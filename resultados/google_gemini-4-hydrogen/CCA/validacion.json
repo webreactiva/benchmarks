@@ -1,0 +1,21 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ npm test: tsc + 14/14 (node:test); npm run demo recorre carrito, cupón y checkout",
+    "✖ 50 altas a la vez: 5 guardadas y 45 rechazadas con CONCURRENCY_CONFLICT (5 reintentos sin espera)",
+    "✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)",
+    "~ valida cantidades negativas, decimales y enormes; acepta cantidad 0",
+    "~ librería sin servidor: solo adaptadores en memoria; Redis o Postgres, en el README",
+    "~ entrega dist/ compilado; usa el tsc global de la máquina (no es dependencia)"
+  ],
+  "comprobacion": "Copia en /tmp, npm test, npm run demo y juez/juez.mjs contra dist/ (del juez)",
+  "juez_salida": [
+    "50 addItem a la vez: 5 ok, 45 CONCURRENCY_CONFLICT → 5 unidades guardadas (no pierde las aceptadas)",
+    "precio desde el cliente (unitPrice 0,01) → se ignora, guarda 10,00 del catálogo",
+    "quantity 0 → aceptada; -3 / 1,5 → INVALID_QUANTITY; 1e9 → INSUFFICIENT_STOCK",
+    "producto y cartId con «../» → no encontrado",
+    "0,10 × 3 → 30 céntimos; EUR + USD → INVALID_CURRENCY",
+    "mutar el carrito devuelto no cambia lo guardado"
+  ]
+}
