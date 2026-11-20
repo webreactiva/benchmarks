@@ -351,6 +351,300 @@
     "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
+    "dir": "resultados/google_gemini-4-carbon/A3D",
+    "codigo": "A3D",
+    "modelo": "google/gemini-4-carbon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T12:12:03Z",
+    "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 39157,
+      "output": 28805,
+      "reasoning": 1205,
+      "cache_read": 42024,
+      "cache_write": 0,
+      "total": 111191
+    },
+    "peticiones": 4,
+    "error": null,
+    "mensajes_usuario": [
+      "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 1,
+      "write": 1,
+      "shell": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e07210993ffeiyw6b2fR00AkVo",
+    "coste_usd": 0.3813,
+    "ficheros": [
+      "alhambra-ruta-3d.html"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alhambra-ruta-3d.html",
+          "errores": [],
+          "titulo": "Ruta 3D Interactiva — La Alhambra de Granada",
+          "canvas": 1,
+          "texto": "1\nPta. Justicia\n2\nAlcazaba\n3\nCarlos V\n4\nArrayanes\n5\nP. Leones\n6\nEl Partal\n7\nP. Cipreses\n8\nGeneralife\nGRANADA · COLINA DE LA SABIKA\nRuta 3D por La Alhambra y Generalife\nRecorrido monumental interactivo desde la Puerta de la Justicia hasta los jardines nazaríes\nAtardecer\nDía\nNoche\nVista Aérea\nEtiquetas\nPARADA 1 DE 8\n1348 · Yusuf I\nPuerta de la Justicia\n\nLa entrada monumental más célebre de la Alhamb",
+          "scripts": [],
+          "captura": "capturas/alhambra-ruta-3d.html.png",
+          "capturas_extra": [
+            "capturas/auto-30s.png",
+            "capturas/vista-parada-2.png",
+            "capturas/parada-3.png",
+            "capturas/vista-parada-4.png",
+            "capturas/vista-parada-5.png",
+            "capturas/vista-parada-7.png",
+            "capturas/parada-8.png",
+            "capturas/vista-aerea-dia.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores de consola; three.js 0.164.1 desde jsDelivr (75 KB)",
+        "✔ 8 paradas reales en orden de visita: Justicia, Alcazaba, Carlos V, Arrayanes, Leones, Partal, Cipreses, Generalife",
+        "✔ ruta guiada: la cámara sigue la curva entre paradas (~56 s el recorrido); también con botones, píldoras y deslizador",
+        "✔ se reconoce: arco de herradura de la Justicia, patio circular de Carlos V, alberca de Arrayanes, torres almenadas, cipreses del Generalife",
+        "✖ en la parada de los Leones los tejados tapan el patio y la fuente",
+        "~ en el contenedor el render por software va a 1,3 fps; el avance usa el tiempo real con dt ≤ 0,05, por eso en 30 s solo llega al 4 %",
+        "✔ textos correctos (Yusuf I 1348, Machuca, 124 columnas, Muhammad V, Acequia Real)"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "se recorre y se reconoce",
+      "rubrica": {
+        "abre sin errores": 1,
+        "ruta con paradas reales": 2,
+        "la ruta se recorre": 3,
+        "se reconoce la Alhambra": 2,
+        "vista limpia": 0,
+        "textos sin errores": 1
+      },
+      "resumen": "Una maqueta con three.js de ocho paradas, de la Puerta de la Justicia al Generalife, con ruta guiada que lleva la cámara por una curva luminosa, fichas históricas correctas y luz de atardecer, día y noche. Se reconocen el arco de la Justicia, el patio circular de Carlos V, la alberca de Arrayanes y los cipreses, pero en los Leones los tejados tapan el patio.",
+      "rarezas": [
+        "Un solo write con el HTML entero (75 KB) y una comprobación de sintaxis con node: 4 peticiones, 111 000 tokens, 0,38 $.",
+        "No lo abrió en un navegador; solo comprobó que el JavaScript parseaba.",
+        "Primera tirada perdida: la ruta por defecto de OpenRouter (Google Vertex) cortaba cada petición con un 502 a los ~5 min de razonar (en _descartados/)."
+      ]
+    },
+    "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
+  },
+  {
+    "dir": "resultados/google_gemini-4-carbon/AIF",
+    "codigo": "AIF",
+    "modelo": "google/gemini-4-carbon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T12:37:40Z",
+    "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 77885,
+      "output": 80209,
+      "reasoning": 9747,
+      "cache_read": 474828,
+      "cache_write": 0,
+      "total": 642669
+    },
+    "peticiones": 16,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+      "Decide tú."
+    ],
+    "herramientas": {
+      "read": 1,
+      "websearch": 1,
+      "shell": 5,
+      "write": 1,
+      "edit": 7
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e07099432ffexBXB3DwQS1bLMf",
+    "coste_usd": 1.0946,
+    "ficheros": [
+      "index.html"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models"
+    },
+    "veces_decide_tu": 1,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "index.html",
+          "errores": [],
+          "titulo": "Web Reactiva Craft · Alquimia Malandriner",
+          "canvas": 1,
+          "texto": "⚡\nWeb Reactiva Craft\nMALANDRINER\n\n¡Hola, malandriner! Combina piezas del universo Web Reactiva.\n\n∞\nModo Infinito:\nON\n📖\nCódice\n🔊\n🌙\n⚡ Laboratorio Malandriner\n\nArrastra elementos desde el panel o haz clic sobre ellos para lanzarlos a la mesa.\nJunta dos fichas para descubrir el universo de Web Reactiva.\nDoble clic duplica · Clic derecho borra\n\n💻\nCódigo\n🎙️\nMicrófono\n☕\nCafé\n🧠\nCuriosidad\n💡\nPista M",
+          "scripts": [],
+          "captura": "capturas/index.html.png",
+          "capturas_extra": [
+            "capturas/web-reactiva.png",
+            "capturas/infinito.png",
+            "capturas/pista.png",
+            "capturas/codice.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; un HTML de 115 KB sin dependencias",
+        "✔ lienzo libre: se arrastra una ficha sobre otra (también doble clic duplica, clic derecho borra, zoom y desplazamiento)",
+        "✔ Código + Café → Programador; Micrófono + Micrófono → Podcast; Código + Código → Web; Web + Podcast → Web Reactiva; Programador + Web Reactiva → Daniel Primo",
+        "✔ 112 de 112 elementos alcanzables desde los 4 iniciales (juez/alcanzables.js); 389 pares con receta, 1 receta duplicada que no cuenta",
+        "✔ modo infinito: Café + Web (sin receta) → «Micro-Web con Café», con su ficha de «primer descubrimiento»",
+        "✔ guarda en localStorage (9/112 tras recargar), buscador, pistas, códice por categorías y 13 logros",
+        "~ contenido de memoria (la búsqueda web quedó cancelada): malandriner, Zona Premium, Telegram, café virtual, mastermind; algún detalle sin comprobar («todos los martes», «Episodio 500»)"
+      ]
+    },
+    "juicio": {
+      "nota": 10,
+      "veredicto": "el AIF más completo",
+      "rubrica": {
+        "abre sin errores": 1,
+        "mecánica de Infinite Craft": 2,
+        "las combinaciones funcionan": 2,
+        "progresión": 1,
+        "«infinito»": 1,
+        "contenido de Web Reactiva": 2,
+        "acabado": 1
+      },
+      "resumen": "Mesa libre donde se suelta una ficha sobre otra, 112 elementos y 389 recetas todos alcanzables desde cuatro iniciales (Código, Micrófono, Café, Curiosidad), un generador para las mezclas sin receta, pistas, buscador, códice, logros y guardado. El contenido es de Web Reactiva de verdad (malandriner, Daniel Primo, Zona Premium, Telegram, café virtual, mastermind), aunque sacado de memoria porque la búsqueda web se canceló.",
+      "rarezas": [
+        "Intentó una búsqueda web sobre Web Reactiva; OpenCode pidió permiso, el lanzador cerró el diálogo y le contestó «Decide tú.», y siguió sin buscar.",
+        "Escribió un esqueleto y lo rellenó por secciones con 7 edit; se comprobó a sí mismo con node: ids inexistentes en las recetas, pares en conflicto y alcanzabilidad (112/112), y corrigió lo que salió.",
+        "16 peticiones, 643 000 tokens (475 000 de caché), 1,09 $.",
+        "Primera tirada perdida: por la ruta por defecto de OpenRouter (Google Vertex) la petición que escribía el juego se cortó tres veces con un 502 (en _descartados/); esta fue por Google AI Studio."
+      ]
+    },
+    "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
+    "dir": "resultados/google_gemini-4-carbon/CCA",
+    "codigo": "CCA",
+    "modelo": "google/gemini-4-carbon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T12:54:22Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 93818,
+      "output": 40800,
+      "reasoning": 6348,
+      "cache_read": 694468,
+      "cache_write": 0,
+      "total": 835434
+    },
+    "peticiones": 25,
+    "error": "Step interrupted",
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+      "Decide tú."
+    ],
+    "herramientas": {
+      "read": 4,
+      "question": 1,
+      "shell": 6,
+      "write": 24,
+      "edit": 2,
+      "glob": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e06fa4919ffeMPvgrm77MzBZbG",
+    "coste_usd": 0.7236,
+    "ficheros": [
+      ".gitignore",
+      "README.md",
+      "package.json",
+      "src/application/cart-service.ts",
+      "src/application/ports.ts",
+      "src/domain/cart.ts",
+      "src/domain/errors.ts",
+      "src/domain/events.ts",
+      "src/domain/money.ts",
+      "src/domain/pricing.ts",
+      "src/infrastructure/catalog/in-memory-catalog-inventory.ts",
+      "src/infrastructure/events/in-memory-event-bus.ts",
+      "src/infrastructure/idempotency/in-memory-idempotency-store.ts",
+      "src/infrastructure/persistence/in-memory-cart-repository.ts",
+      "src/infrastructure/persistence/sqlite-cart-repository.ts",
+      "src/infrastructure/persistence/tiered-cart-repository.ts",
+      "src/interfaces/http/router.ts",
+      "src/interfaces/http/ui.ts",
+      "src/interfaces/http/validation.ts",
+      "src/server.ts",
+      "tests/domain.test.ts",
+      "tests/http-api.test.ts",
+      "tests/service-concurrency.test.ts",
+      "tsconfig.json"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models"
+    },
+    "veces_decide_tu": 1,
+    "validacion": {
+      "html": [],
+      "mermaid": [],
+      "extra": [
+        "✔ sin dependencias: npm test (9/9 con node:test) y npm start con Node 22 y TypeScript nativo",
+        "✔ 50 altas a la vez: 50 guardadas en una instancia y en dos instancias con el mismo SQLite",
+        "✔ dinero en céntimos (0,10 × 3 = 0,30), sumar EUR y USD da error, precio del catálogo (se ignora el del cliente)",
+        "✔ valida cantidades (0, negativa, decimal, enorme), sku inexistente, ids con «../», cuerpo vacío",
+        "✖ la caché L1 de cada instancia sirve lecturas viejas cuando escribe la otra (juez/cache-l1.mjs)",
+        "~ stock, idempotencia y eventos viven en la memoria de cada proceso; el almacenamiento compartido es un fichero SQLite (una sola máquina)"
+      ],
+      "comprobacion": "Copia en /tmp, npm test, dos instancias con CART_DB_PATH común y juez/juez.mjs y juez/cache-l1.mjs (del juez)",
+      "juez_salida": [
+        "50 altas a la vez (USB-HUB-7IN1, stock 120): 200 × 50 → 50 guardadas; repartidas entre dos instancias: 200 × 50 → 50",
+        "con el primer SKU (stock 25): 25 × 200 y 25 × 409 INSUFFICIENT_STOCK → 25 guardadas, sin pérdidas",
+        "precio desde el cliente (unitPrice: 1) → 200, se guarda 119,50 € del catálogo",
+        "quantity 0 / -3 / 1,5 → 400; 1e9 → 409 stock insuficiente; sku «../../etc/passwd» → 404; cartId «../» → 404",
+        "Money: 0,10 × 3 = 30 céntimos; EUR + USD → error",
+        "la vista devuelta se puede mutar pero es una copia: al releer no cambia",
+        "caché L1: A escribe, B lee v2; A escribe otra vez (v3), B sigue leyendo v2; B escribe → CAS detecta el conflicto, reintenta y guarda v4 bien; A entonces lee v3"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "escala en una máquina",
+      "rubrica": {
+        "se ejecuta": 1,
+        "tests en verde": 1,
+        "dominio completo": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 1,
+        "concurrencia": 2,
+        "escala horizontal": 1,
+        "explica el escalado": 1
+      },
+      "resumen": "TypeScript sobre Node 22 sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, cupones, IVA, envío, idempotencia, checkout con reserva de stock y SQLite en WAL con compare-and-set por versión: 50 altas a la vez no pierden nada, ni repartidas entre dos instancias con el mismo fichero. Pero cada instancia guarda una caché L1 que sirve lecturas viejas cuando escribe la otra, y el stock y la idempotencia viven en memoria de cada proceso.",
+      "rarezas": [
+        "Preguntó con la herramienta de preguntas qué tipo de solución hacía (API, full-stack, módulo); el lanzador la cerró y siguió con su opción recomendada.",
+        "Comprobó qué había en la máquina (node, npm, python, go, la versión de SQLite de Node) antes de elegir y se quedó con lo que traía Node 22: cero dependencias.",
+        "El primer npm test dio 8/9; arregló el servicio, no el test.",
+        "El README presenta los nodos como «sin estado» y la L1 como «reemplazable por Redis»: en la práctica cada nodo guarda caché, stock e idempotencia propios.",
+        "25 peticiones, 835 000 tokens (694 000 de caché), 0,72 $."
+      ]
+    },
+    "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
     "dir": "resultados/google_gemini-4-carbon/PTS",
     "codigo": "PTS",
     "modelo": "google/gemini-4-carbon",
