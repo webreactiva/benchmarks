@@ -8,7 +8,7 @@ import html, json, os, glob
 B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORDEN = ["A3D", "AIF", "CCA", "PTS"]
 TIPO = {"A3D": "visual", "AIF": "visual", "CCA": "código", "PTS": "texto"}
-PAGES = "https://webreactiva.github.io/benchmarks"  # GitHub Pages del repo: sirve los HTML para verlos funcionando
+PREVIEW = "https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main"  # abre los HTML del repo para verlos funcionando
 filas = []
 for m in sorted(glob.glob(f"{B}/resultados/*/*/meta.json")):
     d = os.path.dirname(m)
@@ -70,7 +70,7 @@ for r in filas:
 <td><small>{fich or '–'}</small></td>
 <td><small>{celda_val(r)}</small></td>
 <td class="nota n{'' if nota is None else int(nota) // 4}">{'–' if nota is None else nota}<br><small>{e(j.get('veredicto', ''))}</small></td>
-<td><small>{e(j.get('resumen', ''))}</small>{f' <a href="{e(r["dir"])}/juicio.md">juicio</a>' if j else ''}{''.join(f' · <a href="{e(u)}">▶ en vivo</a>' for _, u in en_vivo(r))}</td>
+<td><small>{e(j.get('resumen', ''))}</small>{f' <a href="{e(r["dir"])}/juicio.md">juicio</a>' if j else ''}{''.join(f' · <a href="{e(u)}">▶ en vivo</a>' for _, u in en_vivo(r, PREVIEW + "/"))}</td>
 <td class=cap>{captura(r)}</td>
 </tr>""")
 
@@ -123,8 +123,8 @@ for carpeta, rs in por_modelo.items():
         l.append(f"| [{r['codigo']}]({r['codigo']}/juicio.md) | {TIPO.get(r['codigo'], '')} | {r['peticiones']} | "
                  f"{kk((r['tokens'] or {}).get('total'))} | {j.get('nota', '–')} | {j.get('veredicto', 'sin juzgar')} | "
                  f"{j.get('resumen', '').replace('|', '/')} | "
-                 + (" · ".join(f"[▶ {f}]({u})" for f, u in en_vivo(r, PAGES + "/")) or "–") + " |")
-    l += ["", "Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, servido por GitHub Pages.", "", "## Rarezas", ""]
+                 + (" · ".join(f"[▶ {f}]({u})" for f, u in en_vivo(r, PREVIEW + "/")) or "–") + " |")
+    l += ["", "Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.", "", "## Rarezas", ""]
     for r in rs:
         rz = (r["juicio"] or {}).get("rarezas") or []
         if rz:
