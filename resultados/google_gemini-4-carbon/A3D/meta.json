@@ -1,0 +1,38 @@
+{
+  "codigo": "A3D",
+  "modelo": "google/gemini-4-carbon",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T12:12:03Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 39157,
+    "output": 28805,
+    "reasoning": 1205,
+    "cache_read": 42024,
+    "cache_write": 0,
+    "total": 111191
+  },
+  "peticiones": 4,
+  "error": null,
+  "mensajes_usuario": [
+    "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 1,
+    "write": 1,
+    "shell": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e07210993ffeiyw6b2fR00AkVo",
+  "coste_usd": 0.3813,
+  "ficheros": [
+    "alhambra-ruta-3d.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models"
+  },
+  "veces_decide_tu": 0
+}

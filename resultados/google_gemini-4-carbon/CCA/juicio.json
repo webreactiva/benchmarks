@@ -1,0 +1,22 @@
+{
+  "nota": 9,
+  "veredicto": "escala en una máquina",
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 2,
+    "escala horizontal": 1,
+    "explica el escalado": 1
+  },
+  "resumen": "TypeScript sobre Node 22 sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, cupones, IVA, envío, idempotencia, checkout con reserva de stock y SQLite en WAL con compare-and-set por versión: 50 altas a la vez no pierden nada, ni repartidas entre dos instancias con el mismo fichero. Pero cada instancia guarda una caché L1 que sirve lecturas viejas cuando escribe la otra, y el stock y la idempotencia viven en memoria de cada proceso.",
+  "rarezas": [
+    "Preguntó con la herramienta de preguntas qué tipo de solución hacía (API, full-stack, módulo); el lanzador la cerró y siguió con su opción recomendada.",
+    "Comprobó qué había en la máquina (node, npm, python, go, la versión de SQLite de Node) antes de elegir y se quedó con lo que traía Node 22: cero dependencias.",
+    "El primer npm test dio 8/9; arregló el servicio, no el test.",
+    "El README presenta los nodos como «sin estado» y la L1 como «reemplazable por Redis»: en la práctica cada nodo guarda caché, stock e idempotencia propios.",
+    "25 peticiones, 835 000 tokens (694 000 de caché), 0,72 $."
+  ]
+}

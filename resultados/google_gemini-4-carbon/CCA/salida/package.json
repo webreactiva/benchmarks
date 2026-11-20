@@ -1,0 +1,14 @@
+{
+  "name": "scalable-shopping-cart",
+  "version": "1.0.0",
+  "description": "Carrito de la compra escalable con Arquitectura Hexagonal, control de concurrencia optimista, idempotencia, persistencia multinivel (L1 + SQLite WAL) y API HTTP.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "scripts": {
+    "start": "node --no-warnings src/server.ts",
+    "dev": "node --no-warnings --watch src/server.ts",
+    "test": "node --no-warnings --test tests/*.test.ts"
+  }
+}

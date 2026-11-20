@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Web Reactiva Craft · Alquimia Malandriner</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <style>
+    :root {
+      --bg-canvas: #f8f9fc;
+      --dot-color: #d8deeb;
+      --bg-sidebar: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-surface-2: #f1f4f9;
+      --bg-chip: #ffffff;
+      --bg-chip-hover: #f7faff;
+      --border-color: #dce2ee;
+      --border-chip: #cfd7e6;
+      --border-chip-hover: #6366f1;
+      --text-main: #151926;
+      --text-muted: #5e677d;
+      --text-soft: #8992a9;
+      --wr-yellow: #facc15;
+      --wr-amber: #f59e0b;
+      --wr-indigo: #4f46e5;
+      --wr-blue: #2563eb;
+      --wr-purple: #7c3aed;
+      --wr-emerald: #10b981;
+      --wr-rose: #f43f5e;
+      --shadow-chip: 0 2px 6px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-chip-drag: 0 14px 28px rgba(79, 70, 229, 0.22), 0 4px 10px rgba(15, 23, 42, 0.1);
+      --shadow-float: 0 10px 30px rgba(15, 23, 42, 0.10);
+      --sidebar-width: 370px;
+      --radius-chip: 10px;
+      --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html[data-theme="dark"] {
+      --bg-canvas: #0d1117;
+      --dot-color: #232b3a;
+      --bg-sidebar: #141923;
+      --bg-surface: #181f2c;
+      --bg-surface-2: #20293a;
+      --bg-chip: #1b2230;
+      --bg-chip-hover: #242e42;
+      --border-color: #283246;
+      --border-chip: #313d55;
+      --border-chip-hover: #818cf8;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-soft: #64748b;
+      --shadow-chip: 0 2px 8px rgba(0, 0, 0, 0.32);
+      --shadow-chip-drag: 0 16px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(129, 140, 248, 0.45);
+      --shadow-float: 0 12px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      background: var(--bg-canvas);
+      color: var(--text-main);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    #app {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* ================= CANVAS AREA ================= */
+    #workspace {
+      flex: 1;
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-canvas);
+      background-image: radial-gradient(var(--dot-color) 1.35px, transparent 1.35px);
+      background-size: 24px 24px;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    #workspace.panning {
+      cursor: grabbing;
+    }
+
+    #fx-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 25;
+    }
+
+    #world {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      transform-origin: 0 0;
+      z-index: 10;
+    }
+
+    /* Floating Header Brand */
+    .brand-card {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 9px 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      box-shadow: var(--shadow-float);
+      backdrop-filter: blur(10px);
+      max-width: calc(100% - 32px);
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #facc15 0%, #f59e0b 55%, #ea580c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 3px 10px rgba(245, 158, 11, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-text h1 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 99px;
+      background: rgba(79, 70, 229, 0.12);
+      color: var(--wr-indigo);
+      letter-spacing: 0.03em;
+    }
+
+    html[data-theme="dark"] .brand-badge {
+      background: rgba(129, 140, 248, 0.18);
+      color: #a5b4fc;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 330px;
+    }
+
+    /* Top-right controls on workspace */
+    .top-controls {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 11px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-chip);
+      transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease;
+    }
+
+    .pill-btn:hover {
+      border-color: var(--border-chip-hover);
+      background: var(--bg-chip-hover);
+      transform: translateY(-1px);
+    }
+
+    .pill-btn:active {
+      transform: translateY(0);
+    }
+
+    .pill-btn.active-mode {
+      border-color: var(--wr-indigo);
+      background: rgba(79, 70, 229, 0.1);
+      color: var(--wr-indigo);
+    }
+
+    html[data-theme="dark"] .pill-btn.active-mode {
+      border-color: #818cf8;
+      background: rgba(129, 140, 248, 0.16);
+      color: #c7d2fe;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    /* Bottom toolbar on workspace */
+    .bottom-toolbar {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: auto;
+      flex-wrap: wrap;
+    }
+
+    .hint-btn {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-color: #f59e0b;
+      color: #78350f;
+    }
+
+    html[data-theme="dark"] .hint-btn {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.24), rgba(217, 119, 6, 0.18));
+      border-color: rgba(245, 158, 11, 0.55);
+      color: #fde68a;
+    }
+
+    .zoom-indicator {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      padding: 6px 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 9px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Empty workspace helper overlay */
+    #empty-guide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 5;
+      text-align: center;
+      padding: 24px;
+      transition: opacity 0.25s ease;
+    }
+
+    #empty-guide.hidden {
+      opacity: 0;
+    }
+
+    .empty-guide-box {
+      max-width: 390px;
+      padding: 20px 24px;
+      border-radius: 16px;
+      border: 1.5px dashed var(--border-chip);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(3px);
+    }
+
+    html[data-theme="dark"] .empty-guide-box {
+      background: rgba(20, 25, 35, 0.55);
+    }
+
+    .empty-guide-box h2 {
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .empty-guide-box p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ================= ELEMENT CHIPS ================= */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border-radius: var(--radius-chip);
+      background: var(--bg-chip);
+      border: 1.5px solid var(--border-chip);
+      box-shadow: var(--shadow-chip);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: grab;
+      white-space: nowrap;
+      transition: border-color 0.14s ease, box-shadow 0.14s ease, background 0.14s ease, transform 0.14s ease;
+      position: relative;
+    }
+
+    .chip:hover {
+      border-color: var(--border-chip-hover);
+      background: var(--bg-chip-hover);
+    }
+
+    .chip .emoji {
+      font-size: 17px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .chip .label {
+      line-height: 1.15;
+      pointer-events: none;
+    }
+
+    .chip.milestone {
+      border-color: rgba(245, 158, 11, 0.65);
+    }
+
+    .chip.procedural {
+      border-style: dashed;
+    }
+
+    /* Canvas-placed chip */
+    .canvas-chip {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 12;
+      padding: 8px 14px;
+      font-size: 14.5px;
+      touch-action: none;
+    }
+
+    .canvas-chip.dragging {
+      cursor: grabbing;
+      z-index: 100 !important;
+      box-shadow: var(--shadow-chip-drag);
+      border-color: var(--wr-indigo);
+      transition: none;
+    }
+
+    .canvas-chip.merge-target {
+      border-color: var(--wr-amber) !important;
+      box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.32), var(--shadow-chip-drag) !important;
+      transform: translate(-50%, -50%) scale(1.09) !important;
+    }
+
+    .canvas-chip.pop-in {
+      animation: chipPop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .canvas-chip.shake {
+      animation: chipShake 0.32s ease;
+    }
+
+    .first-badge {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      padding: 1.5px 7px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #f59e0b, #ec4899, #6366f1);
+      color: #fff;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3);
+    }
+
+    .milestone-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--wr-amber);
+      flex-shrink: 0;
+    }
+
+    .combo-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--wr-emerald);
+      flex-shrink: 0;
+    }
+
+    @keyframes chipPop {
+      0% { transform: translate(-50%, -50%) scale(0.35); opacity: 0.2; }
+      70% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes chipShake {
+      0%, 100% { transform: translate(-50%, -50%) translateX(0); }
+      25% { transform: translate(-50%, -50%) translateX(-6px); }
+      75% { transform: translate(-50%, -50%) translateX(6px); }
+    }
+
+    /* Floating drag clone from sidebar */
+    #drag-ghost {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      box-shadow: var(--shadow-chip-drag);
+      border-color: var(--wr-indigo);
+      display: none;
+    }
+
+    /* Floating formula text on merge */
+    .floating-formula {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 40;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      box-shadow: var(--shadow-chip);
+      white-space: nowrap;
+      animation: floatUpFade 1.25s ease forwards;
+    }
+
+    @keyframes floatUpFade {
+      0% { opacity: 0; transform: translate(-50%, -10px) scale(0.9); }
+      18% { opacity: 1; transform: translate(-50%, -28px) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -56px) scale(0.96); }
+    }
+
+    /* Discovery Toast Banner */
+    #toast-container {
+      position: absolute;
+      top: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 45;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      width: min(460px, calc(100% - 32px));
+    }
+
+    .discovery-toast {
+      pointer-events: auto;
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 14px;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--wr-amber);
+      box-shadow: var(--shadow-float);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      animation: toastSlide 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .discovery-toast.info-toast {
+      border-color: var(--wr-indigo);
+    }
+
+    .toast-emoji {
+      font-size: 28px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .toast-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .toast-tag {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--wr-amber);
+      margin-bottom: 2px;
+    }
+
+    .discovery-toast.info-toast .toast-tag {
+      color: var(--wr-indigo);
+    }
+
+    .toast-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .toast-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    .toast-action {
+      margin-top: 7px;
+      padding: 5px 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 8px;
+      border: none;
+      background: var(--wr-indigo);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @keyframes toastSlide {
+      from { opacity: 0; transform: translateY(-12px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ================= SIDEBAR ================= */
+    #sidebar {
+      width: var(--sidebar-width);
+      height: 100%;
+      background: var(--bg-sidebar);
+      border-left: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      z-index: 35;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    #sidebar.trash-hover::after {
+      content: "🗑️ Soltar para quitar de la mesa";
+      position: absolute;
+      inset: 10px;
+      border-radius: 14px;
+      background: rgba(244, 63, 94, 0.14);
+      border: 2px dashed var(--wr-rose);
+      color: var(--wr-rose);
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(3px);
+      z-index: 60;
+      pointer-events: none;
+    }
+
+    .sidebar-header {
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .progress-stats {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      border-radius: 99px;
+      background: var(--bg-surface-2);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #facc15 0%, #f59e0b 45%, #4f46e5 100%);
+      transition: width 0.35s ease;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 9px 32px 9px 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      color: var(--text-main);
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--wr-indigo);
+      background: var(--bg-surface);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      font-size: 13.5px;
+      pointer-events: none;
+      color: var(--text-soft);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 4px;
+      display: none;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .tab-chip {
+      padding: 5px 8.5px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: var(--bg-surface-2);
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.14s ease;
+    }
+
+    .tab-chip.active {
+      background: var(--wr-indigo);
+      color: #ffffff;
+    }
+
+    .sort-select {
+      padding: 5px 7px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      color: var(--text-main);
+      font-size: 11.5px;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    #inventory-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 7px;
+    }
+
+    #inventory-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #inventory-list::-webkit-scrollbar-thumb {
+      background: var(--border-chip);
+      border-radius: 99px;
+    }
+
+    .inv-empty {
+      width: 100%;
+      text-align: center;
+      padding: 32px 12px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .sidebar-footer {
+      padding: 9px 14px;
+      border-top: 1px solid var(--border-color);
+      font-size: 11.5px;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .footer-link-btn {
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .footer-link-btn:hover {
+      color: var(--wr-rose);
+    }
+
+    /* ================= MODAL (CÓDICE MALANDRINER) ================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 24, 0.58);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(820px, 100%);
+      max-height: 86vh;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      box-shadow: var(--shadow-float);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-head {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-head h2 {
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      overflow-x: auto;
+    }
+
+    .modal-tab {
+      padding: 7px 13px;
+      border-radius: 9px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .modal-tab.active {
+      background: var(--bg-surface);
+      color: var(--wr-indigo);
+      box-shadow: var(--shadow-chip);
+    }
+
+    .modal-body {
+      padding: 18px 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .cat-section {
+      margin-bottom: 22px;
+    }
+
+    .cat-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .codex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .codex-item {
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      transition: border-color 0.14s ease, transform 0.14s ease;
+    }
+
+    .codex-item:hover:not(.locked) {
+      border-color: var(--wr-indigo);
+      transform: translateY(-1px);
+    }
+
+    .codex-item.locked {
+      opacity: 0.55;
+      cursor: default;
+    }
+
+    .codex-item-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 13.5px;
+    }
+
+    .codex-item-lore {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.38;
+    }
+
+    .codex-item-recipe {
+      font-size: 11px;
+      color: var(--wr-indigo);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    html[data-theme="dark"] .codex-item-recipe {
+      color: #a5b4fc;
+    }
+
+    .ach-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    .ach-card {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-surface-2);
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+    }
+
+    .ach-card.unlocked {
+      border-color: var(--wr-amber);
+      background: rgba(250, 204, 21, 0.08);
+    }
+
+    .ach-icon {
+      font-size: 26px;
+      line-height: 1;
+      filter: grayscale(1);
+      opacity: 0.45;
+    }
+
+    .ach-card.unlocked .ach-icon {
+      filter: none;
+      opacity: 1;
+    }
+
+    .recipe-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 7px;
+      font-size: 13px;
+      background: var(--bg-surface-2);
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ================= RESPONSIVE MOBILE ================= */
+    @media (max-width: 840px) {
+      #app {
+        flex-direction: column;
+      }
+
+      #workspace {
+        height: 56vh;
+        flex: none;
+      }
+
+      #sidebar {
+        width: 100%;
+        height: 44vh;
+        border-left: none;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .brand-card {
+        top: 10px;
+        left: 10px;
+        padding: 7px 11px;
+      }
+
+      .brand-text p {
+        display: none;
+      }
+
+      .top-controls {
+        top: 10px;
+        right: 10px;
+      }
+
+      .bottom-toolbar {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+      }
+
+      .pill-btn span.hide-sm {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- INFINITE WORKSPACE -->
+    <main id="workspace">
+      <canvas id="fx-canvas"></canvas>
+
+      <!-- Brand Card -->
+      <div class="brand-card">
+        <div class="brand-logo" title="Web Reactiva">⚡</div>
+        <div class="brand-text">
+          <h1>Web Reactiva Craft <span class="brand-badge">Malandriner</span></h1>
+          <p id="brand-quote">¡Hola, malandriner! Combina piezas del universo Web Reactiva.</p>
+        </div>
+      </div>
+
+      <!-- Top Right Controls -->
+      <div class="top-controls">
+        <button id="btn-infinite" class="pill-btn active-mode" title="Modo Infinito: cualquier par sin receta oficial genera un invento malandriner único">
+          <span>∞</span> <span class="hide-sm">Modo Infinito:</span> <strong id="infinite-label">ON</strong>
+        </button>
+        <button id="btn-codex" class="pill-btn" title="Abrir Códice Malandriner, logros y recetas">
+          <span>📖</span> <span class="hide-sm">Códice</span>
+        </button>
+        <button id="btn-sound" class="pill-btn icon-btn" title="Activar / silenciar efectos de sonido">🔊</button>
+        <button id="btn-theme" class="pill-btn icon-btn" title="Cambiar tema claro / oscuro">🌙</button>
+      </div>
+
+      <!-- Toast Notifications -->
+      <div id="toast-container"></div>
+
+      <!-- Empty Workspace Helper -->
+      <div id="empty-guide">
+        <div class="empty-guide-box">
+          <h2>⚡ Laboratorio Malandriner</h2>
+          <p>Arrastra elementos desde el panel o haz <strong>clic</strong> sobre ellos para lanzarlos a la mesa.<br />Junta dos fichas para descubrir el universo de <strong>Web Reactiva</strong>.<br /><small>Doble clic duplica · Clic derecho borra</small></p>
+        </div>
+      </div>
+
+      <!-- Pannable/Zoomable World -->
+      <div id="world"></div>
+
+      <!-- Bottom Workspace Toolbar -->
+      <div class="bottom-toolbar">
+        <div class="toolbar-group">
+          <button id="btn-hint" class="pill-btn hint-btn" title="Obtener una pista usando elementos que ya has descubierto">
+            <span>💡</span> <span>Pista Malandriner</span>
+          </button>
+          <button id="btn-starter-pack" class="pill-btn" title="Colocar los 4 elementos iniciales en la mesa">
+            <span>🎲</span> <span class="hide-sm">Sacar básicos</span>
+          </button>
+          <button id="btn-clear" class="pill-btn" title="Limpiar las fichas de la mesa (no borra tus descubrimientos)">
+            <span>🧹</span> <span class="hide-sm">Limpiar mesa</span>
+          </button>
+        </div>
+        <div class="toolbar-group">
+          <button id="btn-center" class="pill-btn" title="Restablecer vista y zoom">🎯 <span class="hide-sm">Centrar</span></button>
+          <span id="zoom-label" class="zoom-indicator">100%</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- SIDEBAR INVENTORY -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <div class="progress-bar-wrap">
+          <div class="progress-stats">
+            <span id="stats-official">⚡ Oficiales: 4 / 112</span>
+            <span id="stats-extra">✨ Inventos: 0</span>
+          </div>
+          <div class="progress-track">
+            <div id="progress-fill" class="progress-fill" style="width: 3.5%"></div>
+          </div>
+        </div>
+
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input id="search-input" type="text" placeholder="Buscar elemento malandriner..." autocomplete="off" />
+          <button id="search-clear" class="search-clear" title="Limpiar búsqueda">✕</button>
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-tabs" id="filter-tabs">
+            <button class="tab-chip active" data-filter="all">Todos</button>
+            <button class="tab-chip" data-filter="official">⚡ Oficiales</button>
+            <button class="tab-chip" data-filter="combos" title="Elementos con recetas oficiales aún por descubrir con tu inventario actual">🟢 Con combo</button>
+            <button class="tab-chip" data-filter="custom">✨ Inventos</button>
+          </div>
+          <select id="sort-select" class="sort-select" title="Ordenar inventario">
+            <option value="time">⏱️ Orden</option>
+            <option value="recent">🆕 Recientes</option>
+            <option value="az">🔤 A-Z</option>
+            <option value="cat">🗂️ Categoría</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="inventory-list"></div>
+
+      <div class="sidebar-footer">
+        <span>Clic = lanzar · Arrastrar = colocar</span>
+        <button id="btn-reset" class="footer-link-btn" title="Reiniciar todo el progreso guardado">Reiniciar progreso</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Drag Ghost -->
+  <div id="drag-ghost" class="chip">
+    <span class="emoji">⚡</span>
+    <span class="label">Elemento</span>
+  </div>
+
+  <!-- CÓDICE MALANDRINER MODAL -->
+  <div id="codex-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2>📖 Códice de Web Reactiva</h2>
+        <button id="modal-close" class="pill-btn icon-btn" title="Cerrar">✕</button>
+      </div>
+      <div class="modal-tabs" id="modal-tabs">
+        <button class="modal-tab active" data-mtab="elements">⚡ Elementos Oficiales</button>
+        <button class="modal-tab" data-mtab="achievements">🏆 Logros Malandriner</button>
+        <button class="modal-tab" data-mtab="recipes">🧪 Recetas Descubiertas</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    // === SECTION 1: DATA ===
+    const CATEGORIES = {
+      origen: "🌱 Orígenes",
+      wr: "⚡ Universo Web Reactiva",
+      dev: "💻 Desarrollo & Código",
+      caos: "🔥 Bugs, Humo & Folklore Dev",
+      indie: "🚀 Side Projects & Negocio",
+      auto: "⚙️ Automatización & Herramientas",
+      ia: "🤖 IA & Horizonte Malandriner"
+    };
+
+    const OFFICIAL_ELEMENTS = [
+      // Orígenes (4)
+      { id: "codigo", name: "Código", emoji: "💻", cat: "origen", starter: true, lore: "Líneas de texto que a veces compilan a la primera y casi siempre dan sorpresas." },
+      { id: "microfono", name: "Micrófono", emoji: "🎙️", cat: "origen", starter: true, lore: "El arma secreta para transformar reflexiones técnicas en compañía semanal." },
+      { id: "cafe", name: "Café", emoji: "☕", cat: "origen", starter: true, lore: "Combustible oficial de deploys matutinos, cafés virtuales y side projects." },
+      { id: "curiosidad", name: "Curiosidad", emoji: "🧠", cat: "origen", starter: true, lore: "El verdadero motor malandriner: preguntarse «¿y qué pasa si toco este botón?»." },
+
+      // Universo Web Reactiva (18)
+      { id: "web_reactiva", name: "Web Reactiva", emoji: "⚡", cat: "wr", milestone: true, lore: "Podcast, boletín y comunidad para gente inquieta del desarrollo web. ¡Hola, malandriner!" },
+      { id: "malandriner", name: "Malandriner", emoji: "🕵️", cat: "wr", milestone: true, lore: "Persona curiosa, pragmática y cacharreadora que aprende en comunidad y huye del humo." },
+      { id: "daniel_primo", name: "Daniel Primo", emoji: "🧔‍♂️", cat: "wr", milestone: true, lore: "Anfitrión de Web Reactiva, domador de automatizaciones y defensor del oficio sin postureo." },
+      { id: "podcast", name: "Podcast", emoji: "🎧", cat: "wr", lore: "Compañero fiel de paseos, fregaderos y viajes en tren todos los martes." },
+      { id: "newsletter", name: "Newsletter", emoji: "📩", cat: "wr", lore: "El boletín semanal: una buena historia inicial con giro directo hacia una lección tech." },
+      { id: "comunidad", name: "Comunidad", emoji: "🤝", cat: "wr", milestone: true, lore: "El antídoto definitivo contra la soledad del desarrollador." },
+      { id: "zona_premium", name: "Zona Premium", emoji: "💎", cat: "wr", milestone: true, lore: "El cuartel general privado donde se comparten dudas reales, victorias y aprendizajes." },
+      { id: "telegram", name: "Grupo de Telegram", emoji: "💬", cat: "wr", lore: "Hilos temáticos donde preguntas algo raro de Docker y en 4 minutos tienes tres soluciones." },
+      { id: "cafe_virtual", name: "Café Virtual", emoji: "🫖", cat: "wr", lore: "Quedada distendida entre malandriners: taza en mano, micro abierto y cero corbatas." },
+      { id: "mastermind", name: "Mastermind", emoji: "🧭", cat: "wr", milestone: true, lore: "Pequeño grupo de compromiso para empujar tus proyectos sin excusas." },
+      { id: "charla_tech", name: "Charla Tech", emoji: "🗣️", cat: "wr", lore: "Contar batallas reales de código sin 90 diapositivas corporativas." },
+      { id: "entrevista", name: "Entrevista", emoji: "🎤", cat: "wr", lore: "Conversaciones pausadas con profesionales que cuentan la cara B del sector." },
+      { id: "oyente", name: "Oyente", emoji: "👂", cat: "wr", lore: "Asiente con la cabeza en mitad de la calle porque justo eso le pasó ayer en producción." },
+      { id: "audiocurso", name: "Audio-curso", emoji: "📻", cat: "wr", lore: "Formación cápsula en formato podcast privado para aprender caminando." },
+      { id: "reto", name: "Reto Malandriner", emoji: "🏆", cat: "wr", lore: "Fecha límite corta + foco concreto = proyecto terminado por fin." },
+      { id: "directo", name: "Directo", emoji: "📹", cat: "wr", lore: "Cacharreo en vivo donde el efecto demo siempre añade emoción extra." },
+      { id: "jardin_digital", name: "Jardín Digital", emoji: "🌱", cat: "wr", milestone: true, lore: "Tu casa propia en internet: notas vivas que crecen sin depender de algoritmos." },
+      { id: "aprender_publico", name: "Aprender en Público", emoji: "📢", cat: "wr", lore: "Compartir el camino mientras aprendes, sin esperar a tener un doctorado." },
+
+      // Desarrollo & Código (26)
+      { id: "web", name: "Web", emoji: "🌐", cat: "dev", lore: "El mejor patio de recreo abierto jamás inventado: URL, navegador y a funcionar." },
+      { id: "programador", name: "Programador", emoji: "👩‍💻", cat: "dev", lore: "Organismo vivo capaz de convertir cafeína y documentación a medias en software." },
+      { id: "cacharreo", name: "Cacharreo", emoji: "🔧", cat: "dev", milestone: true, lore: "Trastear por puro placer con herramientas nuevas un sábado por la mañana." },
+      { id: "html", name: "HTML", emoji: "📄", cat: "dev", lore: "Los cimientos nobles de la web; un buen <button> vale más que diez divs con eventos." },
+      { id: "css", name: "CSS", emoji: "🎨", cat: "dev", lore: "Centrar un div ya es fácil, pero el diseño sigue teniendo magia negra." },
+      { id: "javascript", name: "JavaScript", emoji: "🟨", cat: "dev", lore: "Creado en 10 días y gobernando desde el navegador hasta las tostadoras." },
+      { id: "typescript", name: "TypeScript", emoji: "🔷", cat: "dev", lore: "JavaScript con casco y chaleco reflectante para dormir tranquilo." },
+      { id: "php", name: "PHP", emoji: "🐘", cat: "dev", lore: "Llevan 20 años anunciando su muerte mientras mueve media internet en silencio." },
+      { id: "wordpress", name: "WordPress", emoji: "📝", cat: "dev", lore: "El clásico inmortal: con cariño es una navaja suiza; con 64 plugins, una aventura." },
+      { id: "react", name: "React", emoji: "⚛️", cat: "dev", lore: "Componentes, estados y algún useEffect misterioso que nadie se atreve a borrar." },
+      { id: "astro", name: "Astro", emoji: "🚀", cat: "dev", lore: "HTML ultrarrápido de vuelta a los orígenes con islas interactivas." },
+      { id: "api", name: "API", emoji: "🔌", cat: "dev", lore: "El enchufe universal para que dos sistemas hablen y se entiendan." },
+      { id: "json", name: "JSON", emoji: "📦", cat: "dev", lore: "Llaves, comillas y esa coma final traicionera que rompe el parser." },
+      { id: "git", name: "Git", emoji: "🌿", cat: "dev", lore: "Máquina del tiempo cuyos mensajes de commit pasan de poéticos a «fix final 3»." },
+      { id: "github", name: "GitHub", emoji: "🐙", cat: "dev", lore: "Red social de cuadraditos verdes, pull requests y repositorios con buenas intenciones." },
+      { id: "docker", name: "Docker", emoji: "🐳", cat: "dev", lore: "Empaquetamos tu máquina entera para que funcione igual en todas partes." },
+      { id: "servidor", name: "Servidor", emoji: "🖥️", cat: "dev", lore: "El ordenador de otro (o tu VPS de 4€) aguantando el chaparrón 24/7." },
+      { id: "linux", name: "Linux", emoji: "🐧", cat: "dev", lore: "Libertad en estado puro, permisos chmod y amor eterno por la línea de comandos." },
+      { id: "terminal", name: "Terminal", emoji: "⌨️", cat: "dev", lore: "Pantalla negra donde te sientes hacker aunque solo estés haciendo ls -la." },
+      { id: "regex", name: "Regex", emoji: "🧩", cat: "dev", lore: "Jeroglífico arcano que escribes en 20 minutos y olvidas cómo leer en 20 segundos." },
+      { id: "testing", name: "Testing", emoji: "✅", cat: "dev", lore: "El cinturón de seguridad que agradeces infinito cuando tocas código antiguo." },
+      { id: "refactor", name: "Refactor", emoji: "🧹", cat: "dev", lore: "Pasar la escoba al código para que tu yo del mes que viene no te odie." },
+      { id: "base_datos", name: "Base de Datos", emoji: "🗄️", cat: "dev", lore: "Todo es risa hasta que olvidas el WHERE en un DELETE." },
+      { id: "produccion", name: "Producción", emoji: "🔒", cat: "dev", lore: "El mundo real, donde los usuarios hacen clics que jamás imaginaste en local." },
+      { id: "cloud", name: "Cloud", emoji: "☁️", cat: "dev", lore: "Escalable hasta el infinito... igual que la factura si olvidas una alerta." },
+      { id: "self_hosting", name: "Self-Hosting", emoji: "🏠", cat: "dev", lore: "Montarte tus propias herramientas en tu VPS por soberanía digital y puro vicio." },
+
+      // Bugs, Humo & Folklore Dev (16)
+      { id: "bug", name: "Bug", emoji: "🐛", cat: "caos", lore: "No es un fallo, es una funcionalidad inesperada con vida propia." },
+      { id: "legacy", name: "Código Legacy", emoji: "🦖", cat: "caos", lore: "Código venerable en producción que da dinero: trátalo con respeto arqueológico." },
+      { id: "espagueti", name: "Código Espagueti", emoji: "🍝", cat: "caos", lore: "Tiras de una función de login y se descuadra el pie de página en Safari." },
+      { id: "deuda_tecnica", name: "Deuda Técnica", emoji: "💳", cat: "caos", lore: "El «luego lo arreglo bien» con intereses compuestos al 40% mensual." },
+      { id: "viernes", name: "Viernes", emoji: "📅", cat: "caos", lore: "El día sagrado en que las manos lejos del botón de deploy viven más felices." },
+      { id: "deploy_viernes", name: "Deploy en Viernes", emoji: "🔥", cat: "caos", milestone: true, lore: "Deporte extremo de alto riesgo: «era solo cambiar un CSS, qué podía salir mal»." },
+      { id: "caida_prod", name: "Caída de Producción", emoji: "🚨", cat: "caos", lore: "Error 500, sudor frío y el cliente escribiendo «¿está caída la web?»." },
+      { id: "impostor", name: "Síndrome del Impostor", emoji: "🎭", cat: "caos", milestone: true, lore: "Esa vocecilla que dice que no sabes suficiente, incluso tras resolver diez marrones." },
+      { id: "burnout", name: "Burnout", emoji: "🥵", cat: "caos", lore: "Cuando el cuerpo y la mente piden cerrar el portátil y tocar césped urgente." },
+      { id: "vendehumos", name: "Vendehumos", emoji: "💨", cat: "caos", milestone: true, lore: "Te promete facturar 6 cifras en chanclas con 3 prompts secretos. Huye, malandriner." },
+      { id: "objeto_brillante", name: "Objeto Brillante", emoji: "✨", cat: "caos", lore: "Abandonar tu proyecto al 80% porque acaba de salir un framework JS nuevo." },
+      { id: "cementerio_dominios", name: "Cementerio de Dominios", emoji: "💀", cat: "caos", milestone: true, lore: "Colección de dominios comprados a las 2 AM que renuevas religiosamente cada año." },
+      { id: "sobreingenieria", name: "Sobreingeniería", emoji: "🚧", cat: "caos", lore: "Microservicios distribuidos y tres colas de mensajes para guardar cuatro correos." },
+      { id: "mi_maquina", name: "En mi Máquina Funciona", emoji: "🙈", cat: "caos", lore: "Famosa última frase antes de descubrir cómo funciona Docker." },
+      { id: "procrastinacion", name: "Procrastinación", emoji: "⏰", cat: "caos", lore: "Pasar cuatro horas afinando el tema de colores del editor en vez de publicar." },
+      { id: "noche_vela", name: "Noche en Vela", emoji: "🌙", cat: "caos", lore: "Las 2:30 de la madrugada y tú convencido de que estás a cinco minutos de arreglarlo." },
+
+      // Side Projects & Negocio (18)
+      { id: "idea", name: "Idea", emoji: "💡", cat: "indie", lore: "En tu cabeza vale millones; en la libreta espera validación real." },
+      { id: "side_project", name: "Side Project", emoji: "🚀", cat: "indie", milestone: true, lore: "El laboratorio perfecto para aprender, disfrutar y quizás facturar algo." },
+      { id: "mvp", name: "MVP", emoji: "🛠️", cat: "indie", lore: "Mínimo Producto Viable: feo pero funcional hoy mejor que perfecto en 2029." },
+      { id: "saas", name: "SaaS", emoji: "💼", cat: "indie", lore: "Software recurrente que resuelve un dolor concreto cada mes." },
+      { id: "dominio", name: "Dominio", emoji: "🏷️", cat: "indie", lore: "El primer impulso irresistible cada vez que se te ocurre una idea en la ducha." },
+      { id: "landing", name: "Landing Page", emoji: "🛬", cat: "indie", lore: "Una página clara, una propuesta honesta y un botón bien visible." },
+      { id: "stripe", name: "Stripe", emoji: "💸", cat: "indie", lore: "La notificación móvil más bonita que puede recibir un creador indie." },
+      { id: "mrr", name: "MRR", emoji: "📈", cat: "indie", lore: "Ingresos recurrentes mensuales: aunque empiecen pagando el café, saben a gloria." },
+      { id: "indie_hacker", name: "Indie Hacker", emoji: "🦄", cat: "indie", lore: "Persona orquesta que programa, diseña, da soporte y escribe el copy." },
+      { id: "validacion", name: "Validación", emoji: "🎯", cat: "indie", lore: "Hablar con humanos reales ANTES de pasarte seis meses programando en la cueva." },
+      { id: "usuarios", name: "Usuarios", emoji: "👥", cat: "indie", lore: "Seres fascinantes que usan tu app de formas jamás contempladas." },
+      { id: "analitica", name: "Analítica", emoji: "📊", cat: "indie", lore: "Datos sin espionaje para saber si te leen de verdad o es todo tráfico de bots." },
+      { id: "monetizacion", name: "Monetización", emoji: "💰", cat: "indie", lore: "Cuando tu proyecto aporta tanto valor que alguien saca la tarjeta feliz." },
+      { id: "abandonware", name: "Abandonware", emoji: "🪦", cat: "indie", lore: "Repositorio glorioso cuyo último commit fue hace 3 años: «Initial setup»." },
+      { id: "waitlist", name: "Lista de Espera", emoji: "📬", cat: "indie", lore: "Formulario sencillo para medir el interés antes de picar una sola tabla SQL." },
+      { id: "portfolio", name: "Portfolio", emoji: "🖼️", cat: "indie", lore: "Tu escaparate profesional con proyectos reales mejor que mil currículums PDF." },
+      { id: "blog", name: "Blog", emoji: "✍️", cat: "indie", lore: "Escribir para ordenar tu cabeza y ayudar al que viene dos pasos detrás." },
+      { id: "rss", name: "RSS", emoji: "📡", cat: "indie", lore: "Tecnología libre, silenciosa e insuperable para leer sin ruido algorítmico." },
+
+      // Automatización & Herramientas (14)
+      { id: "automatizacion", name: "Automatización", emoji: "⚙️", cat: "auto", milestone: true, lore: "Si lo haces más de dos veces a mano, un malandriner ya está pensando en automatizarlo." },
+      { id: "webhook", name: "Webhook", emoji: "🔗", cat: "auto", lore: "«No me llames cada minuto preguntando; cuando pase algo yo te aviso»." },
+      { id: "make", name: "Make", emoji: "🟣", cat: "auto", lore: "Burbujas moradas uniendo media docena de servicios en diez minutos sin despeinarte." },
+      { id: "n8n", name: "n8n", emoji: "🔄", cat: "auto", lore: "Flujos de automatización potentes que puedes alojar en tu propio servidor." },
+      { id: "zapier", name: "Zapier", emoji: "⚡", cat: "auto", lore: "El puente rápido del no-code que conecta hasta la cafetera con una hoja de cálculo." },
+      { id: "notion", name: "Notion", emoji: "📓", cat: "auto", lore: "Segundo cerebro donde cabe tu wiki, tu CRM y 14 plantillas a medio estrenar." },
+      { id: "obsidian", name: "Obsidian", emoji: "💎", cat: "auto", lore: "Notas locales en Markdown conectadas como una galaxia neuronal." },
+      { id: "markdown", name: "Markdown", emoji: "📝", cat: "auto", lore: "Texto plano limpio y duradero que podrás seguir abriendo dentro de 50 años." },
+      { id: "bot_telegram", name: "Bot de Telegram", emoji: "🤖", cat: "auto", lore: "Tu asistente casero que te manda alertas, despliegues y resúmenes al bolsillo." },
+      { id: "cronjob", name: "Cronjob", emoji: "⏱️", cat: "auto", lore: "Cinco asteriscos mágicos ejecutando tareas fielmente a las 04:00 AM." },
+      { id: "raspberry", name: "Raspberry Pi", emoji: "🍓", cat: "auto", lore: "Pequeña placa silenciosa en una estantería haciendo de servidor doméstico épico." },
+      { id: "productividad", name: "Productividad Serena", emoji: "📋", cat: "auto", lore: "Hacer lo importante con foco y cerrar el día a tu hora sin culpa." },
+      { id: "pragmatismo", name: "Pragmatismo", emoji: "🧘", cat: "auto", milestone: true, lore: "Elegir la herramienta aburrida que resuelve el problema hoy. Filosofía 100% Web Reactiva." },
+      { id: "energia", name: "Energía", emoji: "⚡", cat: "auto", lore: "Chispa vital para arrancar ideas, grabar episodios o depurar a primera hora." },
+
+      // IA & Horizonte Malandriner (16)
+      { id: "ia", name: "Inteligencia Artificial", emoji: "🤖", cat: "ia", milestone: true, lore: "Multiplicador brutal cuando tienes criterio; fábrica de caos si copias sin leer." },
+      { id: "prompt", name: "Prompt", emoji: "💬", cat: "ia", lore: "Explicarle con contexto y cariño a una máquina lo que antes no explicabas ni en Jira." },
+      { id: "llm", name: "LLM", emoji: "🧠", cat: "ia", lore: "Modelo gigante entrenado con medio internet que predice el siguiente token a toda pastilla." },
+      { id: "vibe_coding", name: "Vibe Coding", emoji: "🕶️", cat: "ia", milestone: true, lore: "Fluir creando prototipos a golpe de prompt... vigilando que no borre la base de datos." },
+      { id: "agente_ia", name: "Agente IA", emoji: "🕵️‍♂️", cat: "ia", lore: "Un LLM con herramientas, bucle de decisión y permiso supervisado para actuar." },
+      { id: "copilot", name: "Copilot", emoji: "✨", cat: "ia", lore: "Autocompletado vitaminado a golpe de Tab que a veces te lee el pensamiento." },
+      { id: "alucinacion", name: "Alucinación IA", emoji: "🌀", cat: "ia", lore: "Cuando el modelo se inventa una librería inexistente con una seguridad pasmosa." },
+      { id: "rag", name: "RAG", emoji: "📚", cat: "ia", lore: "Darle tus propios apuntes y documentos al modelo para que hable con fundamento." },
+      { id: "clon_voz", name: "Clon de Voz", emoji: "🔊", cat: "ia", lore: "Síntesis vocal tan realista que dudas si habla el humano o el modelo." },
+      { id: "experimento", name: "Experimento", emoji: "🧪", cat: "ia", lore: "Probar en pequeño, medir qué ocurre y aprender pase lo que pase." },
+      { id: "motivacion", name: "Motivación", emoji: "🔥", cat: "ia", lore: "Ganas tremendas de crear algo propio después de escuchar un buen episodio." },
+      { id: "senior_pragmatico", name: "Senior Pragmático", emoji: "🦸", cat: "ia", milestone: true, lore: "Responde «depende», borra más código del que escribe y protege al equipo del caos." },
+      { id: "libertad_digital", name: "Libertad Digital", emoji: "🏝️", cat: "ia", lore: "Vivir bien de la tecnología con autonomía, buenos clientes o productos propios." },
+      { id: "episodio_500", name: "Episodio 500", emoji: "🎙️", cat: "ia", milestone: true, lore: "Constancia legendaria martes tras martes acompañando a miles de desarrolladores." },
+      { id: "leyenda_malandriner", name: "Leyenda Malandriner", emoji: "👑", cat: "ia", milestone: true, lore: "Cima alquímica: comparte generosamente, construye sin humo y disfruta del camino." },
+      { id: "singularidad_wr", name: "Singularidad Malandriner", emoji: "🔮", cat: "ia", milestone: true, lore: "El instante cósmico en que comunidad, código, IA y café convergen en pura armonía." }
+    ];
+
+    const ACHIEVEMENTS = [
+      { id: "ach_wr", icon: "⚡", title: "¡Hola, Malandriner!", desc: "Descubre Web Reactiva.", req: ["web_reactiva"] },
+      { id: "ach_dani", icon: "🧔‍♂️", title: "El Anfitrión", desc: "Descubre a Daniel Primo y al Malandriner.", req: ["daniel_primo", "malandriner"] },
+      { id: "ach_premium", icon: "💎", title: "Cero Soledad Dev", desc: "Desbloquea Comunidad, Zona Premium y Mastermind.", req: ["comunidad", "zona_premium", "mastermind"] },
+      { id: "ach_dominios", icon: "💀", title: "Renovación Anual", desc: "Construye el mítico Cementerio de Dominios.", req: ["cementerio_dominios"] },
+      { id: "ach_viernes", icon: "🔥", title: "Valiente o Temerario", desc: "Provoca un Deploy en Viernes y una Caída de Producción.", req: ["deploy_viernes", "caida_prod"] },
+      { id: "ach_humo", icon: "🧘", title: "Detector Antihumo", desc: "Descubre al Vendehumos y contrarréstalo con Pragmatismo.", req: ["vendehumos", "pragmatismo"] },
+      { id: "ach_auto", icon: "⚙️", title: "Domador de Burbujas", desc: "Descubre Automatización, Make y n8n.", req: ["automatizacion", "make", "n8n"] },
+      { id: "ach_indie", icon: "🚀", title: "De Idea a MRR", desc: "Lleva un Side Project hasta MVP, SaaS y MRR.", req: ["side_project", "mvp", "saas", "mrr"] },
+      { id: "ach_jardin", icon: "🌱", title: "Cultivador Digital", desc: "Crea tu Jardín Digital, Obsidian y RSS.", req: ["jardin_digital", "obsidian", "rss"] },
+      { id: "ach_vibe", icon: "🕶️", title: "Vibe Coder con Criterio", desc: "Descubre Inteligencia Artificial, Vibe Coding y Agente IA.", req: ["ia", "vibe_coding", "agente_ia"] },
+      { id: "ach_impostor", icon: "🎭", title: "Fuera Caretas", desc: "Supera el Síndrome del Impostor hasta Senior Pragmático.", req: ["impostor", "senior_pragmatico"] },
+      { id: "ach_50", icon: "🌟", title: "Medio Centenar", desc: "Descubre al menos 50 elementos oficiales.", countReq: 50 },
+      { id: "ach_all", icon: "👑", title: "Alquimista Total WR", desc: "Descubre los 112 elementos oficiales de Web Reactiva.", countReq: 112 }
+    ];
+
+    const DANI_QUOTES = [
+      "¡Hola, malandriner! ¿Qué vamos a cacharrear hoy?",
+      "Mejor un proyecto sencillo publicado hoy que una catedral a medias.",
+      "Antes de comprar otro dominio a las 2 AM... ¿ya validaste la idea?",
+      "Recuerda: en viernes ni se despliega ni se toca una regex antigua.",
+      "Programar en soledad pesa el doble; en comunidad se disfruta el triple.",
+      "Si una tarea repetitiva te aburre dos veces, pide a gritos un webhook.",
+      "Menos humo de lamborghinis y más código pragmático que resuelva problemas.",
+      "Tu jardín digital es tuyo; las redes sociales son suelo alquilado."
+    ];
+
+    // === SECTION 1B: RECIPES ===
+    // Format: [elemA, elemB, resultElem] (commutative: order of A and B doesn't matter)
+    const RAW_RECIPES = [
+      // --- 10/10 Starter Combinations (Every initial pair works!) ---
+      ["codigo", "codigo", "web"],
+      ["microfono", "microfono", "podcast"],
+      ["cafe", "cafe", "energia"],
+      ["curiosidad", "curiosidad", "idea"],
+      ["codigo", "cafe", "programador"],
+      ["codigo", "curiosidad", "cacharreo"],
+      ["codigo", "microfono", "charla_tech"],
+      ["microfono", "cafe", "entrevista"],
+      ["microfono", "curiosidad", "oyente"],
+      ["cafe", "curiosidad", "motivacion"],
+
+      // --- Core Web Reactiva Universe ---
+      ["web", "podcast", "web_reactiva"],
+      ["programador", "podcast", "web_reactiva"],
+      ["cacharreo", "podcast", "web_reactiva"],
+      ["charla_tech", "podcast", "web_reactiva"],
+      ["programador", "curiosidad", "malandriner"],
+      ["oyente", "web_reactiva", "malandriner"],
+      ["cacharreo", "programador", "malandriner"],
+      ["oyente", "cacharreo", "malandriner"],
+      ["web_reactiva", "microfono", "daniel_primo"],
+      ["web_reactiva", "programador", "daniel_primo"],
+      ["malandriner", "microfono", "daniel_primo"],
+      ["podcast", "automatizacion", "daniel_primo"],
+      ["malandriner", "malandriner", "comunidad"],
+      ["programador", "programador", "comunidad"],
+      ["oyente", "oyente", "comunidad"],
+      ["charla_tech", "comunidad", "cafe_virtual"],
+      ["comunidad", "cafe", "cafe_virtual"],
+      ["malandriner", "cafe", "cafe_virtual"],
+      ["entrevista", "cafe", "cafe_virtual"],
+      ["web_reactiva", "comunidad", "zona_premium"],
+      ["malandriner", "comunidad", "zona_premium"],
+      ["daniel_primo", "comunidad", "zona_premium"],
+      ["comunidad", "web", "telegram"],
+      ["zona_premium", "charla_tech", "telegram"],
+      ["malandriner", "charla_tech", "telegram"],
+      ["zona_premium", "side_project", "mastermind"],
+      ["comunidad", "side_project", "mastermind"],
+      ["malandriner", "motivacion", "mastermind"],
+      ["comunidad", "motivacion", "reto"],
+      ["zona_premium", "motivacion", "reto"],
+      ["malandriner", "idea", "side_project"],
+      ["podcast", "web", "web_reactiva"],
+      ["web_reactiva", "idea", "newsletter"],
+      ["daniel_primo", "blog", "newsletter"],
+      ["podcast", "blog", "newsletter"],
+      ["charla_tech", "idea", "newsletter"],
+      ["markdown", "comunidad", "newsletter"],
+      ["podcast", "curiosidad", "audiocurso"],
+      ["zona_premium", "podcast", "audiocurso"],
+      ["daniel_primo", "podcast", "audiocurso"],
+      ["microfono", "web", "directo"],
+      ["charla_tech", "web", "directo"],
+      ["daniel_primo", "cacharreo", "directo"],
+      ["podcast", "energia", "directo"],
+      ["blog", "curiosidad", "jardin_digital"],
+      ["obsidian", "web", "jardin_digital"],
+      ["markdown", "web", "jardin_digital"],
+      ["blog", "jardin_digital", "aprender_publico"],
+      ["cacharreo", "comunidad", "aprender_publico"],
+      ["malandriner", "blog", "aprender_publico"],
+      ["directo", "curiosidad", "aprender_publico"],
+      ["side_project", "blog", "aprender_publico"],
+      ["reto", "codigo", "mvp"],
+      ["reto", "malandriner", "aprender_publico"],
+
+      // --- Web & Programming Fundamentals ---
+      ["web", "codigo", "html"],
+      ["html", "curiosidad", "css"],
+      ["html", "idea", "css"],
+      ["web", "idea", "css"],
+      ["html", "codigo", "javascript"],
+      ["html", "energia", "javascript"],
+      ["css", "codigo", "javascript"],
+      ["web", "energia", "javascript"],
+      ["javascript", "testing", "typescript"],
+      ["javascript", "pragmatismo", "typescript"],
+      ["javascript", "codigo", "typescript"],
+      ["web", "servidor", "php"],
+      ["html", "servidor", "php"],
+      ["codigo", "legacy", "php"],
+      ["php", "web", "wordpress"],
+      ["php", "blog", "wordpress"],
+      ["blog", "web", "wordpress"],
+      ["javascript", "javascript", "react"],
+      ["javascript", "css", "react"],
+      ["html", "javascript", "astro"],
+      ["markdown", "javascript", "astro"],
+      ["react", "pragmatismo", "astro"],
+      ["jardin_digital", "codigo", "astro"],
+      ["codigo", "web_reactiva", "pragmatismo"],
+
+      // --- Backend, Infra, DevOps & Tools ---
+      ["web", "web", "cloud"],
+      ["codigo", "energia", "servidor"],
+      ["web", "programador", "servidor"],
+      ["cloud", "codigo", "servidor"],
+      ["servidor", "codigo", "api"],
+      ["web", "cacharreo", "api"],
+      ["javascript", "servidor", "api"],
+      ["api", "codigo", "json"],
+      ["api", "javascript", "json"],
+      ["api", "api", "webhook"],
+      ["codigo", "idea", "side_project"],
+      ["programador", "idea", "side_project"],
+      ["cacharreo", "idea", "experimento"],
+      ["curiosidad", "energia", "experimento"],
+      ["cacharreo", "cacharreo", "experimento"],
+      ["codigo", "experimento", "git"],
+      ["programador", "refactor", "git"],
+      ["codigo", "noche_vela", "git"],
+      ["git", "web", "github"],
+      ["git", "comunidad", "github"],
+      ["git", "side_project", "github"],
+      ["servidor", "curiosidad", "linux"],
+      ["programador", "servidor", "linux"],
+      ["linux", "codigo", "terminal"],
+      ["programador", "linux", "terminal"],
+      ["cacharreo", "linux", "terminal"],
+      ["servidor", "mi_maquina", "docker"],
+      ["linux", "experimento", "docker"],
+      ["servidor", "servidor", "docker"],
+      ["produccion", "mi_maquina", "docker"],
+      ["servidor", "base_datos", "produccion"],
+      ["cloud", "servidor", "produccion"],
+      ["mvp", "servidor", "produccion"],
+      ["api", "servidor", "base_datos"],
+      ["json", "json", "base_datos"],
+      ["php", "servidor", "base_datos"],
+      ["docker", "curiosidad", "self_hosting"],
+      ["servidor", "cacharreo", "self_hosting"],
+      ["linux", "docker", "self_hosting"],
+      ["raspberry", "docker", "self_hosting"],
+      ["linux", "cafe", "raspberry"],
+      ["energia", "linux", "raspberry"],
+      ["self_hosting", "cacharreo", "raspberry"],
+      ["codigo", "bug", "testing"],
+      ["produccion", "bug", "caida_prod"],
+      ["produccion", "pragmatismo", "testing"],
+      ["codigo", "testing", "refactor"],
+      ["espagueti", "pragmatismo", "refactor"],
+      ["legacy", "testing", "refactor"],
+      ["deuda_tecnica", "testing", "refactor"],
+      ["terminal", "codigo", "regex"],
+      ["markdown", "codigo", "regex"],
+      ["bug", "markdown", "regex"],
+      ["regex", "codigo", "bug"],
+
+      // --- Bugs, Caos & Folklore Dev ---
+      ["energia", "cafe", "noche_vela"],
+      ["programador", "cafe", "energia"],
+      ["cafe", "noche_vela", "burnout"],
+      ["noche_vela", "noche_vela", "burnout"],
+      ["programador", "noche_vela", "bug"],
+      ["javascript", "noche_vela", "bug"],
+      ["cacharreo", "produccion", "bug"],
+      ["bug", "bug", "espagueti"],
+      ["codigo", "procrastinacion", "espagueti"],
+      ["php", "noche_vela", "espagueti"],
+      ["javascript", "espagueti", "legacy"],
+      ["espagueti", "produccion", "legacy"],
+      ["produccion", "produccion", "legacy"],
+      ["espagueti", "mvp", "deuda_tecnica"],
+      ["legacy", "espagueti", "deuda_tecnica"],
+      ["side_project", "noche_vela", "deuda_tecnica"],
+      ["programador", "energia", "viernes"],
+      ["cafe_virtual", "comunidad", "viernes"],
+      ["produccion", "cafe", "viernes"],
+      ["viernes", "produccion", "deploy_viernes"],
+      ["viernes", "codigo", "deploy_viernes"],
+      ["viernes", "git", "deploy_viernes"],
+      ["deploy_viernes", "produccion", "caida_prod"],
+      ["deploy_viernes", "bug", "caida_prod"],
+      ["deploy_viernes", "cafe", "noche_vela"],
+      ["programador", "comunidad", "impostor"],
+      ["programador", "charla_tech", "impostor"],
+      ["oyente", "programador", "impostor"],
+      ["aprender_publico", "bug", "impostor"],
+      ["burnout", "deuda_tecnica", "impostor"],
+      ["deuda_tecnica", "noche_vela", "burnout"],
+      ["podcast", "monetizacion", "vendehumos"],
+      ["ia", "monetizacion", "vendehumos"],
+      ["landing", "motivacion", "vendehumos"],
+      ["motivacion", "motivacion", "vendehumos"],
+      ["curiosidad", "react", "objeto_brillante"],
+      ["side_project", "curiosidad", "objeto_brillante"],
+      ["javascript", "curiosidad", "objeto_brillante"],
+      ["idea", "idea", "objeto_brillante"],
+      ["objeto_brillante", "side_project", "abandonware"],
+      ["procrastinacion", "side_project", "abandonware"],
+      ["dominio", "dominio", "cementerio_dominios"],
+      ["dominio", "abandonware", "cementerio_dominios"],
+      ["dominio", "noche_vela", "cementerio_dominios"],
+      ["dominio", "procrastinacion", "cementerio_dominios"],
+      ["side_project", "abandonware", "cementerio_dominios"],
+      ["docker", "blog", "sobreingenieria"],
+      ["cloud", "side_project", "sobreingenieria"],
+      ["react", "html", "sobreingenieria"],
+      ["cloud", "mvp", "sobreingenieria"],
+      ["servidor", "idea", "sobreingenieria"],
+      ["bug", "programador", "mi_maquina"],
+      ["produccion", "programador", "mi_maquina"],
+      ["caida_prod", "programador", "mi_maquina"],
+      ["motivacion", "noche_vela", "procrastinacion"],
+      ["idea", "cafe", "procrastinacion"],
+      ["objeto_brillante", "cafe", "procrastinacion"],
+
+      // --- Side Projects, Indie Hacking & Content ---
+      ["side_project", "web", "dominio"],
+      ["noche_vela", "idea", "dominio"],
+      ["dominio", "web", "landing"],
+      ["dominio", "html", "landing"],
+      ["side_project", "html", "landing"],
+      ["idea", "css", "landing"],
+      ["mvp", "html", "landing"],
+      ["landing", "idea", "waitlist"],
+      ["landing", "newsletter", "waitlist"],
+      ["validacion", "landing", "waitlist"],
+      ["side_project", "codigo", "mvp"],
+      ["idea", "pragmatismo", "mvp"],
+      ["side_project", "pragmatismo", "mvp"],
+      ["mvp", "usuarios", "validacion"],
+      ["idea", "comunidad", "validacion"],
+      ["waitlist", "usuarios", "validacion"],
+      ["landing", "comunidad", "usuarios"],
+      ["web", "oyente", "usuarios"],
+      ["mvp", "web", "usuarios"],
+      ["usuarios", "codigo", "analitica"],
+      ["landing", "usuarios", "analitica"],
+      ["web", "curiosidad", "analitica"],
+      ["mvp", "monetizacion", "saas"],
+      ["mvp", "usuarios", "validacion"],
+      ["side_project", "produccion", "saas"],
+      ["api", "stripe", "saas"],
+      ["saas", "api", "stripe"],
+      ["landing", "monetizacion", "stripe"],
+      ["web", "monetizacion", "stripe"],
+      ["usuarios", "saas", "monetizacion"],
+      ["side_project", "usuarios", "monetizacion"],
+      ["validacion", "mvp", "monetizacion"],
+      ["stripe", "saas", "mrr"],
+      ["monetizacion", "monetizacion", "mrr"],
+      ["stripe", "usuarios", "mrr"],
+      ["mrr", "usuarios", "libertad_digital"],
+      ["programador", "side_project", "indie_hacker"],
+      ["malandriner", "saas", "indie_hacker"],
+      ["malandriner", "side_project", "indie_hacker"],
+      ["mrr", "programador", "indie_hacker"],
+      ["html", "charla_tech", "blog"],
+      ["css", "charla_tech", "blog"],
+      ["programador", "markdown", "blog"],
+      ["oyente", "html", "blog"],
+      ["idea", "markdown", "blog"],
+      ["blog", "json", "rss"],
+      ["blog", "api", "rss"],
+      ["jardin_digital", "podcast", "rss"],
+      ["jardin_digital", "api", "rss"],
+      ["newsletter", "api", "rss"],
+      ["css", "programador", "portfolio"],
+      ["side_project", "landing", "portfolio"],
+      ["github", "landing", "portfolio"],
+      ["aprender_publico", "web", "portfolio"],
+
+      // --- Automatización, No-Code & Productividad ---
+      ["cacharreo", "energia", "automatizacion"],
+      ["api", "cacharreo", "automatizacion"],
+      ["webhook", "api", "automatizacion"],
+      ["malandriner", "api", "automatizacion"],
+      ["daniel_primo", "codigo", "automatizacion"],
+      ["automatizacion", "web", "webhook"],
+      ["automatizacion", "css", "make"],
+      ["automatizacion", "cacharreo", "make"],
+      ["webhook", "webhook", "make"],
+      ["daniel_primo", "webhook", "make"],
+      ["make", "self_hosting", "n8n"],
+      ["automatizacion", "docker", "n8n"],
+      ["webhook", "linux", "n8n"],
+      ["make", "docker", "n8n"],
+      ["automatizacion", "cloud", "zapier"],
+      ["webhook", "cloud", "zapier"],
+      ["make", "saas", "zapier"],
+      ["idea", "automatizacion", "notion"],
+      ["blog", "base_datos", "notion"],
+      ["productividad", "web", "notion"],
+      ["procrastinacion", "idea", "notion"],
+      ["html", "blog", "markdown"],
+      ["codigo", "blog", "markdown"],
+      ["terminal", "blog", "markdown"],
+      ["markdown", "curiosidad", "obsidian"],
+      ["markdown", "markdown", "obsidian"],
+      ["notion", "markdown", "obsidian"],
+      ["curiosidad", "jardin_digital", "obsidian"],
+      ["telegram", "automatizacion", "bot_telegram"],
+      ["telegram", "api", "bot_telegram"],
+      ["telegram", "codigo", "bot_telegram"],
+      ["n8n", "telegram", "bot_telegram"],
+      ["linux", "automatizacion", "cronjob"],
+      ["terminal", "automatizacion", "cronjob"],
+      ["servidor", "automatizacion", "cronjob"],
+      ["pragmatismo", "energia", "productividad"],
+      ["obsidian", "motivacion", "productividad"],
+      ["notion", "pragmatismo", "productividad"],
+      ["malandriner", "energia", "productividad"],
+      ["vendehumos", "curiosidad", "pragmatismo"],
+      ["daniel_primo", "idea", "pragmatismo"],
+      ["malandriner", "legacy", "pragmatismo"],
+      ["sobreingenieria", "refactor", "pragmatismo"],
+      ["impostor", "comunidad", "pragmatismo"],
+      ["web_reactiva", "cacharreo", "pragmatismo"],
+
+      // --- Inteligencia Artificial & Cima Malandriner ---
+      ["automatizacion", "curiosidad", "ia"],
+      ["servidor", "cloud", "ia"],
+      ["cacharreo", "cloud", "ia"],
+      ["experimento", "curiosidad", "ia"],
+      ["web_reactiva", "experimento", "ia"],
+      ["api", "curiosidad", "ia"],
+      ["ia", "idea", "prompt"],
+      ["ia", "charla_tech", "prompt"],
+      ["ia", "curiosidad", "prompt"],
+      ["ia", "programador", "copilot"],
+      ["ia", "codigo", "copilot"],
+      ["ia", "base_datos", "llm"],
+      ["ia", "ia", "llm"],
+      ["prompt", "servidor", "llm"],
+      ["ia", "cafe", "vibe_coding"],
+      ["prompt", "side_project", "vibe_coding"],
+      ["copilot", "motivacion", "vibe_coding"],
+      ["llm", "codigo", "vibe_coding"],
+      ["vibe_coding", "produccion", "caida_prod"],
+      ["vibe_coding", "noche_vela", "espagueti"],
+      ["ia", "automatizacion", "agente_ia"],
+      ["llm", "webhook", "agente_ia"],
+      ["llm", "n8n", "agente_ia"],
+      ["llm", "make", "agente_ia"],
+      ["prompt", "automatizacion", "agente_ia"],
+      ["llm", "bug", "alucinacion"],
+      ["ia", "bug", "alucinacion"],
+      ["ia", "vendehumos", "alucinacion"],
+      ["vibe_coding", "bug", "alucinacion"],
+      ["llm", "obsidian", "rag"],
+      ["llm", "base_datos", "rag"],
+      ["ia", "jardin_digital", "rag"],
+      ["ia", "markdown", "rag"],
+      ["ia", "microfono", "clon_voz"],
+      ["ia", "podcast", "clon_voz"],
+      ["daniel_primo", "ia", "clon_voz"],
+
+      // --- High-Tier Milestones & Endgame ---
+      ["programador", "pragmatismo", "senior_pragmatico"],
+      ["refactor", "pragmatismo", "senior_pragmatico"],
+      ["legacy", "pragmatismo", "senior_pragmatico"],
+      ["impostor", "mastermind", "senior_pragmatico"],
+      ["malandriner", "pragmatismo", "senior_pragmatico"],
+      ["indie_hacker", "mrr", "libertad_digital"],
+      ["senior_pragmatico", "productividad", "libertad_digital"],
+      ["saas", "mrr", "libertad_digital"],
+      ["jardin_digital", "mrr", "libertad_digital"],
+      ["web_reactiva", "podcast", "episodio_500"],
+      ["daniel_primo", "daniel_primo", "episodio_500"],
+      ["podcast", "podcast", "episodio_500"],
+      ["web_reactiva", "energia", "episodio_500"],
+      ["audiocurso", "podcast", "episodio_500"],
+      ["malandriner", "senior_pragmatico", "leyenda_malandriner"],
+      ["zona_premium", "episodio_500", "leyenda_malandriner"],
+      ["daniel_primo", "zona_premium", "leyenda_malandriner"],
+      ["libertad_digital", "comunidad", "leyenda_malandriner"],
+      ["leyenda_malandriner", "agente_ia", "singularidad_wr"],
+      ["leyenda_malandriner", "web_reactiva", "singularidad_wr"],
+      ["episodio_500", "ia", "singularidad_wr"],
+      ["daniel_primo", "agente_ia", "singularidad_wr"],
+
+      // --- Extra Fun Cross-Links & Intuitive Aliases ---
+      ["cafe", "podcast", "oyente"],
+      ["cafe", "web_reactiva", "cafe_virtual"],
+      ["cafe", "daniel_primo", "cafe_virtual"],
+      ["microfono", "programador", "charla_tech"],
+      ["microfono", "idea", "podcast"],
+      ["programador", "motivacion", "side_project"],
+      ["motivacion", "idea", "side_project"],
+      ["motivacion", "codigo", "side_project"],
+      ["charla_tech", "charla_tech", "podcast"],
+      ["entrevista", "podcast", "web_reactiva"],
+      ["oyente", "microfono", "podcast"],
+      ["wordpress", "bug", "legacy"],
+      ["wordpress", "php", "legacy"],
+      ["php", "pragmatismo", "wordpress"],
+      ["css", "bug", "noche_vela"],
+      ["regex", "noche_vela", "caida_prod"],
+      ["docker", "docker", "sobreingenieria"],
+      ["typescript", "sobreingenieria", "deuda_tecnica"],
+      ["github", "ia", "copilot"],
+      ["bot_telegram", "ia", "agente_ia"],
+      ["obsidian", "ia", "rag"],
+      ["notion", "ia", "agente_ia"],
+      ["make", "ia", "agente_ia"],
+      ["newsletter", "monetizacion", "zona_premium"],
+      ["newsletter", "daniel_primo", "web_reactiva"],
+      ["jardin_digital", "rss", "blog"],
+      ["cronjob", "bot_telegram", "automatizacion"],
+      ["raspberry", "linux", "self_hosting"],
+      ["burnout", "comunidad", "cafe_virtual"],
+      ["burnout", "pragmatismo", "productividad"],
+      ["impostor", "zona_premium", "motivacion"],
+      ["impostor", "aprender_publico", "motivacion"],
+      ["vendehumos", "web_reactiva", "pragmatismo"],
+      ["vendehumos", "daniel_primo", "pragmatismo"],
+      ["cementerio_dominios", "pragmatismo", "mvp"],
+      ["abandonware", "motivacion", "refactor"]
+    ];
+    // === SECTION 2: ENGINE ===
+    const STORAGE_KEY = "web_reactiva_craft_v1";
+
+    // Build fast lookup maps
+    const ELEMENT_MAP = new Map();
+    for (const el of OFFICIAL_ELEMENTS) {
+      ELEMENT_MAP.set(el.id, { ...el, official: true });
+    }
+
+    const RECIPE_MAP = new Map();
+    function pairKey(a, b) {
+      return a < b ? `${a}+${b}` : `${b}+${a}`;
+    }
+    for (const [a, b, res] of RAW_RECIPES) {
+      const k = pairKey(a, b);
+      if (!RECIPE_MAP.has(k)) {
+        RECIPE_MAP.set(k, res);
+      }
+    }
+
+    // --- Web Audio Procedural Sound Synth (Zero external assets) ---
+    class SoundFX {
+      constructor() {
+        this.enabled = true;
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AC();
+        }
+        if (this.ctx && this.ctx.state === "suspended") {
+          this.ctx.resume();
+        }
+      }
+      tone(freq, type = "sine", dur = 0.12, gainVal = 0.08, delay = 0, slideTo = null) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const t0 = this.ctx.currentTime + delay;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, t0);
+        if (slideTo) {
+          osc.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
+        }
+        gain.gain.setValueAtTime(0.0001, t0);
+        gain.gain.linearRampToValueAtTime(gainVal, t0 + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t0);
+        osc.stop(t0 + dur + 0.02);
+      }
+      pickup() {
+        this.tone(360, "sine", 0.07, 0.06, 0, 520);
+      }
+      drop() {
+        this.tone(300, "triangle", 0.07, 0.05, 0, 220);
+      }
+      delete() {
+        this.tone(240, "sine", 0.09, 0.05, 0, 120);
+      }
+      fail() {
+        this.tone(210, "sawtooth", 0.09, 0.035, 0, 175);
+        this.tone(170, "sawtooth", 0.11, 0.035, 0.08, 140);
+      }
+      combine() {
+        this.tone(440, "triangle", 0.12, 0.07, 0);
+        this.tone(554.37, "triangle", 0.15, 0.07, 0.05);
+      }
+      discover(isMilestone = false) {
+        const notes = isMilestone ? [523.25, 659.25, 783.99, 1046.5] : [493.88, 659.25, 880];
+        notes.forEach((n, idx) => {
+          this.tone(n, "triangle", 0.24, 0.085, idx * 0.065);
+        });
+      }
+    }
+    const sfx = new SoundFX();
+
+    // --- Deterministic Procedural Malandriner Fusion Engine (Modo Infinito) ---
+    function hashStr(str) {
+      let h = 2166136261 >>> 0;
+      for (let i = 0; i < str.length; i++) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return h >>> 0;
+    }
+
+    const PROC_TEMPLATES = [
+      { fmt: (a, b) => `${a} Malandriner de ${b}`, emojis: ["⚡", "🕵️", "🔧", "🚀"] },
+      { fmt: (a, b) => `Micro-${a} con ${b}`, emojis: ["🧪", "🛠️", "📦", "✨"] },
+      { fmt: (a, b) => `${a} Automatizado`, sub: (a, b) => `${a} + ${b}`, emojis: ["⚙️", "🟣", "🔄", "🤖"] },
+      { fmt: (a, b) => `SaaS de ${a} y ${b}`, emojis: ["💼", "💸", "📈", "🦄"] },
+      { fmt: (a, b) => `Podcast sobre ${a}`, emojis: ["🎙️", "🎧", "📻", "🗣️"] },
+      { fmt: (a, b) => `${a} en Producción`, emojis: ["🔥", "🔒", "🚨", "🐳"] },
+      { fmt: (a, b) => `Plugin de ${a} para ${b}`, emojis: ["🔌", "🧩", "📝", "💻"] },
+      { fmt: (a, b) => `Agente de ${a}`, emojis: ["🕵️‍♂️", "🧠", "🤖", "🔮"] },
+      { fmt: (a, b) => `Boletín de ${a} & ${b}`, emojis: ["📩", "✍️", "📡", "🌱"] },
+      { fmt: (a, b) => `Arquitectura ${a}-${b}`, emojis: ["🏗️", "☁️", "🖥️", "🧘"] },
+      { fmt: (a, b) => `Reto de ${a} con ${b}`, emojis: ["🏆", "🔥", "🧭", "☕"] },
+      { fmt: (a, b) => `Script de ${b} (${a})`, emojis: ["⌨️", "🐧", "⏱️", "🌿"] }
+    ];
+
+    const PROC_LORES = [
+      "Invento nacido a las 23:45 cacharreando en local con una taza a medio terminar.",
+      "Prototipo malandriner que empezó como broma en Telegram y ya tiene tres usuarios fieles.",
+      "Fusión experimental digna de protagonizar una sección entera del boletín del martes.",
+      "Nadie sabía que necesitaba combinar esto hasta que funcionó a la primera sin bugs.",
+      "Solución pragmática, casera y libre de humo lista para enseñarse en el próximo Café Virtual.",
+      "Experimento alquímico que Daniel Primo aprobaría con una ceja levantada y una sonrisa."
+    ];
+
+    function cleanCoreWord(el) {
+      // Extract clean short root noun so procedural names never nest infinitely
+      if (el.rootWord) return el.rootWord;
+      const stripped = el.name
+        .replace(/^(Micro-|SaaS de |Podcast sobre |Plugin de |Agente de |Boletín de |Arquitectura |Reto de |Script de )/i, "")
+        .split(/\s+(de|con|para|en|sobre|&)\s+/i)[0]
+        .trim();
+      return stripped.length > 22 ? stripped.slice(0, 22).trim() : stripped;
+    }
+
+    function createProceduralElement(elA, elB) {
+      const key = pairKey(elA.id, elB.id);
+      const h = hashStr(key);
+      const id = "proc_" + h.toString(36);
+      if (ELEMENT_MAP.has(id)) {
+        return ELEMENT_MAP.get(id);
+      }
+
+      const wA = cleanCoreWord(elA);
+      const wB = cleanCoreWord(elB);
+      let name = "";
+      if (wA.toLowerCase() === wB.toLowerCase()) {
+        const prefixes = ["Súper", "Meta", "Hiper", "Ultra", "Turbo", "Mega"];
+        name = `${prefixes[h % prefixes.length]} ${wA}`;
+      } else {
+        const tpl = PROC_TEMPLATES[h % PROC_TEMPLATES.length];
+        name = (h & 1) === 0 ? tpl.fmt(wA, wB) : tpl.fmt(wB, wA);
+      }
+
+      const tplRef = PROC_TEMPLATES[(h >>> 3) % PROC_TEMPLATES.length];
+      const emojiPool = [elA.emoji, elB.emoji, ...tplRef.emojis];
+      const emoji = emojiPool[(h >>> 5) % emojiPool.length];
+      const lore = PROC_LORES[(h >>> 7) % PROC_LORES.length];
+
+      const customEl = {
+        id,
+        name,
+        emoji,
+        cat: "ia",
+        official: false,
+        procedural: true,
+        firstDiscovery: true,
+        rootWord: (h & 2) ? wA : wB,
+        lore
+      };
+      ELEMENT_MAP.set(id, customEl);
+      return customEl;
+    }
+
+    // --- Game State ---
+    const state = {
+      discovered: ["codigo", "microfono", "cafe", "curiosidad"], // ordered by discovery time
+      customElements: {}, // id -> custom element object
+      unlockedRecipes: {}, // "a+b" -> resultId
+      firstDiscoveries: [], // ids discovered as First Discovery / Milestone
+      canvasItems: [], // { uid, id, x, y, firstBadge }
+      panX: 0,
+      panY: 0,
+      zoom: 1,
+      infiniteMode: true,
+      sound: true,
+      theme: "light",
+      filter: "all",
+      sort: "time",
+      search: "",
+      activeModalTab: "elements"
+    };
+
+    let uidCounter = 1;
+
+    function saveState() {
+      try {
+        const payload = {
+          discovered: state.discovered,
+          customElements: state.customElements,
+          unlockedRecipes: state.unlockedRecipes,
+          firstDiscoveries: state.firstDiscoveries,
+          canvasItems: state.canvasItems.slice(-80),
+          infiniteMode: state.infiniteMode,
+          sound: state.sound,
+          theme: state.theme
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch (_) {}
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return false;
+        const parsed = JSON.parse(raw);
+        if (parsed.customElements && typeof parsed.customElements === "object") {
+          state.customElements = parsed.customElements;
+          for (const [cid, cel] of Object.entries(parsed.customElements)) {
+            ELEMENT_MAP.set(cid, cel);
+          }
+        }
+        if (Array.isArray(parsed.discovered) && parsed.discovered.length >= 4) {
+          state.discovered = parsed.discovered.filter(id => ELEMENT_MAP.has(id));
+          for (const st of ["codigo", "microfono", "cafe", "curiosidad"]) {
+            if (!state.discovered.includes(st)) state.discovered.unshift(st);
+          }
+        }
+        if (parsed.unlockedRecipes) state.unlockedRecipes = parsed.unlockedRecipes;
+        if (Array.isArray(parsed.firstDiscoveries)) state.firstDiscoveries = parsed.firstDiscoveries;
+        if (typeof parsed.infiniteMode === "boolean") state.infiniteMode = parsed.infiniteMode;
+        if (typeof parsed.sound === "boolean") state.sound = parsed.sound;
+        if (parsed.theme === "dark" || parsed.theme === "light") state.theme = parsed.theme;
+        if (Array.isArray(parsed.canvasItems)) {
+          state.canvasItems = parsed.canvasItems.filter(it => ELEMENT_MAP.has(it.id));
+        }
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    // === SECTION 2B: UI & INTERACTIONS ===
+    const dom = {
+      workspace: document.getElementById("workspace"),
+      world: document.getElementById("world"),
+      fxCanvas: document.getElementById("fx-canvas"),
+      sidebar: document.getElementById("sidebar"),
+      inventoryList: document.getElementById("inventory-list"),
+      dragGhost: document.getElementById("drag-ghost"),
+      emptyGuide: document.getElementById("empty-guide"),
+      toastContainer: document.getElementById("toast-container"),
+      brandQuote: document.getElementById("brand-quote"),
+      statsOfficial: document.getElementById("stats-official"),
+      statsExtra: document.getElementById("stats-extra"),
+      progressFill: document.getElementById("progress-fill"),
+      searchInput: document.getElementById("search-input"),
+      searchClear: document.getElementById("search-clear"),
+      filterTabs: document.getElementById("filter-tabs"),
+      sortSelect: document.getElementById("sort-select"),
+      btnInfinite: document.getElementById("btn-infinite"),
+      infiniteLabel: document.getElementById("infinite-label"),
+      btnCodex: document.getElementById("btn-codex"),
+      btnSound: document.getElementById("btn-sound"),
+      btnTheme: document.getElementById("btn-theme"),
+      btnHint: document.getElementById("btn-hint"),
+      btnStarterPack: document.getElementById("btn-starter-pack"),
+      btnClear: document.getElementById("btn-clear"),
+      btnCenter: document.getElementById("btn-center"),
+      btnReset: document.getElementById("btn-reset"),
+      zoomLabel: document.getElementById("zoom-label"),
+      codexModal: document.getElementById("codex-modal"),
+      modalClose: document.getElementById("modal-close"),
+      modalTabs: document.getElementById("modal-tabs"),
+      modalBody: document.getElementById("modal-body")
+    };
+
+    // --- Particle Burst System ---
+    const fxCtx = dom.fxCanvas.getContext("2d");
+    const particles = [];
+
+    function resizeFxCanvas() {
+      const rect = dom.workspace.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      dom.fxCanvas.width = rect.width * dpr;
+      dom.fxCanvas.height = rect.height * dpr;
+      fxCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener("resize", resizeFxCanvas);
+
+    function spawnParticles(worldX, worldY, isSpecial = false) {
+      const sx = worldX * state.zoom + state.panX;
+      const sy = worldY * state.zoom + state.panY;
+      const colors = isSpecial
+        ? ["#facc15", "#f59e0b", "#6366f1", "#ec4899", "#10b981"]
+        : ["#6366f1", "#f59e0b", "#3b82f6", "#a855f7"];
+      const count = isSpecial ? 34 : 18;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+        const speed = (isSpecial ? 2.4 : 1.6) + Math.random() * (isSpecial ? 4.2 : 2.6);
+        particles.push({
+          x: sx,
+          y: sy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 0.6,
+          r: 2.5 + Math.random() * (isSpecial ? 3.5 : 2.2),
+          alpha: 1,
+          color: colors[i % colors.length]
+        });
+      }
+    }
+
+    function tickParticles() {
+      if (particles.length > 0) {
+        const rect = dom.workspace.getBoundingClientRect();
+        fxCtx.clearRect(0, 0, rect.width, rect.height);
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.08;
+          p.alpha -= 0.028;
+          if (p.alpha <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+          fxCtx.globalAlpha = p.alpha;
+          fxCtx.fillStyle = p.color;
+          fxCtx.beginPath();
+          fxCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          fxCtx.fill();
+        }
+        fxCtx.globalAlpha = 1;
+      }
+      requestAnimationFrame(tickParticles);
+    }
+
+    // --- Helper: Compute which discovered elements still have undiscovered official combos ---
+    function getElementsWithAvailableCombos() {
+      const discSet = new Set(state.discovered);
+      const hasCombo = new Set();
+      for (const [k, resId] of RECIPE_MAP.entries()) {
+        if (discSet.has(resId)) continue;
+        const [a, b] = k.split("+");
+        if (discSet.has(a) && discSet.has(b)) {
+          hasCombo.add(a);
+          hasCombo.add(b);
+        }
+      }
+      return hasCombo;
+    }
+
+    function countRemainingCombosFor(elId) {
+      const discSet = new Set(state.discovered);
+      let count = 0;
+      for (const [k, resId] of RECIPE_MAP.entries()) {
+        if (discSet.has(resId)) continue;
+        const [a, b] = k.split("+");
+        if ((a === elId && discSet.has(b)) || (b === elId && discSet.has(a))) {
+          count++;
+        }
+      }
+      return count;
+    }
+
+    // --- Toast Notifications ---
+    function showToast({ emoji, tag, title, desc, info = false, actionText = null, onAction = null, duration = 4600 }) {
+      while (dom.toastContainer.children.length >= 2) {
+        dom.toastContainer.firstChild.remove();
+      }
+      const card = document.createElement("div");
+      card.className = "discovery-toast" + (info ? " info-toast" : "");
+      card.innerHTML = `
+        <div class="toast-emoji">${emoji}</div>
+        <div class="toast-body">
+          <div class="toast-tag">${tag}</div>
+          <div class="toast-title">${title}</div>
+          <div class="toast-desc">${desc}</div>
+        </div>
+      `;
+      if (actionText && onAction) {
+        const btn = document.createElement("button");
+        btn.className = "toast-action";
+        btn.textContent = actionText;
+        btn.addEventListener("click", () => {
+          onAction();
+          card.remove();
+        });
+        card.querySelector(".toast-body").appendChild(btn);
+      }
+      dom.toastContainer.appendChild(card);
+      setTimeout(() => {
+        if (card.parentNode) card.remove();
+      }, duration);
+    }
+
+    // --- World Transform (Pan & Zoom) ---
+    function updateWorldTransform() {
+      dom.world.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.zoom})`;
+      dom.workspace.style.backgroundPosition = `${state.panX}px ${state.panY}px`;
+      const grid = 24 * state.zoom;
+      dom.workspace.style.backgroundSize = `${grid}px ${grid}px`;
+      dom.zoomLabel.textContent = `${Math.round(state.zoom * 100)}%`;
+      dom.emptyGuide.classList.toggle("hidden", state.canvasItems.length > 0);
+    }
+
+    function screenToWorld(clientX, clientY) {
+      const rect = dom.workspace.getBoundingClientRect();
+      return {
+        x: (clientX - rect.left - state.panX) / state.zoom,
+        y: (clientY - rect.top - state.panY) / state.zoom
+      };
+    }
+
+    // --- Canvas Chip DOM Management ---
+    const chipNodes = new Map(); // uid -> HTMLElement
+
+    function createCanvasChipNode(item, animatePop = true) {
+      const el = ELEMENT_MAP.get(item.id);
+      if (!el) return null;
+      const div = document.createElement("div");
+      div.className = "chip canvas-chip" +
+        (el.milestone ? " milestone" : "") +
+        (el.procedural ? " procedural" : "") +
+        (animatePop ? " pop-in" : "");
+      div.dataset.uid = item.uid;
+      div.style.left = `${item.x}px`;
+      div.style.top = `${item.y}px`;
+      div.title = el.lore || el.name;
+
+      let badgeHtml = "";
+      if (item.firstBadge) {
+        badgeHtml = `<span class="first-badge">${el.official ? "✨ Hito Malandriner" : "✨ Primer Descubrimiento"}</span>`;
+      }
+      div.innerHTML = `<span class="emoji">${el.emoji}</span><span class="label">${el.name}</span>${badgeHtml}`;
+
+      // Double click duplicates chip
+      div.addEventListener("dblclick", (e) => {
+        e.stopPropagation();
+        sfx.pickup();
+        spawnCanvasChip(item.id, item.x + 26, item.y + 26, false);
+        saveState();
+      });
+
+      // Right click deletes chip
+      div.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        sfx.delete();
+        removeCanvasChip(item.uid);
+        saveState();
+      });
+
+      // Pointer drag start on canvas chip
+      div.addEventListener("pointerdown", (e) => {
+        if (e.button !== 0) return;
+        e.stopPropagation();
+        startCanvasChipDrag(e, item, div);
+      });
+
+      dom.world.appendChild(div);
+      chipNodes.set(item.uid, div);
+      return div;
+    }
+
+    function spawnCanvasChip(id, x, y, firstBadge = false) {
+      const item = { uid: uidCounter++, id, x, y, firstBadge };
+      state.canvasItems.push(item);
+      createCanvasChipNode(item, true);
+      dom.emptyGuide.classList.add("hidden");
+      return item;
+    }
+
+    function removeCanvasChip(uid) {
+      const idx = state.canvasItems.findIndex(c => c.uid === uid);
+      if (idx !== -1) state.canvasItems.splice(idx, 1);
+      const node = chipNodes.get(uid);
+      if (node) {
+        node.remove();
+        chipNodes.delete(uid);
+      }
+      dom.emptyGuide.classList.toggle("hidden", state.canvasItems.length > 0);
+    }
+
+    function showFloatingFormula(x, y, text) {
+      const f = document.createElement("div");
+      f.className = "floating-formula";
+      f.style.left = `${x}px`;
+      f.style.top = `${y}px`;
+      f.textContent = text;
+      dom.world.appendChild(f);
+      setTimeout(() => f.remove(), 1250);
+    }
+
+    // --- Sidebar & Stats Rendering ---
+    function updateStatsAndHeader() {
+      const officialDiscovered = state.discovered.filter(id => {
+        const el = ELEMENT_MAP.get(id);
+        return el && el.official;
+      }).length;
+      const customDiscovered = state.discovered.length - officialDiscovered;
+      const totalOfficial = OFFICIAL_ELEMENTS.length;
+
+      dom.statsOfficial.textContent = `⚡ Oficiales: ${officialDiscovered} / ${totalOfficial}`;
+      dom.statsExtra.textContent = `✨ Inventos: ${customDiscovered}`;
+      const pct = Math.min(100, (officialDiscovered / totalOfficial) * 100);
+      dom.progressFill.style.width = `${pct.toFixed(1)}%`;
+
+      dom.btnInfinite.classList.toggle("active-mode", state.infiniteMode);
+      dom.infiniteLabel.textContent = state.infiniteMode ? "ON" : "OFF";
+      dom.btnSound.textContent = state.sound ? "🔊" : "🔇";
+      dom.btnTheme.textContent = state.theme === "dark" ? "☀️" : "🌙";
+      document.documentElement.setAttribute("data-theme", state.theme);
+    }
+
+    function renderInventory() {
+      updateStatsAndHeader();
+      const availCombos = getElementsWithAvailableCombos();
+      const q = state.search.trim().toLowerCase();
+
+      let items = state.discovered
+        .map((id, index) => ({ el: ELEMENT_MAP.get(id), index }))
+        .filter(x => x.el);
+
+      if (state.filter === "official") {
+        items = items.filter(x => x.el.official);
+      } else if (state.filter === "custom") {
+        items = items.filter(x => !x.el.official);
+      } else if (state.filter === "combos") {
+        items = items.filter(x => availCombos.has(x.el.id));
+      }
+
+      if (q) {
+        items = items.filter(x =>
+          x.el.name.toLowerCase().includes(q) ||
+          x.el.emoji.includes(q) ||
+          (x.el.lore && x.el.lore.toLowerCase().includes(q))
+        );
+      }
+
+      if (state.sort === "recent") {
+        items.reverse();
+      } else if (state.sort === "az") {
+        items.sort((a, b) => a.el.name.localeCompare(b.el.name, "es"));
+      } else if (state.sort === "cat") {
+        items.sort((a, b) => (a.el.cat || "").localeCompare(b.el.cat || "") || a.el.name.localeCompare(b.el.name, "es"));
+      }
+
+      dom.inventoryList.innerHTML = "";
+      if (items.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "inv-empty";
+        empty.textContent = q
+          ? "No hay ningún elemento que coincida con tu búsqueda."
+          : state.filter === "combos"
+            ? "¡No quedan recetas directas con este filtro! Prueba otro filtro o el Modo Infinito."
+            : "Aún no tienes elementos en esta categoría.";
+        dom.inventoryList.appendChild(empty);
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      for (const { el } of items) {
+        const chip = document.createElement("div");
+        chip.className = "chip" + (el.milestone ? " milestone" : "") + (el.procedural ? " procedural" : "");
+        chip.title = el.lore || el.name;
+
+        const hasCombo = availCombos.has(el.id);
+        const dotHtml = hasCombo
+          ? `<span class="combo-dot" title="Tiene combinaciones oficiales por descubrir"></span>`
+          : el.milestone
+            ? `<span class="milestone-dot" title="Hito de Web Reactiva"></span>`
+            : "";
+
+        chip.innerHTML = `<span class="emoji">${el.emoji}</span><span class="label">${el.name}</span>${dotHtml}`;
+
+        chip.addEventListener("pointerdown", (e) => {
+          if (e.button !== 0) return;
+          startSidebarDragOrClick(e, el);
+        });
+
+        frag.appendChild(chip);
+      }
+      dom.inventoryList.appendChild(frag);
+    }
+
+    // --- Combination Resolution ---
+    function combineElements(itemA, itemB, dropX, dropY) {
+      const elA = ELEMENT_MAP.get(itemA.id);
+      const elB = ELEMENT_MAP.get(itemB.id);
+      if (!elA || !elB) return false;
+
+      const key = pairKey(elA.id, elB.id);
+      let resultEl = null;
+
+      if (RECIPE_MAP.has(key)) {
+        resultEl = ELEMENT_MAP.get(RECIPE_MAP.get(key));
+      } else if (state.unlockedRecipes[key] && ELEMENT_MAP.has(state.unlockedRecipes[key])) {
+        resultEl = ELEMENT_MAP.get(state.unlockedRecipes[key]);
+      } else if (state.infiniteMode) {
+        resultEl = createProceduralElement(elA, elB);
+      }
+
+      if (!resultEl) {
+        // Strict Official Mode & no recipe found: bounce gently + give helpful malandriner feedback
+        sfx.fail();
+        const nodeA = chipNodes.get(itemA.uid);
+        const nodeB = chipNodes.get(itemB.uid);
+        itemA.x = itemB.x + (Math.random() > 0.5 ? 58 : -58);
+        itemA.y = itemB.y + 34;
+        if (nodeA) {
+          nodeA.style.left = `${itemA.x}px`;
+          nodeA.style.top = `${itemA.y}px`;
+          nodeA.classList.remove("shake");
+          void nodeA.offsetWidth;
+          nodeA.classList.add("shake");
+        }
+        if (nodeB) {
+          nodeB.classList.remove("shake");
+          void nodeB.offsetWidth;
+          nodeB.classList.add("shake");
+        }
+        const remA = countRemainingCombosFor(elA.id);
+        const remB = countRemainingCombosFor(elB.id);
+        showToast({
+          emoji: "🤔",
+          tag: "Sin receta oficial",
+          title: `${elA.name} + ${elB.name} no cuaja`,
+          desc: `Pista: ${elA.emoji} tiene ${remA} combo(s) disponible(s) y ${elB.emoji} tiene ${remB}. (O activa ∞ Modo Infinito arriba).`,
+          info: true,
+          duration: 3400
+        });
+        return false;
+      }
+
+      // Consume both source chips and create result!
+      removeCanvasChip(itemA.uid);
+      removeCanvasChip(itemB.uid);
+
+      const isNew = !state.discovered.includes(resultEl.id);
+      state.unlockedRecipes[key] = resultEl.id;
+
+      if (!resultEl.official) {
+        state.customElements[resultEl.id] = resultEl;
+      }
+
+      let showFirstBadge = false;
+      if (isNew) {
+        state.discovered.push(resultEl.id);
+        if (resultEl.milestone || resultEl.procedural) {
+          state.firstDiscoveries.push(resultEl.id);
+          showFirstBadge = true;
+        }
+        sfx.discover(Boolean(resultEl.milestone || resultEl.procedural));
+        spawnParticles(dropX, dropY, true);
+
+        showToast({
+          emoji: resultEl.emoji,
+          tag: resultEl.official
+            ? (resultEl.milestone ? "🏆 ¡Hito Web Reactiva Descubierto!" : "⚡ ¡Nuevo Elemento Oficial!")
+            : "✨ ¡Primer Descubrimiento Malandriner!",
+          title: resultEl.name,
+          desc: resultEl.lore
+        });
+
+        dom.brandQuote.textContent = `${resultEl.emoji} ${resultEl.name}: ${resultEl.lore}`;
+        renderInventory();
+      } else {
+        sfx.combine();
+        spawnParticles(dropX, dropY, false);
+      }
+
+      showFloatingFormula(dropX, dropY, `${elA.emoji} + ${elB.emoji} = ${resultEl.emoji} ${resultEl.name}`);
+      spawnCanvasChip(resultEl.id, dropX, dropY, showFirstBadge);
+      saveState();
+      return true;
+    }
+
+    // --- Dragging & Merge Target Detection ---
+    const MERGE_DISTANCE = 64;
+
+    function findNearestCanvasItem(worldX, worldY, excludeUid = null) {
+      let best = null;
+      let bestDist = MERGE_DISTANCE;
+      for (const it of state.canvasItems) {
+        if (it.uid === excludeUid) continue;
+        const d = Math.hypot(it.x - worldX, it.y - worldY);
+        if (d < bestDist) {
+          bestDist = d;
+          best = it;
+        }
+      }
+      return best;
+    }
+
+    function clearMergeHighlights() {
+      for (const node of chipNodes.values()) {
+        node.classList.remove("merge-target");
+      }
+    }
+
+    function isOverSidebar(clientX, clientY) {
+      const r = dom.sidebar.getBoundingClientRect();
+      return clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom;
+    }
+
+    function startCanvasChipDrag(e, item, node) {
+      sfx.pickup();
+      const pointerId = e.pointerId;
+      node.setPointerCapture(pointerId);
+      node.classList.add("dragging");
+
+      // Bring item to end of array so z-order stays fresh
+      const idx = state.canvasItems.indexOf(item);
+      if (idx !== -1) {
+        state.canvasItems.splice(idx, 1);
+        state.canvasItems.push(item);
+        dom.world.appendChild(node);
+      }
+
+      const startWorld = screenToWorld(e.clientX, e.clientY);
+      const offsetX = item.x - startWorld.x;
+      const offsetY = item.y - startWorld.y;
+      let lastX = e.clientX;
+      let hoveredTarget = null;
+
+      function onMove(ev) {
+        if (ev.pointerId !== pointerId) return;
+        const vx = Math.max(-5, Math.min(5, (ev.clientX - lastX) * 0.25));
+        lastX = ev.clientX;
+
+        const w = screenToWorld(ev.clientX, ev.clientY);
+        item.x = w.x + offsetX;
+        item.y = w.y + offsetY;
+        node.style.left = `${item.x}px`;
+        node.style.top = `${item.y}px`;
+        node.style.transform = `translate(-50%, -50%) scale(1.05) rotate(${vx}deg)`;
+
+        const overTrash = isOverSidebar(ev.clientX, ev.clientY);
+        dom.sidebar.classList.toggle("trash-hover", overTrash);
+
+        clearMergeHighlights();
+        if (!overTrash) {
+          hoveredTarget = findNearestCanvasItem(item.x, item.y, item.uid);
+          if (hoveredTarget) {
+            const tNode = chipNodes.get(hoveredTarget.uid);
+            if (tNode) tNode.classList.add("merge-target");
+          }
+        } else {
+          hoveredTarget = null;
+        }
+      }
+
+      function onUp(ev) {
+        if (ev.pointerId !== pointerId) return;
+        node.removeEventListener("pointermove", onMove);
+        node.removeEventListener("pointerup", onUp);
+        node.removeEventListener("pointercancel", onUp);
+        node.classList.remove("dragging");
+        node.style.transform = "";
+        dom.sidebar.classList.remove("trash-hover");
+        clearMergeHighlights();
+
+        if (isOverSidebar(ev.clientX, ev.clientY)) {
+          sfx.delete();
+          removeCanvasChip(item.uid);
+          saveState();
+          return;
+        }
+
+        if (hoveredTarget) {
+          const midX = (item.x + hoveredTarget.x) / 2;
+          const midY = (item.y + hoveredTarget.y) / 2;
+          combineElements(item, hoveredTarget, midX, midY);
+        } else {
+          sfx.drop();
+          saveState();
+        }
+      }
+
+      node.addEventListener("pointermove", onMove);
+      node.addEventListener("pointerup", onUp);
+      node.addEventListener("pointercancel", onUp);
+    }
+
+    // Spawn smartly near center of workspace when clicking an inventory item
+    function spawnAtSmartSpot(elId) {
+      const rect = dom.workspace.getBoundingClientRect();
+      const centerW = screenToWorld(rect.left + rect.width * 0.5, rect.top + rect.height * 0.52);
+      const count = state.canvasItems.length;
+      const angle = count * 2.39996; // golden angle spiral so chips don't stack blindly
+      const radius = count === 0 ? 0 : Math.min(180, 38 + Math.sqrt(count) * 32);
+      const x = centerW.x + Math.cos(angle) * radius;
+      const y = centerW.y + Math.sin(angle) * radius * 0.72;
+      sfx.pickup();
+      spawnCanvasChip(elId, x, y, false);
+      saveState();
+    }
+
+    function startSidebarDragOrClick(e, el) {
+      const startX = e.clientX;
+      const startY = e.clientY;
+      let dragging = false;
+      let hoveredTarget = null;
+
+      function onMove(ev) {
+        const dist = Math.hypot(ev.clientX - startX, ev.clientY - startY);
+        if (!dragging && dist > 7) {
+          dragging = true;
+          sfx.pickup();
+          dom.dragGhost.querySelector(".emoji").textContent = el.emoji;
+          dom.dragGhost.querySelector(".label").textContent = el.name;
+          dom.dragGhost.style.display = "inline-flex";
+        }
+        if (dragging) {
+          dom.dragGhost.style.left = `${ev.clientX}px`;
+          dom.dragGhost.style.top = `${ev.clientY}px`;
+          clearMergeHighlights();
+          if (!isOverSidebar(ev.clientX, ev.clientY)) {
+            const w = screenToWorld(ev.clientX, ev.clientY);
+            hoveredTarget = findNearestCanvasItem(w.x, w.y, null);
+            if (hoveredTarget) {
+              const tNode = chipNodes.get(hoveredTarget.uid);
+              if (tNode) tNode.classList.add("merge-target");
+            }
+          } else {
+            hoveredTarget = null;
+          }
+        }
+      }
+
+      function onUp(ev) {
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("pointerup", onUp);
+        window.removeEventListener("pointercancel", onUp);
+        dom.dragGhost.style.display = "none";
+        clearMergeHighlights();
+
+        if (!dragging) {
+          spawnAtSmartSpot(el.id);
+          return;
+        }
+
+        if (!isOverSidebar(ev.clientX, ev.clientY)) {
+          const w = screenToWorld(ev.clientX, ev.clientY);
+          const created = spawnCanvasChip(el.id, w.x, w.y, false);
+          if (hoveredTarget) {
+            combineElements(created, hoveredTarget, hoveredTarget.x, hoveredTarget.y);
+          } else {
+            sfx.drop();
+            saveState();
+          }
+        }
+      }
+
+      window.addEventListener("pointermove", onMove);
+      window.addEventListener("pointerup", onUp);
+      window.addEventListener("pointercancel", onUp);
+    }
+
+    // --- Workspace Panning & Zooming ---
+    dom.workspace.addEventListener("pointerdown", (e) => {
+      if (e.target !== dom.workspace && e.target !== dom.world) return;
+      if (e.button !== 0 && e.button !== 1) return;
+      const pointerId = e.pointerId;
+      dom.workspace.setPointerCapture(pointerId);
+      dom.workspace.classList.add("panning");
+      const startX = e.clientX - state.panX;
+      const startY = e.clientY - state.panY;
+
+      function onMove(ev) {
+        if (ev.pointerId !== pointerId) return;
+        state.panX = ev.clientX - startX;
+        state.panY = ev.clientY - startY;
+        updateWorldTransform();
+      }
+      function onUp(ev) {
+        if (ev.pointerId !== pointerId) return;
+        dom.workspace.classList.remove("panning");
+        dom.workspace.removeEventListener("pointermove", onMove);
+        dom.workspace.removeEventListener("pointerup", onUp);
+        dom.workspace.removeEventListener("pointercancel", onUp);
+      }
+      dom.workspace.addEventListener("pointermove", onMove);
+      dom.workspace.addEventListener("pointerup", onUp);
+      dom.workspace.addEventListener("pointercancel", onUp);
+    });
+
+    dom.workspace.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const rect = dom.workspace.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const prevZoom = state.zoom;
+      const delta = e.deltaY < 0 ? 1.09 : 0.91;
+      const nextZoom = Math.max(0.45, Math.min(1.85, prevZoom * delta));
+      state.panX = mx - ((mx - state.panX) / prevZoom) * nextZoom;
+      state.panY = my - ((my - state.panY) / prevZoom) * nextZoom;
+      state.zoom = nextZoom;
+      updateWorldTransform();
+    }, { passive: false });
+
+    // --- Smart Hint System ---
+    function giveSmartHint() {
+      const discSet = new Set(state.discovered);
+      const candidates = [];
+      for (const [k, resId] of RECIPE_MAP.entries()) {
+        if (discSet.has(resId)) continue;
+        const [a, b] = k.split("+");
+        if (discSet.has(a) && discSet.has(b)) {
+          candidates.push({ a: ELEMENT_MAP.get(a), b: ELEMENT_MAP.get(b), res: ELEMENT_MAP.get(resId) });
+        }
+      }
+
+      if (candidates.length === 0) {
+        showToast({
+          emoji: "👑",
+          tag: "¡Alquimia Oficial Completada!",
+          title: "¡Has descubierto todos los elementos oficiales!",
+          desc: "Ya eres Leyenda Malandriner. Activa ∞ Modo Infinito para seguir creando inventos locos.",
+          info: true
+        });
+        return;
+      }
+
+      // Prefer milestone discoveries or pick random available combo
+      const milestoneHits = candidates.filter(c => c.res.milestone);
+      const pickPool = milestoneHits.length > 0 && Math.random() < 0.55 ? milestoneHits : candidates;
+      const chosen = pickPool[Math.floor(Math.random() * pickPool.length)];
+
+      sfx.pickup();
+      showToast({
+        emoji: "💡",
+        tag: `Pista Malandriner (${candidates.length} combos disponibles)`,
+        title: `Prueba juntar ${chosen.a.emoji} ${chosen.a.name} + ${chosen.b.emoji} ${chosen.b.name}`,
+        desc: `Pista del resultado: pertenece a «${CATEGORIES[chosen.res.cat]}».`,
+        info: true,
+        actionText: "✨ Sacar ambos a la mesa",
+        onAction: () => {
+          const rect = dom.workspace.getBoundingClientRect();
+          const c = screenToWorld(rect.left + rect.width * 0.5, rect.top + rect.height * 0.52);
+          spawnCanvasChip(chosen.a.id, c.x - 62, c.y, false);
+          spawnCanvasChip(chosen.b.id, c.x + 62, c.y, false);
+          sfx.pickup();
+          saveState();
+        },
+        duration: 7000
+      });
+    }
+
+    // --- Códice Malandriner Modal ---
+    function renderCodexModal() {
+      const discSet = new Set(state.discovered);
+      dom.modalBody.innerHTML = "";
+
+      if (state.activeModalTab === "elements") {
+        // Reverse map: resultId -> unlocked recipe pair
+        const recipeByResult = {};
+        for (const [k, rId] of Object.entries(state.unlockedRecipes)) {
+          if (!recipeByResult[rId]) recipeByResult[rId] = k;
+        }
+
+        for (const [catKey, catLabel] of Object.entries(CATEGORIES)) {
+          const catEls = OFFICIAL_ELEMENTS.filter(e => e.cat === catKey);
+          const unlockedCount = catEls.filter(e => discSet.has(e.id)).length;
+
+          const sec = document.createElement("div");
+          sec.className = "cat-section";
+          sec.innerHTML = `<div class="cat-title"><span>${catLabel}</span><span>${unlockedCount} / ${catEls.length}</span></div>`;
+
+          const grid = document.createElement("div");
+          grid.className = "codex-grid";
+
+          for (const el of catEls) {
+            const unlocked = discSet.has(el.id);
+            const card = document.createElement("div");
+            card.className = "codex-item" + (unlocked ? "" : " locked");
+
+            if (unlocked) {
+              let recText = el.starter ? "🌱 Elemento inicial" : "";
+              if (recipeByResult[el.id]) {
+                const [ra, rb] = recipeByResult[el.id].split("+");
+                const ea = ELEMENT_MAP.get(ra);
+                const eb = ELEMENT_MAP.get(rb);
+                if (ea && eb) recText = `🧪 ${ea.emoji} ${ea.name} + ${eb.emoji} ${eb.name}`;
+              }
+              card.innerHTML = `
+                <div class="codex-item-top"><span>${el.emoji}</span><span>${el.name}</span></div>
+                <div class="codex-item-lore">${el.lore}</div>
+                ${recText ? `<div class="codex-item-recipe">${recText}</div>` : ""}
+              `;
+              card.title = "Haz clic para enviar a la mesa";
+              card.addEventListener("click", () => {
+                spawnAtSmartSpot(el.id);
+                dom.codexModal.classList.remove("open");
+              });
+            } else {
+              card.innerHTML = `
+                <div class="codex-item-top"><span>🔒</span><span>???</span></div>
+                <div class="codex-item-lore">Elemento oculto de ${catLabel.replace(/^[^\s]+\s/, "")}.</div>
+              `;
+            }
+            grid.appendChild(card);
+          }
+          sec.appendChild(grid);
+          dom.modalBody.appendChild(sec);
+        }
+      } else if (state.activeModalTab === "achievements") {
+        const officialCount = state.discovered.filter(id => ELEMENT_MAP.get(id)?.official).length;
+        const grid = document.createElement("div");
+        grid.className = "ach-grid";
+
+        for (const ach of ACHIEVEMENTS) {
+          const ok = ach.countReq
+            ? officialCount >= ach.countReq
+            : ach.req.every(r => discSet.has(r));
+
+          const card = document.createElement("div");
+          card.className = "ach-card" + (ok ? " unlocked" : "");
+          card.innerHTML = `
+            <div class="ach-icon">${ach.icon}</div>
+            <div>
+              <div style="font-weight:800;font-size:14px;">${ach.title} ${ok ? "✅" : ""}</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:3px;line-height:1.38;">${ach.desc}</div>
+            </div>
+          `;
+          grid.appendChild(card);
+        }
+        dom.modalBody.appendChild(grid);
+      } else if (state.activeModalTab === "recipes") {
+        const entries = Object.entries(state.unlockedRecipes).reverse();
+        if (entries.length === 0) {
+          dom.modalBody.innerHTML = `<div class="inv-empty">Aún no has registrado ninguna combinación. ¡Junta dos fichas en la mesa!</div>`;
+          return;
+        }
+        for (const [k, resId] of entries) {
+          const [a, b] = k.split("+");
+          const ea = ELEMENT_MAP.get(a);
+          const eb = ELEMENT_MAP.get(b);
+          const er = ELEMENT_MAP.get(resId);
+          if (!ea || !eb || !er) continue;
+
+          const row = document.createElement("div");
+          row.className = "recipe-row";
+          row.innerHTML = `
+            <span><strong>${ea.emoji} ${ea.name}</strong> + <strong>${eb.emoji} ${eb.name}</strong></span>
+            <span>➔ <strong>${er.emoji} ${er.name}</strong></span>
+          `;
+          dom.modalBody.appendChild(row);
+        }
+      }
+    }
+
+    // --- UI Controls Event Bindings ---
+    dom.searchInput.addEventListener("input", () => {
+      state.search = dom.searchInput.value;
+      dom.searchClear.style.display = state.search ? "block" : "none";
+      renderInventory();
+    });
+
+    dom.searchClear.addEventListener("click", () => {
+      state.search = "";
+      dom.searchInput.value = "";
+      dom.searchClear.style.display = "none";
+      renderInventory();
+    });
+
+    dom.filterTabs.addEventListener("click", (e) => {
+      const btn = e.target.closest(".tab-chip");
+      if (!btn) return;
+      state.filter = btn.dataset.filter;
+      for (const b of dom.filterTabs.querySelectorAll(".tab-chip")) {
+        b.classList.toggle("active", b === btn);
+      }
+      renderInventory();
+    });
+
+    dom.sortSelect.addEventListener("change", () => {
+      state.sort = dom.sortSelect.value;
+      renderInventory();
+    });
+
+    dom.btnInfinite.addEventListener("click", () => {
+      state.infiniteMode = !state.infiniteMode;
+      sfx.pickup();
+      updateStatsAndHeader();
+      saveState();
+      showToast({
+        emoji: state.infiniteMode ? "∞" : "🎯",
+        tag: "Modo de Alquimia",
+        title: state.infiniteMode ? "Modo Infinito ACTIVADO" : "Modo Solo Recetas Oficiales",
+        desc: state.infiniteMode
+          ? "Cualquier par sin receta oficial fusionará un invento malandriner único."
+          : "Solo combinarán las recetas oficiales de los 112 elementos de Web Reactiva.",
+        info: true,
+        duration: 3000
+      });
+    });
+
+    dom.btnSound.addEventListener("click", () => {
+      state.sound = !state.sound;
+      sfx.enabled = state.sound;
+      if (state.sound) sfx.pickup();
+      updateStatsAndHeader();
+      saveState();
+    });
+
+    dom.btnTheme.addEventListener("click", () => {
+      state.theme = state.theme === "dark" ? "light" : "dark";
+      sfx.pickup();
+      updateStatsAndHeader();
+      saveState();
+    });
+
+    dom.btnHint.addEventListener("click", giveSmartHint);
+
+    dom.btnStarterPack.addEventListener("click", () => {
+      const rect = dom.workspace.getBoundingClientRect();
+      const c = screenToWorld(rect.left + rect.width * 0.5, rect.top + rect.height * 0.52);
+      const offsets = [[-85, -45], [85, -45], [-85, 45], [85, 45]];
+      ["codigo", "microfono", "cafe", "curiosidad"].forEach((id, i) => {
+        spawnCanvasChip(id, c.x + offsets[i][0], c.y + offsets[i][1], false);
+      });
+      sfx.pickup();
+      saveState();
+    });
+
+    dom.btnClear.addEventListener("click", () => {
+      if (state.canvasItems.length === 0) return;
+      sfx.delete();
+      state.canvasItems = [];
+      chipNodes.clear();
+      dom.world.innerHTML = "";
+      dom.emptyGuide.classList.remove("hidden");
+      saveState();
+    });
+
+    dom.btnCenter.addEventListener("click", () => {
+      state.panX = 0;
+      state.panY = 0;
+      state.zoom = 1;
+      sfx.pickup();
+      updateWorldTransform();
+    });
+
+    dom.btnCodex.addEventListener("click", () => {
+      sfx.pickup();
+      renderCodexModal();
+      dom.codexModal.classList.add("open");
+    });
+
+    dom.modalClose.addEventListener("click", () => {
+      dom.codexModal.classList.remove("open");
+    });
+
+    dom.codexModal.addEventListener("click", (e) => {
+      if (e.target === dom.codexModal) dom.codexModal.classList.remove("open");
+    });
+
+    dom.modalTabs.addEventListener("click", (e) => {
+      const btn = e.target.closest(".modal-tab");
+      if (!btn) return;
+      state.activeModalTab = btn.dataset.mtab;
+      for (const b of dom.modalTabs.querySelectorAll(".modal-tab")) {
+        b.classList.toggle("active", b === btn);
+      }
+      renderCodexModal();
+    });
+
+    dom.btnReset.addEventListener("click", () => {
+      if (!confirm("¿Seguro que quieres borrar todo tu progreso malandriner y empezar desde los 4 elementos iniciales?")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    });
+
+    // Rotate subtle Web Reactiva quotes occasionally when idle
+    setInterval(() => {
+      const q = DANI_QUOTES[Math.floor(Math.random() * DANI_QUOTES.length)];
+      dom.brandQuote.textContent = q;
+    }, 22000);
+
+    // --- Boot Game ---
+    function init() {
+      resizeFxCanvas();
+      const hadSave = loadState();
+      sfx.enabled = state.sound;
+      updateWorldTransform();
+      renderInventory();
+
+      if (hadSave && state.canvasItems.length > 0) {
+        const savedItems = [...state.canvasItems];
+        state.canvasItems = [];
+        for (const it of savedItems) {
+          const itemObj = { uid: uidCounter++, id: it.id, x: it.x, y: it.y, firstBadge: Boolean(it.firstBadge) };
+          state.canvasItems.push(itemObj);
+          createCanvasChipNode(itemObj, false);
+        }
+        dom.emptyGuide.classList.toggle("hidden", state.canvasItems.length > 0);
+      } else if (!hadSave) {
+        // Place the 4 starter elements invitingly in the middle on first launch!
+        requestAnimationFrame(() => {
+          const rect = dom.workspace.getBoundingClientRect();
+          const cx = rect.width * 0.5;
+          const cy = rect.height * 0.53;
+          const spots = [[-95, -48], [95, -48], [-95, 48], [95, 48]];
+          ["codigo", "microfono", "cafe", "curiosidad"].forEach((id, i) => {
+            spawnCanvasChip(id, cx + spots[i][0], cy + spots[i][1], false);
+          });
+          saveState();
+        });
+      }
+
+      tickParticles();
+    }
+
+    init();
+  </script>
+</body>
+</html>

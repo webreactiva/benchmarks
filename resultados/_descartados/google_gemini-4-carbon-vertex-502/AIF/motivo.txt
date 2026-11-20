@@ -1,0 +1,4 @@
+Fallo técnico del proveedor, el mismo que en A3D. Ruta por defecto de OpenRouter (Google Vertex).
+Tras 3 peticiones cortas (leer la carpeta y dos herramientas), la que escribía el juego se cortó tres veces seguidas
+con «502 Network connection lost» (provider_unavailable), cada vez a los ~10 min. Se paró a mano tras el tercer corte.
+No dejó ficheros ni meta.json. Se repite con PROVEEDOR_OR=google-ai-studio, ya en options.extraBody.

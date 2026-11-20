@@ -1,0 +1,18 @@
+{
+  "nota": 9,
+  "veredicto": "se recorre y se reconoce",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  },
+  "resumen": "Una maqueta con three.js de ocho paradas, de la Puerta de la Justicia al Generalife, con ruta guiada que lleva la cámara por una curva luminosa, fichas históricas correctas y luz de atardecer, día y noche. Se reconocen el arco de la Justicia, el patio circular de Carlos V, la alberca de Arrayanes y los cipreses, pero en los Leones los tejados tapan el patio.",
+  "rarezas": [
+    "Un solo write con el HTML entero (75 KB) y una comprobación de sintaxis con node: 4 peticiones, 111 000 tokens, 0,38 $.",
+    "No lo abrió en un navegador; solo comprobó que el JavaScript parseaba.",
+    "Primera tirada perdida: la ruta por defecto de OpenRouter (Google Vertex) cortaba cada petición con un 502 a los ~5 min de razonar (en _descartados/)."
+  ]
+}

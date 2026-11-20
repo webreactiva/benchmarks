@@ -59,6 +59,36 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>953 palabras con un argumento de verdad: un test inestable enseña al equipo a ignorar el rojo («normalización del fallo») y da una seguridad falsa que sin tests no existe. Un caso concreto (timeout de red, regresión de facturación que se pierde) y cinco prácticas útiles. Le sobran la lista con etiquetas en negrita, la «Conclusión» y una cita inventada.</small> <a href="resultados/anthropic_claude-haiku-5-5/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 12:12 UTC</small></td>
+<td class=n><b>111.2 k</b><br><small>in 39.2 k · out 28.8 k<br>razon. 1.2 k · caché 42.0 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/google_gemini-4-carbon/A3D/salida/alhambra-ruta-3d.html">alhambra-ruta-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-ruta-3d.html<br>✔ carga sin errores de consola; three.js 0.164.1 desde jsDelivr (75 KB)<br>✔ 8 paradas reales en orden de visita: Justicia, Alcazaba, Carlos V, Arrayanes, Leones, Partal, Cipreses, Generalife<br>✔ ruta guiada: la cámara sigue la curva entre paradas (~56 s el recorrido); también con botones, píldoras y deslizador<br>✔ se reconoce: arco de herradura de la Justicia, patio circular de Carlos V, alberca de Arrayanes, torres almenadas, cipreses del Generalife<br>✖ en la parada de los Leones los tejados tapan el patio y la fuente<br>~ en el contenedor el render por software va a 1,3 fps; el avance usa el tiempo real con dt ≤ 0,05, por eso en 30 s solo llega al 4 %<br>✔ textos correctos (Yusuf I 1348, Machuca, 124 columnas, Muhammad V, Acequia Real)</small></td>
+<td class="nota n2">9<br><small>se recorre y se reconoce</small></td>
+<td><small>Una maqueta con three.js de ocho paradas, de la Puerta de la Justicia al Generalife, con ruta guiada que lleva la cámara por una curva luminosa, fichas históricas correctas y luz de atardecer, día y noche. Se reconocen el arco de la Justicia, el patio circular de Carlos V, la alberca de Arrayanes y los cipreses, pero en los Leones los tejados tapan el patio.</small> <a href="resultados/google_gemini-4-carbon/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/google_gemini-4-carbon/A3D/capturas/alhambra-ruta-3d.html.png"><img src="resultados/google_gemini-4-carbon/A3D/capturas/alhambra-ruta-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 12:37 UTC</small></td>
+<td class=n><b>642.7 k</b><br><small>in 77.9 k · out 80.2 k<br>razon. 9.7 k · caché 474.8 k</small></td>
+<td class=n>16</td>
+<td><small><a href="resultados/google_gemini-4-carbon/AIF/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ carga sin errores; un HTML de 115 KB sin dependencias<br>✔ lienzo libre: se arrastra una ficha sobre otra (también doble clic duplica, clic derecho borra, zoom y desplazamiento)<br>✔ Código + Café → Programador; Micrófono + Micrófono → Podcast; Código + Código → Web; Web + Podcast → Web Reactiva; Programador + Web Reactiva → Daniel Primo<br>✔ 112 de 112 elementos alcanzables desde los 4 iniciales (juez/alcanzables.js); 389 pares con receta, 1 receta duplicada que no cuenta<br>✔ modo infinito: Café + Web (sin receta) → «Micro-Web con Café», con su ficha de «primer descubrimiento»<br>✔ guarda en localStorage (9/112 tras recargar), buscador, pistas, códice por categorías y 13 logros<br>~ contenido de memoria (la búsqueda web quedó cancelada): malandriner, Zona Premium, Telegram, café virtual, mastermind; algún detalle sin comprobar («todos los martes», «Episodio 500»)</small></td>
+<td class="nota n2">10<br><small>el AIF más completo</small></td>
+<td><small>Mesa libre donde se suelta una ficha sobre otra, 112 elementos y 389 recetas todos alcanzables desde cuatro iniciales (Código, Micrófono, Café, Curiosidad), un generador para las mezclas sin receta, pistas, buscador, códice, logros y guardado. El contenido es de Web Reactiva de verdad (malandriner, Daniel Primo, Zona Premium, Telegram, café virtual, mastermind), aunque sacado de memoria porque la búsqueda web se canceló.</small> <a href="resultados/google_gemini-4-carbon/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/google_gemini-4-carbon/AIF/capturas/index.html.png"><img src="resultados/google_gemini-4-carbon/AIF/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 12:54 UTC</small></td>
+<td class=n><b>835.4 k</b><br><small>in 93.8 k · out 40.8 k<br>razon. 6.3 k · caché 694.5 k</small></td>
+<td class=n>25</td>
+<td><small><a href="resultados/google_gemini-4-carbon/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/README.md">README.md</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/package.json">package.json</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/application/cart-service.ts">src/application/cart-service.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/application/ports.ts">src/application/ports.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/errors.ts">src/domain/errors.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/events.ts">src/domain/events.ts</a><br>… y 16 más</small></td>
+<td><small>✔ sin dependencias: npm test (9/9 con node:test) y npm start con Node 22 y TypeScript nativo<br>✔ 50 altas a la vez: 50 guardadas en una instancia y en dos instancias con el mismo SQLite<br>✔ dinero en céntimos (0,10 × 3 = 0,30), sumar EUR y USD da error, precio del catálogo (se ignora el del cliente)<br>✔ valida cantidades (0, negativa, decimal, enorme), sku inexistente, ids con «../», cuerpo vacío<br>✖ la caché L1 de cada instancia sirve lecturas viejas cuando escribe la otra (juez/cache-l1.mjs)<br>~ stock, idempotencia y eventos viven en la memoria de cada proceso; el almacenamiento compartido es un fichero SQLite (una sola máquina)</small></td>
+<td class="nota n2">9<br><small>escala en una máquina</small></td>
+<td><small>TypeScript sobre Node 22 sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, cupones, IVA, envío, idempotencia, checkout con reserva de stock y SQLite en WAL con compare-and-set por versión: 50 altas a la vez no pierden nada, ni repartidas entre dos instancias con el mismo fichero. Pero cada instancia guarda una caché L1 que sirve lecturas viejas cuando escribe la otra, y el stock y la idempotencia viven en memoria de cada proceso.</small> <a href="resultados/google_gemini-4-carbon/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>PTS</b><br><small>texto</small></td>
 <td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 10:23 UTC</small></td>
 <td class=n><b>22.5 k</b><br><small>in 10.3 k · out 2.2 k<br>razon. 734 · caché 9.3 k</small></td>
