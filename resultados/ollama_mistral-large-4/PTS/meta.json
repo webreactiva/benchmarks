@@ -1,0 +1,48 @@
+{
+  "codigo": "PTS",
+  "modelo": "ollama/mistral-large-4",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T18:07:28Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 17200,
+    "output": 8453,
+    "reasoning": 0,
+    "cache_read": 121856,
+    "cache_write": 0,
+    "total": 147509
+  },
+  "peticiones": 14,
+  "error": null,
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "Decide tú.",
+    "Decide tú.",
+    "Decide tú.",
+    "Decide tú.",
+    "Decide tú."
+  ],
+  "herramientas": {
+    "write": 5,
+    "edit": 4,
+    "shell": 1,
+    "grep": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e05dba181ffe6R4A8R0Xj9mv5c",
+  "coste_usd": 0,
+  "ficheros": [
+    "guion-video-corto-tests-que-fallan.md",
+    "hilo-redes-sociales-tests-que-fallan.md",
+    "newsletter-tests-que-fallan.md",
+    "por-que-los-tests-que-fallan-son-peores-que-no-tener-tests.md",
+    "why-failing-tests-are-worse-than-no-tests.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 262144,
+    "output_proveedor": 262144,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 5
+}

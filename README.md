@@ -61,6 +61,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | 10 | 8 | 5 | 8 | **7,8** | 89 | 4,4 M |
 | [ollama/minimax-m3](resultados/ollama_minimax-m3/README.md) | OpenCode | 4 | 9 | 10 | 8 | **7,8** | 317 | 35,8 M |
 | [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | 6 | 9 | 6 | 8 | **7,2** | 94 | 6,1 M |
+| [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | 7 | 6 | 8 | 7 | **7,0** | 42 | 0,7 M |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | 6 | 8 | 4 | 9 | **6,8** | 24 | 0,5 M |
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | 10 | **6,8** | 19 | 0,4 M |
 | [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | 7 | **5,8** | 38 | 0,6 M |
