@@ -1,0 +1,33 @@
+{
+ "html": [
+  {
+   "fichero": "alhambra-ruta-3d.html",
+   "errores": [],
+   "titulo": "Ruta 3D Interactiva — La Alhambra de Granada",
+   "canvas": 1,
+   "texto": "1\nPta. Justicia\n2\nAlcazaba\n3\nCarlos V\n4\nArrayanes\n5\nP. Leones\n6\nEl Partal\n7\nP. Cipreses\n8\nGeneralife\nGRANADA · COLINA DE LA SABIKA\nRuta 3D por La Alhambra y Generalife\nRecorrido monumental interactivo desde la Puerta de la Justicia hasta los jardines nazaríes\nAtardecer\nDía\nNoche\nVista Aérea\nEtiquetas\nPARADA 1 DE 8\n1348 · Yusuf I\nPuerta de la Justicia\n\nLa entrada monumental más célebre de la Alhamb",
+   "scripts": [],
+   "captura": "capturas/alhambra-ruta-3d.html.png",
+   "capturas_extra": [
+    "capturas/auto-30s.png",
+    "capturas/vista-parada-2.png",
+    "capturas/parada-3.png",
+    "capturas/vista-parada-4.png",
+    "capturas/vista-parada-5.png",
+    "capturas/vista-parada-7.png",
+    "capturas/parada-8.png",
+    "capturas/vista-aerea-dia.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores de consola; three.js 0.164.1 desde jsDelivr (75 KB)",
+  "✔ 8 paradas reales en orden de visita: Justicia, Alcazaba, Carlos V, Arrayanes, Leones, Partal, Cipreses, Generalife",
+  "✔ ruta guiada: la cámara sigue la curva entre paradas (~56 s el recorrido); también con botones, píldoras y deslizador",
+  "✔ se reconoce: arco de herradura de la Justicia, patio circular de Carlos V, alberca de Arrayanes, torres almenadas, cipreses del Generalife",
+  "✖ en la parada de los Leones los tejados tapan el patio y la fuente",
+  "~ en el contenedor el render por software va a 1,3 fps; el avance usa el tiempo real con dt ≤ 0,05, por eso en 30 s solo llega al 4 %",
+  "✔ textos correctos (Yusuf I 1348, Machuca, 124 columnas, Muhammad V, Acequia Real)"
+ ]
+}
