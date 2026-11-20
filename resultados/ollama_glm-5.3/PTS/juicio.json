@@ -1,0 +1,17 @@
+{
+  "nota": 8,
+  "veredicto": "buen argumento, descuidado",
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 0,
+    "slop": 1,
+    "extensión": 1
+  },
+  "resumen": "Defiende bien la tesis: sin tests el equipo sabe que no tiene red y va con cuidado; con tests intermitentes aprende a pulsar retry y el fallo real se cuela, además de inflar la cobertura. Trae código del sleep frente a esperar la condición, causas y qué hacer, pero con erratas («cuarenta» por «cuarentena», «Pensa»), un pastor convertido en guardia y un flake8-ignore-comments que no sirve para silenciar tests.",
+  "rarezas": [
+    "2 peticiones y 15.998 tokens: escribió el post de una vez y terminó."
+  ]
+}

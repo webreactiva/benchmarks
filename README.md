@@ -53,6 +53,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | 9 | 9 | 8 | 9 | **8,8** | 41 | 1,3 M |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | 9 | 9 | 9 | 8 | **8,8** | 82 | 3,0 M |
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | 10 | 9 | 6 | 10 | **8,8** | 63 | 2,9 M |
+| [ollama/glm-5.3](resultados/ollama_glm-5.3/README.md) | OpenCode | 8 | 10 | 8 | 8 | **8,5** | 83 | 7,8 M |
 | [ollama/glm-5.3-flash](resultados/ollama_glm-5.3-flash/README.md) | OpenCode | 9 | 8 | 8 | 9 | **8,5** | 69 | 3,2 M |
 | [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | 8 | 9 | 10 | 7 | **8,5** | 314 | 28,4 M |
 | [claude-haiku-5-5](resultados/anthropic_claude-haiku-5-5/README.md) | Claude Code | 8 | 9 | 9 | 6 | **8,0** | 29 | 2,0 M |
