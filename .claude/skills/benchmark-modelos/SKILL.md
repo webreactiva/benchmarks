@@ -33,6 +33,14 @@ scripts/benchmark.sh -p CCA,PTS MODELO               # solo algunos
 - **Una tirada.** Solo se repite por un fallo técnico (error de la API, desconexión, sesión que no responde, un límite nuestro). La prueba fallida va a `_descartados/` con un `motivo.txt`. Un mal resultado no se repite.
 - Lánzalo **en segundo plano** y vigila con Monitor las líneas `### …` y `{"codigo"…}`. Dos modelos de agentes distintos pueden ir a la vez (sesiones de tmux distintas: `b-CÓDIGO` y `c-CÓDIGO`).
 - **Cupo gratuito de OpenRouter: 50 peticiones al día por clave.** Una sesión de agente gasta de 2 a 25. `benchmark.sh` para si el cupo está a 0. Si un prompt se corta por 429 a medias, la prueba no vale: muévela a `_descartados/<modelo>-limite-diario/` con un `motivo.txt` y repítela cuando haya cupo. Lo hecho no se repite (se salta lo que tiene `meta.json`).
+- **OpenCode 2.x no está en npm** (`opencode-ai` acaba en 1.x). En Linux: `curl -fsSL https://opencode.ai/v2/install -o i.sh && VERSION=2.3.0 bash i.sh --no-modify-path` y copia `~/.opencode/bin/opencode` a `/usr/local/bin/`: el encierro tapa `/root` y no lo vería. `lanzar.sh` ya quita sus topes de tiempo (`timeout`, `headerTimeout`, `chunkTimeout`).
+- **Modelos de Google por OpenRouter (`google/*`): fija AI Studio.** La ruta por defecto va a Google Vertex, que corta con `502 Network connection lost` (`provider_unavailable`) cuando el modelo razona más de ~5 min: en OpenCode se ve como «Retry due · Network connection lost» que se repite sin fin. Lánzalo así:
+  ```bash
+  PROVEEDOR_OR=google-ai-studio scripts/benchmark.sh google/gemini-4-carbon
+  ```
+  `PROVEEDOR_OR` va en `options.extraBody.provider` del `opencode.json` del modelo (`only`, sin respaldo). En `options.provider` OpenCode 2.x no lo manda: para comprobar que llega, pon un proveedor inexistente y OpenRouter tiene que rechazar la petición. Los proveedores de un modelo: `curl -s https://openrouter.ai/api/v1/models/<id>/endpoints`. Apunta en las rarezas del juicio por qué proveedor fue.
+- **«Retry due» que se repite = fallo técnico.** Mira el error en `~/.opencode-bench/<modelo>/data/opencode/opencode.db` (tabla `session_message`, campo `error.response.body`): si es del proveedor, para la prueba (mata `benchmark.sh`, `lanzar.sh` y su sesión de tmux), llévala a `_descartados/` y reprodúcelo con curl antes de cambiar nada.
+- Para saber cuánto se lleva gastado: `curl -s https://openrouter.ai/api/v1/key -H "Authorization: Bearer $OPEN_ROUTER_API_KEY"` (`usage_daily`) y `…/api/v1/credits` (crédito total y usado).
 
 ## 2. Validar (en una copia)
 
@@ -43,6 +51,10 @@ Primero: ¿existe lo que dice que ha hecho? Compara `respuesta.md` con `meta.jso
 | A3D, AIF | `node scripts/validar.mjs <dir>`: errores de consola y captura. Luego usarlo con Playwright: en A3D, arrancar el tour y capturar a los ~10 s y en una parada intermedia; en AIF, combinar dos pares obvios (HTML + CSS…) y calcular cuántas recetas se pueden alcanzar desde los elementos base (`juez/alcanzables.js` de nemotron sirve de modelo). |
 | CCA | En `/tmp`: instalar, compilar, sus tests y su ejemplo. Después un script del juez con las mismas pruebas para todos: 50 altas concurrentes sobre el mismo carrito, monedas mezcladas, 0,10 × 3, id con `../`, si el objeto devuelto se puede mutar. Ver `CCA/juez/` de los modelos ya hechos. |
 | PTS | `python3 scripts/slop.py <post.md>`: palabras, títulos, marcas de slop y densidad. Guarda el resultado en `validacion.json` (`slop` y `extra`). Léelo entero: tesis, ejemplos, datos, inventos. |
+
+En el contenedor sin GPU, Chromium dibuja WebGL por software (`--use-gl=swiftshader`) a ~1 fps: en A3D, las escenas que avanzan con `dt` limitado (p. ej. `Math.min(dt, 0.05)`) van hasta 15 veces más lentas. Mide los fps antes de decir que «el tour no avanza» y espera a que acabe el vuelo de cámara antes de capturar una parada (ver `google_gemini-4-carbon/A3D/juez/`). En AIF, combina con la mesa limpia y solo las dos fichas: si se amontonan, la detección por «ficha más cercana» puede acertar a otra.
+
+Los scripts del juez en `.mjs` cargan Playwright con `createRequire(import.meta.url)('playwright')` y `NODE_PATH=$(npm root -g)`; escríbelos con Write, no con un heredoc en Bash.
 
 En `validacion.json` añade `extra` con líneas cortas (`✔ …`, `✖ …`, `~ …`) y `capturas_extra` si hiciste más capturas: el índice las enseña.
 
