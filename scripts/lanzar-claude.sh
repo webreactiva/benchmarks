@@ -1,25 +1,36 @@
 #!/usr/bin/env bash
 # lanzar-claude.sh <CODIGO> <modelo de Claude Code>
 #   lanzar-claude.sh PTS haiku
+#   ESFUERZO=medium lanzar-claude.sh PTS claude-sonnet-5-5   # con --effort; la carpeta es anthropic_<modelo>-<esfuerzo>
 # Como lanzar.sh, pero con Claude Code aislado (claude-aislado.sh, --permission-mode auto): configuración y HOME
 # propios (sin skills, sin CLAUDE.md, sin ajustes de nadie), carpeta vacía fuera del repo y un solo mensaje:
 # el prompt tal cual + prompts/_destino.txt. Guarda lo mismo que lanzar.sh; sesion.jsonl es el registro de Claude Code.
 set -eu
 cod=$1 alias=$2
+esf=${ESFUERZO:-}; efarg=""; sufijo=""
+[ -n "$esf" ] && [ "$esf" != default ] && { efarg="--effort $esf"; sufijo="-$esf"; }
 B=$(cd "$(dirname "$0")/.." && pwd); R=$(cd "$B/.." && pwd)
 # Herramientas: en el repositorio público van en herramientas/; aquí, en _comun/herramientas
 if [ -d "$B/herramientas" ]; then H=$B/herramientas; else H=$R/_comun/herramientas; fi
 prompt="$(cat "$B/prompts/$cod.txt") $(cat "$B/prompts/_destino.txt")"
-base=${CLAUDE_BENCH:-$HOME/.claude-bench}
+base=${CLAUDE_BENCH:-$HOME/.claude-bench/$alias$sufijo}
 conf=$base/config; casa=$base/home; mkdir -p "$conf" "$casa"
 # Carpeta con nombre aleatorio, que se borra al terminar: así ningún modelo encuentra el trabajo de otro
 mkdir -p /var/tmp/bench; ws=$(mktemp -d /var/tmp/bench/ws-XXXXXXXX)
 # Encerrado (scripts/encierro.sh): no ve el repo, ni /tmp, ni el resto de /root; el lanzador va en su configuración
 cp "$H/claude-aislado.sh" "$base/"
-s=c-$cod tp="=c-$cod:"
+# En la nube no se heredan las credenciales de quien lo dirige: con ANTHROPIC_API_KEY, se da por aceptada la clave
+# para que no salga el aviso de «custom API key» al arrancar
+if [ -n "${ANTHROPIC_API_KEY:-}" ]; then python3 -c '
+import json, os, sys
+f = sys.argv[1]; d = json.load(open(f)) if os.path.exists(f) else {}
+k = os.environ["ANTHROPIC_API_KEY"][-20:]; r = d.setdefault("customApiKeyResponses", {"approved": [], "rejected": []})
+if k not in r["approved"]: r["approved"].append(k)
+json.dump(d, open(f, "w"), indent=2)' "$conf/.claude.json"; fi
+s=c-$cod-$(echo "$alias$sufijo" | tr -cd "a-z0-9-") tp="=$s:"
 tmux kill-session -t "=$s" 2>/dev/null || true
 tmux new-session -d -s "$s" -x 120 -y 36 -c "$ws" \
-  "$B/scripts/encierro.sh $ws $base env HOME=$casa CLAUDE_LOOP_CONFIG=$conf $base/claude-aislado.sh --permission-mode auto --model $alias"
+  "$B/scripts/encierro.sh $ws $base env HOME=$casa CLAUDE_LOOP_CONFIG=$conf $base/claude-aislado.sh --permission-mode auto --model $alias $efarg"
 tmux set-option -t "$tp" @agente claude
 tmux set-option -t "$tp" @pantallas "$B/resultados/.pantallas"
 pantalla() { tmux capture-pane -p -t "$tp" 2>/dev/null; }
@@ -57,14 +68,16 @@ import json,sys
 for l in open(sys.argv[1]):
     d=json.loads(l)
     if d.get("type")=="assistant" and d["message"].get("model","").startswith("claude"): print(d["message"]["model"]); break' "$reg")
-dest=$B/resultados/anthropic_$modelo/$cod
+dest=$B/resultados/anthropic_$modelo$sufijo/$cod
 [ -e "$dest/meta.json" ] && { echo "Ya existe $dest"; exit 1; }
 mkdir -p "$dest"; echo "$pantalla_final" > "$dest/pantalla.txt"
 cp "$reg" "$dest/sesion.jsonl"; mv "$reg" "$reg.hecho"
 rm -rf "$dest/salida"; cp -R "$ws" "$dest/salida"; rm -rf "$ws"
 python3 "$B/scripts/tokens-claude.py" "$dest" "$cod" "$modelo" "$inicio" "$prompt"
 # Cuántas veces se le contestó «Decide tú.», en meta.json
-python3 - "$dest/meta.json" "$pregunto" <<'PY'
+python3 - "$dest/meta.json" "$pregunto" "$esf" <<'PY'
 import json, sys
-f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2]); json.dump(m, open(f, "w"), indent=2, ensure_ascii=False)
+f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2])
+if sys.argv[3]: m["esfuerzo"] = sys.argv[3]
+json.dump(m, open(f, "w"), indent=2, ensure_ascii=False)
 PY
