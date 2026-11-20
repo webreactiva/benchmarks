@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Alquimia Reactiva: el juego de crafteo infinito con el universo de Web Reactiva. Combina Humano, Café, Prompt y Terminal y descubre MCPs, skills, el Stack Chino o la Zona Malandriner.">
+<meta name="theme-color" content="#0a0e15">
+<title>Alquimia Reactiva — el juego de crafteo infinito de Web Reactiva</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚗️</text></svg>">
+<style>
+:root{
+  --bg:#0a0e15; --panel:#0c111b; --panel2:#0f1521; --line:#1e2735; --line2:#2a3547;
+  --txt:#e8eef6; --dim:#8b98ab; --accent:#7ee787; --accent2:#4cc2ff; --amber:#ffd166;
+  --pill-bg:rgba(20,27,40,.92); --pill-bd:rgba(255,255,255,.26);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Inter","Helvetica Neue",Arial,sans-serif;
+  display:flex; flex-direction:column; height:100dvh; overflow:hidden; overscroll-behavior:none;
+  -webkit-tap-highlight-color:transparent;
+}
+header{
+  display:flex; align-items:center; gap:10px; height:58px; padding:0 14px;
+  border-bottom:1px solid var(--line); background:rgba(10,14,21,.85);
+  backdrop-filter:blur(8px); z-index:40; user-select:none; -webkit-user-select:none; flex:none;
+}
+.brand{display:flex; align-items:center; gap:10px; min-width:0}
+.logo{width:34px; height:34px; display:grid; place-items:center; font-size:19px; border-radius:10px;
+  background:linear-gradient(135deg,rgba(126,231,135,.18),rgba(76,194,255,.18)); border:1px solid rgba(126,231,135,.35)}
+.brand-txt{display:flex; flex-direction:column; line-height:1.15; min-width:0}
+.brand-txt strong{font-size:16px; letter-spacing:.2px; white-space:nowrap}
+.brand-txt small{color:var(--dim); font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.spacer{flex:1}
+.count{background:rgba(126,231,135,.12); border:1px solid rgba(126,231,135,.3); color:var(--accent);
+  font-weight:700; font-size:13px; padding:6px 11px; border-radius:999px; white-space:nowrap}
+.icon-btn{background:none; border:1px solid var(--line2); color:var(--txt); width:36px; height:36px;
+  border-radius:10px; font-size:16px; cursor:pointer; display:grid; place-items:center;
+  transition:background .15s,border-color .15s; touch-action:manipulation; flex:none}
+.icon-btn:hover{background:rgba(255,255,255,.08)}
+.icon-btn.danger:hover{border-color:#ff7b93; color:#ff9aa9}
+#app{flex:1; display:flex; min-height:0; position:relative}
+aside{width:280px; min-width:280px; background:var(--panel); border-right:1px solid var(--line);
+  display:flex; flex-direction:column; z-index:30}
+aside.stash{outline:2px dashed var(--amber); outline-offset:-4px}
+.side-head{padding:10px; display:flex; gap:8px; align-items:center; border-bottom:1px solid var(--line)}
+#search{flex:1; background:var(--panel2); border:1px solid var(--line2); color:var(--txt);
+  border-radius:10px; padding:9px 12px; font-size:13.5px; outline:none; min-width:0}
+#search:focus{border-color:var(--accent)}
+#items{flex:1; overflow-y:auto; padding:10px; display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start}
+.side-foot{padding:8px 12px; border-top:1px solid var(--line); color:var(--dim); font-size:11.5px; text-align:center}
+.item{display:inline-flex; align-items:center; gap:7px; padding:8px 12px; border-radius:11px;
+  background:var(--pill-bg); border:1.5px solid var(--pill-bd); cursor:grab;
+  user-select:none; -webkit-user-select:none; touch-action:none; font-weight:600; font-size:13.5px;
+  transition:transform .12s,border-color .12s,background .12s; max-width:100%}
+.item:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.5); background:rgba(28,36,52,.95)}
+.item:active{cursor:grabbing; transform:scale(.97)}
+.item .em{font-size:15px}
+.item.gen{border-style:dashed; color:#cfd8e4}
+.item .mark{color:var(--amber); font-size:11px}
+#board{flex:1; position:relative; overflow:hidden; touch-action:none;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.055) 1.2px,transparent 1.6px);
+  background-size:26px 26px; background-color:#0b1018}
+#board::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(900px 500px at 75% -10%,rgba(126,231,135,.06),transparent 60%),
+             radial-gradient(700px 400px at 10% 110%,rgba(76,194,255,.05),transparent 60%)}
+#empty-hint{position:absolute; left:50%; top:44%; transform:translate(-50%,-50%);
+  color:var(--dim); font-size:14.5px; text-align:center; pointer-events:none; padding:0 20px}
+.node{position:absolute; transform:translate(-50%,-50%); display:flex; align-items:center; gap:8px;
+  padding:10px 14px; border-radius:12px; background:var(--pill-bg); border:1.5px solid var(--pill-bd);
+  font-weight:600; font-size:14px; cursor:grab; user-select:none; -webkit-user-select:none; touch-action:none;
+  box-shadow:0 6px 20px rgba(0,0,0,.35); white-space:nowrap; z-index:1}
+.node .em{font-size:17px}
+.node.gen{border-style:dashed; color:#d4dcea}
+.node.grabbing{cursor:grabbing; box-shadow:0 14px 34px rgba(0,0,0,.5); z-index:99}
+.node.drop-target{border-color:var(--accent); box-shadow:0 0 0 4px rgba(126,231,135,.22),0 6px 20px rgba(0,0,0,.4)}
+.node .del{margin-left:2px; width:20px; height:20px; border:none; background:rgba(255,255,255,.09);
+  color:#aab6c6; border-radius:6px; font-size:10px; cursor:pointer; display:grid; place-items:center;
+  opacity:0; transition:opacity .12s; padding:0; flex:none}
+.node:hover .del{opacity:1}
+.node .del:hover{background:#ff7b93; color:#fff}
+@media (hover:none){ .node .del{opacity:.6} }
+.node.pop{animation:pop .18s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:translate(-50%,-50%) scale(.5); opacity:0}}
+.node.vanish{animation:vanish .16s ease forwards}
+@keyframes vanish{to{transform:translate(-50%,-50%) scale(.4); opacity:0}}
+.ghost{position:fixed; transform:translate(-50%,-50%) rotate(-2deg) scale(1.05); display:flex;
+  align-items:center; gap:8px; padding:10px 14px; border-radius:12px; background:rgba(20,27,40,.97);
+  border:1.5px solid rgba(126,231,135,.5); font-weight:600; font-size:14px; pointer-events:none;
+  z-index:100; opacity:.95; box-shadow:0 14px 34px rgba(0,0,0,.5); white-space:nowrap}
+#toasts{position:fixed; top:70px; left:50%; transform:translateX(-50%); display:flex;
+  flex-direction:column; gap:8px; z-index:200; width:min(94vw,540px); pointer-events:none; align-items:center}
+.toast{pointer-events:auto; cursor:pointer; background:#101724; border:1px solid var(--line2);
+  border-radius:12px; padding:11px 15px; font-size:13.5px; color:var(--txt);
+  box-shadow:0 10px 30px rgba(0,0,0,.45); opacity:0; transform:translateY(-8px);
+  transition:opacity .18s,transform .18s; text-align:center; max-width:100%}
+.toast.in{opacity:1; transform:translateY(0)}
+.toast b{color:#fff}
+.toast.discovery{border-color:rgba(126,231,135,.45)}
+.toast.milestone{border-color:rgba(255,209,102,.55)}
+.toast.hint{border-color:rgba(76,194,255,.45)}
+.confetti{position:fixed; width:8px; height:8px; margin:-4px 0 0 -4px; border-radius:2px; pointer-events:none; z-index:150}
+.overlay{position:fixed; inset:0; background:rgba(4,7,12,.66); display:grid; place-items:center;
+  z-index:300; opacity:0; transition:opacity .18s; padding:18px}
+.overlay.on{opacity:1}
+.overlay[hidden]{display:none}
+.modal{background:#0f1522; border:1px solid var(--line2); border-radius:16px; padding:22px 24px;
+  max-width:560px; width:100%; max-height:min(82dvh,720px); overflow-y:auto;
+  box-shadow:0 30px 80px rgba(0,0,0,.5); user-select:text}
+.modal h2{margin:0 0 6px; font-size:19px; display:flex; align-items:center; gap:9px}
+.modal h3{margin:18px 0 8px; font-size:13.5px; color:var(--accent); text-transform:uppercase; letter-spacing:.6px}
+.modal p,.modal li{color:#c3cddb; font-size:14px}
+.modal a{color:var(--accent2)}
+.modal .actions{display:flex; justify-content:flex-end; gap:10px; margin-top:20px}
+.btn{background:var(--panel2); border:1px solid var(--line2); color:var(--txt); padding:9px 16px;
+  border-radius:10px; font-size:14px; cursor:pointer; font-weight:600}
+.btn:hover{background:rgba(255,255,255,.07)}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:#08240f}
+.btn.primary:hover{background:#8ff09a}
+.btn.danger{background:#ff7b93; border-color:#ff7b93; color:#2b0a12}
+ul.ach{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:7px}
+ul.ach li{font-size:13.5px; color:#c3cddb}
+ul.ach li.done{color:#dff5e1}
+ul.rules{padding-left:20px; margin:6px 0}
+.kbd{background:var(--panel2); border:1px solid var(--line2); border-radius:6px; padding:1px 7px;
+  font-size:12px; font-family:ui-monospace,monospace}
+.mobile-only{display:none}
+@media (max-width:760px){
+  .mobile-only{display:grid}
+  aside{position:absolute; top:0; left:0; bottom:0; transform:translateX(-102%);
+    transition:transform .22s; box-shadow:20px 0 60px rgba(0,0,0,.5); width:min(320px,86vw)}
+  aside.open{transform:translateX(0)}
+  .brand-txt small{display:none}
+  header{gap:6px; padding:0 10px}
+  .node{font-size:13px; padding:9px 12px}
+}
+@media (max-width:480px){
+  .brand-txt{display:none}
+  .count{font-size:12px; padding:5px 9px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button id="menuBtn" class="icon-btn mobile-only" title="Elementos">☰</button>
+  <div class="brand">
+    <span class="logo">⚗️</span>
+    <div class="brand-txt">
+      <strong>Alquimia Reactiva</strong>
+      <small>el Infinite Craft de Web Reactiva</small>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <div class="count" id="count" title="Elementos descubiertos (✦ = inventos tuyos)">🧪 …</div>
+  <button class="icon-btn" id="hintBtn" title="Dame una pista">💡</button>
+  <button class="icon-btn" id="soundBtn" title="Sonido">🔊</button>
+  <button class="icon-btn" id="helpBtn" title="Ayuda y retos">❓</button>
+  <button class="icon-btn" id="clearBtn" title="Limpiar tablero">🧹</button>
+  <button class="icon-btn danger" id="resetBtn" title="Reiniciar todo el progreso">♻️</button>
+</header>
+
+<div id="app">
+  <aside id="sidebar">
+    <div class="side-head">
+      <input id="search" type="search" placeholder="Buscar elemento… ( / )" autocomplete="off">
+      <button class="icon-btn mobile-only" id="closeSide" title="Cerrar">✕</button>
+    </div>
+    <div id="items"></div>
+    <div class="side-foot">✦ = inventos tuyos · combinaciones que nadie probó</div>
+  </aside>
+
+  <main id="board" aria-label="Tablero de alquimia">
+    <div id="empty-hint">Arrastra elementos aquí y suelta uno encima de otro para combinarlos 👇</div>
+  </main>
+</div>
+
+<div id="toasts"></div>
+
+<div class="overlay" id="helpModal" hidden>
+  <div class="modal">
+    <h2>⚗️ Alquimia Reactiva</h2>
+    <p style="color:var(--dim);margin:4px 0 0">El juego de combinar piezas del universo de <b>Web Reactiva</b>.</p>
+    <h3>Cómo se juega</h3>
+    <ul class="rules">
+      <li>Arrastra elementos de la izquierda al tablero.</li>
+      <li>Suelta uno <b>encima de otro</b> para combinarlos. Siempre pasa algo.</li>
+      <li>Los descubrimientos se guardan solos en tu navegador.</li>
+      <li><b>✕</b> o clic derecho elimina una pieza del tablero. Arrastrar una pieza de vuelta a la izquierda la guarda.</li>
+      <li>Doble clic duplica una pieza. <span class="kbd">/</span> para buscar en tus elementos.</li>
+    </ul>
+    <h3>Retos</h3>
+    <ul class="ach" id="achList"></ul>
+    <h3>✦ Inventos</h3>
+    <p>Cada combinación que nadie probó antes genera un <b>invento</b> nuevo (marcado con ✦). Hay toda una galaxia ahí fuera… y también basura. Como con la IA.</p>
+    <h3>Sobre</h3>
+    <p>Juego hecho con 💚 por y para la comunidad <b>Malandriner</b>, con el contenido de <a href="https://webreactiva.com" target="_blank" rel="noopener">webreactiva.com</a>: podcast, newsletter, MCPs, skills, masterclass, el Atlas… Proyecto no oficial y sin afiliación. Inspirado en <b>Infinite Craft</b> de neal.fun.</p>
+    <div class="actions"><button class="btn primary" id="helpClose">¡A combinar!</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="confirmModal" hidden>
+  <div class="modal">
+    <h2 id="confirmTitle"></h2>
+    <p id="confirmBody"></p>
+    <div class="actions">
+      <button class="btn" id="confirmCancel">Cancelar</button>
+      <button class="btn danger" id="confirmOk"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DATOS DEL JUEGO ============ -->
+<script id="gamedata">
+window.GAME_DATA = {
+  bases: [
+    { name: "Humano",  emoji: "🧑" },
+    { name: "Café",    emoji: "☕" },
+    { name: "Prompt",  emoji: "💬" },
+    { name: "Terminal",emoji: "⌨️" }
+  ],
+  // [nombre, emoji, "receta1", "recetaAlternativa1", ...]
+  crafted: [
+    ["Idea","💡","Humano + Prompt"],
+    ["Developer","👨‍💻","Humano + Café"],
+    ["Hacker","😎","Humano + Terminal"],
+    ["Personas","👥","Humano + Humano"],
+    ["Prisa","🏃","Prompt + Café"],
+    ["Script","📜","Prompt + Terminal"],
+    ["Noche de Deploy","🌙","Café + Terminal"],
+    ["Meta-prompt","🪄","Prompt + Prompt"],
+    ["Café Doble","🔥","Café + Café"],
+    ["Café Triple","🚀","Café + Café Doble"],
+    ["Taquicardia","💓","Café Doble + Café Doble"],
+    ["tmux","🪟","Terminal + Terminal"],
+    ["Texto","📝","Idea + Prompt"],
+    ["Historial","🧾","Terminal + Texto"],
+    ["Contexto","🧩","Prompt + Historial"],
+    ["IA","🤖","Prompt + Contexto"],
+    ["Ventana de Contexto","🖼️","Contexto + Contexto"],
+    ["Contexto Infinito","♾️","Ventana de Contexto + Ventana de Contexto"],
+    ["Overflow de Contexto","💥","Ventana de Contexto + Tokens"],
+    ["LLM","🦙","IA + IA"],
+    ["Tokens","🪙","LLM + Dinero"],
+    ["Alucinación","🌀","LLM + Tokens","IA + Café"],
+    ["Cliente","🤝","Humano + Software"],
+    ["Producto","📦","Software + Idea"],
+    ["Dinero","💰","Cliente + Producto"],
+    ["Código","💻","Developer + Script"],
+    ["Software","💾","Código + Código"],
+    ["Agente","🕵️","IA + Terminal"],
+    ["Multiagente","🕸️","Agente + Agente"],
+    ["Plan","🗺️","Idea + Texto"],
+    ["Plan Mode","🤔","Agente + Plan"],
+    ["Orquestación","🎼","Multiagente + Plan"],
+    ["Git","🌿","Terminal + Historial"],
+    ["Computadora","🖥️","Terminal + Software"],
+    ["Servidor","🗄️","Computadora + Cliente"],
+    ["Nube","☁️","Servidor + Servidor"],
+    ["Dirección","📮","Contexto + Palabra"],
+    ["Documento","📄","Palabra + Texto"],
+    ["Palabra","🔤","Texto + Tokens"],
+    ["Enlace","🔗","Documento + Dirección"],
+    ["Mensaje","📨","Palabra + Enlace"],
+    ["Chat","🗨️","Mensaje + Mensaje"],
+    ["Conversación","🗣️","Palabra + Palabra"],
+    ["Telegram","✈️","Chat + Nube"],
+    ["Comunidad","🤗","Chat + Personas"],
+    ["Open Source","🐧","Código + Comunidad"],
+    ["Red","🌐","Servidor + Enlace"],
+    ["Internet","🛰️","Nube + Red"],
+    ["Página","📃","Documento + Internet"],
+    ["Web","🌍","Internet + Página"],
+    ["Correo","📧","Mensaje + Nube"],
+    ["Blog","📰","Web + Texto"],
+    ["Newsletter","🗞️","Blog + Correo"],
+    ["Voz","🔊","Humano + Palabra"],
+    ["Grabación","⏺️","Voz + Software"],
+    ["Audio","🎧","Voz + Grabación"],
+    ["Video","📹","Audio + Software"],
+    ["Directo","🔴","Video + Comunidad"],
+    ["Aprendizaje","🧠","Humano + Idea"],
+    ["Lección","📗","Documento + Aprendizaje"],
+    ["Curso","📘","Lección + Lección"],
+    ["Masterclass","🎓","Curso + Directo"],
+    ["Guía","📖","Lección + Documento"],
+    ["Roadmap","🛤️","Plan + Aprendizaje"],
+    ["Programa con IA","🎯","Roadmap + IA"],
+    ["Mentoría","🧑‍🏫","Comunidad + Aprendizaje"],
+    ["Bucle","🔁","Historial + Historial"],
+    ["Entrenamiento","🏋️","Aprendizaje + Bucle"],
+    ["Preguntas","❓","Prompt + Personas"],
+    ["Entrevista","👔","Preguntas + Humano"],
+    ["Herramienta","🛠️","Developer + Software"],
+    ["Saco de Boxeo","🥊","Entrenamiento + Herramienta"],
+    ["Fichómetro","🥋","Entrevista + Saco de Boxeo","Entrevista + IA"],
+    ["Conector","🔌","Herramienta + Enlace"],
+    ["MCP","🔧","Agente + Conector"],
+    ["Instrucciones","📋","Texto + Prompt"],
+    ["Skill","⚡","Agente + Instrucciones"],
+    ["Librería de Skills","🗃️","Skill + Skill"],
+    ["Subagente","🤏","Agente + Skill"],
+    ["Spec","📐","Plan + Documento"],
+    ["SDD","🏗️","Spec + Software"],
+    ["OpenSpec","📔","Spec + Open Source"],
+    ["Ciclo de SDD","🔄","OpenSpec + Bucle"],
+    ["AGENTS.md","🗂️","Documento + Instrucciones"],
+    ["CLAUDE.md","📛","AGENTS.md + Claude"],
+    ["Revisor de AGENTS.md","🔬","AGENTS.md + Herramienta"],
+    ["Constructor de Specs","⚒️","OpenSpec + Herramienta"],
+    ["Ética","⚖️","Preguntas + IA"],
+    ["Anthropic","🏛️","IA + Ética"],
+    ["Claude","🟣","Anthropic + LLM"],
+    ["Claude Code","🎩","Claude + Terminal"],
+    ["Startup","🦄","Idea + Café"],
+    ["OpenAI","🌊","IA + Startup"],
+    ["ChatGPT","🟢","OpenAI + LLM"],
+    ["GPT","🔤","ChatGPT + Tokens"],
+    ["Codex","🎛️","OpenAI + Terminal"],
+    ["GitHub","🐙","Git + Web"],
+    ["Copilot","🧑‍✈️","GitHub + IA"],
+    ["Editor","✍️","Computadora + Código"],
+    ["Cursor","🖱️","Editor + IA"],
+    ["OpenCode","🔵","Open Source + Agente"],
+    ["Llama","🐑","Open Source + LLM"],
+    ["Buscador","🔎","Preguntas + Web"],
+    ["DeepSeek","🐋","LLM + Buscador"],
+    ["Google","🔍","Buscador + Dinero"],
+    ["Gemini","💎","Google + LLM"],
+    ["Amigo","🫂","Humano + Conversación"],
+    ["Kimi","🐨","LLM + Amigo"],
+    ["GLM","💠","LLM + Código"],
+    ["Stack Chino","🐉","Kimi + DeepSeek","Kimi + GLM","GLM + DeepSeek"],
+    ["Cerebras","🏎️","Prisa + Computadora"],
+    ["Groq","🚄","Prisa + LLM"],
+    ["Modelos Gratis","🆓","Cerebras + Groq"],
+    ["Selector de Modelos","🎚️","MCP + LLM"],
+    ["Comparativa de Precios IA","🏷️","Selector de Modelos + Dinero"],
+    ["RAG","🧲","Documento + IA"],
+    ["Libro","📕","Documento + Documento"],
+    ["Biblioteca","📚","Libro + Libro"],
+    ["Atlas Malandriner","🧭","MCP + Biblioteca","MCP + Zona Malandriner"],
+    ["Bug","🐛","Código + Prisa"],
+    ["Debug","🪲","Bug + Terminal"],
+    ["AI Slop","🗑️","Alucinación + IA","Alucinación + Código"],
+    ["Deuda Técnica","🕳️","Software + Prisa"],
+    ["Legacy","🏚️","Deuda Técnica + Historial"],
+    ["Refactor","🧹","Legacy + Agente"],
+    ["Tests","✅","Código + Miedo"],
+    ["Evals","📊","Tests + IA"],
+    ["Sin Alucinar","🧘","Alucinación + Evals"],
+    ["Miedo","😱","Humano + Prod"],
+    ["Prod","🏭","Deploy + Nube"],
+    ["Deploy","🚀","Terminal + Prisa"],
+    ["Viernes de Deploy","📅","Noche de Deploy + Deploy"],
+    ["Rollback","⏪","Prod + Miedo"],
+    ["Commit","📌","Git + Mensaje"],
+    ["Commit Automático","⚙️","Commit + Copilot"],
+    ["Leer","👓","Humano + Texto"],
+    ["Revisión","👀","Leer + Código"],
+    ["Pull Request","📬","Commit + Revisión"],
+    ["Review con IA","🤓","Pull Request + IA"],
+    ["Merge","🔀","Pull Request + Humano"],
+    ["Podcast","🎙️","Voz + Nube"],
+    ["Dani Primo","🧔","Podcast + Voz","Web Reactiva + Café"],
+    ["Descanso","🛋️","Leer + Café"],
+    ["En Pantuflas","🩴","Podcast + Descanso"],
+    ["Web Reactiva","⚛️","Podcast + Blog","Podcast + Newsletter","Blog + Newsletter"],
+    ["Web Reactiva Premium","💳","Web Reactiva + Dinero"],
+    ["15€/mes","💶","Web Reactiva Premium + Café"],
+    ["Zona Malandriner","🏝️","Telegram + Comunidad"],
+    ["Malandriner","🧢","Humano + Zona Malandriner"],
+    ["Contenido Humano","🫶","Dani Primo + IA"],
+    ["Pánico","😨","Humano + LLM"],
+    ["Calma","😌","Pánico + Descanso"],
+    ["Momento","⏳","Prisa + Descanso"],
+    ["Ahora","⏱️","Blog + Momento"],
+    ["Ciborg","🦿","Humano + IA"],
+    ["Singularidad","🌠","Ciborg + Contexto Infinito"],
+    ["Bucle Infinito","♻️","Bucle + Bucle"],
+    ["Audio 24/7","📻","Audio + Bucle Infinito"],
+    ["Notificación","🔔","Mensaje + Bucle Infinito"],
+    ["Doomscrolling","📱","Telegram + Bucle Infinito"],
+    ["Telegram Bot","🛎️","Telegram + Agente"],
+    ["Diseño","🎨","Idea + Página"],
+    ["Open Design","🖌️","Diseño + Open Source"],
+    ["Claude Design","🪞","Diseño + Claude"],
+    ["Automatización","🤖","Script + Prisa"],
+    ["Nodos","⭕","Red + Herramienta"],
+    ["n8n","🧵","Automatización + Nodos"],
+    ["Diversión","🎉","Café + Comunidad"],
+    ["Juego","🎮","Humano + Diversión"],
+    ["Magia","✨","IA + Café Doble"],
+    ["Mezcla","🧪","Script + Script"],
+    ["Alquimia","⚗️","Magia + Mezcla"],
+    ["Juego de Alquimia","🧙","Alquimia + Juego"],
+    ["Infinite Craft","🌌","Juego de Alquimia + Contexto Infinito"],
+    ["Prompt Inyectado","💉","Prompt + Hacker"],
+    ["Frontend","🌈","Código + Diseño"],
+    ["Backend","🛢️","Servidor + Código"],
+    ["Full Stack","🥞","Frontend + Backend"],
+    ["JavaScript","🟨","Web + Código"],
+    ["Stack Overflow","🚧","Preguntas + Overflow de Contexto"],
+    ["Copiar y Pegar","📑","Blog + Código"],
+    ["Vibe Coding","🎸","Código + Magia"],
+    ["Prompt Engineer","🤹","Humano + Meta-prompt"]
+  ]
+};
+</script>
+
+<!-- ============ LÓGICA DEL JUEGO ============ -->
+<script>
+(() => {
+"use strict";
+
+// ---------- Utilidades ----------
+const $ = (s, r) => (r || document).querySelector(s);
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+const pairKey = (a, b) => a < b ? a + "|" + b : b + "|" + a;
+const hash = s => { let h = 2166136261; for (const c of s) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// ---------- Registro de elementos y recetas ----------
+const elements = new Map();     // clave -> { key, name, emoji, curated }
+const recipes = new Map();      // "a|b" -> clave resultado
+const recipeIndex = new Map();  // resultado -> [[a,b], ...]
+const addElement = el => elements.set(el.key, el);
+
+const BASES = GAME_DATA.bases.map(b => ({ key: norm(b.name), name: b.name, emoji: b.emoji, curated: true }));
+BASES.forEach(addElement);
+for (const [name, emoji] of GAME_DATA.crafted) addElement({ key: norm(name), name, emoji, curated: true });
+for (const [name, , ...pairs] of GAME_DATA.crafted) {
+  const resKey = norm(name);
+  for (const p of pairs) {
+    const parts = p.split("+").map(s => norm(s.trim()));
+    if (parts.length !== 2) { console.warn("Receta malformada:", name, p); continue; }
+    const [a, b] = parts;
+    if (!elements.has(a) || !elements.has(b)) { console.warn("Ingrediente desconocido en:", name, p); continue; }
+    const k = pairKey(a, b);
+    if (recipes.has(k)) console.warn("Conflicto de receta:", k, "->", recipes.get(k), "y", name);
+    recipes.set(k, resKey);
+    if (!recipeIndex.has(resKey)) recipeIndex.set(resKey, []);
+    recipeIndex.get(resKey).push([a, b]);
+  }
+}
+const TOTAL = [...elements.values()].filter(e => e.curated).length;
+
+// ---------- Retos ----------
+const ACH = [
+  { key: norm("Web Reactiva"),         label: "Crea Web Reactiva" },
+  { key: norm("Dani Primo"),           label: "Invoca a Dani Primo" },
+  { key: norm("Zona Malandriner"),     label: "Entra en la Zona Malandriner" },
+  { key: norm("Atlas Malandriner"),    label: "Construye el Atlas Malandriner" },
+  { key: norm("Stack Chino"),          label: "Monta el Stack Chino" },
+  { key: norm("Sin Alucinar"),         label: "Domina el arte de programar sin alucinar" },
+  { key: norm("Web Reactiva Premium"), label: "Hazte Web Reactiva Premium" },
+  { key: norm("Infinite Craft"),       label: "Llega hasta Infinite Craft" }
+];
+
+// ---------- Estado y persistencia ----------
+const LS = "alquimia-reactiva-v1";
+let zTop = 1, uidc = 0;
+const uid = () => "n" + (++uidc) + "-" + Math.random().toString(36).slice(2, 7);
+const state = { discovered: [], overrides: {}, board: [], sound: true, intro: false };
+
+function saveNow() {
+  try {
+    const payload = { ...state, zTop, discovered: state.discovered.map(k => {
+      const el = elements.get(k) || {};
+      return { key: k, name: el.name, emoji: el.emoji, curated: el.curated };
+    }) };
+    localStorage.setItem(LS, JSON.stringify(payload));
+  } catch (e) {}
+}
+function save() { clearTimeout(save._t); save._t = setTimeout(saveNow, 250); }
+
+function load() {
+  try {
+    const raw = localStorage.getItem(LS);
+    if (!raw) return false;
+    const d = JSON.parse(raw);
+    state.sound = d.sound !== false;
+    state.intro = !!d.intro;
+    for (const el of (d.discovered || [])) {
+      if (!el || !el.key || elements.has(el.key)) continue;
+      addElement({ key: el.key, name: el.name || el.key, emoji: el.emoji || "✦", curated: false });
+    }
+    state.discovered = (d.discovered || []).map(e => e && e.key).filter(k => k && elements.has(k));
+    state.overrides = d.overrides || {};
+    for (const [k, r] of Object.entries(state.overrides)) if (elements.has(r)) recipes.set(k, r);
+    state.board = (d.board || []).filter(n => n && elements.has(n.key));
+    zTop = d.zTop || 1;
+    return true;
+  } catch (e) { return false; }
+}
+
+// ---------- Referencias DOM ----------
+const boardEl = $("#board"), itemsEl = $("#items"), searchEl = $("#search"),
+      sideEl = $("#sidebar"), toastsEl = $("#toasts"), countEl = $("#count");
+
+const boardRect = () => boardEl.getBoundingClientRect();
+const boardSize = () => { const r = boardRect(); return { w: r.width, h: r.height }; };
+const clampX = v => { const { w } = boardSize(); return Math.min(Math.max(v, 26), Math.max(w - 26, 26)); };
+const clampY = v => { const { h } = boardSize(); return Math.min(Math.max(v, 26), Math.max(h - 26, 26)); };
+
+// ---------- Sonido ----------
+let AC = null;
+function beep(freqs, dur = 0.07, vol = 0.06) {
+  if (!state.sound) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state === "suspended") AC.resume();
+    freqs.forEach((f, i) => {
+      const o = AC.createOscillator(), g = AC.createGain();
+      o.type = "sine"; o.frequency.value = f;
+      const t0 = AC.currentTime + i * dur;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); g.connect(AC.destination);
+      o.start(t0); o.stop(t0 + dur + 0.03);
+    });
+  } catch (e) {}
+}
+
+// ---------- Avisos (toasts) ----------
+function toast(html, cls = "info", ms = 3200) {
+  while (toastsEl.children.length >= 4) toastsEl.firstChild.remove();
+  const t = document.createElement("div");
+  t.className = "toast " + cls;
+  t.innerHTML = html;
+  toastsEl.appendChild(t);
+  requestAnimationFrame(() => t.classList.add("in"));
+  const kill = () => { t.classList.remove("in"); setTimeout(() => t.remove(), 220); };
+  const timer = setTimeout(kill, ms);
+  t.addEventListener("click", () => { clearTimeout(timer); kill(); });
+}
+
+// ---------- Confeti ----------
+const COLORS = ["#7ee787", "#4cc2ff", "#ffd166", "#ff7b93", "#c084fc", "#ffffff"];
+function confetti(px, py) {
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement("i");
+    p.className = "confetti";
+    p.style.left = px + "px"; p.style.top = py + "px";
+    p.style.background = COLORS[i % COLORS.length];
+    document.body.appendChild(p);
+    const ang = Math.random() * Math.PI * 2, d = 30 + Math.random() * 85;
+    const dx = Math.cos(ang) * d, dy = Math.sin(ang) * d + 55;
+    const anim = p.animate(
+      [{ transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+       { transform: `translate(${dx}px,${dy}px) rotate(${160 + Math.random() * 380}deg)`, opacity: 0 }],
+      { duration: 650 + Math.random() * 450, easing: "cubic-bezier(.15,.6,.3,1)" }
+    );
+    anim.onfinish = () => p.remove();
+  }
+}
+
+// ---------- Barra lateral ----------
+function renderSidebar() {
+  const q = norm(searchEl.value || "");
+  const prevScroll = itemsEl.scrollTop;
+  itemsEl.innerHTML = "";
+  const keys = [...state.discovered].reverse();
+  for (const k of keys) {
+    const el = elements.get(k);
+    if (!el) continue;
+    if (q && !norm(el.name).includes(q)) continue;
+    const d = document.createElement("div");
+    d.className = "item" + (el.curated ? "" : " gen");
+    d.dataset.key = k;
+    d.innerHTML = `<span class="em">${el.emoji}</span><span class="nm">${esc(el.name)}</span>${el.curated ? "" : "<span class='mark'>✦</span>"}`;
+    d.addEventListener("pointerdown", ev => { if (ev.button === 0) beginDrag(ev, { type: "sidebar", key: k }); });
+    itemsEl.appendChild(d);
+  }
+  itemsEl.scrollTop = prevScroll;
+}
+
+function updateCount() {
+  const found = state.discovered.filter(k => (elements.get(k) || {}).curated).length;
+  const gen = state.discovered.length - found;
+  countEl.textContent = `🧪 ${found}/${TOTAL}` + (gen ? ` ✦${gen}` : "");
+  document.title = `⚗️ ${found}/${TOTAL} · Alquimia Reactiva`;
+}
+
+function updateEmpty() {
+  $("#empty-hint").style.display = state.board.length ? "none" : "";
+}
+
+// ---------- Tablero ----------
+const nodeEls = new Map();
+function nodeDiv(n) {
+  const el = elements.get(n.key);
+  const d = document.createElement("div");
+  d.className = "node" + (el.curated ? "" : " gen");
+  d.dataset.id = n.id;
+  d.innerHTML = `<span class="em">${el.emoji}</span><span class="nm">${esc(el.name)}</span><button class="del" title="Eliminar" aria-label="Eliminar">✕</button>`;
+  d.style.left = n.x + "px"; d.style.top = n.y + "px"; d.style.zIndex = n.z;
+  d.addEventListener("pointerdown", ev => {
+    if (ev.button !== 0) return;
+    if (ev.target.closest(".del")) return;
+    beginDrag(ev, { type: "board", nodeId: n.id });
+  });
+  d.addEventListener("contextmenu", ev => { ev.preventDefault(); removeNode(n, false); });
+  d.addEventListener("dblclick", ev => {
+    if (ev.target.closest(".del")) return;
+    spawn(n.key, clampX(n.x + 30), clampY(n.y + 30));
+  });
+  d.querySelector(".del").addEventListener("click", ev => { ev.stopPropagation(); removeNode(n, false); });
+  return d;
+}
+function spawn(key, x, y) {
+  const n = { id: uid(), key, x: clampX(x), y: clampY(y), z: ++zTop };
+  state.board.push(n);
+  const d = nodeDiv(n);
+  d.classList.add("pop");
+  boardEl.appendChild(d);
+  nodeEls.set(n.id, d);
+  save(); updateEmpty();
+  return n;
+}
+function removeNode(n, animate = true) {
+  const i = state.board.indexOf(n);
+  if (i !== -1) state.board.splice(i, 1);
+  const d = nodeEls.get(n.id);
+  if (d) {
+    if (animate) { d.classList.add("vanish"); setTimeout(() => d.remove(), 170); }
+    else d.remove();
+  }
+  nodeEls.delete(n.id);
+  updateEmpty(); save();
+}
+function renderBoard() {
+  boardEl.querySelectorAll(".node").forEach(e => e.remove());
+  nodeEls.clear();
+  for (const n of state.board) {
+    n.x = clampX(n.x); n.y = clampY(n.y);
+    const d = nodeDiv(n);
+    boardEl.appendChild(d);
+    nodeEls.set(n.id, d);
+  }
+  updateEmpty();
+}
+
+// ---------- Inventos (combinaciones sin receta) ----------
+const TPL = [
+  (a, b, h) => `${a} de ${b}`,
+  (a, b) => `${b} de ${a}`,
+  (a, b) => `${a} con ${b}`,
+  (a, b) => `${b} en ${a}`,
+  (a, b) => `Ultra ${a}`,
+  (a, b) => `Meta ${b}`,
+  (a, b) => `${a} Premium`,
+  (a, b, h) => `${a} v${2 + (h % 8)}`,
+  (a, b) => `${a} ${b}`,
+  (a, b) => `${b} ${a}`,
+  (a, b) => `${a} Turbos`,
+  (a, b) => `${b} Reactivo`,
+  (a, b) => `${a} Infinito`,
+  (a, b) => `Café con ${a}`
+];
+const POOL = ["✨","🔥","⚡","🌀","🎯","🧿","🪄","🚀","💎","🌙","🧠","🤖","🎭","🪐","🌱","🎨","🍀","💫"];
+function invent(ea, eb) {
+  const [a, b] = [ea.name, eb.name].sort((x, y) => x.localeCompare(y, "es"));
+  const h = hash(a + "|" + b);
+  let name = null;
+  for (let i = 0; i < 40; i++) {
+    const cand = TPL[(h + i) % TPL.length](a, b, h + i);
+    if (cand !== a && cand !== b && !elements.has(norm(cand))) { name = cand; break; }
+  }
+  if (!name) name = `${a} ${b} ✦`;
+  const el = { key: norm(name), name, emoji: POOL[(h >>> 3) % POOL.length], curated: false };
+  addElement(el);
+  const k = pairKey(ea.key, eb.key);
+  recipes.set(k, el.key);
+  state.overrides[k] = el.key;   // se persiste: la misma pareja dará siempre el mismo invento
+  return el;
+}
+
+// ---------- Descubrimientos ----------
+function discover(el, x, y) {
+  if (state.discovered.includes(el.key)) return;
+  state.discovered.push(el.key);
+  renderSidebar(); updateCount(); save();
+  const r = boardRect();
+  confetti(r.left + x, r.top + y);
+  beep([660, 990]);
+  toast(`✨ ¡Descubrimiento! <b>${el.emoji} ${esc(el.name)}</b>`, "discovery");
+  const ach = ACH.find(a => a.key === el.key);
+  if (ach) {
+    setTimeout(() => {
+      toast(`🏆 Reto completado: <b>${esc(ach.label)}</b>`, "milestone", 4200);
+      beep([523, 659, 784, 1046], 0.09);
+    }, 450);
+  }
+}
+
+function combine(nA, nB) {
+  const ea = elements.get(nA.key), eb = elements.get(nB.key);
+  const k = pairKey(nA.key, nB.key);
+  let resKey = recipes.get(k);
+  if (!resKey) resKey = invent(ea, eb).key;
+  const res = elements.get(resKey);
+  const x = (nA.x + nB.x) / 2, y = (nA.y + nB.y) / 2;
+  removeNode(nA); removeNode(nB);
+  spawn(res.key, x, y);
+  discover(res, x, y);
+}
+
+// ---------- Arrastrar y soltar ----------
+let drag = null;
+let bRect = null, sRect = null;
+
+function beginDrag(ev, src) {
+  if (drag) return;
+  drag = { src, moved: false, startX: ev.clientX, startY: ev.clientY, ghost: null, node: null, target: null, rects: [] };
+  if (src.type === "board") {
+    drag.node = state.board.find(n => n.id === src.nodeId);
+    if (!drag.node) { drag = null; return; }
+    drag.node.z = ++zTop;
+    const d = nodeEls.get(drag.node.id);
+    d.style.zIndex = drag.node.z;
+    d.classList.add("grabbing");
+  }
+  bRect = boardRect();
+  sRect = sideEl.getBoundingClientRect();
+  window.addEventListener("pointermove", dragMove);
+  window.addEventListener("pointerup", dragEnd);
+  window.addEventListener("pointercancel", dragCancel);
+  ev.preventDefault();
+}
+function hitTest(x, y) {
+  let best = null;
+  for (const { n, r } of drag.rects) {
+    if (x >= r.left - 8 && x <= r.right + 8 && y >= r.top - 8 && y <= r.bottom + 8) {
+      if (!best || n.z > best.z) best = n;
+    }
+  }
+  return best;
+}
+const overSidebar = ev => ev.clientX >= sRect.left && ev.clientX <= sRect.right && ev.clientY >= sRect.top && ev.clientY <= sRect.bottom;
+const overBoard = ev => ev.clientX >= bRect.left && ev.clientX <= bRect.right && ev.clientY >= bRect.top && ev.clientY <= bRect.bottom;
+
+function dragMove(ev) {
+  if (!drag) return;
+  if (!drag.moved) {
+    if (Math.hypot(ev.clientX - drag.startX, ev.clientY - drag.startY) < 7) return;
+    drag.moved = true;
+    const key = drag.src.type === "sidebar" ? drag.src.key : drag.node.key;
+    const el = elements.get(key);
+    if (drag.src.type === "sidebar") {
+      const g = document.createElement("div");
+      g.className = "ghost" + (el.curated ? "" : " gen");
+      g.innerHTML = `<span class="em">${el.emoji}</span><span class="nm">${esc(el.name)}</span>`;
+      document.body.appendChild(g);
+      drag.ghost = g;
+    }
+    drag.rects = state.board
+      .filter(n => drag.src.type === "sidebar" || n.id !== drag.node.id)
+      .map(n => ({ n, r: nodeEls.get(n.id).getBoundingClientRect() }));
+  }
+  if (drag.ghost) { drag.ghost.style.left = ev.clientX + "px"; drag.ghost.style.top = ev.clientY + "px"; }
+  if (drag.node) {
+    drag.node.x = clampX(ev.clientX - bRect.left);
+    drag.node.y = clampY(ev.clientY - bRect.top);
+    const d = nodeEls.get(drag.node.id);
+    d.style.left = drag.node.x + "px";
+    d.style.top = drag.node.y + "px";
+  }
+  const t = hitTest(ev.clientX, ev.clientY);
+  if (drag.target && drag.target !== t) nodeEls.get(drag.target.id)?.classList.remove("drop-target");
+  drag.target = t;
+  if (t) nodeEls.get(t.id).classList.add("drop-target");
+  sideEl.classList.toggle("stash", !!(drag.node && overSidebar(ev)));
+}
+
+function dragEnd(ev) {
+  if (!drag) return;
+  const { src, moved, node, target } = drag;
+  if (!moved) {
+    // Toque/clic: colocar directamente en el tablero
+    if (src.type === "sidebar") {
+      const { w, h } = boardSize();
+      spawn(src.key, w * (0.3 + Math.random() * 0.4), h * (0.25 + Math.random() * 0.5));
+    }
+    finishDrag();
+    return;
+  }
+  if (node && overSidebar(ev)) {
+    removeNode(node, false);
+    toast(`📥 ${esc(elements.get(node.key).name)} guardado`);
+    finishDrag();
+    return;
+  }
+  if (target && overBoard(ev)) {
+    if (node) combine(node, target);
+    else {
+      const n = spawn(src.key, target.x, target.y);
+      combine(n, target);
+    }
+    finishDrag();
+    return;
+  }
+  if (!node && overBoard(ev)) spawn(src.key, clampX(ev.clientX - bRect.left), clampY(ev.clientY - bRect.top));
+  save();
+  finishDrag();
+}
+function dragCancel() { finishDrag(); }
+function finishDrag() {
+  if (!drag) return;
+  if (drag.target) nodeEls.get(drag.target.id)?.classList.remove("drop-target");
+  if (drag.ghost) drag.ghost.remove();
+  if (drag.node) nodeEls.get(drag.node.id)?.classList.remove("grabbing");
+  sideEl.classList.remove("stash");
+  drag = null;
+  window.removeEventListener("pointermove", dragMove);
+  window.removeEventListener("pointerup", dragEnd);
+  window.removeEventListener("pointercancel", dragCancel);
+  save();
+}
+
+// ---------- Pista ----------
+function giveHint() {
+  const cands = [];
+  for (const [res, pairs] of recipeIndex) {
+    if (state.discovered.includes(res)) continue;
+    for (const [a, b] of pairs) {
+      if (state.discovered.includes(a) && state.discovered.includes(b)) { cands.push([a, b]); break; }
+    }
+  }
+  if (!cands.length) {
+    toast("💡 No tienes recetas a la vista: combina elementos que ya tengas y <b>inventarás algo nuevo ✦</b>", "hint", 4500);
+    return;
+  }
+  const [a, b] = cands[Math.floor(Math.random() * cands.length)];
+  const ea = elements.get(a), eb = elements.get(b);
+  toast(`💡 Prueba a combinar <b>${ea.emoji} ${esc(ea.name)}</b> con <b>${eb.emoji} ${esc(eb.name)}</b>`, "hint", 5200);
+}
+
+// ---------- Modales ----------
+function openModal(el) { el.hidden = false; requestAnimationFrame(() => el.classList.add("on")); }
+function closeModal(el) { el.classList.remove("on"); setTimeout(() => { el.hidden = true; }, 190); }
+
+const helpModal = $("#helpModal"), confirmModal = $("#confirmModal");
+let confirmCb = null;
+function askConfirm(title, body, okLabel, cb) {
+  $("#confirmTitle").textContent = title;
+  $("#confirmBody").textContent = body;
+  $("#confirmOk").textContent = okLabel;
+  confirmCb = cb;
+  openModal(confirmModal);
+}
+$("#confirmCancel").addEventListener("click", () => closeModal(confirmModal));
+$("#confirmOk").addEventListener("click", () => { closeModal(confirmModal); if (confirmCb) confirmCb(); });
+
+function renderAch() {
+  $("#achList").innerHTML = ACH.map(a => {
+    const done = state.discovered.includes(a.key);
+    return `<li class="${done ? "done" : ""}"><span>${done ? "✅" : "⬜"}</span> ${esc(a.label)}</li>`;
+  }).join("");
+}
+
+// ---------- Botones ----------
+$("#hintBtn").addEventListener("click", giveHint);
+$("#helpBtn").addEventListener("click", () => { renderAch(); openModal(helpModal); });
+$("#helpClose").addEventListener("click", () => closeModal(helpModal));
+$("#helpModal").addEventListener("click", e => { if (e.target === helpModal) closeModal(helpModal); });
+confirmModal.addEventListener("click", e => { if (e.target === confirmModal) closeModal(confirmModal); });
+
+$("#soundBtn").addEventListener("click", () => {
+  state.sound = !state.sound;
+  $("#soundBtn").textContent = state.sound ? "🔊" : "🔇";
+  if (state.sound) beep([880]);
+  save();
+});
+
+$("#clearBtn").addEventListener("click", () => {
+  if (!state.board.length) { toast("🧹 El tablero ya está limpio"); return; }
+  askConfirm("¿Limpiar el tablero?", "Tus descubrimientos se mantienen. Solo desaparecen las piezas sueltas del tablero.", "Limpiar", () => {
+    state.board = []; renderBoard(); save();
+    toast("🧹 Tablero limpio");
+  });
+});
+
+$("#resetBtn").addEventListener("click", () => {
+  askConfirm("¿Reiniciar todo el progreso?", "Se borrará TODO: descubrimientos, inventos y tablero. No hay vuelta atrás.", "Reiniciar", () => {
+    try { localStorage.removeItem(LS); } catch (e) {}
+    location.reload();
+  });
+});
+
+$("#menuBtn").addEventListener("click", () => sideEl.classList.add("open"));
+$("#closeSide").addEventListener("click", () => sideEl.classList.remove("open"));
+
+searchEl.addEventListener("input", renderSidebar);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    if (!helpModal.hidden) closeModal(helpModal);
+    if (!confirmModal.hidden) closeModal(confirmModal);
+    sideEl.classList.remove("open");
+  }
+  if (e.key === "/" && document.activeElement !== searchEl) {
+    const open = !helpModal.hidden || !confirmModal.hidden;
+    if (!open) { e.preventDefault(); searchEl.focus(); }
+  }
+});
+document.addEventListener("dragstart", e => e.preventDefault());
+
+window.addEventListener("resize", () => {
+  for (const n of state.board) {
+    n.x = clampX(n.x); n.y = clampY(n.y);
+    const d = nodeEls.get(n.id);
+    if (d) { d.style.left = n.x + "px"; d.style.top = n.y + "px"; }
+  }
+});
+window.addEventListener("beforeunload", saveNow);
+
+// ---------- Arranque ----------
+const hadSave = load();
+if (!hadSave) {
+  state.discovered = BASES.map(b => b.key);
+  saveNow();
+}
+for (const b of BASES) if (!state.discovered.includes(b.key)) state.discovered.push(b.key);
+
+renderSidebar();
+renderBoard();
+updateCount();
+updateEmpty();
+$("#soundBtn").textContent = state.sound ? "🔊" : "🔇";
+
+if (!state.intro) {
+  state.intro = true; save();
+  setTimeout(() => toast("👋 Bienvenido a la <b>Alquimia Reactiva</b>: combina piezas del universo de Web Reactiva", "milestone", 4800), 500);
+  setTimeout(() => toast("🎯 Arrastra dos elementos al tablero y suelta uno encima de otro para combinarlos", "info", 5200), 1500);
+}
+
+})();
+</script>
+</body>
+</html>

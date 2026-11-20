@@ -1,0 +1,18 @@
+{
+  "nota": 9,
+  "veredicto": "a pie de calle, tapado",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  },
+  "resumen": "Ruta guiada a pie de calle por ocho paradas con three.js, que arranca sola y además se puede explorar en órbita o a pie con WASD; se reconocen la fuente de los Leones, la alberca de Arrayanes, el patio circular de Carlos V y la acequia del Generalife. Pero unos marcadores numerados enormes tapan media pantalla en cada parada y en el Salón de Embajadores la cámara queda contra un muro.",
+  "rarezas": [
+    "Lo probó en Chrome con Playwright: arrancó la página, saltó a las paradas 4 y 6 y comprobó los títulos antes de dar por terminado.",
+    "Comprobó con curl que el CDN de three.js respondía antes de usarlo.",
+    "7 peticiones, 220 000 tokens, 0,43 $."
+  ]
+}

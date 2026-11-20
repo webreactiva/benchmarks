@@ -1,0 +1,36 @@
+   Juego de alquimia Web Reactiv +
+     ├───────────────────────────────────────────────┼───────────────────────────────────────────────────────────────┤
+     │ 🐉 Stack Chino                                │ Kimi + DeepSeek                                               │
+     ├───────────────────────────────────────────────┼───────────────────────────────────────────────────────────────┤
+     │ 🌌 Infinite Craft                             │ Juego de Alquimia + Contexto Infinito                         │
+     └───────────────────────────────────────────────┴───────────────────────────────────────────────────────────────┘
+
+     Contenido: 187 elementos curados con 192 recetas (MCPs, skills, SDD/OpenSpec, Plan Mode, n8n, Evals, Fichómetro,
+     LinkedIn-5-5, En Pantuflas, AI Slop, la newsletter, el podcast, Kimi/GLM/DeepSeek, Cerebras y Groq, el 15€/mes…),
+     todo alcanzable desde los básicos (validado con BFS).
+
+     Como Infinite Craft: cualquier combinación sin receta genera un invento nuevo y determinista (marcado con ✦) — el
+     juego es infinito.
+
+     Funciones:
+
+     - 🖱️ Arrastrar y soltar con resaltado del objetivo (funciona también en táctil; tap coloca, doble clic duplica, ✕/
+       clic derecho elimina, arrastrar a la barra lateral guarda)
+     - 💾 Progreso y tablero guardados en localStorage
+     - 💡 Botón de pista, ❓ ayuda con 8 retos rastreados, 🔊 sonidito de descubrimiento, 🧹 limpiar tablero y ♻️
+       reinicio
+     - 🧪 Contador descubiertos/187, buscador con /, toasts con confeti en cada primer descubrimiento
+     - 100% offline, sin APIs ni LLMs — abre el archivo y juega
+
+     Créditos incluidos en la ayuda: juego no oficial para la comunidad Malandriner, inspirado en Infinite Craft de
+     neal.fun, con el contenido de webreactiva.com.
+
+     Build · glm-5.3 · 9m 0s · 225.4 tok/s · 588ms ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-jrA9VaND                                                             116.5K (11%)  ctrl+p commands
+

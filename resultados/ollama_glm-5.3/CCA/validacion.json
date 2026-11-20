@@ -1,0 +1,20 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ npm ci, build y 19/19 tests (vitest); arranca la API con una interfaz web de demostración",
+    "✔ 50 altas a la vez en una instancia: 50 guardadas",
+    "✖ dos instancias con el mismo SQLite: 44 guardadas y 6 errores 500; sin control de versión",
+    "✔ dinero en céntimos, precio del catálogo (se ignora el del cliente), una sola moneda",
+    "✔ valida cantidad 0, negativa, decimal, enorme y en texto; productos y carritos con «../»; cuerpo vacío",
+    "~ entrega dist/ y data/cart.db junto al código"
+  ],
+  "comprobacion": "Copia en /tmp sin node_modules, dist ni data; npm ci, build, vitest y juez/juez.mjs contra dos instancias con DB_FILE común (del juez)",
+  "juez_salida": [
+    "50 altas a la vez (p-hub, stock 50) en una instancia: 201 × 50 → 50 guardadas",
+    "repartidas entre dos instancias: 201 × 44, 500 × 6 → 44 guardadas (sin perder lo aceptado)",
+    "precio desde el cliente (priceCents: 1) → se ignora, 45,50 € del catálogo",
+    "quantity 0 / -3 / 1,5 / 1e9 / «2» → 400",
+    "producto y cartId con «../» → 404; cuerpo vacío → 400"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "nota": 8,
+  "veredicto": "bien hecho, poca concurrencia",
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 1,
+    "escala horizontal": 1,
+    "explica el escalado": 1
+  },
+  "resumen": "Librería TypeScript sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, promociones (porcentaje, fijo, 3x2, volumen), IVA por categoría, envío, idempotencia, fusión de carritos y checkout con compensación de stock; 14 tests y una demo que funcionan. La versión optimista no pierde datos, pero con 50 altas a la vez rechaza 45 porque reintenta cinco veces sin esperar, y solo hay adaptadores en memoria.",
+  "rarezas": [
+    "Un test de concurrencia falló (13/14) y lo arregló subiendo los reintentos por defecto de 3 a 5: ajustó un parámetro hasta que el test pasó.",
+    "Entrega la carpeta dist/ compilada junto al código.",
+    "22 peticiones, 678 000 tokens, 0,43 $."
+  ]
+}

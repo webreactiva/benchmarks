@@ -1,0 +1,18 @@
+{
+  "nota": 8,
+  "veredicto": "bonita, con tropiezos",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 0,
+    "textos sin errores": 0
+  },
+  "resumen": "Maqueta con three.js y nueve paradas, de la Puerta de la Justicia al Generalife, con ruta guiada que vuela de una a otra, itinerario clicable y vista aérea en la que se reconoce el recinto: Carlos V circular, la fuente de los Leones, el Patio de la Acequia. Pero en Arrayanes la cámara queda contra un muro, en Leones un marcador tapa media vista y sitúa a Washington Irving hospedado en la Plaza de los Aljibes.",
+  "rarezas": [
+    "Lo reescribió entero tras revisar la geometría y lo probó en Chrome con Playwright: capturas del tour y análisis de los píxeles para comprobar que el cielo y la piedra se veían.",
+    "Buscó navegadores también en /root/.cache/ms-playwright (vacío dentro del encierro).",
+    "21 peticiones y 3,1 millones de tokens (2,9 de caché)."
+  ]
+}

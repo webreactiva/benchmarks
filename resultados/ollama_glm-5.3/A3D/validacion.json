@@ -1,0 +1,31 @@
+{
+ "html": [
+  {
+   "fichero": "alhambra-ruta-3d.html",
+   "errores": [],
+   "titulo": "La Alhambra · Granada — Ruta guiada en 3D",
+   "canvas": 1,
+   "texto": "GRANADA · ANDALUCÍA · PATRIMONIO DE LA HUMANIDAD\nLa Alhambra\n\nLa ciudad palatina nazarí —qa'lat al-Hamra', «el castillo rojo»— que corona el cerro de la Sabika. Esta ruta guiada en 3D atraviesa sus puertas, la Alcazaba militar, los palacios de Comares y de los Leones, el palacio renacentista de Carlos V y los jardines del Generalife.\n\nPuerta de la Justicia\nAlcazaba y Torre de la Vela\nPlaza de los ",
+   "scripts": [],
+   "captura": "capturas/alhambra-ruta-3d.html.png",
+   "capturas_extra": [
+    "capturas/auto-90s.png",
+    "capturas/parada-3.png",
+    "capturas/parada-5.png",
+    "capturas/parada-7.png",
+    "capturas/parada-8.png",
+    "capturas/parada-9.png",
+    "capturas/aerea.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; 61 KB con three.js 0.160 de jsDelivr",
+  "✔ 9 paradas en orden de visita: Justicia, Alcazaba, Aljibes, Mexuar, Arrayanes, Embajadores, Leones, Carlos V, Generalife",
+  "✔ la ruta guiada avanza sola con vuelos de cámara (parada 3 a los 4 min con render por software a 3 fps; 8,5 s de escena por parada)",
+  "✔ se reconoce: torres almenadas, patio circular de Carlos V, fuente de los Leones con arquerías, Patio de la Acequia con surtidores, vista aérea del recinto",
+  "✖ en Arrayanes la cámara queda contra un muro; en Leones el marcador «7» tapa media pantalla",
+  "✖ «Aquí se hospedó Washington Irving» en la Plaza de los Aljibes: se alojó dentro del palacio"
+ ]
+}

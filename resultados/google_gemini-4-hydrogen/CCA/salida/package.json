@@ -1,0 +1,23 @@
+{
+  "name": "scalable-shopping-cart",
+  "version": "1.0.0",
+  "description": "Arquitectura modular y escalable para un carrito de la compra en TypeScript",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "tsc && node --test tests/*.test.mjs",
+    "demo": "tsc && node examples/demo.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

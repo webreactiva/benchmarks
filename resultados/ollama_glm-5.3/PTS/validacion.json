@@ -1,0 +1,9 @@
+{
+  "slop": "1296 palabras · 8 títulos · 18 líneas de lista · frase media 16.4 · slop 18.0 (1.39/100 palabras)\n  9-no-solo-sino           1  «no solo X, sino Y»: es \n  15-negritas             20  negritas: **un test no determinista es, en la práctica, peor que no tener test alguno**, **los tests existen para darnos confianza a la hora de cambiar el código**, **aprender a ignorar las alarmas**, **el pipeline ha dejado de ser una señal y se ha convertido en una ruleta**, **Tiempo de re-ejecución.**, **Tiempo de investigación.**\n  16-lista-con-titulo      9  listas con etiqueta en negrita y dos puntos: \n- **Tiempo de re-ejecución.**, - **Tiempo de investigación.**, - **Coste de cómputo.**, - **Paralización del flujo.**, \n- **Dependencia del tiempo.**, - **Estado compartido entre tests.**\n  realidad-compleja        1  frases hechas de giro («la realidad es más compleja»): spoiler\n  titulo-conclusión        1  sección «Conclusión»: Conclusión",
+  "extra": [
+    "✔ un post en Markdown, en español, de 1296 palabras",
+    "~ 1,39 marcas de slop por cada 100 palabras: 20 negritas, 9 listas con etiqueta, sección «Conclusión»",
+    "✔ código antes y después (sleep(2000) frente a esperar la condición) y números (suite de 20 min, 90 % en verde)",
+    "✖ errores: «cuarenta» por «cuarentena» (dos veces), «Pensa», el «guardia de seguridad» que grita «¡lobo!», y `flake8-ignore-comments` como forma de silenciar tests"
+  ]
+}

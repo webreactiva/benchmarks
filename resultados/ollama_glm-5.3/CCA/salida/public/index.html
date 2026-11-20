@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TiendaDev — Carrito de la compra</title>
+    <meta name="description" content="Demo de carrito de la compra con API REST en Node + TypeScript" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/">🛒 TiendaDev</a>
+        <button id="cart-toggle" class="cart-toggle" type="button">
+          <span>🧺 Carrito</span>
+          <span id="cart-count" class="badge" hidden>0</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="container layout">
+      <section aria-labelledby="products-title">
+        <h2 id="products-title">Catálogo</h2>
+        <div id="product-grid" class="grid" aria-live="polite"></div>
+      </section>
+
+      <aside id="cart-panel" class="cart-panel" aria-label="Carrito de la compra">
+        <!-- lo pinta app.js -->
+      </aside>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

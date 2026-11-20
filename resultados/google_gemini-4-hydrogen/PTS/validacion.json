@@ -1,0 +1,9 @@
+{
+  "slop": "1220 palabras · 12 títulos · 12 líneas de lista · frase media 20.6 · slop 18.8 (1.54/100 palabras)\n  7-vocabulario            1  vocabulario de IA: exhaustiva\n  13-raya                  4  rayas (—): —, —, —, —\n  15-negritas             19  negritas: **\"Re-run failed jobs\"**, **flaky test**, **una suite con tests que fallan a veces suele ser peor que no tener tests en absoluto**, **dar una señal clara e inequívoca**, **La primera vez**, **La tercera vez**\n  16-lista-con-titulo      5  listas con etiqueta en negrita y dos puntos: \n* **La primera vez**, * **La tercera vez**, * **La décima vez**, * **Cuellos de botella en las entregas:**, * **Normalización de la mediocridad:**\n  23-relleno               1  muletillas: En resumen\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que\n  realidad-compleja        1  frases hechas de giro («la realidad es más compleja»): a primera vista",
+  "extra": [
+    "✔ un post en Markdown, en español, de 1220 palabras",
+    "~ 1,54 marcas de slop por cada 100 palabras: 19 negritas, listas con etiqueta, «En resumen», «La próxima vez que…»",
+    "✔ código del sleep(100) que en CI tarda 120 ms, y números de coste (pipeline de 15 min con un 10 % de fallo aleatorio)",
+    "✔ mecanismo claro: sin tests sabes que vas a ciegas; con tests intermitentes el equipo aprende a pulsar re-run y deja pasar el fallo real"
+  ]
+}

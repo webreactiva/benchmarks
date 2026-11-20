@@ -1,0 +1,41 @@
+{
+  "codigo": "AIF",
+  "modelo": "google/gemini-4-hydrogen",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T15:25:14Z",
+  "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 72834,
+    "output": 32164,
+    "reasoning": 12861,
+    "cache_read": 287567,
+    "cache_write": 0,
+    "total": 405426
+  },
+  "peticiones": 8,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 1,
+    "websearch": 3,
+    "webfetch": 1,
+    "write": 1,
+    "shell": 3,
+    "edit": 4
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e06702a26ffegVDtTAMcmQRL8m",
+  "coste_usd": 0.4682,
+  "ficheros": [
+    "index.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models"
+  },
+  "veces_decide_tu": 1
+}
