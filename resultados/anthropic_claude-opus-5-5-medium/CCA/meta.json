@@ -1,0 +1,47 @@
+{
+  "codigo": "CCA",
+  "modelo": "claude-opus-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-20T11:27:54Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 26,
+    "output": 33075,
+    "reasoning": 0,
+    "cache_read": 650162,
+    "cache_write": 42591,
+    "total": 725854
+  },
+  "peticiones": 13,
+  "error": null,
+  "herramientas": {
+    "Bash": 6,
+    "Write": 12,
+    "Edit": 2
+  },
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "README.md",
+    "package.json",
+    "src/application/cartService.js",
+    "src/container.js",
+    "src/domain/cart.js",
+    "src/domain/errors.js",
+    "src/domain/money.js",
+    "src/domain/pricing.js",
+    "src/http/server.js",
+    "src/index.js",
+    "src/infrastructure/adapters.js",
+    "src/infrastructure/inMemoryCartRepository.js",
+    "src/infrastructure/redisCartRepository.js",
+    "test/domain.test.js",
+    "test/http.test.js",
+    "test/redisRepository.test.js",
+    "test/service.test.js"
+  ],
+  "veces_decide_tu": 0,
+  "esfuerzo": "medium",
+  "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py."
+}

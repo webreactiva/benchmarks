@@ -1,0 +1,27 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ python3 tests/test_cart.py: 8/8, sin dependencias",
+    "✔ python3 -m cart.api arranca; alta, cambio de cantidad, quitar y vaciar por HTTP",
+    "✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50",
+    "✔ Redis real, dos instancias HTTP: 50 POST a la vez, aceptadas = guardadas; 2-6 acaban en 409 explícito tras 8 reintentos",
+    "✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora",
+    "~ una sola moneda fija (EUR): el catálogo no tiene moneda, así que no hay nada que mezclar",
+    "~ id ../ lo para la ruta HTTP (404); el servicio lo acepta",
+    "✖ el carrito devuelto se puede mutar y cambia lo guardado en memoria: 500 unidades a 1 ¢ sin pasar por catálogo ni límites",
+    "~ RedisCartRepository no está conectado en api.py ni exportado en cart/__init__.py: hay que montarlo a mano"
+  ],
+  "comprobacion": "Copia en /tmp sin __pycache__, sus tests, python3 -m cart.api con curl y juez/juez.py (del juez) en memoria y contra un redis-server local (puerto 6390) con redis-py 8.1.0 en un venv en /tmp",
+  "juez_salida": [
+    "memoria: 50 altas a la vez, 50 productos → 50 líneas; mismo producto → cantidad 50; 0 errores",
+    "0,10 × 3 = 30 céntimos",
+    "id ../fuera en el servicio: ACEPTADO · HTTP /carts/../items: 404",
+    "cantidades 0, -1, 1.5, True, '2', 1e9: rechazadas",
+    "objeto devuelto: c.items['a'] = CartItem('a', 500, 1) → en el almacén 500 unidades",
+    "HTTP precio desde el cliente (1 ¢): ignorado, total 1000",
+    "redis, 2 instancias, mismo producto: cantidad 44, 6 ConcurrencyError",
+    "HTTP 2 instancias + Redis, 50 POST: 200 × 47, 409 × 3 → 47 líneas, versión 47",
+    "DELETE en una instancia: la otra ve 0 líneas; TTL 604800 s"
+  ]
+}

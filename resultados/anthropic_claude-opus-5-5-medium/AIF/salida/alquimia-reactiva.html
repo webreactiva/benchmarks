@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alquimia Reactiva</title>
+<style>
+:root{
+  --bg:#f7f5f0;--dot:#d6d0c2;--panel:#fffdf9;--text:#1d1b22;--muted:#6b6676;--line:#e4dfd3;
+  --pill:#ffffff;--pill-line:#d8d2c4;--accent:#7c3aed;--accent-soft:#efe7ff;--bad:#e11d48;
+  --shadow:0 1px 2px rgba(20,10,40,.08),0 2px 6px rgba(20,10,40,.06);
+  --shadow-lift:0 6px 18px rgba(40,20,80,.18);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#121117;--dot:#2c2a35;--panel:#18171f;--text:#ece9f3;--muted:#9a95a8;--line:#2b2935;
+  --pill:#22202b;--pill-line:#3a3746;--accent:#a78bfa;--accent-soft:#2c2340;--bad:#fb7185;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 2px 8px rgba(0,0,0,.3);--shadow-lift:0 8px 22px rgba(0,0,0,.55);
+}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--text);font:15px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  display:grid;grid-template-columns:1fr 340px;overflow:hidden;-webkit-user-select:none;user-select:none}
+#board{position:relative;overflow:hidden;touch-action:none;
+  background-image:radial-gradient(var(--dot) 1px,transparent 1.2px);background-size:22px 22px}
+#brand{position:absolute;top:16px;left:18px;pointer-events:none;z-index:1}
+#brand h1{margin:0;font-size:22px;letter-spacing:-.02em}
+#brand h1 span{color:var(--accent)}
+#brand p{margin:2px 0 0;color:var(--muted);font-size:13px}
+#empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
+  color:var(--muted);pointer-events:none;padding:24px;font-size:15px;transition:opacity .3s}
+#empty div{max-width:340px}
+#empty b{color:var(--text)}
+#tools{position:absolute;left:16px;bottom:16px;display:flex;gap:8px;z-index:1;flex-wrap:wrap}
+button{font:inherit;font-size:14px;color:var(--text);background:var(--pill);border:1px solid var(--pill-line);
+  border-radius:10px;padding:7px 12px;cursor:pointer;box-shadow:var(--shadow)}
+button:hover{border-color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.item{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;background:var(--pill);
+  border:1px solid var(--pill-line);border-radius:9px;box-shadow:var(--shadow);white-space:nowrap;
+  cursor:grab;font-weight:500;font-size:15px}
+.item .em{font-size:17px;line-height:1}
+.inst{position:absolute;top:0;left:0;touch-action:none;will-change:transform}
+.inst.dragging{cursor:grabbing;box-shadow:var(--shadow-lift);z-index:5}
+.inst.target{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
+.inst.trash{opacity:.45}
+.inst.pop{animation:pop .35s cubic-bezier(.2,1.6,.4,1)}
+.inst.fresh{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent),var(--shadow)}
+.inst.shake{animation:shake .35s}
+@keyframes pop{from{scale:.4;opacity:.2}to{scale:1;opacity:1}}
+@keyframes shake{0%,100%{translate:0}25%{translate:-5px}50%{translate:5px}75%{translate:-3px}}
+#side{background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+#sideHead{padding:14px 14px 10px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+#progress{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--muted)}
+#progress b{color:var(--text);font-size:15px}
+#bar{height:5px;border-radius:5px;background:var(--line);overflow:hidden}
+#bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+#goals{display:flex;flex-wrap:wrap;gap:5px}
+.goal{font-size:12px;padding:3px 8px;border-radius:20px;border:1px dashed var(--pill-line);color:var(--muted)}
+.goal.done{border-style:solid;border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+#searchRow{display:flex;gap:6px}
+#search{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 10px;border-radius:10px;border:1px solid var(--pill-line);
+  background:var(--pill);color:var(--text)}
+#sort{white-space:nowrap}
+#list{flex:1;overflow-y:auto;padding:12px 14px 20px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:7px;touch-action:pan-y}
+#list .item.flash{animation:flash 1.6s}
+#list .item.hint{border-color:var(--accent);background:var(--accent-soft)}
+@keyframes flash{0%,40%{background:var(--accent-soft);border-color:var(--accent)}100%{}}
+#none{color:var(--muted);font-size:13px;padding:6px 2px}
+#toasts{position:fixed;left:0;right:340px;bottom:70px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:20}
+.toast{background:var(--text);color:var(--bg);padding:9px 16px;border-radius:12px;font-size:14px;box-shadow:var(--shadow-lift);
+  animation:tin .25s ease-out;max-width:min(90vw,460px);text-align:center}
+.toast.new{background:var(--accent);color:#fff}
+.toast.out{opacity:0;transform:translateY(6px);transition:.3s}
+@keyframes tin{from{opacity:0;transform:translateY(10px)}}
+@media (max-width:760px){
+  body{grid-template-columns:1fr;grid-template-rows:1fr 42vh}
+  #side{border-left:0;border-top:1px solid var(--line)}
+  #toasts{right:0;bottom:calc(42vh + 60px)}
+  #brand h1{font-size:18px}
+  #tools{left:12px;bottom:12px}
+  #goals{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main id="board">
+  <div id="brand"><h1>Alquimia <span>Reactiva</span></h1><p>Combina conceptos del universo Web Reactiva</p></div>
+  <div id="empty"><div>Arrastra elementos desde la lista y <b>suéltalos uno encima de otro</b> para combinarlos.<br><br>
+    Doble clic para duplicar · clic derecho o arrastrar a la lista para borrar.</div></div>
+  <div id="tools">
+    <button id="hintBtn" title="Muestra una pista">💡 Pista</button>
+    <button id="clearBtn" title="Quita todos los elementos del tablero">🧹 Limpiar</button>
+    <button id="resetBtn" title="Borra todo tu progreso">↺ Reiniciar</button>
+  </div>
+</main>
+<aside id="side">
+  <div id="sideHead">
+    <div id="progress"><span><b id="count">4</b> / <span id="total">0</span> descubiertos</span><span id="pct">0%</span></div>
+    <div id="bar"><i></i></div>
+    <div id="goals"></div>
+    <div id="searchRow">
+      <input id="search" type="search" placeholder="Buscar elementos…" autocomplete="off">
+      <button id="sort" title="Cambiar orden">Orden: llegada</button>
+    </div>
+  </div>
+  <div id="list"></div>
+</aside>
+<div id="toasts"></div>
+
+<script>
+// ------------------------------------------------------------
+//  Recetas: "A + B = emoji Resultado"
+// ------------------------------------------------------------
+const BASE = { 'Código':'💻', 'Café':'☕', 'Idea':'💡', 'Bug':'🐛' };
+const RECIPES_TXT = `
+Código + Código = 📜 Programa
+Café + Café = ⚡ Energía
+Idea + Idea = 🧠 Brainstorming
+Bug + Bug = 🏚️ Legacy
+Código + Café = 👩‍💻 Programador
+Código + Idea = 📁 Proyecto
+Código + Bug = ❌ Error
+Café + Idea = ✨ Inspiración
+Café + Bug = 🔍 Debugging
+Idea + Bug = 🎁 Feature
+Café + Energía = 🌙 Insomnio
+Programador + Programador = 👥 Equipo
+Programador + Energía = ✅ Productividad
+Programador + Idea = 🛠️ Side Project
+Programador + Código = 📌 Commit
+Commit + Commit = 🌳 Git
+Git + Equipo = 🔀 Pull Request
+Git + Error = ⚔️ Conflicto de merge
+Git + Bug = 🪓 Git bisect
+Git + Internet = 🗃️ Repositorio
+Commit + Error = ⏪ Git revert
+Commit + Insomnio = 🤞 fix: ahora sí
+Pull Request + Programador = 👀 Code Review
+Programa + Programa = 🖥️ Sistema Operativo
+Programa + Idea = 📲 App
+Programa + Código = ✏️ Editor
+Café + Programa = 🫘 Java
+Sistema Operativo + Sistema Operativo = 🔗 Red
+Red + Red = 🌍 Internet
+Programa + Red = 🗄️ Servidor
+Internet + Código = 🕸️ Web
+Internet + Programa = 📊 Datos
+Internet + Internet = 📣 Redes sociales
+Web + Código = 📄 HTML
+HTML + Inspiración = 🎨 CSS
+HTML + Programa = 🟨 JavaScript
+HTML + CSS = 🖼️ Frontend
+HTML + Comunidad = ♿ Accesibilidad
+CSS + CSS = ↔️ Flexbox
+Flexbox + Flexbox = 🔲 CSS Grid
+CSS + Error = 😩 Centrar un div
+CSS + Framework = 🌬️ Tailwind
+Web + Inspiración = 🖌️ Diseño
+Diseño + Frontend = 😍 UX
+Frontend + App = 📱 Responsive
+JavaScript + Energía = 🔁 Reactividad
+JavaScript + Servidor = 🟩 Node.js
+JavaScript + JavaScript = 🏗️ Framework
+JavaScript + Test = 🔷 TypeScript
+Framework + Framework = 😵‍💫 Fatiga de JavaScript
+Framework + Reactividad = ⚛️ React
+Framework + Inspiración = 💚 Vue
+Servidor + Código = ⚙️ Backend
+Servidor + Servidor = ☁️ Nube
+Frontend + Backend = 🧱 Full Stack
+Backend + Internet = 🔌 API
+Backend + Legacy = 🗿 Monolito
+API + Datos = 🔣 JSON
+Docker + API = 🧩 Microservicios
+Web + Servidor = 🐘 PHP
+PHP + Contenido = 📰 WordPress
+Datos + Código = 🐍 Python
+Datos + Servidor = 🛢️ Base de datos
+Base de datos + Código = 💾 SQL
+Datos + Web = 🍪 Cookies
+Debugging + Código = 🧪 Test
+Test + Test = 🔴 TDD
+Nube + Programa = 🐳 Docker
+Docker + Docker = ☸️ Kubernetes
+Nube + Proyecto = 🚢 Deploy
+Deploy + Error = 😱 Deploy en viernes
+Deploy + Test = 🚦 CI/CD
+Deploy + Bug = 🩹 Hotfix
+Deploy + Servidor = 🏭 Producción
+Producción + Bug = 🚨 Incidencia
+Incidencia + Insomnio = 📟 Guardia
+Incidencia + Programador = 🪦 Post-mortem
+Datos + Brainstorming = 🤖 IA
+IA + Programador = 🧑‍✈️ Copiloto
+IA + Bug = 🍄 Alucinación
+IA + Idea = ✍️ Prompt
+IA + Código = 🌴 Vibe Coding
+IA + IA = 🔥 Hype
+Prompt + Programador = 🪄 Prompt engineer
+Copiloto + Junior = 🦸 Junior con superpoderes
+Equipo + Equipo = 🫂 Comunidad
+Comunidad + Código = 🔓 Open Source
+Open Source + Sistema Operativo = 🐧 Linux
+Repositorio + Open Source = ⭐ Estrella
+Open Source + Programador = 🌱 Contribución
+Sistema Operativo + Programador = ⬛ Terminal
+Editor + Terminal = 🧙 Vim
+Vim + Error = 🚪 Salir de Vim
+Editor + JavaScript = 🟦 VS Code
+Editor + Equipo = 🥊 Tabs vs espacios
+Programador + Proyecto = 💼 Trabajo
+Trabajo + Trabajo = 💰 Dinero
+Trabajo + Internet = 🏠 Remoto
+Trabajo + Insomnio = 🫠 Burnout
+Burnout + Dinero = 🏖️ Vacaciones
+Dinero + Proyecto = 🚀 Startup
+Startup + Dinero = 🦄 Unicornio
+Dinero + Programador = 🧳 Freelance
+Freelance + Proyecto = 🤝 Cliente
+Feature + Cliente = 🌪️ Cambio de requisitos
+Feature + Proyecto = 🥉 MVP
+Feature + Bug = 😏 No es un bug, es una feature
+Error + Programador = 🤷 Funciona en mi máquina
+Error + Error = ⚠️ Excepción
+Excepción + Código = 🥅 Try/catch
+Error + Internet = 🆘 Stack Overflow
+Stack Overflow + Programador = 📋 Copiar y pegar
+Código + Brainstorming = 🧮 Algoritmo
+Algoritmo + Algoritmo = 🌀 Recursividad
+Recursividad + Error = 🆘 Stack Overflow
+Insomnio + Código = 🦇 Código a las 3 AM
+Legacy + Código = 🧹 Refactor
+Refactor + Test = 🧼 Código limpio
+Legacy + Dinero = 💸 Deuda técnica
+Legacy + Proyecto = 💸 Deuda técnica
+Legacy + Programador = 🦴 Arqueólogo del código
+Bug + Red = 🕶️ Hacker
+Hacker + Servidor = 🔒 Seguridad
+Seguridad + Idea = 🔑 Contraseña
+Contraseña + Bug = 🤦 123456
+Seguridad + Código = 🦀 Rust
+Productividad + Productividad = 📆 Hábito
+Café + Hábito = 🌅 Rutina matutina
+Inspiración + Programador = 📚 Aprendizaje
+Aprendizaje + Internet = 📺 Tutorial
+Tutorial + Tutorial = 😈 Infierno de tutoriales
+Aprendizaje + Comunidad = 🧑‍🏫 Mentoría
+Programador + Aprendizaje = 🐣 Junior
+Error + Aprendizaje = 🏅 Experiencia
+Junior + Experiencia = 🦉 Senior
+Senior + Equipo = 🧭 Tech Lead
+Senior + Senior = 🏛️ Arquitecto
+Junior + Bug = 🎭 Síndrome del impostor
+Síndrome del impostor + Comunidad = 💪 Confianza
+Junior + Trabajo = 🧑‍💼 Entrevista técnica
+Entrevista técnica + Algoritmo = 🌲 Invertir un árbol binario
+Side Project + Web = 🗂️ Portfolio
+Equipo + Idea = 🗓️ Reunión
+Reunión + Reunión = 📩 Esto pudo ser un email
+Reunión + Proyecto = 🏉 Scrum
+Scrum + Energía = 🏃 Sprint
+Reunión + Hábito = ☀️ Daily
+Proyecto + Insomnio = ⏰ Deadline
+Deadline + Idea = 🎲 Estimación
+Deadline + Programador = 🙃 Está casi hecho
+Redes sociales + Contenido = 📈 Viral
+Inspiración + Internet = 🖋️ Contenido
+Contenido + Programa = 📖 Documentación
+Documentación + Programador = 🙈 Nadie lee la documentación
+Café + Equipo = 💬 Conversación
+Conversación + Internet = 🎙️ Podcast
+Servidor + Conversación = 📨 Email
+Email + Contenido = 📧 Newsletter
+Contenido + Hábito = 📧 Newsletter
+Newsletter + Newsletter = 📬 Suscriptores
+Podcast + Idea = 📻 Episodio
+Episodio + Episodio = 🎬 Temporada
+Podcast + Senior = 🎤 Invitado
+Podcast + Programador = 👂 Oyente
+Oyente + Oyente = 🏟️ Audiencia
+Web + Reactividad = 💜 Web Reactiva
+Podcast + Newsletter = 💜 Web Reactiva
+Web Reactiva + Programador = 🌟 Dani Primo
+Web Reactiva + Oyente = 😎 Malandriner
+Suscriptores + Web Reactiva = 😎 Malandriner
+Audiencia + Web Reactiva = 😎 Malandriner
+Malandriner + Comunidad = 🏴‍☠️ Comunidad Malandriner
+Malandriner + Malandriner = 🏴‍☠️ Comunidad Malandriner
+Web Reactiva + Dinero = 💎 Web Reactiva Premium
+Web Reactiva Premium + Malandriner = 👑 Malandriner Premium
+Web Reactiva Premium + Aprendizaje = 🎓 Cursos Premium
+Comunidad Malandriner + Algoritmo = 🏁 Retos de programación
+Web Reactiva + Café = 🫖 Café con Web Reactiva
+Web Reactiva + Episodio = 🎧 Maratón de episodios
+Web Reactiva + Comunidad Malandriner = ❤️‍🔥 Malandriner de corazón
+Dani Primo + Malandriner = 👋 Saludo malandriner
+`;
+
+const key = (a,b) => [a,b].sort().join('\u0000');
+const EMOJI = {...BASE};
+const RECIPES = new Map();
+for (let line of RECIPES_TXT.split('\n')) {
+  line = line.trim(); if (!line) continue;
+  const m = line.match(/^(.+?) \+ (.+?) = (\S+) (.+)$/);
+  if (!m) { console.warn('Receta mal formada:', line); continue; }
+  const [, a, b, em, r] = m;
+  if (!EMOJI[r]) EMOJI[r] = em;
+  RECIPES.set(key(a, b), { a, b, r });
+}
+const ALL = new Set([...Object.keys(BASE), ...[...RECIPES.values()].map(x => x.r)]);
+const TOTAL = ALL.size;
+const GOALS = ['Web Reactiva','Dani Primo','Malandriner','Comunidad Malandriner','Web Reactiva Premium'];
+const FAILS = ['Ni con más café… 🤷','Eso no compila 🧱','undefined is not a function','404: combinación no encontrada',
+  'Funciona en mi máquina… pero aquí no','Prueba otra cosa, malandriner 😎','Error de sintaxis alquímica','NaN'];
+
+// ------------------------------------------------------------
+//  Estado y persistencia
+// ------------------------------------------------------------
+const STORE = 'alquimia-reactiva-v1';
+let discovered = [];
+try { const d = JSON.parse(localStorage.getItem(STORE) || 'null'); if (Array.isArray(d)) discovered = d.filter(n => ALL.has(n)); } catch {}
+for (const b of Object.keys(BASE)) if (!discovered.includes(b)) discovered.unshift(b);
+let known = new Set(discovered);
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify(discovered)); } catch {} };
+
+let sortMode = 'llegada';
+try { sortMode = localStorage.getItem(STORE + '-sort') || 'llegada'; } catch {}
+
+// ------------------------------------------------------------
+//  UI
+// ------------------------------------------------------------
+const $ = s => document.querySelector(s);
+const board = $('#board'), list = $('#list'), side = $('#side'), search = $('#search');
+
+function pill(name, cls) {
+  const el = document.createElement('div');
+  el.className = 'item ' + (cls || '');
+  el.dataset.name = name;
+  const em = document.createElement('span'); em.className = 'em'; em.textContent = EMOJI[name] || '❔';
+  const tx = document.createElement('span'); tx.textContent = name;
+  el.append(em, tx);
+  return el;
+}
+
+function renderList(flashName) {
+  const q = search.value.trim().toLowerCase();
+  let items = discovered.filter(n => n.toLowerCase().includes(q));
+  if (sortMode === 'nombre') items = [...items].sort((a,b) => a.localeCompare(b, 'es'));
+  if (sortMode === 'emoji') items = [...items].sort((a,b) => (EMOJI[a]||'').localeCompare(EMOJI[b]||''));
+  list.replaceChildren(...items.map(n => pill(n, n === flashName ? 'flash' : '')));
+  if (!items.length) { const p = document.createElement('div'); p.id = 'none'; p.textContent = 'Nada por aquí con ese nombre.'; list.append(p); }
+  $('#count').textContent = discovered.length;
+  $('#total').textContent = TOTAL;
+  const pct = Math.round(discovered.length / TOTAL * 100);
+  $('#pct').textContent = pct + '%';
+  $('#bar i').style.width = pct + '%';
+  $('#goals').replaceChildren(...GOALS.map(g => {
+    const s = document.createElement('span');
+    const done = known.has(g);
+    s.className = 'goal' + (done ? ' done' : '');
+    s.textContent = done ? `${EMOJI[g]} ${g}` : `🔒 ${g}`;
+    s.title = done ? '¡Conseguido!' : 'Objetivo por descubrir';
+    return s;
+  }));
+  $('#sort').textContent = 'Orden: ' + sortMode;
+  if (flashName) list.querySelector('.flash')?.scrollIntoView({ block: 'nearest' });
+}
+
+function toast(msg, cls = '', ms = 2200) {
+  const t = document.createElement('div'); t.className = 'toast ' + cls; t.textContent = msg;
+  const box = $('#toasts'); box.append(t);
+  while (box.children.length > 3) box.firstChild.remove();
+  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 300); }, ms);
+}
+
+function updateEmpty() { $('#empty').style.opacity = board.querySelector('.inst') ? 0 : 1; }
+
+// ------------------------------------------------------------
+//  Instancias en el tablero
+// ------------------------------------------------------------
+function setPos(el, x, y) { el._x = x; el._y = y; el.style.transform = `translate(${x}px,${y}px)`; }
+function makeInst(name, x, y, cls) {
+  const el = pill(name, 'inst ' + (cls || ''));
+  board.append(el); setPos(el, x, y); updateEmpty();
+  el.addEventListener('animationend', () => el.classList.remove('pop', 'shake'));
+  return el;
+}
+function clampInst(el) {
+  const bw = board.clientWidth, bh = board.clientHeight;
+  setPos(el, Math.max(4, Math.min(el._x, bw - el.offsetWidth - 4)), Math.max(4, Math.min(el._y, bh - el.offsetHeight - 4)));
+}
+function spawnRandom(name) {
+  const bw = board.clientWidth, bh = board.clientHeight;
+  const el = makeInst(name, 0, 0, 'pop');
+  const x = bw / 2 - el.offsetWidth / 2 + (Math.random() - .5) * Math.min(bw * .6, 380);
+  const y = bh / 2 - el.offsetHeight / 2 + (Math.random() - .5) * Math.min(bh * .55, 260);
+  setPos(el, x, y); clampInst(el);
+  return el;
+}
+
+function overlap(a, b) {
+  const r1 = a.getBoundingClientRect(), r2 = b.getBoundingClientRect();
+  const w = Math.min(r1.right, r2.right) - Math.max(r1.left, r2.left);
+  const h = Math.min(r1.bottom, r2.bottom) - Math.max(r1.top, r2.top);
+  return w > 0 && h > 0 ? w * h : 0;
+}
+function findTarget(el) {
+  let best = null, bestA = 0;
+  for (const o of board.querySelectorAll('.inst')) {
+    if (o === el) continue;
+    const a = overlap(el, o);
+    if (a > bestA) { bestA = a; best = o; }
+  }
+  return best;
+}
+function overSide(x, y) { const r = side.getBoundingClientRect(); return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom; }
+
+function combine(dragged, target) {
+  const a = dragged.dataset.name, b = target.dataset.name;
+  const rec = RECIPES.get(key(a, b));
+  if (!rec) {
+    for (const e of [dragged, target]) { e.classList.remove('shake'); void e.offsetWidth; e.classList.add('shake'); }
+    toast(FAILS[Math.floor(Math.random() * FAILS.length)]);
+    return;
+  }
+  const r = rec.r;
+  const cx = target._x + target.offsetWidth / 2, cy = target._y + target.offsetHeight / 2;
+  dragged.remove(); target.remove();
+  const isNew = !known.has(r);
+  const el = makeInst(r, 0, 0, 'pop' + (isNew ? ' fresh' : ''));
+  setPos(el, cx - el.offsetWidth / 2, cy - el.offsetHeight / 2); clampInst(el);
+  if (isNew) {
+    setTimeout(() => el.classList.remove('fresh'), 2500);
+    known.add(r); discovered.push(r); save();
+    list.querySelectorAll('.hint').forEach(h => h.classList.remove('hint'));
+    renderList(r);
+    if (GOALS.includes(r)) toast(`🏆 ¡Objetivo conseguido! ${EMOJI[r]} ${r}`, 'new', 3500);
+    else toast(`✨ Nuevo descubrimiento: ${EMOJI[r]} ${r}`, 'new');
+    if (discovered.length === TOTAL) setTimeout(() => toast('🎉 ¡Lo has descubierto TODO! Eres malandriner de pura cepa.', 'new', 6000), 700);
+  }
+}
+
+// ------------------------------------------------------------
+//  Arrastrar y soltar (pointer events)
+// ------------------------------------------------------------
+let drag = null, pendingTouch = null;
+
+function startDrag(el, e, fromSide) {
+  const r = el.getBoundingClientRect();
+  drag = { el, fromSide, offX: e.clientX - r.left, offY: e.clientY - r.top, sx: e.clientX, sy: e.clientY, moved: false, target: null };
+  board.append(el); // al frente
+  el.classList.add('dragging');
+}
+
+board.addEventListener('pointerdown', e => {
+  const el = e.target.closest('.inst');
+  if (!el || e.button !== 0) return;
+  e.preventDefault();
+  startDrag(el, e, false);
+});
+
+list.addEventListener('pointerdown', e => {
+  const it = e.target.closest('.item');
+  if (!it || e.button !== 0) return;
+  const name = it.dataset.name;
+  if (e.pointerType === 'touch') { pendingTouch = { name, x: e.clientX, y: e.clientY, id: e.pointerId }; return; }
+  e.preventDefault();
+  const br = board.getBoundingClientRect(), ir = it.getBoundingClientRect();
+  const el = makeInst(name, ir.left - br.left, ir.top - br.top);
+  startDrag(el, e, true);
+  drag.offX = e.clientX - ir.left; drag.offY = e.clientY - ir.top;
+});
+
+window.addEventListener('pointermove', e => {
+  if (pendingTouch && e.pointerId === pendingTouch.id && Math.hypot(e.clientX - pendingTouch.x, e.clientY - pendingTouch.y) > 10) pendingTouch = null;
+  if (!drag) return;
+  if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 4) drag.moved = true;
+  const br = board.getBoundingClientRect();
+  setPos(drag.el, e.clientX - br.left - drag.offX, e.clientY - br.top - drag.offY);
+  const t = findTarget(drag.el);
+  if (t !== drag.target) { drag.target?.classList.remove('target'); t?.classList.add('target'); drag.target = t; }
+  drag.el.classList.toggle('trash', overSide(e.clientX, e.clientY));
+});
+
+window.addEventListener('pointerup', e => {
+  if (pendingTouch && e.pointerId === pendingTouch.id) { spawnRandom(pendingTouch.name); pendingTouch = null; return; }
+  if (!drag) return;
+  const { el, fromSide, moved } = drag;
+  drag.target?.classList.remove('target');
+  el.classList.remove('dragging', 'trash');
+  const target = findTarget(el);
+  drag = null;
+  if (overSide(e.clientX, e.clientY)) {
+    if (fromSide && !moved) { // clic en la lista → aparece en el tablero
+      el.remove(); spawnRandom(el.dataset.name);
+    } else { el.remove(); updateEmpty(); }
+    return;
+  }
+  if (target) combine(el, target); else clampInst(el);
+});
+window.addEventListener('pointercancel', () => {
+  pendingTouch = null;
+  if (drag) { drag.target?.classList.remove('target'); drag.el.classList.remove('dragging', 'trash'); clampInst(drag.el); drag = null; }
+});
+
+board.addEventListener('dblclick', e => {
+  const el = e.target.closest('.inst'); if (!el) return;
+  const c = makeInst(el.dataset.name, el._x + 18, el._y + 18, 'pop'); clampInst(c);
+});
+board.addEventListener('contextmenu', e => {
+  const el = e.target.closest('.inst'); if (!el) return;
+  e.preventDefault(); el.remove(); updateEmpty();
+});
+
+// ------------------------------------------------------------
+//  Controles
+// ------------------------------------------------------------
+search.addEventListener('input', () => renderList());
+$('#sort').addEventListener('click', () => {
+  const modes = ['llegada', 'nombre', 'emoji'];
+  sortMode = modes[(modes.indexOf(sortMode) + 1) % modes.length];
+  try { localStorage.setItem(STORE + '-sort', sortMode); } catch {}
+  renderList();
+});
+$('#clearBtn').addEventListener('click', () => { board.querySelectorAll('.inst').forEach(e => e.remove()); updateEmpty(); });
+$('#resetBtn').addEventListener('click', () => {
+  if (!confirm('¿Seguro que quieres borrar todos tus descubrimientos?')) return;
+  discovered = Object.keys(BASE); known = new Set(discovered); save();
+  board.querySelectorAll('.inst').forEach(e => e.remove()); updateEmpty();
+  search.value = ''; renderList(); toast('Progreso reiniciado. git reset --hard 🔄');
+});
+$('#hintBtn').addEventListener('click', () => {
+  const opts = [...RECIPES.values()].filter(x => known.has(x.a) && known.has(x.b) && !known.has(x.r));
+  if (!opts.length) { toast('No quedan combinaciones por descubrir. ¡Crack! 🏆'); return; }
+  const h = opts[Math.floor(Math.random() * opts.length)];
+  const one = Math.random() < .5 ? h.a : h.b;
+  search.value = ''; renderList();
+  list.querySelectorAll('.hint').forEach(x => x.classList.remove('hint'));
+  const it = [...list.querySelectorAll('.item')].find(x => x.dataset.name === one);
+  it?.classList.add('hint'); it?.scrollIntoView({ block: 'nearest' });
+  toast(`💡 Pista: prueba a combinar ${EMOJI[one]} ${one} con algo que ya tienes.`, '', 3500);
+});
+
+renderList();
+// Coloca los elementos iniciales para empezar a jugar
+if (discovered.length === 4) {
+  requestAnimationFrame(() => {
+    const bw = board.clientWidth, bh = board.clientHeight;
+    Object.keys(BASE).forEach((n, i) => {
+      const el = makeInst(n, 0, 0, 'pop');
+      const ang = (i / 4) * Math.PI * 2 - Math.PI / 4, rad = Math.min(bw, bh) * .22;
+      setPos(el, bw / 2 + Math.cos(ang) * rad - el.offsetWidth / 2, bh / 2 + Math.sin(ang) * rad - el.offsetHeight / 2);
+      clampInst(el);
+    });
+  });
+}
+</script>
+</body>
+</html>

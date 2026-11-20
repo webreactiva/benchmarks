@@ -4,7 +4,7 @@
 #   benchmark.sh -p CCA,PTS sonnet google/gemma-4-31b-it:free
 # Lanza los prompts (todos por defecto, en el orden de abajo) para cada modelo, uno detrás de otro.
 # Un modelo con «/» va con OpenCode (lanzar.sh): «ollama/…» es de Ollama Cloud y el resto, de OpenRouter; haiku, sonnet, opus o claude-* van con
-# Claude Code (lanzar-claude.sh); gpt-* va con Codex CLI (lanzar-codex.sh, esfuerzo en ESFUERZO, por defecto medium).
+# Claude Code (lanzar-claude.sh, esfuerzo opcional en ESFUERZO); gpt-* va con Codex CLI (lanzar-codex.sh, esfuerzo en ESFUERZO, por defecto medium).
 # Lo que ya tiene meta.json no se repite. Para al primer 429 de OpenRouter.
 set -u
 B=$(cd "$(dirname "$0")/.." && pwd)
@@ -25,8 +25,10 @@ for m in "$@"; do
       [ -e "$B/resultados/openai_$m-$e/$c/meta.json" ] && { echo "### $m $c: ya hecho"; continue; }
       echo "### $m ($e) $c"; "$B/scripts/lanzar-codex.sh" "$c" "$m" "$e" 2>&1 | tail -1
     else
-      ls "$B"/resultados/anthropic_*"$m"*/"$c"/meta.json >/dev/null 2>&1 && { echo "### $m $c: ya hecho"; continue; }
-      echo "### $m $c"; "$B/scripts/lanzar-claude.sh" "$c" "$m" 2>&1 | tail -1
+      e=${ESFUERZO:-}; suf=""; [ -n "$e" ] && [ "$e" != default ] && suf="-$e"
+      if [ -n "$suf" ]; then ls "$B"/resultados/anthropic_*"$m$suf"/"$c"/meta.json >/dev/null 2>&1
+      else ls "$B"/resultados/anthropic_*"$m"/"$c"/meta.json >/dev/null 2>&1; fi && { echo "### $m${e:+ ($e)} $c: ya hecho"; continue; }
+      echo "### $m${e:+ ($e)} $c"; "$B/scripts/lanzar-claude.sh" "$c" "$m" 2>&1 | tail -1
     fi
   done
 done

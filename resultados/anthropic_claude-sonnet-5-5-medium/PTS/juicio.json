@@ -1,0 +1,19 @@
+{
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 0,
+    "slop": 1,
+    "extensión": 1
+  },
+  "nota": 8,
+  "veredicto": "sólido, con la cuenta mal",
+  "resumen": "1210 palabras centradas en los tests intermitentes, con la tesis bien armada (un hueco sin test es honesto, un test intermitente miente y enseña a pulsar «Re-run» también cuando el fallo es real) y un ejemplo de código con sleep y su arreglo. Pierde el punto de errores por la cuenta estrella, 0,98^500 ≈ «0,00004 %» cuando es 0,0041 %, y otro de slop por el formato de manual y el cierre de chatbot.",
+  "rarezas": [
+    "Dos peticiones y una sola llamada (Write): escribe el post de un tirón en 31 s, sin borrador ni relectura.",
+    "Repite el número equivocado en la respuesta del chat («con la cuenta de 0.98^500») como argumento de venta.",
+    "Termina con «¿Cuál es el test flaky más absurdo…? Cuéntalo en los comentarios», que la regla de chatbot de slop.py no caza por la forma «cuéntalo»."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "carrito-escalable",
+  "version": "1.0.0",
+  "description": "Servicio de carrito de la compra escalable (arquitectura hexagonal, sin estado, concurrencia optimista)",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/index.js",
+    "start:cluster": "CLUSTER=1 node src/index.js",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "license": "MIT"
+}

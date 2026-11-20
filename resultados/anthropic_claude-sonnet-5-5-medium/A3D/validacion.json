@@ -1,0 +1,34 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra_ruta_3d.html",
+      "errores": [],
+      "titulo": "Ruta 3D por la Alhambra de Granada",
+      "canvas": 2,
+      "texto": "La Alhambra de Granada\n\nRUTA 3D · PATRIMONIO DE LA HUMANIDAD\n\n1\nPuerta de la Justicia\n2\nLa Alcazaba\n3\nPalacio de Carlos V\n4\nEl Mexuar\n5\nPatio de los Arrayanes\n6\nPatio de los Leones\n7\nEl Partal y Torre de las Damas\n8\nJardines del Generalife\n9\nMirador sobre la Alhambra\nEN RUTA\nHacia: Puerta de la Justicia\nSiglo XIV · 1348\n\nDisfruta del paseo. Arrastra para mirar alrededor.\n\nUn paseo por la ciudad ro",
+      "scripts": [
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      ],
+      "captura": "capturas/alhambra_ruta_3d.html.png",
+      "capturas_extra": [
+        "capturas/tour-10s.png",
+        "capturas/tour-60s.png",
+        "capturas/parada-3.png",
+        "capturas/parada-4.png",
+        "capturas/parada-5.png",
+        "capturas/parada-6.png",
+        "capturas/parada-9.png",
+        "capturas/dron.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores, three.js r128 desde cdnjs",
+    "✔ el recorrido a pie viaja de parada en parada; la lista y la vista Dron también",
+    "✔ se reconocen Justicia, Carlos V, Leones, Comares y la acequia del Generalife",
+    "✖ a pie, el Mexuar, Arrayanes y el mirador final encuadran un muro",
+    "~ la ficha en ruta pone «Hacia:» la parada más cercana, no la siguiente",
+    "~ deja en el HTML el gancho de pruebas window.__alhambra"
+  ]
+}

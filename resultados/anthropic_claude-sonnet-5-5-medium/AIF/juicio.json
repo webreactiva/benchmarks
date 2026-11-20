@@ -1,0 +1,20 @@
+{
+  "nota": 7,
+  "veredicto": "buen juego, otra Web Reactiva",
+  "resumen": "Mesa libre donde se suelta una ficha sobre otra, 63 elementos y 59 recetas, todos alcanzables desde Estado, Evento, Píxel y Pantalla, con buscador y guardado de la mesa. Pero leyó «Web Reactiva» como programación reactiva más diseño responsive (señales, Virtual DOM, media queries, clamp()): de la web, el podcast o la comunidad no hay nada, y las mezclas sin receta no dan nada.",
+  "rarezas": [
+    "Tenía WebSearch y WebFetch y no los usó: decidió qué era «Web Reactiva» por el nombre y lo dice en el chat («puede significar programación reactiva o diseño responsive, así que usé los dos»).",
+    "Termina pidiendo lo que no puede pedir: «Si te referías a una web o curso concreto, dime qué temas incluye y adapto los elementos».",
+    "Comprobó con un script de Python que todo es alcanzable y avisa de que no lo abrió en un navegador; en el chat habla de «63 recetas» y son 59 (63 son los elementos).",
+    "4 peticiones, 187 k tokens y 0,30 $ en menos de dos minutos."
+  ],
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 0,
+    "acabado": 1
+  }
+}

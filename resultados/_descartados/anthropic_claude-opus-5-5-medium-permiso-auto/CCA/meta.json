@@ -1,0 +1,39 @@
+{
+  "codigo": "CCA",
+  "modelo": "claude-opus-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-20T11:17:49Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 12,
+    "output": 24547,
+    "reasoning": 0,
+    "cache_read": 242071,
+    "cache_write": 29603,
+    "total": 296233
+  },
+  "peticiones": 6,
+  "error": null,
+  "herramientas": {
+    "Bash": 6
+  },
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "package.json",
+    "src/catalog/memory.ts",
+    "src/catalog/ports.ts",
+    "src/domain/cart.ts",
+    "src/domain/errors.ts",
+    "src/infra/redis-client.ts",
+    "src/pricing/pricing-engine.ts",
+    "src/pricing/promotions.ts",
+    "src/repository/memory.ts",
+    "src/repository/ports.ts",
+    "tsconfig.json"
+  ],
+  "veces_decide_tu": 0,
+  "esfuerzo": "medium",
+  "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py."
+}

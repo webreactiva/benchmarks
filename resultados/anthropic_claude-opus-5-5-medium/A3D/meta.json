@@ -1,0 +1,31 @@
+{
+  "codigo": "A3D",
+  "modelo": "claude-opus-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-20T10:52:54Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 34,
+    "output": 93270,
+    "reasoning": 0,
+    "cache_read": 2065744,
+    "cache_write": 122288,
+    "total": 2281336
+  },
+  "peticiones": 17,
+  "error": null,
+  "herramientas": {
+    "Bash": 9,
+    "Write": 1,
+    "Read": 16
+  },
+  "mensajes_usuario": [
+    "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "alhambra-ruta-3d.html"
+  ],
+  "veces_decide_tu": 0,
+  "esfuerzo": "medium",
+  "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py."
+}

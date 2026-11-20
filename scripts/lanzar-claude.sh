@@ -1,25 +1,36 @@
 #!/usr/bin/env bash
 # lanzar-claude.sh <CODIGO> <modelo de Claude Code>
 #   lanzar-claude.sh PTS haiku
+#   ESFUERZO=medium lanzar-claude.sh PTS claude-sonnet-5-5   # con --effort; la carpeta es anthropic_<modelo>-<esfuerzo>
 # Como lanzar.sh, pero con Claude Code aislado (claude-aislado.sh, --permission-mode auto): configuración y HOME
 # propios (sin skills, sin CLAUDE.md, sin ajustes de nadie), carpeta vacía fuera del repo y un solo mensaje:
 # el prompt tal cual + prompts/_destino.txt. Guarda lo mismo que lanzar.sh; sesion.jsonl es el registro de Claude Code.
 set -eu
 cod=$1 alias=$2
+esf=${ESFUERZO:-}; efarg=""; sufijo=""
+[ -n "$esf" ] && [ "$esf" != default ] && { efarg="--effort $esf"; sufijo="-$esf"; }
 B=$(cd "$(dirname "$0")/.." && pwd); R=$(cd "$B/.." && pwd)
 # Herramientas: en el repositorio público van en herramientas/; aquí, en _comun/herramientas
 if [ -d "$B/herramientas" ]; then H=$B/herramientas; else H=$R/_comun/herramientas; fi
 prompt="$(cat "$B/prompts/$cod.txt") $(cat "$B/prompts/_destino.txt")"
-base=${CLAUDE_BENCH:-$HOME/.claude-bench}
+base=${CLAUDE_BENCH:-$HOME/.claude-bench/$alias$sufijo}
 conf=$base/config; casa=$base/home; mkdir -p "$conf" "$casa"
 # Carpeta con nombre aleatorio, que se borra al terminar: así ningún modelo encuentra el trabajo de otro
 mkdir -p /var/tmp/bench; ws=$(mktemp -d /var/tmp/bench/ws-XXXXXXXX)
 # Encerrado (scripts/encierro.sh): no ve el repo, ni /tmp, ni el resto de /root; el lanzador va en su configuración
 cp "$H/claude-aislado.sh" "$base/"
-s=c-$cod tp="=c-$cod:"
+# Sin la recomendación de plugins LSP: su diálogo tapa el «esc to interrupt» y el lanzador da la sesión por acabada
+python3 -c '
+import json, os, sys
+f = sys.argv[1]; d = json.load(open(f)) if os.path.exists(f) else {}
+d["lspRecommendationDisabled"] = True; json.dump(d, open(f, "w"), indent=2)' "$conf/.claude.json"
+s=c-$cod-$(echo "$alias$sufijo" | tr -cd "a-z0-9-") tp="=$s:"
 tmux kill-session -t "=$s" 2>/dev/null || true
+# SIN_ENCIERRO=1: sin encierro.sh, como en cursos-y-guias. En la nube Claude Code entra con la credencial de la sesión
+# que lo dirige (/home/claude/.claude/remote), y el encierro la oculta con /home vacío. Se apunta en meta.json → aislamiento.
+enc="$B/scripts/encierro.sh $ws $base"; [ -n "${SIN_ENCIERRO:-}" ] && enc=""
 tmux new-session -d -s "$s" -x 120 -y 36 -c "$ws" \
-  "$B/scripts/encierro.sh $ws $base env HOME=$casa CLAUDE_LOOP_CONFIG=$conf $base/claude-aislado.sh --permission-mode auto --model $alias"
+  "$enc env HOME=$casa CLAUDE_LOOP_CONFIG=$conf $base/claude-aislado.sh --permission-mode auto --model $alias $efarg"
 tmux set-option -t "$tp" @agente claude
 tmux set-option -t "$tp" @pantallas "$B/resultados/.pantallas"
 pantalla() { tmux capture-pane -p -t "$tp" 2>/dev/null; }
@@ -39,6 +50,17 @@ for i in $(seq 1 90); do
 done
 inicio=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" di "$s" "$prompt" || true
+# Permisos del modo auto: si Claude Code pide permiso con cuenta atrás («will automatically block this request»), no se
+# contesta (sin encierro, aprobar a ciegas es arriesgado): se deja que lo bloquee solo y se sigue esperando, como en una
+# sesión desatendida. Antes el lanzador lo tomaba por el final (Opus 5.5 CCA en _descartados/).
+espera_permisos() {
+  local n=0
+  while [ $n -lt 10 ] && pantalla | grep -q "automatically block this request"; do
+    n=$((n + 1)); permisos=$((permisos + 1)); sleep 150
+    ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" espera "$s" || true
+  done
+}
+permisos=0; espera_permisos
 # Regla de las preguntas: el modelo decide siempre. Cada vez que pregunte, da opciones o pida que elijamos, se cierra
 # la pregunta y se le contesta «Decide tú.» (como mucho 5 veces, para no entrar en un bucle)
 pregunto=0
@@ -46,6 +68,7 @@ while [ $pregunto -lt 5 ] && tmux capture-pane -p -t "=$s:" 2>/dev/null | grep -
   pregunto=$((pregunto + 1))
   tmux send-keys -t "=$s:" Escape; sleep 3
   ACEPTA=1 ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" di "$s" "Decide tú." || true
+  espera_permisos
 done
 pantalla_final=$(tmux capture-pane -p -t "$tp" -S -3000)
 tmux send-keys -t "$tp" -l "/exit"; sleep 1; tmux send-keys -t "$tp" Enter; sleep 3
@@ -57,14 +80,20 @@ import json,sys
 for l in open(sys.argv[1]):
     d=json.loads(l)
     if d.get("type")=="assistant" and d["message"].get("model","").startswith("claude"): print(d["message"]["model"]); break' "$reg")
-dest=$B/resultados/anthropic_$modelo/$cod
+dest=$B/resultados/anthropic_$modelo$sufijo/$cod
 [ -e "$dest/meta.json" ] && { echo "Ya existe $dest"; exit 1; }
 mkdir -p "$dest"; echo "$pantalla_final" > "$dest/pantalla.txt"
 cp "$reg" "$dest/sesion.jsonl"; mv "$reg" "$reg.hecho"
 rm -rf "$dest/salida"; cp -R "$ws" "$dest/salida"; rm -rf "$ws"
 python3 "$B/scripts/tokens-claude.py" "$dest" "$cod" "$modelo" "$inicio" "$prompt"
 # Cuántas veces se le contestó «Decide tú.», en meta.json
-python3 - "$dest/meta.json" "$pregunto" <<'PY'
+python3 - "$dest/meta.json" "$pregunto" "$esf" "${SIN_ENCIERRO:-}" "$permisos" <<'PY'
 import json, sys
-f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2]); json.dump(m, open(f, "w"), indent=2, ensure_ascii=False)
+f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2])
+if int(sys.argv[5]): m["permisos_bloqueados"] = int(sys.argv[5])
+if sys.argv[3]: m["esfuerzo"] = sys.argv[3]
+if sys.argv[4]: m["aislamiento"] = ("Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión "
+    "que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, "
+    "pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.")
+json.dump(m, open(f, "w"), indent=2, ensure_ascii=False)
 PY

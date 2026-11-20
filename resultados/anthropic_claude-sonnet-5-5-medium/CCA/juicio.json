@@ -1,0 +1,22 @@
+{
+  "nota": 9,
+  "veredicto": "escala en 400 líneas",
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 0,
+    "concurrencia": 2,
+    "escala horizontal": 2,
+    "explica el escalado": 1
+  },
+  "resumen": "Python sin dependencias con servicio sin estado, versión optimista con reintentos y un adaptador de Redis con compare-and-swap en Lua y TTL que funciona: con dos instancias sobre el mismo Redis, 50 altas a la vez acaban guardadas o en un 409 explícito, sin pérdidas. Pero el carrito que devuelve se puede mutar y en memoria eso cambia lo guardado (500 unidades a 1 céntimo sin pasar por el catálogo), solo hay una moneda fija y el adaptador de Redis no lo probó ni lo conectó a la API.",
+  "rarezas": [
+    "3 peticiones, 124 k tokens, 72 s y 0,16 $: escribió todo de una vez en un único heredoc, pasó los tests a la primera y ni los tocó.",
+    "Dice con claridad lo que no ha probado (Redis y la API HTTP), y es lo que mejor funciona en las pruebas del juez.",
+    "El test de concurrencia que cita en la respuesta lanza 6 hilos, no 50.",
+    "Al acabar, Claude Code dejó escrita en la caja de entrada la sugerencia «añade la idempotencia con Idempotency-Key»; no se envió (un solo mensaje en la sesión).",
+    "Dejó __pycache__ en la entrega."
+  ]
+}

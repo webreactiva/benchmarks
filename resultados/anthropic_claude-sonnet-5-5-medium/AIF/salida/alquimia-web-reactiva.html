@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alquimia Reactiva</title>
+<style>
+  :root {
+    --bg: #fbfaf7; --panel: #ffffff; --ink: #1d1d1f; --muted: #6b6b73; --line: #e4e1da;
+    --chip: #ffffff; --chip-line: #d8d4ca; --accent: #2f6df6; --good: #1f9d55; --new: #f5a524;
+    --shadow: 0 2px 6px rgba(0,0,0,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141416; --panel: #1c1c20; --ink: #ececf0; --muted: #9a9aa5; --line: #2c2c33;
+      --chip: #25252b; --chip-line: #3a3a44; --accent: #6b95ff; --good: #3ecf7a; --new: #ffc14d;
+      --shadow: 0 2px 8px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141416; --panel: #1c1c20; --ink: #ececf0; --muted: #9a9aa5; --line: #2c2c33;
+    --chip: #25252b; --chip-line: #3a3a44; --accent: #6b95ff; --good: #3ecf7a; --new: #ffc14d;
+    --shadow: 0 2px 8px rgba(0,0,0,.5);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden; -webkit-user-select: none; user-select: none;
+  }
+  .app {
+    display: grid; height: 100dvh;
+    grid-template-columns: 1fr minmax(260px, 24rem);
+    grid-template-rows: 1fr;
+  }
+  /* Diseño responsivo: en pantallas estrechas la lista pasa abajo */
+  @media (max-width: 700px) {
+    .app { grid-template-columns: 1fr; grid-template-rows: 1fr minmax(0, 42dvh); }
+    aside { border-left: 0 !important; border-top: 1px solid var(--line); }
+  }
+  #canvas {
+    position: relative; overflow: hidden; touch-action: none;
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .title {
+    position: absolute; left: 16px; top: 12px; pointer-events: none; z-index: 0;
+  }
+  .title h1 { margin: 0; font-size: clamp(1.1rem, 3vw, 1.6rem); letter-spacing: -.02em; }
+  .title p { margin: 2px 0 0; color: var(--muted); font-size: .85rem; }
+  .hint {
+    position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
+    color: var(--muted); pointer-events: none; padding: 2rem; font-size: .95rem;
+  }
+  .toolbar { position: absolute; right: 12px; top: 10px; display: flex; gap: 6px; z-index: 5; }
+  button {
+    font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 8px; padding: 5px 10px; cursor: pointer; font-size: .85rem;
+  }
+  button:hover { border-color: var(--accent); }
+  .item {
+    display: inline-flex; align-items: center; gap: .4em; white-space: nowrap;
+    background: var(--chip); border: 1px solid var(--chip-line); border-radius: 10px;
+    padding: 6px 11px; font-size: .95rem; box-shadow: var(--shadow);
+    cursor: grab; touch-action: none; position: absolute; z-index: 1;
+  }
+  .item .em { font-size: 1.15em; }
+  .item.ghost { position: fixed; z-index: 100; cursor: grabbing; transform: scale(1.06); pointer-events: none; }
+  .item.target { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .item.pop { animation: pop .35s ease-out; }
+  .item.shake { animation: shake .4s; }
+  @keyframes pop { 0% { transform: scale(.4); opacity: 0 } 60% { transform: scale(1.18) } 100% { transform: scale(1); opacity: 1 } }
+  @keyframes shake { 0%,100% { transform: translateX(0) } 20% { transform: translateX(-6px) } 40% { transform: translateX(6px) } 60% { transform: translateX(-4px) } 80% { transform: translateX(4px) } }
+  aside {
+    background: var(--panel); border-left: 1px solid var(--line);
+    display: flex; flex-direction: column; min-height: 0;
+  }
+  aside.drop { outline: 2px dashed var(--accent); outline-offset: -6px; }
+  .side-head { padding: 12px 12px 8px; display: grid; gap: 8px; }
+  .progress { display: flex; justify-content: space-between; align-items: center; font-size: .85rem; color: var(--muted); }
+  .bar { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; background: var(--good); transition: width .4s; }
+  input[type=search] {
+    width: 100%; font: inherit; color: var(--ink); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; -webkit-user-select: text; user-select: text;
+  }
+  #list { padding: 6px 12px 16px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; flex: 1; }
+  #list .item { position: relative; box-shadow: none; }
+  #list .item .badge {
+    font-size: .65rem; background: var(--new); color: #222; border-radius: 6px; padding: 0 5px; font-weight: 700;
+  }
+  .toast {
+    position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 12px;
+    opacity: 0; pointer-events: none; transition: .25s; z-index: 200; max-width: min(92vw, 30rem);
+    text-align: center; font-size: .9rem;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast b { color: var(--new); }
+  .win {
+    position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.55); z-index: 300; padding: 1rem;
+  }
+  .win.show { display: grid; }
+  .win div { background: var(--panel); border-radius: 16px; padding: 1.6rem; max-width: 26rem; text-align: center; }
+  .win h2 { margin: 0 0 .5rem; }
+  .win p { color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <main id="canvas">
+    <div class="title"><h1>⚗️ Alquimia Reactiva</h1><p>Combina conceptos de la web reactiva</p></div>
+    <div class="hint" id="hint">Arrastra elementos desde la derecha<br>y suéltalos unos sobre otros para combinarlos.</div>
+    <div class="toolbar">
+      <button id="theme" title="Cambiar tema">🌓</button>
+      <button id="clear" title="Vaciar el área de juego">Vaciar</button>
+      <button id="reset" title="Borrar todo el progreso">Reiniciar</button>
+    </div>
+  </main>
+  <aside id="side">
+    <div class="side-head">
+      <div class="progress"><span id="count"></span><span>Doble clic: duplicar · Soltar aquí: borrar</span></div>
+      <div class="bar"><i id="bar"></i></div>
+      <input type="search" id="q" placeholder="Buscar descubrimientos…" autocomplete="off">
+    </div>
+    <div id="list"></div>
+  </aside>
+</div>
+<div class="toast" id="toast"></div>
+<div class="win" id="win"><div>
+  <h2>🏆 ¡Has creado la Web Reactiva!</h2>
+  <p>Programación reactiva + diseño responsive: una web que reacciona a los datos y se adapta a cualquier pantalla. ¡Sigue descubriendo el resto!</p>
+  <button id="winok">Seguir jugando</button>
+</div></div>
+
+<script>
+/* ---------- Datos: elementos [nombre, emoji, descripción] ---------- */
+const ELEMENTS = [
+ ["Estado","🧠","Los datos que describen cómo está tu app en un momento dado."],
+ ["Evento","⚡","Algo que ocurre: un clic, un teclazo, un cambio de tamaño…"],
+ ["Píxel","🟦","La unidad mínima de una pantalla. Y de CSS (px)."],
+ ["Pantalla","🖥️","Donde vive tu web. Las hay de todos los tamaños."],
+ ["Reactividad","🔄","Cuando el estado cambia, la interfaz se actualiza sola."],
+ ["Store","🏪","Un almacén centralizado de estado."],
+ ["Listener","👂","Función que espera un evento para ejecutarse (addEventListener)."],
+ ["Imagen","🖼️","Un puñado de píxeles bien ordenados."],
+ ["Viewport","🔲","El área visible del navegador. <meta name=\"viewport\"> es clave en móvil."],
+ ["Resolución","📐","Cuántos píxeles tiene una pantalla. Ojo con devicePixelRatio."],
+ ["Resize","↔️","Evento que se dispara cuando cambia el tamaño de la ventana."],
+ ["Breakpoint","📏","Ancho a partir del cual el diseño cambia."],
+ ["Media Query","🔍","@media: aplica CSS según características del dispositivo."],
+ ["Dark Mode","🌙","@media (prefers-color-scheme: dark): respeta la preferencia del usuario."],
+ ["Porcentaje","％","Unidad relativa a su contenedor. Base de los diseños fluidos."],
+ ["Rem","🔤","Unidad relativa al tamaño de fuente raíz. Accesible y escalable."],
+ ["Fluido","🌊","Diseño que se estira y encoge con el contenedor, sin saltos."],
+ ["clamp()","🎚️","clamp(min, ideal, max): tipografía y espacios fluidos sin media queries."],
+ ["Responsive Design","📱","Una sola web que se adapta a cualquier pantalla: fluidez + media queries."],
+ ["Flexbox","📦","Layout unidimensional: alinea y reparte espacio en una fila o columna."],
+ ["Grid","▦","Layout bidimensional con filas y columnas. auto-fit y minmax() son magia."],
+ ["Layout Adaptable","🧱","Grid + media queries: la estructura cambia según el espacio."],
+ ["Imagen Responsive","🏞️","srcset y sizes: el navegador elige la imagen adecuada."],
+ ["Scroll","📜","Evento de desplazamiento. Mejor con IntersectionObserver."],
+ ["Lazy Loading","💤","Cargar imágenes solo cuando están a punto de verse."],
+ ["Observador","👁️","Patrón Observer: alguien vigila un dato y es avisado de sus cambios."],
+ ["Señal","📡","Signal: valor reactivo que notifica a quien lo lee. Base de Solid, Vue, Angular…"],
+ ["Computed","🧮","Valor derivado que se recalcula solo cuando cambian sus dependencias."],
+ ["Efecto","✨","Código que se re-ejecuta automáticamente cuando cambian las señales que lee."],
+ ["Bucle Infinito","♾️","Un efecto que modifica lo que él mismo observa. ¡Cuidado!"],
+ ["Grafo de Dependencias","🕸️","La red de señales y derivados que el motor reactivo mantiene."],
+ ["Derivado","🧪","Estado calculado a partir de otro estado: no lo dupliques, derívalo."],
+ ["Suscripción","📬","Conexión de un listener a un store. Recuerda cancelarla."],
+ ["Framework","🧰","Conjunto de herramientas para construir interfaces reactivas."],
+ ["React","⚛️","Biblioteca de componentes con estado (useState) y Virtual DOM."],
+ ["Solid","🧊","Reactividad fina con señales y sin Virtual DOM."],
+ ["Vue","💚","Framework progresivo con reactividad basada en proxies."],
+ ["Svelte","🔥","Compilador que convierte tu código reactivo en JS mínimo."],
+ ["Vista","🪟","La representación visual del estado."],
+ ["Componente","🧩","Pieza reutilizable de interfaz con su propio estado y marcado."],
+ ["Árbol de Componentes","🌳","Componentes anidados formando la jerarquía de la UI."],
+ ["Virtual DOM","👻","Copia ligera del DOM en memoria para calcular cambios."],
+ ["Reconciliación","🔀","Comparar dos versiones del Virtual DOM y aplicar solo las diferencias."],
+ ["DOM","🌐","El árbol de nodos del documento que el navegador pinta."],
+ ["Re-render","♻️","Volver a pintar un componente tras un cambio de estado."],
+ ["Click","👆","El evento más popular. Y el primer contacto con el usuario."],
+ ["Móvil","📲","Pantalla pequeña, táctil y con conexión inestable."],
+ ["Mobile First","🥇","Diseñar primero para móvil y ampliar con min-width."],
+ ["Gestos Táctiles","🤏","Pinch, swipe, tap: eventos pointer y touch."],
+ ["Rendimiento","🚀","Una web rápida es una web que se siente reactiva."],
+ ["Memoización","🗃️","Guardar resultados para no repetir cálculos caros."],
+ ["Debounce","⏱️","Esperar a que el usuario termine antes de reaccionar."],
+ ["PWA","🛰️","Web instalable, rápida y con service worker."],
+ ["Offline","🔌","Funcionar sin conexión gracias a la caché."],
+ ["Observable","🔭","Flujo de valores en el tiempo al que te puedes suscribir (RxJS)."],
+ ["Stream","🚰","Secuencia de eventos que se puede transformar con operadores."],
+ ["Programación Reactiva","🌀","Programar con flujos de datos y propagación del cambio."],
+ ["Container Query","🎛️","@container: el componente se adapta a su contenedor, no a la pantalla."],
+ ["Estado Global","🌍","Estado compartido por toda la aplicación."],
+ ["Acción","🎬","Descripción de «qué ha pasado» que se envía al store."],
+ ["Reducer","⚙️","Función pura: (estado, acción) → nuevo estado."],
+ ["Web Reactiva","🏆","Reactiva a los datos y responsive a cualquier pantalla. ¡Objetivo cumplido!"],
+ ["Web del Futuro","🌈","Container queries, señales, offline… y lo que venga."]
+];
+const BASE = ["Estado","Evento","Píxel","Pantalla"];
+
+/* ---------- Recetas ---------- */
+const RECIPES = `
+Estado+Evento=Reactividad
+Estado+Estado=Store
+Evento+Evento=Listener
+Píxel+Píxel=Imagen
+Pantalla+Pantalla=Viewport
+Píxel+Pantalla=Resolución
+Pantalla+Evento=Resize
+Resize+Resolución=Breakpoint
+Breakpoint+Viewport=Media Query
+Media Query+Estado=Dark Mode
+Píxel+Estado=Porcentaje
+Porcentaje+Píxel=Rem
+Porcentaje+Pantalla=Fluido
+Fluido+Rem=clamp()
+Fluido+Media Query=Responsive Design
+Fluido+Fluido=Flexbox
+Flexbox+Flexbox=Grid
+Grid+Media Query=Layout Adaptable
+Imagen+Viewport=Imagen Responsive
+Evento+Viewport=Scroll
+Scroll+Imagen Responsive=Lazy Loading
+Listener+Estado=Observador
+Observador+Estado=Señal
+Señal+Señal=Computed
+Señal+Evento=Efecto
+Efecto+Efecto=Bucle Infinito
+Señal+Computed=Grafo de Dependencias
+Estado+Computed=Derivado
+Store+Listener=Suscripción
+Reactividad+Store=Framework
+Framework+Estado=React
+Framework+Señal=Solid
+Framework+Efecto=Vue
+Framework+Computed=Svelte
+Pantalla+Estado=Vista
+Vista+Estado=Componente
+Componente+Componente=Árbol de Componentes
+Árbol de Componentes+Reactividad=Virtual DOM
+Virtual DOM+Estado=Reconciliación
+Vista+Evento=DOM
+DOM+Reactividad=Re-render
+Píxel+Evento=Click
+Click+Pantalla=Móvil
+Móvil+Media Query=Mobile First
+Móvil+Evento=Gestos Táctiles
+Re-render+Virtual DOM=Rendimiento
+Computed+Rendimiento=Memoización
+Evento+Rendimiento=Debounce
+Móvil+Framework=PWA
+PWA+Estado=Offline
+Observador+Evento=Observable
+Observable+Observable=Stream
+Stream+Estado=Programación Reactiva
+Programación Reactiva+Responsive Design=Web Reactiva
+Media Query+Componente=Container Query
+Store+Componente=Estado Global
+Store+Evento=Acción
+Acción+Store=Reducer
+Web Reactiva+Web Reactiva=Web del Futuro
+`;
+const key = (a, b) => [a, b].sort().join("|");
+const EL = Object.fromEntries(ELEMENTS.map(([n, e, d]) => [n, { n, e, d }]));
+const REC = {};
+RECIPES.trim().split("\n").forEach(l => {
+  const [l1, r] = l.split("="); const [a, b] = l1.split("+");
+  REC[key(a, b)] = r;
+});
+
+/* ---------- Estado del juego (reactivo a mano, ¡cómo no!) ---------- */
+const SAVE = "alquimia-reactiva-v1";
+let state = { found: [...BASE], inst: [], fresh: [], seq: 1 };
+try { const s = JSON.parse(localStorage.getItem(SAVE)); if (s && s.found) state = s; } catch (e) {}
+const save = () => { try { localStorage.setItem(SAVE, JSON.stringify(state)); } catch (e) {} };
+
+const $ = s => document.querySelector(s);
+const canvas = $("#canvas"), list = $("#list"), side = $("#side");
+
+function mkItem(id, extra = "") {
+  const d = document.createElement("div");
+  d.className = "item " + extra;
+  d.dataset.id = id;
+  d.title = EL[id].d;
+  d.innerHTML = `<span class="em">${EL[id].e}</span><span>${id}</span>`;
+  return d;
+}
+
+/* ---------- Render ---------- */
+function renderList() {
+  const q = $("#q").value.trim().toLowerCase();
+  list.innerHTML = "";
+  state.found.filter(id => id.toLowerCase().includes(q)).forEach(id => {
+    const it = mkItem(id);
+    if (state.fresh.includes(id)) it.insertAdjacentHTML("beforeend", `<span class="badge">NUEVO</span>`);
+    it.addEventListener("pointerdown", e => startDrag(e, id, null));
+    list.appendChild(it);
+  });
+  $("#count").textContent = `${state.found.length} / ${ELEMENTS.length} descubiertos`;
+  $("#bar").style.width = (state.found.length / ELEMENTS.length * 100) + "%";
+}
+function renderCanvas() {
+  canvas.querySelectorAll(".item:not(.ghost)").forEach(n => n.remove());
+  state.inst.forEach(i => canvas.appendChild(instEl(i)));
+  $("#hint").style.display = state.inst.length ? "none" : "";
+}
+function instEl(i, cls = "") {
+  const el = mkItem(i.id, cls);
+  el.dataset.uid = i.uid;
+  el.style.left = i.x + "px"; el.style.top = i.y + "px";
+  el.addEventListener("pointerdown", e => startDrag(e, i.id, i.uid));
+  return el;
+}
+
+/* ---------- Toasts ---------- */
+let toastT;
+function toast(html) {
+  const t = $("#toast"); t.innerHTML = html; t.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+/* ---------- Arrastrar ---------- */
+let drag = null, lastTap = { uid: 0, t: 0 };
+function startDrag(e, id, uid) {
+  if (e.button > 0) return;
+  e.preventDefault();
+  const el = e.currentTarget; const r = el.getBoundingClientRect();
+  const ghost = mkItem(id, "ghost");
+  let offX = e.clientX - r.left, offY = e.clientY - r.top;
+  if (uid == null) { offX = r.width / 2; offY = r.height / 2; }
+  ghost.style.left = (e.clientX - offX) + "px"; ghost.style.top = (e.clientY - offY) + "px";
+  document.body.appendChild(ghost);
+  if (uid != null) {
+    const i = state.inst.find(x => x.uid === uid);
+    state.inst = state.inst.filter(x => x.uid !== uid);
+    el.remove();
+    drag = { id, uid, ghost, offX, offY, sx: e.clientX, sy: e.clientY, moved: false, orig: i };
+  } else {
+    drag = { id, uid: null, ghost, offX, offY, sx: e.clientX, sy: e.clientY, moved: false };
+  }
+  highlight(e);
+}
+function targetUnder(rect, cx, cy) {
+  let best = null, bestA = 0;
+  canvas.querySelectorAll(".item:not(.ghost)").forEach(n => {
+    const b = n.getBoundingClientRect();
+    const w = Math.min(rect.right, b.right) - Math.max(rect.left, b.left);
+    const h = Math.min(rect.bottom, b.bottom) - Math.max(rect.top, b.top);
+    let a = w > 0 && h > 0 ? w * h : 0;
+    if (cx >= b.left && cx <= b.right && cy >= b.top && cy <= b.bottom) a += 1e6;
+    if (a > bestA) { bestA = a; best = n; }
+  });
+  return best;
+}
+function highlight(e) {
+  canvas.querySelectorAll(".target").forEach(n => n.classList.remove("target"));
+  const t = targetUnder(drag.ghost.getBoundingClientRect(), e.clientX, e.clientY);
+  if (t) t.classList.add("target");
+  const sr = side.getBoundingClientRect();
+  side.classList.toggle("drop", drag.moved && inRect(e, sr));
+}
+const inRect = (e, r) => e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+addEventListener("pointermove", e => {
+  if (!drag) return;
+  if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 4) drag.moved = true;
+  drag.ghost.style.left = (e.clientX - drag.offX) + "px";
+  drag.ghost.style.top = (e.clientY - drag.offY) + "px";
+  highlight(e);
+});
+addEventListener("pointerup", endDrag);
+addEventListener("pointercancel", endDrag);
+
+function endDrag(e) {
+  if (!drag) return;
+  const d = drag; drag = null;
+  const gr = d.ghost.getBoundingClientRect();
+  const cr = canvas.getBoundingClientRect();
+  d.ghost.remove();
+  canvas.querySelectorAll(".target").forEach(n => n.classList.remove("target"));
+  side.classList.remove("drop");
+
+  // Clic simple en la lista: colocar en el centro con algo de azar
+  if (!d.moved && d.uid == null) {
+    const x = cr.width / 2 - 50 + (Math.random() - .5) * 160;
+    const y = cr.height / 2 - 20 + (Math.random() - .5) * 160;
+    place(d.id, x, y, true); return;
+  }
+  // Doble clic para duplicar
+  if (!d.moved && d.uid != null) {
+    state.inst.push(d.orig);
+    const now = Date.now();
+    if (lastTap.uid === d.uid && now - lastTap.t < 350) {
+      place(d.id, d.orig.x + 24, d.orig.y + 24, true); lastTap = { uid: 0, t: 0 };
+    } else { lastTap = { uid: d.uid, t: now }; renderCanvas(); save(); }
+    return;
+  }
+  // Soltar sobre la lista: eliminar
+  if (inRect(e, side.getBoundingClientRect())) { renderCanvas(); save(); return; }
+
+  const target = targetUnder(gr, e.clientX, e.clientY);
+  let x = gr.left - cr.left, y = gr.top - cr.top;
+  x = Math.max(0, Math.min(cr.width - gr.width, x));
+  y = Math.max(0, Math.min(cr.height - gr.height, y));
+
+  if (target) {
+    const t = state.inst.find(i => i.uid == target.dataset.uid);
+    const res = REC[key(d.id, t.id)];
+    if (res) {
+      state.inst = state.inst.filter(i => i !== t);
+      const tr = target.getBoundingClientRect();
+      combine(res, tr.left - cr.left, tr.top - cr.top);
+      return;
+    }
+    // Sin receta: se queda donde se soltó y ambos tiemblan
+    const ni = { uid: state.seq++, id: d.id, x, y };
+    state.inst.push(ni); renderCanvas(); save();
+    [target, canvas.querySelector(`[data-uid="${ni.uid}"]`)].forEach(n => { n && n.classList.add("shake"); });
+    toast(`${EL[d.id].e} ${d.id} + ${EL[t.id].e} ${t.id}: no pasa nada…`);
+    return;
+  }
+  const ni = { uid: d.uid ?? state.seq++, id: d.id, x, y };
+  state.inst.push(ni); renderCanvas(); save();
+}
+function place(id, x, y, animate) {
+  const cr = canvas.getBoundingClientRect();
+  x = Math.max(0, Math.min(cr.width - 140, x)); y = Math.max(40, Math.min(cr.height - 50, y));
+  const i = { uid: state.seq++, id, x, y };
+  state.inst.push(i); renderCanvas(); save();
+  if (animate) canvas.querySelector(`[data-uid="${i.uid}"]`)?.classList.add("pop");
+}
+function combine(res, x, y) {
+  const i = { uid: state.seq++, id: res, x, y };
+  state.inst.push(i);
+  const isNew = !state.found.includes(res);
+  if (isNew) { state.found.push(res); state.fresh.push(res); }
+  renderCanvas();
+  canvas.querySelector(`[data-uid="${i.uid}"]`)?.classList.add("pop");
+  if (isNew) {
+    renderList(); list.scrollTop = list.scrollHeight;
+    toast(`✨ <b>¡Nuevo!</b> ${EL[res].e} ${res} — ${EL[res].d}`);
+    if (res === "Web Reactiva") $("#win").classList.add("show");
+  } else toast(`${EL[res].e} ${res} — ${EL[res].d}`);
+  save();
+}
+
+/* ---------- Controles ---------- */
+$("#q").addEventListener("input", renderList);
+$("#q").addEventListener("focus", () => { state.fresh = []; });
+$("#clear").onclick = () => { state.inst = []; renderCanvas(); save(); };
+$("#reset").onclick = () => {
+  if (!confirm("¿Borrar todo tu progreso?")) return;
+  state = { found: [...BASE], inst: [], fresh: [], seq: 1 };
+  save(); renderList(); renderCanvas();
+};
+$("#winok").onclick = () => $("#win").classList.remove("show");
+$("#theme").onclick = () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+};
+list.addEventListener("pointerenter", () => {}, { passive: true });
+
+renderList(); renderCanvas();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "scalable-cart",
+  "version": "1.0.0",
+  "description": "Carrito de la compra escalable: servicio sin estado, concurrencia optimista, idempotencia y almacenamiento en Redis.",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "start": "node src/main.ts",
+    "start:cluster": "node src/cluster.ts",
+    "test": "node --test test/*.test.ts",
+    "typecheck": "npx -y -p typescript@5.8.3 tsc --noEmit"
+  }
+}

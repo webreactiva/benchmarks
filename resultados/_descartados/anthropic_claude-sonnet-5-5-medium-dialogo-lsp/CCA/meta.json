@@ -1,0 +1,30 @@
+{
+  "codigo": "CCA",
+  "modelo": "claude-sonnet-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-20T11:14:12Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 4,
+    "output": 2687,
+    "reasoning": 0,
+    "cache_read": 60348,
+    "cache_write": 8310,
+    "total": 71349
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "Bash": 1,
+    "Write": 1
+  },
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "cart/domain.py"
+  ],
+  "veces_decide_tu": 0,
+  "esfuerzo": "medium",
+  "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py."
+}

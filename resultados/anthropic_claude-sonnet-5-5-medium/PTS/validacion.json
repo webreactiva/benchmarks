@@ -1,0 +1,10 @@
+{
+  "slop": "1210 palabras · 11 títulos · 12 líneas de lista · frase media 16.1 · slop 12.0 (0.99/100 palabras)\n  15-negritas             16  negritas: **miente**, **te hace cambiar de decisión**, **bugs reales de concurrencia**, **Tiempo y esperas**, **Orden de ejecución y estado compartido**, **Concurrencia**\n  16-lista-con-titulo      6  listas con etiqueta en negrita y dos puntos: \n- **Tiempo y esperas**:, - **Orden de ejecución y estado compartido**:, - **Concurrencia**:, - **Dependencias externas**:, - **Datos no deterministas**:, - **Entorno**:\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que\n  titulo-conclusión        1  sección «Conclusión»: Conclusión",
+  "extra": [
+    "✔ un post en Markdown, en español, de 1210 palabras",
+    "~ 0,99 marcas de slop por cada 100 palabras según slop.py; el cierre «Cuéntalo en los comentarios» se le escapa a la regla de chatbot (peso 2) y con él serían 1,16",
+    "✔ dos bloques de Python: el test con time.sleep(1) en una cola de pedidos y su arreglo con espera a una condición",
+    "✖ 0,98^500 ≈ 0,0041 %, no «0,00004 %»: confunde la probabilidad con el porcentaje (cien veces menos)",
+    "✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-LbTlNHJV; fugas.py sin hallazgos"
+  ]
+}
