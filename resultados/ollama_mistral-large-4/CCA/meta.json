@@ -1,0 +1,66 @@
+{
+  "codigo": "CCA",
+  "modelo": "ollama/mistral-large-4",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T17:50:14Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 29609,
+    "output": 39503,
+    "reasoning": 0,
+    "cache_read": 121344,
+    "cache_write": 0,
+    "total": 190456
+  },
+  "peticiones": 9,
+  "error": null,
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 1,
+    "shell": 5,
+    "write": 15,
+    "edit": 4
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e05eb6950ffeTAH8j3ImfIexQ5",
+  "coste_usd": 0,
+  "ficheros": [
+    "README.md",
+    "cart/__init__.py",
+    "cart/__pycache__/__init__.cpython-313.pyc",
+    "cart/application/__init__.py",
+    "cart/application/__pycache__/__init__.cpython-313.pyc",
+    "cart/application/__pycache__/ports.cpython-313.pyc",
+    "cart/application/__pycache__/pricing.cpython-313.pyc",
+    "cart/application/__pycache__/services.cpython-313.pyc",
+    "cart/application/ports.py",
+    "cart/application/pricing.py",
+    "cart/application/services.py",
+    "cart/domain/__init__.py",
+    "cart/domain/__pycache__/__init__.cpython-313.pyc",
+    "cart/domain/__pycache__/entities.cpython-313.pyc",
+    "cart/domain/__pycache__/events.cpython-313.pyc",
+    "cart/domain/__pycache__/exceptions.cpython-313.pyc",
+    "cart/domain/__pycache__/value_objects.cpython-313.pyc",
+    "cart/domain/entities.py",
+    "cart/domain/events.py",
+    "cart/domain/exceptions.py",
+    "cart/domain/value_objects.py",
+    "cart/infrastructure/__init__.py",
+    "cart/infrastructure/__pycache__/__init__.cpython-313.pyc",
+    "cart/infrastructure/__pycache__/repositories.cpython-313.pyc",
+    "cart/infrastructure/repositories.py",
+    "demo_cli.py",
+    "tests/__pycache__/test_cart.cpython-313.pyc",
+    "tests/test_cart.py"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 262144,
+    "output_proveedor": 262144,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

@@ -1,0 +1,28 @@
+{
+ "html": [
+  {
+   "fichero": "reactiva-craft.html",
+   "errores": [],
+   "titulo": "⚛️ ReactivaCraft — Infinite Craft de Web Reactiva",
+   "canvas": 0,
+   "texto": "⚛️ ReactivaCraft\n🔍 4 / 268 elementos\n💡 Pista\n🧹 Limpiar\n🗑️ Reiniciar\nEl Infinite Craft de Web Reactiva: toca un elemento del panel para colocarlo en el lienzo y selecciona dos para combinarlos. ¿Cuántos elementos del ecosistema web podrás descubrir?\n💻\nComputadora\n🌐\nInternet\n⚡\nElectricidad\n📝\nPapel\n💻\nComputadora\n🌐\nInternet\n⚡\nElectricidad\n📝\nPapel\n👋 ¡Bienvenido a ReactivaCraft! Arrastra y co",
+   "scripts": [],
+   "captura": "capturas/reactiva-craft.html.png",
+   "capturas_extra": [
+    "capturas/mezcla.png",
+    "capturas/sin-receta.png",
+    "capturas/pista.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; un HTML de 27 KB sin dependencias",
+  "~ se combina seleccionando dos fichas del lienzo (clic y clic); arrastrar una sobre otra no hace nada",
+  "✔ Computadora + Internet → Navegador; Papel + Internet → Periódico; Computadora + Electricidad → Programa",
+  "✔ 268 de 268 elementos alcanzables desde 4 bases (juez/alcanzables.js)",
+  "✖ sin modo infinito: Papel + Electricidad no tiene receta y no da nada",
+  "✖ contenido de desarrollo web genérico; de Web Reactiva solo el nombre, como combinación de Podcast + Comunidad",
+  "✔ guarda en localStorage (7/268 tras recargar), buscador y pista"
+ ]
+}
