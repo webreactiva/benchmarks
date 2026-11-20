@@ -41,6 +41,10 @@ c["provider"].setdefault("ol", {"npm": "@ai-sdk/openai-compatible", "name": "Oll
     "options": {"baseURL": "https://ollama.com/v1", "apiKey": "{env:OLLAMA_CLOUD_API_KEY}"}, "models": {}})
 p, id = ("ol", m[len("ollama/"):]) if m.startswith("ollama/") else ("or", m)
 c["provider"][p]["models"][id] = {"name": id, "limit": {"context": lim["context"], "output": lim["output"]}}
+# OpenCode 2.x corta una petición a los 5 min sin cabeceras (headerTimeout) y a los 15 min sin fragmentos (chunkTimeout):
+# un modelo que piensa mucho o escribe un fichero grande en una sola llamada se queda en «Network connection lost».
+for prov in c["provider"].values():
+    prov["options"].update({"timeout": False, "headerTimeout": False, "chunkTimeout": 3600000})
 c["model"] = p + "/" + id
 json.dump(c, open(f, "w"), indent=2)
 PY
