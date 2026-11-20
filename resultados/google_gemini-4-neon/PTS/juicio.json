@@ -1,0 +1,18 @@
+{
+  "nota": 9,
+  "veredicto": "completo, con tics de formato",
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 1,
+    "slop": 1,
+    "extensión": 1
+  },
+  "resumen": "Defiende la tesis con su mecanismo: sin tests el equipo sabe que no tiene red; con tests intermitentes aprende a pulsar Re-run y la alarma real se ignora, además de esconder condiciones de carrera reales. Trae una escena reconocible, la cifra correcta (20 tests al 5 % → 36 % de pasar a la primera), código antes y después y qué hacer con los reintentos, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».",
+  "rarezas": [
+    "Repetido con SALIDA_MAX=32768 porque la primera tirada no pudo empezar: OpenRouter rechazaba el tope de 65 536 tokens por falta de saldo (en _descartados/).",
+    "3 peticiones, 24 000 tokens, 0,09 $."
+  ]
+}

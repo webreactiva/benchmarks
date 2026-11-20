@@ -140,6 +140,36 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
+<td><small>google/gemini-4-neon</small><br><small>OpenCode · 2026-11-20 21:24 UTC</small></td>
+<td class=n><b>1011.5 k</b><br><small>in 92.4 k · out 48.9 k<br>razon. 9.9 k · caché 860.3 k</small></td>
+<td class=n>19</td>
+<td><small><a href="resultados/google_gemini-4-neon/A3D/salida/alhambra-3d.html">alhambra-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-3d.html<br>✔ carga sin errores; 103 KB con three.js 0.160 de jsDelivr<br>✔ 7 paradas en orden de visita: Justicia, Alcazaba, Carlos V, Arrayanes, Leones, Partal, Generalife<br>✔ la ruta guiada arranca sola: Alcazaba a los 60 s y Carlos V a los 120 s con render por software a 2 fps<br>✔ se reconoce: patio circular de dos pisos de Carlos V, pórtico de Arrayanes con la torre de Comares, templete del Patio de los Leones, Torre de la Vela, acequia del Generalife<br>✖ en el Generalife los chorros de agua se dibujan como cuadrados blancos enormes que tapan media vista<br>✔ textos correctos (Yusuf I, Machuca, pórtico de siete arcos, Muhammad III, Torre de la Vela)</small></td>
+<td class="nota n2">9<br><small>se recorre y se reconoce</small></td>
+<td><small>Ruta guiada a pie de calle por siete paradas con three.js, que arranca sola, con modos de órbita, paseo libre y panorámica, minimapa y tres luces; se reconocen el patio circular de Carlos V, el pórtico de Arrayanes con Comares, el templete de los Leones y la acequia del Generalife, y las fichas son correctas. Pero en el Generalife los chorros de agua se ven como cuadrados blancos que tapan media pantalla.</small> <a href="resultados/google_gemini-4-neon/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/google_gemini-4-neon/A3D/capturas/alhambra-3d.html.png"><img src="resultados/google_gemini-4-neon/A3D/capturas/alhambra-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>google/gemini-4-neon</small><br><small>OpenCode · 2026-11-20 21:45 UTC</small></td>
+<td class=n><b>894.7 k</b><br><small>in 134.6 k · out 54.1 k<br>razon. 12.6 k · caché 693.4 k</small></td>
+<td class=n>11</td>
+<td><small><a href="resultados/google_gemini-4-neon/AIF/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ carga sin errores; un HTML de 122 KB sin dependencias<br>✔ tablero libre: se suelta una ficha sobre otra (clic añade, doble clic duplica, arrastrar al panel retira)<br>✔ Pantuflas + Código → Developer; Pantuflas + Podcast → Dani Primo; Código + IA → Prompt; Podcast + Podcast → +710 Episodios<br>✔ 144 de 144 elementos alcanzables desde 4 iniciales, 360 recetas (juez/alcanzables.js)<br>~ infinito con interruptor: Dani Primo + Developer no da nada con el Modo Libre apagado (por defecto) y «Meta-Developer» con él encendido<br>✔ contenido de webreactiva.com (8 webfetch): Atlas Malandriner, Selector de Modelos, Bingo de Mentiras, Chuleta OpenCode, Robotito, LinkedIn-5-5, Fichómetro<br>✔ guarda en localStorage (8/144 tras recargar), buscador, pistas en dos niveles, Atlas con rarezas y compartir</small></td>
+<td class="nota n2">10<br><small>el AIF más documentado</small></td>
+<td><small>Tablero libre donde se suelta una ficha sobre otra, 144 elementos y 360 recetas todos alcanzables desde Pantuflas, Código, IA y Podcast, con Atlas Malandriner, pistas en dos niveles, buscador y guardado; las mezclas sin receta dan fusiones con el Modo Libre encendido. El contenido sale de ocho páginas de webreactiva.com: Selector de Modelos, Bingo de Mentiras, Chuleta OpenCode, Robotito, LinkedIn-5-5, Fichómetro, skills y SDD.</small> <a href="resultados/google_gemini-4-neon/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/google_gemini-4-neon/AIF/capturas/index.html.png"><img src="resultados/google_gemini-4-neon/AIF/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>google/gemini-4-neon</small><br><small>OpenCode · 2026-11-20 22:02 UTC</small></td>
+<td class=n><b>23.7 k</b><br><small>in 11.0 k · out 2.5 k<br>razon. 987 · caché 9.3 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/google_gemini-4-neon/PTS/salida/por-que-los-tests-flaky-son-peores-que-no-tener-tests.md">por-que-los-tests-flaky-son-peores-que-no-tener-tests.md</a></small></td>
+<td><small>✔ un post en Markdown, en español, de 1486 palabras<br>~ 1,26 marcas de slop por cada 100 palabras: 19 negritas, 7 listas con etiqueta, «En resumen», «La próxima vez que…»<br>✔ código antes y después (sleep(300) frente a findByText) y la cifra correcta: 20 tests con un 5 % de fallo → 0,95²⁰ ≈ 36 % de pasar a la primera<br>✔ mecanismo: sin tests sabes que no hay red; con tests intermitentes el equipo aprende a pulsar Re-run y el fallo real llega a producción</small></td>
+<td class="nota n2">9<br><small>completo, con tics de formato</small></td>
+<td><small>Defiende la tesis con su mecanismo: sin tests el equipo sabe que no tiene red; con tests intermitentes aprende a pulsar Re-run y la alarma real se ignora, además de esconder condiciones de carrera reales. Trae una escena reconocible, la cifra correcta (20 tests al 5 % → 36 % de pasar a la primera), código antes y después y qué hacer con los reintentos, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».</small> <a href="resultados/google_gemini-4-neon/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
 <td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:41 UTC</small></td>
 <td class=n><b>111.6 k</b><br><small>in 18.4 k · out 6.4 k<br>razon. 23 · caché 86.8 k</small></td>
 <td class=n>5</td>

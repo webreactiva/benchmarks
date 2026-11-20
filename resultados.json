@@ -1112,6 +1112,253 @@
     "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
+    "dir": "resultados/google_gemini-4-neon/A3D",
+    "codigo": "A3D",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T21:24:24Z",
+    "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 92374,
+      "output": 48945,
+      "reasoning": 9851,
+      "cache_read": 860304,
+      "cache_write": 0,
+      "total": 1011474
+    },
+    "peticiones": 19,
+    "error": "Network connection lost.",
+    "mensajes_usuario": [
+      "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 5,
+      "write": 1,
+      "shell": 4,
+      "edit": 4,
+      "grep": 2
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e052758b6ffejtCokEOcftufPw",
+    "coste_usd": 1.2844,
+    "ficheros": [
+      "alhambra-3d.html"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 65536,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alhambra-3d.html",
+          "errores": [],
+          "titulo": "La Alhambra de Granada · Ruta 3D Interactiva",
+          "canvas": 2,
+          "texto": "La Alhambra de Granada\nRuta 3D Nazarí · Alcazaba · Palacios · Generalife\n✦ Ruta Guiada\n◎ Explorar\n❖ Paseo Libre\n▲ Panorámica\nAtardecer\nDía\nNoche\n〰 Ruta\n♪ Agua\n◫ Info\nPARADA 1 DE 7\n1348 · Sultán Yusuf I\nPuerta de la Justicia y Murallas Rojas\n\nGran acceso monumental al recinto amurallado de la Sabika. Su imponente arco de herradura en piedra y ladrillo rojo luce talladas la mano de Fátima y la llave",
+          "scripts": [],
+          "captura": "capturas/alhambra-3d.html.png",
+          "capturas_extra": [
+            "capturas/auto-2min.png",
+            "capturas/parada-3.png",
+            "capturas/parada-4.png",
+            "capturas/parada-5.png",
+            "capturas/parada-6.png",
+            "capturas/parada-8.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; 103 KB con three.js 0.160 de jsDelivr",
+        "✔ 7 paradas en orden de visita: Justicia, Alcazaba, Carlos V, Arrayanes, Leones, Partal, Generalife",
+        "✔ la ruta guiada arranca sola: Alcazaba a los 60 s y Carlos V a los 120 s con render por software a 2 fps",
+        "✔ se reconoce: patio circular de dos pisos de Carlos V, pórtico de Arrayanes con la torre de Comares, templete del Patio de los Leones, Torre de la Vela, acequia del Generalife",
+        "✖ en el Generalife los chorros de agua se dibujan como cuadrados blancos enormes que tapan media vista",
+        "✔ textos correctos (Yusuf I, Machuca, pórtico de siete arcos, Muhammad III, Torre de la Vela)"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "se recorre y se reconoce",
+      "rubrica": {
+        "abre sin errores": 1,
+        "ruta con paradas reales": 2,
+        "la ruta se recorre": 3,
+        "se reconoce la Alhambra": 2,
+        "vista limpia": 0,
+        "textos sin errores": 1
+      },
+      "resumen": "Ruta guiada a pie de calle por siete paradas con three.js, que arranca sola, con modos de órbita, paseo libre y panorámica, minimapa y tres luces; se reconocen el patio circular de Carlos V, el pórtico de Arrayanes con Comares, el templete de los Leones y la acequia del Generalife, y las fichas son correctas. Pero en el Generalife los chorros de agua se ven como cuadrados blancos que tapan media pantalla.",
+      "rarezas": [
+        "Tercera tirada: las dos primeras se cortaron con «Network connection lost» porque Neon piensa más de 6 min antes de escribir el HTML (en _descartados/). Esta fue por AI Studio estándar con SALIDA_MAX=65536 y también tuvo cortes, pero los reintentos salieron y la sesión terminó; meta.json guarda el último error.",
+        "Escribió los 103 KB de una vez y revisó el JavaScript con node varias veces; no lo abrió en un navegador.",
+        "19 peticiones, 1 millón de tokens (860 000 de caché), 1,28 $."
+      ]
+    },
+    "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
+  },
+  {
+    "dir": "resultados/google_gemini-4-neon/AIF",
+    "codigo": "AIF",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T21:45:39Z",
+    "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 134641,
+      "output": 54057,
+      "reasoning": 12633,
+      "cache_read": 693401,
+      "cache_write": 0,
+      "total": 894732
+    },
+    "peticiones": 11,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 2,
+      "websearch": 2,
+      "webfetch": 8,
+      "write": 1,
+      "shell": 2,
+      "edit": 5
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e0513e09fffezAY2EmJbxlJrbm",
+    "coste_usd": 1.4992,
+    "ficheros": [
+      "index.html"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 65536,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 1,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "index.html",
+          "errores": [],
+          "titulo": "Alquimia Reactiva — Infinite Craft × Web Reactiva",
+          "canvas": 1,
+          "texto": "Alquimia Reactiva\nEN PANTUFLAS\n\nCombina conceptos de Web Reactiva · Programa con IA sin alucinar\n\n🥿 + 🤖 = ✨\nArrastra elementos al tablero\n\nSuelta un elemento encima de otro para descubrir conceptos, herramientas, podcasts y secretos de Web Reactiva.\n\nClic añade al tablero · Doble clic duplica · Clic derecho elimina\n\n🧭\nAtlas\n💡\nPista\n∞\nModo Libre\n🧹\nLimpiar\n🔊\n🌙\n🗑️\nSuelta aquí para retirar\nDes",
+          "scripts": [],
+          "captura": "capturas/index.html.png",
+          "capturas_extra": [
+            "capturas/dani-primo.png",
+            "capturas/sin-receta-libre.png",
+            "capturas/pista.png",
+            "capturas/atlas.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; un HTML de 122 KB sin dependencias",
+        "✔ tablero libre: se suelta una ficha sobre otra (clic añade, doble clic duplica, arrastrar al panel retira)",
+        "✔ Pantuflas + Código → Developer; Pantuflas + Podcast → Dani Primo; Código + IA → Prompt; Podcast + Podcast → +710 Episodios",
+        "✔ 144 de 144 elementos alcanzables desde 4 iniciales, 360 recetas (juez/alcanzables.js)",
+        "~ infinito con interruptor: Dani Primo + Developer no da nada con el Modo Libre apagado (por defecto) y «Meta-Developer» con él encendido",
+        "✔ contenido de webreactiva.com (8 webfetch): Atlas Malandriner, Selector de Modelos, Bingo de Mentiras, Chuleta OpenCode, Robotito, LinkedIn-5-5, Fichómetro",
+        "✔ guarda en localStorage (8/144 tras recargar), buscador, pistas en dos niveles, Atlas con rarezas y compartir"
+      ]
+    },
+    "juicio": {
+      "nota": 10,
+      "veredicto": "el AIF más documentado",
+      "rubrica": {
+        "abre sin errores": 1,
+        "mecánica de Infinite Craft": 2,
+        "las combinaciones funcionan": 2,
+        "progresión": 1,
+        "«infinito»": 1,
+        "contenido de Web Reactiva": 2,
+        "acabado": 1
+      },
+      "resumen": "Tablero libre donde se suelta una ficha sobre otra, 144 elementos y 360 recetas todos alcanzables desde Pantuflas, Código, IA y Podcast, con Atlas Malandriner, pistas en dos niveles, buscador y guardado; las mezclas sin receta dan fusiones con el Modo Libre encendido. El contenido sale de ocho páginas de webreactiva.com: Selector de Modelos, Bingo de Mentiras, Chuleta OpenCode, Robotito, LinkedIn-5-5, Fichómetro, skills y SDD.",
+      "rarezas": [
+        "La primera búsqueda web quedó cancelada por el permiso; buscó otra vez y leyó ocho páginas de webreactiva.com con webfetch, el que más del benchmark.",
+        "El Modo Libre (mezclas sin receta) viene apagado: quien no lo encienda juega a un juego con recetas cerradas.",
+        "11 peticiones, 895 000 tokens, 1,50 $: el AIF más caro de los Gemini."
+      ]
+    },
+    "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
+    "dir": "resultados/google_gemini-4-neon/PTS",
+    "codigo": "PTS",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T22:02:45Z",
+    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 10955,
+      "output": 2498,
+      "reasoning": 987,
+      "cache_read": 9289,
+      "cache_write": 0,
+      "total": 23729
+    },
+    "peticiones": 3,
+    "error": null,
+    "mensajes_usuario": [
+      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 1,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e0504397dffeAtM2AXljPOqyye",
+    "coste_usd": 0.0857,
+    "ficheros": [
+      "por-que-los-tests-flaky-son-peores-que-no-tener-tests.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 32768,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "slop": "1486 palabras · 13 títulos · 18 líneas de lista · frase media 20.4 · slop 18.8 (1.26/100 palabras)\n  13-raya                  4  rayas (—): —, —, —, —\n  15-negritas             19  negritas: **Re-run**, **tests intermitentes**, **confianza**, **36%**, **Cambios de contexto constantes:**, **Cuellos de botella en los despliegues:**\n  16-lista-con-titulo      7  listas con etiqueta en negrita y dos puntos: \n- **Cambios de contexto constantes:**, - **Cuellos de botella en los despliegues:**, - **Fricción innecesaria en las revisiones:**, \n- **Inyecta el reloj:**, - **Aísla cada test:**, - **Usa semillas fijas**\n  23-relleno               1  muletillas: En resumen\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que",
+      "extra": [
+        "✔ un post en Markdown, en español, de 1486 palabras",
+        "~ 1,26 marcas de slop por cada 100 palabras: 19 negritas, 7 listas con etiqueta, «En resumen», «La próxima vez que…»",
+        "✔ código antes y después (sleep(300) frente a findByText) y la cifra correcta: 20 tests con un 5 % de fallo → 0,95²⁰ ≈ 36 % de pasar a la primera",
+        "✔ mecanismo: sin tests sabes que no hay red; con tests intermitentes el equipo aprende a pulsar Re-run y el fallo real llega a producción"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "completo, con tics de formato",
+      "rubrica": {
+        "hay post": 1,
+        "tesis con mecanismo": 2,
+        "se ciñe al tema": 1,
+        "ejemplos concretos": 2,
+        "sin errores ni inventos": 1,
+        "slop": 1,
+        "extensión": 1
+      },
+      "resumen": "Defiende la tesis con su mecanismo: sin tests el equipo sabe que no tiene red; con tests intermitentes aprende a pulsar Re-run y la alarma real se ignora, además de esconder condiciones de carrera reales. Trae una escena reconocible, la cifra correcta (20 tests al 5 % → 36 % de pasar a la primera), código antes y después y qué hacer con los reintentos, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».",
+      "rarezas": [
+        "Repetido con SALIDA_MAX=32768 porque la primera tirada no pudo empezar: OpenRouter rechazaba el tope de 65 536 tokens por falta de saldo (en _descartados/).",
+        "3 peticiones, 24 000 tokens, 0,09 $."
+      ]
+    },
+    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+  },
+  {
     "dir": "resultados/openai_gpt-6.2-astra-default/A3D",
     "codigo": "A3D",
     "modelo": "gpt-6.2-astra (default)",
