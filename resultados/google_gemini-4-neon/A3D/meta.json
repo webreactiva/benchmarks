@@ -1,0 +1,40 @@
+{
+  "codigo": "A3D",
+  "modelo": "google/gemini-4-neon",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T21:24:24Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 92374,
+    "output": 48945,
+    "reasoning": 9851,
+    "cache_read": 860304,
+    "cache_write": 0,
+    "total": 1011474
+  },
+  "peticiones": 19,
+  "error": "Network connection lost.",
+  "mensajes_usuario": [
+    "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 5,
+    "write": 1,
+    "shell": 4,
+    "edit": 4,
+    "grep": 2
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e052758b6ffejtCokEOcftufPw",
+  "coste_usd": 1.2844,
+  "ficheros": [
+    "alhambra-3d.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 65536,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+  },
+  "veces_decide_tu": 0
+}

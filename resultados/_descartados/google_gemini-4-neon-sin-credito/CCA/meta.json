@@ -1,0 +1,65 @@
+{
+  "codigo": "CCA",
+  "modelo": "google/gemini-4-neon",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T21:54:35Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 49177,
+    "output": 33866,
+    "reasoning": 5111,
+    "cache_read": 125261,
+    "cache_write": 0,
+    "total": 213415
+  },
+  "peticiones": 12,
+  "error": "This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 62602. To increase, visit https://openrouter.ai/settings/credits and add more credits",
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 1,
+    "shell": 4,
+    "write": 27,
+    "edit": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e050bb62affeMZtUQyWybIfv2e",
+  "coste_usd": 0.748,
+  "ficheros": [
+    "package.json",
+    "src/api/server.ts",
+    "src/application/cart-service.ts",
+    "src/bootstrap.ts",
+    "src/demo.ts",
+    "src/domain/cart.ts",
+    "src/domain/errors.ts",
+    "src/domain/events.ts",
+    "src/domain/money.ts",
+    "src/domain/pricing.ts",
+    "src/index.ts",
+    "src/infrastructure/file-cart-repository.ts",
+    "src/infrastructure/in-memory-cart-repository.ts",
+    "src/infrastructure/in-memory-catalog.ts",
+    "src/infrastructure/in-memory-event-bus.ts",
+    "src/infrastructure/in-memory-idempotency-store.ts",
+    "src/infrastructure/in-memory-inventory.ts",
+    "src/infrastructure/in-memory-lock-manager.ts",
+    "src/main.ts",
+    "src/ports/cart-repository.ts",
+    "src/ports/catalog-provider.ts",
+    "src/ports/event-bus.ts",
+    "src/ports/idempotency-store.ts",
+    "src/ports/inventory-provider.ts",
+    "src/ports/lock-manager.ts",
+    "src/types/node.d.ts",
+    "tsconfig.json"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 65536,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+  },
+  "veces_decide_tu": 0
+}

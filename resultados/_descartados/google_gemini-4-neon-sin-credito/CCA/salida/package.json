@@ -1,0 +1,16 @@
+{
+  "name": "scalable-shopping-cart",
+  "version": "1.0.0",
+  "description": "Carrito de la compra escalable con arquitectura hexagonal, control de concurrencia optimista, idempotencia, motor de promociones y API REST",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.ts",
+    "start": "node src/main.ts",
+    "demo": "node src/demo.ts"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

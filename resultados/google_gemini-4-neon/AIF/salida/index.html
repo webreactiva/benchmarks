@@ -1,0 +1,3187 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Alquimia Reactiva — Infinite Craft × Web Reactiva</title>
+  <style>
+    :root {
+      --bg-canvas: #faf9f6;
+      --bg-dots: #ddd8cf;
+      --bg-sidebar: #ffffff;
+      --bg-chip: #ffffff;
+      --bg-chip-hover: #fff7f9;
+      --bg-surface: #f4f1ec;
+      --bg-modal: #ffffff;
+      --border: #1e1b24;
+      --border-soft: #dcd6ce;
+      --text: #1c1922;
+      --text-muted: #665f70;
+      --shadow-chip: 2px 2px 0px rgba(30, 27, 36, 0.14);
+      --shadow-chip-hover: 3px 3px 0px rgba(225, 79, 124, 0.35);
+      --shadow-drag: 6px 8px 0px rgba(30, 27, 36, 0.22);
+      --shadow-hard: 4px 4px 0px #1e1b24;
+
+      /* Paleta Web Reactiva */
+      --wr-rose: #e14f7c;
+      --wr-pink: #ffb0c0;
+      --wr-sky: #7dc5f1;
+      --wr-mint: #9ef4a4;
+      --wr-mulberry: #8a2b5c;
+      --wr-gold: #f5b700;
+      --wr-purple: #8b5cf6;
+
+      --sidebar-w: 350px;
+      --radius: 10px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    [data-theme="dark"] {
+      --bg-canvas: #131118;
+      --bg-dots: #2b2636;
+      --bg-sidebar: #1b1823;
+      --bg-chip: #231f2e;
+      --bg-chip-hover: #2d263b;
+      --bg-surface: #282334;
+      --bg-modal: #1d1a26;
+      --border: #48405a;
+      --border-soft: #312b40;
+      --text: #f3effa;
+      --text-muted: #a49cb5;
+      --shadow-chip: 2px 2px 0px rgba(0, 0, 0, 0.45);
+      --shadow-chip-hover: 3px 3px 0px rgba(225, 79, 124, 0.55);
+      --shadow-drag: 6px 8px 0px rgba(0, 0, 0, 0.65);
+      --shadow-hard: 4px 4px 0px #09070c;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      background: var(--bg-canvas);
+      color: var(--text);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Layout principal */
+    .app {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* Workspace / Lienzo */
+    .workspace {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--bg-canvas);
+      background-image: radial-gradient(var(--bg-dots) 1.35px, transparent 1.35px);
+      background-size: 26px 26px;
+      touch-action: none;
+    }
+
+    #fx-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    /* Cabecera flotante Web Reactiva */
+    .brand-bar {
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .brand-shapes {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .brand-shapes span {
+      display: inline-block;
+      height: 6px;
+      border-radius: 2px;
+    }
+
+    .brand-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 7px;
+      border-radius: 4px;
+      background: var(--wr-rose);
+      color: #fff;
+      vertical-align: middle;
+    }
+
+    .brand-sub {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Guía inicial vacía */
+    .empty-guide {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      max-width: 390px;
+      padding: 24px 28px;
+      border: 2px dashed var(--border-soft);
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--bg-canvas) 82%, transparent);
+      backdrop-filter: blur(4px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 5;
+    }
+
+    .empty-guide.hidden {
+      opacity: 0;
+      transform: translate(-50%, -46%) scale(0.96);
+    }
+
+    .empty-guide .guide-emoji {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    .empty-guide h2 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .empty-guide p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .empty-guide kbd {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 5px;
+      border: 1px solid var(--border-soft);
+      border-radius: 4px;
+      background: var(--bg-chip);
+      color: var(--text);
+    }
+
+    /* Controles flotantes inferiores */
+    .canvas-controls {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      z-index: 30;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .ctrl-btn {
+      appearance: none;
+      border: 1.5px solid var(--border);
+      background: var(--bg-chip);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-chip);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+    }
+
+    .ctrl-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-chip-hover);
+      border-color: var(--wr-rose);
+    }
+
+    .ctrl-btn:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    .ctrl-btn.active {
+      background: var(--wr-rose);
+      color: #fff;
+      border-color: var(--wr-rose);
+    }
+
+    .ctrl-btn.icon-only {
+      padding: 8px 10px;
+    }
+
+    /* Toast de Descubrimiento / Lore */
+    .lore-toast {
+      position: absolute;
+      bottom: 66px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 35;
+      max-width: min(480px, calc(100% - 32px));
+      width: max-content;
+      background: var(--bg-modal);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: var(--shadow-hard);
+      transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+    }
+
+    .lore-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .lore-toast.is-new {
+      border-color: var(--wr-rose);
+    }
+
+    .lore-toast.is-legendary {
+      border-color: var(--wr-gold);
+    }
+
+    .lore-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    .lore-tag {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--wr-rose);
+      color: #fff;
+    }
+
+    .lore-tag.legendary {
+      background: var(--wr-gold);
+      color: #1e1b24;
+    }
+
+    .lore-tag.hint {
+      background: var(--wr-sky);
+      color: #102536;
+    }
+
+    .lore-tag.free {
+      background: var(--wr-purple);
+      color: #fff;
+    }
+
+    .lore-tag.nope {
+      background: var(--bg-surface);
+      color: var(--text-muted);
+    }
+
+    .lore-formula {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .lore-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin: 2px 0;
+    }
+
+    .lore-desc {
+      margin: 0;
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    /* Elementos en el lienzo */
+    .board-item {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 13px;
+      background: var(--bg-chip);
+      border: 1.75px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      cursor: grab;
+      box-shadow: var(--shadow-chip);
+      z-index: 10;
+      transition: box-shadow 0.14s ease, border-color 0.14s ease, background 0.14s ease;
+      will-change: transform;
+      touch-action: none;
+    }
+
+    .board-item:hover {
+      background: var(--bg-chip-hover);
+      border-color: var(--wr-rose);
+      box-shadow: var(--shadow-chip-hover);
+    }
+
+    .board-item.dragging {
+      cursor: grabbing;
+      z-index: 100 !important;
+      box-shadow: var(--shadow-drag);
+      border-color: var(--wr-rose);
+      background: var(--bg-chip-hover);
+    }
+
+    .board-item.drop-target {
+      border-color: var(--wr-rose);
+      background: color-mix(in srgb, var(--wr-pink) 24%, var(--bg-chip));
+      box-shadow: 0 0 0 4px rgba(225, 79, 124, 0.25), var(--shadow-chip-hover);
+    }
+
+    .board-item.rarity-legendary {
+      border-color: var(--wr-gold);
+      background: linear-gradient(135deg, var(--bg-chip) 0%, color-mix(in srgb, var(--wr-gold) 15%, var(--bg-chip)) 100%);
+    }
+
+    .board-item.rarity-epic {
+      border-color: var(--wr-purple);
+    }
+
+    .board-item.is-free {
+      border-style: dashed;
+      border-color: var(--wr-purple);
+    }
+
+    .board-item .item-emoji {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .board-item .new-pip {
+      position: absolute;
+      top: -9px;
+      right: -8px;
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 2px 5px;
+      border-radius: 99px;
+      background: var(--wr-rose);
+      color: #fff;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+      animation: badgePop 0.35s cubic-bezier(0.2, 1.3, 0.4, 1);
+    }
+
+    .board-item.rarity-legendary .new-pip {
+      background: var(--wr-gold);
+      color: #1e1b24;
+    }
+
+    @keyframes popSpawn {
+      0% { transform: translate(var(--x), var(--y)) scale(0.45); opacity: 0; }
+      70% { transform: translate(var(--x), var(--y)) scale(1.08); opacity: 1; }
+      100% { transform: translate(var(--x), var(--y)) scale(1); opacity: 1; }
+    }
+
+    @keyframes shakeNo {
+      0%, 100% { margin-left: 0; }
+      20% { margin-left: -7px; }
+      40% { margin-left: 7px; }
+      60% { margin-left: -5px; }
+      80% { margin-left: 4px; }
+    }
+
+    @keyframes badgePop {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+
+    .board-item.anim-spawn {
+      animation: popSpawn 0.28s cubic-bezier(0.2, 1.15, 0.3, 1);
+    }
+
+    .board-item.anim-shake {
+      animation: shakeNo 0.32s ease;
+    }
+
+    /* Sidebar derecha */
+    .sidebar {
+      width: var(--sidebar-w);
+      height: 100%;
+      background: var(--bg-sidebar);
+      border-left: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 25;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+
+    .sidebar.trash-hover {
+      background: color-mix(in srgb, var(--wr-rose) 12%, var(--bg-sidebar));
+    }
+
+    .trash-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: color-mix(in srgb, var(--wr-rose) 14%, var(--bg-sidebar));
+      backdrop-filter: blur(2px);
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      font-weight: 800;
+      color: var(--wr-rose);
+      font-size: 15px;
+    }
+
+    .sidebar.trash-hover .trash-overlay {
+      opacity: 1;
+    }
+
+    .sidebar-header {
+      padding: 14px 14px 10px;
+      border-bottom: 1.5px solid var(--border-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .progress-count {
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-count .num {
+      color: var(--wr-rose);
+      font-family: var(--font-mono);
+      font-size: 14px;
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      height: 7px;
+      background: var(--bg-surface);
+      border-radius: 99px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 3%;
+      background: linear-gradient(90deg, var(--wr-sky), var(--wr-rose), var(--wr-mint));
+      border-radius: 99px;
+      transition: width 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+
+    .search-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 8px;
+      background: var(--bg-surface);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .search-input:focus {
+      border-color: var(--wr-rose);
+      background: var(--bg-chip);
+    }
+
+    .sort-btn {
+      border: 1.5px solid var(--border-soft);
+      background: var(--bg-surface);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 0 9px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .sort-btn:hover {
+      border-color: var(--wr-rose);
+    }
+
+    .cat-pills {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .cat-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-pill {
+      border: 1.5px solid var(--border-soft);
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border-radius: 99px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.12s ease;
+    }
+
+    .cat-pill:hover {
+      border-color: var(--wr-rose);
+      color: var(--text);
+    }
+
+    .cat-pill.active {
+      background: var(--text);
+      color: var(--bg-sidebar);
+      border-color: var(--text);
+    }
+
+    .inventory-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 8px;
+    }
+
+    .inv-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 11px;
+      background: var(--bg-chip);
+      border: 1.5px solid var(--border-soft);
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      cursor: grab;
+      box-shadow: var(--shadow-chip);
+      transition: transform 0.1s ease, border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      position: relative;
+    }
+
+    .inv-chip:hover {
+      transform: translateY(-1px);
+      border-color: var(--wr-rose);
+      background: var(--bg-chip-hover);
+      box-shadow: var(--shadow-chip-hover);
+    }
+
+    .inv-chip.rarity-legendary {
+      border-color: var(--wr-gold);
+    }
+
+    .inv-chip.rarity-epic {
+      border-color: color-mix(in srgb, var(--wr-purple) 65%, var(--border-soft));
+    }
+
+    .inv-chip.is-free {
+      border-style: dashed;
+      border-color: var(--wr-purple);
+    }
+
+    .inv-chip .rarity-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .inv-chip.rarity-legendary .rarity-dot { background: var(--wr-gold); }
+    .inv-chip.rarity-epic .rarity-dot { background: var(--wr-purple); }
+    .inv-chip.rarity-rare .rarity-dot { background: var(--wr-sky); }
+
+    .inv-empty {
+      width: 100%;
+      text-align: center;
+      padding: 28px 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .sidebar-footer {
+      padding: 9px 12px;
+      border-top: 1.5px solid var(--border-soft);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .sidebar-footer a {
+      color: var(--wr-rose);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .sidebar-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Ghost de arrastre desde sidebar */
+    .drag-ghost {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 200;
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 13px;
+      background: var(--bg-chip-hover);
+      border: 2px solid var(--wr-rose);
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: var(--shadow-drag);
+      white-space: nowrap;
+      will-change: transform;
+    }
+
+    /* Modal Atlas Malandriner */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 12, 22, 0.62);
+      backdrop-filter: blur(4px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(820px, 100%);
+      max-height: min(86vh, 760px);
+      background: var(--bg-modal);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow-hard);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1.5px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .modal-stats {
+      padding: 12px 20px;
+      background: var(--bg-surface);
+      border-bottom: 1.5px solid var(--border-soft);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-val {
+      font-size: 18px;
+      font-weight: 900;
+      font-family: var(--font-mono);
+      color: var(--wr-rose);
+    }
+
+    .stat-lbl {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px 24px;
+    }
+
+    .atlas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .atlas-card {
+      border: 1.5px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 11px 12px;
+      background: var(--bg-chip);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: border-color 0.14s ease, transform 0.12s ease;
+    }
+
+    .atlas-card.unlocked {
+      cursor: pointer;
+    }
+
+    .atlas-card.unlocked:hover {
+      border-color: var(--wr-rose);
+      transform: translateY(-1px);
+    }
+
+    .atlas-card.locked {
+      opacity: 0.52;
+      background: var(--bg-surface);
+      border-style: dashed;
+    }
+
+    .atlas-card.rarity-legendary.unlocked {
+      border-color: var(--wr-gold);
+    }
+
+    .atlas-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .atlas-card-name {
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .atlas-card-cat {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-surface);
+      color: var(--text-muted);
+    }
+
+    .atlas-card-desc {
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .atlas-card-recipe {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--wr-rose);
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    /* Botón drawer móvil */
+    .mobile-toggle {
+      display: none;
+    }
+
+    @media (max-width: 780px) {
+      .app {
+        flex-direction: column;
+      }
+
+      .brand-bar {
+        top: 10px;
+        left: 12px;
+      }
+
+      .brand-title {
+        font-size: 17px;
+      }
+
+      .brand-sub {
+        display: none;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: 40vh;
+        min-height: 215px;
+        border-left: none;
+        border-top: 2px solid var(--border);
+      }
+
+      .canvas-controls {
+        bottom: 10px;
+        left: 10px;
+        gap: 6px;
+      }
+
+      .ctrl-btn {
+        padding: 6px 9px;
+        font-size: 11.5px;
+      }
+
+      .ctrl-btn .btn-label-sm {
+        display: none;
+      }
+
+      .lore-toast {
+        bottom: 54px;
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Lienzo de Alquimia -->
+    <main class="workspace" id="workspace">
+      <canvas id="fx-canvas"></canvas>
+
+      <header class="brand-bar">
+        <div class="brand-shapes" aria-hidden="true">
+          <span style="width: 16px; background: var(--wr-sky);"></span>
+          <span style="width: 24px; background: var(--wr-pink);"></span>
+          <span style="width: 18px; background: var(--wr-mint);"></span>
+          <span style="width: 10px; background: var(--wr-rose);"></span>
+        </div>
+        <div class="brand-title-row">
+          <h1 class="brand-title">Alquimia Reactiva <span class="brand-badge">En Pantuflas</span></h1>
+        </div>
+        <p class="brand-sub">Combina conceptos de Web Reactiva · Programa con IA sin alucinar</p>
+      </header>
+
+      <div class="empty-guide" id="empty-guide">
+        <div class="guide-emoji">🥿 + 🤖 = ✨</div>
+        <h2>Arrastra elementos al tablero</h2>
+        <p>
+          Suelta un elemento encima de otro para descubrir conceptos, herramientas, podcasts y secretos de <strong>Web Reactiva</strong>.<br /><br />
+          <kbd>Clic</kbd> añade al tablero · <kbd>Doble clic</kbd> duplica · <kbd>Clic derecho</kbd> elimina
+        </p>
+      </div>
+
+      <div class="lore-toast" id="lore-toast" role="status" aria-live="polite"></div>
+
+      <div class="canvas-controls">
+        <button class="ctrl-btn" id="btn-atlas" title="Ver Atlas Malandriner y progreso">
+          🧭 <span>Atlas</span>
+        </button>
+        <button class="ctrl-btn" id="btn-hint" title="Pista de una combinación que puedes hacer ahora">
+          💡 <span>Pista</span>
+        </button>
+        <button class="ctrl-btn" id="btn-free" title="Modo Libre: cualquier par no registrado genera una fusión experimental">
+          ∞ <span class="btn-label-sm">Modo Libre</span>
+        </button>
+        <button class="ctrl-btn" id="btn-clear" title="Limpiar el tablero (C)">
+          🧹 <span class="btn-label-sm">Limpiar</span>
+        </button>
+        <button class="ctrl-btn icon-only" id="btn-sound" title="Activar / silenciar sonido">🔊</button>
+        <button class="ctrl-btn icon-only" id="btn-theme" title="Cambiar tema claro / oscuro">🌙</button>
+      </div>
+    </main>
+
+    <!-- Panel lateral de Elementos -->
+    <aside class="sidebar" id="sidebar">
+      <div class="trash-overlay">
+        <span style="font-size: 28px;">🗑️</span>
+        <span>Suelta aquí para retirar</span>
+      </div>
+
+      <div class="sidebar-header">
+        <div class="progress-row">
+          <div class="progress-count">
+            <span>Descubiertos</span>
+            <span class="num" id="progress-text">4 / 144</span>
+          </div>
+          <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);" id="progress-pct">3%</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <div class="search-row">
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Buscar elemento... (Ctrl+K)"
+            autocomplete="off"
+          />
+          <button class="sort-btn" id="btn-sort" title="Cambiar orden">Recientes</button>
+        </div>
+        <div class="cat-pills" id="cat-pills"></div>
+      </div>
+
+      <div class="inventory-list" id="inventory-list"></div>
+
+      <div class="sidebar-footer">
+        <span>Inspirado en <a href="https://www.webreactiva.com" target="_blank" rel="noopener">webreactiva.com</a></span>
+        <span id="combines-counter">0 mezclas</span>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal Atlas Malandriner -->
+  <div class="modal-backdrop" id="atlas-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="atlas-title">
+      <div class="modal-header">
+        <h2 id="atlas-title">🧭 Atlas Malandriner</h2>
+        <div class="modal-actions">
+          <button class="ctrl-btn" id="btn-share">📋 Compartir</button>
+          <button class="ctrl-btn" id="btn-reset" style="color: var(--wr-rose);">↺ Reiniciar</button>
+          <button class="ctrl-btn icon-only" id="btn-close-atlas" aria-label="Cerrar">✕</button>
+        </div>
+      </div>
+      <div class="modal-stats">
+        <div class="stat-group">
+          <div class="stat-item">
+            <span class="stat-val" id="stat-found">4</span>
+            <span class="stat-lbl">Curados</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val" id="stat-legendary">0</span>
+            <span class="stat-lbl">Legendarios</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val" id="stat-free">0</span>
+            <span class="stat-lbl">Fusiones Libres</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val" id="stat-combines">0</span>
+            <span class="stat-lbl">Mezclas</span>
+          </div>
+        </div>
+        <div class="cat-pills" id="atlas-cat-pills" style="max-width: 100%;"></div>
+      </div>
+      <div class="modal-body">
+        <div class="atlas-grid" id="atlas-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      /* =====================================================================
+       * 1. UNIVERSO WEB REACTIVA — ELEMENTOS (126 curados)
+       * ===================================================================== */
+      const CATEGORIES = [
+        { id: "all", label: "Todos" },
+        { id: "base", label: "Fundamentos" },
+        { id: "comunidad", label: "Comunidad" },
+        { id: "ia", label: "IA y Modelos" },
+        { id: "agentes", label: "Agentes y Skills" },
+        { id: "herramientas", label: "Herramientas WR" },
+        { id: "dev", label: "Código y Caos" },
+        { id: "carrera", label: "Carrera" }
+      ];
+
+      const ELEMENTS = {
+        // --- 4 ELEMENTOS INICIALES ---
+        pantuflas: {
+          name: "Pantuflas", emoji: "🥿", cat: "base", rarity: "common", starter: true,
+          desc: "La programación empieza por los pies. Zapatillas, chancletas, calcetines gordos o descalzo."
+        },
+        codigo: {
+          name: "Código", emoji: "💻", cat: "base", rarity: "common", starter: true,
+          desc: "1s y 0s, teclas y criterio. El oficio de dar vida a software útil."
+        },
+        ia: {
+          name: "IA", emoji: "🤖", cat: "base", rarity: "common", starter: true,
+          desc: "La ola disruptiva que cambió cómo programamos. Úsala con cabeza y sin alucinar."
+        },
+        podcast: {
+          name: "Podcast", emoji: "🎙️", cat: "base", rarity: "common", starter: true,
+          desc: "Donde nació Web Reactiva en septiembre de 2017. Aprende mientras caminas, conduces o cocinas."
+        },
+
+        // --- TIER 1: COMBINACIONES DIRECTAS DE LOS 4 INICIALES ---
+        teletrabajo: {
+          name: "Teletrabajo", emoji: "🛋️", cat: "base", rarity: "common",
+          desc: "Trabajar frente a la pantalla con la máxima comodidad podal."
+        },
+        developer: {
+          name: "Developer", emoji: "👨‍💻", cat: "base", rarity: "common",
+          desc: "Persona inquieta que convierte café, pantuflas y curiosidad en software."
+        },
+        programa_con_ia: {
+          name: "Programa con IA", emoji: "⚡", cat: "comunidad", rarity: "rare",
+          desc: "El apellido oficial de Web Reactiva: dominar agentes, skills y MCPs sin perder el control."
+        },
+        dani_primo: {
+          name: "Dani Primo", emoji: "🧔", cat: "comunidad", rarity: "rare",
+          desc: "Creador de Web Reactiva. Programador web desde hace lustros: menos pelo y más olfato."
+        },
+        web: {
+          name: "Web", emoji: "🌐", cat: "base", rarity: "common",
+          desc: "HTML, CSS, JavaScript y el navegador que todo lo aguanta."
+        },
+        prompt: {
+          name: "Prompt", emoji: "💬", cat: "ia", rarity: "common",
+          desc: "Rol, acción, contexto y formato de salida. Si pides humo, la IA te devuelve humo."
+        },
+        web_reactiva: {
+          name: "Web Reactiva", emoji: "🔥", cat: "comunidad", rarity: "epic",
+          desc: "Podcast, newsletter, guías y comunidad. La tecnología es necesaria, pero las personas son lo importante."
+        },
+        llm: {
+          name: "LLM", emoji: "🧠", cat: "ia", rarity: "common",
+          desc: "Large Language Model: el núcleo estadístico que predice el siguiente token más probable."
+        },
+        esperando_eskainet: {
+          name: "Esperando a Eskainet", emoji: "🎧", cat: "comunidad", rarity: "rare",
+          desc: "El podcast spin-off de Web Reactiva para vivir el futuro de la programación con IA sin distracciones."
+        },
+        episodios_710: {
+          name: "+710 Episodios", emoji: "📻", cat: "comunidad", rarity: "rare",
+          desc: "Más de 710 episodios en español acompañando a developers desde 2017."
+        },
+
+        // --- FUNDAMENTOS Y CONECTORES ---
+        cafe: {
+          name: "Café", emoji: "☕", cat: "base", rarity: "common",
+          desc: "Combustible oficial del lunes por la mañana y de las charlas entre developers."
+        },
+        bug: {
+          name: "Bug", emoji: "🐛", cat: "dev", rarity: "common",
+          desc: "Ese fallo inesperado que solo aparece cuando miras para otro lado o despliegas."
+        },
+        terminal: {
+          name: "Terminal", emoji: "🖥️", cat: "dev", rarity: "common",
+          desc: "El shell donde viven los agentes serios en 2026: comandos, Git, tests y cero florituras."
+        },
+        git: {
+          name: "Git", emoji: "🌿", cat: "dev", rarity: "common",
+          desc: "Tu red de seguridad histórica cuando el agente acaba de tocar 200 ficheros."
+        },
+
+        // --- COMUNIDAD Y LORE WEB REACTIVA ---
+        malandriner: {
+          name: "Malandriner", emoji: "🏴‍☠️", cat: "comunidad", rarity: "rare",
+          desc: "Miembro de la comunidad Web Reactiva. Developers inquietos que aprenden juntos sin postureo."
+        },
+        en_pantuflas: {
+          name: "En Pantuflas", emoji: "🏡", cat: "comunidad", rarity: "legendary",
+          desc: "La filosofía de Web Reactiva: da igual lo avanzada que sea la IA, seguimos programando en pantuflas."
+        },
+        zona_malandriner: {
+          name: "Zona Malandriner", emoji: "💬", cat: "comunidad", rarity: "epic",
+          desc: "El grupo privado de Telegram. Sin hate, sin sentirte juzgado y con mentoría informal cada día."
+        },
+        wr_premium: {
+          name: "WR Premium", emoji: "⭐", cat: "comunidad", rarity: "epic",
+          desc: "15€/mes sin permanencia: comunidad, masterclasses en directo, guías, audios y Atlas Malandriner."
+        },
+        newsletter: {
+          name: "Newsletter", emoji: "📬", cat: "comunidad", rarity: "rare",
+          desc: "Cada domingo a las 12:30 en tu bandeja de entrada para +7.500 developers en español."
+        },
+        doce_recursos: {
+          name: "12 Recursos", emoji: "📦", cat: "comunidad", rarity: "rare",
+          desc: "Los 12 enlaces seleccionados cada domingo que van directos a tus favoritos."
+        },
+        asombrosico: {
+          name: "Asombrósico", emoji: "🤯", cat: "comunidad", rarity: "epic",
+          desc: "La categoría más gloriosa de la newsletter dominical de Web Reactiva."
+        },
+        cafe_del_lunes: {
+          name: "Café del Lunes", emoji: "🥐", cat: "comunidad", rarity: "rare",
+          desc: "El momento de la semana donde sueltas los trucos que leíste el domingo en la newsletter."
+        },
+        para_fardar: {
+          name: "Para Fardar", emoji: "🦚", cat: "comunidad", rarity: "epic",
+          desc: "Sección mítica de la newsletter con joyas tech perfectas para lucirse el lunes."
+        },
+        envio_400: {
+          name: "Envío 400", emoji: "🎉", cat: "comunidad", rarity: "legendary",
+          desc: "#WR354: 400 envíos de Web Reactiva celebrados regalando un yak (YesYak) y un poke (Wikipoke)."
+        },
+        yesyak: {
+          name: "YesYak", emoji: "🐃", cat: "comunidad", rarity: "epic",
+          desc: "Proyecto open source presentado en el envío 400 de Web Reactiva para trabajar con IA en software."
+        },
+        wikipoke: {
+          name: "Wikipoke", emoji: "🐾", cat: "comunidad", rarity: "epic",
+          desc: "El proyecto hermano de YesYak nacido en el histórico envío 400 de Web Reactiva."
+        },
+        masterclass: {
+          name: "Masterclass", emoji: "🎓", cat: "comunidad", rarity: "rare",
+          desc: "Talleres mensuales en directo programando con herramientas reales, errores en vivo y soluciones."
+        },
+        peluca_dani: {
+          name: "Peluca de Dani", emoji: "💇", cat: "comunidad", rarity: "legendary",
+          desc: "FAQ oficial: '¿Los directos se graban? Siempre, salvo que Dani se ponga peluca.'"
+        },
+        robotito: {
+          name: "Robotito", emoji: "🤖", cat: "herramientas", rarity: "rare",
+          desc: "El buscador conversacional de Web Reactiva: le dices qué quieres conseguir y te lleva al recurso."
+        },
+        quince_euros: {
+          name: "15€/mes", emoji: "💶", cat: "comunidad", rarity: "rare",
+          desc: "Sin permanencia. Como dijo un malandriner: entre Netflix y esto no hay color."
+        },
+        roadmap: {
+          name: "Roadmap", emoji: "🗺️", cat: "comunidad", rarity: "rare",
+          desc: "Rutas temáticas ordenadas con principio, fin y sentido claro. No 'me sé un poco': cierras un tema."
+        },
+        guia_practica: {
+          name: "Guía Práctica", emoji: "📘", cat: "comunidad", rarity: "rare",
+          desc: "Aprendizaje paso a paso con barra de progreso, pistas y soluciones. Sin tabs perdidas."
+        },
+        contra_las_cuerdas: {
+          name: "Contra las Cuerdas", emoji: "🥊", cat: "comunidad", rarity: "epic",
+          desc: "La serie premium donde un developer afronta diseño, testing, arquitectura y AWS en vivo."
+        },
+        codigo_calambrazo: {
+          name: "Código Calambrazo", emoji: "⚡", cat: "comunidad", rarity: "epic",
+          desc: "Mentoría intensiva donde se revisa código real, PRs y fallos al descubierto sin anestesia."
+        },
+        malandriner_overflow: {
+          name: "Malandriner Overflow", emoji: "❓", cat: "comunidad", rarity: "epic",
+          desc: "Side-project nacido en la comunidad usando IA para resumir y comparar respuestas."
+        },
+        vaca_purpura: {
+          name: "Vaca Púrpura", emoji: "🐮", cat: "carrera", rarity: "epic",
+          desc: "#WR296: Destaca con un 15% diferencial (Seth Godin) en lugar de hacer otro producto invisible."
+        },
+        sin_humo: {
+          name: "Sin Humo", emoji: "🌬️", cat: "comunidad", rarity: "rare",
+          desc: "La regla de oro de Web Reactiva: práctica real, números delante y cero vendehumos."
+        },
+        surfeando_la_ola: {
+          name: "Surfeando la Ola", emoji: "🏄", cat: "carrera", rarity: "rare",
+          desc: "#WR328: Mantenerse cuerdo y adaptarse juntos a la transformación de la IA."
+        },
+
+        // --- IA, MODELOS, TOKENS Y CONTEXTO ---
+        token: {
+          name: "Token", emoji: "🪙", cat: "ia", rarity: "common",
+          desc: "La unidad mínima de texto de un LLM. Escribir en español consume más tokens que en inglés."
+        },
+        ventana_contexto: {
+          name: "Ventana de Contexto", emoji: "🪟", cat: "ia", rarity: "common",
+          desc: "El presupuesto máximo de tokens de una petición. Cuando se llena, el modelo degrada."
+        },
+        context_rot: {
+          name: "Context Rot", emoji: "🧀", cat: "ia", rarity: "rare",
+          desc: "Cuando el contexto crece de más, se llena de ruido caducado y el agente empieza a empeorar."
+        },
+        tokenmaxxing: {
+          name: "Tokenmaxxing", emoji: "📉", cat: "ia", rarity: "epic",
+          desc: "Ahorrar tokens de verdad: contexto justo, sesiones cortas, caché y el modelo adecuado."
+        },
+        prefix_cache: {
+          name: "Prefix Cache", emoji: "⚡", cat: "ia", rarity: "rare",
+          desc: "Reutiliza el prefijo común entre turnos para pagar mucho menos y responder antes."
+        },
+        alucinacion: {
+          name: "Alucinación", emoji: "🎭", cat: "ia", rarity: "common",
+          desc: "Código sintácticamente perfecto pero semánticamente falso, dicho con total seguridad."
+        },
+        ai_slop: {
+          name: "AI Slop", emoji: "🗑️", cat: "ia", rarity: "rare",
+          desc: "Interfaces clónicas y código hinchado sin alma cuando nadie pone criterio."
+        },
+        adulacion: {
+          name: "Adulación", emoji: "🪞", cat: "ia", rarity: "rare",
+          desc: "Sycophancy: el sesgo por el que tu IA siempre te da la razón aunque vayas al precipicio."
+        },
+        moe: {
+          name: "Mixture of Experts", emoji: "🧩", cat: "ia", rarity: "rare",
+          desc: "Muchos parámetros en total, pero solo unos pocos expertos activos para cada token."
+        },
+        rag: {
+          name: "RAG", emoji: "📚", cat: "ia", rarity: "rare",
+          desc: "Retrieval-Augmented Generation: darle documentación propia a tu LLM antes de que conteste."
+        },
+        embeddings: {
+          name: "Embeddings", emoji: "🧲", cat: "ia", rarity: "rare",
+          desc: "Vectores numéricos que permiten buscar fragmentos por significado y no por palabras exactas."
+        },
+        pesos_abiertos: {
+          name: "Pesos Abiertos", emoji: "🔓", cat: "ia", rarity: "rare",
+          desc: "Modelos open-weight que puedes descargar, correr en local y controlar sin vendor lock-in."
+        },
+        ollama: {
+          name: "Ollama", emoji: "🦙", cat: "ia", rarity: "rare",
+          desc: "Corre modelos locales en tu equipo con un comando, sin tarjeta ni fugas de datos."
+        },
+        stack_chino: {
+          name: "Stack Chino", emoji: "🐉", cat: "ia", rarity: "epic",
+          desc: "DeepSeek, Kimi y GLM: la alternativa open-weight y barata que rompió el duopolio en 2026."
+        },
+        deepseek: {
+          name: "DeepSeek", emoji: "🐋", cat: "ia", rarity: "rare",
+          desc: "El modelo open-weight chino que puso en jaque el coste por millón de tokens."
+        },
+        kimi: {
+          name: "Kimi", emoji: "🌙", cat: "ia", rarity: "rare",
+          desc: "Kimi K2.6 de Moonshot: probado a fondo con OpenCode en la Zona Malandriner."
+        },
+        glm: {
+          name: "GLM", emoji: "⚙️", cat: "ia", rarity: "rare",
+          desc: "GLM 5.1: apodado 'Opus por el 20% del coste' en las comparativas de la comunidad."
+        },
+        modelos_gratis: {
+          name: "Modelos Gratis", emoji: "🎁", cat: "ia", rarity: "rare",
+          desc: "Cerebras, Groq y proveedores sin tarjeta para experimentar y tirar millas sin arruinarte."
+        },
+        benchmark: {
+          name: "Benchmark", emoji: "📊", cat: "ia", rarity: "common",
+          desc: "Pruebas estandarizadas para comparar LLMs, aunque la verdad final está en tu propio repo."
+        },
+        esfuerzo: {
+          name: "Esfuerzo (Effort)", emoji: "🤔", cat: "ia", rarity: "rare",
+          desc: "El dial que regula cuánto razona un modelo antes de responderte."
+        },
+
+        // --- AGENTES, CLIENTES, PROTOCOLOS Y SKILLS ---
+        agente_ia: {
+          name: "Agente IA", emoji: "🦾", cat: "agentes", rarity: "common",
+          desc: "No es un chatbot: combina modelo, contexto, tools, memoria, bucle y guardarraíles."
+        },
+        claude_code: {
+          name: "Claude Code", emoji: "🟠", cat: "agentes", rarity: "rare",
+          desc: "El agente en terminal de Anthropic que lee, planifica, edita y lanza tests en tu shell."
+        },
+        opencode: {
+          name: "OpenCode", emoji: "💠", cat: "agentes", rarity: "epic",
+          desc: "El agente de IA open source en terminal. Protagonista del reto de verano contra el vendor lock-in."
+        },
+        codex_cli: {
+          name: "Codex CLI", emoji: "📦", cat: "agentes", rarity: "rare",
+          desc: "El cliente agéntico en terminal de OpenAI compitiendo cara a cara con Claude Code y OpenCode."
+        },
+        github_copilot: {
+          name: "GitHub Copilot", emoji: "✈️", cat: "agentes", rarity: "common",
+          desc: "Del autocompletado GhostText en VS Code a chat, agentes y CLI."
+        },
+        cursor: {
+          name: "Cursor", emoji: "🖱️", cat: "agentes", rarity: "common",
+          desc: "IDE agéntico con diff en vivo y contexto del editor al alcance del teclado."
+        },
+        claude_code_leak: {
+          name: "Claude Code Leak", emoji: "🕵️", cat: "agentes", rarity: "epic",
+          desc: "La filtración de source maps que reveló su system prompt, Undercover Mode y Buddy."
+        },
+        subagentes: {
+          name: "Subagentes", emoji: "👥", cat: "agentes", rarity: "rare",
+          desc: "Agentes secundarios con contexto aislado para delegar tareas sin contaminar tu sesión."
+        },
+        orquestador: {
+          name: "Orquestador", emoji: "🎼", cat: "agentes", rarity: "epic",
+          desc: "Coordina Agent Teams y Dynamic Workflows: reparte tareas en paralelo o secuencia."
+        },
+        tool_calling: {
+          name: "Tool Calling", emoji: "🔌", cat: "agentes", rarity: "common",
+          desc: "Las manos del LLM: leer ficheros, lanzar tests, llamar APIs y consultar bases de datos."
+        },
+        mcp: {
+          name: "MCP", emoji: "🔗", cat: "agentes", rarity: "rare",
+          desc: "Model Context Protocol: el estándar abierto que conecta tu agente con datos y tools reales."
+        },
+        loop_engineering: {
+          name: "Loop Engineering", emoji: "🔄", cat: "agentes", rarity: "epic",
+          desc: "Diseñar el bucle que hace avanzar al agente: disparador, contexto, acción y verificación."
+        },
+        graph_engineering: {
+          name: "Graph Engineering", emoji: "🕸️", cat: "agentes", rarity: "epic",
+          desc: "El paso siguiente al bucle: diseñar topologías completas de agentes interdependientes."
+        },
+        harness_engineer: {
+          name: "Harness Engineer", emoji: "🧰", cat: "agentes", rarity: "legendary",
+          desc: "#WR350: Diseña el arnés (tools, contexto, verificaciones y bucles) que rodea al modelo."
+        },
+        modo_afk: {
+          name: "Modo AFK", emoji: "🏖️", cat: "agentes", rarity: "rare",
+          desc: "Away From Keyboard: dejar al agente trabajando en autonomía... solo con buenas verificaciones."
+        },
+        humano_en_bucle: {
+          name: "Humano en el Bucle", emoji: "👀", cat: "agentes", rarity: "rare",
+          desc: "Human in the loop: el agente propone, pero tú revisas y apruebas antes de que se quede."
+        },
+        dirigible: {
+          name: "Dirigible (400€)", emoji: "🎈", cat: "agentes", rarity: "legendary",
+          desc: "#WR355: El experimento de Borja dejando a Claude Code en loop infinito: 35.000M tokens y 400€."
+        },
+        hermes_agent: {
+          name: "Hermes Agent", emoji: "🦅", cat: "agentes", rarity: "epic",
+          desc: "Agente open source de Nous Research con memoria persistente en 3 niveles que aprende de sus fallos."
+        },
+        openclaw: {
+          name: "OpenClaw", emoji: "🦞", cat: "agentes", rarity: "epic",
+          desc: "El agente open source desarrollado en público que dejó oro puro en lecciones prácticas."
+        },
+        n8n: {
+          name: "n8n", emoji: "⚙️", cat: "agentes", rarity: "rare",
+          desc: "Automatización basada en nodos, webhooks y agentes de IA fuera del editor."
+        },
+        guardarrailes: {
+          name: "Guardarraíles", emoji: "🛡️", cat: "agentes", rarity: "common",
+          desc: "Permisos, filtros y políticas para acotar qué puede hacer un agente sin liarla."
+        },
+        sandbox: {
+          name: "Sandbox", emoji: "🏖️", cat: "agentes", rarity: "rare",
+          desc: "Caja de arena aislada: si el agente mete la pata, no toca tu máquina ni producción."
+        },
+        agents_md: {
+          name: "AGENTS.md", emoji: "📋", cat: "agentes", rarity: "rare",
+          desc: "El fichero fundacional con las reglas del proyecto que el agente carga al abrir sesión."
+        },
+        skill_md: {
+          name: "SKILL.md", emoji: "🧩", cat: "agentes", rarity: "rare",
+          desc: "Instrucciones portables para agentes: se lo enseñas una vez y salta sola cuando hace falta."
+        },
+        cook_first: {
+          name: "Cook-First Skills", emoji: "🍳", cat: "agentes", rarity: "epic",
+          desc: "La mejor skill no se descarga, se cocina: resuelve la tarea, destila la skill y valida en 2ª sesión."
+        },
+        grill_me: {
+          name: "grill-me", emoji: "🔥", cat: "agentes", rarity: "rare",
+          desc: "Skill de Matt Pocock: te fríe a preguntas antes de picar código para sacar el contexto oculto."
+        },
+        eli5: {
+          name: "eli5", emoji: "👶", cat: "agentes", rarity: "rare",
+          desc: "Skill de Anthropic que te explica cualquier concepto técnico como si tuvieras 5 años."
+        },
+        handoff_torch: {
+          name: "handoff-torch", emoji: "🔦", cat: "agentes", rarity: "epic",
+          desc: "Skill hecha en Web Reactiva: crea un documento de relevo para continuar en otra sesión sin perder hilo."
+        },
+        git_commit_organizer: {
+          name: "git-commit-organizer", emoji: "🏷️", cat: "agentes", rarity: "epic",
+          desc: "Skill hecha en Web Reactiva: ordena tu caos en commits atómicos sin hacer push jamás."
+        },
+        caveman: {
+          name: "caveman", emoji: "🪨", cat: "agentes", rarity: "rare",
+          desc: "Skill viral que hace hablar a tu agente como cavernícola y recorta hasta un 75% de tokens de salida."
+        },
+        taste_skill: {
+          name: "taste-skill", emoji: "🎨", cat: "agentes", rarity: "rare",
+          desc: "Inyecta criterio de diseño en tu agente para dejar de generar AI slop."
+        },
+        skill_creator: {
+          name: "skill-creator", emoji: "🛠️", cat: "agentes", rarity: "epic",
+          desc: "La skill que crea, evalúa y refina otras skills a partir de tus conversaciones."
+        },
+        ponytail: {
+          name: "ponytail", emoji: "🐴", cat: "agentes", rarity: "rare",
+          desc: "YAGNI dentro del agente: menos dependencias, menos líneas innecesarias."
+        },
+        plan_mode: {
+          name: "Plan Mode", emoji: "📝", cat: "agentes", rarity: "common",
+          desc: "Pensar antes de prompar. Validar el plan antes de que el agente edite 50 ficheros."
+        },
+        sdd: {
+          name: "SDD", emoji: "📐", cat: "agentes", rarity: "epic",
+          desc: "Spec Driven Development: cuando la IA programa, el rigor de ingeniería se traslada a la spec."
+        },
+        openspec: {
+          name: "OpenSpec", emoji: "📜", cat: "agentes", rarity: "epic",
+          desc: "El sistema abierto de Spec Driven Development protagonista de las guías de Web Reactiva."
+        },
+        spdd: {
+          name: "SPDD", emoji: "🗂️", cat: "agentes", rarity: "epic",
+          desc: "Spec Prompt Driven Development: el prompt versionado en Git como fuente de verdad."
+        },
+        context_engineering: {
+          name: "Context Engineering", emoji: "🏗️", cat: "agentes", rarity: "epic",
+          desc: "Decidir qué información entra en la ventana de contexto, en qué orden y con qué jerarquía."
+        },
+        compactacion: {
+          name: "Compactación", emoji: "🗜️", cat: "agentes", rarity: "rare",
+          desc: "Handoff en memoria: resume el historial cuando se llena el contexto y siembra sesión fresca."
+        },
+        okf: {
+          name: "OKF", emoji: "📁", cat: "agentes", rarity: "rare",
+          desc: "Open Knowledge Format: carpetas de Markdown + YAML para que agentes naveguen sin base vectorial."
+        },
+
+        // --- HERRAMIENTAS DE WEBREACTIVA.COM ---
+        atlas_malandriner: {
+          name: "Atlas Malandriner", emoji: "🧭", cat: "herramientas", rarity: "legendary",
+          desc: "+1.600 contenidos premium y +2.500 recursos curados expuestos como MCP directo para tu agente."
+        },
+        selector_modelos: {
+          name: "Selector de Modelos", emoji: "🎛️", cat: "herramientas", rarity: "rare",
+          desc: "Herramienta de webreactiva.com (y del MCP) que recomienda el modelo ideal según tu suscripción."
+        },
+        revisor_agents_md: {
+          name: "Revisor AGENTS.md", emoji: "🔎", cat: "herramientas", rarity: "rare",
+          desc: "Herramienta gratuita de Web Reactiva que audita qué sobra y qué falta en tu AGENTS.md."
+        },
+        constructor_specs: {
+          name: "Constructor de Specs", emoji: "🧱", cat: "herramientas", rarity: "rare",
+          desc: "Genera tu plantilla de especificación SDD con los bloques que necesitas y en tu orden."
+        },
+        contador_tokens: {
+          name: "Contador de Tokens", emoji: "🧮", cat: "herramientas", rarity: "rare",
+          desc: "Pega un texto en webreactiva.com y descubre cuánto cuesta en cada modelo."
+        },
+        bingo_mentiras: {
+          name: "Bingo de Mentiras", emoji: "🎲", cat: "herramientas", rarity: "epic",
+          desc: "El juego de Web Reactiva para marcar las mentiras de tu agente de IA que ya te has tragado."
+        },
+        radar_capas: {
+          name: "Radar de Capas", emoji: "📡", cat: "herramientas", rarity: "rare",
+          desc: "Diagnóstico interactivo de la arquitectura de tu agente: modelo, memoria, tools y guardarraíles."
+        },
+        chuleta_opencode: {
+          name: "Chuleta OpenCode", emoji: "🗒️", cat: "herramientas", rarity: "rare",
+          desc: "Los diez atajos y comandos clave de OpenCode para marcar los que usas y llevarlos copiados."
+        },
+        sub_vs_api: {
+          name: "Suscripción vs API", emoji: "⚖️", cat: "herramientas", rarity: "rare",
+          desc: "Calculadora de Web Reactiva: cuánto te costaría por tokens lo que pagas a tarifa plana."
+        },
+
+        // --- CÓDIGO, STACK Y CAOS DEV ---
+        pull_request: {
+          name: "Pull Request", emoji: "🔀", cat: "dev", rarity: "common",
+          desc: "El rito que cierra el ciclo de un cambio, de la issue a la rama protegida con review."
+        },
+        conventional_commits: {
+          name: "Conventional Commits", emoji: "🔖", cat: "dev", rarity: "common",
+          desc: "feat:, fix:, chore: y gitmoji generados con cabeza (y con ayuda de IA)."
+        },
+        testing: {
+          name: "Testing", emoji: "✅", cat: "dev", rarity: "common",
+          desc: "Verificación determinista imprescindible para que los agentes no rompan lo que ya funcionaba."
+        },
+        tdd: {
+          name: "TDD", emoji: "🚦", cat: "dev", rarity: "rare",
+          desc: "Red-Green-Refactor: la forma más sólida de guiar y validar el código que escribe un agente."
+        },
+        mutation_testing: {
+          name: "Mutation Testing", emoji: "🧬", cat: "dev", rarity: "epic",
+          desc: "Introduce mutantes en tu código para comprobar si tus tests de verdad cazan los bugs."
+        },
+        testing_e2e: {
+          name: "Testing E2E", emoji: "🎭", cat: "dev", rarity: "rare",
+          desc: "Playwright recorriendo la app de punta a punta como un usuario real en el navegador."
+        },
+        react: {
+          name: "React", emoji: "⚛️", cat: "dev", rarity: "common",
+          desc: "Componentes, estado y un ecosistema inmenso que protagoniza mil proyectos de la comunidad."
+        },
+        laravel: {
+          name: "Laravel", emoji: "🔺", cat: "dev", rarity: "common",
+          desc: "El framework PHP de cabecera de Dani Primo para lanzar plataformas reales a toda mecha."
+        },
+        astro: {
+          name: "Astro", emoji: "🚀", cat: "dev", rarity: "rare",
+          desc: "Webs ultrarrápidas, islas y protagonista de los retos refrescantes de verano en Web Reactiva."
+        },
+        typescript: {
+          name: "TypeScript", emoji: "📘", cat: "dev", rarity: "common",
+          desc: "Tipos estrictos para que el compilador frene en seco las invenciones del LLM."
+        },
+        docker: {
+          name: "Docker", emoji: "🐳", cat: "dev", rarity: "common",
+          desc: "Contenedores portables. Uno de los primeros temas con los que nació Web Reactiva en 2017."
+        },
+        coolify: {
+          name: "Coolify", emoji: "🧊", cat: "dev", rarity: "rare",
+          desc: "Despliega tus side projects, webapps y n8n en tu propio servidor con experiencia PaaS."
+        },
+        codigo_legacy: {
+          name: "Código Legacy", emoji: "🏚️", cat: "dev", rarity: "common",
+          desc: "Código heredado sin tests donde la IA brilla documentando y refactorizando paso a paso."
+        },
+        prompt_injection: {
+          name: "Prompt Injection", emoji: "💉", cat: "dev", rarity: "rare",
+          desc: "La SQL injection del lenguaje natural: cuando un texto malicioso secuestra a tu agente."
+        },
+        side_project: {
+          name: "Side Project", emoji: "🛠️", cat: "dev", rarity: "common",
+          desc: "Tu banco de pruebas fuera del trabajo para quitarte el gusanillo con tecnología nueva."
+        },
+        poc: {
+          name: "POC", emoji: "⚡", cat: "dev", rarity: "rare",
+          desc: "#WR326: ¡Muerte a los side projects eternos, vivan las POC! Pequeñas, rápidas y desplegadas."
+        },
+        despliegue_viernes: {
+          name: "Despliegue en Viernes", emoji: "🚀", cat: "dev", rarity: "epic",
+          desc: "#WR313: 'Despliega pronto, aunque sea viernes'. Menos miedo, menor fricción y feedback real."
+        },
+        modo_fuego: {
+          name: "Modo Fuego", emoji: "🔥", cat: "dev", rarity: "rare",
+          desc: "#WR332: Cuando producción arde o una migración explota y toca apagar incendios."
+        },
+        modo_pantano: {
+          name: "Modo Pantano", emoji: "🐊", cat: "dev", rarity: "epic",
+          desc: "#WR332: Cuando el proyecto está tan atascado en deuda técnica que cada paso cuesta el doble."
+        },
+
+        // --- CARRERA, PSICOLOGÍA Y CRITERIO ---
+        vibe_coding: {
+          name: "Vibe Coding", emoji: "🎸", cat: "carrera", rarity: "rare",
+          desc: "Programar describiendo en lenguaje natural... pero ojo: el vibe coding NO es para vagos."
+        },
+        panico_silla: {
+          name: "Pánico en la Silla", emoji: "😱", cat: "carrera", rarity: "epic",
+          desc: "'La patada en la silla del developer': esa sacudida que te obliga a reinventarte con la IA."
+        },
+        deuda_cognitiva: {
+          name: "Deuda Cognitiva", emoji: "🤯", cat: "carrera", rarity: "epic",
+          desc: "#WRP359: Aceptar todo lo que genera la IA hasta perder el modelo mental de tu propio código."
+        },
+        sindrome_impostor: {
+          name: "Síndrome del Impostor", emoji: "🎭", cat: "carrera", rarity: "rare",
+          desc: "#WR312: Esa sensación de no saber suficiente que se disipa cuando compartes en comunidad."
+        },
+        linkedin_5_5: {
+          name: "LinkedIn-5-5", emoji: "💼", cat: "carrera", rarity: "epic",
+          desc: "Guía especial de Web Reactiva: tu perfil de LinkedIn listo en 5 días para aguantar 5 años."
+        },
+        fichometro: {
+          name: "Fichómetro", emoji: "🥊", cat: "carrera", rarity: "epic",
+          desc: "Entrena entrevistas técnicas con la IA como saco de boxeo hasta llegar sudado a la real."
+        },
+        storytelling: {
+          name: "Storytelling Técnico", emoji: "📖", cat: "carrera", rarity: "rare",
+          desc: "#WR329: La soft skill más infravalorada: convertir tus commits, PRs y errores en historias A→B."
+        },
+        aprender_descansar: {
+          name: "Aprender a Descansar", emoji: "😴", cat: "carrera", rarity: "rare",
+          desc: "#WR322: Deja el FOMO digital, practica el HOMO, échate una siesta y apaga pantallas."
+        },
+        no_dinosaurio: {
+          name: "No Ser un Dinosaurio", emoji: "🦖", cat: "carrera", rarity: "epic",
+          desc: "#WR325: Hackea el tiempo con pequeños hábitos para mantenerte al día sin quemarte."
+        },
+        arquitecto_ia: {
+          name: "De Cliente a Arquitecto", emoji: "🏛️", cat: "carrera", rarity: "epic",
+          desc: "Nivel 3 del roadmap: orquestas agentes con criterio y sabes cuándo NO usar la IA."
+        },
+        app_sexy: {
+          name: "App Sexy", emoji: "🌶️", cat: "carrera", rarity: "epic",
+          desc: "#WR310: Reduce fricción, añade datos de ejemplo, recompensas visuales y huella humana."
+        },
+        inocentada_manager: {
+          name: "Inocentada al Manager", emoji: "🤡", cat: "carrera", rarity: "epic",
+          desc: "El mítico recurso escondido del episodio #WR332 para alegrarle la mañana a tu manager."
+        },
+        criterio_humano: {
+          name: "Criterio Humano", emoji: "💎", cat: "carrera", rarity: "legendary",
+          desc: "Tú decides, la IA solo ejecuta (#WR351). La brújula que separa el software serio del slop."
+        },
+        software_factory: {
+          name: "Software Factory", emoji: "🏭", cat: "carrera", rarity: "legendary",
+          desc: "El sistema completo: specs, agentes, tests y criterio humano entregando software verificado."
+        }
+      };
+
+      /* =====================================================================
+       * 2. RECETAS CURADAS (orden independiente: A + B === B + A)
+       * ===================================================================== */
+      const RAW_RECIPES = [
+        // --- 10 Pares entre los 4 iniciales ---
+        ["pantuflas", "pantuflas", "teletrabajo"],
+        ["pantuflas", "codigo", "developer"],
+        ["pantuflas", "ia", "programa_con_ia"],
+        ["pantuflas", "podcast", "dani_primo"],
+        ["codigo", "codigo", "web"],
+        ["codigo", "ia", "prompt"],
+        ["codigo", "podcast", "web_reactiva"],
+        ["ia", "ia", "llm"],
+        ["ia", "podcast", "esperando_eskainet"],
+        ["podcast", "podcast", "episodios_710"],
+
+        // --- Fundamentos & Puentes ---
+        ["pantuflas", "teletrabajo", "cafe"],
+        ["developer", "teletrabajo", "aprender_descansar"],
+        ["developer", "pantuflas", "cafe"],
+        ["codigo", "web", "bug"],
+        ["developer", "codigo", "terminal"],
+        ["terminal", "codigo", "git"],
+        ["developer", "web", "react"],
+        ["web", "dani_primo", "laravel"],
+        ["codigo", "dani_primo", "laravel"],
+        ["web", "newsletter", "astro"],
+        ["web", "poc", "astro"],
+        ["web", "side_project", "astro"],
+        ["codigo", "guardarrailes", "typescript"],
+        ["web", "typescript", "react"],
+        ["codigo", "testing", "typescript"],
+
+        // --- Comunidad y Lore Web Reactiva ---
+        ["dani_primo", "web_reactiva", "malandriner"],
+        ["developer", "web_reactiva", "malandriner"],
+        ["developer", "en_pantuflas", "malandriner"],
+        ["dani_primo", "pantuflas", "en_pantuflas"],
+        ["web_reactiva", "pantuflas", "en_pantuflas"],
+        ["programa_con_ia", "pantuflas", "en_pantuflas"],
+        ["malandriner", "malandriner", "zona_malandriner"],
+        ["malandriner", "pantuflas", "zona_malandriner"],
+        ["malandriner", "podcast", "zona_malandriner"],
+        ["malandriner", "web_reactiva", "wr_premium"],
+        ["zona_malandriner", "web_reactiva", "wr_premium"],
+        ["dani_primo", "wr_premium", "quince_euros"],
+        ["wr_premium", "cafe", "quince_euros"],
+        ["wr_premium", "newsletter", "quince_euros"],
+        ["dani_primo", "podcast", "newsletter"],
+        ["web_reactiva", "podcast", "newsletter"],
+        ["newsletter", "podcast", "doce_recursos"],
+        ["newsletter", "codigo", "doce_recursos"],
+        ["doce_recursos", "web", "asombrosico"],
+        ["doce_recursos", "ia", "asombrosico"],
+        ["doce_recursos", "asombrosico", "para_fardar"],
+        ["newsletter", "cafe", "cafe_del_lunes"],
+        ["developer", "cafe", "cafe_del_lunes"],
+        ["cafe_del_lunes", "doce_recursos", "para_fardar"],
+        ["cafe_del_lunes", "newsletter", "para_fardar"],
+        ["newsletter", "episodios_710", "envio_400"],
+        ["newsletter", "newsletter", "envio_400"],
+        ["envio_400", "codigo", "yesyak"],
+        ["envio_400", "git", "yesyak"],
+        ["envio_400", "ia", "wikipoke"],
+        ["envio_400", "llm", "wikipoke"],
+        ["dani_primo", "terminal", "masterclass"],
+        ["wr_premium", "codigo", "masterclass"],
+        ["wr_premium", "podcast", "masterclass"],
+        ["dani_primo", "masterclass", "peluca_dani"],
+        ["dani_primo", "bug", "peluca_dani"],
+        ["dani_primo", "modo_fuego", "peluca_dani"],
+        ["dani_primo", "ia", "robotito"],
+        ["web_reactiva", "ia", "robotito"],
+        ["web_reactiva", "programa_con_ia", "roadmap"],
+        ["dani_primo", "programa_con_ia", "roadmap"],
+        ["roadmap", "codigo", "guia_practica"],
+        ["roadmap", "wr_premium", "guia_practica"],
+        ["masterclass", "guia_practica", "roadmap"],
+        ["zona_malandriner", "podcast", "contra_las_cuerdas"],
+        ["developer", "masterclass", "codigo_calambrazo"],
+        ["developer", "bug", "codigo_calambrazo"],
+        ["codigo_calambrazo", "podcast", "contra_las_cuerdas"],
+        ["zona_malandriner", "codigo", "malandriner_overflow"],
+        ["zona_malandriner", "side_project", "malandriner_overflow"],
+        ["dani_primo", "side_project", "vaca_purpura"],
+        ["web_reactiva", "side_project", "vaca_purpura"],
+        ["dani_primo", "alucinacion", "sin_humo"],
+        ["web_reactiva", "alucinacion", "sin_humo"],
+        ["newsletter", "alucinacion", "sin_humo"],
+        ["web_reactiva", "ai_slop", "sin_humo"],
+        ["developer", "programa_con_ia", "surfeando_la_ola"],
+        ["malandriner", "programa_con_ia", "surfeando_la_ola"],
+
+        // --- IA, Modelos, Tokens y Contexto ---
+        ["llm", "codigo", "token"],
+        ["llm", "prompt", "token"],
+        ["token", "token", "ventana_contexto"],
+        ["llm", "ventana_contexto", "context_rot"],
+        ["ventana_contexto", "ventana_contexto", "context_rot"],
+        ["ventana_contexto", "bug", "context_rot"],
+        ["token", "developer", "tokenmaxxing"],
+        ["token", "sin_humo", "tokenmaxxing"],
+        ["token", "quince_euros", "tokenmaxxing"],
+        ["tokenmaxxing", "ventana_contexto", "prefix_cache"],
+        ["token", "prefix_cache", "tokenmaxxing"],
+        ["llm", "bug", "alucinacion"],
+        ["ia", "bug", "alucinacion"],
+        ["prompt", "bug", "alucinacion"],
+        ["alucinacion", "codigo", "ai_slop"],
+        ["alucinacion", "web", "ai_slop"],
+        ["vibe_coding", "alucinacion", "ai_slop"],
+        ["prompt", "adulacion", "ai_slop"],
+        ["llm", "cafe", "adulacion"],
+        ["ia", "cafe", "adulacion"],
+        ["alucinacion", "prompt", "adulacion"],
+        ["llm", "llm", "moe"],
+        ["llm", "web", "rag"],
+        ["llm", "guia_practica", "rag"],
+        ["rag", "codigo", "embeddings"],
+        ["rag", "llm", "embeddings"],
+        ["llm", "pantuflas", "pesos_abiertos"],
+        ["llm", "git", "pesos_abiertos"],
+        ["pesos_abiertos", "terminal", "ollama"],
+        ["pesos_abiertos", "codigo", "ollama"],
+        ["pesos_abiertos", "docker", "ollama"],
+        ["pesos_abiertos", "tokenmaxxing", "stack_chino"],
+        ["pesos_abiertos", "quince_euros", "stack_chino"],
+        ["stack_chino", "llm", "deepseek"],
+        ["pesos_abiertos", "llm", "deepseek"],
+        ["stack_chino", "opencode", "kimi"],
+        ["stack_chino", "codigo", "kimi"],
+        ["stack_chino", "token", "glm"],
+        ["stack_chino", "tokenmaxxing", "glm"],
+        ["llm", "quince_euros", "modelos_gratis"],
+        ["llm", "doce_recursos", "modelos_gratis"],
+        ["tokenmaxxing", "ollama", "modelos_gratis"],
+        ["llm", "testing", "benchmark"],
+        ["deepseek", "llm", "benchmark"],
+        ["llm", "plan_mode", "esfuerzo"],
+        ["llm", "tokenmaxxing", "esfuerzo"],
+
+        // --- Agentes, Clientes en Terminal y Protocolos ---
+        ["ia", "terminal", "agente_ia"],
+        ["llm", "terminal", "agente_ia"],
+        ["llm", "tool_calling", "agente_ia"],
+        ["prompt", "terminal", "tool_calling"],
+        ["agente_ia", "codigo", "tool_calling"],
+        ["agente_ia", "terminal", "claude_code"],
+        ["programa_con_ia", "terminal", "claude_code"],
+        ["claude_code", "pesos_abiertos", "opencode"],
+        ["agente_ia", "pesos_abiertos", "opencode"],
+        ["claude_code", "llm", "codex_cli"],
+        ["agente_ia", "prompt", "skill_md"],
+        ["claude_code", "terminal", "codex_cli"],
+        ["codigo", "programa_con_ia", "github_copilot"],
+        ["developer", "ia", "vibe_coding"],
+        ["git", "ia", "github_copilot"],
+        ["github_copilot", "web", "cursor"],
+        ["github_copilot", "agente_ia", "cursor"],
+        ["claude_code", "bug", "claude_code_leak"],
+        ["claude_code", "alucinacion", "claude_code_leak"],
+        ["agente_ia", "agente_ia", "subagentes"],
+        ["subagentes", "subagentes", "orquestador"],
+        ["subagentes", "plan_mode", "orquestador"],
+        ["tool_calling", "web", "mcp"],
+        ["agente_ia", "web", "mcp"],
+        ["agente_ia", "rag", "mcp"],
+        ["agente_ia", "testing", "loop_engineering"],
+        ["agente_ia", "modo_afk", "loop_engineering"],
+        ["loop_engineering", "orquestador", "graph_engineering"],
+        ["loop_engineering", "subagentes", "graph_engineering"],
+        ["loop_engineering", "agente_ia", "harness_engineer"],
+        ["loop_engineering", "guardarrailes", "harness_engineer"],
+        ["developer", "loop_engineering", "harness_engineer"],
+        ["agente_ia", "pantuflas", "modo_afk"],
+        ["agente_ia", "teletrabajo", "modo_afk"],
+        ["agente_ia", "developer", "humano_en_bucle"],
+        ["agente_ia", "criterio_humano", "humano_en_bucle"],
+        ["modo_afk", "claude_code", "dirigible"],
+        ["loop_engineering", "claude_code", "dirigible"],
+        ["modo_afk", "token", "dirigible"],
+        ["agente_ia", "ventana_contexto", "hermes_agent"],
+        ["opencode", "rag", "hermes_agent"],
+        ["opencode", "agente_ia", "openclaw"],
+        ["pesos_abiertos", "subagentes", "openclaw"],
+        ["agente_ia", "docker", "sandbox"],
+        ["agente_ia", "n8n", "orquestador"],
+        ["mcp", "docker", "n8n"],
+        ["tool_calling", "teletrabajo", "n8n"],
+        ["tool_calling", "side_project", "n8n"],
+        ["agente_ia", "bug", "guardarrailes"],
+        ["ia", "testing", "guardarrailes"],
+        ["guardarrailes", "terminal", "sandbox"],
+        ["guardarrailes", "docker", "sandbox"],
+
+        // --- Skills, Reglas y SDD ---
+        ["prompt", "codigo", "agents_md"],
+        ["claude_code", "prompt", "agents_md"],
+        ["opencode", "prompt", "agents_md"],
+        ["agents_md", "agente_ia", "skill_md"],
+        ["skill_md", "dani_primo", "cook_first"],
+        ["skill_md", "pantuflas", "cook_first"],
+        ["skill_md", "web_reactiva", "cook_first"],
+        ["skill_md", "prompt", "grill_me"],
+        ["skill_md", "plan_mode", "grill_me"],
+        ["skill_md", "guia_practica", "eli5"],
+        ["skill_md", "podcast", "eli5"],
+        ["skill_md", "ventana_contexto", "handoff_torch"],
+        ["skill_md", "context_rot", "handoff_torch"],
+        ["skill_md", "git", "git_commit_organizer"],
+        ["skill_md", "conventional_commits", "git_commit_organizer"],
+        ["skill_md", "tokenmaxxing", "caveman"],
+        ["skill_md", "token", "caveman"],
+        ["skill_md", "ai_slop", "taste_skill"],
+        ["skill_md", "web", "taste_skill"],
+        ["skill_md", "skill_md", "skill_creator"],
+        ["cook_first", "skill_md", "skill_creator"],
+        ["skill_md", "codigo", "ponytail"],
+        ["skill_md", "sin_humo", "ponytail"],
+        ["developer", "prompt", "plan_mode"],
+        ["prompt", "roadmap", "plan_mode"],
+        ["plan_mode", "codigo", "sdd"],
+        ["plan_mode", "agente_ia", "sdd"],
+        ["sdd", "pesos_abiertos", "openspec"],
+        ["sdd", "opencode", "openspec"],
+        ["sdd", "git", "spdd"],
+        ["sdd", "prompt", "spdd"],
+        ["ventana_contexto", "plan_mode", "context_engineering"],
+        ["ventana_contexto", "agents_md", "context_engineering"],
+        ["ventana_contexto", "handoff_torch", "compactacion"],
+        ["context_rot", "handoff_torch", "compactacion"],
+        ["context_rot", "plan_mode", "compactacion"],
+        ["agents_md", "rag", "okf"],
+        ["guia_practica", "git", "okf"],
+        ["mcp", "guia_practica", "okf"],
+
+        // --- Herramientas de Web Reactiva ---
+        ["wr_premium", "mcp", "atlas_malandriner"],
+        ["web_reactiva", "mcp", "atlas_malandriner"],
+        ["doce_recursos", "mcp", "atlas_malandriner"],
+        ["web_reactiva", "llm", "selector_modelos"],
+        ["atlas_malandriner", "llm", "selector_modelos"],
+        ["web_reactiva", "agents_md", "revisor_agents_md"],
+        ["robotito", "agents_md", "revisor_agents_md"],
+        ["web_reactiva", "sdd", "constructor_specs"],
+        ["web_reactiva", "openspec", "constructor_specs"],
+        ["web_reactiva", "token", "contador_tokens"],
+        ["web_reactiva", "tokenmaxxing", "contador_tokens"],
+        ["masterclass", "alucinacion", "bingo_mentiras"],
+        ["agente_ia", "alucinacion", "bingo_mentiras"],
+        ["web_reactiva", "agente_ia", "radar_capas"],
+        ["masterclass", "agente_ia", "radar_capas"],
+        ["web_reactiva", "opencode", "chuleta_opencode"],
+        ["guia_practica", "opencode", "chuleta_opencode"],
+        ["web_reactiva", "quince_euros", "sub_vs_api"],
+        ["contador_tokens", "quince_euros", "sub_vs_api"],
+        ["tokenmaxxing", "quince_euros", "sub_vs_api"],
+
+        // --- Código, Stack y Caos Dev ---
+        ["git", "developer", "pull_request"],
+        ["git", "codigo", "pull_request"],
+        ["git", "prompt", "conventional_commits"],
+        ["git", "github_copilot", "conventional_commits"],
+        ["codigo", "bug", "testing"],
+        ["developer", "guardarrailes", "testing"],
+        ["testing", "plan_mode", "tdd"],
+        ["testing", "prompt", "tdd"],
+        ["testing", "bug", "mutation_testing"],
+        ["testing", "alucinacion", "mutation_testing"],
+        ["testing", "web", "testing_e2e"],
+        ["testing", "react", "testing_e2e"],
+        ["terminal", "web", "docker"],
+        ["codigo", "teletrabajo", "side_project"],
+        ["terminal", "git", "docker"],
+        ["docker", "web", "coolify"],
+        ["docker", "side_project", "coolify"],
+        ["docker", "n8n", "coolify"],
+        ["codigo", "episodios_710", "codigo_legacy"],
+        ["bug", "git", "codigo_legacy"],
+        ["bug", "bug", "modo_fuego"],
+        ["prompt", "guardarrailes", "prompt_injection"],
+        ["alucinacion", "guardarrailes", "prompt_injection"],
+        ["prompt", "modo_fuego", "prompt_injection"],
+        ["developer", "side_project", "poc"],
+        ["side_project", "ia", "poc"],
+        ["side_project", "programa_con_ia", "poc"],
+        ["side_project", "git", "despliegue_viernes"],
+        ["poc", "git", "despliegue_viernes"],
+        ["pull_request", "cafe_del_lunes", "despliegue_viernes"],
+        ["despliegue_viernes", "bug", "modo_fuego"],
+        ["codigo_legacy", "modo_fuego", "modo_pantano"],
+        ["codigo_legacy", "bug", "modo_pantano"],
+
+        // --- Carrera, Psicología y Criterio ---
+        ["vibe_coding", "bug", "deuda_cognitiva"],
+        ["vibe_coding", "context_rot", "deuda_cognitiva"],
+        ["developer", "ai_slop", "deuda_cognitiva"],
+        ["developer", "alucinacion", "panico_silla"],
+        ["developer", "esperando_eskainet", "panico_silla"],
+        ["developer", "modo_fuego", "sindrome_impostor"],
+        ["developer", "codigo_legacy", "sindrome_impostor"],
+        ["developer", "panico_silla", "no_dinosaurio"],
+        ["developer", "episodios_710", "no_dinosaurio"],
+        ["developer", "cafe_del_lunes", "linkedin_5_5"],
+        ["wr_premium", "developer", "linkedin_5_5"],
+        ["developer", "testing", "fichometro"],
+        ["wr_premium", "testing", "fichometro"],
+        ["linkedin_5_5", "ia", "fichometro"],
+        ["developer", "podcast", "storytelling"],
+        ["pull_request", "podcast", "storytelling"],
+        ["aprender_descansar", "pantuflas", "en_pantuflas"],
+        ["developer", "orquestador", "arquitecto_ia"],
+        ["roadmap", "orquestador", "arquitecto_ia"],
+        ["side_project", "taste_skill", "app_sexy"],
+        ["web", "taste_skill", "app_sexy"],
+        ["poc", "taste_skill", "app_sexy"],
+        ["doce_recursos", "modo_fuego", "inocentada_manager"],
+        ["cafe_del_lunes", "modo_fuego", "inocentada_manager"],
+        ["ai_slop", "sin_humo", "criterio_humano"],
+        ["humano_en_bucle", "sin_humo", "criterio_humano"],
+        ["arquitecto_ia", "sin_humo", "criterio_humano"],
+        ["criterio_humano", "sdd", "software_factory"],
+        ["criterio_humano", "orquestador", "software_factory"],
+        ["harness_engineer", "sdd", "software_factory"],
+        ["arquitecto_ia", "loop_engineering", "software_factory"],
+
+        // --- Rutas alternativas extra para máxima intuición ---
+        ["dani_primo", "git", "laravel"],
+        ["claude_code", "skill_md", "cook_first"],
+        ["opencode", "skill_md", "cook_first"],
+        ["prompt", "token", "tokenmaxxing"],
+        ["ai_slop", "testing", "tdd"],
+        ["bug", "tdd", "mutation_testing"],
+        ["laravel", "testing", "codigo_calambrazo"],
+        ["vibe_coding", "sin_humo", "programa_con_ia"],
+        ["vibe_coding", "sdd", "software_factory"],
+        ["deuda_cognitiva", "humano_en_bucle", "criterio_humano"],
+        ["sindrome_impostor", "zona_malandriner", "malandriner_overflow"],
+        ["sindrome_impostor", "dani_primo", "surfeando_la_ola"],
+        ["panico_silla", "zona_malandriner", "surfeando_la_ola"],
+        ["panico_silla", "pantuflas", "aprender_descansar"],
+        ["context_rot", "tokenmaxxing", "context_engineering"],
+        ["alucinacion", "tdd", "guardarrailes"],
+        ["llm", "mcp", "atlas_malandriner"],
+        ["robotito", "mcp", "atlas_malandriner"],
+        ["selector_modelos", "quince_euros", "sub_vs_api"],
+        ["claude_code", "quince_euros", "sub_vs_api"],
+        ["deepseek", "ollama", "stack_chino"],
+        ["kimi", "glm", "stack_chino"],
+        ["claude_code", "opencode", "codex_cli"],
+        ["cursor", "terminal", "claude_code"],
+        ["github_copilot", "terminal", "claude_code"],
+        ["mcp", "skill_md", "harness_engineer"],
+        ["agents_md", "skill_md", "context_engineering"],
+        ["plan_mode", "tdd", "sdd"],
+        ["openspec", "sdd", "constructor_specs"],
+        ["grill_me", "plan_mode", "sdd"],
+        ["caveman", "prefix_cache", "tokenmaxxing"],
+        ["git_commit_organizer", "pull_request", "conventional_commits"],
+        ["dirigible", "quince_euros", "sub_vs_api"],
+        ["peluca_dani", "podcast", "episodios_710"],
+        ["yesyak", "wikipoke", "envio_400"],
+        ["asombrosico", "para_fardar", "doce_recursos"],
+        ["storytelling", "linkedin_5_5", "vaca_purpura"],
+        ["fichometro", "storytelling", "linkedin_5_5"],
+        ["modo_pantano", "ia", "codigo_legacy"],
+        ["coolify", "despliegue_viernes", "app_sexy"],
+        ["astro", "taste_skill", "app_sexy"],
+        ["n8n", "mcp", "orquestador"],
+        ["hermes_agent", "openclaw", "orquestador"],
+        ["sandbox", "modo_afk", "harness_engineer"],
+        ["prompt_injection", "sandbox", "guardarrailes"],
+        ["embeddings", "okf", "rag"],
+        ["benchmark", "selector_modelos", "esfuerzo"],
+        ["modelos_gratis", "stack_chino", "tokenmaxxing"],
+        ["ponytail", "codigo_legacy", "sin_humo"],
+        ["eli5", "storytelling", "guia_practica"],
+        ["radar_capas", "orquestador", "arquitecto_ia"],
+        ["bingo_mentiras", "adulacion", "criterio_humano"],
+        ["chuleta_opencode", "terminal", "opencode"],
+        ["revisor_agents_md", "agents_md", "context_engineering"],
+        ["no_dinosaurio", "newsletter", "surfeando_la_ola"],
+        ["inocentada_manager", "pull_request", "despliegue_viernes"]
+      ];
+
+      // Mapa normalizado de recetas ("a+b" -> resultId)
+      const RECIPE_MAP = new Map();
+      const recipeKey = (a, b) => (a < b ? `${a}+${b}` : `${b}+${a}`);
+
+      for (const [a, b, res] of RAW_RECIPES) {
+        if (!ELEMENTS[a] || !ELEMENTS[b] || !ELEMENTS[res]) continue;
+        const key = recipeKey(a, b);
+        if (!RECIPE_MAP.has(key)) {
+          RECIPE_MAP.set(key, res);
+        }
+      }
+
+      // Fallbacks temáticos suaves que siempre producen elementos curados coherentes
+      function smartCuratedFallback(a, b) {
+        const ea = ELEMENTS[a], eb = ELEMENTS[b];
+        if (!ea || !eb) return null;
+        const pair = [a, b];
+        const has = (id) => a === id || b === id;
+        const cats = new Set([ea.cat, eb.cat]);
+
+        // Un elemento con bug suele dar resultados divertidos
+        if (has("bug") && (ea.cat === "ia" || eb.cat === "ia")) return "alucinacion";
+        if (has("bug") && (ea.cat === "agentes" || eb.cat === "agentes")) return "guardarrailes";
+        if (has("bug") && (ea.cat === "dev" || eb.cat === "dev")) return "testing";
+        if (has("pantuflas") && (ea.cat === "comunidad" || eb.cat === "comunidad")) return "en_pantuflas";
+        if (has("sin_humo") && (ea.cat === "ia" || eb.cat === "ia")) return "criterio_humano";
+        if (has("web_reactiva") && (ea.cat === "herramientas" || eb.cat === "herramientas")) return "atlas_malandriner";
+        if (has("tokenmaxxing") && (ea.cat === "ia" || eb.cat === "ia")) return "prefix_cache";
+        if (has("modo_fuego") && (ea.cat === "dev" || eb.cat === "dev")) return "modo_pantano";
+        if (has("testing") && (ea.cat === "agentes" || eb.cat === "agentes")) return "guardarrailes";
+        if (has("dani_primo") && (ea.cat === "agentes" || eb.cat === "agentes")) return "masterclass";
+        if (has("dani_primo") && (ea.cat === "ia" || eb.cat === "ia")) return "newsletter";
+        if (has("malandriner") && cats.has("ia")) return "zona_malandriner";
+        return null;
+      }
+
+      // Generador determinista para el "Modo Libre" (Infinite Craft puro)
+      const FREE_PREFIXES = [
+        ["Super", "🚀"], ["Mini", "🔬"], ["Turbo", "⚡"], ["Auto", "🤖"],
+        ["Meta", "🌀"], ["Neo", "✨"], ["Crypto", "🔐"], ["Vibe", "🎸"],
+        ["Open", "🔓"], ["Micro", "🧩"], ["Hyper", "🔥"], ["Anti", "🛡️"]
+      ];
+      const FREE_SUFFIXES = [
+        ["en Pantuflas", "🥿"], ["con IA", "🤖"], ["sin Humo", "🌬️"],
+        ["Malandriner", "🏴‍☠️"], ["de Viernes", "🚀"], ["Asombrósico", "🤯"],
+        ["en Loop", "🔄"], ["2026", "⚡"], ["Open Source", "🔓"],
+        ["en Terminal", "🖥️"], ["para Fardar", "🦚"], [".md", "📄"]
+      ];
+      const NO_MATCH_QUIPS = [
+        "Esos dos no compilan juntos… todavía.",
+        "Ni Claude Code con effort al máximo sabe qué sale de ahí.",
+        "Sin reacción. Prueba con otro ingrediente o activa ∞ Modo Libre.",
+        "Ese merge tiene demasiados conflictos.",
+        "No saltó la skill para esa mezcla. Prueba otra combinación.",
+        "Contexto incompatible. ¿Y si pruebas con 💡 Pista?"
+      ];
+
+      function hashStr(str) {
+        let h = 2166136261;
+        for (let i = 0; i < str.length; i++) {
+          h ^= str.charCodeAt(i);
+          h = Math.imul(h, 16777619);
+        }
+        return h >>> 0;
+      }
+
+      function generateFreeCombo(idA, idB) {
+        const key = recipeKey(idA, idB);
+        const id = "free_" + hashStr(key).toString(36);
+        if (state.freeElements[id]) return id;
+
+        const elA = getElement(idA);
+        const elB = getElement(idB);
+        const h = hashStr(key + "_wr");
+        const mode = h % 3;
+
+        let name, emoji;
+        const cleanA = elA.name.split(" ")[0];
+        const cleanB = elB.name.split(" ").slice(-1)[0];
+
+        if (mode === 0) {
+          const [suf, em] = FREE_SUFFIXES[h % FREE_SUFFIXES.length];
+          name = `${elA.name.split(" ").slice(0, 2).join(" ")} ${suf}`;
+          emoji = (h & 1) ? elB.emoji : em;
+        } else if (mode === 1) {
+          const [pre, em] = FREE_PREFIXES[h % FREE_PREFIXES.length];
+          name = `${pre}-${cleanB}`;
+          emoji = (h & 1) ? elA.emoji : em;
+        } else {
+          name = `${cleanA} × ${cleanB}`;
+          emoji = (h & 1) ? elA.emoji : elB.emoji;
+        }
+
+        if (name.length > 28) name = name.slice(0, 26) + "…";
+
+        state.freeElements[id] = {
+          name,
+          emoji,
+          cat: "free",
+          rarity: "free",
+          isFree: true,
+          desc: `Fusión experimental nacida en Modo Libre al mezclar ${elA.emoji} ${elA.name} + ${elB.emoji} ${elB.name}.`
+        };
+        return id;
+      }
+
+      /* =====================================================================
+       * 3. ESTADO & PERSISTENCIA
+       * ===================================================================== */
+      const STORAGE_KEY = "alquimia_reactiva_v1";
+      const CURATED_IDS = Object.keys(ELEMENTS);
+      const STARTER_IDS = CURATED_IDS.filter((id) => ELEMENTS[id].starter);
+
+      function defaultState() {
+        return {
+          discovered: [...STARTER_IDS],
+          discoveredRecipes: {}, // resultId -> [a, b]
+          freeElements: {},      // freeId -> elementObj
+          combines: 0,
+          sound: true,
+          theme: window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
+          freeMode: false,
+          sortMode: "recent",    // recent | alpha | rarity
+          activeCat: "all"
+        };
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return defaultState();
+          const parsed = JSON.parse(raw);
+          const base = defaultState();
+          const merged = { ...base, ...parsed };
+          // Garantizar que los 4 iniciales siempre estén presentes
+          for (const sid of STARTER_IDS) {
+            if (!merged.discovered.includes(sid)) merged.discovered.unshift(sid);
+          }
+          // Limpiar IDs inválidos
+          merged.discovered = merged.discovered.filter((id) => ELEMENTS[id] || (merged.freeElements && merged.freeElements[id]));
+          return merged;
+        } catch {
+          return defaultState();
+        }
+      }
+
+      let state = loadState();
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch {
+          // Ignorar errores de cuota
+        }
+      }
+
+      function getElement(id) {
+        return ELEMENTS[id] || state.freeElements[id] || null;
+      }
+
+      /* =====================================================================
+       * 4. SINTETIZADOR DE AUDIO (Web Audio API, sin archivos externos)
+       * ===================================================================== */
+      let audioCtx = null;
+      function getAudio() {
+        if (!state.sound) return null;
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return null;
+          audioCtx = new AC();
+        }
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        return audioCtx;
+      }
+
+      function playTone(freq, duration, type = "sine", vol = 0.08, delay = 0) {
+        const ctx = getAudio();
+        if (!ctx) return;
+        const now = ctx.currentTime + delay;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.exponentialRampToValueAtTime(vol, now + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0008, now + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + duration + 0.02);
+      }
+
+      const SFX = {
+        pickup() { playTone(380, 0.07, "triangle", 0.06); },
+        spawn() { playTone(460, 0.09, "sine", 0.06); },
+        combineKnown() {
+          playTone(523.25, 0.12, "triangle", 0.07, 0);
+          playTone(659.25, 0.16, "triangle", 0.07, 0.06);
+        },
+        discover() {
+          playTone(523.25, 0.14, "triangle", 0.08, 0);
+          playTone(659.25, 0.14, "triangle", 0.08, 0.06);
+          playTone(783.99, 0.18, "triangle", 0.09, 0.12);
+          playTone(1046.5, 0.28, "sine", 0.09, 0.18);
+        },
+        legendary() {
+          const notes = [523.25, 659.25, 783.99, 987.77, 1046.5, 1318.5];
+          notes.forEach((n, i) => playTone(n, 0.24, "triangle", 0.085, i * 0.055));
+        },
+        nope() {
+          playTone(190, 0.11, "sawtooth", 0.04, 0);
+          playTone(155, 0.14, "sawtooth", 0.035, 0.07);
+        },
+        trash() { playTone(260, 0.09, "sine", 0.05); }
+      };
+
+      /* =====================================================================
+       * 5. PARTÍCULAS EN CANVAS (60fps)
+       * ===================================================================== */
+      const fxCanvas = document.getElementById("fx-canvas");
+      const fxCtx = fxCanvas.getContext("2d");
+      let particles = [];
+      let fxRunning = false;
+
+      function resizeFx() {
+        const rect = workspace.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        fxCanvas.width = rect.width * dpr;
+        fxCanvas.height = rect.height * dpr;
+        fxCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function spawnBurst(x, y, mode = "normal") {
+        const palettes = {
+          normal: ["#e14f7c", "#7dc5f1", "#9ef4a4", "#ffb0c0"],
+          new: ["#e14f7c", "#7dc5f1", "#9ef4a4", "#f5b700", "#ffb0c0"],
+          legendary: ["#f5b700", "#ffe066", "#e14f7c", "#7dc5f1", "#9ef4a4"],
+          free: ["#8b5cf6", "#c4b5fd", "#7dc5f1", "#ffb0c0"]
+        };
+        const colors = palettes[mode] || palettes.normal;
+        const count = mode === "legendary" ? 34 : mode === "new" ? 22 : 12;
+
+        for (let i = 0; i < count; i++) {
+          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+          const speed = (mode === "legendary" ? 3.2 : 2.1) + Math.random() * 3.4;
+          particles.push({
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 0.8,
+            size: 3.5 + Math.random() * 4.5,
+            color: colors[i % colors.length],
+            life: 1,
+            decay: 0.022 + Math.random() * 0.018,
+            rot: Math.random() * Math.PI,
+            vrot: (Math.random() - 0.5) * 0.25,
+            shape: i % 3
+          });
+        }
+        if (!fxRunning) {
+          fxRunning = true;
+          requestAnimationFrame(tickFx);
+        }
+      }
+
+      function tickFx() {
+        fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.09;
+          p.vx *= 0.97;
+          p.rot += p.vrot;
+          p.life -= p.decay;
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+          fxCtx.save();
+          fxCtx.globalAlpha = Math.max(0, p.life);
+          fxCtx.translate(p.x, p.y);
+          fxCtx.rotate(p.rot);
+          fxCtx.fillStyle = p.color;
+          if (p.shape === 0) {
+            fxCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.7);
+          } else if (p.shape === 1) {
+            fxCtx.beginPath();
+            fxCtx.arc(0, 0, p.size * 0.48, 0, Math.PI * 2);
+            fxCtx.fill();
+          } else {
+            fxCtx.beginPath();
+            fxCtx.moveTo(0, -p.size * 0.6);
+            fxCtx.lineTo(p.size * 0.55, p.size * 0.5);
+            fxCtx.lineTo(-p.size * 0.55, p.size * 0.5);
+            fxCtx.closePath();
+            fxCtx.fill();
+          }
+          fxCtx.restore();
+        }
+        if (particles.length > 0) {
+          requestAnimationFrame(tickFx);
+        } else {
+          fxRunning = false;
+        }
+      }
+
+      /* =====================================================================
+       * 6. REFERENCIAS DOM & GESTIÓN DEL TABLERO
+       * ===================================================================== */
+      const workspace = document.getElementById("workspace");
+      const sidebar = document.getElementById("sidebar");
+      const inventoryList = document.getElementById("inventory-list");
+      const emptyGuide = document.getElementById("empty-guide");
+      const loreToast = document.getElementById("lore-toast");
+      const searchInput = document.getElementById("search-input");
+      const catPillsEl = document.getElementById("cat-pills");
+      const progressText = document.getElementById("progress-text");
+      const progressPct = document.getElementById("progress-pct");
+      const progressFill = document.getElementById("progress-fill");
+      const combinesCounter = document.getElementById("combines-counter");
+      const btnSort = document.getElementById("btn-sort");
+      const btnSound = document.getElementById("btn-sound");
+      const btnTheme = document.getElementById("btn-theme");
+      const btnFree = document.getElementById("btn-free");
+      const btnHint = document.getElementById("btn-hint");
+      const btnClear = document.getElementById("btn-clear");
+      const btnAtlas = document.getElementById("btn-atlas");
+
+      const atlasModal = document.getElementById("atlas-modal");
+      const atlasGrid = document.getElementById("atlas-grid");
+      const atlasCatPills = document.getElementById("atlas-cat-pills");
+      const btnCloseAtlas = document.getElementById("btn-close-atlas");
+      const btnShare = document.getElementById("btn-share");
+      const btnReset = document.getElementById("btn-reset");
+
+      let boardItems = []; // { uid, id, x, y, el }
+      let nextUid = 1;
+      let topZ = 15;
+      let toastTimer = null;
+      let lastHintKey = null;
+      let hintStage = 0;
+      let atlasCat = "all";
+
+      function updateEmptyGuide() {
+        emptyGuide.classList.toggle("hidden", boardItems.length > 0);
+      }
+
+      function showToast({ tag, tagClass = "", formula = "", title = "", desc = "", variant = "" }, duration = 4800) {
+        clearTimeout(toastTimer);
+        loreToast.className = "lore-toast show" + (variant ? " " + variant : "");
+        loreToast.innerHTML = `
+          <div class="lore-header">
+            ${tag ? `<span class="lore-tag ${tagClass}">${tag}</span>` : ""}
+            ${formula ? `<span class="lore-formula">${formula}</span>` : ""}
+          </div>
+          ${title ? `<div class="lore-title">${title}</div>` : ""}
+          ${desc ? `<p class="lore-desc">${desc}</p>` : ""}
+        `;
+        toastTimer = setTimeout(() => {
+          loreToast.classList.remove("show");
+        }, duration);
+      }
+
+      function spawnBoardItem(id, x, y, opts = {}) {
+        const data = getElement(id);
+        if (!data) return null;
+
+        const rect = workspace.getBoundingClientRect();
+        const el = document.createElement("div");
+        el.className = "board-item";
+        if (data.rarity === "legendary") el.classList.add("rarity-legendary");
+        else if (data.rarity === "epic") el.classList.add("rarity-epic");
+        if (data.isFree) el.classList.add("is-free");
+
+        el.innerHTML = `<span class="item-emoji">${data.emoji}</span><span>${data.name}</span>`;
+        if (opts.isNew) {
+          const pip = document.createElement("span");
+          pip.className = "new-pip";
+          pip.textContent = data.rarity === "legendary" ? "★ LEGENDARIO" : data.isFree ? "∞ LIBRE" : "NUEVO";
+          el.appendChild(pip);
+          setTimeout(() => pip.remove(), 3400);
+        }
+
+        workspace.appendChild(el);
+        const w = el.offsetWidth;
+        const h = el.offsetHeight;
+
+        const clampedX = Math.max(12, Math.min(rect.width - w - 12, x - w / 2));
+        const clampedY = Math.max(70, Math.min(rect.height - h - 68, y - h / 2));
+
+        const item = { uid: nextUid++, id, x: clampedX, y: clampedY, el };
+        el.style.zIndex = ++topZ;
+        el.style.setProperty("--x", `${clampedX}px`);
+        el.style.setProperty("--y", `${clampedY}px`);
+        el.style.transform = `translate(${clampedX}px, ${clampedY}px)`;
+
+        if (opts.animate !== false) {
+          el.classList.add("anim-spawn");
+          el.addEventListener("animationend", () => el.classList.remove("anim-spawn"), { once: true });
+        }
+
+        // Eventos del elemento en tablero
+        el.addEventListener("pointerdown", (e) => onBoardPointerDown(e, item));
+        el.addEventListener("dblclick", (e) => {
+          e.stopPropagation();
+          SFX.spawn();
+          spawnBoardItem(item.id, item.x + el.offsetWidth / 2 + 24, item.y + el.offsetHeight / 2 + 24);
+        });
+        el.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          SFX.trash();
+          removeBoardItem(item.uid);
+        });
+
+        boardItems.push(item);
+        updateEmptyGuide();
+        return item;
+      }
+
+      function removeBoardItem(uid) {
+        const idx = boardItems.findIndex((i) => i.uid === uid);
+        if (idx === -1) return;
+        const [item] = boardItems.splice(idx, 1);
+        item.el.remove();
+        updateEmptyGuide();
+      }
+
+      function clearBoard() {
+        if (boardItems.length === 0) return;
+        SFX.trash();
+        for (const item of boardItems) item.el.remove();
+        boardItems = [];
+        updateEmptyGuide();
+      }
+
+      function findDropTarget(cx, cy, excludeUid = null) {
+        let best = null;
+        let bestDist = Infinity;
+        for (const item of boardItems) {
+          if (item.uid === excludeUid) continue;
+          const r = item.el.getBoundingClientRect();
+          const ix = r.left + r.width / 2;
+          const iy = r.top + r.height / 2;
+          const pad = 18;
+          const inside = cx >= r.left - pad && cx <= r.right + pad && cy >= r.top - pad && cy <= r.bottom + pad;
+          if (!inside) continue;
+          const dist = Math.hypot(cx - ix, cy - iy);
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = item;
+          }
+        }
+        return best;
+      }
+
+      /* =====================================================================
+       * 7. LÓGICA DE COMBINACIÓN
+       * ===================================================================== */
+      function resolveCombination(idA, idB) {
+        const key = recipeKey(idA, idB);
+        if (RECIPE_MAP.has(key)) {
+          return { id: RECIPE_MAP.get(key), source: "curated" };
+        }
+        // Solo usar fallback temático si ambos son elementos curados
+        if (ELEMENTS[idA] && ELEMENTS[idB]) {
+          const fb = smartCuratedFallback(idA, idB);
+          if (fb && fb !== idA && fb !== idB) {
+            return { id: fb, source: "fallback" };
+          }
+        }
+        if (state.freeMode) {
+          return { id: generateFreeCombo(idA, idB), source: "free" };
+        }
+        return null;
+      }
+
+      function combineItems(idA, idB, targetItem, sourceItem = null) {
+        const elA = getElement(idA);
+        const elB = getElement(idB);
+        const result = resolveCombination(idA, idB);
+
+        const wsRect = workspace.getBoundingClientRect();
+        const tRect = targetItem.el.getBoundingClientRect();
+        const cx = tRect.left - wsRect.left + tRect.width / 2;
+        const cy = tRect.top - wsRect.top + tRect.height / 2;
+
+        if (!result) {
+          SFX.nope();
+          targetItem.el.classList.add("anim-shake");
+          targetItem.el.addEventListener("animationend", () => targetItem.el.classList.remove("anim-shake"), { once: true });
+          if (sourceItem) {
+            // Separar ligeramente para que no se solapen
+            const nx = Math.max(12, Math.min(wsRect.width - sourceItem.el.offsetWidth - 12, targetItem.x + 56));
+            const ny = Math.max(70, Math.min(wsRect.height - sourceItem.el.offsetHeight - 68, targetItem.y + 34));
+            sourceItem.x = nx;
+            sourceItem.y = ny;
+            sourceItem.el.style.transform = `translate(${nx}px, ${ny}px)`;
+          }
+          const quip = NO_MATCH_QUIPS[Math.floor(Math.random() * NO_MATCH_QUIPS.length)];
+          showToast({
+            tag: "Sin reacción",
+            tagClass: "nope",
+            formula: `${elA.emoji} ${elA.name} + ${elB.emoji} ${elB.name}`,
+            desc: quip
+          }, 2800);
+          return;
+        }
+
+        const resId = result.id;
+        const resEl = getElement(resId);
+        const isNew = !state.discovered.includes(resId);
+
+        state.combines++;
+        if (isNew) {
+          state.discovered.push(resId);
+          if (!state.discoveredRecipes[resId]) {
+            state.discoveredRecipes[resId] = [idA, idB];
+          }
+        } else if (!state.discoveredRecipes[resId]) {
+          state.discoveredRecipes[resId] = [idA, idB];
+        }
+        saveState();
+
+        // Retirar piezas originales y crear la nueva
+        removeBoardItem(targetItem.uid);
+        if (sourceItem) removeBoardItem(sourceItem.uid);
+
+        spawnBoardItem(resId, cx, cy, { isNew });
+
+        // Efectos y feedback
+        if (isNew) {
+          if (resEl.rarity === "legendary") {
+            SFX.legendary();
+            spawnBurst(cx, cy, "legendary");
+          } else if (resEl.isFree) {
+            SFX.discover();
+            spawnBurst(cx, cy, "free");
+          } else {
+            SFX.discover();
+            spawnBurst(cx, cy, "new");
+          }
+
+          showToast({
+            tag: resEl.rarity === "legendary" ? "★ Legendario" : resEl.isFree ? "∞ Fusión Libre" : "✨ Nuevo descubrimiento",
+            tagClass: resEl.rarity === "legendary" ? "legendary" : resEl.isFree ? "free" : "",
+            formula: `${elA.emoji} ${elA.name} + ${elB.emoji} ${elB.name}`,
+            title: `${resEl.emoji} ${resEl.name}`,
+            desc: resEl.desc,
+            variant: resEl.rarity === "legendary" ? "is-legendary" : "is-new"
+          }, 5600);
+        } else {
+          SFX.combineKnown();
+          spawnBurst(cx, cy, "normal");
+          showToast({
+            tag: "Sintetizado",
+            tagClass: resEl.isFree ? "free" : "nope",
+            formula: `${elA.emoji} ${elA.name} + ${elB.emoji} ${elB.name}`,
+            title: `${resEl.emoji} ${resEl.name}`,
+            desc: resEl.desc
+          }, 3200);
+        }
+
+        renderProgress();
+        renderInventory();
+      }
+
+      /* =====================================================================
+       * 8. ARRASTRE CON POINTER EVENTS (TABLERO Y SIDEBAR)
+       * ===================================================================== */
+      let activeHighlight = null;
+
+      function setHighlight(target) {
+        if (activeHighlight === target) return;
+        if (activeHighlight) activeHighlight.el.classList.remove("drop-target");
+        activeHighlight = target;
+        if (activeHighlight) activeHighlight.el.classList.add("drop-target");
+      }
+
+      function isOverSidebar(clientX, clientY) {
+        const r = sidebar.getBoundingClientRect();
+        return clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom;
+      }
+
+      function onBoardPointerDown(e, item) {
+        if (e.button !== 0) return;
+        e.preventDefault();
+        e.stopPropagation();
+
+        SFX.pickup();
+        item.el.style.zIndex = ++topZ;
+        item.el.classList.add("dragging");
+
+        const wsRect = workspace.getBoundingClientRect();
+        const startX = e.clientX;
+        const startY = e.clientY;
+        const origX = item.x;
+        const origY = item.y;
+
+        const onMove = (ev) => {
+          const dx = ev.clientX - startX;
+          const dy = ev.clientY - startY;
+          item.x = origX + dx;
+          item.y = origY + dy;
+          item.el.style.transform = `translate(${item.x}px, ${item.y}px) rotate(-1.5deg)`;
+
+          const overTrash = isOverSidebar(ev.clientX, ev.clientY);
+          sidebar.classList.toggle("trash-hover", overTrash);
+
+          if (overTrash) {
+            setHighlight(null);
+          } else {
+            const target = findDropTarget(ev.clientX, ev.clientY, item.uid);
+            setHighlight(target);
+          }
+        };
+
+        const onUp = (ev) => {
+          window.removeEventListener("pointermove", onMove);
+          window.removeEventListener("pointerup", onUp);
+          window.removeEventListener("pointercancel", onUp);
+
+          item.el.classList.remove("dragging");
+          sidebar.classList.remove("trash-hover");
+          const target = activeHighlight;
+          setHighlight(null);
+
+          if (isOverSidebar(ev.clientX, ev.clientY)) {
+            SFX.trash();
+            removeBoardItem(item.uid);
+            return;
+          }
+
+          if (target) {
+            combineItems(item.id, target.id, target, item);
+            return;
+          }
+
+          // Mantener dentro del lienzo
+          const w = item.el.offsetWidth;
+          const h = item.el.offsetHeight;
+          item.x = Math.max(8, Math.min(wsRect.width - w - 8, item.x));
+          item.y = Math.max(60, Math.min(wsRect.height - h - 56, item.y));
+          item.el.style.transform = `translate(${item.x}px, ${item.y}px)`;
+        };
+
+        window.addEventListener("pointermove", onMove);
+        window.addEventListener("pointerup", onUp);
+        window.addEventListener("pointercancel", onUp);
+      }
+
+      function onSidebarChipPointerDown(e, id) {
+        if (e.button !== 0) return;
+        const data = getElement(id);
+        if (!data) return;
+
+        // En pantalla táctil dejamos fluir el scroll del panel y el tap añade el elemento al tablero
+        if (e.pointerType === "touch") return;
+
+        const startX = e.clientX;
+        const startY = e.clientY;
+        let dragging = false;
+        let ghost = null;
+
+        const onMove = (ev) => {
+          const dist = Math.hypot(ev.clientX - startX, ev.clientY - startY);
+          if (!dragging && dist > 6) {
+            dragging = true;
+            SFX.pickup();
+            ghost = document.createElement("div");
+            ghost.className = "drag-ghost";
+            ghost.innerHTML = `<span style="font-size:18px">${data.emoji}</span><span>${data.name}</span>`;
+            document.body.appendChild(ghost);
+          }
+          if (!dragging) return;
+
+          const gw = ghost.offsetWidth;
+          const gh = ghost.offsetHeight;
+          ghost.style.transform = `translate(${ev.clientX - gw / 2}px, ${ev.clientY - gh / 2}px) rotate(-1.5deg)`;
+
+          if (!isOverSidebar(ev.clientX, ev.clientY)) {
+            setHighlight(findDropTarget(ev.clientX, ev.clientY));
+          } else {
+            setHighlight(null);
+          }
+        };
+
+        const onUp = (ev) => {
+          window.removeEventListener("pointermove", onMove);
+          window.removeEventListener("pointerup", onUp);
+          window.removeEventListener("pointercancel", onUp);
+
+          const target = activeHighlight;
+          setHighlight(null);
+
+          if (ghost) ghost.remove();
+
+          if (!dragging) {
+            // Clic simple -> aparece en el centro del tablero con ligero desplazamiento aleatorio
+            SFX.spawn();
+            const r = workspace.getBoundingClientRect();
+            const jx = (Math.random() - 0.5) * Math.min(200, r.width * 0.38);
+            const jy = (Math.random() - 0.5) * Math.min(160, r.height * 0.34);
+            spawnBoardItem(id, r.width / 2 + jx, r.height / 2 + jy);
+            return;
+          }
+
+          if (isOverSidebar(ev.clientX, ev.clientY)) return;
+
+          if (target) {
+            combineItems(id, target.id, target, null);
+          } else {
+            SFX.spawn();
+            const wsRect = workspace.getBoundingClientRect();
+            spawnBoardItem(id, ev.clientX - wsRect.left, ev.clientY - wsRect.top);
+          }
+        };
+
+        window.addEventListener("pointermove", onMove);
+        window.addEventListener("pointerup", onUp);
+        window.addEventListener("pointercancel", onUp);
+      }
+
+      /* =====================================================================
+       * 9. SISTEMA DE PISTAS INTELIGENTE
+       * ===================================================================== */
+      function showSmartHint() {
+        const unlocked = new Set(state.discovered);
+        const candidates = [];
+
+        for (const [key, resId] of RECIPE_MAP.entries()) {
+          if (unlocked.has(resId)) continue;
+          const [a, b] = key.split("+");
+          if (unlocked.has(a) && unlocked.has(b)) {
+            candidates.push({ a, b, resId, key });
+          }
+        }
+
+        if (candidates.length === 0) {
+          showToast({
+            tag: "🏆 ¡Completado!",
+            tagClass: "legendary",
+            title: "¡Has descubierto todos los elementos curados de Web Reactiva!",
+            desc: "Puedes activar ∞ Modo Libre para crear fusiones experimentales infinitas."
+          }, 5500);
+          return;
+        }
+
+        // Priorizar pistas no legendarias primero o elegir una estable si repite clic
+        let pick = candidates.find((c) => c.key === lastHintKey);
+        if (pick && hintStage === 1) {
+          hintStage = 2;
+          const elA = getElement(pick.a);
+          const elB = getElement(pick.b);
+          const elR = getElement(pick.resId);
+          SFX.spawn();
+          showToast({
+            tag: "💡 Pista exacta",
+            tagClass: "hint",
+            title: `Prueba: ${elA.emoji} ${elA.name} + ${elB.emoji} ${elB.name}`,
+            desc: `Desbloquea un elemento de la categoría "${getCategoryLabel(elR.cat)}".`
+          }, 5500);
+          lastHintKey = null;
+          hintStage = 0;
+          return;
+        }
+
+        // Elegir una nueva pista aleatoria
+        pick = candidates[Math.floor(Math.random() * candidates.length)];
+        lastHintKey = pick.key;
+        hintStage = 1;
+        const elA = getElement(pick.a);
+        const elR = getElement(pick.resId);
+        SFX.spawn();
+        showToast({
+          tag: "💡 Pista (1/2)",
+          tagClass: "hint",
+          title: `Usa ${elA.emoji} ${elA.name} + ???`,
+          desc: `Te llevará a algo de "${getCategoryLabel(elR.cat)}". Pulsa 💡 Pista otra vez si quieres la pareja exacta.`
+        }, 5200);
+      }
+
+      function getCategoryLabel(catId) {
+        if (catId === "free") return "Fusiones Libres";
+        const found = CATEGORIES.find((c) => c.id === catId);
+        return found ? found.label : catId;
+      }
+
+      /* =====================================================================
+       * 10. RENDER DE SIDEBAR, PROGRESO Y ATLAS MALANDRINER
+       * ===================================================================== */
+      function renderProgress() {
+        const curatedFound = state.discovered.filter((id) => Boolean(ELEMENTS[id])).length;
+        const total = CURATED_IDS.length;
+        const pct = Math.round((curatedFound / total) * 100);
+        progressText.textContent = `${curatedFound} / ${total}`;
+        progressPct.textContent = `${pct}%`;
+        progressFill.style.width = `${Math.max(2, pct)}%`;
+        combinesCounter.textContent = `${state.combines} ${state.combines === 1 ? "mezcla" : "mezclas"}`;
+      }
+
+      function renderCategoryPills(container, activeId, onSelect, includeFree = true) {
+        const hasFree = state.discovered.some((id) => !ELEMENTS[id]);
+        const list = [...CATEGORIES];
+        if (includeFree && hasFree) {
+          list.push({ id: "free", label: "∞ Libres" });
+        }
+
+        container.innerHTML = "";
+        for (const cat of list) {
+          const btn = document.createElement("button");
+          btn.className = "cat-pill" + (cat.id === activeId ? " active" : "");
+          btn.textContent = cat.label;
+          btn.addEventListener("click", () => onSelect(cat.id));
+          container.appendChild(btn);
+        }
+      }
+
+      const RARITY_WEIGHT = { legendary: 4, epic: 3, rare: 2, common: 1, free: 0 };
+
+      function renderInventory() {
+        renderCategoryPills(catPillsEl, state.activeCat, (catId) => {
+          state.activeCat = catId;
+          saveState();
+          renderInventory();
+        });
+
+        const q = searchInput.value.trim().toLowerCase();
+        let ids = [...state.discovered];
+
+        if (state.activeCat !== "all") {
+          ids = ids.filter((id) => {
+            const el = getElement(id);
+            return el && el.cat === state.activeCat;
+          });
+        }
+
+        if (q) {
+          ids = ids.filter((id) => {
+            const el = getElement(id);
+            return el && (el.name.toLowerCase().includes(q) || el.desc.toLowerCase().includes(q));
+          });
+        }
+
+        if (state.sortMode === "recent") {
+          ids.reverse();
+        } else if (state.sortMode === "alpha") {
+          ids.sort((a, b) => getElement(a).name.localeCompare(getElement(b).name, "es"));
+        } else if (state.sortMode === "rarity") {
+          ids.sort((a, b) => (RARITY_WEIGHT[getElement(b).rarity] || 0) - (RARITY_WEIGHT[getElement(a).rarity] || 0));
+        }
+
+        inventoryList.innerHTML = "";
+        if (ids.length === 0) {
+          inventoryList.innerHTML = `<div class="inv-empty">No hay elementos que coincidan con ese filtro.</div>`;
+          return;
+        }
+
+        const frag = document.createDocumentFragment();
+        for (const id of ids) {
+          const el = getElement(id);
+          const chip = document.createElement("div");
+          chip.className = "inv-chip";
+          if (el.rarity === "legendary") chip.classList.add("rarity-legendary");
+          else if (el.rarity === "epic") chip.classList.add("rarity-epic");
+          else if (el.rarity === "rare") chip.classList.add("rarity-rare");
+          if (el.isFree) chip.classList.add("is-free");
+
+          chip.title = el.desc;
+          const dot = (el.rarity === "legendary" || el.rarity === "epic" || el.rarity === "rare")
+            ? `<span class="rarity-dot"></span>`
+            : "";
+          chip.innerHTML = `<span>${el.emoji}</span><span>${el.name}</span>${dot}`;
+          chip.addEventListener("pointerdown", (e) => {
+            chip._lastPointerType = e.pointerType;
+            onSidebarChipPointerDown(e, id);
+          });
+          chip.addEventListener("click", () => {
+            if (chip._lastPointerType !== "touch") return;
+            SFX.spawn();
+            const r = workspace.getBoundingClientRect();
+            const jx = (Math.random() - 0.5) * Math.min(180, r.width * 0.36);
+            const jy = (Math.random() - 0.5) * Math.min(140, r.height * 0.32);
+            spawnBoardItem(id, r.width / 2 + jx, r.height / 2 + jy);
+          });
+          frag.appendChild(chip);
+        }
+        inventoryList.appendChild(frag);
+      }
+
+      function renderAtlas() {
+        const unlocked = new Set(state.discovered);
+        const curatedFound = state.discovered.filter((id) => Boolean(ELEMENTS[id]));
+        const legendaryFound = curatedFound.filter((id) => ELEMENTS[id].rarity === "legendary").length;
+        const legendaryTotal = CURATED_IDS.filter((id) => ELEMENTS[id].rarity === "legendary").length;
+        const freeFound = state.discovered.filter((id) => !ELEMENTS[id]).length;
+
+        document.getElementById("stat-found").textContent = `${curatedFound.length}/${CURATED_IDS.length}`;
+        document.getElementById("stat-legendary").textContent = `${legendaryFound}/${legendaryTotal}`;
+        document.getElementById("stat-free").textContent = `${freeFound}`;
+        document.getElementById("stat-combines").textContent = `${state.combines}`;
+
+        renderCategoryPills(atlasCatPills, atlasCat, (c) => {
+          atlasCat = c;
+          renderAtlas();
+        }, true);
+
+        let listIds;
+        if (atlasCat === "free") {
+          listIds = state.discovered.filter((id) => !ELEMENTS[id]);
+        } else {
+          listIds = CURATED_IDS.filter((id) => atlasCat === "all" || ELEMENTS[id].cat === atlasCat);
+          // Descubiertos primero, luego por rareza
+          listIds.sort((a, b) => {
+            const ua = unlocked.has(a) ? 1 : 0;
+            const ub = unlocked.has(b) ? 1 : 0;
+            if (ua !== ub) return ub - ua;
+            return (RARITY_WEIGHT[ELEMENTS[b].rarity] || 0) - (RARITY_WEIGHT[ELEMENTS[a].rarity] || 0);
+          });
+        }
+
+        atlasGrid.innerHTML = "";
+        const frag = document.createDocumentFragment();
+        for (const id of listIds) {
+          const el = getElement(id);
+          const isUnlocked = unlocked.has(id);
+          const card = document.createElement("div");
+          card.className = "atlas-card " + (isUnlocked ? "unlocked" : "locked");
+          if (el.rarity === "legendary") card.classList.add("rarity-legendary");
+
+          if (isUnlocked) {
+            const rec = state.discoveredRecipes[id];
+            let recHtml = el.starter ? "Elemento inicial" : "";
+            if (rec && getElement(rec[0]) && getElement(rec[1])) {
+              const ra = getElement(rec[0]);
+              const rb = getElement(rec[1]);
+              recHtml = `${ra.emoji} ${ra.name} + ${rb.emoji} ${rb.name}`;
+            }
+
+            card.innerHTML = `
+              <div class="atlas-card-top">
+                <div class="atlas-card-name"><span>${el.emoji}</span><span>${el.name}</span></div>
+                <span class="atlas-card-cat">${el.rarity === "legendary" ? "★ Legendario" : getCategoryLabel(el.cat)}</span>
+              </div>
+              <p class="atlas-card-desc">${el.desc}</p>
+              ${recHtml ? `<div class="atlas-card-recipe">${recHtml}</div>` : ""}
+            `;
+            card.addEventListener("click", () => {
+              closeAtlas();
+              SFX.spawn();
+              const r = workspace.getBoundingClientRect();
+              spawnBoardItem(id, r.width / 2 + (Math.random() - 0.5) * 140, r.height / 2 + (Math.random() - 0.5) * 120);
+            });
+          } else {
+            card.innerHTML = `
+              <div class="atlas-card-top">
+                <div class="atlas-card-name"><span>🔒</span><span>???</span></div>
+                <span class="atlas-card-cat">${el.rarity === "legendary" ? "★ Legendario" : getCategoryLabel(el.cat)}</span>
+              </div>
+              <p class="atlas-card-desc">Aún por descubrir. Experimenta combinando elementos en el tablero.</p>
+            `;
+          }
+          frag.appendChild(card);
+        }
+        atlasGrid.appendChild(frag);
+      }
+
+      function openAtlas() {
+        renderAtlas();
+        atlasModal.classList.add("open");
+        atlasModal.setAttribute("aria-hidden", "false");
+      }
+
+      function closeAtlas() {
+        atlasModal.classList.remove("open");
+        atlasModal.setAttribute("aria-hidden", "true");
+      }
+
+      /* =====================================================================
+       * 11. TEMA, CONTROLES Y EVENTOS GLOBALES
+       * ===================================================================== */
+      function applyTheme() {
+        document.documentElement.setAttribute("data-theme", state.theme);
+        btnTheme.textContent = state.theme === "dark" ? "☀️" : "🌙";
+      }
+
+      function applyButtonsState() {
+        btnSound.textContent = state.sound ? "🔊" : "🔇";
+        btnFree.classList.toggle("active", state.freeMode);
+        const sortLabels = { recent: "Recientes", alpha: "A–Z", rarity: "Rareza" };
+        btnSort.textContent = sortLabels[state.sortMode] || "Recientes";
+      }
+
+      btnTheme.addEventListener("click", () => {
+        state.theme = state.theme === "dark" ? "light" : "dark";
+        saveState();
+        applyTheme();
+      });
+
+      btnSound.addEventListener("click", () => {
+        state.sound = !state.sound;
+        saveState();
+        applyButtonsState();
+        if (state.sound) SFX.spawn();
+      });
+
+      btnFree.addEventListener("click", () => {
+        state.freeMode = !state.freeMode;
+        saveState();
+        applyButtonsState();
+        SFX.spawn();
+        showToast({
+          tag: state.freeMode ? "∞ Modo Libre ON" : "Modo Curado",
+          tagClass: state.freeMode ? "free" : "hint",
+          title: state.freeMode ? "Alquimia sin límites activada" : "Solo descubrimientos curados de Web Reactiva",
+          desc: state.freeMode
+            ? "Cualquier pareja sin receta oficial creará una fusión experimental nueva."
+            : "Las fusiones no registradas rebotarán para mantener tu Atlas limpio."
+        }, 3800);
+      });
+
+      btnSort.addEventListener("click", () => {
+        const order = ["recent", "alpha", "rarity"];
+        state.sortMode = order[(order.indexOf(state.sortMode) + 1) % order.length];
+        saveState();
+        applyButtonsState();
+        renderInventory();
+      });
+
+      btnClear.addEventListener("click", clearBoard);
+      btnHint.addEventListener("click", showSmartHint);
+      btnAtlas.addEventListener("click", openAtlas);
+      btnCloseAtlas.addEventListener("click", closeAtlas);
+
+      atlasModal.addEventListener("click", (e) => {
+        if (e.target === atlasModal) closeAtlas();
+      });
+
+      btnShare.addEventListener("click", async () => {
+        const curatedFound = state.discovered.filter((id) => Boolean(ELEMENTS[id])).length;
+        const legendaries = state.discovered.filter((id) => ELEMENTS[id] && ELEMENTS[id].rarity === "legendary");
+        const pct = Math.round((curatedFound / CURATED_IDS.length) * 100);
+        const barFilled = Math.round(pct / 10);
+        const bar = "🟥".repeat(barFilled) + "⬜".repeat(10 - barFilled);
+        const legIcons = legendaries.map((id) => ELEMENTS[id].emoji).join(" ") || "Ninguno aún";
+        const text = `🧪 Alquimia Reactiva (Web Reactiva)\n${bar} ${curatedFound}/${CURATED_IDS.length} (${pct}%)\n★ Legendarios: ${legIcons}\n⚡ Mezclas: ${state.combines} · En pantuflas 🥿`;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          btnShare.textContent = "✅ ¡Copiado!";
+          setTimeout(() => { btnShare.textContent = "📋 Compartir"; }, 2000);
+        } catch {
+          prompt("Copia tu progreso malandriner:", text);
+        }
+      });
+
+      btnReset.addEventListener("click", () => {
+        if (!confirm("¿Reiniciar todo tu progreso de Alquimia Reactiva y volver a los 4 elementos iniciales?")) return;
+        const keepTheme = state.theme;
+        const keepSound = state.sound;
+        state = defaultState();
+        state.theme = keepTheme;
+        state.sound = keepSound;
+        saveState();
+        clearBoard();
+        renderProgress();
+        renderInventory();
+        renderAtlas();
+        closeAtlas();
+      });
+
+      searchInput.addEventListener("input", renderInventory);
+
+      window.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+        } else if (e.key === "Escape") {
+          closeAtlas();
+        } else if (e.key.toLowerCase() === "c" && document.activeElement !== searchInput && !atlasModal.classList.contains("open")) {
+          clearBoard();
+        }
+      });
+
+      window.addEventListener("resize", resizeFx);
+
+      /* =====================================================================
+       * 12. ARRANQUE INICIAL
+       * ===================================================================== */
+      applyTheme();
+      applyButtonsState();
+      resizeFx();
+      renderProgress();
+      renderInventory();
+      updateEmptyGuide();
+    })();
+  </script>
+</body>
+</html>
