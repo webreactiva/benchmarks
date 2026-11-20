@@ -1,0 +1,14 @@
+He escrito el post y lo he guardado en `tests-flaky-peores-que-no-tener-tests.md` (en el directorio actual).
+
+**Título:** *Los tests que fallan a veces son peores que no tener tests*
+
+**Contenido del artículo:**
+
+1. **El valor de un test está en su confianza** — los tests existen para dar seguridad al cambiar código; un flaky da una falsa sensación de red de seguridad, más peligrosa que no tener ninguna.
+2. **El semáforo siempre en rojo se ignora** — el flujo "fallo → debe ser el flaky → retry → verde" convierte el CI en ruido y permite que bugs reales pasen inadvertidos.
+3. **Coste económico** — re-ejecuciones, tiempo de investigación, cómputo extra y PR estancados.
+4. **Cobertura engañosa** — la métrica deja de reflejar realidad cuando incluye tests intermitentes.
+5. **Causas comunes** — `sleep()` mágicos, estado compartido, concurrencia, dependencia del entorno, con ejemplos de código en JavaScript (mal vs. bien).
+6. **Qué hacer** — tratarlo como bug crítico, regla de "arregla o borra", reproducir con semillas, eliminar estado compartido, cuarentenas visibles y con caducidad.
+
+Cierra con una regla de oro: *un CI que falla debe significar siempre que algo está roto, nunca "a veces"*.

@@ -1,0 +1,21 @@
+{
+  "nota": 8,
+  "veredicto": "limpio, una sola instancia",
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 1,
+    "escala horizontal": 1,
+    "explica el escalado": 1
+  },
+  "resumen": "API Express en TypeScript con capas y puertos, SQLite nativo de Node, dinero en céntimos, precio siempre del catálogo, descuentos, envío, IVA, checkout con stock, validación estricta y una interfaz web; compila, pasa 19 tests y 50 altas a la vez en una instancia no pierden nada. Pero no tiene control de versión: con dos instancias sobre el mismo SQLite seis de cincuenta altas acaban en error 500.",
+  "rarezas": [
+    "Preguntó con la herramienta de preguntas qué stack usar; el lanzador la cerró y siguió con su opción recomendada (Node/Express + TypeScript).",
+    "Lo probó de punta a punta con curl contra el servidor, incluido que el stock persiste entre reinicios.",
+    "Entrega dist/ y data/cart.db junto al código.",
+    "31 peticiones y 2 millones de tokens (1,8 de caché)."
+  ]
+}

@@ -1,0 +1,36 @@
+   Carrito de la compra escalabl +
+     Verificado en vivo
+
+     - npm run typecheck limpio · 19/19 tests · build OK
+     - Flujo completo con curl: crear carrito, fusionar líneas, PATCH/DELETE, descuentos (422 si es inválido), stock (
+       409), checkout con descuento de stock atómico y compensación si falla a mitad, 404/400/409 según toca, y
+       persistencia entre reinicios (el stock quedó guardado en data/cart.db).
+     - Regla de negocio confirmada con cifras exactas: 179,87 € − 10 % + IVA redondeado = 195,87 €.
+
+     Para usarlo
+
+     npm run dev     # http://localhost:3000  (UI + API)
+     npm test        # tests
+
+     Variables opcionales: PORT, STORAGE=memory, DB_FILE, TAX_RATE, SHIPPING_CENTS, FREE_SHIPPING_THRESHOLD_CENTS,
+     DISCOUNT_CODES. Todo documentado en el README.md, junto con ejemplos de curl y una guía de extensión (nueva BD,
+     nuevos tipos de descuento, GraphQL, transacción de checkout).
+
+     Build · glm-5.3 · 6m 31s · 229.3 tok/s · 1.2s ttft
+
+     ↳ Shell finished · node dist/index.js
+
+     + 1 thought
+
+     El servidor se detuvo limpiamente (SIGTERM con cierre correcto de la base de datos). El proyecto queda completo y
+     listo para arrancar cuando quieras con npm run dev en http://localhost:3000.
+
+     Build · glm-5.3 · 6m 33s · 229.2 tok/s · 1.2s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-785ka59g                                                               78.0K (7%)  ctrl+p commands
+

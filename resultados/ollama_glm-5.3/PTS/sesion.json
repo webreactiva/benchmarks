@@ -1,0 +1,167 @@
+{
+  "info": {
+    "id": "ses_e064881d7ffeH1Rderb5HbNGiN",
+    "projectID": "8d334f1d9019d1c32d4e7254d4937816cd98070e",
+    "agent": "build",
+    "model": {
+      "id": "glm-5.3",
+      "providerID": "ol",
+      "variant": "default"
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 3634,
+      "output": 2924,
+      "reasoning": 0,
+      "cache": {
+        "read": 10240,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1795190914615,
+      "updated": 1795190931494,
+      "busy": 1795190914761,
+      "idle": 1795190931499,
+      "viewed": 1795190931499
+    },
+    "title": "Tests intermitentes vs ningún test",
+    "location": {
+      "directory": "/var/tmp/bench/ws-s1X36F7C"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_1f9b77e2e001R3Y01Xy2f2jaXj",
+      "time": {
+        "created": 1795190914778
+      },
+      "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1f9b77ef5001IBFr7aDHjWx5jH",
+      "time": {
+        "created": 1795190914812,
+        "firstToken": 1795190915944,
+        "streamed": 1795190928779,
+        "completed": 1795190928792
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "glm-5.3",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "The user wants a blog post in Spanish about why flaky tests are worse than having no tests at all. This is a programming blog post. I'll write it in Spanish, save it to the current working directory as a markdown file. Let me write a good, well-structured, engaging blog post with technical insight: flaky tests erode trust, waste time, create noise, \"quarantine\" culture, CI costs, debugging time, psychology of ignoring red builds, etc. Include code examples maybe, practical advice on handling flakiness.\n\nLet me write the file.",
+          "native": {
+            "reasoningField": "reasoning"
+          },
+          "time": {
+            "created": 1795190915949,
+            "completed": 1795190928767
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_ug5wh1rr",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "# Los tests que fallan a veces son peores que no tener tests\n\nHay una frase que aparece una y otra vez en equipos de desarrollo: *\"ya sabes que ese test es así, dale otra vez al pipeline y pasa\"*. Si la has dicho (o la has oído) recientemente, este artículo es para ti.\n\nUn test *flaky* (o \"que falla a veces\") es ese test que pasa el lunes, falla el martes, vuelve a pasar si lo ejecutas solo, y falla aleatoriamente cuando se ejecuta junto con el resto de la suite. Parece un problema menor: al fin y al cabo, el 90% de las veces está en verde. Pero ese razonamiento es una trampa. En este artículo quiero defender una idea incómoda: **un test no determinista es, en la práctica, peor que no tener test alguno**.\n\n## 1. El valor de un test está en su confianza, no en su cobertura\n\n¿Para qué escribimos tests? La respuesta obvia es \"para verificar que el código funciona\", pero la respuesta real es más sutil: **los tests existen para darnos confianza a la hora de cambiar el código**. Esa confianza es lo único que nos permite refactorizar sin miedo, entregar rápido y dormir tranquilos.\n\nUn test flaky destruye exactamente eso. Cuando un test falla, el mensaje que recibe el equipo es: \"algo está roto... o quizá no\". Y ante la incertidumbre, el cerebro humano hace lo peor posible: **aprender a ignorar las alarmas**.\n\nNo tener tests, en cambio, produce un estado mental sano: \"no tengo red de seguridad, tengo que ir con cuidado\". Es incómodo, pero al menos es honesto. Con tests flaky creemos tener una red de seguridad que en realidad tiene agujeros que aparecen al azar. La falsa sensación de seguridad es más peligrosa que la ausencia de seguridad, porque la primera no te invita a mirar abajo.\n\n## 2. El semáforo que siempre está en rojo termina siendo ignorado\n\nEs el principio del guardia de seguridad del pueblo que grita \"¡lobo!\" cada media hora. En un equipo con flakiness, el flujo de trabajo se corrompe:\n\n1. Falla el CI.\n2. Alguien mira el log, ve que es \"el de siempre\".\n3. Pensa: *\"probablemente es el flaky\"*, y pulsa *retry*.\n4. Pasa al segundo intento. Nadie revisó nada.\n\nEl paso 4 es el letal. Fíjate en lo que ha ocurrido: **el pipeline ha dejado de ser una señal y se ha convertido en una ruleta**. Y cada vez que falla algo *real*, el instinto es el mismo: \"seguro que es el flaky\". El resultado es que los bugs de verdad pueden colarse en producción porque el único mecanismo que teníamos para detectarlos se ha vuelto ruido de fondo.\n\nUn equipo sin tests nunca desarrollaría ese reflejo. Nadie puede ignorar una alarma que no suena.\n\n## 3. El coste económico que nadie contabiliza\n\nLa flakiness es cara de una forma que casi ningún equipo calcula:\n\n- **Tiempo de re-ejecución.** Si tu suite tarda 20 minutos y el retry es el procedimiento estándar, has multiplicado tu feedback loop por dos o por tres. Eso no es solo tiempo de máquina: es tiempo de *persona* esperando.\n- **Tiempo de investigación.** Cada falso positivo consume minutos (u horas) de alguien abriendo logs, re-ejecutando localmente, preguntando en el canal del equipo.\n- **Coste de cómputo.** Pipelines repetidos, runners ocupados, colas de CI más largas para todo el mundo.\n- **Paralización del flujo.** Los PR se acumulan esperando un verde que depende de la suerte. Mientras tanto, el merge se retrasa, aumenta el riesgo de conflictos y el coste de cada integración crece.\n\nY hay un efecto segundo aún más caro: **la gente deja de confiar y deja de arreglar**. Los tests flaky se marcan con `skip` o `flake8-ignore-comments` y pasan a formar parte del mobiliario. Nadie los toca. Ya no protegen nada, pero siguen consumiendo presupuesto.\n\n## 4. La cobertura engañosa\n\nOtro argumento en contra: un test flaky contamina tus métricas. Ese módulo puede presumir de un 90% de cobertura y sin embargo no estar verificado de verdad, porque la única aserción que tiene es intermitente.\n\nLa cobertura es un proxy de calidad, y los proxies son útiles solo cuando miden lo que dicen medir. Un dashboard que dice \"85% cubierto\" cuando el 15% restante incluye tests deshabilitados o intermitentes es una mentira con formato de gráfico. Prefiero un 60% honesto que un 90% adornado con asteriscos mentales.\n\n## 5. ¿De dónde viene la flakiness?\n\nNormalmente no es mala suerte: es un síntoma de que algo más está mal. Las causas más frecuentes:\n\n- **Dependencia del tiempo.** `sleep(5)` en lugar de sincronizarse con una condición. El tiempo de espera suficiente en tu portátil no lo es en el runner del CI.\n- **Estado compartido entre tests.** Tests que dependen del orden de ejecución, de datos residuales en base de datos o de singletons que no se resetean.\n- **Concurrencia sin controlar.** Threads, colas, temporizadores: el clásico \"espero que ya haya terminado\".\n- **Dependencia del entorno.** Fechas actuales (`new Date()`), zonas horarias, locales, directorios temporales, dependencias de red.\n- **Tests de UI acoplados al detalle.** Selectores frágiles, animaciones, elementos que aparecen y desaparecen.\n\nEl caso del `sleep` es un clásico tan común que merece su propio ejemplo. Mal:\n\n```javascript\n// Incorrecto: una espera fija no garantiza nada\nawait page.click(\"#send\");\nawait sleep(2000); // \"por si acaso\"\nexpect(await page.textContent(\"#status\")).toBe(\"Sent\");\n```\n\nBien:\n\n```javascript\n// Correcto: esperamos una condición observable\nawait page.click(\"#send\");\nawait page.waitForSelector(\"#status:has-text('Sent')\");\n```\n\nLa diferencia no es de estilo: la primera versión falla cuando el entorno va lento y esconde bugs cuando va rápido. La segunda es determinista *por diseño*.\n\n## 6. Qué hacer con un flaky (spoiler: no es \"retry\")\n\nAlgunas estrategias que sí funcionan, en orden de preferencia:\n\n1. **Trátalo como un bug crítico, no como una molestia.** Un test intermitente es un bug con dos caras: o el código es no determinista (y eso es un bug de producción esperando a ocurrir), o el test es incorrecto. Ambas opciones merecen atención inmediata.\n2. **Arregla o borra. No hay tercera opción.** El principio es simple: cualquier test que no puedas hacer determinista, no debería existir. Borrar un flaky no es perder cobertura; es dejar de mentir en el dashboard. Recuperarlo cuando tengas la causa raíz identificada.\n3. **Reproduce con semillas y repeticiones.** Ejecuta el test sospechoso en bucle (`for i in {1..100}`) y con seeds de aleatoriedad fijas y registradas. La flakiness que se puede reproducir a demanda se puede depurar.\n4. **Elimina el estado compartido.** Cada test debe crear su propio mundo y desmontarlo al terminar. Bases de datos en contenedor, factories en lugar de fixtures globales, y nada de tests que dependen del orden.\n5. **Si necesitas cuarenta, que sea visible y temporal.** Aislar un test flaky en una suite separada puede ser una estrategia de emergencia legítima, pero solo si (a) es visible para todo el equipo, (b) tiene un issue asociado y (c) caduca. Una cuarenta sin fecha de caducidad es un cementerio.\n\nY la regla de oro que resume todo:\n\n> **Un CI que falla debe significar siempre que algo está roto. Nunca \"a veces\".**\n\n## Conclusión\n\nLos tests no son un trámite para rellenar el panel de cobertura: son un sistema de alarma. Un sistema de alarma que suena de forma aleatoria se desinstala, se ignora o se silencia; en cualquier caso, deja de proteger.\n\nLa flakiness no es una peculiaridad inevitable del testing moderno: es deuda técnica con un disfraz especialmente traidor, porque se presenta con la palabra \"test\" delante. Si tu equipo ha normalizado el botón de retry, considera seriamente que tenéis dos problemas: el test que falla a veces, y la costumbre de mirar hacia otro lado.\n\nArreglad los flaky o borradlos. Vuestro futuro vosotros, con el pipeline en verde de verdad, os lo agradecerá.\n",
+              "path": "/var/tmp/bench/ws-s1X36F7C/tests-flaky-peores-que-no-tener-tests.md"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: tests-flaky-peores-que-no-tener-tests.md"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795190928677,
+            "ran": 1795190928775,
+            "completed": 1795190928789
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 460,
+        "output": 2212,
+        "reasoning": 0,
+        "cache": {
+          "read": 5120,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1f9b7b5a6001sEhGNdWZ6RYJsR",
+      "time": {
+        "created": 1795190928814,
+        "firstToken": 1795190929623,
+        "streamed": 1795190931491,
+        "completed": 1795190931494
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "glm-5.3",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "The file is created. I should give a brief summary. The post covers: value of tests is confidence, ignored alarms (boy who cried wolf), economic cost, misleading coverage, causes of flakiness, strategies to fix, conclusion. Maybe show the file path. Keep response concise.",
+          "native": {
+            "reasoningField": "reasoning"
+          },
+          "time": {
+            "created": 1795190929626,
+            "completed": 1795190931483
+          }
+        },
+        {
+          "type": "text",
+          "text": "He escrito el post y lo he guardado en `tests-flaky-peores-que-no-tener-tests.md` (en el directorio actual).\n\n**Título:** *Los tests que fallan a veces son peores que no tener tests*\n\n**Contenido del artículo:**\n\n1. **El valor de un test está en su confianza** — los tests existen para dar seguridad al cambiar código; un flaky da una falsa sensación de red de seguridad, más peligrosa que no tener ninguna.\n2. **El semáforo siempre en rojo se ignora** — el flujo \"fallo → debe ser el flaky → retry → verde\" convierte el CI en ruido y permite que bugs reales pasen inadvertidos.\n3. **Coste económico** — re-ejecuciones, tiempo de investigación, cómputo extra y PR estancados.\n4. **Cobertura engañosa** — la métrica deja de reflejar realidad cuando incluye tests intermitentes.\n5. **Causas comunes** — `sleep()` mágicos, estado compartido, concurrencia, dependencia del entorno, con ejemplos de código en JavaScript (mal vs. bien).\n6. **Qué hacer** — tratarlo como bug crítico, regla de \"arregla o borra\", reproducir con semillas, eliminar estado compartido, cuarentenas visibles y con caducidad.\n\nCierra con una regla de oro: *un CI que falla debe significar siempre que algo está roto, nunca \"a veces\"*."
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 2692,
+        "output": 394,
+        "reasoning": 0,
+        "cache": {
+          "read": 5120,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1f9b7c02b001vz6bnxWF6C4YZw",
+      "time": {
+        "created": 1795190931499
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}
