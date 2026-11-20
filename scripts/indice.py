@@ -8,6 +8,7 @@ import html, json, os, glob
 B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORDEN = ["A3D", "AIF", "CCA", "PTS"]
 TIPO = {"A3D": "visual", "AIF": "visual", "CCA": "código", "PTS": "texto"}
+PAGES = "https://webreactiva.github.io/benchmarks"  # GitHub Pages del repo: sirve los HTML para verlos funcionando
 filas = []
 for m in sorted(glob.glob(f"{B}/resultados/*/*/meta.json")):
     d = os.path.dirname(m)
@@ -38,6 +39,12 @@ def celda_val(r):
         out.append(e(x))
     return "<br>".join(out) or "–"
 
+def en_vivo(r, base=""):
+    """Enlaces para abrir los HTML de las pruebas visuales en el navegador."""
+    if TIPO.get(r["codigo"]) != "visual":
+        return []
+    return [(h["fichero"], f"{base}{r['dir']}/salida/{h['fichero']}") for h in (r["validacion"] or {}).get("html", [])]
+
 def captura(r):
     v = r["validacion"] or {}
     for x in v.get("html", []) + v.get("mermaid", []):
@@ -63,7 +70,7 @@ for r in filas:
 <td><small>{fich or '–'}</small></td>
 <td><small>{celda_val(r)}</small></td>
 <td class="nota n{'' if nota is None else int(nota) // 4}">{'–' if nota is None else nota}<br><small>{e(j.get('veredicto', ''))}</small></td>
-<td><small>{e(j.get('resumen', ''))}</small>{f' <a href="{e(r["dir"])}/juicio.md">juicio</a>' if j else ''}</td>
+<td><small>{e(j.get('resumen', ''))}</small>{f' <a href="{e(r["dir"])}/juicio.md">juicio</a>' if j else ''}{''.join(f' · <a href="{e(u)}">▶ en vivo</a>' for _, u in en_vivo(r))}</td>
 <td class=cap>{captura(r)}</td>
 </tr>""")
 
@@ -110,13 +117,14 @@ for carpeta, rs in por_modelo.items():
          f"Total: {pet} peticiones y {kk(tok)} tokens.", ""]
     if faltan:
         l += [f"Pendientes: {', '.join(faltan)}.", ""]
-    l += ["| Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio |", "|---|---|---:|---:|---:|---|---|"]
+    l += ["| Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |", "|---|---|---:|---:|---:|---|---|---|"]
     for r in rs:
         j = r["juicio"] or {}
         l.append(f"| [{r['codigo']}]({r['codigo']}/juicio.md) | {TIPO.get(r['codigo'], '')} | {r['peticiones']} | "
                  f"{kk((r['tokens'] or {}).get('total'))} | {j.get('nota', '–')} | {j.get('veredicto', 'sin juzgar')} | "
-                 f"{j.get('resumen', '').replace('|', '/')} |")
-    l += ["", "Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché).", "", "## Rarezas", ""]
+                 f"{j.get('resumen', '').replace('|', '/')} | "
+                 + (" · ".join(f"[▶ {f}]({u})" for f, u in en_vivo(r, PAGES + "/")) or "–") + " |")
+    l += ["", "Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, servido por GitHub Pages.", "", "## Rarezas", ""]
     for r in rs:
         rz = (r["juicio"] or {}).get("rarezas") or []
         if rz:
