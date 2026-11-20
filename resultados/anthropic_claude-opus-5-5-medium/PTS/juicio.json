@@ -1,0 +1,19 @@
+{
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 0,
+    "slop": 2,
+    "extensión": 0
+  },
+  "nota": 8,
+  "veredicto": "completo pero se pasa",
+  "resumen": "El argumento es el mejor de los dos Claude: el test como detector de humo, la regla implícita «un rojo no significa nada» que se contagia a toda la suite y el bug intermitente real que se relanza hasta que pasa, con tres fragmentos de código y una guía de cuarentena útil. Pero son 1929 palabras con 23 títulos, la cuenta de horas da el doble de lo que sale (6,25 h, no 12) y pone @RepeatedTest como reintento.",
+  "rarezas": [
+    "Dos peticiones y una sola llamada (Write) en 59 s; 5,5 k tokens de salida, la mitad más que Sonnet.",
+    "Añade cabecera YAML (title, date, tags, description) que nadie le pidió, como si fuera a un generador de blogs estáticos.",
+    "Cierra el post con una sección «Resumen» en viñetas que repite lo que acaba de decir."
+  ]
+}
