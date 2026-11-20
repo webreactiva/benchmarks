@@ -1,0 +1,39 @@
+{
+  "codigo": "A3D",
+  "modelo": "ollama/mistral-large-4",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T15:36:54Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 25108,
+    "output": 25084,
+    "reasoning": 0,
+    "cache_read": 83456,
+    "cache_write": 0,
+    "total": 133648
+  },
+  "peticiones": 10,
+  "error": "Gateway Timeout",
+  "mensajes_usuario": [
+    "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "glob": 1,
+    "write": 2,
+    "edit": 3,
+    "shell": 2
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e06657cc5ffeQ1nvA5OwQj0oy7",
+  "coste_usd": 0,
+  "ficheros": [
+    "alhambra-ruta-3d.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 262144,
+    "output_proveedor": 262144,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

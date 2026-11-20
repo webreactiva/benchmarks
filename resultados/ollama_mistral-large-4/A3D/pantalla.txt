@@ -1,0 +1,36 @@
+   Ruta 3D Alhambra Granada html +
+     Voy a verificar que el JavaScript no tenga errores de sintaxis:
+
+     + 2 commands, 1 thought
+
+     Listo. He guardado la ruta 3D en la carpeta actual:
+
+     📁 /var/tmp/bench/ws-yfUufHj3/alhambra-ruta-3d.html (un único fichero, ~32 KB, sin dependencias locales)
+
+     Qué incluye
+
+     - Escena 3D completa de la Alhambra con Three.js (desde CDN): recinto amurallado con almenas, la Alcazaba con sus
+       torres, la Puerta de la Justicia, el Patio de los Arrayanes con su estanque y naranjos, el Palacio de Comares
+       con la Torre de Comares, el Patio de los Leones (fuente con sus 12 leones y columnata perimetral), la Sala de
+       las Dos Hermanas con cúpula de mocárabes, la Sala de los Abencerrajes, y los jardines del Generalife con su
+       canal de agua, pérgolas y cipreses.
+     - Texturas procedurales (ladrillo, yesería geométrica nazarí, artesonado de ataurique, terreno) generadas en
+       canvas: no requiere ningún archivo externo salvo la librería Three.js.
+     - Ruta guiada automática por 8 puntos de interés: la cámara vuela suavemente de uno a otro mostrando una tarjeta
+       informativa con la historia de cada lugar.
+     - Interactividad: clic en las esferas doradas pulsantes (o en la lista lateral) para volar a un punto concreto;
+       modo vuelo libre con órbita/zoom; botones de iniciar/pausar/reiniciar, selector de velocidad (1×–4×) y atajo de
+       teclado (ESPACIO).
+
+     Para usarlo, basta con abrir el fichero en cualquier navegador moderno con conexión a internet (para cargar
+     Three.js desde el CDN).
+
+     Build · mistral-large-4 · 37m 27s · 11.3 tok/s · 2.0s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · mistral-large-4 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-yfUufHj3                                                               22.6K (2%)  ctrl+p commands
+
