@@ -49,10 +49,12 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 
 | Modelo | Agente | A3D | AIF | CCA | PTS | Media | Peticiones | Tokens |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
+| [claude-opus-5-5 (medium)](resultados/anthropic_claude-opus-5-5-medium/README.md) | Claude Code | 9 | 8 | 10 | 8 | **8,8** | 36 | 3,3 M |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | 9 | 9 | 9 | 8 | **8,8** | 82 | 3,0 M |
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | 10 | 9 | 6 | 10 | **8,8** | 63 | 2,9 M |
 | [ollama/glm-5.3-flash](resultados/ollama_glm-5.3-flash/README.md) | OpenCode | 9 | 8 | 8 | 9 | **8,5** | 69 | 3,2 M |
 | [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | 8 | 9 | 10 | 7 | **8,5** | 314 | 28,4 M |
+| [claude-sonnet-5-5 (medium)](resultados/anthropic_claude-sonnet-5-5-medium/README.md) | Claude Code | 9 | 7 | 9 | 8 | **8,2** | 28 | 3,0 M |
 | [claude-haiku-5-5](resultados/anthropic_claude-haiku-5-5/README.md) | Claude Code | 8 | 9 | 9 | 6 | **8,0** | 29 | 2,0 M |
 | [ollama/muse-spark-open](resultados/ollama_muse-spark-open/README.md) | OpenCode | 7 | 8 | 9 | 8 | **8,0** | 41 | 1,1 M |
 | [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | 10 | 8 | 5 | 8 | **7,8** | 89 | 4,4 M |
@@ -62,9 +64,10 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | 10 | **6,8** | 19 | 0,4 M |
 | [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | 7 | **5,8** | 38 | 0,6 M |
 | [nvidia/nemotron-3-ultra-550b-a55b:free](resultados/nvidia_nemotron-3-ultra-550b-a55b_free/README.md) | OpenCode | 6 | 3 | 4 | 4 | **4,2** | 34 | 0,6 M |
+| [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | – | – | – | 9 | **en curso** | 3 | 0,0 M |
 
 Notas con las rúbricas de `rubricas.md`. Las pruebas que fallaron por la parte técnica (respuestas cortadas en el tope de 32 000 tokens de OpenCode, GLM compactando sin parar por nuestra configuración de límites, MiniMax preguntando antes de que existiera la regla «Decide tú.») se repitieron. Las versiones anteriores están en `resultados/_descartados/`.
 
-Aislamiento: desde la tanda de Ollama cada prueba corre en `scripts/encierro.sh` (no ve el repo, `/tmp`, `/home`, `/mnt` ni otros procesos). `scripts/fugas.py` revisa las sesiones: antes del encierro, DeepSeek llegó a listar los ficheros de otros modelos, pero ninguna sesión leyó trabajo ajeno. GPT-6.2-Sol (Codex CLI, esfuerzo medio) corrió en macOS, sin encierro y con el sandbox de Codex (excepción macOS, arriba): listó `/tmp` y `/Applications` y usó navegadores instalados en el equipo, sin tocar nada del benchmark. Como Haiku, va con otro agente, así que sus tokens no se comparan con los de OpenCode.
+Aislamiento: desde la tanda de Ollama cada prueba corre en `scripts/encierro.sh` (no ve el repo, `/tmp`, `/home`, `/mnt` ni otros procesos). `scripts/fugas.py` revisa las sesiones: antes del encierro, DeepSeek llegó a listar los ficheros de otros modelos, pero ninguna sesión leyó trabajo ajeno. GPT-6.2-Sol (Codex CLI, esfuerzo medio) corrió en macOS, sin encierro y con el sandbox de Codex (excepción macOS, arriba): listó `/tmp` y `/Applications` y usó navegadores instalados en el equipo, sin tocar nada del benchmark. Como Haiku, va con otro agente, así que sus tokens no se comparan con los de OpenCode. Sonnet 5.5 y Opus 5.5 (Claude Code, esfuerzo medio) corrieron sin `encierro.sh` (`SIN_ENCIERRO=1`): en la nube Claude Code entra con la credencial de la sesión que lo dirige, y el encierro la oculta. Conservan configuración, `HOME` y carpeta aleatoria propios; `fugas.py` no encuentra lecturas fuera de su carpeta. Opus, en CCA, sí escribió un log en `/tmp` y paró su servidor con `pkill -f`. Dos pruebas se repitieron por fallos del lanzador (un diálogo de plugins LSP y un permiso del modo auto), ver `resultados/_descartados/`.
 
 Para lanzar otro modelo, la skill `/benchmark-modelos` o `scripts/benchmark.sh MODELO…`. `resultados/_descartados/` explica las pruebas que no cuentan.

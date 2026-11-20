@@ -11,8 +11,24 @@
         "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js",
         "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/objects/Reflector.js"
       ],
-      "captura": "capturas/alhambra-ruta-3d.html.png"
+      "captura": "capturas/alhambra-ruta-3d.html.png",
+      "capturas_extra": [
+        "capturas/tour-10s.png",
+        "capturas/viaje-30s.png",
+        "capturas/viaje-90s.png",
+        "capturas/parada-4.png",
+        "capturas/parada-5.png",
+        "capturas/vista-libre.png"
+      ]
     }
   ],
-  "mermaid": []
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores; three.js r128 y dos complementos por CDN",
+    "✔ el recorrido arranca solo y la cámara vuela de parada en parada",
+    "✔ se reconocen Sierra Nevada, Alcazaba, Carlos V, Arrayanes, Leones, Partal y la acequia del Generalife",
+    "✖ a 1280×800 la ficha tapa la parada 8 de la lista y un cuarto de la escena",
+    "~ etiquetas encimadas en la vista general",
+    "~ en Chromium sin GPU va a 1 fotograma/s: el recorrido se probó con «siguiente» a 3×"
+  ]
 }

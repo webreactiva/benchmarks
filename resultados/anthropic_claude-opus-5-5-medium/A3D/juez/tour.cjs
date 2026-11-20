@@ -20,7 +20,9 @@ const caps = path.join(dir, 'capturas');
   await p.click('#next'); const t0 = Date.now();
   for (const s of [30, 90]) { await p.waitForTimeout(s * 1000 - (Date.now() - t0)); await p.screenshot({ path: path.join(caps, `viaje-${s}s.png`) }); console.log('viaje ' + s + 's', JSON.stringify(await estado())); }
   const n = await p.locator('#stops ol li').count(); console.log('paradas', n);
-  for (let i = 0; i < n; i++) { await p.locator('#stops ol li').nth(i).click(); await p.waitForTimeout(6000);
+  for (let i = 0; i < n; i++) { const li = p.locator('#stops ol li button').nth(i);
+    await li.click({ timeout: 20000 }).catch(async e => { console.log('p' + (i + 1) + ': no se puede pulsar (' + (e.message.match(/<[^>]+> from <section id="card"[^>]*>/) ? 'la ficha lo tapa' : 'timeout') + '); clic por código'); await li.dispatchEvent('click'); });
+    await p.waitForTimeout(6000);
     await p.screenshot({ path: path.join(tmp, `p${i + 1}.png`) }); console.log('p' + (i + 1), JSON.stringify(await estado())); }
   fs.copyFileSync(path.join(tmp, 'p4.png'), path.join(caps, 'parada-4.png')); fs.copyFileSync(path.join(tmp, 'p5.png'), path.join(caps, 'parada-5.png'));
   await p.click('#free'); await p.waitForTimeout(1500); await p.mouse.move(640, 400); await p.mouse.down(); await p.mouse.move(500, 380, { steps: 5 }); await p.mouse.up(); await p.waitForTimeout(4000);

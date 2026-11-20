@@ -1,0 +1,20 @@
+{
+  "nota": 9,
+  "veredicto": "la maqueta más vistosa",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  },
+  "resumen": "Una Alhambra con three.js a media tarde que se reconoce de un vistazo (Sierra Nevada nevada, Alcazaba con la Torre de la Vela, patio circular de Carlos V, alberca de Arrayanes con su pórtico, Leones con galerías y templetes, Partal, acequia del Generalife con arcos de agua) y un recorrido de 8 paradas que arranca solo y lleva la cámara en vuelo de una a otra. Pero a 1280×800 la ficha de la parada tapa el final de la lista (la parada 8 no se puede pulsar) y un cuarto de la escena, y en la vista final las etiquetas se montan.",
+  "rarezas": [
+    "Se comprobó a sí mismo con Chrome headless (SwiftShader): la primera captura salió negra, inyectó un registro de errores en una copia del HTML, encontró que el mapa de entorno (PMREM) rompía el render y lo quitó; luego miró capturas de las ocho paradas y reencuadró Arrayanes, Leones y el Partal.",
+    "Cuenta con precisión lo que no probó: «Las capturas son fotogramas fijos: no he visto la animación en movimiento… Tampoco he probado la vista libre ni el diseño para pantallas pequeñas». El fallo de la ficha sobre la lista está justo ahí.",
+    "2,28 M tokens en 17 peticiones (93 k de salida, 2,07 M leídos de caché); algo menos que Sonnet.",
+    "Termina ofreciendo publicarlo como página web con un enlace.",
+    "Corrió sin encierro; no leyó nada fuera de su carpeta de trabajo y su scratchpad (`scripts/fugas.py` limpio)."
+  ]
+}

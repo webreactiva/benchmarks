@@ -11,7 +11,7 @@ const caps = path.join(dir, 'capturas');
   await p.goto('file://' + copia); await p.waitForTimeout(5000);
   const ficha = () => p.evaluate(() => ({ card: document.getElementById('card')?.innerText.replace(/\n+/g, ' | ').slice(0, 200), prog: document.getElementById('prog')?.value }));
   await p.click('#go'); const t0 = Date.now();
-  for (const s of [10, 20, 30, 45, 60]) { await p.waitForTimeout(s * 1000 - (Date.now() - t0)); await p.screenshot({ path: path.join(caps, `tour-${s}s.png`) }); console.log(s + 's', JSON.stringify(await ficha())); }
+  for (const s of [10, 60]) { await p.waitForTimeout(s * 1000 - (Date.now() - t0)); await p.screenshot({ path: path.join(caps, `tour-${s}s.png`) }); console.log(s + 's', JSON.stringify(await ficha())); }
   // parada intermedia: saltar a la 6 (Leones) desde la lista
   await p.click('#play').catch(() => {});
   await p.locator('#stops >> text=Patio de los Leones').click(); await p.waitForTimeout(8000);

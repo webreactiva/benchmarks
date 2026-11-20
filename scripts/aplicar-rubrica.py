@@ -29,6 +29,10 @@ PUNTOS = {
  "ollama_minimax-m3": {
   "A3D": [1, 2, 0, 1, 0, 0], "MWP": [2, 1, 2, 2, 1, 0], "AIF": [1, 1, 2, 1, 1, 2, 1],
   "PTS": [1, 2, 1, 2, 0, 2, 0]},
+ "anthropic_claude-sonnet-5-5-medium": {
+  "A3D": [1, 2, 3, 2, 0, 1]},
+ "anthropic_claude-opus-5-5-medium": {
+  "A3D": [1, 2, 3, 2, 0, 1]},
 }
 for modelo, cods in PUNTOS.items():
     for cod, pts in cods.items():

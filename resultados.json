@@ -351,6 +351,653 @@
     "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
+    "dir": "resultados/anthropic_claude-opus-5-5-medium/A3D",
+    "codigo": "A3D",
+    "modelo": "claude-opus-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-20T10:52:54Z",
+    "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 34,
+      "output": 93270,
+      "reasoning": 0,
+      "cache_read": 2065744,
+      "cache_write": 122288,
+      "total": 2281336
+    },
+    "peticiones": 17,
+    "error": null,
+    "herramientas": {
+      "Bash": 9,
+      "Write": 1,
+      "Read": 16
+    },
+    "mensajes_usuario": [
+      "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "alhambra-ruta-3d.html"
+    ],
+    "veces_decide_tu": 0,
+    "esfuerzo": "medium",
+    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alhambra-ruta-3d.html",
+          "errores": [],
+          "titulo": "Alhambra 3D · Ruta por la colina roja",
+          "canvas": 2,
+          "texto": "Alcazaba\nTorre de la Vela\nTorre de Comares\nPalacio de Carlos V\nPatio de los Leones\nTorre de las Damas\nGeneralife\nAlbaicín\nSierra Nevada\nLa Alhambra\n\nRUTA 3D · GRANADA\n\n1\nMirador de San Nicolás\n2\nAlcazaba y Torre de la Vela\n3\nPalacio de Carlos V\n4\nPatio de los Arrayanes\n5\nPatio de los Leones\n6\nJardines del Partal\n7\nGeneralife · Patio de la Acequia\n8\nLa colina roja al atardecer\n01\nMirador de San Nic",
+          "scripts": [
+            "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+            "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js",
+            "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/objects/Reflector.js"
+          ],
+          "captura": "capturas/alhambra-ruta-3d.html.png",
+          "capturas_extra": [
+            "capturas/tour-10s.png",
+            "capturas/viaje-30s.png",
+            "capturas/viaje-90s.png",
+            "capturas/parada-4.png",
+            "capturas/parada-5.png",
+            "capturas/vista-libre.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; three.js r128 y dos complementos por CDN",
+        "✔ el recorrido arranca solo y la cámara vuela de parada en parada",
+        "✔ se reconocen Sierra Nevada, Alcazaba, Carlos V, Arrayanes, Leones, Partal y la acequia del Generalife",
+        "✖ a 1280×800 la ficha tapa la parada 8 de la lista y un cuarto de la escena",
+        "~ etiquetas encimadas en la vista general",
+        "~ en Chromium sin GPU va a 1 fotograma/s: el recorrido se probó con «siguiente» a 3×"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "la maqueta más vistosa",
+      "rubrica": {
+        "abre sin errores": 1,
+        "ruta con paradas reales": 2,
+        "la ruta se recorre": 3,
+        "se reconoce la Alhambra": 2,
+        "vista limpia": 0,
+        "textos sin errores": 1
+      },
+      "resumen": "Una Alhambra con three.js a media tarde que se reconoce de un vistazo (Sierra Nevada nevada, Alcazaba con la Torre de la Vela, patio circular de Carlos V, alberca de Arrayanes con su pórtico, Leones con galerías y templetes, Partal, acequia del Generalife con arcos de agua) y un recorrido de 8 paradas que arranca solo y lleva la cámara en vuelo de una a otra. Pero a 1280×800 la ficha de la parada tapa el final de la lista (la parada 8 no se puede pulsar) y un cuarto de la escena, y en la vista final las etiquetas se montan.",
+      "rarezas": [
+        "Se comprobó a sí mismo con Chrome headless (SwiftShader): la primera captura salió negra, inyectó un registro de errores en una copia del HTML, encontró que el mapa de entorno (PMREM) rompía el render y lo quitó; luego miró capturas de las ocho paradas y reencuadró Arrayanes, Leones y el Partal.",
+        "Cuenta con precisión lo que no probó: «Las capturas son fotogramas fijos: no he visto la animación en movimiento… Tampoco he probado la vista libre ni el diseño para pantallas pequeñas». El fallo de la ficha sobre la lista está justo ahí.",
+        "2,28 M tokens en 17 peticiones (93 k de salida, 2,07 M leídos de caché); algo menos que Sonnet.",
+        "Termina ofreciendo publicarlo como página web con un enlace.",
+        "Corrió sin encierro; no leyó nada fuera de su carpeta de trabajo y su scratchpad (`scripts/fugas.py` limpio)."
+      ]
+    },
+    "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
+  },
+  {
+    "dir": "resultados/anthropic_claude-opus-5-5-medium/AIF",
+    "codigo": "AIF",
+    "modelo": "claude-opus-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-20T11:12:48Z",
+    "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 8,
+      "output": 31436,
+      "reasoning": 0,
+      "cache_read": 175185,
+      "cache_write": 38012,
+      "total": 244641
+    },
+    "peticiones": 4,
+    "error": null,
+    "herramientas": {
+      "Bash": 2,
+      "Write": 1
+    },
+    "mensajes_usuario": [
+      "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "alquimia-reactiva.html"
+    ],
+    "veces_decide_tu": 0,
+    "esfuerzo": "medium",
+    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alquimia-reactiva.html",
+          "errores": [],
+          "titulo": "Alquimia Reactiva",
+          "canvas": 0,
+          "texto": "Alquimia Reactiva\n\nCombina conceptos del universo Web Reactiva\n\nArrastra elementos desde la lista y suéltalos uno encima de otro para combinarlos.\n\nDoble clic para duplicar · clic derecho o arrastrar a la lista para borrar.\n💡 Pista\n🧹 Limpiar\n↺ Reiniciar\n💻\nCódigo\n☕\nCafé\n💡\nIdea\n🐛\nBug\n4 / 178 descubiertos\n2%\n🔒 Web Reactiva\n🔒 Dani Primo\n🔒 Malandriner\n🔒 Comunidad Malandriner\n🔒 Web Reactiva Pr",
+          "scripts": [],
+          "captura": "capturas/alquimia-reactiva.html.png",
+          "capturas_extra": [
+            "capturas/inicio.png",
+            "capturas/codigo-cafe.png",
+            "capturas/sin-receta.png",
+            "capturas/pista.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; 26 KB, sin dependencias",
+        "✔ arrastrando con el ratón: Código + Café → Programador, Idea + Bug → Feature, Código + Código → Programa",
+        "✔ 178 de 178 elementos alcanzables con 181 recetas (juez/alcanzables.js)",
+        "✖ mezcla sin receta: un chiste («Funciona en mi máquina… pero aquí no») y nada más",
+        "✔ guarda al recargar, busca, ordena y da pistas; cinco objetivos con candado",
+        "~ Web Reactiva a medias: unos 20 de 178 (Podcast, Newsletter, Dani Primo, Malandriner, Premium); el resto es cultura de programador genérica",
+        "~ arranca con los cuatro básicos ya en el tablero"
+      ]
+    },
+    "juicio": {
+      "nota": 8,
+      "veredicto": "gran juego, Web Reactiva a medias",
+      "resumen": "Mesa libre donde se suelta una ficha sobre otra, 178 elementos y 181 recetas, todos alcanzables desde Código, Café, Idea y Bug, con pistas, buscador, guardado y cinco objetivos con candado. De Web Reactiva tiene la capa de marca de memoria (Podcast, Newsletter, Dani Primo, Malandriner, Premium), unos 20 elementos; el resto es cultura de programador genérica, y las mezclas sin receta solo dan un chiste.",
+      "rarezas": [
+        "Tenía WebSearch y WebFetch y no los usó: Dani Primo, Malandriner y la comunidad salen de memoria, sin un tema actual de la web (agentes, MCP, En pantuflas).",
+        "Mete a Dani Primo como elemento y avisa al final de que quizá convenga «confirmar que le parece bien».",
+        "Comprobó con node que no hay recetas duplicadas, que se llega a los 178 elementos y que el JavaScript compila, y dice que no lo probó en un navegador.",
+        "4 peticiones, 245 k tokens y 0,99 $, el triple que Sonnet en la misma prueba."
+      ],
+      "rubrica": {
+        "abre sin errores": 1,
+        "mecánica de Infinite Craft": 2,
+        "las combinaciones funcionan": 2,
+        "progresión": 1,
+        "«infinito»": 0,
+        "contenido de Web Reactiva": 1,
+        "acabado": 1
+      }
+    },
+    "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
+    "dir": "resultados/anthropic_claude-opus-5-5-medium/CCA",
+    "codigo": "CCA",
+    "modelo": "claude-opus-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-20T11:27:54Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 26,
+      "output": 33075,
+      "reasoning": 0,
+      "cache_read": 650162,
+      "cache_write": 42591,
+      "total": 725854
+    },
+    "peticiones": 13,
+    "error": null,
+    "herramientas": {
+      "Bash": 6,
+      "Write": 12,
+      "Edit": 2
+    },
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "README.md",
+      "package.json",
+      "src/application/cartService.js",
+      "src/container.js",
+      "src/domain/cart.js",
+      "src/domain/errors.js",
+      "src/domain/money.js",
+      "src/domain/pricing.js",
+      "src/http/server.js",
+      "src/index.js",
+      "src/infrastructure/adapters.js",
+      "src/infrastructure/inMemoryCartRepository.js",
+      "src/infrastructure/redisCartRepository.js",
+      "test/domain.test.js",
+      "test/http.test.js",
+      "test/redisRepository.test.js",
+      "test/service.test.js"
+    ],
+    "veces_decide_tu": 0,
+    "esfuerzo": "medium",
+    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
+    "validacion": {
+      "html": [],
+      "mermaid": [],
+      "extra": [
+        "✔ npm test: 19/19 (node:test, sin dependencias), estable en tres pasadas",
+        "✔ npm start arranca; alta, cambio de cantidad, quitar y vaciar por HTTP",
+        "✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50, también con 50 productos distintos",
+        "✔ Redis real, dos instancias HTTP con REDIS_URL: 50 POST a la vez, aceptadas = guardadas; 1 acaba en 409 explícito. Con CLUSTER=1 y dos workers, igual",
+        "✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora",
+        "✔ el objeto devuelto se puede tocar, pero lo guardado no cambia (memoria serializada y Redis)",
+        "✔ id ../ no se puede crear (el id lo genera el servicio con UUID); la ruta HTTP da 404",
+        "~ la moneda la elige el cliente al crear y no se valida ({\"x\":1} se guarda); el catálogo no tiene moneda, así que un carrito USD cobra los precios en euros",
+        "~ ioredis no está en package.json: para usar Redis hay que instalarlo a mano (el README lo dice)",
+        "~ idempotencia, catálogo y cupones solo en memoria: con varias réplicas la Idempotency-Key no se comparte (lo dice)"
+      ],
+      "comprobacion": "Copia en /tmp/cca-opus, npm test, npm start con fetch, npm i ioredis en la copia y juez/juez.mjs (del juez) en memoria y contra un redis-server local (puerto 6390, parado al acabar) con dos servicios, dos instancias HTTP y modo CLUSTER",
+      "juez_salida": [
+        "memoria, 3 tandas: 50 altas a la vez, 50 productos → 50 líneas, versión 51; mismo producto → cantidad 50; 0 errores",
+        "0,10 × 3 = 30 céntimos",
+        "moneda USD al crear: aceptada, total 1000 USD con el precio de catálogo en euros; {x:1}: aceptado",
+        "id ../fuera en el servicio: NOT_FOUND · HTTP /carts/..%2Ffuera: 404",
+        "cantidades 0, -1, 1.5, true, '2': VALIDATION_ERROR; 1e9: LIMIT_EXCEEDED; sku ../x: VALIDATION_ERROR",
+        "objeto devuelto y repo.get mutados (500 unidades a 1 ¢): en el almacén sigue 1 unidad a 1000",
+        "HTTP precio desde el cliente (1 ¢): ignorado, subtotal 800",
+        "redis, 2 servicios, 3 tandas: 50 productos → 48/46/46 líneas = aceptadas; mismo producto → 47/48/44 = aceptadas; resto VERSION_CONFLICT",
+        "HTTP 2 instancias + Redis, 50 POST: 200 × 49, 409 × 1 → 49 unidades, versión 50 (mismo producto y 4 productos)",
+        "CLUSTER=1 WORKERS=2 + Redis: 200 × 49, 409 × 1, cantidad 49, dos pids",
+        "alta en una instancia la ve la otra; DELETE en B → 404 en A; TTL 2 592 000 s (30 días)"
+      ]
+    },
+    "juicio": {
+      "nota": 10,
+      "veredicto": "escala, y Redis funciona",
+      "rubrica": {
+        "se ejecuta": 1,
+        "tests en verde": 1,
+        "dominio completo": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 1,
+        "concurrencia": 2,
+        "escala horizontal": 2,
+        "explica el escalado": 1
+      },
+      "resumen": "Servicio REST en Node sin dependencias, hexagonal, con carrito inmutable, céntimos, precios del catálogo, versión optimista con reintentos y backoff, y un adaptador de Redis con compare-and-swap en Lua que se conecta con REDIS_URL y aguanta 50 altas a la vez desde dos instancias sin perder nada. Lo flojo es menor: la moneda la pone el cliente sin validar, ioredis no está en package.json y la idempotencia y el catálogo solo existen en memoria, cosa que el README admite.",
+      "rarezas": [
+        "13 peticiones, 726 k tokens (650 k de caché) y 4 min 25 s: escribió el código fichero a fichero y lo probó con tests y con curl.",
+        "Su test de 50 altas a la vez falló (cantidad 1) y lo arregló en el código: el save en memoria tenía un await entre comprobar la versión y escribir. El test no lo tocó; lo único que cambió para que corrieran fue el glob de npm test.",
+        "Dice que el adaptador de Redis no lo ha probado contra un Redis real; en las pruebas del juez es lo que mejor sale.",
+        "Sin encierro: escribió el log del servidor en /tmp/claude-0/srv.log, fuera de su carpeta, y lo paró con pkill -f \"node src/index.js\", que mata cualquier proceso con ese nombre en la máquina. scripts/fugas.py no encuentra lecturas fuera de /var/tmp/bench/ws-FvdIqxPx.",
+        "Al acabar, Claude Code dejó en la caja de entrada la sugerencia «Implementa la idempotencia con Redis para varias réplicas»; no se envió."
+      ]
+    },
+    "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/anthropic_claude-opus-5-5-medium/PTS",
+    "codigo": "PTS",
+    "modelo": "claude-opus-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-20T11:21:39Z",
+    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 4,
+      "output": 5539,
+      "reasoning": 0,
+      "cache_read": 60375,
+      "cache_write": 12471,
+      "total": 78389
+    },
+    "peticiones": 2,
+    "error": null,
+    "herramientas": {
+      "Write": 1
+    },
+    "mensajes_usuario": [
+      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "tests-intermitentes-peor-que-no-tener-tests.md"
+    ],
+    "veces_decide_tu": 0,
+    "esfuerzo": "medium",
+    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
+    "validacion": {
+      "slop": "1929 palabras · 23 títulos · 27 líneas de lista · frase media 19.1 · slop 9.5 (0.49/100 palabras)\n  7-vocabulario            1  vocabulario de IA: clave\n  15-negritas             26  negritas: **\"Re-run failed jobs\"**, **Un test que falla de forma intermitente puede ser peor que no tener ese test.**, **con el mismo código y la misma configuración**, **el resultado no te dice nada sobre el código**, **sabes**, **información**\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que\n  titulo-conclusión        1  sección «Conclusión»: Resumen",
+      "extra": [
+        "✔ un post en Markdown con cabecera YAML, en español, de 1929 palabras",
+        "✖ por encima de 1800 palabras, con 23 títulos y 27 líneas de lista",
+        "✔ 0,49 marcas de slop por cada 100 palabras (26 negritas, sección «Resumen», «la próxima vez que»)",
+        "✔ tres bloques de código (sleep de 2 s y su arreglo en Python, reloj real en Jest) y una cuenta de horas",
+        "✖ la cuenta no sale: 10 personas × 5 PR × 5 días × 10 % × 15 min son 6,25 h a la semana, no 12; y 12 h no son «una persona y media a tiempo completo»",
+        "✖ pone @RepeatedTest de JUnit 5 como reintento automático: repite el test N veces, no reintenta los fallos",
+        "✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-tCkcAp3h; fugas.py sin hallazgos"
+      ]
+    },
+    "juicio": {
+      "rubrica": {
+        "hay post": 1,
+        "tesis con mecanismo": 2,
+        "se ciñe al tema": 1,
+        "ejemplos concretos": 2,
+        "sin errores ni inventos": 0,
+        "slop": 2,
+        "extensión": 0
+      },
+      "nota": 8,
+      "veredicto": "completo pero se pasa",
+      "resumen": "El argumento es el mejor de los dos Claude: el test como detector de humo, la regla implícita «un rojo no significa nada» que se contagia a toda la suite y el bug intermitente real que se relanza hasta que pasa, con tres fragmentos de código y una guía de cuarentena útil. Pero son 1929 palabras con 23 títulos, la cuenta de horas da el doble de lo que sale (6,25 h, no 12) y pone @RepeatedTest como reintento.",
+      "rarezas": [
+        "Dos peticiones y una sola llamada (Write) en 59 s; 5,5 k tokens de salida, la mitad más que Sonnet.",
+        "Añade cabecera YAML (title, date, tags, description) que nadie le pidió, como si fuera a un generador de blogs estáticos.",
+        "Cierra el post con una sección «Resumen» en viñetas que repite lo que acaba de decir."
+      ]
+    },
+    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+  },
+  {
+    "dir": "resultados/anthropic_claude-sonnet-5-5-medium/A3D",
+    "codigo": "A3D",
+    "modelo": "claude-sonnet-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-20T10:52:54Z",
+    "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 38,
+      "output": 102582,
+      "reasoning": 0,
+      "cache_read": 2428366,
+      "cache_write": 130803,
+      "total": 2661789
+    },
+    "peticiones": 19,
+    "error": null,
+    "herramientas": {
+      "Bash": 12,
+      "Write": 1,
+      "Read": 15
+    },
+    "mensajes_usuario": [
+      "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "alhambra_ruta_3d.html"
+    ],
+    "veces_decide_tu": 0,
+    "esfuerzo": "medium",
+    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alhambra_ruta_3d.html",
+          "errores": [],
+          "titulo": "Ruta 3D por la Alhambra de Granada",
+          "canvas": 2,
+          "texto": "La Alhambra de Granada\n\nRUTA 3D · PATRIMONIO DE LA HUMANIDAD\n\n1\nPuerta de la Justicia\n2\nLa Alcazaba\n3\nPalacio de Carlos V\n4\nEl Mexuar\n5\nPatio de los Arrayanes\n6\nPatio de los Leones\n7\nEl Partal y Torre de las Damas\n8\nJardines del Generalife\n9\nMirador sobre la Alhambra\nEN RUTA\nHacia: Puerta de la Justicia\nSiglo XIV · 1348\n\nDisfruta del paseo. Arrastra para mirar alrededor.\n\nUn paseo por la ciudad ro",
+          "scripts": [
+            "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+          ],
+          "captura": "capturas/alhambra_ruta_3d.html.png",
+          "capturas_extra": [
+            "capturas/tour-10s.png",
+            "capturas/tour-60s.png",
+            "capturas/parada-3.png",
+            "capturas/parada-4.png",
+            "capturas/parada-5.png",
+            "capturas/parada-6.png",
+            "capturas/parada-9.png",
+            "capturas/dron.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores, three.js r128 desde cdnjs",
+        "✔ el recorrido a pie viaja de parada en parada; la lista y la vista Dron también",
+        "✔ se reconocen Justicia, Carlos V, Leones, Comares y la acequia del Generalife",
+        "✖ a pie, el Mexuar, Arrayanes y el mirador final encuadran un muro",
+        "~ la ficha en ruta pone «Hacia:» la parada más cercana, no la siguiente",
+        "~ deja en el HTML el gancho de pruebas window.__alhambra"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "se pasea dentro, encuadres flojos",
+      "rubrica": {
+        "abre sin errores": 1,
+        "ruta con paradas reales": 2,
+        "la ruta se recorre": 3,
+        "se reconoce la Alhambra": 2,
+        "vista limpia": 0,
+        "textos sin errores": 1
+      },
+      "resumen": "Una maqueta con three.js que se recorre a pie a la altura de los ojos por 9 paradas en orden de visita, y se reconoce: Puerta de la Justicia con la llave, Alcazaba, patio circular de Carlos V, fuente de los doce leones con sus canales, Comares y la acequia del Generalife con surtidores. Pero en la vista Paseo, que es la del recorrido, varias paradas encuadran un muro: el Mexuar es un panel de azulejos a un palmo, en Arrayanes no se ve el estanque y el mirador final mira a una muralla.",
+      "rarezas": [
+        "Se comprobó a sí mismo: descargó three.js a su scratchpad para probar sin red, sacó capturas con Chrome headless (SwiftShader) inyectando JavaScript en copias del HTML y leyó 15 capturas; corrigió la cornisa de Carlos V que tapaba el patio, el arbolado y la cámara de la primera parada.",
+        "Dejó en el HTML final el gancho de pruebas que se fabricó para esas capturas (`window.__alhambra` con `setMode`, `gotoStop` y la órbita).",
+        "2,66 M tokens en 19 peticiones (102 k de salida, 2,43 M leídos de caché): casi el triple que Haiku en este prompt (981 k en 11).",
+        "Corrió sin encierro; no leyó nada fuera de su carpeta de trabajo y su scratchpad (`scripts/fugas.py` limpio)."
+      ]
+    },
+    "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
+  },
+  {
+    "dir": "resultados/anthropic_claude-sonnet-5-5-medium/AIF",
+    "codigo": "AIF",
+    "modelo": "claude-sonnet-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-20T11:11:52Z",
+    "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 8,
+      "output": 17558,
+      "reasoning": 0,
+      "cache_read": 144871,
+      "cache_write": 24219,
+      "total": 186656
+    },
+    "peticiones": 4,
+    "error": null,
+    "herramientas": {
+      "Bash": 2,
+      "Write": 1
+    },
+    "mensajes_usuario": [
+      "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "alquimia-web-reactiva.html"
+    ],
+    "veces_decide_tu": 0,
+    "esfuerzo": "medium",
+    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alquimia-web-reactiva.html",
+          "errores": [],
+          "titulo": "Alquimia Reactiva",
+          "canvas": 0,
+          "texto": "⚗️ Alquimia Reactiva\n\nCombina conceptos de la web reactiva\n\nArrastra elementos desde la derecha\ny suéltalos unos sobre otros para combinarlos.\n🌓\nVaciar\nReiniciar\n4 / 63 descubiertos\nDoble clic: duplicar · Soltar aquí: borrar\n🧠\nEstado\n⚡\nEvento\n🟦\nPíxel\n🖥️\nPantalla",
+          "scripts": [],
+          "captura": "capturas/alquimia-web-reactiva.html.png",
+          "capturas_extra": [
+            "capturas/estado-evento.png",
+            "capturas/sin-receta.png",
+            "capturas/tras-recargar.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; 22 KB, sin dependencias",
+        "✔ arrastrando con el ratón: Estado + Evento → Reactividad, Píxel + Pantalla → Resolución, Estado + Estado → Store",
+        "✔ 63 de 63 elementos alcanzables con 59 recetas (juez/alcanzables.js)",
+        "✖ mezcla sin receta: «no pasa nada…» y las fichas tiemblan",
+        "✔ guarda descubrimientos y mesa al recargar; buscador",
+        "✖ sin pistas",
+        "✖ «Web Reactiva» leído como programación reactiva + responsive: nada de la web, el podcast ni la comunidad"
+      ]
+    },
+    "juicio": {
+      "nota": 7,
+      "veredicto": "buen juego, otra Web Reactiva",
+      "resumen": "Mesa libre donde se suelta una ficha sobre otra, 63 elementos y 59 recetas, todos alcanzables desde Estado, Evento, Píxel y Pantalla, con buscador y guardado de la mesa. Pero leyó «Web Reactiva» como programación reactiva más diseño responsive (señales, Virtual DOM, media queries, clamp()): de la web, el podcast o la comunidad no hay nada, y las mezclas sin receta no dan nada.",
+      "rarezas": [
+        "Tenía WebSearch y WebFetch y no los usó: decidió qué era «Web Reactiva» por el nombre y lo dice en el chat («puede significar programación reactiva o diseño responsive, así que usé los dos»).",
+        "Termina pidiendo lo que no puede pedir: «Si te referías a una web o curso concreto, dime qué temas incluye y adapto los elementos».",
+        "Comprobó con un script de Python que todo es alcanzable y avisa de que no lo abrió en un navegador; en el chat habla de «63 recetas» y son 59 (63 son los elementos).",
+        "4 peticiones, 187 k tokens y 0,30 $ en menos de dos minutos."
+      ],
+      "rubrica": {
+        "abre sin errores": 1,
+        "mecánica de Infinite Craft": 2,
+        "las combinaciones funcionan": 2,
+        "progresión": 1,
+        "«infinito»": 0,
+        "contenido de Web Reactiva": 0,
+        "acabado": 1
+      }
+    },
+    "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
+    "dir": "resultados/anthropic_claude-sonnet-5-5-medium/CCA",
+    "codigo": "CCA",
+    "modelo": "claude-sonnet-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-20T11:16:43Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 6,
+      "output": 8293,
+      "reasoning": 0,
+      "cache_read": 101187,
+      "cache_write": 14811,
+      "total": 124297
+    },
+    "peticiones": 3,
+    "error": null,
+    "herramientas": {
+      "Bash": 2
+    },
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "README.md",
+      "cart/__init__.py",
+      "cart/__pycache__/__init__.cpython-313.pyc",
+      "cart/__pycache__/domain.cpython-313.pyc",
+      "cart/__pycache__/repository.cpython-313.pyc",
+      "cart/__pycache__/service.cpython-313.pyc",
+      "cart/api.py",
+      "cart/domain.py",
+      "cart/repository.py",
+      "cart/service.py",
+      "tests/test_cart.py"
+    ],
+    "veces_decide_tu": 0,
+    "esfuerzo": "medium",
+    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
+    "validacion": {
+      "html": [],
+      "mermaid": [],
+      "extra": [
+        "✔ python3 tests/test_cart.py: 8/8, sin dependencias",
+        "✔ python3 -m cart.api arranca; alta, cambio de cantidad, quitar y vaciar por HTTP",
+        "✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50",
+        "✔ Redis real, dos instancias HTTP: 50 POST a la vez, aceptadas = guardadas; 2-6 acaban en 409 explícito tras 8 reintentos",
+        "✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora",
+        "~ una sola moneda fija (EUR): el catálogo no tiene moneda, así que no hay nada que mezclar",
+        "~ id ../ lo para la ruta HTTP (404); el servicio lo acepta",
+        "✖ el carrito devuelto se puede mutar y cambia lo guardado en memoria: 500 unidades a 1 ¢ sin pasar por catálogo ni límites",
+        "~ RedisCartRepository no está conectado en api.py ni exportado en cart/__init__.py: hay que montarlo a mano"
+      ],
+      "comprobacion": "Copia en /tmp sin __pycache__, sus tests, python3 -m cart.api con curl y juez/juez.py (del juez) en memoria y contra un redis-server local (puerto 6390) con redis-py 8.1.0 en un venv en /tmp",
+      "juez_salida": [
+        "memoria: 50 altas a la vez, 50 productos → 50 líneas; mismo producto → cantidad 50; 0 errores",
+        "0,10 × 3 = 30 céntimos",
+        "id ../fuera en el servicio: ACEPTADO · HTTP /carts/../items: 404",
+        "cantidades 0, -1, 1.5, True, '2', 1e9: rechazadas",
+        "objeto devuelto: c.items['a'] = CartItem('a', 500, 1) → en el almacén 500 unidades",
+        "HTTP precio desde el cliente (1 ¢): ignorado, total 1000",
+        "redis, 2 instancias, mismo producto: cantidad 44, 6 ConcurrencyError",
+        "HTTP 2 instancias + Redis, 50 POST: 200 × 47, 409 × 3 → 47 líneas, versión 47",
+        "DELETE en una instancia: la otra ve 0 líneas; TTL 604800 s"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "escala en 400 líneas",
+      "rubrica": {
+        "se ejecuta": 1,
+        "tests en verde": 1,
+        "dominio completo": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 0,
+        "concurrencia": 2,
+        "escala horizontal": 2,
+        "explica el escalado": 1
+      },
+      "resumen": "Python sin dependencias con servicio sin estado, versión optimista con reintentos y un adaptador de Redis con compare-and-swap en Lua y TTL que funciona: con dos instancias sobre el mismo Redis, 50 altas a la vez acaban guardadas o en un 409 explícito, sin pérdidas. Pero el carrito que devuelve se puede mutar y en memoria eso cambia lo guardado (500 unidades a 1 céntimo sin pasar por el catálogo), solo hay una moneda fija y el adaptador de Redis no lo probó ni lo conectó a la API.",
+      "rarezas": [
+        "3 peticiones, 124 k tokens, 72 s y 0,16 $: escribió todo de una vez en un único heredoc, pasó los tests a la primera y ni los tocó.",
+        "Dice con claridad lo que no ha probado (Redis y la API HTTP), y es lo que mejor funciona en las pruebas del juez.",
+        "El test de concurrencia que cita en la respuesta lanza 6 hilos, no 50.",
+        "Al acabar, Claude Code dejó escrita en la caja de entrada la sugerencia «añade la idempotencia con Idempotency-Key»; no se envió (un solo mensaje en la sesión).",
+        "Dejó __pycache__ en la entrega."
+      ]
+    },
+    "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/anthropic_claude-sonnet-5-5-medium/PTS",
+    "codigo": "PTS",
+    "modelo": "claude-sonnet-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-20T11:14:57Z",
+    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 4,
+      "output": 3617,
+      "reasoning": 0,
+      "cache_read": 60377,
+      "cache_write": 10473,
+      "total": 74471
+    },
+    "peticiones": 2,
+    "error": null,
+    "herramientas": {
+      "Write": 1
+    },
+    "mensajes_usuario": [
+      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "tests-intermitentes-peores-que-no-tener-tests.md"
+    ],
+    "veces_decide_tu": 0,
+    "esfuerzo": "medium",
+    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
+    "validacion": {
+      "slop": "1210 palabras · 11 títulos · 12 líneas de lista · frase media 16.1 · slop 12.0 (0.99/100 palabras)\n  15-negritas             16  negritas: **miente**, **te hace cambiar de decisión**, **bugs reales de concurrencia**, **Tiempo y esperas**, **Orden de ejecución y estado compartido**, **Concurrencia**\n  16-lista-con-titulo      6  listas con etiqueta en negrita y dos puntos: \n- **Tiempo y esperas**:, - **Orden de ejecución y estado compartido**:, - **Concurrencia**:, - **Dependencias externas**:, - **Datos no deterministas**:, - **Entorno**:\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que\n  titulo-conclusión        1  sección «Conclusión»: Conclusión",
+      "extra": [
+        "✔ un post en Markdown, en español, de 1210 palabras",
+        "~ 0,99 marcas de slop por cada 100 palabras según slop.py; el cierre «Cuéntalo en los comentarios» se le escapa a la regla de chatbot (peso 2) y con él serían 1,16",
+        "✔ dos bloques de Python: el test con time.sleep(1) en una cola de pedidos y su arreglo con espera a una condición",
+        "✖ 0,98^500 ≈ 0,0041 %, no «0,00004 %»: confunde la probabilidad con el porcentaje (cien veces menos)",
+        "✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-LbTlNHJV; fugas.py sin hallazgos"
+      ]
+    },
+    "juicio": {
+      "rubrica": {
+        "hay post": 1,
+        "tesis con mecanismo": 2,
+        "se ciñe al tema": 1,
+        "ejemplos concretos": 2,
+        "sin errores ni inventos": 0,
+        "slop": 1,
+        "extensión": 1
+      },
+      "nota": 8,
+      "veredicto": "sólido, con la cuenta mal",
+      "resumen": "1210 palabras centradas en los tests intermitentes, con la tesis bien armada (un hueco sin test es honesto, un test intermitente miente y enseña a pulsar «Re-run» también cuando el fallo es real) y un ejemplo de código con sleep y su arreglo. Pierde el punto de errores por la cuenta estrella, 0,98^500 ≈ «0,00004 %» cuando es 0,0041 %, y otro de slop por el formato de manual y el cierre de chatbot.",
+      "rarezas": [
+        "Dos peticiones y una sola llamada (Write): escribe el post de un tirón en 31 s, sin borrador ni relectura.",
+        "Repite el número equivocado en la respuesta del chat («con la cuenta de 0.98^500») como argumento de venta.",
+        "Termina con «¿Cuál es el test flaky más absurdo…? Cuéntalo en los comentarios», que la regla de chatbot de slop.py no caza por la forma «cuéntalo»."
+      ]
+    },
+    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+  },
+  {
     "dir": "resultados/google_gemini-4-carbon/PTS",
     "codigo": "PTS",
     "modelo": "google/gemini-4-carbon",

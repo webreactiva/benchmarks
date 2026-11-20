@@ -59,6 +59,86 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>953 palabras con un argumento de verdad: un test inestable enseña al equipo a ignorar el rojo («normalización del fallo») y da una seguridad falsa que sin tests no existe. Un caso concreto (timeout de red, regresión de facturación que se pierde) y cinco prácticas útiles. Le sobran la lista con etiquetas en negrita, la «Conclusión» y una cita inventada.</small> <a href="resultados/anthropic_claude-haiku-5-5/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 10:52 UTC</small></td>
+<td class=n><b>2281.3 k</b><br><small>in 34 · out 93.3 k<br>razon. 0 · caché 2065.7 k</small></td>
+<td class=n>17</td>
+<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/A3D/salida/alhambra-ruta-3d.html">alhambra-ruta-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-ruta-3d.html<br>✔ carga sin errores; three.js r128 y dos complementos por CDN<br>✔ el recorrido arranca solo y la cámara vuela de parada en parada<br>✔ se reconocen Sierra Nevada, Alcazaba, Carlos V, Arrayanes, Leones, Partal y la acequia del Generalife<br>✖ a 1280×800 la ficha tapa la parada 8 de la lista y un cuarto de la escena<br>~ etiquetas encimadas en la vista general<br>~ en Chromium sin GPU va a 1 fotograma/s: el recorrido se probó con «siguiente» a 3×</small></td>
+<td class="nota n2">9<br><small>la maqueta más vistosa</small></td>
+<td><small>Una Alhambra con three.js a media tarde que se reconoce de un vistazo (Sierra Nevada nevada, Alcazaba con la Torre de la Vela, patio circular de Carlos V, alberca de Arrayanes con su pórtico, Leones con galerías y templetes, Partal, acequia del Generalife con arcos de agua) y un recorrido de 8 paradas que arranca solo y lleva la cámara en vuelo de una a otra. Pero a 1280×800 la ficha de la parada tapa el final de la lista (la parada 8 no se puede pulsar) y un cuarto de la escena, y en la vista final las etiquetas se montan.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/anthropic_claude-opus-5-5-medium/A3D/capturas/alhambra-ruta-3d.html.png"><img src="resultados/anthropic_claude-opus-5-5-medium/A3D/capturas/alhambra-ruta-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:12 UTC</small></td>
+<td class=n><b>244.6 k</b><br><small>in 8 · out 31.4 k<br>razon. 0 · caché 175.2 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/AIF/salida/alquimia-reactiva.html">alquimia-reactiva.html</a></small></td>
+<td><small>✔ carga · alquimia-reactiva.html<br>✔ carga sin errores; 26 KB, sin dependencias<br>✔ arrastrando con el ratón: Código + Café → Programador, Idea + Bug → Feature, Código + Código → Programa<br>✔ 178 de 178 elementos alcanzables con 181 recetas (juez/alcanzables.js)<br>✖ mezcla sin receta: un chiste («Funciona en mi máquina… pero aquí no») y nada más<br>✔ guarda al recargar, busca, ordena y da pistas; cinco objetivos con candado<br>~ Web Reactiva a medias: unos 20 de 178 (Podcast, Newsletter, Dani Primo, Malandriner, Premium); el resto es cultura de programador genérica<br>~ arranca con los cuatro básicos ya en el tablero</small></td>
+<td class="nota n2">8<br><small>gran juego, Web Reactiva a medias</small></td>
+<td><small>Mesa libre donde se suelta una ficha sobre otra, 178 elementos y 181 recetas, todos alcanzables desde Código, Café, Idea y Bug, con pistas, buscador, guardado y cinco objetivos con candado. De Web Reactiva tiene la capa de marca de memoria (Podcast, Newsletter, Dani Primo, Malandriner, Premium), unos 20 elementos; el resto es cultura de programador genérica, y las mezclas sin receta solo dan un chiste.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/anthropic_claude-opus-5-5-medium/AIF/capturas/alquimia-reactiva.html.png"><img src="resultados/anthropic_claude-opus-5-5-medium/AIF/capturas/alquimia-reactiva.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:27 UTC</small></td>
+<td class=n><b>725.9 k</b><br><small>in 26 · out 33.1 k<br>razon. 0 · caché 650.2 k</small></td>
+<td class=n>13</td>
+<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/package.json">package.json</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/application/cartService.js">src/application/cartService.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/container.js">src/container.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/cart.js">src/domain/cart.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/errors.js">src/domain/errors.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/money.js">src/domain/money.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/pricing.js">src/domain/pricing.js</a><br>… y 9 más</small></td>
+<td><small>✔ npm test: 19/19 (node:test, sin dependencias), estable en tres pasadas<br>✔ npm start arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50, también con 50 productos distintos<br>✔ Redis real, dos instancias HTTP con REDIS_URL: 50 POST a la vez, aceptadas = guardadas; 1 acaba en 409 explícito. Con CLUSTER=1 y dos workers, igual<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>✔ el objeto devuelto se puede tocar, pero lo guardado no cambia (memoria serializada y Redis)<br>✔ id ../ no se puede crear (el id lo genera el servicio con UUID); la ruta HTTP da 404<br>~ la moneda la elige el cliente al crear y no se valida ({&quot;x&quot;:1} se guarda); el catálogo no tiene moneda, así que un carrito USD cobra los precios en euros<br>~ ioredis no está en package.json: para usar Redis hay que instalarlo a mano (el README lo dice)<br>~ idempotencia, catálogo y cupones solo en memoria: con varias réplicas la Idempotency-Key no se comparte (lo dice)</small></td>
+<td class="nota n2">10<br><small>escala, y Redis funciona</small></td>
+<td><small>Servicio REST en Node sin dependencias, hexagonal, con carrito inmutable, céntimos, precios del catálogo, versión optimista con reintentos y backoff, y un adaptador de Redis con compare-and-swap en Lua que se conecta con REDIS_URL y aguanta 50 altas a la vez desde dos instancias sin perder nada. Lo flojo es menor: la moneda la pone el cliente sin validar, ioredis no está en package.json y la idempotencia y el catálogo solo existen en memoria, cosa que el README admite.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:21 UTC</small></td>
+<td class=n><b>78.4 k</b><br><small>in 4 · out 5.5 k<br>razon. 0 · caché 60.4 k</small></td>
+<td class=n>2</td>
+<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/PTS/salida/tests-intermitentes-peor-que-no-tener-tests.md">tests-intermitentes-peor-que-no-tener-tests.md</a></small></td>
+<td><small>✔ un post en Markdown con cabecera YAML, en español, de 1929 palabras<br>✖ por encima de 1800 palabras, con 23 títulos y 27 líneas de lista<br>✔ 0,49 marcas de slop por cada 100 palabras (26 negritas, sección «Resumen», «la próxima vez que»)<br>✔ tres bloques de código (sleep de 2 s y su arreglo en Python, reloj real en Jest) y una cuenta de horas<br>✖ la cuenta no sale: 10 personas × 5 PR × 5 días × 10 % × 15 min son 6,25 h a la semana, no 12; y 12 h no son «una persona y media a tiempo completo»<br>✖ pone @RepeatedTest de JUnit 5 como reintento automático: repite el test N veces, no reintenta los fallos<br>✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-tCkcAp3h; fugas.py sin hallazgos</small></td>
+<td class="nota n2">8<br><small>completo pero se pasa</small></td>
+<td><small>El argumento es el mejor de los dos Claude: el test como detector de humo, la regla implícita «un rojo no significa nada» que se contagia a toda la suite y el bug intermitente real que se relanza hasta que pasa, con tres fragmentos de código y una guía de cuarentena útil. Pero son 1929 palabras con 23 títulos, la cuenta de horas da el doble de lo que sale (6,25 h, no 12) y pone @RepeatedTest como reintento.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 10:52 UTC</small></td>
+<td class=n><b>2661.8 k</b><br><small>in 38 · out 102.6 k<br>razon. 0 · caché 2428.4 k</small></td>
+<td class=n>19</td>
+<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/A3D/salida/alhambra_ruta_3d.html">alhambra_ruta_3d.html</a></small></td>
+<td><small>✔ carga · alhambra_ruta_3d.html<br>✔ carga sin errores, three.js r128 desde cdnjs<br>✔ el recorrido a pie viaja de parada en parada; la lista y la vista Dron también<br>✔ se reconocen Justicia, Carlos V, Leones, Comares y la acequia del Generalife<br>✖ a pie, el Mexuar, Arrayanes y el mirador final encuadran un muro<br>~ la ficha en ruta pone «Hacia:» la parada más cercana, no la siguiente<br>~ deja en el HTML el gancho de pruebas window.__alhambra</small></td>
+<td class="nota n2">9<br><small>se pasea dentro, encuadres flojos</small></td>
+<td><small>Una maqueta con three.js que se recorre a pie a la altura de los ojos por 9 paradas en orden de visita, y se reconoce: Puerta de la Justicia con la llave, Alcazaba, patio circular de Carlos V, fuente de los doce leones con sus canales, Comares y la acequia del Generalife con surtidores. Pero en la vista Paseo, que es la del recorrido, varias paradas encuadran un muro: el Mexuar es un panel de azulejos a un palmo, en Arrayanes no se ve el estanque y el mirador final mira a una muralla.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/anthropic_claude-sonnet-5-5-medium/A3D/capturas/alhambra_ruta_3d.html.png"><img src="resultados/anthropic_claude-sonnet-5-5-medium/A3D/capturas/alhambra_ruta_3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:11 UTC</small></td>
+<td class=n><b>186.7 k</b><br><small>in 8 · out 17.6 k<br>razon. 0 · caché 144.9 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/AIF/salida/alquimia-web-reactiva.html">alquimia-web-reactiva.html</a></small></td>
+<td><small>✔ carga · alquimia-web-reactiva.html<br>✔ carga sin errores; 22 KB, sin dependencias<br>✔ arrastrando con el ratón: Estado + Evento → Reactividad, Píxel + Pantalla → Resolución, Estado + Estado → Store<br>✔ 63 de 63 elementos alcanzables con 59 recetas (juez/alcanzables.js)<br>✖ mezcla sin receta: «no pasa nada…» y las fichas tiemblan<br>✔ guarda descubrimientos y mesa al recargar; buscador<br>✖ sin pistas<br>✖ «Web Reactiva» leído como programación reactiva + responsive: nada de la web, el podcast ni la comunidad</small></td>
+<td class="nota n1">7<br><small>buen juego, otra Web Reactiva</small></td>
+<td><small>Mesa libre donde se suelta una ficha sobre otra, 63 elementos y 59 recetas, todos alcanzables desde Estado, Evento, Píxel y Pantalla, con buscador y guardado de la mesa. Pero leyó «Web Reactiva» como programación reactiva más diseño responsive (señales, Virtual DOM, media queries, clamp()): de la web, el podcast o la comunidad no hay nada, y las mezclas sin receta no dan nada.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/anthropic_claude-sonnet-5-5-medium/AIF/capturas/alquimia-web-reactiva.html.png"><img src="resultados/anthropic_claude-sonnet-5-5-medium/AIF/capturas/alquimia-web-reactiva.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:16 UTC</small></td>
+<td class=n><b>124.3 k</b><br><small>in 6 · out 8.3 k<br>razon. 0 · caché 101.2 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__init__.py">cart/__init__.py</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/__init__.cpython-313.pyc">cart/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/domain.cpython-313.pyc">cart/__pycache__/domain.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/repository.cpython-313.pyc">cart/__pycache__/repository.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/service.cpython-313.pyc">cart/__pycache__/service.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/api.py">cart/api.py</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/domain.py">cart/domain.py</a><br>… y 3 más</small></td>
+<td><small>✔ python3 tests/test_cart.py: 8/8, sin dependencias<br>✔ python3 -m cart.api arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50<br>✔ Redis real, dos instancias HTTP: 50 POST a la vez, aceptadas = guardadas; 2-6 acaban en 409 explícito tras 8 reintentos<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>~ una sola moneda fija (EUR): el catálogo no tiene moneda, así que no hay nada que mezclar<br>~ id ../ lo para la ruta HTTP (404); el servicio lo acepta<br>✖ el carrito devuelto se puede mutar y cambia lo guardado en memoria: 500 unidades a 1 ¢ sin pasar por catálogo ni límites<br>~ RedisCartRepository no está conectado en api.py ni exportado en cart/__init__.py: hay que montarlo a mano</small></td>
+<td class="nota n2">9<br><small>escala en 400 líneas</small></td>
+<td><small>Python sin dependencias con servicio sin estado, versión optimista con reintentos y un adaptador de Redis con compare-and-swap en Lua y TTL que funciona: con dos instancias sobre el mismo Redis, 50 altas a la vez acaban guardadas o en un 409 explícito, sin pérdidas. Pero el carrito que devuelve se puede mutar y en memoria eso cambia lo guardado (500 unidades a 1 céntimo sin pasar por el catálogo), solo hay una moneda fija y el adaptador de Redis no lo probó ni lo conectó a la API.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:14 UTC</small></td>
+<td class=n><b>74.5 k</b><br><small>in 4 · out 3.6 k<br>razon. 0 · caché 60.4 k</small></td>
+<td class=n>2</td>
+<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/PTS/salida/tests-intermitentes-peores-que-no-tener-tests.md">tests-intermitentes-peores-que-no-tener-tests.md</a></small></td>
+<td><small>✔ un post en Markdown, en español, de 1210 palabras<br>~ 0,99 marcas de slop por cada 100 palabras según slop.py; el cierre «Cuéntalo en los comentarios» se le escapa a la regla de chatbot (peso 2) y con él serían 1,16<br>✔ dos bloques de Python: el test con time.sleep(1) en una cola de pedidos y su arreglo con espera a una condición<br>✖ 0,98^500 ≈ 0,0041 %, no «0,00004 %»: confunde la probabilidad con el porcentaje (cien veces menos)<br>✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-LbTlNHJV; fugas.py sin hallazgos</small></td>
+<td class="nota n2">8<br><small>sólido, con la cuenta mal</small></td>
+<td><small>1210 palabras centradas en los tests intermitentes, con la tesis bien armada (un hueco sin test es honesto, un test intermitente miente y enseña a pulsar «Re-run» también cuando el fallo es real) y un ejemplo de código con sleep y su arreglo. Pierde el punto de errores por la cuenta estrella, 0,98^500 ≈ «0,00004 %» cuando es 0,0041 %, y otro de slop por el formato de manual y el cierre de chatbot.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>PTS</b><br><small>texto</small></td>
 <td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 10:23 UTC</small></td>
 <td class=n><b>22.5 k</b><br><small>in 10.3 k · out 2.2 k<br>razon. 734 · caché 9.3 k</small></td>
