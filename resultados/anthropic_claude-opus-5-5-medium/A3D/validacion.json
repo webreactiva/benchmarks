@@ -1,0 +1,18 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra-ruta-3d.html",
+      "errores": [],
+      "titulo": "Alhambra 3D · Ruta por la colina roja",
+      "canvas": 2,
+      "texto": "Alcazaba\nTorre de la Vela\nTorre de Comares\nPalacio de Carlos V\nPatio de los Leones\nTorre de las Damas\nGeneralife\nAlbaicín\nSierra Nevada\nLa Alhambra\n\nRUTA 3D · GRANADA\n\n1\nMirador de San Nicolás\n2\nAlcazaba y Torre de la Vela\n3\nPalacio de Carlos V\n4\nPatio de los Arrayanes\n5\nPatio de los Leones\n6\nJardines del Partal\n7\nGeneralife · Patio de la Acequia\n8\nLa colina roja al atardecer\n01\nMirador de San Nic",
+      "scripts": [
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+        "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js",
+        "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/objects/Reflector.js"
+      ],
+      "captura": "capturas/alhambra-ruta-3d.html.png"
+    }
+  ],
+  "mermaid": []
+}
