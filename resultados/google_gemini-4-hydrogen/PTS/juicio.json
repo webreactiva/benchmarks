@@ -1,0 +1,17 @@
+{
+  "nota": 9,
+  "veredicto": "claro y útil, algo de slop",
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 1,
+    "slop": 1,
+    "extensión": 1
+  },
+  "resumen": "Defiende la tesis con su mecanismo: sin tests el equipo sabe que va a ciegas y actúa con cautela, mientras que un test intermitente le enseña a pulsar re-run hasta que el fallo real pasa con el sello de «todos los checks en verde». Trae código (el sleep de 100 ms que en CI tarda 120), causas típicas y qué hacer, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».",
+  "rarezas": [
+    "4 peticiones, 32 000 tokens, 0,05 $: leyó la carpeta, escribió el post y terminó."
+  ]
+}

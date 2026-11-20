@@ -50,6 +50,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | Modelo | Agente | A3D | AIF | CCA | PTS | Media | Peticiones | Tokens |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | 9 | 10 | 9 | 9 | **9,2** | 48 | 1,6 M |
+| [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | 9 | 9 | 8 | 9 | **8,8** | 41 | 1,3 M |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | 9 | 9 | 9 | 8 | **8,8** | 82 | 3,0 M |
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | 10 | 9 | 6 | 10 | **8,8** | 63 | 2,9 M |
 | [ollama/glm-5.3-flash](resultados/ollama_glm-5.3-flash/README.md) | OpenCode | 9 | 8 | 8 | 9 | **8,5** | 69 | 3,2 M |
