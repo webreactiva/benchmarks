@@ -1,0 +1,36 @@
+ │     case '$': {
+ │       const len = Number(line);
+ │       if (len === -1) return { value: null, next: after };
+ │       if (buf.length < after + len + 2) return INCOMPLETE;
+ │       return { value: buf.toString('utf8', after, after + len), next: after + len + 2 };
+ │     }
+ │     case '*': {
+ │       const count = Number(line);
+ │       if (count === -1) return { value: null, next: after };
+ │       const items: RedisReply[] = [];
+ │       let next = after;
+ │       for (let i = 0; i < count; i++) {
+ │         const r = parse(buf, next);
+ │         if (r === INCOMPLETE) return INCOMPLETE;
+ │         if (r.value instanceof RedisReplyError) return { value: r.value, next: r.next }; // simplificación
+ │         items.push(r.value);
+ │         next = r.next;
+ │       }
+ │       return { value: items, next };
+ │     }
+ │     default:
+ │       throw new Error(`Respuesta RESP desconocida: ${type}`);
+ │   }
+ │ }
+ │ EOF
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+ │ Claude Code can't be sure it read this command the way the shell will, so it can't rule out a dangerous removal.
+ │ Read the command, and don't go ahead if you can't tell what it does.
+ ⚠ Claude Code will automatically block this request in 1:45, to avoid holding up an unattended session
+
+
+ Do you want to proceed?
+ ❯ 1. Yes
+   2. No
+ ↑ 154 more lines
+ Esc to cancel · Tab to amend
