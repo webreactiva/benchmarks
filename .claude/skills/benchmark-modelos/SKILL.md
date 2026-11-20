@@ -57,13 +57,15 @@ SALIDA_MAX=65536 PROVEEDOR_OR=google-ai-studio scripts/benchmark.sh google/gemin
 - En AI Studio, un tope de salida mayor de 65 536 lleva la petición al nivel **«flex»** (mitad de precio, mucho más lento) y también se corta. Con `SALIDA_MAX=65536` va al nivel estándar, que es el límite real de ese endpoint y sobra para cualquier prompt (A3D ≈ 26 000 tokens). El nivel se ve por el precio: `cost / completion_tokens` ≈ precio estándar o la mitad.
 - Aun así, un modelo que piensa mucho (gemini-4-neon con el sistema de OpenCode: ~23 000 caracteres y 13 herramientas) puede pasar de ~6 min en una petición y cortarse. Ver «Reintentos».
 
+**Saldo de OpenRouter**: cada petición reserva `max_tokens × precio de salida` y OpenRouter la rechaza con un 402 («requires more credits, or fewer max_tokens») si no cabe en el saldo, aunque luego fuera a gastar mucho menos (65 536 × 15 $/M ≈ 0,98 $). Una sesión puede quedarse a medias por eso: es un límite nuestro, va a `_descartados/<modelo>-sin-credito/`. Con poco saldo, un PTS cabe con `SALIDA_MAX=32768`; para A3D, AIF o CCA hace falta crédito.
+
 **Ollama Cloud** no manda nada mientras el modelo genera una llamada a herramienta (un `write` grande): si pasan ~5 min sin bytes, corta con `ECONNRESET` o `504 Gateway Timeout`. Les pasa a los modelos lentos (mistral-large-4). OpenCode reintenta solo.
 
 **Reintentos: cuándo vale la prueba y cuándo no.**
 - «Retry due · attempt N» es OpenCode reintentando la misma petición: no es repetir la prueba. Si la sesión **termina** (escribe lo suyo y da su respuesta final), la prueba vale; apunta los cortes como rareza. `meta.json → error` puede quedarse con el último error aunque la sesión acabara bien: mira `respuesta.md` y la sesión.
 - Las peticiones cortadas no se cobran (`/api/v1/generation?id=gen-…` → `total_cost: 0`), así que dejar reintentar solo cuesta tiempo.
 - Si encadena **tres cortes seguidos** en la misma petición, o la sesión muere sin `meta.json`, es un fallo técnico: para (mata `benchmark.sh`, `lanzar.sh` y **solo** su sesión de tmux), mueve lo que haya a `_descartados/<modelo>-<motivo>/` con `motivo.txt`, apúntalo en `_descartados/README.md` y relanza con el arreglo. Lo ya hecho no se repite.
-- Vigila con un Monitor que avise del `{"codigo"…}` de cada prompt y de N cortes seguidos (no de cada línea «Retry»: se repite en pantalla y llena el chat).
+- Vigila con un Monitor que avise del `{"codigo"…}` de cada prompt y de N cortes seguidos (no de cada línea «Retry»: se repite en pantalla y llena el chat). No acabes el pipeline en `uniq`: se guarda la última línea hasta que llega otra distinta y el aviso no sale nunca; compara con la línea anterior dentro del bucle.
 
 **Diagnosticar un corte**, en este orden:
 1. El error exacto: `~/.opencode-bench/<modelo>/data/opencode/opencode.db`, tabla `session_message` (campos `finish`, `time.created/completed`, `error.message`, `error.response.body` con el `gen-…` y el proveedor).
