@@ -1,0 +1,30 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ npm test: 19/19 (node:test, sin dependencias), estable en tres pasadas",
+    "✔ npm start arranca; alta, cambio de cantidad, quitar y vaciar por HTTP",
+    "✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50, también con 50 productos distintos",
+    "✔ Redis real, dos instancias HTTP con REDIS_URL: 50 POST a la vez, aceptadas = guardadas; 1 acaba en 409 explícito. Con CLUSTER=1 y dos workers, igual",
+    "✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora",
+    "✔ el objeto devuelto se puede tocar, pero lo guardado no cambia (memoria serializada y Redis)",
+    "✔ id ../ no se puede crear (el id lo genera el servicio con UUID); la ruta HTTP da 404",
+    "~ la moneda la elige el cliente al crear y no se valida ({\"x\":1} se guarda); el catálogo no tiene moneda, así que un carrito USD cobra los precios en euros",
+    "~ ioredis no está en package.json: para usar Redis hay que instalarlo a mano (el README lo dice)",
+    "~ idempotencia, catálogo y cupones solo en memoria: con varias réplicas la Idempotency-Key no se comparte (lo dice)"
+  ],
+  "comprobacion": "Copia en /tmp/cca-opus, npm test, npm start con fetch, npm i ioredis en la copia y juez/juez.mjs (del juez) en memoria y contra un redis-server local (puerto 6390, parado al acabar) con dos servicios, dos instancias HTTP y modo CLUSTER",
+  "juez_salida": [
+    "memoria, 3 tandas: 50 altas a la vez, 50 productos → 50 líneas, versión 51; mismo producto → cantidad 50; 0 errores",
+    "0,10 × 3 = 30 céntimos",
+    "moneda USD al crear: aceptada, total 1000 USD con el precio de catálogo en euros; {x:1}: aceptado",
+    "id ../fuera en el servicio: NOT_FOUND · HTTP /carts/..%2Ffuera: 404",
+    "cantidades 0, -1, 1.5, true, '2': VALIDATION_ERROR; 1e9: LIMIT_EXCEEDED; sku ../x: VALIDATION_ERROR",
+    "objeto devuelto y repo.get mutados (500 unidades a 1 ¢): en el almacén sigue 1 unidad a 1000",
+    "HTTP precio desde el cliente (1 ¢): ignorado, subtotal 800",
+    "redis, 2 servicios, 3 tandas: 50 productos → 48/46/46 líneas = aceptadas; mismo producto → 47/48/44 = aceptadas; resto VERSION_CONFLICT",
+    "HTTP 2 instancias + Redis, 50 POST: 200 × 49, 409 × 1 → 49 unidades, versión 50 (mismo producto y 4 productos)",
+    "CLUSTER=1 WORKERS=2 + Redis: 200 × 49, 409 × 1, cantidad 49, dos pids",
+    "alta en una instancia la ve la otra; DELETE en B → 404 en A; TTL 2 592 000 s (30 días)"
+  ]
+}
