@@ -1,5 +1,0 @@
-Fallo técnico, no del modelo. Linux, OpenCode 2.3.0 --standalone, 20 nov. 2026.
-Tras leer la carpeta, cada petición acababa en «Retry due · Network connection lost» a los ~6 min (5 reintentos en 32 min,
-0,0 tok/s). OpenCode 2.x corta por defecto a los 5 min sin cabeceras (headerTimeout) y a los 15 min sin fragmentos
-(chunkTimeout). La misma petición por curl directo a OpenRouter acababa bien en 111 s.
-Se paró a mano, no dejó ficheros ni meta.json. Arreglo: lanzar.sh pone timeout/headerTimeout a false y chunkTimeout a 1 h.

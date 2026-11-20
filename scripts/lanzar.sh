@@ -45,6 +45,11 @@ c["provider"][p]["models"][id] = {"name": id, "limit": {"context": lim["context"
 # un modelo que piensa mucho o escribe un fichero grande en una sola llamada se queda en «Network connection lost».
 for prov in c["provider"].values():
     prov["options"].update({"timeout": False, "headerTimeout": False, "chunkTimeout": 3600000})
+# PROVEEDOR_OR=google-ai-studio fija el proveedor de OpenRouter (sin respaldo). Solo por fallo técnico de la ruta por
+# defecto (gemini-4-carbon por Vertex corta con «502 Network connection lost» a los ~5 min de razonar).
+po = os.environ.get("PROVEEDOR_OR")
+if po: c["provider"]["or"]["options"]["provider"] = {"only": [po], "allow_fallbacks": False}
+else: c["provider"]["or"]["options"].pop("provider", None)
 c["model"] = p + "/" + id
 json.dump(c, open(f, "w"), indent=2)
 PY
