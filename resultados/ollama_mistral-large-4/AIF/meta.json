@@ -1,0 +1,39 @@
+{
+  "codigo": "AIF",
+  "modelo": "ollama/mistral-large-4",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T17:27:08Z",
+  "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 34647,
+    "output": 62045,
+    "reasoning": 0,
+    "cache_read": 170496,
+    "cache_write": 0,
+    "total": 267188
+  },
+  "peticiones": 9,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "write": 2,
+    "shell": 2,
+    "edit": 5,
+    "grep": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e06008f5dffeWGXxaQ7P6YAX9o",
+  "coste_usd": 0,
+  "ficheros": [
+    "reactiva-craft.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 262144,
+    "output_proveedor": 262144,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

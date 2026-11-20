@@ -3,3 +3,8 @@ Con un tope de salida mayor de 65 536, OpenRouter manda la petición al nivel «
 La petición que escribía el HTML se cortó dos veces con «Network connection lost» (a los 376 s y a los 395 s); se paró a mano.
 No dejó ficheros ni meta.json. Con curl, la misma petición con max_tokens 65 536 (nivel estándar) acabó bien en 174 s y 25 888 tokens.
 Se repite con SALIDA_MAX=65536 (lanzar.sh).
+
+Segundo intento (SALIDA_MAX=65536, nivel estándar de AI Studio): la petición que escribe el HTML se cortó cuatro veces seguidas
+(«Network connection lost» a los 338, 378 y 358 s, y un «Connection lost while reading» a los 91 s que coincidió con un reset de
+red de mi propio curl). Neon piensa más de 6 min con el sistema de OpenCode antes de escribir. Reenviada la misma petición
+con curl: Vertex corta con 502 a los 332 s. Se paró a mano; no dejó meta.json.
