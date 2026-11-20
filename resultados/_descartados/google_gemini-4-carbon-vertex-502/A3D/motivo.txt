@@ -6,5 +6,5 @@ Reproducido con curl, sin OpenCode: la misma petición con razonamiento en strea
 defecto (Google Vertex) se corta a los 318 s con ese 502; por Google AI Studio acaba bien en 192 s.
 No dejó ficheros ni meta.json. Se repitió con PROVEEDOR_OR=google-ai-studio, pero esa versión de lanzar.sh ponía el proveedor
 en options.provider y OpenCode 2.x no lo manda: A3D salió igualmente por la ruta por defecto y esa vez acabó bien.
-Desde CCA va en options.extraBody (comprobado: con un proveedor inexistente OpenRouter rechaza la petición).
+Desde la repetición de AIF va en options.extraBody (comprobado: con un proveedor inexistente OpenRouter rechaza la petición).
 (Primero se sospechó de los topes de tiempo de OpenCode 2.x; lanzar.sh los quita igualmente, pero no era la causa.)
