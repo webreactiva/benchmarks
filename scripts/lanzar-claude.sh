@@ -19,6 +19,11 @@ conf=$base/config; casa=$base/home; mkdir -p "$conf" "$casa"
 mkdir -p /var/tmp/bench; ws=$(mktemp -d /var/tmp/bench/ws-XXXXXXXX)
 # Encerrado (scripts/encierro.sh): no ve el repo, ni /tmp, ni el resto de /root; el lanzador va en su configuración
 cp "$H/claude-aislado.sh" "$base/"
+# Sin la recomendación de plugins LSP: su diálogo tapa el «esc to interrupt» y el lanzador da la sesión por acabada
+python3 -c '
+import json, os, sys
+f = sys.argv[1]; d = json.load(open(f)) if os.path.exists(f) else {}
+d["lspRecommendationDisabled"] = True; json.dump(d, open(f, "w"), indent=2)' "$conf/.claude.json"
 s=c-$cod-$(echo "$alias$sufijo" | tr -cd "a-z0-9-") tp="=$s:"
 tmux kill-session -t "=$s" 2>/dev/null || true
 # SIN_ENCIERRO=1: sin encierro.sh, como en cursos-y-guias. En la nube Claude Code entra con la credencial de la sesión

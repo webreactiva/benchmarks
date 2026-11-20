@@ -1,0 +1,36 @@
+         qué pasa, cómo detectarlo y qué hacer al respecto."
+       6 ---
+       7
+       8 # El test que falla a veces: por qué un test intermitente puede ser peor que ningún test
+       9
+     … +188 lines
+
+● He escrito el post y lo he guardado en tests-intermitentes-peor-que-no-tener-tests.md, en la carpeta actual. Es un
+  archivo Markdown con cabecera de metadatos (título, fecha, etiquetas y descripción), así que se puede usar en la
+  mayoría de generadores de blogs estáticos.
+
+  Se titula «El test que falla a veces: por qué un test intermitente puede ser peor que ningún test» y está organizado
+  así:
+
+  - Arranque: el típico viernes a las seis de la tarde en el que alguien vuelve a lanzar la integración continua sin
+    leer el error.
+  - Idea central: un test es como un detector de humo. Si salta sin motivo, el equipo aprende a ignorarlo, y además da
+    una falsa sensación de que esa parte está cubierta.
+  - Costes: acostumbra al equipo a ignorar los fallos, esconde bugs reales y hace que se desconfíe de todos los tests.
+    Incluye un cálculo aproximado de las horas que se pierden.
+  - Causas habituales, con ejemplos de código: esperas con sleep, depender del reloj real, estado compartido entre
+    tests, servicios externos, datos aleatorios sin semilla fija y concurrencia.
+  - Qué hacer: arreglar el test, apartarlo temporalmente de la suite principal con un responsable y una fecha límite, o
+    borrarlo. También explica por qué los reintentos automáticos solo valen si se registran y son temporales, y cómo
+    medir qué tests fallan de forma intermitente.
+  - Cierre: el título no defiende tener menos tests, sino tests que den siempre el mismo resultado y en los que se pueda
+    confiar. Termina con un resumen en viñetas.
+
+  Si lo quieres más corto, con otro tono o adaptado a un lenguaje concreto en los ejemplos, puedo ajustarlo.
+
+✻ Churned for 58s · done 11:22 AM
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ hazlo más corto
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)
