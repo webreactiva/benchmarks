@@ -1,0 +1,24 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✖ sesión cortada por un diálogo de permisos de Claude Code a los 4 min: sin respuesta, sin README, sin tests",
+    "✔ tsc --noEmit (TypeScript 5.8.3) sin errores en los 9 ficheros que hay",
+    "✖ npm start: falta src/main.ts; npm test: 0 tests (test/ vacía); src/service, src/http y src/events vacías",
+    "✔ céntimos enteros (0,10 × 3 = 30) y USD en carrito EUR rechazado",
+    "✔ SKU, moneda ISO, cupones y cantidad (0, negativas, decimales, > 99) validados",
+    "~ CAS por versión en el repositorio en memoria, pero no hay servicio que lo use ni reintente: 50 altas a mano dan 1 guardada y 49 conflictos",
+    "✖ cliente Redis RESP escrito a mano, pero sin repositorio de Redis",
+    "~ id ../ aceptado por newCart; el objeto devuelto no está congelado (get() devuelve copia, sí)"
+  ],
+  "comprobacion": "Copia en /tmp, npm i --no-save typescript@5.8.3 @types/node@22, tsc --noEmit, npm test, npm start y juez/juez.ts (del juez) con node 22.23 sobre las piezas sueltas",
+  "juez_salida": [
+    "50 altas a la vez (sin reintentos, no hay servicio): ok 1, conflicto 49; líneas guardadas 1",
+    "save no sube la versión: si quien llama no la sube, la 2.ª escritura pisa la 1.ª",
+    "USD en carrito EUR: rechazado VALIDATION_ERROR",
+    "0,10 × 3 = 30 céntimos",
+    "id ../fuera en newCart: ACEPTADO",
+    "objeto devuelto congelado: false; tocar lo que da get() no cambia el almacén",
+    "vaciar: no hay función"
+  ]
+}

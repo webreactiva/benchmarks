@@ -1,0 +1,23 @@
+{
+  "nota": 3,
+  "provisional": true,
+  "aviso": "Sesión cortada por el arnés: Claude Code pidió permiso para un comando («can't rule out a dangerous removal») y el lanzador la dio por acabada, como en el descarte de Sonnet por el diálogo de pyright-lsp. Es un fallo técnico: según las reglas toca mover esta prueba a _descartados/ y repetirla. La nota es solo de lo que quedó en disco.",
+  "veredicto": "cortado a medio hacer",
+  "rubrica": {
+    "se ejecuta": 0,
+    "tests en verde": 0,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 0,
+    "escala horizontal": 0,
+    "explica el escalado": 0
+  },
+  "resumen": "Quedan las piezas de abajo de un servicio TypeScript sin dependencias: dominio puro en céntimos con una moneda por carrito, validación de SKU, cantidades y cupones, motor de precios con promociones e IVA, repositorio en memoria con versión y TTL, catálogo e inventario, y un cliente Redis escrito a mano; todo compila. Falta todo lo de arriba (servicio, API, repositorio de Redis, tests, README) porque un diálogo de permisos de Claude Code cortó la sesión a los cuatro minutos.",
+  "rarezas": [
+    "La sesión acabó en un diálogo de permisos de Claude Code sobre su séptimo comando («can't rule out a dangerous removal»); el lanzador lo tomó por el final. respuesta.md está vacía.",
+    "Creó de entrada src/service, src/http, src/events y test, que quedaron vacías: el plan era servicio sin estado, idempotencia, eventos y tests.",
+    "Escribió su propio cliente Redis (protocolo RESP, pipelining, AUTH) para no tener dependencias, antes de tener servicio.",
+    "6 peticiones, 296 k tokens, 230 s y 0,78 $ en lo que dio tiempo a hacer."
+  ]
+}

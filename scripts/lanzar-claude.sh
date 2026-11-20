@@ -50,6 +50,17 @@ for i in $(seq 1 90); do
 done
 inicio=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" di "$s" "$prompt" || true
+# Permisos del modo auto: si Claude Code pide permiso con cuenta atrás («will automatically block this request»), no se
+# contesta (sin encierro, aprobar a ciegas es arriesgado): se deja que lo bloquee solo y se sigue esperando, como en una
+# sesión desatendida. Antes el lanzador lo tomaba por el final (Opus 5.5 CCA en _descartados/).
+espera_permisos() {
+  local n=0
+  while [ $n -lt 10 ] && pantalla | grep -q "automatically block this request"; do
+    n=$((n + 1)); permisos=$((permisos + 1)); sleep 150
+    ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" espera "$s" || true
+  done
+}
+permisos=0; espera_permisos
 # Regla de las preguntas: el modelo decide siempre. Cada vez que pregunte, da opciones o pida que elijamos, se cierra
 # la pregunta y se le contesta «Decide tú.» (como mucho 5 veces, para no entrar en un bucle)
 pregunto=0
@@ -57,6 +68,7 @@ while [ $pregunto -lt 5 ] && tmux capture-pane -p -t "=$s:" 2>/dev/null | grep -
   pregunto=$((pregunto + 1))
   tmux send-keys -t "=$s:" Escape; sleep 3
   ACEPTA=1 ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" di "$s" "Decide tú." || true
+  espera_permisos
 done
 pantalla_final=$(tmux capture-pane -p -t "$tp" -S -3000)
 tmux send-keys -t "$tp" -l "/exit"; sleep 1; tmux send-keys -t "$tp" Enter; sleep 3
@@ -75,9 +87,10 @@ cp "$reg" "$dest/sesion.jsonl"; mv "$reg" "$reg.hecho"
 rm -rf "$dest/salida"; cp -R "$ws" "$dest/salida"; rm -rf "$ws"
 python3 "$B/scripts/tokens-claude.py" "$dest" "$cod" "$modelo" "$inicio" "$prompt"
 # Cuántas veces se le contestó «Decide tú.», en meta.json
-python3 - "$dest/meta.json" "$pregunto" "$esf" "${SIN_ENCIERRO:-}" <<'PY'
+python3 - "$dest/meta.json" "$pregunto" "$esf" "${SIN_ENCIERRO:-}" "$permisos" <<'PY'
 import json, sys
 f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2])
+if int(sys.argv[5]): m["permisos_bloqueados"] = int(sys.argv[5])
 if sys.argv[3]: m["esfuerzo"] = sys.argv[3]
 if sys.argv[4]: m["aislamiento"] = ("Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión "
     "que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, "
