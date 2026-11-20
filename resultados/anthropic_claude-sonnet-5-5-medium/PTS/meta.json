@@ -1,0 +1,29 @@
+{
+  "codigo": "PTS",
+  "modelo": "claude-sonnet-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-20T11:14:57Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 4,
+    "output": 3617,
+    "reasoning": 0,
+    "cache_read": 60377,
+    "cache_write": 10473,
+    "total": 74471
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "Write": 1
+  },
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "tests-intermitentes-peores-que-no-tener-tests.md"
+  ],
+  "veces_decide_tu": 0,
+  "esfuerzo": "medium",
+  "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py."
+}
