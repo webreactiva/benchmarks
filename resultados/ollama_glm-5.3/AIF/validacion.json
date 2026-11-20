@@ -1,0 +1,29 @@
+{
+ "html": [
+  {
+   "fichero": "alquimia-reactiva.html",
+   "errores": [],
+   "titulo": "⚗️ 4/187 · Alquimia Reactiva",
+   "canvas": 0,
+   "texto": "⚗️\nAlquimia Reactiva\nel Infinite Craft de Web Reactiva\n🧪 4/187\n💡\n🔊\n❓\n🧹\n♻️\n⌨️\nTerminal\n💬\nPrompt\n☕\nCafé\n🧑\nHumano\n✦ = inventos tuyos · combinaciones que nadie probó\nArrastra elementos aquí y suelta uno encima de otro para combinarlos 👇\n👋 Bienvenido a la Alquimia Reactiva: combina piezas del universo de Web Reactiva\n🎯 Arrastra dos elementos al tablero y suelta uno encima de otro para combinar",
+   "scripts": [],
+   "captura": "capturas/alquimia-reactiva.html.png",
+   "capturas_extra": [
+    "capturas/cafe-doble.png",
+    "capturas/infinito.png",
+    "capturas/pista.png",
+    "capturas/ayuda-retos.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; un HTML de 42 KB sin dependencias",
+  "✔ tablero libre: se arrastra desde la barra al tablero y se suelta una ficha sobre otra",
+  "✔ Humano + Café → Developer; Prompt + Terminal → Script; Café + Café → Café Doble; Developer + Script → Código",
+  "✔ 187 de 187 elementos alcanzables desde 4 básicos, 192 recetas sin choques (juez/alcanzables.js)",
+  "✔ modo infinito: Humano + Script (sin receta) → «Humano Infinito», contado aparte como invento (✦1)",
+  "✔ contenido de webreactiva.com (leyó la portada): Programa con IA, Fichómetro, Atlas Malandriner, En Pantuflas, Audio 24/7, Sin alucinar, Contenido humano, 15 €/mes",
+  "✔ guarda en localStorage (8/187 ✦1 tras recargar), buscador, pistas y 8 retos"
+ ]
+}

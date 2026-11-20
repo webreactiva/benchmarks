@@ -1,0 +1,19 @@
+{
+  "nota": 10,
+  "veredicto": "infinito y de la casa",
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 1,
+    "contenido de Web Reactiva": 2,
+    "acabado": 1
+  },
+  "resumen": "Tablero libre donde se suelta una ficha sobre otra, 187 elementos y 192 recetas todos alcanzables desde Humano, Café, Prompt y Terminal, y un generador para las mezclas sin receta que cuenta los inventos aparte. El contenido sale de la portada de webreactiva.com (Programa con IA, Fichómetro, Atlas Malandriner, En Pantuflas, «sin alucinar»), con pistas, retos, buscador y guardado.",
+  "rarezas": [
+    "Las dos búsquedas web fallaron (una cancelada por el permiso y otra sin resultado); leyó la portada de webreactiva.com con webfetch.",
+    "Lo probó a fondo en Chrome con Playwright: arrastrar, combinar, borrar, duplicar, y validó con un BFS que todo era alcanzable.",
+    "29 peticiones y 2,8 millones de tokens (2,5 de caché)."
+  ]
+}
