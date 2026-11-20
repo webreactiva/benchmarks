@@ -1,0 +1,29 @@
+{
+ "html": [
+  {
+   "fichero": "index.html",
+   "errores": [],
+   "titulo": "Alquimia Reactiva — Infinite Craft · Web Reactiva",
+   "canvas": 0,
+   "texto": "WR\nAlquimia Reactiva\nInfinite Craft · Universo Web Reactiva\n4 / 109\n4%\n🤖\nPista\n🗺️\nAtlas\n🔊\n🌙\n❓\nWEB REACTIVA\nArrastra elementos de la derecha y júntalos aquí. Pon las manos sobre el teclado.\n🧹\nLimpiar\n🎲\nAzar\n🗑️\n🌐\nWeb\n🎙️\nPodcast\n🔍\nRecientes\nA-Z\nBase\nWeb & Código\nComunidad WR\nIA & Agentes\nLeyenda\n🎙️\nPodcast\n🤖\nIA\n🌐\nWeb\n💻\nCódigo\n🤖\nDoble clic en la mesa para duplicar. Clic derecho para qui",
+   "scripts": [],
+   "captura": "capturas/index.html.png",
+   "capturas_extra": [
+    "capturas/web-reactiva.png",
+    "capturas/sin-receta.png",
+    "capturas/pista.png",
+    "capturas/atlas.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; un HTML de 92 KB sin dependencias",
+  "✔ lienzo libre: se arrastra una ficha sobre otra (clic saca al centro, doble clic duplica, papelera)",
+  "✔ Código + Web → HTML; Web + Podcast → Web Reactiva; IA + Podcast → Robotito; Código + Código → Refactor",
+  "✔ 109 de 109 elementos alcanzables desde 4 iniciales, 255 recetas sin duplicados (juez/alcanzables.js)",
+  "✖ sin modo infinito: HTML + Robotito no tiene receta y las fichas solo tiemblan",
+  "✔ contenido sacado de webreactiva.com: Robotito, +710 episodios, Zona Premium, En Pantuflas, Atlas Malandriner, LinkedIn-5-5, Fichómetro, las 5 etapas de Programa con IA",
+  "✔ guarda en localStorage (8 elementos tras recargar), buscador, pista de Robotito, Atlas con rangos"
+ ]
+}

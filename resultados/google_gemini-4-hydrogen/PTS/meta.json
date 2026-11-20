@@ -1,0 +1,37 @@
+{
+  "codigo": "PTS",
+  "modelo": "google/gemini-4-hydrogen",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T15:33:22Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 12785,
+    "output": 2149,
+    "reasoning": 996,
+    "cache_read": 15861,
+    "cache_write": 0,
+    "total": 31791
+  },
+  "peticiones": 4,
+  "error": null,
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 2,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e0668b751ffe2XCkxpcyDU3X18",
+  "coste_usd": 0.0503,
+  "ficheros": [
+    "por-que-los-flaky-tests-son-peores-que-no-tener-tests.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models"
+  },
+  "veces_decide_tu": 0
+}

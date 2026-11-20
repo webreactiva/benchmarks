@@ -1,0 +1,32 @@
+{
+ "html": [
+  {
+   "fichero": "alhambra-ruta-3d.html",
+   "errores": [],
+   "titulo": "Ruta 3D por la Alhambra de Granada",
+   "canvas": 2,
+   "texto": "✦\nAlhambra de Granada · Ruta 3D\nColina de la Sabika · Recorrido monumental interactivo\n▶ Ruta Guiada\n◎ Explorar\n⚑ A Pie\nAmanecer\nDía\nAtardecer\nNoche\n♪\n👁\nPARADA 1 DE 8\n1348 · Yusuf I (Nazarí)\nPuerta de la Justicia\n\nPrincipal acceso monumental a la ciudad palatina. Su inmenso arco de herradura enmarcado en mármol y ladrillo rojo custodia la subida por la colina de la Sabika con un trazado defensivo",
+   "scripts": [
+    "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+   ],
+   "captura": "capturas/alhambra-ruta-3d.html.png",
+   "capturas_extra": [
+    "capturas/auto-desde-4.png",
+    "capturas/parada-3.png",
+    "capturas/parada-5.png",
+    "capturas/parada-6.png",
+    "capturas/parada-7.png",
+    "capturas/parada-8.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; 98 KB con three.js r128 de cdnjs",
+  "✔ 8 paradas en orden de visita: Justicia, Alcazaba, Carlos V, Arrayanes, Embajadores, Leones, Partal, Generalife",
+  "✔ la ruta guiada arranca sola y la cámara recorre la curva a pie de calle; desde la parada 4 pasa a la 5 (47,7 % a los 30 s a 1,7 fps)",
+  "✔ se reconoce: arco de herradura, patio circular de Carlos V, alberca de Arrayanes con pórticos, fuente con leones, acequia del Generalife con surtidores",
+  "✖ marcadores numerados enormes en medio de la vista; en el Salón de Embajadores la cámara queda pegada a un muro",
+  "✔ textos correctos (Yusuf I, Machuca, 124 columnas, Muhammad V, Muhammad III, Acequia Real)"
+ ]
+}

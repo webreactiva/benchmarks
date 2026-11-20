@@ -1,0 +1,19 @@
+{
+  "nota": 9,
+  "veredicto": "de la casa, sin infinito",
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 2,
+    "acabado": 1
+  },
+  "resumen": "Mesa libre donde se suelta una ficha sobre otra, 109 elementos y 255 recetas todos alcanzables desde Código, Web, IA y Podcast, con pista de Robotito, buscador, Atlas Malandriner con rangos y guardado. El contenido sale de webreactiva.com (Robotito, Zona Premium, En Pantuflas, Atlas Malandriner, Programa con IA), pero las mezclas sin receta no dan nada.",
+  "rarezas": [
+    "La primera búsqueda web quedó cancelada por el permiso de OpenCode (el lanzador contestó «Decide tú.»); volvió a buscar, esta vez pasó, y leyó la portada de webreactiva.com con webfetch.",
+    "Se comprobó con node: recetas duplicadas (8), las quitó y verificó 109/109 alcanzables.",
+    "8 peticiones, 405 000 tokens, 0,47 $: la mitad de peticiones y de coste que Carbon en el mismo prompt."
+  ]
+}
