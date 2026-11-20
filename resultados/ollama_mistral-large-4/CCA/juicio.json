@@ -1,0 +1,21 @@
+{
+  "nota": 8,
+  "veredicto": "sólido en un proceso",
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 1,
+    "escala horizontal": 1,
+    "explica el escalado": 1
+  },
+  "resumen": "Librería Python sin dependencias, hexagonal, con dinero en céntimos, una moneda por carrito, precio del catálogo, descuentos e impuestos enchufables, eventos de dominio, límites y repositorio en memoria o SQLite; 24 tests y una demo que funcionan, y 50 altas a la vez con un servicio no pierden nada. Pero la concurrencia depende de un cerrojo del proceso: con dos servicios sobre el mismo SQLite se pierden 3 de 50 altas sin aviso.",
+  "rarezas": [
+    "El primer unittest no cargó por un nombre de test con un espacio; lo arregló y pasaron los 24.",
+    "Probó la demo con SQLite en /tmp/opencode, fuera de su carpeta (dentro del encierro).",
+    "Entrega las carpetas __pycache__ junto al código.",
+    "9 peticiones y 190 000 tokens."
+  ]
+}
