@@ -1,0 +1,15 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ pytest 12/12 y main.py",
+    "✔ 50 hilos con 4 shards: 50 unidades",
+    "✔ versión optimista en el almacenamiento, Decimal, precio del inventario",
+    "~ sin almacenamiento compartido real (Redis/DynamoDB «intercambiable»)"
+  ],
+  "comprobacion": "Copia en /tmp, pytest, main.py y juez/juez.py (del juez)",
+  "juez_salida": [
+    "50 hilos, 4 productos, 4 shards: unidades 50, sin errores",
+    "add_item(cart_id, product_id, quantity): el cliente no manda precio"
+  ]
+}

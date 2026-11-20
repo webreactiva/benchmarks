@@ -1,0 +1,240 @@
+{
+  "info": {
+    "id": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+    "slug": "proud-lagoon",
+    "projectID": "global",
+    "directory": "/tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/PTS",
+    "path": "tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/PTS",
+    "title": "Post sobre tests inestables vs sin tests",
+    "agent": "build",
+    "model": {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "providerID": "or"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 8080,
+      "output": 682,
+      "reasoning": 71,
+      "cache": {
+        "read": 8768,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795121215549,
+      "updated": 1795121236768
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795121215576
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "or",
+          "modelID": "nvidia/nemotron-3-ultra-550b-a55b:free"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f58ff858001dp7VXqs1M0yC42",
+        "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f58ff85a001nHgX5Nu1B68AFX",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f58ff858001dp7VXqs1M0yC42"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f58ff858001dp7VXqs1M0yC42",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/PTS",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8769,
+          "input": 8058,
+          "output": 654,
+          "reasoning": 57,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "providerID": "or",
+        "time": {
+          "created": 1795121215596,
+          "completed": 1795121235399
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f58ff86c0012G6sUpFCjrRvGm",
+        "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f590015f001AWmqA9BQhIQinO",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f58ff86c0012G6sUpFCjrRvGm"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user wants me to write a blog post in Spanish about why flaky tests (tests that fail intermittently) are worse than having no tests at all. They want me to save it in the current directory.\n\nLet me write this blog post and save it as a markdown file.",
+          "time": {
+            "start": 1795121217892,
+            "end": 1795121235333
+          },
+          "id": "prt_1f5900164001G70qxAMDY6nZsK",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f58ff86c0012G6sUpFCjrRvGm"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call-ffd22e54-6202-4c0c-9c81-e8c5252d1a2b",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/PTS/por-que-tests-flaky-son-peores-que-no-tener-tests.md",
+              "content": "# Por qué los tests flaky son peores que no tener tests\n\nLos tests que fallan intermitentemente (flaky tests) son uno de los problemas más insidiosos en el desarrollo de software. A primera vista, tener *algunos* tests parece mejor que no tener ninguno. Pero la realidad es más compleja.\n\n## El costo oculto de los tests flaky\n\n### 1. Erosionan la confianza\n\nCuando un test falla aleatoriamente, el equipo deja de creer en la suite de tests. \"Ah, ese test siempre falla, vuelve a correrlo\" se convierte en la respuesta estándar. Esto anula el propósito principal de los tests: **dar confianza**.\n\n### 2. Ocultan bugs reales\n\nSi el 20% de tus tests fallan por razones ajenas al código, los desarrolladores ignoran las alertas. Un fallo real se pierde en el ruido. El resultado: bugs que llegan a producción.\n\n### 3. Desperdician tiempo de desarrollo\n\nCada ejecución fallida requiere investigación manual. ¿Es un bug real? ¿Es el test? ¿Es el entorno? Ese tiempo no se recupera. Multiplicado por cada CI run, cada developer, cada día.\n\n### 4. Frenan el refactoring\n\nEl miedo a romper tests flaky hace que los equipos eviten tocar código que \"funciona\". La deuda técnica se acumula porque nadie quiere lidiar con la incertidumbre.\n\n### 5. Dan falsa seguridad\n\nUn test flaky que *pasa* no garantiza nada. Puede estar pasando por casualidad. Es peor que no tener test porque **crees que estás cubierto cuando no lo estás**.\n\n## ¿Qué hacer en su lugar?\n\n1. **Bórralos o arréglalos ya**. No hay término medio. Un test flaky es deuda técnica con intereses compuestos.\n\n2. **Aísla la causa**: timing, estado compartido, dependencias externas, datos de test sucios.\n\n3. **Usa timeouts generosos** y reintentos *solo* como medida temporal mientras arreglas la causa raíz.\n\n4. **Prioriza tests deterministas**: unit tests > integration tests > E2E tests para la suite rápida.\n\n5. **Monitorea la flakiness**: si un test falla >1% de las veces sin cambios de código, es flaky.\n\n## Conclusión\n\nUna suite de tests pequeña, rápida y 100% confiable vale infinitamente más que una suite grande, lenta y flaky.\n\n**Mejor cero tests que tests en los que no confías.**\n\n---\n\n*¿Has lidiado con tests flaky en tu equipo? Cuéntame tu experiencia en los comentarios.*"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/PTS/por-que-tests-flaky-son-peores-que-no-tener-tests.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/PTS/por-que-tests-flaky-son-peores-que-no-tener-tests.md",
+            "time": {
+              "start": 1795121235348,
+              "end": 1795121235361
+            }
+          },
+          "id": "prt_1f590458a001vTDxhCUx6SZRMW",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f58ff86c0012G6sUpFCjrRvGm"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8769,
+            "input": 8058,
+            "output": 654,
+            "reasoning": 57,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f59045bd001Y1ZoOSy2T5QcgH",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f58ff86c0012G6sUpFCjrRvGm"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f58ff858001dp7VXqs1M0yC42",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/PTS",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8832,
+          "input": 22,
+          "output": 28,
+          "reasoning": 14,
+          "cache": {
+            "write": 0,
+            "read": 8768
+          }
+        },
+        "modelID": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "providerID": "or",
+        "time": {
+          "created": 1795121235403,
+          "completed": 1795121236761
+        },
+        "finish": "stop",
+        "id": "msg_1f59045cb001gLQbn7bo12V52A",
+        "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f59049e00019woBGCcKK1V6js",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f59045cb001gLQbn7bo12V52A"
+        },
+        {
+          "type": "reasoning",
+          "text": "The file has been created successfully. Let me confirm to the user.",
+          "time": {
+            "start": 1795121236452,
+            "end": 1795121236594
+          },
+          "id": "prt_1f59049e40013hqSPhulVO1pVC",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f59045cb001gLQbn7bo12V52A"
+        },
+        {
+          "type": "text",
+          "text": "Listo. Guardado en `por-que-tests-flaky-son-peores-que-no-tener-tests.md`.",
+          "time": {
+            "start": 1795121236597,
+            "end": 1795121236754
+          },
+          "id": "prt_1f5904a75001nLNCUw4LxECOYD",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f59045cb001gLQbn7bo12V52A"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8832,
+            "input": 22,
+            "output": 28,
+            "reasoning": 14,
+            "cache": {
+              "write": 0,
+              "read": 8768
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5904b15001NpYCmRFeI5k174",
+          "sessionID": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+          "messageID": "msg_1f59045cb001gLQbn7bo12V52A"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+      - --appendfsync
+      - everysec
+      - --maxmemory-policy
+      - noeviction
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "6379:6379"
+
+  # API de carrito: réplicas stateless detrás del balanceador.
+  # Para escalar: docker compose up --scale api=4
+  api:
+    build: .
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      REDIS_URL: redis://redis:6379
+      REDIS_KEY_PREFIX: "cartsvc:"
+      LOG_LEVEL: info
+      RATE_LIMIT_CAPACITY: "300"
+      RATE_LIMIT_REFILL_PER_SECOND: "50"
+      JWT_SECRET: "cambia-esto-en-produccion-por-secreto-largo"
+    depends_on:
+      redis:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    deploy:
+      replicas: 2
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/readyz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Worker de eventos (grupo de consumidores sobre Redis Streams).
+  worker:
+    build: .
+    command: ["node", "dist/worker.js"]
+    environment:
+      NODE_ENV: production
+      REDIS_URL: redis://redis:6379
+      REDIS_KEY_PREFIX: "cartsvc:"
+      LOG_LEVEL: info
+      WORKER_CONSUMER_GROUP: cart-events
+    depends_on:
+      redis:
+        condition: service_healthy
+    deploy:
+      replicas: 1
+
+volumes:
+  redis-data:

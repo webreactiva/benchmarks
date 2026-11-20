@@ -1,0 +1,22 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ npm ci + tsc compila",
+    "✔ 24/24 tests suyos en verde",
+    "✔ npm run dev corre los ejemplos",
+    "✖ 50 addItem concurrentes → guarda 1",
+    "✖ suma EUR + USD como EUR",
+    "✖ id con ../ escribe fuera de la carpeta"
+  ],
+  "comprobacion": "Copia en /tmp, npm ci, tsc, jest, ts-node examples/basic.ts y juez/juez.ts (script del juez, no del modelo)",
+  "juez_salida": [
+    "concurrencia FileStorage: líneas esperadas 50, guardadas 1",
+    "concurrencia memoria: cantidad esperada 50, guardada 1",
+    "monedas mezcladas: { itemCount: 2, totalQuantity: 2, subtotal: 20, currency: 'EUR' }",
+    "0,10 × 3 = 0.30000000000000004",
+    "cart.cleared payload: { previousItemCount: 0 }",
+    "tras vaciar el objeto devuelto, el guardado tiene 0 líneas",
+    "id \"../fuera\" escribe en /tmp/cca-prueba/fuera.json (fuera de la carpeta)"
+  ]
+}

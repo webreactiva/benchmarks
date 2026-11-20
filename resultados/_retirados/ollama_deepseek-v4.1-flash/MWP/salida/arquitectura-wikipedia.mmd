@@ -1,0 +1,82 @@
+%% Arquitectura de Wikipedia (Wikimedia) - diagrama de alto nivel
+%% Flujo: clientes -> DNS/CDN -> balanceo -> MediaWiki -> datos/servicios
+flowchart TB
+
+    subgraph CL["Clientes"]
+        direction LR
+        WEB["Navegador web"]
+        MOV["Apps móviles<br/>iOS / Android"]
+        BOT["Bots y clientes API"]
+    end
+
+    subgraph EDGE["Borde: DNS y CDN"]
+        direction LR
+        DNS["DNS de Wikimedia"]
+        CDN["CDN / caché HTTP<br/>Varnish"]
+        LB["Balanceo de carga<br/>LVS"]
+    end
+
+    subgraph APP["Capa de aplicación (PHP)"]
+        direction LR
+        MW["Servidores MediaWiki<br/>Apache + PHP-FPM"]
+        API["API de MediaWiki<br/>Action API / REST"]
+        AUTH["CentralAuth<br/>autenticación"]
+        SESS["Gestión de sesiones"]
+    end
+
+    subgraph SVC["Servicios de contenido"]
+        direction LR
+        PARSOID["Parsoid<br/>wikitexto ↔ HTML"]
+        RESTBASE["RESTBase<br/>API de servicios"]
+        CIRRUS["CirrusSearch"]
+        WDQS["Wikidata Query Service"]
+    end
+
+    subgraph DATA["Datos y almacenamiento"]
+        direction LR
+        MEM["Memcached<br/>caché de objetos"]
+        DB["MariaDB<br/>clústeres de bases de datos"]
+        ES["Elasticsearch<br/>índice de búsqueda"]
+        SWIFT["Swift<br/>almacenamiento de objetos"]
+        MEDIA["Almacén de medios<br/>imágenes y miniaturas"]
+    end
+
+    subgraph ASYNC["Procesamiento asíncrono"]
+        direction LR
+        KAFKA["Kafka<br/>bus de eventos"]
+        JOBS["Cola de trabajos<br/>JobQueue"]
+        CHANGEPROP["ChangeProp<br/>propagación de cambios"]
+        SCALERS["Escaladores<br/>de miniaturas"]
+    end
+
+    WEB --> DNS
+    MOV --> DNS
+    BOT --> DNS
+
+    DNS --> CDN
+    CDN -->|"fallo de caché"| LB
+    LB --> MW
+
+    MW --> API
+    MW --> AUTH
+    MW --> SESS
+
+    MW --> PARSOID
+    MW --> RESTBASE
+    MW --> CIRRUS
+    MW --> WDQS
+
+    MW --> MEM
+    MW --> DB
+    MW --> SWIFT
+    MW --> MEDIA
+
+    MW --> KAFKA
+    KAFKA --> JOBS
+    KAFKA --> CHANGEPROP
+    JOBS --> SCALERS
+    SCALERS --> MEDIA
+
+    CIRRUS --> ES
+    RESTBASE --> PARSOID
+    RESTBASE --> MW

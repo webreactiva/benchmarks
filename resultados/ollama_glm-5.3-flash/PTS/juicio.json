@@ -1,0 +1,21 @@
+{
+  "nota": 9,
+  "veredicto": "el mejor post",
+  "resumen": "981 palabras con la tesis bien defendida (sin tests sabes que no hay red; con tests que mienten crees que la hay), costes con números (un test que falla 1 de cada 50 con 100 ejecuciones al día interrumpe a diario), un ejemplo en Go, las causas típicas y cinco pasos. El menos slop de todos. Falla en el ejemplo: dice que pasa el 99 % y casi siempre fallará.",
+  "rarezas": [
+    "Único post con código: un test en Go con una goroutine sin sincronizar.",
+    "Se equivoca justo en el ejemplo: sin sincronizar, la goroutine casi nunca termina antes de repo.Get, así que el test fallará casi siempre, no pasará «el 99 % de las veces».",
+    "«El efecto del lobo cibernético» como título de sección: traducción rara de «gritar que viene el lobo».",
+    "3 peticiones y 2,6 k tokens de salida."
+  ],
+  "nota_previa": 8,
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 0,
+    "slop": 2,
+    "extensión": 1
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "rubrica": {
+    "se instala y ejecuta": 1,
+    "tests": 1,
+    "dominio": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 0,
+    "escala horizontal": 0,
+    "explica el escalado": 0
+  },
+  "nota": 5,
+  "veredicto": "bonita tienda, no escala",
+  "resumen": "Una tienda en el navegador muy cuidada, con fotos generadas, cupón, envío y deshacer, y un carrito con funciones puras en céntimos que valida bien lo que lee de localStorage. «Escalable» lo entiende como un catálogo ampliable: no hay servicio, ni almacenamiento compartido, ni concurrencia, y el README solo dice que para producción haría falta un servidor.",
+  "rarezas": [
+    "Lee la skill de serie imagegen y genera una hoja de contacto con seis fotos de producto que recorta en WebP",
+    "Descarga las fuentes DM Sans y DM Serif Display con sus licencias",
+    "Instala navegadores en /tmp para probar y no consigue abrir ninguno; prueba el flujo en un DOM simulado",
+    "Interpreta «escalable» como catálogo ampliable y diseño adaptable"
+  ]
+}

@@ -1,0 +1,36 @@
+  ┃              "  const c = (await m.getCart(cart.id)).toJSON();\n  assert.equal(c.subtotal, 20);")
+  ┃  s=s.replace("  const c = await m.getCart(cart.id);\n  assert.equal(c.items.length, 0);",
+  ┃              "  const c = (await m.getCart(cart.id)).toJSON();\n  assert.equal(c.items.length, 0);")
+  ┃  open(p,'w').write(s)
+  ┃  PY
+  ┃  npm test 2>&1 | tail -25
+  ┃
+  ┃  ---
+  ┃    duration_ms: 1.599755
+  ┃    type: 'test'
+  ┃    ...
+  ┃  # Subtest: stock check
+  ┃  ok 3 - stock check
+  ┃    ---
+  ┃    duration_ms: 0.343856
+  ┃    type: 'test'
+  ┃    ...
+  ┃  …
+  ┃
+  ┃  Click to expand
+  ┃
+
+     + Thought: 1.8s
+
+     Implementado en /var/tmp/bench/ws-P4GcZAVP: núcleo de carrito, persistencia in-memory, locks, eventos, API HTTP
+     sin dependencias y tests (npm test pasa).
+
+     ▣  Build · beam · 1m 5s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · beam Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-P4GcZAVP                                                              16.9K (2%)  ctrl+p commands
+

@@ -1,0 +1,36 @@
+  ┃  [✓] Dominio: entidades, pricing engine, errores, eventos
+  ┃  [✓] Aplicación: ports + CartService con concurrencia optimista
+  ┃  [✓] Infraestructura: repos in-memory (cart/catálogo/cupones) + event bus
+  ┃  [✓] HTTP: rutas REST, validación, servidor
+  ┃  [✓] Tests: dominio, servicio, API (fastify inject)
+  ┃  [✓] Verificación: typecheck + tests + README
+  ┃
+
+     + Thought: 19ms
+
+     Hecho. Carrito escalable en Node.js + TypeScript + Fastify en /var/tmp/bench/ws-oY65Vggd — typecheck limpio, 21
+     tests en verde, smoke test del flujo completo (crear → añadir → cupón → checkout) verificado.
+
+     Estructura (capas + puertos):
+
+     - src/domain/ — Cart, motor de precios (céntimos enteros, cupones %/fijos con cap y subtotal mínimo, IVA, envío
+       gratis por umbral), errores y eventos de dominio, sin dependencias
+     - src/application/ — CartService con concurrencia optimista (expectedVersion → 409) y puertos (CartRepository,
+       ProductCatalog, CouponRepository, EventBus)
+     - src/infrastructure/ — implementaciones in-memory sustituibles por Redis/Postgres
+     - src/http/ — API REST /api/v1 (carts, items, coupon, checkout) con validación Zod y mapeo error→HTTP
+
+     Claves de escalabilidad: API stateless, compare-and-set por versión de carrito en vez de locks, eventos post-
+     commit para outbox/mensajería, TTL de carrito, dinero en céntimos.
+
+     Pendiente si quisieras: persistencia Redis real y tests de carga. Ver README.md para arquitectura y despliegue.
+
+     ▣  Build · inkling-2-small · 2m 22s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · inkling-2-small Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-oY65Vggd                                                              42.6K (4%)  ctrl+p commands
+

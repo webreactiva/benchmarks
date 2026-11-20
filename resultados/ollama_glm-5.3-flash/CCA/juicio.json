@@ -1,0 +1,22 @@
+{
+  "nota": 8,
+  "veredicto": "bien diseñado, Redis roto",
+  "resumen": "Python con capas (dominio, aplicación, infraestructura, API HTTP), Decimal para el dinero, precios del catálogo, bloqueo por carrito en memoria, límites y 24 tests en verde. Pero el adaptador de Redis, que es lo que lo haría escalar, captura self._client.WatchError, que no existe: un conflicto de concurrencia o cualquier error de negocio acaba en AttributeError.",
+  "rarezas": [
+    "33 peticiones y 1,08 millones de tokens. Fue y vino con los tests varias veces hasta ponerlos en verde, y arrancó el servidor y lo probó con curl.",
+    "Dejó __pycache__ y .pytest_cache en la carpeta de entrega.",
+    "Los tests del adaptador de Redis no existen: la pieza rota es justo la que no probó.",
+    "Añadir un producto que ya está en el carrito no suma: da DuplicateProductError y pide usar PATCH."
+  ],
+  "nota_previa": 6,
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 1,
+    "escala horizontal": 1,
+    "explica el escalado": 1
+  }
+}

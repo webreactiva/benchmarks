@@ -1,0 +1,323 @@
+{
+  "info": {
+    "id": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+    "slug": "gentle-sailor",
+    "projectID": "global",
+    "directory": "/var/tmp/bench/ws-11XjhmTN",
+    "path": "var/tmp/bench/ws-11XjhmTN",
+    "title": "Post de blog: tests que fallan vs. sin tests",
+    "agent": "build",
+    "model": {
+      "id": "deepseek-v4.1-flash",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 9200,
+      "output": 2883,
+      "reasoning": 0,
+      "cache": {
+        "read": 17506,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795128591320,
+      "updated": 1795128603833
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795128591363
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "deepseek-v4.1-flash"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f6008402001oiB7zzU6WKBdAY",
+        "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f6008406001pRc5gWO5J4kjlD",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f6008402001oiB7zzU6WKBdAY"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6008402001oiB7zzU6WKBdAY",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-11XjhmTN",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8244,
+          "input": 6024,
+          "output": 498,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 1722
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128591468,
+          "completed": 1795128595928
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f600846c0017um7qnrlx86j8P",
+        "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6008f55001n6yb3xmN1YLk1l",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f600846c0017um7qnrlx86j8P"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user wants me to write a blog post in Spanish about why failing tests are sometimes worse than having no tests, and save it in the current folder. This is a content creation task, not really a coding task. Let me write a good blog post.\n\nLet me check the current directory first.\n\nThe instruction says save what I generate in the current folder. I'll create a markdown file. Let me pick a filename like `tests-que-fallan-peores-que-no-tener-tests.md`.\n\nI should write a substantive blog post. Let me think about the content.\n\nTopic: Why failing tests are sometimes worse than no tests.\n\nKey arguments:\n1. Failing tests destroy signal/noise ratio - alarm fatigue\n2. They train the team to ignore red builds (broken windows)\n3. They block CI/CD and deployment pipelines\n4. They create false confidence when disabled/skipped\n5. They cost time investigating false failures (flaky tests)\n6. They erode trust in the test suite\n7. They can mask real bugs because everything is red anyway\n8. They slow down development velocity\n9. They create pressure to skip/delete tests\n10. Better to have no test than a test that's wrong - a wrong test can give false security, or worse, assert incorrect behavior\n\nBut also add nuance: This isn't an argument for deleting tests. Failing tests are valuable when they're expected to fail and signal real issues. The problem is chronic/ignored failures.\n\nStructure:\n- Hook / intro\n- \"El semáforo que siempre está en rojo\"\n- Alarm fatigue\n- Flaky tests\n- False confidence / disabled tests\n- The cost of a red pipeline\n- Tests that assert the wrong thing\n- When a failing test is actually valuable\n- Practical recommendations\n- Conclusion\n\nI should write it in Spanish, as the user asked in Spanish. Make it well-crafted, engaging, for a programming blog. Save as a file in the current directory.\n\nLet me check the directory contents first, then write.\n\nI'll keep my text response concise per instructions, but the file content can be long. Let me not over-explain in chat.\n\nLet me look at the workspace.",
+          "time": {
+            "start": 1795128594271,
+            "end": 1795128595692
+          },
+          "id": "prt_1f6008f5f001QqlPrSeWBD7pOO",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f600846c0017um7qnrlx86j8P"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_3urwtktb",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "ls -la"
+            },
+            "output": "total 4\ndrwx------ 2 root root 4096 Nov 19 22:49 .\ndrwxrwxrwt 3 root root   60 Nov 19 22:49 ..\n",
+            "metadata": {
+              "output": "total 4\ndrwx------ 2 root root 4096 Nov 19 22:49 .\ndrwxrwxrwt 3 root root   60 Nov 19 22:49 ..\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "ls -la",
+            "time": {
+              "start": 1795128595707,
+              "end": 1795128595911
+            }
+          },
+          "id": "prt_1f60094f2001c4pO1xVJ1yX2Ww",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f600846c0017um7qnrlx86j8P"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8244,
+            "input": 6024,
+            "output": 498,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 1722
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f60095cf001PnE11alZlV696H",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f600846c0017um7qnrlx86j8P"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6008402001oiB7zzU6WKBdAY",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-11XjhmTN",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10648,
+          "input": 681,
+          "output": 2351,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7616
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128595935,
+          "completed": 1795128603124
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f60095df0016pdq4llZPiEcL0",
+        "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f60097770011p1XD21nxxPyWG",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f60095df0016pdq4llZPiEcL0"
+        },
+        {
+          "type": "reasoning",
+          "text": "Empty directory. Let me write the blog post in Spanish as a markdown file.",
+          "time": {
+            "start": 1795128596350,
+            "end": 1795128602960
+          },
+          "id": "prt_1f600977e001m1bj9O2zPVkunX",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f60095df0016pdq4llZPiEcL0"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_wd8vslwz",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-11XjhmTN/tests-que-fallan-peores-que-no-tener-tests.md",
+              "content": "# Cuando el rojo se vuelve invisible: por qué un test que falla puede ser peor que no tener tests\n\nHay una frase que se repite en casi todas las charlas de buenas prácticas: *\"mejor tener tests que no tenerlos\"*. Y es una buena regla general. Pero como toda regla, tiene excepciones que conviene mirar de cerca. Porque un test que falla de forma crónica, que nadie atiende o que miente, no solo deja de aportar: puede ser **más dañino que la ausencia total de tests**.\n\nNo hablo del test que falla una vez y te señala un bug real. Hablo del que se queda en rojo durante semanas, del que falla de manera intermitente, del que todos aprendieron a ignorar. Ese test no es una red de seguridad. Es una alarma de incendios que suena todo el día.\n\n## El problema no es el fallo, es la costumbre\n\nUn test que falla y se arregla es información valiosa. Un test que falla y nadie arregla se convierte en **ruido de fondo**. Y el ruido de fondo tiene un efecto conocido en psicología: la habituación. Dejamos de escucharlo.\n\nCuando el pipeline lleva tres semanas en rojo, aparece una frase peligrosa en la cultura del equipo:\n\n> \"Ese test siempre falla, ignóralo.\"\n\nEn ese momento el test ya no cumple ninguna función. Peor aún, empieza a cumplir una función negativa: **normaliza el fallo**. El equipo se acostumbra a que \"algo esté mal\" y deja de investigar. Y cuando un test *nuevo* señale un bug real, se perderá entre los otros veinte que llevan meses en rojo.\n\nUn proyecto sin tests, al menos, no te engaña: sabes que estás caminando sin red. Un proyecto con un tablero permanentemente en rojo te hace creer que tienes red, cuando en realidad tienes un colador.\n\n## La fatiga de alarmas y el costo de la duda\n\nLos sistemas de monitoreo lo tienen estudiado: si una alerta se dispara con demasiada frecuencia y sin consecuencias reales, los operadores empiezan a ignorarla. Los tests automatizados no son distintos.\n\nPiénsalo en términos de tiempo. Cada vez que el CI se pone en rojo, alguien tiene que:\n\n1. Detenerse a mirar qué falló.\n2. Decidir si es un bug real, un test frágil o un problema de infraestructura.\n3. Comunicarlo al equipo o ignorarlo conscientemente.\n\nSi esto pasa varias veces al día, el costo se acumula. Y no es solo el tiempo: es la **carga cognitiva** de tener que decidir, una y otra vez, si el rojo importa. Esa duda permanente es agotadora, y en algún punto el equipo opta por la decisión más barata: dejar de mirar.\n\nAquí está la trampa: el test que falla constantemente **destruye la señal** de los tests que sí funcionan. Un conjunto de 500 tests donde 30 fallan siempre es, en la práctica, un conjunto de 470 tests, pero con un 100% de desconfianza.\n\n## Tests frágiles: cuando el test miente\n\nEstán los que fallan por razones equivocadas. Dependen del reloj del sistema, del orden de ejecución, de una base de datos compartida, de una llamada de red, de una zona horaria o de un `sleep` de dos segundos que \"casi siempre alcanza\".\n\nEstos tests son especialmente perversos porque fallan de forma intermitente. Pasan en tu máquina, fallan en el CI. Pasan en el CI, fallan en tu máquina. Le rezas al dios de los reintentos y vuelves a lanzar el pipeline.\n\nEl resultado es doble:\n\n- **Te hacen perder tiempo** persiguiendo fantasmas.\n- **Te enseñan a desconfiar de los fallos**, que es exactamente lo contrario de lo que quieres.\n\nUn test frágil es peor que no tener test porque, además de no protegerte, te entrena para ignorar las señales. Y cuando llegue el fallo verdadero, ya habrás aprendido que los rojos no significan nada.\n\n## La falsa confianza de los tests desactivados\n\nAnte un test que molesta, hay tres salidas: arreglarlo, borrarlo o esconderlo. La tercera es la más común y la más peligrosa.\n\n```python\n@pytest.mark.skip(reason=\"flaky, lo vemos después\")\ndef test_conciliacion_de_pagos():\n    ...\n```\n\nEse `skip` deja una marca en el código que dice \"esto está cubierto\", pero no cubre nada. En el reporte de cobertura el archivo aparece en verde. En las discusiones de equipo alguien dice \"sí, tenemos tests para esa parte\". Y sin embargo, el comportamiento crítico ya no está verificado por nadie.\n\nLa cobertura es una de las métricas más fáciles de engañar. Un test saltado, un test que solo verifica que \"no explota\", un test que asume exactamente la implementación actual: todos suman cobertura y restan protección. Los tests malos **producen una sensación de seguridad que no corresponde a la realidad**, y esa falsa confianza es más peligrosa que la ignorancia honesta.\n\n## Tests que verifican lo incorrecto\n\nHay un caso todavía más sutil: el test que pasa, pero que asegura un comportamiento equivocado.\n\nSupongamos que un test captura la salida de una función y la compara con un resultado que en realidad contiene un bug. Mientras el bug siga ahí, el test está en verde. El día que alguien lo corrija, el test se pondrá rojo y podría frenar la corrección. El test se convirtió en un **guardián del error**.\n\nLos tests son código, y el código puede estar mal. Un test que no se revisa con el mismo rigor que la implementación no es una fuente de verdad: es una segunda opinión igual de falible, pero con autoridad de juez.\n\n## El costo real: el pipeline como cuello de botella\n\nEn equipos que practican integración continua, un pipeline en rojo bloquea despliegues. Eso es correcto cuando el fallo importa. Pero si el fallo es crónico y \"conocido\", el equipo empieza a buscar atajos:\n\n- Se ignoran los tests con `--force` o flags de \"saltar los que fallan\".\n- Se configuran reglas de \"permitir fallos\" (allowed failures) para ciertos jobs.\n- Se aprueban pull requests con el CI en rojo y una nota de \"los fallos son los de siempre\".\n\nCada uno de estos atajos es razonable en el momento y desastroso en conjunto. Poco a poco, el sistema de calidad se convierte en teatro: hay tests, hay CI, hay reportes, pero **nadie confía en ellos y todos aprenden a rodearlos**. Has construido la infraestructura de la seguridad sin la seguridad.\n\n## Un test que falla no siempre es un mal test\n\nConviene hacer una distinción importante, porque no quiero que esto se lea como \"borren sus tests\".\n\nUn test que falla puede ser:\n\n- **Valioso**: señala un bug real, un cambio de contrato, una regresión. Hay que atenderlo.\n- **Ruidoso**: es frágil o dependiente del entorno. Hay que arreglarlo o eliminarlo.\n- **Muerto**: está ignorado, saltado o desactualizado. Hay que decidir: revivirlo o enterrarlo.\n\nEl problema nunca es que un test falle. El problema es **la falla que se vuelve estado permanente**. Un test rojo que se ignora deja de ser una herramienta y se convierte en decoración. Y la decoración que parece seguridad es lo peor que le puede pasar a un equipo.\n\n## La regla que sí vale la pena adoptar\n\nSi tuviera que resumirlo en una política, sería esta:\n\n> Un test que falla es una deuda con vencimiento inmediato. O se arregla, o se borra. Lo que no se hace es dejarlo en rojo.\n\nEsto obliga a tomar decisiones honestas:\n\n- **Si el test falla por un bug**: arréglalo. Ese es el trabajo.\n- **Si el test es frágil**: hazlo determinista o elimínalo. Un test frágil no vale el tiempo que consume.\n- **Si el test ya no representa un requisito**: bórralo sin culpa. Los requisitos cambian.\n- **Si necesitas desactivarlo temporalmente**: ponle fecha de caducidad y un ticket. Un `skip` sin dueño es un `skip` para siempre.\n\nY una recomendación cultural: **trata el pipeline en rojo como una emergencia**, no como el clima. Si el rojo es normal, la calidad se vuelve opcional.\n\n## Conclusión\n\nTener tests es mejor que no tenerlos, pero solo cuando esos tests son confiables. Un conjunto de pruebas que falla constantemente, que miente o que nadie mira no es una red de seguridad: es una ilusión costosa. Consume tiempo, erosiona la confianza y, sobre todo, **entrena al equipo para ignorar las señales de peligro**.\n\nNo tener tests te deja vulnerable, pero al menos te deja honesto. Un test que falla y se ignora te deja vulnerable *y* convencido de que estás protegido. Y esa combinación es, casi siempre, peor.\n\nLa próxima vez que veas un rojo que lleva días ahí, no lo mires como \"el test que siempre falla\". Míralo como una decisión pendiente que el equipo lleva demasiado tiempo evitando. Arréglalo o bórralo, pero no lo dejes ahí fingiendo que hace su trabajo.\n"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-11XjhmTN/tests-que-fallan-peores-que-no-tener-tests.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-11XjhmTN/tests-que-fallan-peores-que-no-tener-tests.md",
+            "time": {
+              "start": 1795128602971,
+              "end": 1795128602985
+            }
+          },
+          "id": "prt_1f600b1530012Dpd6wNkq23BPN",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f60095df0016pdq4llZPiEcL0"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10648,
+            "input": 681,
+            "output": 2351,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7616
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f600b1d1001pGOlhisJOsnkVX",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f60095df0016pdq4llZPiEcL0"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6008402001oiB7zzU6WKBdAY",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-11XjhmTN",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10697,
+          "input": 2495,
+          "output": 34,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8168
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128603130,
+          "completed": 1795128603822
+        },
+        "finish": "stop",
+        "id": "msg_1f600b1fa001BuD36LxPVP1YUT",
+        "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f600b38b0018FmDx7VCad7GrO",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f600b1fa001BuD36LxPVP1YUT"
+        },
+        {
+          "type": "text",
+          "text": "Listo. Guardé el post en `tests-que-fallan-peores-que-no-tener-tests.md`, en la carpeta actual.",
+          "time": {
+            "start": 1795128603536,
+            "end": 1795128603714
+          },
+          "id": "prt_1f600b3900011CROXaAZiSP4cH",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f600b1fa001BuD36LxPVP1YUT"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10697,
+            "input": 2495,
+            "output": 34,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8168
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f600b4580015mPt7fjxuzm1ec",
+          "sessionID": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+          "messageID": "msg_1f600b1fa001BuD36LxPVP1YUT"
+        }
+      ]
+    }
+  ]
+}

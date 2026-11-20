@@ -1,0 +1,20 @@
+{
+  "nota": 9,
+  "veredicto": "el mejor A3D: se recorre",
+  "resumen": "El único A3D en que la ruta funciona de principio a fin: la cámara viaja por 8 paradas (a mano o en Auto) y cada una se reconoce: el arco de la Puerta de la Justicia, el patio circular de Carlos V, los pabellones y columnas del Patio de los Leones, el pórtico del Partal con su alberca, el Generalife con la acequia y Sierra Nevada al fondo. En 24 KB. Le faltan la fuente de los leones y unas etiquetas legibles.",
+  "rarezas": [
+    "Repetición sin tope de salida (las dos primeras de GLM, cortadas a 32 000 tokens, están en _descartados). Esta vez su respuesta más larga fue de 38 666 tokens: sí necesitaba pasar del tope.",
+    "Termina en inglés («Verification complete — the fix is confirmed»), con el prompt en español.",
+    "Extrajo el script del HTML a /tmp/opencode/alh.mjs para pasarle node --check.",
+    "29 peticiones y 346 k tokens, sin lectura de caché."
+  ],
+  "nota_previa": 8,
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  }
+}

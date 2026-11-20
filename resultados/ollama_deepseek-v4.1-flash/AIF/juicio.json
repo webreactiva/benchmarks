@@ -1,0 +1,21 @@
+{
+  "nota": 9,
+  "veredicto": "Infinite Craft de verdad",
+  "resumen": "La mecánica más fiel a Infinite Craft de todo el benchmark: lienzo libre donde se suelta una pieza sobre otra, almacén con buscador y una misión (descubrir el Atlas Malandriner). 78 elementos y 90 recetas sacados de webreactiva.com, todos alcanzables, con pistas, sonido y guardado. Pero no es infinito: fuera de las 90 recetas, las mezclas no dan nada.",
+  "rarezas": [
+    "Repetición sin tope de salida (la primera, cortada a 32 000 tokens, está en _descartados). Esta vez su respuesta más larga fue de 27 180 tokens: no necesitaba más, la otra vez lo planteó de otra forma.",
+    "Leyó webreactiva.com y /now para el contenido.",
+    "32 peticiones y 2,6 millones de tokens.",
+    "Ya encerrado, buscó Chrome y Playwright para probarlo; no encontró nada fuera de su carpeta que no fuera del sistema."
+  ],
+  "nota_previa": 8,
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 2,
+    "acabado": 1
+  }
+}

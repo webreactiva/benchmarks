@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alhambra · Ruta en 3D</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#1b1a17;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#f5ecd7}
+#scene{position:fixed;inset:0}
+#scene canvas{display:block}
+.panel{position:absolute;background:rgba(20,18,16,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(233,196,106,.25);border-radius:14px;padding:14px}
+#side{left:16px;top:16px;bottom:16px;width:270px;display:flex;flex-direction:column;gap:10px}
+#side h1{font-size:19px;margin:0;color:#e9c46a;font-family:Georgia,serif}
+#side .sub{font-size:12px;opacity:.7;margin:0}
+#stops{overflow:auto;flex:1;display:flex;flex-direction:column;gap:3px;margin:0;padding:0;list-style:none}
+.stop-btn{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;padding:7px 9px;border-radius:9px;font-size:14px;box-sizing:border-box;width:100%}
+.stop-btn:hover{background:rgba(255,255,255,.08)}
+.stop-btn.active{background:rgba(233,196,106,.22)}
+.num{width:24px;height:24px;min-width:24px;border-radius:50%;background:#2a9d8f;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff}
+#side .note{font-size:11px;opacity:.6;margin:0;line-height:1.4}
+#bar{left:306px;right:16px;bottom:16px;display:flex;flex-direction:column;gap:10px}
+#card h2{margin:0 0 4px;font-size:18px;color:#e9c46a;font-family:Georgia,serif}
+#card p{margin:0;font-size:14px;line-height:1.45;opacity:.92}
+#prog{width:100%;accent-color:#e9c46a}
+#ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{background:#2a9d8f;border:0;color:#fff;padding:8px 12px;border-radius:9px;cursor:pointer;font-size:14px;font-family:inherit}
+.btn:hover{filter:brightness(1.1)}
+.btn.alt{background:rgba(255,255,255,.12)}
+.btn.on{background:#e9c46a;color:#1b1a17}
+select.btn{padding:7px 8px}
+#counter{font-size:13px;opacity:.75;margin-left:auto}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lab{position:absolute;transform:translate(-50%,-115%);pointer-events:auto;cursor:pointer;background:rgba(20,18,16,.78);border:1px solid #e9c46a;color:#f5ecd7;border-radius:999px;padding:3px 10px;font-size:12px;white-space:nowrap;display:none}
+.lab.active{background:#e9c46a;color:#1b1a17;font-weight:600}
+@media (max-width:760px){
+  #side{right:12px;left:12px;top:12px;bottom:auto;width:auto;padding:10px 12px}
+  #stops{display:none}
+  #side .note{display:none}
+  #bar{left:12px;right:12px;bottom:12px;padding:12px}
+  #card h2{font-size:16px}
+  #card p{font-size:13px}
+}
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div id="labels"></div>
+
+<aside id="side" class="panel">
+  <div>
+    <h1>Alhambra · Ruta en 3D</h1>
+    <p class="sub">Granada, España</p>
+  </div>
+  <ul id="stops"></ul>
+  <p class="note">Maqueta esquemática: las posiciones, tamaños y alturas son aproximados y simplificados.</p>
+</aside>
+
+<section id="bar" class="panel">
+  <div id="card">
+    <h2 id="title"></h2>
+    <p id="desc"></p>
+  </div>
+  <input id="prog" type="range" min="0" max="1000" value="0" aria-label="Progreso de la ruta">
+  <div id="ctl">
+    <button class="btn alt" id="prev" title="Parada anterior (←)">◀ Anterior</button>
+    <button class="btn" id="play" title="Reproducir / pausa (espacio)">▶ Reproducir</button>
+    <button class="btn alt" id="next" title="Siguiente parada (→)">Siguiente ▶</button>
+    <button class="btn alt" id="free" title="Girar la cámara libremente con el ratón">Modo libre: off</button>
+    <select class="btn alt" id="speed" aria-label="Velocidad">
+      <option value="0.5">0.5×</option>
+      <option value="1" selected>1×</option>
+      <option value="2">2×</option>
+      <option value="3">3×</option>
+    </select>
+    <span id="counter"></span>
+  </div>
+</section>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ------------------------------------------------------------------ */
+/* Paradas de la ruta (coordenadas en metros, plano aproximado)        */
+/* ------------------------------------------------------------------ */
+const STOPS = [
+  { name: 'Puerta de la Justicia', p: [-185, 4, 96],
+    desc: 'Puerta de herradura de finales del siglo XIV, levantada hacia 1348. En su clave aparecen una mano y una llave, símbolos de la justicia y de la protección del recinto.' },
+  { name: 'Patio de Armas', p: [-95, 4, 60],
+    desc: 'Gran explanada de acceso a la fortaleza, donde se concentraban las actividades militares y civiles. Hoy es un espacio abierto con vistas a la ciudad.' },
+  { name: 'Palacio de Carlos V', p: [-50, 4, 40],
+    desc: 'Palacio renacentista encargado por Carlos I (Carlos V) en el siglo XVI. Su volumen sobrio y de planta cuadrada contrasta con la arquitectura nazarí que lo rodea.' },
+  { name: 'Patio de los Arrayanes', p: [0, 4, 34],
+    desc: 'Estanque alargado flanqueado por arrayanes (mirtos) que refleja el Salón de Comares al fondo. Es uno de los espacios más serenos del palacio nazarí.' },
+  { name: 'Torre de Comares', p: [-44, 4, -56],
+    desc: 'Torre que domina el palacio de Comares. En su interior se encuentra el Salón de los Embajadores, la sala de recepciones más importante de la Alhambra.' },
+  { name: 'Patio de los Leones', p: [70, 4, 28],
+    desc: 'Patio rodeado de columnas de mármol y con una fuente de doce leones que sostienen la taza central. Cuatro canales dividen el agua en cuatro sectores, como un jardín del paraíso.' },
+  { name: 'Sala de los Abencerrajes', p: [84, 4, -36],
+    desc: 'Sala cubierta por una cúpula estrellada de muqarnas, con una leyenda ligada a la familia de los Abencerrajes. Sus yeserías son uno de los mejores ejemplos del arte nazarí.' },
+  { name: 'Torre de las Damas', p: [124, 8, -58],
+    desc: 'Torre situada en el sector de los jardines, junto a los palacios residenciales del recinto. Desde ella se abre una vista sobre el verdor de los huertos.' },
+  { name: 'Generalife', p: [146, 8, -112],
+    desc: 'Palacio de recreo de los sultanes nazaríes, con jardines de agua, acequias y largas hileras de cipreses en la ladera opuesta a la fortaleza.' },
+  { name: 'Mirador final', p: [120, 40, -150],
+    desc: 'Vista panorámica sobre Granada, la Vega y, al fondo, la Sierra Nevada. Fin de la ruta.' }
+];
+const S = STOPS.length;
+
+/* ------------------------------------------------------------------ */
+/* Renderer, escena, cámara                                            */
+/* ------------------------------------------------------------------ */
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.getElementById('scene').appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = skyTexture();
+scene.fog = new THREE.Fog(0xd7e7ec, 300, 1500);
+
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 4000);
+
+scene.add(new THREE.HemisphereLight(0xfff4e0, 0x7a6a4f, 1.1));
+const sun = new THREE.DirectionalLight(0xffe2b0, 2.2);
+sun.position.set(-150, 320, 200);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -260, right: 260, top: 260, bottom: -260, near: 10, far: 900 });
+sun.shadow.camera.updateProjectionMatrix();
+sun.shadow.bias = -0.0008;
+scene.add(sun);
+
+/* ------------------------------------------------------------------ */
+/* Materiales y utilidades                                             */
+/* ------------------------------------------------------------------ */
+const M = {
+  stone:     new THREE.MeshStandardMaterial({ color: 0xe6d6b3, roughness: 0.85 }),
+  stoneDark: new THREE.MeshStandardMaterial({ color: 0xc8b48c, roughness: 0.9 }),
+  earth:     new THREE.MeshStandardMaterial({ color: 0xd8c39a, roughness: 1 }),
+  grass:     new THREE.MeshStandardMaterial({ color: 0x9c9a6a, roughness: 1 }),
+  hedge:     new THREE.MeshStandardMaterial({ color: 0x2f6b3a, roughness: 0.9 }),
+  cypress:   new THREE.MeshStandardMaterial({ color: 0x1f4a2a, roughness: 0.9 }),
+  leaf:      new THREE.MeshStandardMaterial({ color: 0x4a7a3c, roughness: 0.9 }),
+  trunk:     new THREE.MeshStandardMaterial({ color: 0x6b4b2e, roughness: 1 }),
+  water:     new THREE.MeshStandardMaterial({ color: 0x3ab3c2, roughness: 0.05, metalness: 0.1, transparent: true, opacity: 0.9 }),
+  roof:      new THREE.MeshStandardMaterial({ color: 0x9b4f2e, roughness: 0.8 }),
+  rock:      new THREE.MeshStandardMaterial({ color: 0x7d8a7a, roughness: 1 }),
+  snow:      new THREE.MeshStandardMaterial({ color: 0xf7f7f2, roughness: 0.6 }),
+  marker:    new THREE.MeshBasicMaterial({ color: 0xffc857 })
+};
+
+const world = new THREE.Group();
+scene.add(world);
+
+function add(mesh, shadow = true) {
+  mesh.castShadow = shadow;
+  mesh.receiveShadow = true;
+  world.add(mesh);
+  return mesh;
+}
+// Bloque con base en y0 y centro en (x, z)
+function block(w, h, d, x, z, mat = M.stone, y0 = 0) {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  m.position.set(x, y0 + h / 2, z);
+  return add(m);
+}
+function roofPyr(s, h, x, y, z) {
+  const m = new THREE.Mesh(new THREE.ConeGeometry(s * 0.71, h, 4), M.roof);
+  m.rotation.y = Math.PI / 4;
+  m.position.set(x, y + h / 2, z);
+  return add(m);
+}
+function tower(x, z, r, h, roofH = 7) {
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r * 1.05, h, 12), M.stone);
+  m.position.set(x, h / 2, z);
+  add(m);
+  const c = new THREE.Mesh(new THREE.ConeGeometry(r * 1.25, roofH, 12), M.roof);
+  c.position.set(x, h + roofH / 2, z);
+  return add(c);
+}
+function floor(w, d, x, z, mat = null) {
+  const m = new THREE.Mesh(
+    new THREE.PlaneGeometry(w, d),
+    mat || (() => {
+      const t = tileTex.clone();
+      t.repeat.set(w / 7, d / 7);
+      t.needsUpdate = true;
+      return new THREE.MeshStandardMaterial({ map: t, roughness: 0.7 });
+    })()
+  );
+  m.rotation.x = -Math.PI / 2;
+  m.position.set(x, 0.03, z);
+  m.receiveShadow = true;
+  world.add(m);
+  return m;
+}
+function water(w, d, x, z, y = 0.08) {
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), M.water);
+  m.rotation.x = -Math.PI / 2;
+  m.position.set(x, y, z);
+  m.receiveShadow = true;
+  world.add(m);
+  return m;
+}
+function cypress(x, z, h = 11) {
+  const m = new THREE.Mesh(new THREE.ConeGeometry(1.4, h, 8), M.cypress);
+  m.position.set(x, h / 2, z);
+  return add(m);
+}
+function tree(x, z, s = 1) {
+  const t = new THREE.Mesh(new THREE.CylinderGeometry(0.3 * s, 0.4 * s, 4 * s, 6), M.trunk);
+  t.position.set(x, 2 * s, z);
+  add(t);
+  const c = new THREE.Mesh(new THREE.SphereGeometry(2.4 * s, 12, 10), M.leaf);
+  c.position.set(x, 5 * s, z);
+  return add(c);
+}
+function arcade(cx, cz, hw, hd, nx, nz) {
+  const cg = new THREE.CylinderGeometry(0.32, 0.38, 4.4, 10);
+  const pos = [];
+  for (let i = 0; i <= nx; i++) { const x = -hw + (2 * hw * i) / nx; pos.push([x, -hd], [x, hd]); }
+  for (let j = 1; j < nz; j++) { const z = -hd + (2 * hd * j) / nz; pos.push([-hw, z], [hw, z]); }
+  for (const [x, z] of pos) {
+    const c = new THREE.Mesh(cg, M.stone);
+    c.position.set(cx + x, 2.2, cz + z);
+    add(c);
+  }
+  block(2 * hw + 1, 0.6, 1.2, cx, cz - hd, M.stoneDark, 4.4);
+  block(2 * hw + 1, 0.6, 1.2, cx, cz + hd, M.stoneDark, 4.4);
+  block(1.2, 0.6, 2 * hd + 1, cx - hw, cz, M.stoneDark, 4.4);
+  block(1.2, 0.6, 2 * hd + 1, cx + hw, cz, M.stoneDark, 4.4);
+}
+function lion(x, z, a) {
+  // La cabeza mira hacia el centro de la fuente (su origen está en el borde)
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.6, 0.55), M.stone);
+  body.position.set(0, 0.3, 0);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.3, 10, 8), M.stone);
+  head.position.set(0.85, 0.5, 0);
+  const tail = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.1, 0.1), M.stone);
+  tail.position.set(-0.95, 0.5, 0);
+  g.add(body, head, tail);
+  g.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  g.position.set(x, 0.8, z);
+  g.rotation.y = Math.PI - a;
+  world.add(g);
+}
+function rng(seed) {
+  return () => {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const rnd = rng(7);
+
+/* Textura de azulejos (inspirada en el zellige) generada en un canvas */
+function star(g, cx, cy, R, r, n, color) {
+  g.beginPath();
+  for (let k = 0; k < 2 * n; k++) {
+    const a = (Math.PI * k) / n - Math.PI / 2;
+    const rad = k % 2 ? r : R;
+    const x = cx + rad * Math.cos(a), y = cy + rad * Math.sin(a);
+    if (k === 0) g.moveTo(x, y); else g.lineTo(x, y);
+  }
+  g.closePath();
+  g.fillStyle = color;
+  g.fill();
+}
+function zellige() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const g = c.getContext('2d');
+  const pal = ['#1d6a80', '#2a9d8f', '#e9c46a', '#264653', '#f4a261'];
+  g.fillStyle = '#f4f1de';
+  g.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) {
+    const cx = i * 64 + 32, cy = j * 64 + 32, col = pal[(i + j) % pal.length];
+    star(g, cx, cy, 30, 12, 8, col);
+    star(g, cx, cy, 13, 6, 8, '#f4f1de');
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+const tileTex = zellige();
+
+function skyTexture() {
+  const c = document.createElement('canvas');
+  c.width = 2; c.height = 256;
+  const g = c.getContext('2d');
+  const gr = g.createLinearGradient(0, 0, 0, 256);
+  gr.addColorStop(0, '#5d8fb8');
+  gr.addColorStop(0.6, '#cfe3ec');
+  gr.addColorStop(1, '#f3e3c3');
+  g.fillStyle = gr;
+  g.fillRect(0, 0, 2, 256);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+/* ------------------------------------------------------------------ */
+/* Construcción del recinto                                            */
+/* ------------------------------------------------------------------ */
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(3000, 3000), M.grass);
+ground.rotation.x = -Math.PI / 2;
+ground.receiveShadow = true;
+world.add(ground);
+
+// Muralla perimetral elíptica con torres
+const RX = 230, RZ = 200, N = 48;
+const wallPts = [];
+for (let i = 0; i < N; i++) {
+  const a = (i / N) * Math.PI * 2;
+  wallPts.push(new THREE.Vector3(RX * Math.cos(a), 0, RZ * Math.sin(a)));
+}
+for (let i = 0; i < N; i++) {
+  const a = wallPts[i], b = wallPts[(i + 1) % N];
+  const len = a.distanceTo(b) + 1;
+  const mid = a.clone().add(b).multiplyScalar(0.5);
+  const seg = block(len, 10, 4, mid.x, mid.z);
+  seg.rotation.y = Math.atan2(-(b.z - a.z), b.x - a.x);
+  if (i % 4 === 0) tower(a.x, a.z, 4.5, 16);
+}
+
+// Patio de Armas
+floor(70, 60, -95, 60, M.earth);
+[[-125, 45], [-120, 80], [-70, 88], [-150, 60]].forEach(([x, z]) => tree(x, z, 1.2));
+
+// Palacio de Carlos V (volumen cuadrado con patio interior)
+{
+  const cx = -70, cz = -10, h = 25;
+  block(2 * h, 16, 4, cx, cz - h);
+  block(2 * h, 16, 4, cx, cz + h);
+  block(4, 16, 2 * h, cx - h, cz);
+  block(4, 16, 2 * h, cx + h, cz);
+  floor(2 * h - 6, 2 * h - 6, cx, cz);
+}
+
+// Patio de los Arrayanes con estanque y Palacio de Comares
+floor(40, 56, 0, 0);
+water(7, 46, 0, 0, 0.06);
+block(1.4, 0.9, 44, -4.8, 0, M.hedge);
+block(1.4, 0.9, 44, 4.8, 0, M.hedge);
+block(36, 14, 18, 0, -35);             // Salón de Comares
+block(12, 28, 12, -28, -40);           // Torre de Comares
+roofPyr(12, 6, -28, 28, -40);
+
+// Patio de los Leones
+const LX = 70, LZ = 0;
+floor(40, 30, LX, LZ);
+arcade(LX, LZ, 18, 15, 10, 6);
+{
+  const basin = new THREE.Mesh(new THREE.CylinderGeometry(3.4, 3.6, 0.8, 24), M.stone);
+  basin.position.set(LX, 0.4, LZ);
+  add(basin);
+  const wc = new THREE.Mesh(new THREE.CircleGeometry(3.1, 32), M.water);
+  wc.rotation.x = -Math.PI / 2;
+  wc.position.set(LX, 0.82, LZ);
+  world.add(wc);
+  const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.45, 2.4, 10), M.stone);
+  pillar.position.set(LX, 1.2, LZ);
+  add(pillar);
+  const bowl = new THREE.Mesh(new THREE.SphereGeometry(0.6, 12, 10), M.stone);
+  bowl.position.set(LX, 2.5, LZ);
+  add(bowl);
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * Math.PI * 2;
+    lion(LX + Math.cos(a) * 4, LZ + Math.sin(a) * 4, a);
+  }
+  // Cuatro canales
+  water(10, 0.9, LX + 9, LZ, 0.3);
+  water(10, 0.9, LX - 9, LZ, 0.3);
+  water(0.9, 10, LX, LZ + 9, 0.3);
+  water(0.9, 10, LX, LZ - 9, 0.3);
+}
+
+// Sala de los Abencerrajes con cúpula
+block(10, 10, 10, 84, -26);
+{
+  const dome = new THREE.Mesh(new THREE.SphereGeometry(6.5, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), M.stone);
+  dome.position.set(84, 10, -26);
+  add(dome);
+}
+
+// Torre de las Damas y jardines
+block(10, 22, 10, 118, -70);
+roofPyr(10, 8, 118, 22, -70);
+
+// Generalife: palacio, canal y cipreses
+block(20, 10, 14, 170, -112);
+water(3, 60, 132, -110, 0.08);
+for (let z = -84; z >= -138; z -= 6) {
+  cypress(122, z);
+  cypress(142, z);
+}
+for (const [x, z] of [[125, -135], [188, -135], [190, -95], [178, -150]]) tree(x, z, 1.3);
+
+// Árboles dispersos junto a la muralla
+for (let i = 0; i < 30; i++) {
+  const a = rnd() * Math.PI * 2;
+  const k = 0.85 + rnd() * 0.1;
+  tree(Math.cos(a) * RX * k, Math.sin(a) * RZ * k, 0.9 + rnd() * 0.5);
+}
+
+// Sierra Nevada como telón de fondo
+for (let i = 0; i < 16; i++) {
+  const a = (i / 16) * Math.PI * 2 + rnd() * 0.2;
+  const d = 1250 + rnd() * 150;
+  const h = 260 + rnd() * 260, r = 200 + rnd() * 120;
+  const x = Math.cos(a) * d, z = Math.sin(a) * d;
+  const m = new THREE.Mesh(new THREE.ConeGeometry(r, h, 7), M.rock);
+  m.position.set(x, h / 2 - 10, z);
+  scene.add(m);
+  const s = new THREE.Mesh(new THREE.ConeGeometry(r * 0.3, h * 0.3, 7), M.snow);
+  s.position.set(x, h * 0.85 - 10, z);
+  scene.add(s);
+}
+
+/* ------------------------------------------------------------------ */
+/* Ruta: curva que une las paradas                                     */
+/* ------------------------------------------------------------------ */
+// Entre dos paradas se añade un punto elevado para "volar" sobre el recinto
+const ctrl = [];
+STOPS.forEach((s, i) => {
+  ctrl.push(new THREE.Vector3(...s.p));
+  if (i < S - 1) {
+    const b = STOPS[i + 1].p;
+    ctrl.push(new THREE.Vector3((s.p[0] + b[0]) / 2, 34, (s.p[2] + b[2]) / 2));
+  }
+});
+const curve = new THREE.CatmullRomCurve3(ctrl, false, 'centripetal');
+
+// Trazo visible de la ruta
+world.add(new THREE.Mesh(
+  new THREE.TubeGeometry(curve, 400, 0.25, 8, false),
+  new THREE.MeshBasicMaterial({ color: 0xffc857, transparent: true, opacity: 0.85 })
+));
+// Marcadores de paradas
+STOPS.forEach(s => {
+  const m = new THREE.Mesh(new THREE.SphereGeometry(0.9, 12, 10), M.marker);
+  m.position.set(s.p[0], s.p[1], s.p[2]);
+  world.add(m);
+});
+
+/* ------------------------------------------------------------------ */
+/* Interfaz                                                            */
+/* ------------------------------------------------------------------ */
+const stopsEl = document.getElementById('stops');
+const labelsEl = document.getElementById('labels');
+const titleEl = document.getElementById('title');
+const descEl = document.getElementById('desc');
+const progEl = document.getElementById('prog');
+const playBtn = document.getElementById('play');
+const freeBtn = document.getElementById('free');
+const speedEl = document.getElementById('speed');
+const counterEl = document.getElementById('counter');
+
+const listItems = [], labelEls = [];
+STOPS.forEach((s, i) => {
+  const li = document.createElement('li');
+  const b = document.createElement('button');
+  b.className = 'stop-btn';
+  b.innerHTML = `<span class="num">${i + 1}</span><span></span>`;
+  b.lastChild.textContent = s.name;
+  b.addEventListener('click', () => goTo(i));
+  li.appendChild(b);
+  stopsEl.appendChild(li);
+  listItems.push(b);
+
+  const l = document.createElement('div');
+  l.className = 'lab';
+  l.textContent = `${i + 1}. ${s.name}`;
+  l.addEventListener('click', () => goTo(i));
+  labelsEl.appendChild(l);
+  labelEls.push(l);
+});
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enabled = false;
+controls.enableDamping = true;
+controls.minDistance = 2;
+controls.maxDistance = 900;
+controls.maxPolarAngle = Math.PI * 0.49;
+
+const state = { p: 0, playing: false, free: false, tween: null, idx: -1 };
+const SEG_SECONDS = 6; // segundos aproximados por tramo entre paradas a velocidad 1x
+// Vista de introducción desde lo alto; la cámara vuela hasta la primera parada
+const camPos = new THREE.Vector3(-230, 70, 190);
+const lookPos = new THREE.Vector3(...STOPS[0].p);
+camera.position.copy(camPos);
+camera.lookAt(lookPos);
+
+function ease(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+
+function setFree(on) {
+  state.free = on;
+  if (on) {
+    state.playing = false;
+    state.tween = null;
+    controls.target.copy(lookPos);
+    controls.enabled = true;
+  } else {
+    controls.enabled = false;
+    camPos.copy(camera.position);
+    lookPos.copy(controls.target);
+  }
+  freeBtn.classList.toggle('on', on);
+  freeBtn.textContent = 'Modo libre: ' + (on ? 'on' : 'off');
+  playBtn.innerHTML = state.playing ? '❚❚ Pausa' : '▶ Reproducir';
+}
+
+function goTo(i) {
+  setFree(false);
+  state.playing = false;
+  const to = i / (S - 1);
+  const segs = Math.abs(to - state.p) * (S - 1);
+  state.tween = { from: state.p, to, t0: performance.now(), dur: 1500 + 1200 * segs };
+  playBtn.innerHTML = '▶ Reproducir';
+}
+
+function togglePlay() {
+  if (state.free) setFree(false);
+  state.tween = null;
+  if (!state.playing && state.p >= 1) state.p = 0;
+  state.playing = !state.playing;
+  playBtn.innerHTML = state.playing ? '❚❚ Pausa' : '▶ Reproducir';
+}
+
+playBtn.addEventListener('click', togglePlay);
+document.getElementById('prev').addEventListener('click', () => goTo(Math.max(0, state.idx - 1)));
+document.getElementById('next').addEventListener('click', () => goTo(Math.min(S - 1, state.idx + 1)));
+freeBtn.addEventListener('click', () => setFree(!state.free));
+progEl.addEventListener('input', () => {
+  if (state.free) setFree(false);
+  state.tween = null;
+  state.playing = false;
+  state.p = progEl.value / 1000;
+  playBtn.innerHTML = '▶ Reproducir';
+});
+addEventListener('keydown', e => {
+  if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+  if (e.key === 'ArrowRight') goTo(Math.min(S - 1, state.idx + 1));
+  if (e.key === 'ArrowLeft') goTo(Math.max(0, state.idx - 1));
+});
+
+function setActive(i) {
+  state.idx = i;
+  titleEl.textContent = `${i + 1}. ${STOPS[i].name}`;
+  descEl.textContent = STOPS[i].desc;
+  listItems.forEach((b, k) => b.classList.toggle('active', k === i));
+  labelEls.forEach((l, k) => l.classList.toggle('active', k === i));
+  counterEl.textContent = `Parada ${i + 1} de ${S}`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Bucle de animación                                                  */
+/* ------------------------------------------------------------------ */
+const tmp = new THREE.Vector3();
+let last = performance.now();
+
+function update(dt, now) {
+  if (state.tween) {
+    const tw = state.tween;
+    const k = Math.min(1, (now - tw.t0) / tw.dur);
+    state.p = tw.from + (tw.to - tw.from) * ease(k);
+    if (k >= 1) state.tween = null;
+  } else if (state.playing) {
+    const speed = parseFloat(speedEl.value);
+    const q = state.p * (S - 1);
+    const f = q - Math.floor(q);
+    // Se detiene un poco más en cada parada y acelera entre ellas
+    const m = 0.35 + 0.65 * Math.pow(Math.sin(Math.PI * f), 2);
+    state.p = Math.min(1, state.p + (dt * speed * m) / (SEG_SECONDS * (S - 1)));
+    if (state.p >= 1) {
+      state.p = 1;
+      state.playing = false;
+      playBtn.innerHTML = '▶ Reproducir';
+    }
+  }
+
+  if (!state.free) {
+    const pos = curve.getPoint(state.p);
+    const ahead = curve.getPoint(Math.min(1, state.p + 0.01));
+    camPos.lerp(pos, 1 - Math.exp(-dt * 5));
+    lookPos.lerp(ahead, 1 - Math.exp(-dt * 6));
+    camera.position.copy(camPos);
+    camera.lookAt(lookPos);
+  }
+
+  // Parada más cercana
+  const idx = Math.round(state.p * (S - 1));
+  if (idx !== state.idx) setActive(idx);
+  if (document.activeElement !== progEl) progEl.value = Math.round(state.p * 1000);
+}
+
+function updateLabels() {
+  camera.updateMatrixWorld();
+  STOPS.forEach((s, i) => {
+    tmp.set(s.p[0], s.p[1] + 6, s.p[2]).project(camera);
+    const el = labelEls[i];
+    const visible = tmp.z < 1 && Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 1.1;
+    el.style.display = visible ? 'block' : 'none';
+    el.style.left = (tmp.x * 0.5 + 0.5) * innerWidth + 'px';
+    el.style.top = (-tmp.y * 0.5 + 0.5) * innerHeight + 'px';
+  });
+}
+
+function frame(now) {
+  requestAnimationFrame(frame);
+  const dt = Math.min((now - last) / 1000, 0.1);
+  last = now;
+  update(dt, now);
+  if (state.free) controls.update();
+  renderer.render(scene, camera);
+  updateLabels();
+}
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+setActive(0);
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

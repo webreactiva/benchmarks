@@ -1,0 +1,23 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra-3d-route.html",
+      "errores": [],
+      "titulo": "Ruta 3D - Alhambra de Granada",
+      "canvas": 1,
+      "texto": "RUTA 3D ALHAMBRA\n\nRecorrido virtual por el conjunto monumental nazarí\n\n▶ INICIAR TOUR\n⟲ REINICIAR\nℹ PARADAS\n🖱 Arrastrar = Rotar vista\n🖱 Scroll = Zoom\n⌨ Espacio = Play/Pausa\n1. Puerta de la Justicia\n2. Plaza de los Aljibes\n3. Alcazaba - Torre de la Vela\n4. Palacio de Carlos V\n5. Patio de los Arrayanes\n6. Salón de los Embajadores\n7. Patio de los Leones\n8. Sala de los Abencerrajes\n9. Sala de los Re",
+      "scripts": [],
+      "captura": "capturas/alhambra-3d-route.html.png",
+      "capturas_extra": [
+        "capturas/tour-8s.png",
+        "capturas/tour-38s.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores, three.js 0.160 desde unpkg",
+    "✔ el tour avanza (captura a 8 s y 38 s)",
+    "✖ 2 errores al iniciar el tour (CatmullRomCurve3.getPoint)"
+  ]
+}

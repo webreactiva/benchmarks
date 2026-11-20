@@ -1,0 +1,21 @@
+{
+  "nota": 4,
+  "veredicto": "lo más ambicioso, no se recorre",
+  "resumen": "El A3D con más cosas: 15 paradas con textos ricos y consejos de visita, 4 vistas, deslizador de hora del día, narración por voz, minimapa y arcos de herradura generados por código. Pero el recorrido apenas avanza, saltar a una parada no mueve la cámara (se queda en la plaza de entrada) y el minimapa tapa las paradas 11 a 15 de la lista.",
+  "rarezas": [
+    "80 peticiones y 11,4 millones de tokens: cinco veces el siguiente gasto más alto de todo el benchmark.",
+    "Escribió el HTML por partes en /tmp/opencode (cabecera, núcleo, ruta, escena) y luego las juntó.",
+    "Buscó en su propio texto restos en inglés y chino («Muslims», «Islamic», «传入») para limpiarlos.",
+    "Usó el Playwright instalado en el sistema y lanzó rayos contra la geometría para asegurar que la ruta no atraviesa muros. Dice que todo funciona; la cámara no se mueve.",
+    "Error histórico en una ficha: los leones originales volvieron a la fuente en 2012, no están en el museo."
+  ],
+  "nota_previa": 5,
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 0,
+    "se reconoce la Alhambra": 1,
+    "vista limpia": 0,
+    "textos sin errores": 0
+  }
+}

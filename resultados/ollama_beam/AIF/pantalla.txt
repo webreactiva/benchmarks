@@ -1,0 +1,36 @@
+  ┃  drwxrwxrwt 3 root root    60 Nov 20 03:11 ..
+  ┃  -rw-r--r-- 1 root root 20666 Nov 20 03:13 web-reactiva-alchemy.html
+  ┃  node:internal/modules/esm/get_format:219
+  ┃    throw new ERR_UNKNOWN_FILE_EXTENSION(ext, filepath);
+  ┃          ^
+  ┃
+  ┃  TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".html" for /var/tmp/bench/ws-nGbwUOep/web-
+  ┃  reactiva-alchemy.html
+  ┃      at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:219:9)
+  ┃  …
+  ┃
+  ┃  Click to expand
+  ┃
+
+     + Thought: 502ms
+
+  ┃
+  ┃  $ sed -n '/<script>/,/<\/script>/p' /var/tmp/bench/ws-nGbwUOep/web-reactiva-alchemy.html | sed '1d;$d' > /tmp/
+  ┃  opencode/check.js && node --check /tmp/opencode/check.js && echo OK
+  ┃
+  ┃  OK
+  ┃
+
+     + Thought: 73ms
+
+     Creado web-reactiva-alchemy.html en la carpeta actual.
+
+     ▣  Build · beam · 2m 1s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · beam Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-nGbwUOep                                                              34.9K (3%)  ctrl+p commands
+

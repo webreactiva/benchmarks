@@ -1,0 +1,20 @@
+{
+  "nota": 6,
+  "veredicto": "la mejor maqueta, el tour falla",
+  "resumen": "La vista general es la mejor de todo el benchmark: colina de la Sabika amurallada, Alcazaba con torres, Palacio de Carlos V con su patio circular, Generalife con la acequia, casas alrededor y Sierra Nevada. Pero al iniciar el recorrido la cámara se mete dentro de la muralla y a los 35 s sigue en la primera de solo 5 paradas.",
+  "rarezas": [
+    "33 peticiones y 2,2 millones de tokens (2,07 M de caché): el mayor gasto de todo el benchmark en un solo prompt.",
+    "Se escribió su propio cliente de Chrome DevTools Protocol por WebSocket para hacer capturas, y las analizó leyendo píxeles con PIL en Python; luego hizo 12 ediciones sobre el HTML.",
+    "Dejó ficheros fuera de su carpeta (/tmp/alhambra.png, /tmp/cdp-test.js…).",
+    "En el chat dice que la ruta tiene «paradas seleccionables» y «control de velocidad», y es cierto: lo que no dice es que el tour arranca dentro de una pared."
+  ],
+  "nota_previa": 7,
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 0,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  }
+}

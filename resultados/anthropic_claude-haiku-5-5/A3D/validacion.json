@@ -1,0 +1,23 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra-ruta-3d.html",
+      "errores": [],
+      "titulo": "Alhambra · Ruta en 3D",
+      "canvas": 1,
+      "texto": "10. Mirador final\nAlhambra · Ruta en 3D\n\nGranada, España\n\n1\nPuerta de la Justicia\n2\nPatio de Armas\n3\nPalacio de Carlos V\n4\nPatio de los Arrayanes\n5\nTorre de Comares\n6\nPatio de los Leones\n7\nSala de los Abencerrajes\n8\nTorre de las Damas\n9\nGeneralife\n10\nMirador final\n\nMaqueta esquemática: las posiciones, tamaños y alturas son aproximados y simplificados.\n\n1. Puerta de la Justicia\n\nPuerta de herradura",
+      "scripts": [],
+      "captura": "capturas/alhambra-ruta-3d.html.png",
+      "capturas_extra": [
+        "capturas/tour-10s.png",
+        "capturas/parada-6.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores, three.js 0.160 desde jsDelivr",
+    "✔ tour, anterior/siguiente y velocidad funcionan",
+    "✖ el tubo de la ruta y el marcador tapan la vista en el tour"
+  ]
+}

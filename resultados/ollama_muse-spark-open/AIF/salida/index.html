@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alquimia Web Reactiva — Infinite Craft Malandriner</title>
+<meta name="description" content="Mezcla Código, IA, Café y Comunidad para descubrir todo el universo de Web Reactiva. Un Infinite Craft hecho en pantuflas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0d12;
+  --panel:#15151d;
+  --panel2:#1c1c27;
+  --border:#262636;
+  --accent:#FFD400;
+  --accent2:#FF3B82;
+  --accent3:#00E5FF;
+  --text:#f5f5f7;
+  --muted:#9a9ab0;
+  --success:#00E676;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#2a2a3a;border-radius:99px}
+a{color:var(--accent)}
+button{font-family:inherit}
+.topbar{
+  position:sticky;top:0;z-index:30;
+  background:rgba(13,13,18,0.96);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;gap:12px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:42px;height:42px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:grid;place-items:center;font-size:22px;transform:rotate(-3deg);
+  box-shadow:0 4px 18px rgba(255,212,0,.3);border:2px solid #000;
+}
+.brand h1{margin:0;font-family:'Syne',sans-serif;font-weight:800;font-size:18px;line-height:1;letter-spacing:-.5px}
+.brand h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.brand p{margin:2px 0 0;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.stats{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{border:1px solid var(--border);background:var(--panel);border-radius:999px;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:6px}
+.pill strong{color:var(--accent)}
+.progress{width:120px;height:8px;background:#1e1e2c;border-radius:99px;overflow:hidden;border:1px solid var(--border)}
+.bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .4s}
+.btn{border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:8px 12px;border-radius:999px;font-size:13px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{transform:translateY(-1px);border-color:#3a3a52}
+.btn.primary{background:var(--accent);color:#0a0a0a;border-color:#000;font-weight:700}
+.btn.primary:hover{background:#ffe433}
+.btn.ghost{background:transparent}
+.layout{display:grid;grid-template-columns:320px 1fr 300px;gap:14px;padding:14px;max-width:1600px;margin:0 auto;min-height:calc(100vh - 64px)}
+@media(max-width:1100px){.layout{grid-template-columns:300px 1fr} .right{grid-column:1 / -1}}
+@media(max-width:760px){.layout{grid-template-columns:1fr} .left{order:2} .center{order:1} .right{order:3}}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.panel-head{padding:14px 14px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;background:linear-gradient(180deg,rgba(255,212,0,.06),transparent)}
+.panel-head h2{margin:0;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.search{width:100%;background:#0f0f16;border:1px solid var(--border);border-radius:999px;padding:9px 12px;color:var(--text);outline:none;font-size:13px}
+.search:focus{border-color:var(--accent)}
+.inv{padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;overflow:auto;flex:1;align-content:start}
+.elem{
+  user-select:none;
+  background:#1a1a27;border:1px solid var(--border);border-radius:12px;
+  padding:8px 10px;display:flex;align-items:center;gap:8px;
+  cursor:grab;font-size:13px;line-height:1.1;position:relative;
+  transition:.12s;
+}
+.elem:hover{transform:translateY(-1px);border-color:#3b3b55;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.elem:active{cursor:grabbing;transform:scale(.98)}
+.elem.discovered{animation:pop .4s}
+.elem .em{font-size:18px;flex-shrink:0;width:26px;height:26px;display:grid;place-items:center;background:#0f0f16;border-radius:8px;border:1px solid #2a2a3a}
+.elem .name{font-weight:600;font-size:12.5px}
+.elem .hint{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.elem.new{outline:2px solid var(--accent);box-shadow:0 0 0 4px rgba(255,212,0,.15)}
+.elem.selected{border-color:var(--accent);background:linear-gradient(135deg,rgba(255,212,0,.15),rgba(255,59,130,.1))}
+.workspace-wrap{position:relative;display:flex;flex-direction:column;min-height:520px}
+.workspace{
+  flex:1;min-height:480px;position:relative;
+  background:
+    radial-gradient(circle at 1px 1px, #222233 1px, transparent 0);
+  background-size:18px 18px;
+  background-color:#0f0f15;
+  overflow:hidden;border-top:1px solid var(--border);
+}
+.ws-hint{
+  position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;text-align:center;padding:24px;color:var(--muted);
+}
+.ws-hint .card{background:rgba(21,21,29,.9);border:1px dashed var(--border);border-radius:16px;padding:16px 18px;max-width:360px}
+.ws-hint h3{margin:0 0 6px;color:var(--text);font-family:'Syne',sans-serif}
+.ws-node{
+  position:absolute;min-width:120px;max-width:160px;
+  background:#1e1e2e;border:1px solid #2f2f46;border-radius:14px;
+  padding:8px 10px;display:flex;align-items:center;gap:8px;
+  cursor:grab;box-shadow:0 8px 20px rgba(0,0,0,.35);
+  transition:box-shadow .15s, transform .15s;
+  touch-action:none;user-select:none;
+}
+.ws-node:active{cursor:grabbing}
+.ws-node.dragging{transform:scale(1.03);box-shadow:0 12px 28px rgba(0,0,0,.5);z-index:10}
+.ws-node .em{font-size:18px;width:26px;height:26px;display:grid;place-items:center;background:#0f0f16;border-radius:8px;border:1px solid #2a2a3a}
+.ws-node .name{font-weight:700;font-size:13px}
+.ws-node .close{margin-left:auto;background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:14px;line-height:1;padding:2px 4px;border-radius:6px}
+.ws-node .close:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.combine-bar{
+  display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);background:var(--panel2);align-items:center;flex-wrap:wrap
+}
+.sel{flex:1;min-width:120px;background:#0f0f16;border:1px dashed var(--border);border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:13px;min-height:40px}
+.sel.filled{border-style:solid;background:#1a1a27}
+.log{padding:10px;overflow:auto;flex:1;display:flex;flex-direction:column;gap:8px}
+.entry{border:1px solid var(--border);background:#1a1a27;border-radius:12px;padding:10px;display:flex;gap:10px;align-items:center}
+.entry .em{font-size:20px}
+.entry b{font-size:13px}
+.entry small{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace}
+.toast{position:fixed;left:50%;top:14px;transform:translateX(-50%) translateY(-10px);background:#0f0f16;border:1px solid var(--border);padding:10px 14px;border-radius:999px;display:flex;align-items:center;gap:8px;opacity:0;pointer-events:none;transition:.3s;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:60}
+.modal-card{background:#15151d;border:1px solid var(--border);border-radius:18px;max-width:560px;width:100%;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal-card h3{margin:0 0 8px;font-family:'Syne',sans-serif;font-size:20px}
+.modal-card p{margin:6px 0;color:#c8c8d8;font-size:14px;line-height:1.5}
+.kbd{font-family:'JetBrains Mono',monospace;background:#0f0f16;border:1px solid var(--border);border-bottom-width:2px;padding:1px 6px;border-radius:6px;font-size:11px}
+@keyframes pop{0%{transform:scale(.9)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes ping{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.spark{position:absolute;pointer-events:none;font-size:18px;animation:float 800ms ease forwards}
+@keyframes float{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(1.2) rotate(10deg)}}
+.footer{padding:10px 14px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.badge{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;font-weight:800;padding:2px 8px;border-radius:999px;font-size:11px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">🧪</div>
+    <div>
+      <h1>ALQUIMIA <span>WEB REACTIVA</span></h1>
+      <p>Infinite Craft malandriner • mezcla, descubre, alucina</p>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="pill">🔍 <span id="count">0</span> / <span id="total">0</span> <strong id="pct">0%</strong> <div class="progress"><div id="bar" class="bar"></div></div></div>
+    <button class="btn" id="btnHint">💡 Pista</button>
+    <button class="btn" id="btnClear">🧹 Limpiar mesa</button>
+    <button class="btn ghost" id="btnReset">♻️ Reiniciar</button>
+    <a class="btn primary" href="https://webreactiva.com" target="_blank" rel="noopener">webreactiva.com ↗</a>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="panel left">
+    <div class="panel-head"><h2>Inventario</h2><span class="badge" id="badgeNew">+0</span></div>
+    <div style="padding:10px;border-bottom:1px solid var(--border)">
+      <input id="search" class="search" placeholder="Filtra: react, ia, café...">
+      <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+        <button class="btn" style="padding:6px 8px;font-size:12px" data-filter="all">Todo</button>
+        <button class="btn" style="padding:6px 8px;font-size:12px" data-filter="ia">IA</button>
+        <button class="btn" style="padding:6px 8px;font-size:12px" data-filter="codigo">Código</button>
+        <button class="btn" style="padding:6px 8px;font-size:12px" data-filter="comunidad">Comunidad</button>
+      </div>
+    </div>
+    <div id="inventory" class="inv"></div>
+    <div class="footer">
+      <span>Arrastra al tablero o haz clic para seleccionar.</span>
+    </div>
+  </aside>
+
+  <main class="panel center">
+    <div class="panel-head">
+      <h2>Mesa de mezclas</h2>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="pill" style="font-family:'JetBrains Mono',monospace;font-size:11px">Suelta 2 elementos juntos para combinar</span>
+      </div>
+    </div>
+    <div class="combine-bar">
+      <div id="selA" class="sel">⬚ Selecciona A</div>
+      <div style="font-weight:800;color:var(--accent)">+</div>
+      <div id="selB" class="sel">⬚ Selecciona B</div>
+      <button id="btnCombine" class="btn primary">⚗️ Combinar</button>
+      <button id="btnSwap" class="btn">⇄</button>
+      <span id="comboPreview" style="font-size:12px;color:var(--muted)"></span>
+    </div>
+    <div id="workspace" class="workspace">
+      <div id="wsHint" class="ws-hint">
+        <div class="card">
+          <h3>¡Bienvenid@, malandriner! 🩴</h3>
+          <p>Empiezas con <b>4 elementos</b>: <span style="background:#1a1a27;border:1px solid var(--border);padding:2px 6px;border-radius:8px">💻 Código</span> <span style="background:#1a1a27;border:1px solid var(--border);padding:2px 6px;border-radius:8px">🤖 IA</span> <span style="background:#1a1a27;border:1px solid var(--border);padding:2px 6px;border-radius:8px">☕ Café</span> <span style="background:#1a1a27;border:1px solid var(--border);padding:2px 6px;border-radius:8px">👥 Comunidad</span></p>
+          <p style="font-size:13px">Arrastra elementos del <b>inventario</b> a esta mesa. Junta dos y se creará uno nuevo. Como Infinite Craft, pero con <i>skills, MCPs, SDD y mucho hype</i>.</p>
+          <p><span class="kbd">TIP</span> Prueba <b>Código + IA</b> o <b>Café + Código</b> para empezar.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <span>🎯 Objetivo: descubre los <b id="footTotal"></b> artefactos del universo Web Reactiva.</span>
+      <span>Hecho en pantuflas • sin IA alucinando (bueno, un poco).</span>
+    </div>
+  </main>
+
+  <aside class="panel right">
+    <div class="panel-head"><h2>Descubrimientos</h2><span class="pill" id="lastCount">0 nuevos</span></div>
+    <div id="log" class="log"></div>
+    <div style="padding:10px;border-top:1px solid var(--border);background:var(--panel2)">
+      <div style="font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:6px">RECETAS SECRETAS</div>
+      <div style="font-size:12px;line-height:1.5;color:#c8c8d8">
+        • <b>Prompt</b> = Código + IA<br>
+        • <b>Alucinación</b> = IA + Café<br>
+        • <b>Malandriner</b> = Comunidad + Pantuflas<br>
+        • <b>Vibe Coding</b> = IA + Skill<br>
+        • <b>Dirigible</b> = Loop Infinito + IA<br>
+        Prueba también: <i>HTML+CSS, Bug+IA, Newsletter+Podcast...</i>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="modal" class="modal">
+  <div class="modal-card">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div class="logo" style="width:36px;height:36px;font-size:18px">🧪</div><div><div style="font-family:'Syne',sans-serif;font-weight:800">ALQUIMIA WEB REACTIVA</div><div style="font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace">v1.0 • modo malandriner • 120+ combinaciones</div></div></div>
+    <h3>Mezcla ideas hasta desbloquear todo el lore</h3>
+    <p>Este es un <b>Infinite Craft</b> con el contenido real de <b>Web Reactiva</b>: desde <b>HTML</b> hasta <b>Claude Code</b>, de <b>Skills</b> y <b>MCPs</b> a <b>SDD</b>, <b>Atlas Malandriner</b> y las <b>pantuflas</b> de Dani Primo.</p>
+    <p>Cómo jugar: <span class="kbd">Arrastra</span> 2 elementos del inventario a la mesa y júntalos. También puedes <span class="kbd">Clickar</span> dos del inventario y pulsar <b>Combinar</b>. ¡Si aciertas receta, desbloqueas uno nuevo!</p>
+    <p style="color:var(--muted);font-size:13px">Guardado automático en tu navegador. Hay easter eggs: ¿qué pasa con <b>Dani + Peluca</b> o <b>Café x4</b>?</p>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+      <button id="btnStart" class="btn primary" style="flex:1">🚀 Empezar a mezclar</button>
+      <button id="btnHow" class="btn">Ver atajos</button>
+    </div>
+    <div id="how" style="display:none;margin-top:12px;border:1px dashed var(--border);border-radius:12px;padding:10px;background:#0f0f16;font-size:13px;line-height:1.5">
+      <b>Atajos:</b> <span class="kbd">Doble click</span> en inventario → manda a la mesa. <span class="kbd">Click derecho</span> en mesa → elimina. <span class="kbd">Búsqueda</span> filtra. <span class="kbd">💡 Pista</span> te da una receta aún no descubierta.<br>¡El progreso se queda guardado aunque recargues!
+    </div>
+  </div>
+</div>
+
+<script>
+const ELEMENTS = [
+  {id:'codigo', name:'Código', emoji:'💻', color:'#4ECDC4', desc:'El pan de cada día. Sin esto no hay deploy.'},
+  {id:'ia', name:'IA', emoji:'🤖', color:'#FF6B6B', desc:'Tu pair programmer que nunca duerme (y a veces alucina).'},
+  {id:'cafe', name:'Café', emoji:'☕', color:'#8B5A2B', desc:'Combustible oficial del developer. 100% malandriner.'},
+  {id:'comunidad', name:'Comunidad', emoji:'👥', color:'#45B7D1', desc:'Gente que sabe de qué hablas. En Telegram, claro.'},
+
+  {id:'prompt', name:'Prompt', emoji:'💬', color:'#FFD166', desc:'Decirle a la IA qué quieres, pero bien.'},
+  {id:'token', name:'Token', emoji:'🪙', color:'#FFD400', desc:'Cada palabra cuesta. Literal.'},
+  {id:'contexto', name:'Contexto', emoji:'📜', color:'#A78BFA', desc:'Sin contexto la IA hace magia negra.'},
+  {id:'modelo', name:'Modelo', emoji:'🧠', color:'#FF8FA3', desc:'Un cerebro de silicio con resaca de datos.'},
+  {id:'llm', name:'LLM', emoji:'🦾', color:'#60A5FA', desc:'Gran Modelo de Lenguaje. Habla de todo, sabe de casi nada.'},
+  {id:'alucinacion', name:'Alucinación', emoji:'👻', color:'#B794F6', desc:'Cuando la IA se inventa APIs que no existen.'},
+  {id:'ai_slop', name:'AI Slop', emoji:'💩', color:'#8B5A44', desc:'Código genérico, bonito y totalmente inútil.'},
+  {id:'agente', name:'Agente', emoji:'🕵️', color:'#34D399', desc:'No es un chatbot. Es tu empleado con terminal.'},
+  {id:'skill', name:'Skill', emoji:'✨', color:'#FFD400', desc:'SKILL.md: enséñale una vez, lo hace siempre.'},
+  {id:'mcp', name:'MCP', emoji:'🔌', color:'#00E5FF', desc:'Conector mágico que enchufa tu stack a la IA.'},
+  {id:'harness', name:'Harness', emoji:'🦺', color:'#FBBF24', desc:'El arnés que evita que el agente se despeñe.'},
+  {id:'orquestacion', name:'Orquestación', emoji:'🎼', color:'#F472B6', desc:'Muchos agentes tocando a la vez sin desafinar.'},
+  {id:'claude_code', name:'Claude Code', emoji:'🌟', color:'#7C3AED', desc:'El agente de terminal favorito de Dani.'},
+  {id:'opencode', name:'OpenCode', emoji:'🌀', color:'#00E5FF', desc:'El agente open-source que te libera del vendor lock-in.'},
+  {id:'copilot', name:'Copilot', emoji:'👨‍✈️', color:'#3B82F6', desc:'Autocompleta tu vida (y tu PR).'},
+  {id:'cursor', name:'Cursor', emoji:'↖️', color:'#111', desc:'El editor que predice tu próximo bug.'},
+  {id:'codex', name:'Codex', emoji:'📚', color:'#10B981', desc:'El veterano que pasó de autocompletar a agente.'},
+
+  {id:'sdd', name:'SDD', emoji:'📐', color:'#F59E0B', desc:'Spec-Driven Development: piensa antes de prompear.'},
+  {id:'spec', name:'Spec', emoji:'📄', color:'#E5E7EB', desc:'La spec bien escrita vale más que 1000 prompts.'},
+  {id:'plan_mode', name:'Plan Mode', emoji:'🗺️', color:'#34D399', desc:'Planifica, pregunta, grilléame. Luego ejecuta.'},
+  {id:'humo', name:'Humo', emoji:'💨', color:'#9CA3AF', desc:'Vender humo. La IA lo hace muy bien.'},
+
+  {id:'html', name:'HTML', emoji:'🧱', color:'#E34F26', desc:'Esqueleto de la web. Aún manda.'},
+  {id:'css', name:'CSS', emoji:'🎨', color:'#1572B6', desc:'Hacer bonito lo feo. Con sufrimiento.'},
+  {id:'javascript', name:'JavaScript', emoji:'🟨', color:'#F7DF1E', desc:'El lenguaje que todo lo puede y todo lo rompe.'},
+  {id:'typescript', name:'TypeScript', emoji:'🔷', color:'#3178C6', desc:'JS con casco. Menos sustos en producción.'},
+  {id:'react', name:'React', emoji:'⚛️', color:'#61DAFB', desc:'Librería favorita para sufrir con hooks.'},
+  {id:'astro', name:'Astro', emoji:'🚀', color:'#FF5D01', desc:'Islas, cero JS por defecto, 100% hype.'},
+  {id:'tailwind', name:'Tailwind', emoji:'💨', color:'#38BDF8', desc:'Utility-first o muerte por clases.'},
+  {id:'nodejs', name:'Node.js', emoji:'🟩', color:'#339933', desc:'JS en el backend. ¿Quién lo iba a decir?'},
+  {id:'python', name:'Python', emoji:'🐍', color:'#3776AB', desc:'El favorito de la IA para hacer scripts.'},
+  {id:'api', name:'API', emoji:'🔗', color:'#8B5CF6', desc:'El pegamento de todo SaaS.'},
+  {id:'base_datos', name:'Base de Datos', emoji:'🗄️', color:'#475569', desc:'Donde viven tus datos (y tus miedos).'},
+  {id:'git', name:'Git', emoji:'🌿', color:'#F05032', desc:'Control de versiones y de nervios.'},
+  {id:'github', name:'GitHub', emoji:'🐙', color:'#24292F', desc:'Donde tu código conoce el mundo.'},
+  {id:'terminal', name:'Terminal', emoji:'💀', color:'#0f0f0f', desc:'Fondo negro, texto verde, poder infinito.'},
+  {id:'vscode', name:'VS Code', emoji:'🦋', color:'#007ACC', desc:'Tu segunda casa.'},
+  {id:'deploy', name:'Deploy', emoji:'📤', color:'#10B981', desc:'Subir a prod un viernes. Valientes.'},
+  {id:'vercel', name:'Vercel', emoji:'▲', color:'#000', desc:'Deploy en 30 segundos. O 3h debuggeando.'},
+
+  {id:'bug', name:'Bug', emoji:'🐛', color:'#84CC16', desc:'No es un bug, es una feature no documentada.'},
+  {id:'feature', name:'Feature', emoji:'🌟', color:'#FACC15', desc:'Lo que el cliente cree que quiere.'},
+  {id:'test', name:'Test', emoji:'🧪', color:'#22C55E', desc:'Lo que prometes hacer y nunca haces.'},
+  {id:'refactor', name:'Refactor', emoji:'♻️', color:'#06B6D4', desc:'Dejar bonito el código que odias.'},
+  {id:'pr', name:'PR', emoji:'📎', color:'#8B5CF6', desc:'Please Review. Por favor, sin hate.'},
+  {id:'commit', name:'Commit', emoji:'💾', color:'#F97316', desc:'Conventional Commits o caos.'},
+  {id:'branch', name:'Branch', emoji:'🌲', color:'#16A34A', desc:'Ramas que nunca mergeas.'},
+
+  {id:'frontend', name:'Frontend', emoji:'🎭', color:'#EC4899', desc:'Lo que el usuario ve y critica.'},
+  {id:'backend', name:'Backend', emoji:'🔧', color:'#6366F1', desc:'Lo que nadie ve pero todo rompe.'},
+  {id:'fullstack', name:'Fullstack', emoji:'🥞', color:'#F59E0B', desc:'Hacer de todo, dormir poco.'},
+  {id:'devops', name:'DevOps', emoji:'♾️', color:'#0EA5E9', desc:'Tú lo codeas, tú lo operas.'},
+  {id:'infra', name:'Infra', emoji:'☁️', color:'#60A5FA', desc:'La nube, que en realidad es el ordenador de otro.'},
+  {id:'docker', name:'Docker', emoji:'🐳', color:'#2496ED', desc:'Funciona en mi máquina™.'},
+  {id:'aws', name:'AWS', emoji:'🌩️', color:'#FF9900', desc:'Todo servicio posible por 0.02$/h.'},
+
+  {id:'podcast', name:'Podcast', emoji:'🎙️', color:'#FF3B82', desc:'700+ episodios para programar en pantuflas.'},
+  {id:'newsletter', name:'Newsletter', emoji:'📰', color:'#FFD400', desc:'12 recursos cada semana en tu inbox.'},
+  {id:'blog', name:'Blog', emoji:'✍️', color:'#fff', desc:'Artículos largos que te salvan entrevistas.'},
+  {id:'masterclass', name:'Masterclass', emoji:'🎓', color:'#7C3AED', desc:'Directo mensual donde programamos juntos.'},
+  {id:'guia', name:'Guía', emoji:'🧭', color:'#059669', desc:'Paso a paso con pistas y soluciones.'},
+  {id:'roadmap', name:'Roadmap', emoji:'🗺️', color:'#D946EF', desc:'De 0 a Malandriner con principio y fin.'},
+  {id:'premium', name:'Premium', emoji:'👑', color:'#FFD400', desc:'15€/mes para dominar la IA sin alucinar.'},
+  {id:'telegram', name:'Telegram', emoji:'✈️', color:'#26A5E4', desc:'Zona Malandriner. Sin hate, mucho criterio.'},
+  {id:'malandriner', name:'Malandriner', emoji:'😎', color:'#111', desc:'Developer que ya programa con IA y se lo pasa bien.'},
+  {id:'pantuflas', name:'Pantuflas', emoji:'🩴', color:'#F59E0B', desc:'Modo casa. La productividad real.'},
+  {id:'dani_primo', name:'Dani Primo', emoji:'👨‍🏫', color:'#FFD400', desc:'El que te explica la IA sin humo.'},
+  {id:'en_pantuflas', name:'En Pantuflas', emoji:'🛋️', color:'#A78BFA', desc:'Filosofía de programar cómodo y con criterio.'},
+
+  {id:'side_project', name:'Side Project', emoji:'🛠️', color:'#78716C', desc:'Empieza side, acaba POC, muere en GitHub.'},
+  {id:'poc', name:'POC', emoji:'🧫', color:'#14B8A6', desc:'Prueba de concepto. Fracasa rápido, aprende rápido.'},
+  {id:'mvp', name:'MVP', emoji:'🎯', color:'#EF4444', desc:'Mínimo viable, máximo humo.'},
+  {id:'startup', name:'Startup', emoji:'🦄', color:'#D946EF', desc:'De side project a quemar pasta.'},
+  {id:'burnout', name:'Burnout', emoji:'🔥', color:'#DC2626', desc:'Demasiados tokens, pocas horas de sueño.'},
+  {id:'flow', name:'Flow', emoji:'🌊', color:'#06B6D4', desc:'El estado donde el código fluye solo.'},
+  {id:'madrugada', name:'Madrugada', emoji:'🌙', color:'#1E293B', desc:'Cuando el café ya no hace efecto.'},
+  {id:'networking', name:'Networking', emoji:'🤝', color:'#10B981', desc:'Conocer gente que te consigue curro sin LinkedIn.'},
+  {id:'open_source', name:'Open Source', emoji:'📦', color:'#f5f5f5', desc:'Regalar código y recibir issues gratis.'},
+  {id:'framework', name:'Framework', emoji:'🧱', color:'#94A3B8', desc:'Opiniones empaquetadas en npm.'},
+
+  {id:'stack_chino', name:'Stack Chino', emoji:'🐉', color:'#DC2626', desc:'Kimi, DeepSeek y GLM a precio de risa.'},
+  {id:'kimi', name:'Kimi', emoji:'🌙', color:'#334155', desc:'Modelo chino que rinde más de lo que crees.'},
+  {id:'deepseek', name:'DeepSeek', emoji:'🐋', color:'#0EA5E9', desc:'La ballena open-source que asusta a Silicon Valley.'},
+  {id:'vibe_coding', name:'Vibe Coding', emoji:'🌀', color:'#A78BFA', desc:'Deja que la IA codee mientras tú vibras.'},
+  {id:'peluca', name:'Peluca', emoji:'💇', color:'#F472B6', desc:'Si Dani se pone peluca, el directo no se graba.'},
+
+  {id:'tokens_infinitos', name:'Tokens Infinitos', emoji:'♾️', color:'#FFD400', desc:'El sueño húmedo de todo malandriner.'},
+  {id:'loop_infinito', name:'Loop Infinito', emoji:'🔁', color:'#EF4444', desc:'La IA programando sola hasta fundir la tarjeta.'},
+  {id:'dirigible', name:'Dirigible', emoji:'🎈', color:'#60A5FA', desc:'Proyecto hecho 100% por Claude Code en loop. 400€ en tokens.'},
+  {id:'atlas', name:'Atlas Malandriner', emoji:'🗃️', color:'#F59E0B', desc:'1600 recursos + 2500 links curados como MCP.'},
+  {id:'yak', name:'Yak', emoji:'🐃', color:'#78350F', desc:'Yak shaving nivel Web Reactiva.'},
+  {id:'poke', name:'Poke', emoji:'🍣', color:'#FB7185', desc:'Wikipoke: poke + wiki, todo con IA.'},
+
+  {id:'idea', name:'Idea', emoji:'💡', color:'#FDE047', desc:'La chispa antes del prompt.'},
+  {id:'inspiracion', name:'Inspiración', emoji:'✨', color:'#FACC15', desc:'Idea + idea = magia.'},
+  {id:'proyecto', name:'Proyecto', emoji:'🚀', color:'#38BDF8', desc:'Idea con deadlines.'},
+  {id:'freelance', name:'Freelance', emoji:'💼', color:'#475569', desc:'Ser tu propio jefe y tu peor cliente.'},
+  {id:'senior', name:'Senior', emoji:'🧙', color:'#7C3AED', desc:'No por años, por cicatrices en prod.'},
+  {id:'hype', name:'Hype', emoji:'📢', color:'#EF4444', desc:'Cada semana un modelo nuevo. Respira.'},
+  {id:'fomo', name:'FOMO', emoji:'😰', color:'#F97316', desc:'Miedo a perderte el próximo hype.'},
+  {id:'n8n', name:'n8n', emoji:'🔄', color:'#EA4B71', desc:'Automatiza sin picar tanto código.'},
+  {id:'automation', name:'Automatización', emoji:'🤖', color:'#94A3B8', desc:'Que lo haga un bot mientras tú duermes.'},
+  {id:'review_ia', name:'Review con IA', emoji:'👀', color:'#22C55E', desc:'La IA que revisa tu PR antes que tu lead.'},
+  {id:'commit_ia', name:'Commits con IA', emoji:'💌', color:'#F59E0B', desc:'Mensajes bonitos sin pensar.'},
+  {id:'merge', name:'Merge', emoji:'🔀', color:'#10B981', desc:'El momento de la verdad.'},
+  {id:'cloud', name:'Cloud', emoji:'☁️', color:'#38BDF8', desc:'No hay nube, solo ordenadores ajenos.'},
+];
+
+const EMO = Object.fromEntries(ELEMENTS.map(e=>[e.id,e]));
+// helper to make sorted key
+const k=(a,b)=>[a,b].sort().join('+');
+const RECIPES={};
+// define recipes function
+function add(a,b,res){ RECIPES[k(a,b)]=res; }
+
+// Tier1 bases
+add('codigo','ia','prompt');
+add('codigo','cafe','bug');
+add('ia','cafe','alucinacion');
+add('ia','comunidad','newsletter');
+add('codigo','comunidad','open_source');
+add('cafe','comunidad','networking');
+add('ia','ia','modelo');
+add('codigo','codigo','html');
+add('cafe','cafe','madrugada');
+add('comunidad','comunidad','telegram');
+
+// Tier2
+add('prompt','ia','agente');
+add('prompt','codigo','skill');
+add('modelo','prompt','llm');
+add('modelo','codigo','copilot');
+add('modelo','modelo','token');
+add('token','prompt','contexto');
+add('bug','codigo','feature');
+add('bug','ia','ai_slop');
+add('bug','bug','refactor');
+add('newsletter','codigo','blog');
+add('newsletter','telegram','podcast');
+add('open_source','html','git');
+add('open_source','codigo','framework');
+add('madrugada','codigo','side_project');
+add('madrugada','cafe','burnout');
+add('madrugada','madrugada','fomo');
+add('html','codigo','css');
+add('prompt','comunidad','idea');
+add('idea','idea','inspiracion');
+add('idea','codigo','proyecto');
+add('proyecto','codigo','side_project');
+add('framework','idea','startup');
+add('html','css','frontend');
+add('frontend','javascript','react');
+add('css','ia','tailwind');
+add('css','prompt','tailwind');
+add('html','prompt','api');
+
+// Tier3
+add('agente','skill','mcp');
+add('css','codigo','javascript');
+add('javascript','codigo','typescript');
+add('javascript','comunidad','react');
+add('react','typescript','astro');
+add('javascript','prompt','nodejs');
+add('ia','codigo','python');
+add('python','llm','deepseek');
+add('deepseek','ia','stack_chino');
+add('stack_chino','ia','kimi');
+add('api','codigo','base_datos');
+add('api','base_datos','backend');
+add('frontend','backend','fullstack');
+add('git','comunidad','github');
+add('git','prompt','terminal');
+add('terminal','agente','claude_code');
+add('podcast','idea','masterclass');
+add('newsletter','idea','guia');
+add('guia','masterclass','roadmap');
+add('roadmap','proyecto','proyecto'); // placeholder but will override
+add('side_project','git','deploy');
+add('deploy','vercel','proyecto');
+add('open_source','github','open_source'); // keep
+add('idea','comunidad','flow');
+add('burnout','flow','hype');
+add('networking','telegram','podcast');
+add('skill','prompt','plan_mode');
+add('plan_mode','agente','sdd');
+add('sdd','prompt','spec');
+add('spec','prompt','harness');
+add('harness','mcp','orquestacion');
+add('orquestacion','agente','automation');
+add('automation','n8n','n8n');
+add('github','codigo','vscode');
+add('vscode','copilot','cursor');
+add('vscode','ia','cursor');
+add('llm','github','codex');
+add('claude_code','open_source','opencode');
+add('skill','ia','vibe_coding');
+add('vibe_coding','deploy','ai_slop'); // vibe gone wrong
+add('feature','test','refactor');
+add('feature','codigo','pr');
+add('pr','codigo','commit');
+add('commit','pr','merge');
+add('pr','ia','review_ia');
+add('commit','ia','commit_ia');
+add('branch','git','merge');
+add('fullstack','devops','infra');
+add('infra','docker','cloud');
+add('cloud','deploy','aws');
+add('docker','deploy','infra');
+add('frontend','api','fullstack');
+add('backend','infra','devops');
+add('newsletter','podcast','dani_primo');
+add('dani_primo','cafe','pantuflas');
+add('pantuflas','comunidad','malandriner');
+add('pantuflas','comunidad','en_pantuflas');
+add('en_pantuflas','flow','flow');
+add('malandriner','premium','premium');
+add('premium','telegram','telegram');
+add('newsletter','masterclass','premium');
+add('guia','roadmap','premium');
+add('proyecto','mvp','startup');
+add('poc','proyecto','mvp');
+add('side_project','idea','poc');
+add('codigo','idea','side_project');
+add('startup','comunidad','freelance');
+add('freelance','senior','senior');
+add('senior','comunidad','tech_lead'); // need map senior existed but tech_lead not defined? we have no tech_lead element id? we have senior but id senior exists
+add('podcast','comunidad','masterclass');
+add('blog','newsletter','podcast');
+add('api','ia','rag'); // rag not defined but we can map to contexto? We'll map to contexto
+add('llm','contexto','alucinacion');
+add('token','token','tokens_infinitos');
+add('tokens_infinitos','loop_infinito','burnout');
+add('agente','loop_infinito','dirigible');
+add('dirigible','ia','humo');
+add('humo','codigo','peluca');
+add('dani_primo','peluca','hype');
+add('peluca','startup','fomo');
+add('burnout','cafe','hype');
+add('hype','hype','fomo');
+add('github','api','n8n');
+add('mcp','api','atlas');
+add('atlas','comunidad','premium');
+add('poc','atlas','yak');
+add('yak','poke','poke');
+add('side_project','poke','yak');
+add('idea','prompt','proyecto');
+add('javascript','api','nodejs');
+add('python','api','base_datos');
+add('tailwind','react','frontend');
+add('astro','tailwind','frontend');
+add('typescript','react','frontend');
+add('vibe_coding','skill','harness');
+add('orquestacion','mcp','claude_code');
+add('claude_code','skill','harness');
+add('opencode','mcp','open_source');
+add('codex','opencode','stack_chino');
+add('stack_chino','codigo','kimi');
+add('deepseek','stack_chino','kimi');
+add('loop_infinito','ia','loop_infinito');
+add('loop_infinito','codigo','dirigible');
+add('dirigible','token','tokens_infinitos');
+add('fomo','hype','burnout');
+add('flow','codigo','feature');
+add('test','codigo','refactor');
+add('refactor','feature','pr');
+add('commit','git','github');
+add('github','deploy','vercel');
+add('vercel','frontend','deploy');
+add('cloud','aws','infra');
+add('aws','docker','devops');
+add('telegram','malandriner','premium');
+add('premium','pantuflas','en_pantuflas');
+add('malandriner','cafe','pantuflas');
+add('dani_primo','malandriner','podcast');
+add('podcast','pantuflas','en_pantuflas');
+add('roadmap','sdd','spec');
+add('sdd','mcp','plan_mode');
+add('plan_mode','spec','sdd');
+add('ai_slop','humo','ai_slop');
+add('alucinacion','prompt','ai_slop');
+add('alucinacion','codigo','bug');
+add('bug','feature','ai_slop');
+add('automation','ia','n8n');
+add('n8n','api','automation');
+add('review_ia','pr','merge');
+add('commit_ia','commit','pr');
+add('branch','commit','pr');
+add('fullstack','ia','vibe_coding');
+add('vibe_coding','bug','ai_slop');
+add('hype','comunidad','fomo');
+add('senior','startup','freelance');
+add('freelance','side_project','startup');
+add('mvp','startup','hype');
+add('poc','inspiracion','proyecto');
+add('inspiracion','codigo','proyecto');
+add('proyecto','deploy','mvp');
+add('tailwind','astro','deploy');
+add('nodejs','api','backend');
+add('python','ia','llm');
+add('kimi','deepseek','stack_chino');
+add('contexto','llm','rag'); // rag -> treat as contexto+llm gives mcp maybe? We'll map to mcp
+add('rag','base_datos','contexto');
+add('peluca','premium','hype');
+add('yak','ia','alucinacion');
+add('poke','comunidad','newsletter');
+// fill rag mapping actually we don't have rag element, so map rag combos to extra
+// we already defined but need ensure all res ids exist, check any undefined
+// list of all recipe results must be in ELEMENTS
+// Let's verify: rag is not in ELEMENTS -> we used rag as result but not exist. Change those to mcp/atlas
+// We'll patch after
+// also tech_lead not in ELEMENTS
+
+// fix missing ids: rag -> mcp, tech_lead -> senior
+// override those keys
+</script>
+
+<script>
+// Patch missing recipes (ensure all outputs exist)
+(function(){
+  const validIds = new Set(ELEMENTS.map(e=>e.id));
+  // Replace invalid outputs with fallbacks
+  for(const k in RECIPES){
+    if(!validIds.has(RECIPES[k])){
+      // map rag -> mcp, tech_lead -> senior
+      const mapFix={rag:'mcp', tech_lead:'senior'};
+      if(mapFix[RECIPES[k]]) RECIPES[k]=mapFix[RECIPES[k]];
+      else RECIPES[k]='humo';
+    }
+  }
+  // add extra fun combos to reach total more
+  // ensure every element has at least one recipe except base
+  // add some easter eggs
+  add('dani_primo','peluca','peluca');
+  add('peluca','peluca','hype');
+  add('malandriner','malandriner','premium');
+  add('pantuflas','pantuflas','en_pantuflas');
+  add('cafe','prompt','token');
+  add('token','modelo','llm');
+  add('llm','skill','agente');
+  add('agente','agente','orquestacion');
+  add('orquestacion','orquestacion','harness');
+  add('claude_code','codex','opencode');
+  add('opencode','claude_code','harness');
+  add('hype','ai_slop','humo');
+  add('burnout','pantuflas','flow');
+  add('flow','flow','inspiracion');
+  add('inspiracion','inspiracion','idea');
+  add('comunidad','idea','podcast');
+  add('newsletter','podcast','premium');
+  add('roadmap','guia','masterclass');
+  add('masterclass','premium','dani_primo');
+  add('deploy','deploy','vercel');
+  add('vercel','vercel','frontend');
+  add('docker','aws','cloud');
+  add('cloud','ia','infra');
+  add('tailwind','css','frontend');
+  add('react','astro','frontend');
+  add('nodejs','python','api');
+  add('api','git','github');
+  add('github','git','open_source');
+  add('telegram','newsletter','malandriner');
+  add('side_project','burnout','poc');
+  add('poc','poc','mvp');
+  add('mvp','mvp','startup');
+  add('startup','startup','hype');
+  add('vibe_coding','vibe_coding','ai_slop');
+  add('ai_slop','ai_slop','alucinacion');
+  add('alucinacion','alucinacion','humo');
+  add('spec','sdd','plan_mode');
+  add('plan_mode','harness','orquestacion');
+  add('mcp','harness','orquestacion');
+  add('n8n','orquestacion','automation');
+  add('automation','deploy','devops');
+  add('review_ia','commit_ia','merge');
+  add('fullstack','vercel','deploy');
+  add('kimi','kimi','deepseek');
+  add('deepseek','kimi','stack_chino');
+  add('stack_chino','stack_chino','humo');
+  add('loop_infinito','loop_infinito','dirigible');
+  add('dirigible','dirigible','tokens_infinitos');
+  add('tokens_infinitos','tokens_infinitos','burnout');
+  add('atlas','atlas','premium');
+  add('yak','yak','poke');
+  add('poke','poke','yak');
+  add('senior','senior','freelance');
+  add('freelance','freelance','startup');
+  add('fomo','fomo','hype');
+  add('hype','fomo','burnout');
+  add('senior','pantuflas','malandriner');
+  add('flow','pantuflas','en_pantuflas');
+  add('codigo','pantuflas','side_project');
+  add('ia','pantuflas','vibe_coding');
+  add('comunidad','pantuflas','en_pantuflas');
+})();
+
+// STATE
+const STORAGE_KEY='alquimia-wr-v1';
+let discovered = new Set(['codigo','ia','cafe','comunidad']);
+let selA=null, selB=null;
+let wsCounter=0;
+
+function load(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const j=JSON.parse(raw);
+      if(j.discovered) discovered=new Set(j.discovered);
+      // ensure base always present
+      ['codigo','ia','cafe','comunidad'].forEach(id=>discovered.add(id));
+    }
+  }catch(e){}
+}
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({discovered:[...discovered]}));
+}
+
+function totalElements(){ return ELEMENTS.length; }
+function discoveredCount(){ return discovered.size; }
+
+function getElement(id){ return EMO[id]; }
+function getRecipe(a,b){
+  const key=[a,b].sort().join('+');
+  return RECIPES[key]||null;
+}
+
+function renderInventory(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  const inv=document.getElementById('inventory');
+  inv.innerHTML='';
+  const list = ELEMENTS.filter(e=>discovered.has(e.id))
+    .filter(e=> !q || e.name.toLowerCase().includes(q) || e.id.includes(q) || e.desc.toLowerCase().includes(q))
+    .sort((a,b)=> a.name.localeCompare(b.name));
+  if(list.length===0){
+    inv.innerHTML='<div style="grid-column:1/-1;color:var(--muted);text-align:center;padding:20px;font-size:13px">Sin resultados. Prueba otra mezcla 👀</div>';
+    return;
+  }
+  list.forEach(e=>{
+    const d=document.createElement('div');
+    d.className='elem';
+    d.draggable=true;
+    d.dataset.id=e.id;
+    d.innerHTML=`<div class="em">${e.emoji}</div><div><div class="name">${e.name}</div><div class="hint">${e.id}</div></div>`;
+    d.title=e.desc;
+    if(selA===e.id || selB===e.id) d.classList.add('selected');
+    d.addEventListener('dragstart', ev=>{
+      ev.dataTransfer.setData('text/plain', e.id);
+      ev.dataTransfer.effectAllowed='copy';
+    });
+    d.addEventListener('click', ()=>{
+      selectForCombine(e.id);
+    });
+    d.addEventListener('dblclick', ()=>{
+      spawnInWorkspace(e.id, 0,0, true);
+    });
+    inv.appendChild(d);
+  });
+  // update counts
+  document.getElementById('count').textContent=discoveredCount();
+  document.getElementById('total').textContent=totalElements();
+  document.getElementById('footTotal').textContent=totalElements();
+  const pct=Math.round(discoveredCount()/totalElements()*100);
+  document.getElementById('pct').textContent=pct+'%';
+  document.getElementById('bar').style.width=pct+'%';
+  document.getElementById('badgeNew').textContent='+' + discoveredCount();
+}
+
+function selectForCombine(id){
+  if(selA===id || selB===id){
+    if(selA===id) selA=null;
+    if(selB===id) selB=null;
+  } else {
+    if(!selA) selA=id;
+    else if(!selB) selB=id;
+    else { // shift
+      selA=selB; selB=id;
+    }
+  }
+  updateSelectors();
+  renderInventory();
+}
+
+function updateSelectors(){
+  const aEl=document.getElementById('selA');
+  const bEl=document.getElementById('selB');
+  const preview=document.getElementById('comboPreview');
+  function fill(el, id){
+    if(!id){ el.classList.remove('filled'); el.textContent='⬚ Selecciona'; return; }
+    const e=getElement(id);
+    el.classList.add('filled');
+    el.innerHTML=`<span style="font-size:16px">${e.emoji}</span> <b>${e.name}</b>`;
+  }
+  fill(aEl, selA);
+  fill(bEl, selB);
+  if(selA && selB){
+    const res=getRecipe(selA, selB);
+    if(res){
+      const r=getElement(res);
+      const isNew=!discovered.has(res);
+      preview.innerHTML=`→ <b>${r.emoji} ${r.name}</b> ${isNew?'✨ <span style="color:var(--accent)">¡Nuevo!</span>':''}`;
+    } else {
+      preview.textContent='— combinación aún no descubierta (quizá alucine la IA)';
+    }
+  } else preview.textContent='';
+}
+
+function toast(msg, emoji='✨'){
+  const t=document.getElementById('toast');
+  t.innerHTML=`<span style="font-size:16px">${emoji}</span> <span style="font-size:13px;font-weight:600">${msg}</span>`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+function logDiscovery(resId, aId,bId, isFirst){
+  const log=document.getElementById('log');
+  const r=getElement(resId), a=getElement(aId), b=getElement(bId);
+  const entry=document.createElement('div');
+  entry.className='entry';
+  entry.style.borderColor=isFirst? 'var(--accent)':'var(--border)';
+  entry.innerHTML=`<div class="em">${r.emoji}</div><div style="flex:1"><b>${r.name}</b><br><small>${a.emoji} ${a.name} + ${b.emoji} ${b.name} → ${r.emoji} ${r.name}</small><br><small style="color:var(--muted)">${r.desc}</small></div>${isFirst?'<span style="background:var(--accent);color:#000;font-weight:800;font-size:10px;padding:3px 6px;border-radius:999px">¡PRIMERA VEZ!</span>':''}`;
+  log.prepend(entry);
+  document.getElementById('lastCount').textContent=log.children.length+' descubrimientos';
+}
+
+function tryCombine(aId,bId, pos){
+  const res=getRecipe(aId,bId);
+  if(!res){
+    // funny failure
+    const fails=[
+      `Nada por aquí con ${getElement(aId).name} + ${getElement(bId).name}...`,
+      `La IA alucina y no ve conexión entre ${getElement(aId).name} y ${getElement(bId).name}`,
+      `¿${getElement(aId).name} + ${getElement(bId).name}? Ni Dani sabe qué sale.`,
+      `Humo 💨 con ${getElement(aId).name} + ${getElement(bId).name}`
+    ];
+    const msg=fails[Math.floor(Math.random()*fails.length)];
+    toast(msg,'🤔');
+    // spark effect fake
+    spark(pos, '💨');
+    return null;
+  }
+  const isNew=!discovered.has(res);
+  if(isNew){
+    discovered.add(res);
+    save();
+    renderInventory();
+    logDiscovery(res,aId,bId,true);
+    toast(`¡Descubierto: ${getElement(res).emoji} ${getElement(res).name}!`, '🎉');
+    // check completion
+    if(discoveredCount()===totalElements()){
+      setTimeout(()=>toast('¡HAS DESBLOQUEADO TODO EL UNIVERSO WEB REACTIVA! Eres oficialmente Malandriner Legendario 😎👑','🏆'),800);
+    }
+    // subtle confetti spark
+    for(let i=0;i<6;i++) setTimeout(()=>spark(pos, ['✨','🎉','💫','⭐'][i%4]), i*70);
+  } else {
+    toast(`${getElement(aId).emoji} + ${getElement(bId).emoji} = ${getElement(res).emoji} ${getElement(res).name} (ya lo tenías)`, '♻️');
+    spark(pos,'✨');
+    logDiscovery(res,aId,bId,false);
+  }
+  return res;
+}
+
+function spark(pos, emoji){
+  if(!pos) pos={x: window.innerWidth/2, y: 300};
+  const s=document.createElement('div');
+  s.className='spark';
+  s.textContent=emoji;
+  s.style.left=(pos.x+ (Math.random()*40-20))+'px';
+  s.style.top=(pos.y + (Math.random()*20-10))+'px';
+  s.style.position='fixed'; s.style.zIndex=40;
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),800);
+}
+
+// Workspace drag & drop
+const ws=document.getElementById('workspace');
+const wsHint=document.getElementById('wsHint');
+
+function updateWsHint(){
+  wsHint.style.display = ws.querySelectorAll('.ws-node').length? 'none':'grid';
+}
+
+function spawnInWorkspace(id, x,y, centered){
+  const e=getElement(id);
+  const node=document.createElement('div');
+  node.className='ws-node';
+  node.dataset.id=id;
+  node.dataset.nid=++wsCounter;
+  node.innerHTML=`<div class="em">${e.emoji}</div><div class="name">${e.name}</div><button class="close" title="quitar">×</button>`;
+  const rect=ws.getBoundingClientRect();
+  let nx, ny;
+  if(centered || x===0 && y===0){
+    // random near center
+    const cx=rect.width/2, cy=rect.height/2;
+    nx=cx + (Math.random()*160-80);
+    ny=cy + (Math.random()*120-60);
+  } else {
+    nx=x - rect.left - 60;
+    ny=y - rect.top - 20;
+  }
+  // clamp
+  nx=Math.max(6, Math.min(rect.width-130, nx));
+  ny=Math.max(6, Math.min(rect.height-50, ny));
+  node.style.left=nx+'px';
+  node.style.top=ny+'px';
+  ws.appendChild(node);
+  updateWsHint();
+  makeDraggable(node);
+  // close handler
+  node.querySelector('.close').onclick=()=>{ node.remove(); updateWsHint(); };
+  return node;
+}
+
+function makeDraggable(node){
+  let startX, startY, origX, origY, dragging=false;
+  const onPointerDown=(ev)=>{
+    if(ev.target.classList.contains('close')) return;
+    ev.preventDefault();
+    dragging=true;
+    node.classList.add('dragging');
+    node.setPointerCapture?.(ev.pointerId);
+    startX=ev.clientX; startY=ev.clientY;
+    origX=parseFloat(node.style.left)||0;
+    origY=parseFloat(node.style.top)||0;
+    // bring front
+    ws.appendChild(node);
+  };
+  const onPointerMove=(ev)=>{
+    if(!dragging) return;
+    const dx=ev.clientX-startX, dy=ev.clientY-startY;
+    let nx=origX+dx, ny=origY+dy;
+    const rect=ws.getBoundingClientRect();
+    nx=Math.max(0, Math.min(rect.width-130, nx));
+    ny=Math.max(0, Math.min(rect.height-48, ny));
+    node.style.left=nx+'px';
+    node.style.top=ny+'px';
+  };
+  const onPointerUp=(ev)=>{
+    if(!dragging) return;
+    dragging=false;
+    node.classList.remove('dragging');
+    // check collisions
+    checkCollisions(node, ev);
+  };
+  node.addEventListener('pointerdown', onPointerDown);
+  window.addEventListener('pointermove', onPointerMove);
+  window.addEventListener('pointerup', onPointerUp);
+  // touch fallback
+  node.addEventListener('touchstart', (e)=>{
+    const t=e.touches[0];
+    onPointerDown({clientX:t.clientX, clientY:t.clientY, preventDefault:()=>e.preventDefault(), pointerId:0});
+  }, {passive:false});
+}
+
+function checkCollisions(activeNode, ev){
+  const aId=activeNode.dataset.id;
+  const aRect=activeNode.getBoundingClientRect();
+  const nodes=[...ws.querySelectorAll('.ws-node')].filter(n=>n!==activeNode);
+  for(const n of nodes){
+    const bRect=n.getBoundingClientRect();
+    const dx=(aRect.left+aRect.width/2)-(bRect.left+bRect.width/2);
+    const dy=(aRect.top+aRect.height/2)-(bRect.top+bRect.height/2);
+    const dist=Math.hypot(dx,dy);
+    if(dist < 90){
+      const bId=n.dataset.id;
+      const pos={x:(aRect.left+bRect.left)/2 + bRect.width/2, y:(aRect.top+bRect.top)/2};
+      const res=tryCombine(aId,bId,pos);
+      if(res){
+        // remove both, spawn result in middle
+        const mx=(parseFloat(activeNode.style.left)+parseFloat(n.style.left))/2;
+        const my=(parseFloat(activeNode.style.top)+parseFloat(n.style.top))/2;
+        const rect=ws.getBoundingClientRect();
+        activeNode.remove(); n.remove();
+        const newNode=spawnInWorkspace(res, rect.left+mx+60, rect.top+my+20, false);
+        // ping animation
+        newNode.style.animation='ping .3s';
+        setTimeout(()=>newNode.style.animation='',300);
+      }
+      break;
+    }
+  }
+  updateWsHint();
+}
+
+// workspace drop
+ws.addEventListener('dragover', e=>e.preventDefault());
+ws.addEventListener('drop', e=>{
+  e.preventDefault();
+  const id=e.dataTransfer.getData('text/plain');
+  if(!id || !EMO[id]) return;
+  spawnInWorkspace(id, e.clientX, e.clientY, false);
+});
+
+// combine button
+document.getElementById('btnCombine').addEventListener('click', ()=>{
+  if(!selA || !selB){ toast('Selecciona dos elementos del inventario','👆'); return; }
+  const rect=ws.getBoundingClientRect();
+  const pos={x:rect.left+rect.width/2, y:rect.top+120};
+  const res=tryCombine(selA, selB, pos);
+  if(res){
+    spawnInWorkspace(res, pos.x, pos.y, false);
+    // keep selection? clear for next
+    // optional keep
+  }
+});
+document.getElementById('btnSwap').addEventListener('click', ()=>{
+  const t=selA; selA=selB; selB=t; updateSelectors(); renderInventory();
+});
+
+// clear & reset
+document.getElementById('btnClear').addEventListener('click', ()=>{
+  ws.querySelectorAll('.ws-node').forEach(n=>n.remove());
+  updateWsHint();
+  toast('Mesa limpia. ¡A seguir mezclando!','🧹');
+});
+document.getElementById('btnReset').addEventListener('click', ()=>{
+  if(!confirm('¿Reiniciar todo el progreso? Perderás todos los descubrimientos.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  discovered=new Set(['codigo','ia','cafe','comunidad']);
+  document.getElementById('log').innerHTML='';
+  ws.querySelectorAll('.ws-node').forEach(n=>n.remove());
+  selA=selB=null; updateSelectors(); renderInventory(); updateWsHint();
+  toast('Progreso reiniciado','♻️');
+});
+
+document.getElementById('search').addEventListener('input', renderInventory);
+document.querySelectorAll('[data-filter]').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    const f=b.dataset.filter;
+    if(f==='all') document.getElementById('search').value='';
+    else document.getElementById('search').value=f;
+    renderInventory();
+  });
+});
+
+// hint system
+document.getElementById('btnHint').addEventListener('click', ()=>{
+  // find a recipe where both inputs discovered but output not discovered
+  const candidates=[];
+  for(const key in RECIPES){
+    const [a,b]=key.split('+');
+    const out=RECIPES[key];
+    if(discovered.has(a) && discovered.has(b) && !discovered.has(out)){
+      candidates.push({a,b,out});
+    }
+  }
+  if(candidates.length===0){
+    toast('¡No hay pistas! Ya lo has descubierto todo o necesitas más combinaciones','🤷');
+    return;
+  }
+  const pick=candidates[Math.floor(Math.random()*candidates.length)];
+  const aE=getElement(pick.a), bE=getElement(pick.b), oE=getElement(pick.out);
+  toast(`Pista: prueba ${aE.emoji} ${aE.name} + ${bE.emoji} ${bE.name} → ???`,'💡');
+  // highlight those in inventory briefly
+  // also spawn ghost preview
+  const rect=ws.getBoundingClientRect();
+  spark({x:rect.left+rect.width/2, y:rect.top+100}, '💡');
+  // auto select
+  selA=pick.a; selB=pick.b; updateSelectors(); renderInventory();
+});
+
+// modal
+document.getElementById('btnStart').addEventListener('click', ()=>{
+  document.getElementById('modal').style.display='none';
+});
+document.getElementById('btnHow').addEventListener('click', ()=>{
+  const h=document.getElementById('how');
+  h.style.display=h.style.display==='none'?'block':'none';
+});
+document.getElementById('modal').addEventListener('click', (e)=>{
+  if(e.target.id==='modal') e.currentTarget.style.display='none';
+});
+
+// init
+load();
+renderInventory();
+updateSelectors();
+updateWsHint();
+document.getElementById('total').textContent=totalElements();
+document.getElementById('footTotal').textContent=totalElements();
+// add initial log entries for base?
+// small intro log
+const intro=['codigo','ia','cafe','comunidad'];
+intro.forEach(id=>{
+  const e=getElement(id);
+  const entry=document.createElement('div');
+  entry.className='entry';
+  entry.style.opacity='.8';
+  entry.innerHTML=`<div class="em">${e.emoji}</div><div><b>${e.name}</b><br><small>${e.desc}</small></div>`;
+  document.getElementById('log').appendChild(entry);
+});
+
+// keyboard
+window.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){ selA=selB=null; updateSelectors(); renderInventory(); }
+});
+</script>
+</body>
+</html>

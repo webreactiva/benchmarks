@@ -1,0 +1,17 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ npm test 4/4",
+    "✔ 50 altas a la vez: 50 unidades (cerrojo en memoria)",
+    "✖ dinero en coma flotante: 0,10 × 3 = 0.30000000000000004",
+    "✖ el precio lo manda el cliente",
+    "✖ sin almacenamiento compartido ni README"
+  ],
+  "comprobacion": "Copia en /tmp, npm test y juez/juez.js (del juez)",
+  "juez_salida": [
+    "50 altas a la vez: unidades 50",
+    "0,10 × 3 = 0.30000000000000004",
+    "precio 0,01 € mandado por el cliente: aceptado"
+  ]
+}

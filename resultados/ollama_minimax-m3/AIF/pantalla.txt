@@ -1,0 +1,36 @@
+     Mecánicas
+
+     - 4 elementos iniciales (Developer, Prompt, Modelo de IA, Repositorio) + mesa de dos calderos con arrastrar y
+       soltar
+     - Combinación por texto (prompt + modelo), botón aleatorio, y Pista que sugiere una receta sin revelar el
+       resultado
+     - Cada descubrimiento añade su ficha con emoji, categoría y descripción; doble clic abre la ficha completa
+     - Filtros por categoría (9), búsqueda, orden (descubrimiento/A-Z/categoría), bitácora de combinaciones
+     - 7 legendarios (Dani Primo, Premium, Malandriner, Atlas, Robotito, Suika Context, Fusión Reactiva) con contador
+       propio
+     - Progreso en localStorage, botón compartir por URL (#d=…) e import, tema claro/oscuro
+
+     Identidad de marca
+
+     Colores extraídos de su CSS real (violeta #491eff, rosa #ff41c7, teal #00c7b5), tipografía Sculpin y el logo
+     oficial embebidos en base64 (ambas variantes, una por tema).
+
+     Sobre el contenido
+
+     Extraje el catálogo real de webreactiva.com (glosario de 107 términos, 21 cursos, 9 guías, 419 skills, modelos,
+     herramientas, comunidad) y traduje las combinaciones a la voz de la casa: «Un LLM predice, no piensa», «Inventa
+     con cara de saber», «La IA dice que funciona. El diff dice otra cosa.»
+
+     Validado con un script propio: 0 ids/nombres/emojis duplicados, 0 referencias rotas, 0 recetas duplicadas y los
+     399 elementos alcanzables desde los iniciales. Probado en Chromium headless: sin errores de consola, sin
+     desbordamiento horizontal de 360 a 1440 px.
+
+     ▣  Build · minimax-m3 · 29m 30s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · minimax-m3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-ZlTZTSrR                                                                  228.4K  ctrl+p commands
+

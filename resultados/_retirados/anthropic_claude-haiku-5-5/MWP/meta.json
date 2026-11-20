@@ -1,0 +1,27 @@
+{
+  "codigo": "MWP",
+  "modelo": "claude-haiku-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-19T21:02:50Z",
+  "prompt_enviado": "Dibuja en Mermaid la arquitectura de Wikipedia. En español. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 4,
+    "output": 5729,
+    "reasoning": 0,
+    "cache_read": 42065,
+    "cache_write": 47381,
+    "total": 95179
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "Write": 2
+  },
+  "mensajes_usuario": [
+    "Dibuja en Mermaid la arquitectura de Wikipedia. En español. Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "arquitectura_wikipedia.md",
+    "arquitectura_wikipedia.mmd"
+  ]
+}

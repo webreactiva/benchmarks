@@ -1,0 +1,20 @@
+{
+  "nota": 9,
+  "veredicto": "203 elementos de Web Reactiva",
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 2,
+    "acabado": 1
+  },
+  "resumen": "Mesa libre donde se suelta un elemento sobre otro, 203 elementos y 199 recetas todos alcanzables, sacados de varias páginas de webreactiva.com: agentes, skills, SDD con OpenSpec y Spec Kit, MCP, costes de tokens, seguridad y la capa de marca (Dani Primo, Zona y Atlas Malandriner, En pantuflas). Pistas, recetario, compartir y guardado. Fuera de las recetas no hay generador.",
+  "rarezas": [
+    "Leyó la portada, un bucle de páginas de webreactiva.com con curl, su CSS y la propia página de Infinite Craft.",
+    "Se le cuela texto en chino e inglés en la respuesta: «rarezas doradas en la，终 and responsive».",
+    "Corrigió dos fallos propios: había metido la mesa dentro de un <canvas> (sus hijos no se pintan) y el título se solapaba en móvil. Lo probó en Chrome por DevTools a mano.",
+    "55 peticiones y 4,6 millones de tokens."
+  ]
+}

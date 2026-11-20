@@ -1,0 +1,27 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra.html",
+      "errores": [],
+      "titulo": "La Alhambra · Ruta en 3D",
+      "canvas": 1,
+      "texto": "Alhambra 3D\nGranada, España\n\nRECORRIDO INTERACTIVO\n\nLa Alhambra\n\nRecorre la ciudad palatina de Granada en un mapa 3D interactivo.\n\nIniciar ruta\nVista 3D\nAlcazaba\n1\nPalacio de Carlos V\n2\nPalacios Nazaríes\n3\nEl Partal\n4\nGeneralife\n5\nN\nTrazado de la ruta\nArrastra o usa las flechas para girar · Rueda o +/− para acercar\nModelo esquemático\n\nITINERARIO · 5 PARADAS\n\nParadas de la ruta\n1\nAlcazaba\nFortaleza",
+      "scripts": [],
+      "captura": "capturas/alhambra.html.png"
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ abre sin errores de consola",
+    "✔ «Siguiente» lleva la cámara por las 5 paradas",
+    "~ «Iniciar ruta» encuadra la primera parada y no avanza sola",
+    "✔ se reconocen las torres de la Alcazaba, el patio circular de Carlos V y la acequia del Generalife",
+    "✔ textos de las paradas correctos",
+    "~ 790 KB: three.js y las fuentes van dentro del HTML"
+  ],
+  "capturas_extra": [
+    "capturas/siguiente-x4.png",
+    "capturas/auto-10s.png",
+    "capturas/auto-30s.png"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "rubrica": {
+    "un html sin errores": 1,
+    "ruta real": 2,
+    "se recorre": 0,
+    "se reconoce": 1,
+    "vista limpia": 1,
+    "textos": 1
+  },
+  "nota": 6,
+  "veredicto": "maqueta bonita, la cámara no viaja",
+  "resumen": "Una maqueta 3D hecha a mano en canvas, más trabajada que con el esfuerzo por defecto, con una ruta de seis paradas reales y textos correctos. Pero repite el fallo: «Siguiente parada» no mueve la cámara, así que la ruta no se recorre.",
+  "rarezas": [
+    "Tres llamadas y cuatro peticiones; no lo abre en un navegador",
+    "Se programa su propio motor 3D en lugar de usar three.js"
+  ]
+}

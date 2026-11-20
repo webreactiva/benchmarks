@@ -1,0 +1,63 @@
+{
+  "html": [],
+  "mermaid": [],
+  "slop": {
+    "palabras": 3011,
+    "titulos": 23,
+    "lineas_lista": 25,
+    "bloques_codigo": 7,
+    "frase_media": 19.8,
+    "marcas": {
+      "7-vocabulario": {
+        "que": "vocabulario de IA",
+        "n": 3,
+        "ejemplos": [
+          "Robusto",
+          "Robusto",
+          "fundamental"
+        ]
+      },
+      "13-raya": {
+        "que": "rayas (—)",
+        "n": 11,
+        "ejemplos": [
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—"
+        ]
+      },
+      "15-negritas": {
+        "que": "negritas",
+        "n": 66,
+        "ejemplos": [
+          "**un**",
+          "**arreglar**",
+          "**una suite roja crónica que todo el mundo aprende a ignorar**",
+          "**Test rojo en CI**",
+          "**Test rojo conocido y documentado**",
+          "**Test rojo deliberado**"
+        ]
+      },
+      "16-lista-con-titulo": {
+        "que": "listas con etiqueta en negrita y dos puntos",
+        "n": 10,
+        "ejemplos": [
+          "\n- **El PR queda en rojo.**",
+          "- **El pipeline falla.**",
+          "- **El binario no se publica.**",
+          "\n- **Sin `sleep`**",
+          "- **Sin tests que dependan del orden de ejecución.**",
+          "- **Sin `skip` silenciosos.**"
+        ]
+      }
+    },
+    "puntos": 40.5,
+    "densidad_100": 1.35
+  },
+  "extra": [
+    "3011 palabras · slop 40.5 (1.35/100 pal.)"
+  ]
+}

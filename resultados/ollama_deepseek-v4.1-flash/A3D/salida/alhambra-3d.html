@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La Alhambra de Granada · Ruta 3D</title>
+<style>
+  :root{
+    --gold:#d9b96a;
+    --gold-strong:#f0cf7d;
+    --ink:#f5efe2;
+    --panel:rgba(14,19,24,.72);
+    --line:rgba(217,185,106,.28);
+  }
+  *{box-sizing:border-box}
+  html,body{
+    margin:0;height:100%;overflow:hidden;
+    background:linear-gradient(#10202e,#1a2b2f 60%,#101a16);
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    color:var(--ink);
+  }
+  canvas{display:block;position:fixed;inset:0}
+  #ui{position:fixed;inset:0;pointer-events:none;z-index:10}
+  .glass{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+  }
+  #title{position:absolute;top:26px;left:28px;max-width:460px;pointer-events:none}
+  #title .kicker{
+    font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);
+  }
+  #title h1{
+    margin:6px 0 2px;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(28px,4vw,46px);
+    font-weight:500;letter-spacing:.02em;line-height:1.05;
+  }
+  #title p{margin:0;font-size:13px;color:rgba(245,239,226,.65)}
+  #title .rule{width:64px;height:1px;background:var(--gold);margin:12px 0 10px;opacity:.85}
+
+  #panel{
+    position:absolute;top:26px;right:28px;width:252px;padding:16px;
+    display:flex;flex-direction:column;gap:10px;pointer-events:auto;
+  }
+  #panel button{
+    font:inherit;font-size:13px;letter-spacing:.03em;color:var(--ink);
+    background:rgba(255,255,255,.04);border:1px solid var(--line);
+    padding:10px 12px;border-radius:10px;cursor:pointer;transition:.2s;
+  }
+  #panel button:hover{background:rgba(217,185,106,.16);border-color:var(--gold)}
+  #panel button.primary{
+    background:linear-gradient(135deg,#e2c47c,#b98f3e);
+    color:#1b160c;font-weight:600;border-color:transparent;
+  }
+  #panel button.primary:hover{filter:brightness(1.08)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .speed{
+    display:flex;align-items:center;gap:9px;font-size:10px;
+    color:rgba(245,239,226,.6);letter-spacing:.1em;text-transform:uppercase;
+  }
+  input[type=range]{flex:1;accent-color:#d9b96a;height:3px;background:transparent;cursor:pointer}
+  #speedVal{width:34px;text-align:right;color:var(--gold);font-variant-numeric:tabular-nums;letter-spacing:0}
+
+  #stops{
+    position:absolute;left:28px;bottom:30px;width:252px;padding:14px;
+    pointer-events:auto;max-height:46vh;overflow:auto;
+  }
+  .eyebrow{
+    font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:10px;
+  }
+  .stop-item{
+    display:flex;align-items:center;gap:10px;width:100%;padding:8px;
+    border:0;background:transparent;color:var(--ink);font:inherit;font-size:13px;
+    text-align:left;border-radius:9px;cursor:pointer;transition:.2s;
+  }
+  .stop-item:hover{background:rgba(217,185,106,.1)}
+  .stop-item.active{
+    background:rgba(217,185,106,.16);
+    box-shadow:inset 0 0 0 1px rgba(217,185,106,.35);
+  }
+  .dot{
+    flex:0 0 22px;height:22px;border-radius:50%;border:1px solid var(--line);
+    display:grid;place-items:center;font-size:11px;color:var(--gold);
+    background:rgba(0,0,0,.25);
+  }
+  .stop-item.active .dot{
+    background:var(--gold);color:#171208;border-color:var(--gold);font-weight:700;
+  }
+
+  #info{
+    position:absolute;right:28px;bottom:30px;width:336px;padding:20px;
+    pointer-events:none;
+  }
+  #info .eyebrow{margin-bottom:6px}
+  #info h2{
+    margin:0 0 8px;font-family:Georgia,"Times New Roman",serif;
+    font-size:22px;font-weight:500;line-height:1.2;
+  }
+  #info p{margin:0;font-size:13px;line-height:1.6;color:rgba(245,239,226,.72)}
+
+  #progressWrap{
+    position:absolute;left:0;bottom:0;right:0;height:3px;
+    background:rgba(255,255,255,.07);
+  }
+  #progressBar{
+    height:100%;width:0;
+    background:linear-gradient(90deg,#8f6f2e,#f0cf7d);
+    box-shadow:0 0 12px rgba(240,207,125,.6);
+  }
+
+  .stop-label{
+    display:flex;align-items:center;gap:7px;padding:5px 10px 5px 5px;
+    border-radius:999px;background:rgba(12,17,21,.72);
+    border:1px solid rgba(217,185,106,.3);color:#f2ead9;
+    font-size:11.5px;letter-spacing:.02em;white-space:nowrap;
+    pointer-events:auto;cursor:pointer;backdrop-filter:blur(6px);
+    transform:translateY(-4px);
+    transition:opacity .25s,background .25s,color .25s;
+  }
+  .stop-label:hover{background:rgba(217,185,106,.2)}
+  .stop-label .n{
+    width:18px;height:18px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(217,185,106,.15);color:var(--gold);font-size:10px;
+    border:1px solid rgba(217,185,106,.35);
+  }
+  .stop-label.active{background:rgba(217,185,106,.94);color:#1b160c;border-color:#f0cf7d}
+  .stop-label.active .n{background:rgba(0,0,0,.18);color:#1b160c;border-color:transparent}
+  body.touring .stop-label:not(.active){opacity:.3}
+
+  #loader{
+    position:fixed;inset:0;z-index:50;display:grid;place-items:center;
+    background:radial-gradient(circle at 50% 45%,#1c3038,#0b1318 70%);
+    color:#e9dfca;text-align:center;transition:opacity .8s;
+  }
+  #loader.hidden{opacity:0;pointer-events:none}
+  #loader .spinner{
+    width:38px;height:38px;border-radius:50%;margin:0 auto 16px;
+    border:2px solid rgba(217,185,106,.2);border-top-color:#d9b96a;
+    animation:spin 1s linear infinite;
+  }
+  #loader .t{font-family:Georgia,serif;font-size:20px;letter-spacing:.06em}
+  #loader .s{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,239,226,.45);margin-top:8px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  @media(max-width:820px){
+    #title{top:16px;left:16px;max-width:56vw}
+    #title h1{font-size:30px}
+    #title p{display:none}
+    #title .rule{margin:9px 0 0}
+    #panel{top:16px;right:16px;width:186px;padding:12px;gap:8px}
+    #panel button{padding:9px 10px;font-size:12px}
+    #stops{display:none}
+    #info{left:16px;right:16px;bottom:18px;width:auto;padding:14px}
+    #info h2{font-size:17px}
+    #info p{font-size:12px}
+    .stop-label .txt{display:none}
+    .stop-label{padding:4px}
+  }
+</style>
+</head>
+<body>
+<div id="loader">
+  <div>
+    <div class="spinner"></div>
+    <div class="t">La Alhambra</div>
+    <div class="s">Cargando ruta 3D</div>
+  </div>
+</div>
+
+<div id="ui">
+  <header id="title">
+    <div class="kicker">Granada · España</div>
+    <h1>La Alhambra</h1>
+    <div class="rule"></div>
+    <p>Una ruta virtual por la ciudad palatina nazarí, del siglo XIII al XVI.</p>
+  </header>
+
+  <div id="panel" class="glass">
+    <button id="btnTour" class="primary">Iniciar recorrido</button>
+    <div class="row">
+      <button id="btnReset">Reiniciar</button>
+      <button id="btnOverview">Vista general</button>
+    </div>
+    <label class="speed">
+      <span>Velocidad</span>
+      <input id="speed" type="range" min="0.4" max="3" step="0.1" value="1" />
+      <span id="speedVal">1.0×</span>
+    </label>
+  </div>
+
+  <nav id="stops" class="glass">
+    <div class="eyebrow">Paradas de la ruta</div>
+    <div id="stopList"></div>
+  </nav>
+
+  <aside id="info" class="glass">
+    <div class="eyebrow" id="infoEyebrow">Ruta 3D</div>
+    <h2 id="infoTitle">Bienvenido a la Alhambra</h2>
+    <p id="infoDesc">Pulsa «Iniciar recorrido» para sobrevolar la fortaleza, los palacios y los jardines del Generalife. También puedes elegir una parada en la lista.</p>
+  </aside>
+
+  <div id="progressWrap"><div id="progressBar"></div></div>
+</div>
+
+<script>
+  setTimeout(function () {
+    var loader = document.getElementById('loader');
+    if (loader && !loader.classList.contains('hidden')) {
+      var sub = loader.querySelector('.s');
+      if (sub) sub.textContent = 'No se pudo cargar Three.js · revisa la conexión';
+    }
+  }, 18000);
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+/* ------------------------------------------------------------------ */
+/*  Escena base                                                        */
+/* ------------------------------------------------------------------ */
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xdce7ec);
+scene.fog = new THREE.Fog(0xdce7ec, 430, 1300);
+
+const camera = new THREE.PerspectiveCamera(52, innerWidth / innerHeight, 0.1, 3200);
+camera.position.set(156, 122, 198);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.06;
+renderer.domElement.style.cssText = 'position:fixed;inset:0;display:block';
+document.body.appendChild(renderer.domElement);
+
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(innerWidth, innerHeight);
+Object.assign(labelRenderer.domElement.style, {
+  position: 'fixed', top: '0', left: '0',
+  pointerEvents: 'none', zIndex: '2'
+});
+document.body.appendChild(labelRenderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 8, 12);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 26;
+controls.maxDistance = 460;
+controls.maxPolarAngle = Math.PI * 0.495;
+controls.update();
+
+/* ------------------------------------------------------------------ */
+/*  Luz y cielo                                                        */
+/* ------------------------------------------------------------------ */
+const hemi = new THREE.HemisphereLight(0xd7e9f7, 0x8a7a5c, 1.0);
+scene.add(hemi);
+
+const sun = new THREE.DirectionalLight(0xfff1d6, 2.35);
+sun.position.set(125, 185, 95);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -175;
+sun.shadow.camera.right = 175;
+sun.shadow.camera.top = 175;
+sun.shadow.camera.bottom = -175;
+sun.shadow.camera.near = 20;
+sun.shadow.camera.far = 520;
+sun.shadow.bias = -0.0006;
+scene.add(sun);
+scene.add(sun.target);
+
+const sky = new THREE.Mesh(
+  new THREE.SphereGeometry(1600, 32, 20),
+  new THREE.ShaderMaterial({
+    side: THREE.BackSide,
+    depthWrite: false,
+    uniforms: {
+      top: { value: new THREE.Color(0x2f6ea6) },
+      bottom: { value: new THREE.Color(0xeaf1f2) },
+      offset: { value: 180 },
+      exponent: { value: 0.72 }
+    },
+    vertexShader: `
+      varying vec3 vWorld;
+      void main() {
+        vec4 wp = modelMatrix * vec4(position, 1.0);
+        vWorld = wp.xyz;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 top;
+      uniform vec3 bottom;
+      uniform float offset;
+      uniform float exponent;
+      varying vec3 vWorld;
+      void main() {
+        float h = normalize(vWorld + vec3(0.0, offset, 0.0)).y;
+        float k = pow(max(h, 0.0), exponent);
+        gl_FragColor = vec4(mix(bottom, top, k), 1.0);
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+      }
+    `
+  })
+);
+scene.add(sky);
+
+/* ------------------------------------------------------------------ */
+/*  Materiales                                                         */
+/* ------------------------------------------------------------------ */
+const M = {
+  sand: new THREE.MeshStandardMaterial({ color: 0xc9ad84, roughness: 0.93 }),
+  sandLight: new THREE.MeshStandardMaterial({ color: 0xdcc8a4, roughness: 0.9 }),
+  sandDark: new THREE.MeshStandardMaterial({ color: 0xa4855f, roughness: 0.97 }),
+  wall: new THREE.MeshStandardMaterial({ color: 0xbda172, roughness: 0.94 }),
+  roof: new THREE.MeshStandardMaterial({ color: 0x8a5a3b, roughness: 0.9 }),
+  roofDark: new THREE.MeshStandardMaterial({ color: 0x6d452d, roughness: 0.92 }),
+  white: new THREE.MeshStandardMaterial({ color: 0xe9e1cf, roughness: 0.82 }),
+  stoneFloor: new THREE.MeshStandardMaterial({ color: 0xcabfa7, roughness: 0.95 }),
+  green: new THREE.MeshStandardMaterial({ color: 0x527a3e, roughness: 0.95 }),
+  greenDark: new THREE.MeshStandardMaterial({ color: 0x355b30, roughness: 0.96 }),
+  hedge: new THREE.MeshStandardMaterial({ color: 0x3d6a36, roughness: 0.96 }),
+  trunk: new THREE.MeshStandardMaterial({ color: 0x5c4329, roughness: 0.98 }),
+  water: new THREE.MeshStandardMaterial({
+    color: 0x2c728e, roughness: 0.08, metalness: 0.45,
+    transparent: true, opacity: 0.9
+  }),
+  gold: new THREE.MeshStandardMaterial({
+    color: 0xd9b96a, emissive: 0x6a5214, emissiveIntensity: 0.55,
+    metalness: 0.85, roughness: 0.3
+  }),
+  dark: new THREE.MeshStandardMaterial({ color: 0x2a2018, roughness: 0.9 }),
+  cityWall: new THREE.MeshStandardMaterial({ color: 0xd9cfba, roughness: 0.95 }),
+  clay: new THREE.MeshStandardMaterial({ color: 0xa35b3f, roughness: 0.95 }),
+  rock: new THREE.MeshStandardMaterial({ color: 0x8a765a, roughness: 1, flatShading: true })
+};
+
+/* ------------------------------------------------------------------ */
+/*  Utilidades                                                         */
+/* ------------------------------------------------------------------ */
+function addBox(parent, w, h, d, mat, x, y, z, ry = 0) {
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  mesh.position.set(x, y, z);
+  mesh.rotation.y = ry;
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  parent.add(mesh);
+  return mesh;
+}
+
+function addCylinder(parent, rTop, rBot, h, mat, x, y, z, seg = 16) {
+  const mesh = new THREE.Mesh(new THREE.CylinderGeometry(rTop, rBot, h, seg), mat);
+  mesh.position.set(x, y, z);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  parent.add(mesh);
+  return mesh;
+}
+
+function addRamp(x1, z1, y1, x2, z2, y2, width, mat) {
+  const dx = x2 - x1;
+  const dz = z2 - z1;
+  const dy = y2 - y1;
+  const len = Math.hypot(dx, dz, dy);
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, 0.6, len), mat);
+  mesh.position.set((x1 + x2) / 2, (y1 + y2) / 2, (z1 + z2) / 2);
+  mesh.lookAt(x2, y2, z2);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  scene.add(mesh);
+  return mesh;
+}
+
+function merlonsX(parent, x0, x1, y, z, step = 2.4, size = 0.9, mat = M.wall) {
+  for (let x = x0; x <= x1 + 0.01; x += step) {
+    addBox(parent, size, size, size, mat, x, y, z);
+  }
+}
+
+function merlonsZ(parent, z0, z1, y, x, step = 2.4, size = 0.9, mat = M.wall) {
+  for (let z = z0; z <= z1 + 0.01; z += step) {
+    addBox(parent, size, size, size, mat, x, y, z);
+  }
+}
+
+function merlonRing(parent, x, z, radius, y, count = 10, mat = M.wall) {
+  for (let i = 0; i < count; i++) {
+    const a = (i / count) * Math.PI * 2;
+    addBox(parent, 0.85, 0.9, 0.85, mat, x + Math.cos(a) * radius, y, z + Math.sin(a) * radius);
+  }
+}
+
+function roundTower(parent, x, z, r, h, baseY = 2) {
+  addCylinder(parent, r, r * 1.06, h, M.sandLight, x, baseY + h / 2, z, 18);
+  merlonRing(parent, x, z, r * 0.9, baseY + h + 0.45, 10);
+}
+
+function squareTower(parent, x, z, w, d, h, mat = M.sand) {
+  addBox(parent, w, h, d, mat, x, h / 2, z);
+  const y = h + 0.4;
+  merlonsX(parent, x - w / 2 + 0.5, x + w / 2 - 0.5, y, z + d / 2 - 0.4);
+  merlonsX(parent, x - w / 2 + 0.5, x + w / 2 - 0.5, y, z - d / 2 + 0.4);
+  merlonsZ(parent, z - d / 2 + 0.5, z + d / 2 - 0.5, y, x - w / 2 + 0.4);
+  merlonsZ(parent, z - d / 2 + 0.5, z + d / 2 - 0.5, y, x + w / 2 - 0.4);
+}
+
+function dome(parent, x, y, z, r, mat = M.roof) {
+  const mesh = new THREE.Mesh(
+    new THREE.SphereGeometry(r, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2),
+    mat
+  );
+  mesh.position.set(x, y, z);
+  mesh.castShadow = true;
+  parent.add(mesh);
+  return mesh;
+}
+
+let rngState = 7;
+function rand() {
+  rngState = (rngState * 16807) % 2147483647;
+  return (rngState - 1) / 2147483646;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Árboles                                                            */
+/* ------------------------------------------------------------------ */
+function cypress(parent, x, z, s = 1, baseY = 0) {
+  const g = new THREE.Group();
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.25, 1.4, 6), M.trunk);
+  trunk.position.y = 0.7;
+  trunk.castShadow = true;
+  g.add(trunk);
+
+  const c1 = new THREE.Mesh(new THREE.ConeGeometry(1.05, 5.6, 7), M.greenDark);
+  c1.position.y = 3.9;
+  c1.castShadow = true;
+  g.add(c1);
+
+  const c2 = new THREE.Mesh(new THREE.ConeGeometry(0.72, 3.4, 7), M.green);
+  c2.position.y = 5.9;
+  c2.castShadow = true;
+  g.add(c2);
+
+  g.position.set(x, baseY, z);
+  g.scale.setScalar(s);
+  g.rotation.y = rand() * Math.PI;
+  parent.add(g);
+  return g;
+}
+
+function orangeTree(parent, x, z, s = 1, baseY = 0) {
+  const g = new THREE.Group();
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 1.5, 6), M.trunk);
+  trunk.position.y = 0.75;
+  trunk.castShadow = true;
+  g.add(trunk);
+
+  const canopy = new THREE.Mesh(new THREE.SphereGeometry(1.65, 10, 8), M.green);
+  canopy.position.y = 2.5;
+  canopy.castShadow = true;
+  g.add(canopy);
+
+  const orangeMat = new THREE.MeshStandardMaterial({ color: 0xe08a2b, roughness: 0.6 });
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2;
+    const o = new THREE.Mesh(new THREE.SphereGeometry(0.17, 6, 5), orangeMat);
+    o.position.set(Math.cos(a) * 1.55, 2.5 + Math.sin(i * 1.7) * 0.55, Math.sin(a) * 1.55);
+    g.add(o);
+  }
+
+  g.position.set(x, baseY, z);
+  g.scale.setScalar(s);
+  g.rotation.y = rand() * Math.PI;
+  parent.add(g);
+  return g;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Terreno, ciudad y montañas                                         */
+/* ------------------------------------------------------------------ */
+function buildLandscape() {
+  const plateau = new THREE.Mesh(
+    new THREE.CylinderGeometry(118, 140, 30, 56),
+    M.rock
+  );
+  plateau.position.y = -15;
+  plateau.scale.set(1.25, 1, 0.92);
+  plateau.receiveShadow = true;
+  plateau.castShadow = true;
+  scene.add(plateau);
+
+  const lawn = new THREE.Mesh(
+    new THREE.CircleGeometry(117, 56),
+    new THREE.MeshStandardMaterial({ color: 0x7d8459, roughness: 1 })
+  );
+  lawn.rotation.x = -Math.PI / 2;
+  lawn.scale.set(1.25, 0.92, 1);
+  lawn.position.y = 0.03;
+  lawn.receiveShadow = true;
+  scene.add(lawn);
+
+  const cityGround = new THREE.Mesh(
+    new THREE.PlaneGeometry(2000, 2000),
+    new THREE.MeshStandardMaterial({ color: 0x77805d, roughness: 1 })
+  );
+  cityGround.rotation.x = -Math.PI / 2;
+  cityGround.position.y = -30.5;
+  scene.add(cityGround);
+
+  for (let i = 0; i < 230; i++) {
+    const a = rand() * Math.PI * 2;
+    const r = 186 + rand() * 190;
+    const x = Math.cos(a) * r;
+    const z = Math.sin(a) * r;
+    const w = 4 + rand() * 6;
+    const d = 4 + rand() * 6;
+    const h = 3 + rand() * 6;
+    const rot = rand() * Math.PI;
+
+    const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), M.cityWall);
+    body.position.set(x, -30 + h / 2, z);
+    body.rotation.y = rot;
+    scene.add(body);
+
+    const roof = new THREE.Mesh(
+      new THREE.ConeGeometry(Math.max(w, d) * 0.74, 1.9 + rand() * 1.2, 4),
+      M.clay
+    );
+    roof.position.set(x, -30 + h + 0.95, z);
+    roof.rotation.y = rot + Math.PI / 4;
+    scene.add(roof);
+  }
+
+  const mountainMatA = new THREE.MeshStandardMaterial({ color: 0x6b7a84, roughness: 1, flatShading: true });
+  const mountainMatB = new THREE.MeshStandardMaterial({ color: 0x5f6e79, roughness: 1, flatShading: true });
+  const snowMat = new THREE.MeshStandardMaterial({ color: 0xf2f4f2, roughness: 0.85, flatShading: true });
+
+  function mountain(x, z, r, h, mat) {
+    const m = new THREE.Mesh(new THREE.ConeGeometry(r, h, 7, 3), mat);
+    m.position.set(x, -30 + h / 2, z);
+    m.rotation.y = rand() * Math.PI;
+    scene.add(m);
+
+    const capH = h * 0.3;
+    const cap = new THREE.Mesh(new THREE.ConeGeometry(r * 0.34, capH, 7, 1), snowMat);
+    cap.position.set(x, -30 + h - capH / 2, z);
+    cap.rotation.y = m.rotation.y;
+    scene.add(cap);
+  }
+
+  mountain(-430, -640, 185, 265, mountainMatA);
+  mountain(-155, -700, 225, 330, mountainMatB);
+  mountain(155, -740, 245, 350, mountainMatA);
+  mountain(445, -655, 205, 305, mountainMatB);
+  mountain(645, -365, 165, 225, mountainMatA);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Alhambra: Alcazaba                                                 */
+/* ------------------------------------------------------------------ */
+function buildAlcazaba() {
+  const g = new THREE.Group();
+  g.position.set(-58, 0, 10);
+  scene.add(g);
+
+  addBox(g, 50, 2, 38, M.sandDark, 0, 1, 0);
+
+  const wallH = 10;
+  const top = 2 + wallH;
+
+  const zN = 18;
+  addBox(g, 15, wallH, 2, M.wall, -16.5, 2 + wallH / 2, zN);
+  addBox(g, 14, wallH, 2, M.wall, 4, 2 + wallH / 2, zN);
+  addBox(g, 7, wallH, 2, M.wall, 20.5, 2 + wallH / 2, zN);
+  merlonsX(g, -23.2, -9.8, top + 0.4, zN);
+  merlonsX(g, -2.2, 10.2, top + 0.4, zN);
+  merlonsX(g, 17.6, 23.2, top + 0.4, zN);
+
+  addBox(g, 48, wallH, 2, M.wall, 0, 2 + wallH / 2, -18);
+  merlonsX(g, -23.2, 23.2, top + 0.4, -18);
+
+  addBox(g, 2, wallH, 34, M.wall, -24, 2 + wallH / 2, 0);
+  addBox(g, 2, wallH, 34, M.wall, 24, 2 + wallH / 2, 0);
+  merlonsZ(g, -17.2, 17.2, top + 0.4, -24);
+  merlonsZ(g, -17.2, 17.2, top + 0.4, 24);
+
+  roundTower(g, -22, -16, 4.2, 14);
+  roundTower(g, 22, -16, 4.2, 14);
+  roundTower(g, 22, 16, 4.2, 14);
+
+  addCylinder(g, 6, 6.4, 24, M.sandLight, -22, 2 + 12, 16, 20);
+  merlonRing(g, -22, 16, 5.6, 26.5, 12);
+
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 6, 6), M.trunk);
+  pole.position.set(-22, 29, 16);
+  g.add(pole);
+
+  // interior
+  addBox(g, 20, 0.2, 12, M.stoneFloor, 4, 2.1, 2);
+  addBox(g, 15, 6, 8, M.sandLight, 2, 5, -2);
+  addBox(g, 15.6, 0.9, 8.6, M.roof, 2, 8.4, -2);
+  addBox(g, 4, 1.2, 8.6, M.roofDark, 2, 9.2, -2);
+  addBox(g, 2.4, 4, 0.5, M.dark, 2, 4, 2.1);
+
+  const flagTex = (() => {
+    const c = document.createElement('canvas');
+    c.width = 64; c.height = 40;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#c60b1e'; ctx.fillRect(0, 0, 64, 10); ctx.fillRect(0, 30, 64, 10);
+    ctx.fillStyle = '#ffc400'; ctx.fillRect(0, 10, 64, 20);
+    ctx.fillStyle = '#a52a2a'; ctx.beginPath(); ctx.arc(32, 20, 4, 0, Math.PI * 2); ctx.fill();
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  })();
+
+  const flagGroup = new THREE.Group();
+  flagGroup.position.set(-22, 31, 16);
+  const flagMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.4, 1.5),
+    new THREE.MeshStandardMaterial({ map: flagTex, side: THREE.DoubleSide, roughness: 0.9 })
+  );
+  flagMesh.position.x = 1.2;
+  flagMesh.castShadow = true;
+  flagGroup.add(flagMesh);
+  g.add(flagGroup);
+  window.__flagGroup = flagGroup;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Alhambra: Palacios Nazaríes                                        */
+/* ------------------------------------------------------------------ */
+function buildNasridPalaces() {
+  const g = new THREE.Group();
+  g.position.set(-12, 0, 20);
+  scene.add(g);
+
+  squareTower(g, -10, -6, 12, 12, 24, M.sand);
+
+  addBox(g, 5, 8, 20, M.sandLight, -1, 4, 2);
+  addBox(g, 5, 8, 20, M.sandLight, 13, 4, 2);
+  addBox(g, 20, 8, 5, M.sandLight, 6, 4, 12);
+  addBox(g, 20, 8, 5, M.sandLight, 6, 4, -8);
+
+  addBox(g, 20.6, 0.8, 5.6, M.roof, 6, 8.4, 12);
+  addBox(g, 20.6, 0.8, 5.6, M.roof, 6, 8.4, -8);
+  addBox(g, 5.6, 0.8, 20.6, M.roof, -1, 8.4, 2);
+  addBox(g, 5.6, 0.8, 20.6, M.roof, 13, 8.4, 2);
+
+  addBox(g, 12, 0.2, 17, M.stoneFloor, 6, 0.22, 2);
+  addBox(g, 1.2, 0.16, 12, M.water, 6, 0.42, 2);
+  addCylinder(g, 1.7, 1.9, 0.55, M.stoneFloor, 6, 0.55, -2.5, 16);
+  addCylinder(g, 1.35, 1.35, 0.12, M.water, 6, 0.88, -2.5, 16);
+  addCylinder(g, 1.5, 1.7, 0.5, M.stoneFloor, 6, 0.5, 7, 16);
+  addCylinder(g, 1.15, 1.15, 0.1, M.water, 6, 0.8, 7, 16);
+
+  addBox(g, 0.85, 1.0, 12, M.hedge, 3, 0.6, 2);
+  addBox(g, 0.85, 1.0, 12, M.hedge, 9, 0.6, 2);
+
+  orangeTree(g, 3.6, 9, 0.85);
+  orangeTree(g, 8.4, 9, 0.85);
+  orangeTree(g, 3.6, -4.5, 0.85);
+  orangeTree(g, 8.4, -4.5, 0.85);
+
+  // arcada del patio
+  for (let i = 0; i < 5; i++) {
+    const x = 2 + i * 2;
+    addCylinder(g, 0.22, 0.26, 4.2, M.white, x, 2.35, -5.3, 8);
+    addCylinder(g, 0.22, 0.26, 4.2, M.white, x, 2.35, 9.3, 8);
+  }
+  addBox(g, 10, 0.5, 0.6, M.sandLight, 6, 4.7, -5.3);
+  addBox(g, 10, 0.5, 0.6, M.sandLight, 6, 4.7, 9.3);
+
+  addBox(g, 7, 9, 7, M.sand, 18, 4.5, -3);
+  dome(g, 18, 9, -3, 3.2, M.roofDark);
+  addBox(g, 9, 6, 8, M.sandLight, 17, 3, 8);
+  addBox(g, 9.6, 0.9, 8.6, M.roof, 17, 6.3, 8);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Alhambra: Palacio de Carlos V                                      */
+/* ------------------------------------------------------------------ */
+function buildCarlosV() {
+  const g = new THREE.Group();
+  g.position.set(16, 0, 12);
+  scene.add(g);
+
+  const h = 14;
+  addBox(g, 36, h, 8, M.sandLight, 0, h / 2, 14);
+  addBox(g, 36, h, 8, M.sandLight, 0, h / 2, -14);
+  addBox(g, 8, h, 20, M.sandLight, -14, h / 2, 0);
+  addBox(g, 8, h, 20, M.sandLight, 14, h / 2, 0);
+
+  addBox(g, 36.6, 0.9, 1.2, M.roof, 0, h + 0.4, 18.2);
+  addBox(g, 36.6, 0.9, 1.2, M.roof, 0, h + 0.4, -18.2);
+  addBox(g, 1.2, 0.9, 36.6, M.roof, -18.2, h + 0.4, 0);
+  addBox(g, 1.2, 0.9, 36.6, M.roof, 18.2, h + 0.4, 0);
+
+  const floor = new THREE.Mesh(new THREE.RingGeometry(0.2, 10, 64), M.stoneFloor);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = 0.26;
+  floor.receiveShadow = true;
+  g.add(floor);
+
+  for (let i = 0; i < 32; i++) {
+    const a = (i / 32) * Math.PI * 2;
+    addCylinder(g, 0.28, 0.34, 5, M.white, Math.cos(a) * 9.3, 2.5, Math.sin(a) * 9.3, 8);
+  }
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(9.3, 0.34, 8, 72), M.sandLight);
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = 5.15;
+  ring.castShadow = true;
+  g.add(ring);
+
+  const gallery = new THREE.Mesh(new THREE.RingGeometry(6.4, 10, 64), M.stoneFloor);
+  gallery.rotation.x = -Math.PI / 2;
+  gallery.position.y = 7.2;
+  gallery.receiveShadow = true;
+  g.add(gallery);
+
+  for (let i = 0; i < 24; i++) {
+    const a = (i / 24) * Math.PI * 2;
+    addCylinder(g, 0.24, 0.28, 4.4, M.white, Math.cos(a) * 9.3, 9.5, Math.sin(a) * 9.3, 8);
+  }
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(9.3, 0.3, 8, 72), M.sandLight);
+  ring2.rotation.x = -Math.PI / 2;
+  ring2.position.y = 11.8;
+  ring2.castShadow = true;
+  g.add(ring2);
+
+  addCylinder(g, 2.7, 2.9, 0.6, M.stoneFloor, 0, 0.55, 0, 24);
+  addCylinder(g, 2.25, 2.25, 0.12, M.water, 0, 0.92, 0, 24);
+
+  [-10, 0, 10].forEach(x => {
+    addBox(g, 2.6, 4.4, 0.4, M.dark, x, 7.2, 18.03);
+    addBox(g, 2.6, 4.4, 0.4, M.dark, x, 7.2, -18.03);
+    addBox(g, 0.4, 4.4, 2.6, M.dark, 18.03, 7.2, x);
+    addBox(g, 0.4, 4.4, 2.6, M.dark, -18.03, 7.2, x);
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/*  Alhambra: Generalife                                               */
+/* ------------------------------------------------------------------ */
+function buildGeneralife() {
+  const g = new THREE.Group();
+  g.position.set(80, 8, -10);
+  scene.add(g);
+
+  addBox(g, 56, 16, 48, M.sandDark, 0, -8, 0);
+  addBox(g, 54, 0.4, 46, M.green, 0, 0.2, 0);
+
+  addBox(g, 40, 0.18, 2.4, M.water, 2, 0.36, 0);
+  addBox(g, 40, 1.25, 0.85, M.hedge, 2, 0.82, 2.4);
+  addBox(g, 40, 1.25, 0.85, M.hedge, 2, 0.82, -2.4);
+  addBox(g, 40, 0.3, 0.35, M.stoneFloor, 2, 0.35, 1.25);
+  addBox(g, 40, 0.3, 0.35, M.stoneFloor, 2, 0.35, -1.25);
+
+  // pabellón oeste
+  addBox(g, 15, 0.3, 12, M.stoneFloor, -21, 0.15, 0);
+  const cols = [[-27, -5], [-27, 5], [-21, -5], [-21, 5], [-15, -5], [-15, 5]];
+  cols.forEach(([x, z]) => addCylinder(g, 0.32, 0.36, 5.4, M.white, x, 2.7, z, 10));
+  addBox(g, 15.5, 1.0, 13, M.roof, -21, 6.0, 0);
+  addBox(g, 15.9, 0.4, 13.4, M.roofDark, -21, 6.65, 0);
+  addBox(g, 1.0, 5.4, 12, M.sandLight, -28, 2.7, 0);
+  addCylinder(g, 2.0, 2.2, 0.55, M.stoneFloor, -21, 0.55, 0, 18);
+  addCylinder(g, 1.55, 1.55, 0.12, M.water, -21, 0.86, 0, 18);
+
+  // mirador este
+  squareTower(g, 24, 0, 8, 8, 10, M.sandLight);
+  dome(g, 24, 10, 0, 3.4, M.roof);
+  addBox(g, 1.6, 3.2, 0.4, M.dark, 24, 4, 4.2);
+
+  // cipreses del patio
+  for (let i = 0; i < 6; i++) {
+    const x = -12 + i * 6;
+    cypress(g, x, 5.2, 0.85);
+    cypress(g, x, -5.2, 0.85);
+  }
+  orangeTree(g, -9, 3.6, 0.8);
+  orangeTree(g, 11, -3.6, 0.8);
+  orangeTree(g, 17, 3.8, 0.8);
+
+  // jardines del sur
+  for (let i = 0; i < 9; i++) {
+    cypress(g, -20 + i * 5.5, 14 + Math.sin(i) * 2, 0.75);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Puerta de la Justicia                                              */
+/* ------------------------------------------------------------------ */
+function buildGate() {
+  const g = new THREE.Group();
+  g.position.set(-50, 0, 56);
+  scene.add(g);
+
+  addBox(g, 4.2, 10, 4.2, M.sand, -4, 5, 0);
+  addBox(g, 4.2, 10, 4.2, M.sand, 4, 5, 0);
+  addBox(g, 12, 3.4, 4.2, M.sand, 0, 11.2, 0);
+  addBox(g, 12.4, 0.7, 4.6, M.roof, 0, 13.3, 0);
+  merlonsX(g, -5.6, -2.4, 10.4, 0);
+  merlonsX(g, 2.4, 5.6, 10.4, 0);
+  merlonsX(g, -5.6, 5.6, 13.05, 1.8);
+  merlonsX(g, -5.6, 5.6, 13.05, -1.8);
+
+  addBox(g, 20, 6, 2.2, M.wall, -16, 3, 0);
+  addBox(g, 20, 6, 2.2, M.wall, 16, 3, 0);
+  merlonsX(g, -25, -6.8, 6.4, 0.9);
+  merlonsX(g, 6.8, 25, 6.4, 0.9);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Árboles del recinto                                                */
+/* ------------------------------------------------------------------ */
+function buildTrees() {
+  for (let i = 0; i < 150; i++) {
+    const x = (rand() * 2 - 1) * 145;
+    const z = (rand() * 2 - 1) * 103;
+    if ((x / 147) ** 2 + (z / 106) ** 2 > 0.94) continue;
+    if (x > -92 && x < 42 && z > -16 && z < 44) continue;
+    if (x > 48 && x < 112 && z > -40 && z < 20) continue;
+    if (rand() < 0.58) cypress(scene, x, z, 0.7 + rand() * 0.7);
+    else orangeTree(scene, x, z, 0.7 + rand() * 0.6);
+  }
+
+  for (let i = 0; i < 26; i++) {
+    const a = rand() * Math.PI * 2;
+    cypress(scene, Math.cos(a) * 138, Math.sin(a) * 96, 0.8 + rand() * 0.5);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Construcción de la escena                                          */
+/* ------------------------------------------------------------------ */
+buildLandscape();
+buildAlcazaba();
+buildNasridPalaces();
+buildCarlosV();
+buildGeneralife();
+buildGate();
+buildTrees();
+
+addRamp(48, 26, 0.2, 64, 14, 8.2, 10, M.stoneFloor);
+cypress(scene, 44, 31, 1.05);
+cypress(scene, 50, 31, 0.9);
+cypress(scene, 64, 18, 0.8);
+cypress(scene, 68, 6, 0.85, 8);
+
+/* ------------------------------------------------------------------ */
+/*  Ruta                                                               */
+/* ------------------------------------------------------------------ */
+const routePoints = [
+  [-50, 0.55, 72],
+  [-50, 0.55, 58],
+  [-54, 0.55, 46],
+  [-60, 1.60, 34],
+  [-64, 2.45, 26],
+  [-66, 2.45, 18],
+  [-62, 2.45, 24],
+  [-56, 2.45, 22],
+  [-48, 2.30, 26],
+  [-44, 2.45, 29],
+  [-38, 1.00, 36],
+  [-26, 0.55, 38],
+  [-12, 0.55, 38],
+  [4, 0.55, 38],
+  [22, 0.55, 38],
+  [36, 0.55, 34],
+  [44, 0.55, 28],
+  [48, 1.20, 26],
+  [52, 3.20, 23],
+  [56, 5.20, 20],
+  [60, 7.20, 17],
+  [64, 8.55, 14],
+  [68, 8.55, 7],
+  [72, 8.55, 0],
+  [76, 8.55, -5],
+  [82, 8.55, -9],
+  [90, 8.55, -10]
+].map(p => new THREE.Vector3(p[0], p[1], p[2]));
+
+const curve = new THREE.CatmullRomCurve3(routePoints, false, 'centripetal');
+curve.arcLengthDivisions = 1200;
+
+const pathTube = new THREE.Mesh(
+  new THREE.TubeGeometry(curve, 600, 0.22, 7, false),
+  new THREE.MeshStandardMaterial({
+    color: 0xe6c97c, emissive: 0x8a6a1c, emissiveIntensity: 0.8,
+    metalness: 0.7, roughness: 0.28, transparent: true, opacity: 0.92
+  })
+);
+pathTube.castShadow = false;
+scene.add(pathTube);
+
+function nearestT(v) {
+  let best = 0;
+  let bd = Infinity;
+  for (let i = 0; i <= 600; i++) {
+    const t = i / 600;
+    const p = curve.getPointAt(t);
+    const d = (p.x - v.x) ** 2 + (p.z - v.z) ** 2;
+    if (d < bd) { bd = d; best = t; }
+  }
+  return best;
+}
+
+const waypoints = [
+  {
+    name: 'Puerta de la Justicia',
+    desc: 'La entrada monumental a la medina palatina. Su arco de herradura y su torre almohade anuncian el paso al recinto de la Alhambra.',
+    pos: new THREE.Vector3(-50, 0.55, 56),
+    label: new THREE.Vector3(-50, 15.5, 56)
+  },
+  {
+    name: 'Alcazaba',
+    desc: 'Fortaleza militar de la dinastía nazarí, con la Torre de la Vela dominando el valle. Desde sus adarves se controlaba toda Granada.',
+    pos: new THREE.Vector3(-64, 2.45, 20),
+    label: new THREE.Vector3(-64, 23, 24)
+  },
+  {
+    name: 'Palacios Nazaríes',
+    desc: 'El corazón de la Alhambra: el Palacio de Comares y el Palacio de los Leones, con patios de agua, yeserías y mocárabes.',
+    pos: new THREE.Vector3(-6, 0.55, 38),
+    label: new THREE.Vector3(-6, 17, 34)
+  },
+  {
+    name: 'Palacio de Carlos V',
+    desc: 'Obra renacentista comenzada en 1527 dentro del recinto nazarí. Su patio circular sorprende por su escala y su doble columnata.',
+    pos: new THREE.Vector3(30, 0.55, 36),
+    label: new THREE.Vector3(16, 21, 30)
+  },
+  {
+    name: 'Generalife',
+    desc: 'Palacio de recreo y jardines de los sultanes. El Patio de la Acequia, con su larga alberca y sus surtidores, es su imagen más célebre.',
+    pos: new THREE.Vector3(82, 8.55, -10),
+    label: new THREE.Vector3(82, 21, -10)
+  }
+];
+
+waypoints.forEach(wp => { wp.t = nearestT(wp.pos); });
+
+/* ------------------------------------------------------------------ */
+/*  Etiquetas y marcadores                                             */
+/* ------------------------------------------------------------------ */
+const labelEls = [];
+const markerRings = [];
+const stopList = document.getElementById('stopList');
+
+waypoints.forEach((wp, i) => {
+  const el = document.createElement('div');
+  el.className = 'stop-label';
+  el.innerHTML = `<span class="n">${i + 1}</span><span class="txt">${wp.name}</span>`;
+  el.addEventListener('click', () => goToStop(i));
+  const label = new CSS2DObject(el);
+  label.position.copy(wp.label);
+  label.center.set(0.5, 1);
+  scene.add(label);
+  labelEls.push(el);
+
+  const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(1.35, 0.12, 8, 36),
+    M.gold
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.set(wp.pos.x, wp.pos.y + 0.45, wp.pos.z);
+  ring.castShadow = false;
+  scene.add(ring);
+  markerRings.push(ring);
+
+  const btn = document.createElement('button');
+  btn.className = 'stop-item';
+  btn.innerHTML = `<span class="dot">${i + 1}</span><span class="name">${wp.name}</span>`;
+  btn.addEventListener('click', () => goToStop(i));
+  stopList.appendChild(btn);
+});
+
+/* ------------------------------------------------------------------ */
+/*  Fuentes animadas                                                   */
+/* ------------------------------------------------------------------ */
+const jets = [];
+const jetMat = new THREE.MeshStandardMaterial({
+  color: 0xcfeaf3, transparent: true, opacity: 0.55,
+  roughness: 0.15, metalness: 0.1,
+  emissive: 0x2d6070, emissiveIntensity: 0.35
+});
+
+function addJet(x, y, z, h = 2.2) {
+  const jet = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.16, h, 6), jetMat);
+  jet.position.set(x, y + h / 2, z);
+  jet.userData.h = h;
+  jet.userData.base = y;
+  scene.add(jet);
+  jets.push(jet);
+}
+
+addJet(-6, 0.9, 17.5, 2.0);
+addJet(-6, 0.9, 27, 1.8);
+addJet(16, 0.95, 12, 1.6);
+addJet(59, 8.55, -10, 2.4);
+addJet(70, 8.55, -10, 2.0);
+addJet(78, 8.55, -10, 2.2);
+
+/* ------------------------------------------------------------------ */
+/*  Estado del recorrido                                               */
+/* ------------------------------------------------------------------ */
+const DURATION = 78;
+const clock = new THREE.Clock();
+
+let touring = false;
+let paused = false;
+let t = 0;
+let speed = 1;
+let activeStop = -1;
+let elapsed = 0;
+
+const progressBar = document.getElementById('progressBar');
+const btnTour = document.getElementById('btnTour');
+const btnReset = document.getElementById('btnReset');
+const btnOverview = document.getElementById('btnOverview');
+const speedInput = document.getElementById('speed');
+const speedVal = document.getElementById('speedVal');
+const infoEyebrow = document.getElementById('infoEyebrow');
+const infoTitle = document.getElementById('infoTitle');
+const infoDesc = document.getElementById('infoDesc');
+
+const intro = {
+  eyebrow: 'Ruta 3D',
+  title: 'Bienvenido a la Alhambra',
+  desc: 'Pulsa «Iniciar recorrido» para sobrevolar la fortaleza, los palacios y los jardines del Generalife. También puedes elegir una parada en la lista.'
+};
+
+function setActive(i) {
+  if (i === activeStop) return;
+  activeStop = i;
+
+  document.querySelectorAll('.stop-item').forEach((el, j) => {
+    el.classList.toggle('active', j === i);
+  });
+  labelEls.forEach((el, j) => {
+    el.classList.toggle('active', j === i);
+  });
+
+  if (i >= 0 && waypoints[i]) {
+    infoEyebrow.textContent = `Parada ${i + 1} de ${waypoints.length}`;
+    infoTitle.textContent = waypoints[i].name;
+    infoDesc.textContent = waypoints[i].desc;
+  } else {
+    infoEyebrow.textContent = intro.eyebrow;
+    infoTitle.textContent = intro.title;
+    infoDesc.textContent = intro.desc;
+  }
+}
+
+function updateTourCamera() {
+  const tt = Math.min(Math.max(t, 0), 0.9995);
+  const p = curve.getPointAt(tt);
+  const tan = curve.getTangentAt(tt);
+  camera.position.set(p.x, p.y + 5, p.z);
+  camera.lookAt(p.x + tan.x * 24, p.y + 4.6, p.z + tan.z * 24);
+}
+
+function updateActiveFromT() {
+  let idx = -1;
+  for (let i = 0; i < waypoints.length; i++) {
+    if (t >= waypoints[i].t - 0.015) idx = i;
+  }
+  if (idx < 0 && touring) idx = 0;
+  setActive(idx);
+}
+
+function setTouring(on) {
+  touring = on;
+  controls.enabled = !on;
+  document.body.classList.toggle('touring', on);
+}
+
+function updateButtons() {
+  if (!touring) {
+    btnTour.textContent = 'Iniciar recorrido';
+    btnTour.classList.add('primary');
+  } else if (!paused) {
+    btnTour.textContent = 'Pausa';
+    btnTour.classList.remove('primary');
+  } else {
+    btnTour.textContent = t >= 0.999 ? 'Repetir recorrido' : 'Reanudar';
+    btnTour.classList.add('primary');
+  }
+}
+
+function goToStop(i) {
+  if (!waypoints[i]) return;
+  t = waypoints[i].t;
+  paused = true;
+  setTouring(true);
+  setActive(i);
+  updateTourCamera();
+  progressBar.style.width = `${(t * 100).toFixed(2)}%`;
+  updateButtons();
+}
+
+btnTour.addEventListener('click', () => {
+  if (!touring) {
+    if (t >= 0.999) t = 0;
+    paused = false;
+    setTouring(true);
+    updateActiveFromT();
+    updateTourCamera();
+  } else {
+    paused = !paused;
+    if (!paused && t >= 0.999) t = 0;
+  }
+  updateButtons();
+});
+
+btnReset.addEventListener('click', () => {
+  t = 0;
+  paused = false;
+  setTouring(true);
+  setActive(-1);
+  updateActiveFromT();
+  updateTourCamera();
+  progressBar.style.width = '0%';
+  updateButtons();
+});
+
+btnOverview.addEventListener('click', () => {
+  t = 0;
+  paused = false;
+  setTouring(false);
+  setActive(-1);
+  progressBar.style.width = '0%';
+  controls.target.set(0, 8, 12);
+  camera.position.set(156, 122, 198);
+  controls.update();
+  updateButtons();
+});
+
+speedInput.addEventListener('input', () => {
+  speed = parseFloat(speedInput.value);
+  speedVal.textContent = `${speed.toFixed(1)}×`;
+});
+
+addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    btnTour.click();
+  }
+});
+
+/* ------------------------------------------------------------------ */
+/*  Bucle de render                                                    */
+/* ------------------------------------------------------------------ */
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), 0.05);
+  elapsed += dt;
+
+  if (touring && !paused) {
+    t += (dt / DURATION) * speed;
+    if (t >= 1) {
+      t = 1;
+      paused = true;
+      updateButtons();
+    }
+  }
+
+  if (touring) {
+    updateTourCamera();
+    updateActiveFromT();
+    progressBar.style.width = `${(t * 100).toFixed(2)}%`;
+  }
+
+  if (window.__flagGroup) {
+    window.__flagGroup.rotation.y = -0.12 + Math.sin(elapsed * 1.7) * 0.2;
+  }
+
+  jets.forEach((jet, i) => {
+    const s = 0.8 + Math.sin(elapsed * 4 + i * 1.3) * 0.25;
+    jet.scale.y = s;
+    jet.position.y = jet.userData.base + (jet.userData.h * s) / 2;
+  });
+
+  markerRings.forEach((ring, i) => {
+    const active = i === activeStop;
+    const s = active ? 1 + Math.sin(elapsed * 3) * 0.1 : 1;
+    ring.scale.setScalar(s);
+  });
+
+  controls.update();
+  renderer.render(scene, camera);
+  labelRenderer.render(scene, camera);
+}
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  labelRenderer.setSize(innerWidth, innerHeight);
+});
+
+setActive(-1);
+updateButtons();
+animate();
+
+renderer.render(scene, camera);
+labelRenderer.render(scene, camera);
+requestAnimationFrame(() => {
+  document.getElementById('loader').classList.add('hidden');
+});
+</script>
+</body>
+</html>

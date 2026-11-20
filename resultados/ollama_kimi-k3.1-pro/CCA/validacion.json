@@ -1,0 +1,16 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ 17/17 tests y main.py",
+    "✔ Decimal, una moneda, precio del catálogo, stock",
+    "✔ 50 hilos a la vez: 50 líneas",
+    "✖ una clase en memoria: sin servicio, sin persistencia, sin nada para escalar"
+  ],
+  "comprobacion": "Copia en /tmp, unittest, main.py y juez/juez.py (del juez)",
+  "juez_salida": [
+    "50 hilos: líneas 50",
+    "USD en carrito EUR: rechazado ValueError",
+    "0,10 × 3 = 0.30"
+  ]
+}

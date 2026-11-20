@@ -1,0 +1,24 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra-3d.html",
+      "errores": [],
+      "titulo": "La Alhambra de Granada · Ruta 3D",
+      "canvas": 1,
+      "texto": "La Alhambra\nCARGANDO RUTA 3D\nGRANADA · ESPAÑA\nLa Alhambra\n\nUna ruta virtual por la ciudad palatina nazarí, del siglo XIII al XVI.\n\nIniciar recorrido\nReiniciar\nVista general\nVELOCIDAD\n1.0×\nPARADAS DE LA RUTA\n1\nPuerta de la Justicia\n2\nAlcazaba\n3\nPalacios Nazaríes\n4\nPalacio de Carlos V\n5\nGeneralife\nRUTA 3D\nBienvenido a la Alhambra\n\nPulsa «Iniciar recorrido» para sobrevolar la fortaleza, los palacios ",
+      "scripts": [],
+      "captura": "capturas/alhambra-3d.html.png",
+      "capturas_extra": [
+        "capturas/inicio.png",
+        "capturas/tour-10s.png",
+        "capturas/tour-35s.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores, three.js desde jsDelivr",
+    "✔ vista general con colina, muralla, Carlos V, Generalife y Sierra Nevada",
+    "✖ en el tour la cámara se mete en la muralla y a los 35 s sigue en la parada 1"
+  ]
+}

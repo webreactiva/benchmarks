@@ -1,0 +1,36 @@
+  ┃  [✓] Ejecutar y verificar las pruebas
+  ┃
+
+     + Thought: 748ms
+
+     Implementado en la carpeta actual un carrito de compra en Python, sin dependencias externas.
+
+     Componentes
+
+     - models/carrito.py: operaciones para añadir, actualizar, quitar, vaciar y calcular totales.
+     - models/producto.py: producto con validación de precio, moneda y stock.
+     - models/item_carrito.py: cantidades y subtotales.
+     - service/producto_service.py: catálogo inyectable y actualización de stock.
+     - tests/test_carrito.py: pruebas del flujo completo y casos límite.
+     - main.py: ejemplo ejecutable.
+
+     Incluye consolidación de productos repetidos, validación de stock, prevención de importes negativos, redondeo
+     monetario con Decimal y control de monedas mixtas.
+
+     Verificación
+
+     - 17 pruebas ejecutadas correctamente.
+     - Ejemplo verificado con un total de 210,80 EUR.
+
+     python3 main.py
+     python3 -m unittest discover -s tests -v
+
+     ▣  Build · kimi-k3.1-pro · 2m 9s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · kimi-k3.1-pro Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-19lHBQvl                                                              22.0K (2%)  ctrl+p commands
+

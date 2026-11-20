@@ -1,0 +1,1 @@
+Guardado en `tests-flaky-son-peores-que-no-tener-tests.md`, con estructura de blog: el efecto del lobo cibernético, costes ocultos, un ejemplo de código en Go, y consejos accionables (cuarentena, reparar o eliminar).

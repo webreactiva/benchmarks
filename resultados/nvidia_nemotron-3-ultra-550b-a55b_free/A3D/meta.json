@@ -1,0 +1,25 @@
+{
+  "codigo": "A3D",
+  "modelo": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T20:57:25Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 8903,
+    "output": 10033,
+    "reasoning": 333,
+    "cache_read": 35072,
+    "cache_write": 0,
+    "total": 54341
+  },
+  "peticiones": 3,
+  "error": null,
+  "herramientas": {
+    "write": 1,
+    "bash": 1
+  },
+  "sesion": "ses_e0a6665f0ffe3fU22n4PiPVBSw",
+  "ficheros": [
+    "alhambra-3d-route.html"
+  ]
+}

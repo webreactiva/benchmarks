@@ -1,0 +1,22 @@
+{
+  "nota": 6,
+  "veredicto": "bonito, escala el código, no el sistema",
+  "resumen": "Una tienda completa y muy cuidada (catálogo, búsqueda, carrito, cupones, envío, IVA, checkout) con un motor de precios por reglas, dinero en céntimos, almacenamiento intercambiable y 23 tests. Pero el carrito vive en localStorage y el servidor solo sirve estáticos: «escalable» lo resuelve como código fácil de ampliar, sin nada que aguante muchos usuarios.",
+  "rarezas": [
+    "Se inventó una tienda entera, «Nébula Store», con 11 productos, valoraciones y emojis, cuando el prompt solo pedía un carrito.",
+    "26 peticiones y 1,14 millones de tokens.",
+    "El único CCA con interfaz: los demás entregaron librerías o API.",
+    "Listó la carpeta de sus propias pruebas anteriores (A3D, MWP) buscando contexto; no tocó las de otros modelos. Corrió antes del encierro."
+  ],
+  "nota_previa": 6,
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 0,
+    "escala horizontal": 0,
+    "explica el escalado": 1
+  }
+}

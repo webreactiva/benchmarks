@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shopping-cart"
+version = "1.0.0"
+description = "Carrito de la compra escalable: arquitectura hexagonal, repositorios intercambiables (memoria/Redis) y API HTTP stateless"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+redis = ["redis>=5"]
+
+[project.scripts]
+cart-server = "cart.__main__:main"
+
+[tool.setuptools]
+packages = ["cart", "cart.domain", "cart.application", "cart.infrastructure", "cart.api"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

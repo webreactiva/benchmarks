@@ -1,0 +1,25 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra.html",
+      "errores": [],
+      "titulo": "Atlas Nazarí · La Alhambra",
+      "canvas": 1,
+      "texto": "Atlas Nazarí\n⌖   GRANADA, ESPAÑA\nRECORRIDO VIRTUAL\nLa Alhambra\n\nUna ruta en 3D por la ciudad palatina de Granada.\n\nN\n+\n−\n⟲\nPARADA 01 / 06\nAlcazaba\n\nLa torre de la Vela domina el extremo occidental de la colina de la Sabika.\n\nArrastra para girar · Usa + y − para el zoom\nGUÍA DE EXPLORACIÓN\nItinerario\n6 paradas\n01\nAlcazaba\nFortaleza militar\n↗\n02\nPalacio de Carlos V\nPalacio renacentista\n03\nPalacios N",
+      "scripts": [],
+      "captura": "capturas/alhambra.html.png"
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ abre sin errores de consola",
+    "✔ 3D propio en canvas (17 KB, sin librerías): se gira arrastrando y tiene zoom",
+    "✖ «Siguiente parada» cambia la parada activa y su texto, pero la cámara no se mueve",
+    "✔ ruta de 6 paradas en orden de visita, con el Paseo de las Torres",
+    "~ se ven las torres de la Alcazaba y la alberca del Partal; el patio de Carlos V no se distingue",
+    "✔ textos de las paradas correctos"
+  ],
+  "capturas_extra": [
+    "capturas/siguiente-x4.png"
+  ]
+}

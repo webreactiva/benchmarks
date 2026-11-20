@@ -1,0 +1,36 @@
+{
+  "codigo": "PTS",
+  "modelo": "ollama/beam",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T03:14:29Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 13931,
+    "output": 3814,
+    "reasoning": 0,
+    "cache_read": 37760,
+    "cache_write": 0,
+    "total": 55505
+  },
+  "peticiones": 6,
+  "error": null,
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "bash": 2,
+    "write": 3
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+  "ficheros": [
+    "post-tests-flaky.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 131072,
+    "output_proveedor": 131072,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

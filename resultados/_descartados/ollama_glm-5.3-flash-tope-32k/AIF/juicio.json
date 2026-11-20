@@ -1,0 +1,8 @@
+{
+  "nota": 0,
+  "veredicto": "no entregó nada",
+  "resumen": "Igual que en A3D: una sola petición, razonó hasta los 32 000 tokens de salida y OpenCode cortó la respuesta (finish: length) sin que llegara a escribir el fichero.",
+  "rarezas": [
+    "Segunda vez que GLM 5.3 Flash agota el tope de 32 000 tokens de salida pensando, siempre en los prompts que piden un HTML grande."
+  ]
+}

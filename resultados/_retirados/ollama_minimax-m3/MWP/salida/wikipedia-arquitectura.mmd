@@ -1,0 +1,131 @@
+---
+title: Arquitectura de Wikipedia (producción)
+---
+flowchart TB
+
+  subgraph CLIENTES["1. Clientes"]
+    direction LR
+    NAV["Navegador<br/>web, movil, escritorio"]
+    BOT["Bots, raspadores<br/>y lectores de RSS"]
+    API["Aplicaciones de terceros<br/>consumidores de API"]
+    DUMP["Consumidores de dumps<br/>dumps.wikimedia.org"]
+  end
+
+  subgraph BORDE["2. Capa de borde: red anycast, CDN y gateway"]
+    direction LR
+    DNS["DNS anycast<br/>wikipedia.org"]
+    ANY["IP anycast<br/>edge de Wikimedia"]
+    VARN["Caches de borde Varnish<br/>HTML cacheado"]
+    CDN["CDN de estaticos<br/>upload.wikimedia.org"]
+    GW["Wikimedia API Gateway<br/>REST + TLS"]
+  end
+
+  subgraph FRONT["3. Servidores frontend (apiserver)"]
+    direction LR
+    ACTION["Action API<br/>api.php"]
+    REST["REST API<br/>rest.php"]
+  end
+
+  subgraph CORE["4. MediaWiki Core (servidores de aplicacion PHP)"]
+    direction LR
+    PARSER["Parser wikitext / HTML<br/>plantillas, referencias"]
+    EDIT["Edicion, permisos<br/>y cuentas de usuario"]
+    MW["Logica de wiki<br/>paginacion, historial, vista"]
+    JOBS["Planificador de trabajos<br/>mantenimiento de Indices"]
+  end
+
+  subgraph AUX["5. Servicios auxiliares"]
+    direction LR
+    PARSOID["Parsoid<br/>wikitext a HTML (VisualEditor)"]
+    WBASE["Wikidata / Wikibase<br/>y su servicio de consultas"]
+    CIRRUS["Busqueda<br/>CirrusSearch"]
+    CTRANS["ContentTranslation<br/>y otras herramientas"]
+    PAGEV["Pageviews API<br/>y metricas de trafico"]
+    DUMPGEN["Generador de dumps<br/>y Wikimedias Enterprise"]
+  end
+
+  subgraph CACHE["6. Capas de cache"]
+    direction LR
+    LOCAL["Cache local de paginas<br/>APCu en cada servidor"]
+    WAN["Cache WAN de objetos<br/>Memcached por centro de datos"]
+    REDIS["Cola de trabajos<br/>Redis"]
+  end
+
+  subgraph DATOS["7. Capa de datos y almacenamiento"]
+    direction LR
+    PRIM["Base de datos primaria<br/>MariaDB"]
+    REPL["Replicas de base de datos<br/>MariaDB en solo lectura"]
+    ES["Elasticsearch<br/>indice de busqueda"]
+    RESTBASE["Almacenamiento REST<br/>RESTBase / Wikidata REST"]
+    SWIFT["Almacen de medios<br/>Swift + miniaturas"]
+    KAFKA["EventStreams<br/>Kafka"]
+    LAKE["Data lake HDFS<br/>y almacenamiento analitico Druid"]
+  end
+
+  subgraph PLAT["8. Plataforma compartida"]
+    direction LR
+    K8S["Kubernetes<br/>contenedores y autoscaling"]
+    PUPPET["Puppet y Git<br/>gestioned de configuracion"]
+    OBS["Prometheus y Grafana<br/>monitorizacion"]
+    LOGS["Logging centralizado<br/>rsyslog y Loki"]
+  end
+
+  DNS --> ANY
+  ANY --> VARN
+  ANY --> GW
+  VARN -->|"peticion con cache"| NAV
+  VARN -->|"fallo de cache"| FRONT
+  CDN -->|"imagenes, CSS, JS"| NAV
+  CDN -->|"miniatura bajo demanda"| SWIFT
+
+  FRONT --> CORE
+  GW -->|"enruta a la REST API"| REST
+  GW -->|"consultas de trafico"| PAGEV
+
+  MW <--> PARSER
+  MW <--> EDIT
+  MW --> JOBS
+  MW <--> PARSOID
+  MW <--> WBASE
+  MW <--> CIRRUS
+  MW <--> CTRANS
+  CIRRUS --> ES
+  WBASE --> REPL
+  PAGEV --> KAFKA
+
+  MW -->|"lectura"| LOCAL
+  LOCAL -->|"fallo de cache"| WAN
+  WAN -->|"fallo de cache"| REPL
+  MW -->|"escritura"| PRIM
+  PRIM -->|"replicacion"| REPL
+  MW -->|"encola trabajo"| REDIS
+  REDIS -->|"workers"| JOBS
+  JOBS -->|"genera miniaturas"| SWIFT
+  JOBS -->|"reindexado"| ES
+  MW -->|"publica cambios"| KAFKA
+  KAFKA --> RESTBASE
+  KAFKA --> PAGEV
+  KAFKA --> LAKE
+  LAKE -->|"publica dumps"| DUMP
+  DUMPGEN --> LAKE
+  SWIFT -->|"lectura de ficheros"| MW
+
+  PLAT -.->|"soporte de toda la plataforma"| CORE
+
+  classDef cliente fill:#eef2f7,stroke:#4a6fa5,color:#12233b
+  classDef borde fill:#e7f4ea,stroke:#2e7d32,color:#123d18
+  classDef front fill:#fff4e5,stroke:#b26a00,color:#4a2e00
+  classDef core fill:#fdecea,stroke:#c0392b,color:#4a1310
+  classDef aux fill:#f3e8fd,stroke:#7d3c98,color:#33184a
+  classDef cache fill:#e6f2ff,stroke:#1f6fb2,color:#0b2f4d
+  classDef datos fill:#fff9db,stroke:#a98b00,color:#443600
+  classDef plat fill:#f2f2f2,stroke:#8a8a8a,color:#333333
+
+  class NAV,BOT,API,DUMP cliente
+  class DNS,ANY,VARN,CDN,GW borde
+  class ACTION,REST front
+  class PARSER,EDIT,MW,JOBS core
+  class PARSOID,WBASE,CIRRUS,CTRANS,PAGEV,DUMPGEN aux
+  class LOCAL,WAN,REDIS cache
+  class PRIM,REPL,ES,RESTBASE,SWIFT,KAFKA,LAKE datos
+  class K8S,PUPPET,OBS,LOGS plat

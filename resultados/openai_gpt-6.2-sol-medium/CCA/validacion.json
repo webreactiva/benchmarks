@@ -1,0 +1,13 @@
+{
+  "extra": [
+    "✔ npm start sin dependencias: sirve la app en el puerto 3000",
+    "✔ npm test: 4 de 4",
+    "✔ precios en céntimos; 0,10 × 3 = 30",
+    "✔ id con ../ ignorado; cantidades negativas o decimales, a 0; por encima de las existencias, al tope",
+    "✔ el localStorage manipulado solo conserva id y cantidad válidos",
+    "✖ no hay API: el carrito vive en el navegador (localStorage); el servidor solo sirve ficheros",
+    "✖ las 50 altas a la vez no se pueden probar: no hay servicio",
+    "✖ quoteCart devuelve el producto del catálogo: cambiar su precio cambia el catálogo",
+    "~ no hay botón de vaciar; el carrito se vacía al confirmar el pedido"
+  ]
+}

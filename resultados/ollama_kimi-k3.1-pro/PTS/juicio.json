@@ -1,0 +1,17 @@
+{
+  "nota": 10,
+  "veredicto": "el mejor post",
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 1,
+    "slop": 2,
+    "extensión": 1
+  },
+  "resumen": "1409 palabras sin salirse de los tests intermitentes, con la tesis defendida desde el principio («una habitación a oscuras» frente a «una alarma que suena al azar»), cuatro costes con mecanismo (oculta regresiones, entrena a ignorar el rojo, agranda los cambios, gasta atención), la cuenta bien hecha (200 tests al 99 % → 87 % de ejecuciones con algún fallo) y un plan práctico. El menos slop de todos.",
+  "rarezas": [
+    "4 peticiones y 3,5 k tokens de salida."
+  ]
+}

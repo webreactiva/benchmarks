@@ -1,0 +1,64 @@
+graph TB
+    subgraph "Cliente"
+        A[Navegador Web] --> B[App Móvil]
+        B --> C[API Externa]
+    end
+
+    subgraph "Edge / CDN"
+        D[Varnish Cache] --> E[Traffic Layer]
+        E --> F[Load Balancer LVS]
+    end
+
+    subgraph "Capa de Aplicación"
+        F --> G[MediaWiki PHP]
+        G --> H[Job Queue<br/>Redis + Kafka]
+        G --> I[Parser Cache<br/>Memcached]
+        G --> J[Object Cache<br/>Memcached/Redis]
+    end
+
+    subgraph "Servicios Auxiliares"
+        G --> K[Parsoid<br/>Node.js]
+        G --> L[RESTBase<br/>Cassandra]
+        G --> M[Mathoid<br/>Math Rendering]
+        G --> N[Electron/Chromium<br/>PDF Rendering]
+        G --> O[OCG<br/>Legacy PDF]
+        G --> P[Swift/Thumbor<br/>Image Scaling]
+    end
+
+    subgraph "Base de Datos"
+        Q[(MariaDB/MySQL<br/>Primary)]
+        R[(MariaDB/MySQL<br/>Replicas)]
+        S[(MariaDB/MySQL<br/>External Storage)]
+        Q --> R
+        Q --> S
+    end
+
+    subgraph "Almacenamiento"
+        T[Swift/CEPH<br/>File Storage]
+        U[Swift/CEPH<br/>Thumbnails]
+    end
+
+    subgraph "Búsqueda"
+        V[CirrusSearch<br/>Elasticsearch]
+    end
+
+    subgraph "Infraestructura"
+        W[Kubernetes<br/>Deployment]
+        X[Puppet/Ansible<br/>Config Mgmt]
+        Y[Prometheus/Grafana<br/>Monitoring]
+        Z[Logstash/ELK<br/>Logging]
+    end
+
+    G --> Q
+    G --> V
+    G --> T
+    K --> Q
+    L --> Q
+    P --> T
+    P --> U
+
+    style G fill:#f9f,stroke:#333
+    style Q fill:#bbf,stroke:#333
+    style V fill:#bfb,stroke:#333
+    style D fill:#ffb,stroke:#333
+    style W fill:#fbf,stroke:#333

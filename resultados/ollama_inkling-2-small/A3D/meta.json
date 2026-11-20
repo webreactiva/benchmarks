@@ -1,0 +1,38 @@
+{
+  "codigo": "A3D",
+  "modelo": "ollama/inkling-2-small",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T01:35:26Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 176081,
+    "output": 47907,
+    "reasoning": 0,
+    "cache_read": 978176,
+    "cache_write": 0,
+    "total": 1202164
+  },
+  "peticiones": 24,
+  "error": null,
+  "mensajes_usuario": [
+    "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "bash": 12,
+    "write": 1,
+    "edit": 11,
+    "read": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e0967deafffehjpvuaZHmqU1Se",
+  "ficheros": [
+    "alhambra-3d.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 131072,
+    "output_proveedor": 131072,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

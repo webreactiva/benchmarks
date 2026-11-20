@@ -1,0 +1,41 @@
+{
+  "codigo": "A3D",
+  "modelo": "ollama/kimi-k3.1-pro",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T01:48:36Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 53397,
+    "output": 44607,
+    "reasoning": 0,
+    "cache_read": 910045,
+    "cache_write": 0,
+    "total": 1008049
+  },
+  "peticiones": 23,
+  "error": null,
+  "mensajes_usuario": [
+    "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 4,
+    "glob": 1,
+    "todowrite": 4,
+    "write": 1,
+    "bash": 12,
+    "grep": 1,
+    "edit": 4
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e095bd008ffeTHxWyTBhkJ80ie",
+  "ficheros": [
+    "index.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

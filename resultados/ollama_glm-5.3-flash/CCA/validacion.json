@@ -1,0 +1,4 @@
+{"html": [], "mermaid": [],
+ "extra": ["✔ pytest: 24/24", "✔ 50 hilos concurrentes en memoria: 50 líneas", "✔ Decimal: 0,10 × 3 = 0.30", "✖ adaptador Redis: cualquier excepción acaba en AttributeError (self._client.WatchError no existe)"],
+ "comprobacion": "Copia en /tmp, pytest, juez/juez.py y juez/redis.py con fakeredis (scripts del juez, no del modelo)",
+ "juez_salida": ["concurrencia: 50 hilos, líneas guardadas 50", "0,10 × 3 = 0.30", "tras tocar el snapshot, líneas 1", "precio negativo rechazado: InvalidProductError", "carrito inexistente → AttributeError 'FakeRedis' object has no attribute 'WatchError'"]}

@@ -1,0 +1,604 @@
+{
+  "info": {
+    "id": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+    "slug": "crisp-circuit",
+    "projectID": "global",
+    "directory": "/var/tmp/bench/ws-ZSE24wDK",
+    "path": "var/tmp/bench/ws-ZSE24wDK",
+    "title": "Post: tests flaky peores que nada",
+    "agent": "build",
+    "model": {
+      "id": "beam",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 13931,
+      "output": 3814,
+      "reasoning": 0,
+      "cache": {
+        "read": 37760,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795144470779,
+      "updated": 1795144500829
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795144470796
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "beam"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f6f2d10c001zjWyc4mTaL8t0D",
+        "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f6f2d10f001Jp9wR40t2dIT7i",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2d10c001zjWyc4mTaL8t0D"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f2d10c001zjWyc4mTaL8t0D",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-ZSE24wDK",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 6706,
+          "input": 4840,
+          "output": 74,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 1792
+          }
+        },
+        "modelID": "beam",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144470816,
+          "completed": 1795144473614
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f2d120001eZM5vUx3Sz29ah",
+        "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f2d97f001pqAQ1rgvcYY57Y",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2d120001eZM5vUx3Sz29ah"
+        },
+        {
+          "type": "reasoning",
+          "text": "El usuario quiere un post de blog sobre por qué los tests que fallan a veces son peores que no tener tests, y lo quiere guardar en la carpeta actual.\n\nPrimero voy a explorar la carpeta actual para ver qué hay.",
+          "time": {
+            "start": 1795144472961,
+            "end": 1795144473533
+          },
+          "id": "prt_1f6f2d981001Fh7E667phM27it",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2d120001eZM5vUx3Sz29ah"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_wb2shiyx",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "ls -la ."
+            },
+            "output": "total 4\ndrwx------ 2 root root 4096 Nov 20 03:14 .\ndrwxrwxrwt 3 root root   60 Nov 20 03:14 ..\n",
+            "metadata": {
+              "output": "total 4\ndrwx------ 2 root root 4096 Nov 20 03:14 .\ndrwxrwxrwt 3 root root   60 Nov 20 03:14 ..\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "ls -la .",
+            "time": {
+              "start": 1795144473543,
+              "end": 1795144473590
+            }
+          },
+          "id": "prt_1f6f2dbc0001Tr4HmhyeUmN1iK",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2d120001eZM5vUx3Sz29ah"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 6706,
+            "input": 4840,
+            "output": 74,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 1792
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f2dc0a001njF38X8WPXmvLk",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2d120001eZM5vUx3Sz29ah"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f2d10c001zjWyc4mTaL8t0D",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-ZSE24wDK",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 7924,
+          "input": 177,
+          "output": 1155,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 6592
+          }
+        },
+        "modelID": "beam",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144473617,
+          "completed": 1795144489691
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f2dc11001MvLS2q0KPSDkz4",
+        "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f2ddf80010HNfe5ya4jFgw4",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2dc11001MvLS2q0KPSDkz4"
+        },
+        {
+          "type": "reasoning",
+          "text": "La carpeta está vacía. Voy a crear un archivo markdown con el post del blog.",
+          "time": {
+            "start": 1795144474106,
+            "end": 1795144489609
+          },
+          "id": "prt_1f6f2ddfa0019AJlzLxPTR4aWT",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2dc11001MvLS2q0KPSDkz4"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_30k2b3rd",
+          "state": {
+            "status": "error",
+            "input": {
+              "content": "# Los tests que fallan a veces son peores que no tener tests\n\n## La ilusión de seguridad\n\nTienes un test suite. Las suites de CI se ponen en verde. Haces un refactor grande y los tests pasan. Te sientes seguro. Pero la confianza es falsa: el test que a veces falla y a veces pasa es el peor enemigo de la calidad.\n\nCuando un test es determinista —falla siempre en el mismo input— es una alarma útil. Cuando es no determinista, el equipo aprende a ignorarlo. Y un test ignorado es peor que la ausencia de test, porque drena la atención y enmascara problemas reales.\n\n## El costo cognitivo de la flakiness\n\n- **Falsos positivos**: un test flaky hace fallar pipelines que no deberían fallar. El equipo pierde tiempo re-ejecutando.\n- **Pérdida de señal**: cuando el 80% de los tests que fallan son flaky, dejar de mirar los fallos se convierte en hábito. Los bugs reales se entierran bajo el ruido.\n- **Des moralización**: los developers dejan de confiar en CI. \"Es solo un flaky\", \"re-run y listo\".\n- **Fuga de recursos**: cada re-ejecución cuesta minutos y bloquea releases.\n\n## Por qué la flakiness es difícil de erradicar\n\nNo es un bug único. Es la suma de:\n\n- Dependencias de timing (sleeps, timeouts, race conditions)\n- Estado compartido entre tests (orden, datos, archivos)\n- Tests que dependen de la red o de servicios externos sin mocks\n- Aserciones sobre cosas no deterministas ( randomness, fechas )\n- Condiciones de carrera en código de producción que los tests no aislaron\n- Tests que dependen del orden de ejecución (test interdependence)\n\n## Cuándo un test flaky es peor que no test\n\nNo tener test = ausencia de información. Tienes que razonar sobre el código, pero al menos no te mientes.\n\nTest flaky = información falsa. Te miente cada día, y te acostumbras a la mentira. Cuando finalmente viene un bug real, ya no miras el dashboard rojo.\n\nRegla práctica: un test que falla en CI sin que nadie pueda reproducir el fallo en local en 5 minutos debería ser eliminado o arreglado en 24h. De lo contrario, es peor que nada.\n\n## Modelo mental: test como observador\n\nPiensa el test como un sensor. Un sensor que mide bien o falla claro es útil. Un sensor que mide ruido es peor que no tenerlo: te da datos que parece que significan algo pero no.\n\nLa propiedad buscada no es \"mucho coverage\" sino \"signal-to-noise ratio alto\". Un suite de 50 tests deterministas beats 500 tests flaky.\n\n## Estrategias prácticas\n\n1. **Cuarentena**: clases los tests flaky en un directorio `flaky/` y no los ejecutes en el pipeline principal. Solo los reintenta en un job separado.\n2. **Réplicas**: si un test flaky pasa reintentando N veces, eso no es éxito, es thrashing. Tratalo como failing.\n3. **Detección temprana**: ejecuta cada nuevo test 50 veces en CI en PR. Si varía, es flaky antes de merge.\n4. **Eliminación de sleeps**: todo `sleep` en test es olor. Reemplaza por wait-for-condition con timeout determinista.\n5. **Aislamiento**: cada test crea y destruye su propio estado. Nada global.\n6. **Seeds fijas**: para cualquier uso de randomness, fija la seed y reporta la seed en el failure.\n7. **Mock de tiempo**: usa reloj falso (`freezegun`, `jest.useFakeTimers`, `clock`).\n\n## Cierre\n\nLos tests son activos de confianza. Un test flaky es deuda técnica con intereses compuestos: cada día el equipo se acostumbra más a ignorar señales rojas. Mejor un suite pequeño, verde, determinista que 500 tests que \"a veces fallan\" y que nadie ya mira.\n\nSi tienes tests flaky hoy, no los añadas más. Pausa las features nuevas un sprint y límpialos. La deuda de confianza se paga con tiempo de equipo; el test flaky es el impago.\n\n## Checklist antes de mergear un test\n\n- [ ] Determinista: mismo input → mismo resultado, 100 ejecuciones.\n- [ ] Sin sleeps.\n- [ ] Sin estado compartido.\n- [ ] Sin dependencias externas (red, FS real, reloj) no controladas.\n- [ ] Sin dependencias de orden entre tests.\n- [ ] Falla rápido cuando algo va mal (no timeout largos).\n- [ ] El mensaje de fallo permite diagnosticar sin re-ejecutar.\n"
+            },
+            "error": "The write tool was called with invalid arguments: SchemaError(Missing key\n  at [\"filePath\"]).\nPlease rewrite the input so it satisfies the expected schema.",
+            "time": {
+              "start": 1795144489616,
+              "end": 1795144489619
+            }
+          },
+          "id": "prt_1f6f31a8b001RPZ4TzuyaWzy08",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2dc11001MvLS2q0KPSDkz4"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 7924,
+            "input": 177,
+            "output": 1155,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 6592
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f31ad7001RifSBFa376F53p",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f2dc11001MvLS2q0KPSDkz4"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f2d10c001zjWyc4mTaL8t0D",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-ZSE24wDK",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 9181,
+          "input": 6175,
+          "output": 1214,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 1792
+          }
+        },
+        "modelID": "beam",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144489693,
+          "completed": 1795144494601
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f31add0012CmeeFt1AOXa5v",
+        "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f31d6f001oKHQQMESLLFgVT",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f31add0012CmeeFt1AOXa5v"
+        },
+        {
+          "type": "reasoning",
+          "text": "El error dice que falta filePath. Parece que necesita path completo absoluta. Voy a usar la carpeta actual /var/tmp/bench/ws-ZSE24wDK.",
+          "time": {
+            "start": 1795144490353,
+            "end": 1795144494234
+          },
+          "id": "prt_1f6f31d71001EpfQwz111iWzJE",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f31add0012CmeeFt1AOXa5v"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_4p1v63vv",
+          "state": {
+            "status": "error",
+            "input": {
+              "content": "# Los tests que fallan a veces son peores que no tener tests\n\n## La ilusión de seguridad\n\nTienes un test suite. Las pipelines de CI se ponen en verde. Haces un refactor grande y los tests pasan. Te sientes seguro. Pero la confianza es falsa: el test que a veces falla y a veces pasa es el peor enemigo de la calidad.\n\nCuando un test es determinista —falla siempre en el mismo input— es una alarma útil. Cuando es no determinista, el equipo aprende a ignorarlo. Y un test ignorado es peor que la ausencia de test, porque drena la atención y enmascara problemas reales.\n\n## El costo cognitivo de la flakiness\n\n- **Falsos positivos**: un test flaky hace fallar pipelines que no deberían fallar. El equipo pierde tiempo re-ejecutando.\n- **Pérdida de señal**: cuando el 80% de los tests que fallan son flaky, dejar de mirar los fallos se convierte en hábito. Los bugs reales se entierran bajo el ruido.\n- **Des moralización**: los developers dejan de confiar en CI. \"Es solo un flaky\", \"re-run y listo\".\n- **Fuga de recursos**: cada re-ejecución cuesta minutos y bloquea releases.\n\n## Por qué la flakiness es difícil de erradicar\n\nNo es un bug único. Es la suma de:\n\n- Dependencias de timing (sleeps, timeouts, race conditions)\n- Estado compartido entre tests (orden, datos, archivos)\n- Tests que dependen de la red o de servicios externos sin mocks\n- Aserciones sobre cosas no deterministas (randomness, fechas)\n- Condiciones de carrera en código de producción que los tests no aislaron\n- Tests que dependen del orden de ejecución (test interdependence)\n\n## Cuándo un test flaky es peor que no test\n\nNo tener test = ausencia de información. Tienes que razonar sobre el código, pero al menos no te mientes.\n\nTest flaky = información falsa. Te miente cada día, y te acostumbras a la mentira. Cuando finalmente viene un bug real, ya no miras el dashboard rojo.\n\nRegla práctica: un test que falla en CI sin que nadie pueda reproducir el fallo en local en 5 minutos debería ser eliminado o arreglado en 24h. De lo contrario, es peor que nada.\n\n## Modelo mental: test como observador\n\nPiensa el test como un sensor. Un sensor que mide bien o falla claro es útil. Un sensor que mide ruido es peor que no tenerlo: te da datos que parece que significan algo pero no.\n\nLa propiedad buscada no es \"mucho coverage\" sino \"signal-to-noise ratio alto\". Un suite de 50 tests deterministas beats 500 tests flaky.\n\n## Estrategias prácticas\n\n1. **Cuarentena**: clasifica los tests flaky en un directorio `flaky/` y no los ejecutes en el pipeline principal. Solo los reintentas en un job separado.\n2. **Réplicas**: si un test flaky pasa reintentando N veces, eso no es éxito, es thrashing. Trátalo como failing.\n3. **Detección temprana**: ejecuta cada nuevo test 50 veces en CI en PR. Si varía, es flaky antes de merge.\n4. **Eliminación de sleeps**: todo `sleep` en test es olor. Reemplaza por wait-for-condition con timeout determinista.\n5. **Aislamiento**: cada test crea y destruye su propio estado. Nada global.\n6. **Seeds fijas**: para cualquier uso de randomness, fija la seed y reporta la seed en el fallo.\n7. **Mock de tiempo**: usa reloj falso (`freezegun`, `jest.useFakeTimers`, `clock`).\n\n## Cierre\n\nLos tests son activos de confianza. Un test flaky es deuda técnica con intereses compuestos: cada día el equipo se acostumbra más a ignorar señales rojas. Mejor un suite pequeño, verde, determinista que 500 tests que \"a veces fallan\" y que nadie ya mira.\n\nSi tienes tests flaky hoy, no los añadas más. Pausa las features nuevas un sprint y límpialos. La deuda de confianza se paga con tiempo de equipo; el test flaky es el impago.\n\n## Checklist antes de mergear un test\n\n- [ ] Determinista: mismo input → mismo resultado, 100 ejecuciones.\n- [ ] Sin sleeps.\n- [ ] Sin estado compartido.\n- [ ] Sin dependencias externas (red, FS real, reloj) no controladas.\n- [ ] Sin dependencias de orden entre tests.\n- [ ] Falla rápido cuando algo va mal (no timeouts largos).\n- [ ] El mensaje de fallo permite diagnosticar sin re-ejecutar.\n"
+            },
+            "error": "The write tool was called with invalid arguments: SchemaError(Missing key\n  at [\"filePath\"]).\nPlease rewrite the input so it satisfies the expected schema.",
+            "time": {
+              "start": 1795144494240,
+              "end": 1795144494242
+            }
+          },
+          "id": "prt_1f6f32c9c001BNUHjs5uH9Frow",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f31add0012CmeeFt1AOXa5v"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 9181,
+            "input": 6175,
+            "output": 1214,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 1792
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f32e05001994X108gTUc7jQ",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f31add0012CmeeFt1AOXa5v"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f2d10c001zjWyc4mTaL8t0D",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-ZSE24wDK",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10484,
+          "input": 1250,
+          "output": 1298,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7936
+          }
+        },
+        "modelID": "beam",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144494603,
+          "completed": 1795144499307
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f32e0b001SCCorwp2KewWSF",
+        "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f3300c001JZ3rueBfysBTdt",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f32e0b001SCCorwp2KewWSF"
+        },
+        {
+          "type": "reasoning",
+          "text": "Empiezo el post. Hmm, parece que el parámetro se llama file_path? La doc dice `filePath` pero el error dice Missing key at [\"filePath\"]. Quizá el nombre correcto es `path`? No — la doc dice filePath. Espera el error dice \"Missing key at [\\\"filePath\\\"]\" — significa que el schema requiere una key que se llama filePath y no estaba. Pero yo pasé content. Debo pasar filePath. ¡Ah! No pasé filePath. Pasé content pero no filePath. Cierto, en la llamada anterior olvidé el parámetro filePath. Vuelve a intentar con filePath absoluto.",
+          "time": {
+            "start": 1795144495117,
+            "end": 1795144499222
+          },
+          "id": "prt_1f6f3300d001UtbRePgpwpj285",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f32e0b001SCCorwp2KewWSF"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_wmwfngym",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "# Los tests que fallan a veces son peores que no tener tests\n\n## La ilusión de seguridad\n\nTienes un test suite. Las pipelines de CI se ponen en verde. Haces un refactor grande y los tests pasan. Te sientes seguro. Pero la confianza es falsa: el test que a veces falla y a veces pasa es el peor enemigo de la calidad.\n\nCuando un test es determinista —falla siempre en el mismo input— es una alarma útil. Cuando es no determinista, el equipo aprende a ignorarlo. Y un test ignorado es peor que la ausencia de test, porque drena la atención y enmascara problemas reales.\n\n## El costo cognitivo de la flakiness\n\n- **Falsos positivos**: un test flaky hace fallar pipelines que no deberían fallar. El equipo pierde tiempo re-ejecutando.\n- **Pérdida de señal**: cuando el 80% de los tests que fallan son flaky, dejar de mirar los fallos se convierte en hábito. Los bugs reales se entierran bajo el ruido.\n- **Des moralización**: los developers dejan de confiar en CI. \"Es solo un flaky\", \"re-run y listo\".\n- **Fuga de recursos**: cada re-ejecución cuesta minutos y bloquea releases.\n\n## Por qué la flakiness es difícil de erradicar\n\nNo es un bug único. Es la suma de:\n\n- Dependencias de timing (sleeps, timeouts, race conditions)\n- Estado compartido entre tests (orden, datos, archivos)\n- Tests que dependen de la red o de servicios externos sin mocks\n- Aserciones sobre cosas no deterministas (randomness, fechas)\n- Condiciones de carrera en código de producción que los tests no aislaron\n- Tests que dependen del orden de ejecución (test interdependence)\n\n## Cuándo un test flaky es peor que no test\n\nNo tener test = ausencia de información. Tienes que razonar sobre el código, pero al menos no te mientes.\n\nTest flaky = información falsa. Te miente cada día, y te acostumbras a la mentira. Cuando finalmente viene un bug real, ya no miras el dashboard rojo.\n\nRegla práctica: un test que falla en CI sin que nadie pueda reproducir el fallo en local en 5 minutos debería ser eliminado o arreglado en 24h. De lo contrario, es peor que nada.\n\n## Modelo mental: test como observador\n\nPiensa el test como un sensor. Un sensor que mide bien o falla claro es útil. Un sensor que mide ruido es peor que no tenerlo: te da datos que parece que significan algo pero no.\n\nLa propiedad buscada no es \"mucho coverage\" sino \"signal-to-noise ratio alto\". Un suite de 50 tests deterministas beats 500 tests flaky.\n\n## Estrategias prácticas\n\n1. **Cuarentena**: clasifica los tests flaky en un directorio `flaky/` y no los ejecutes en el pipeline principal. Solo los reintentas en un job separado.\n2. **Réplicas**: si un test flaky pasa reintentando N veces, eso no es éxito, es thrashing. Trátalo como failing.\n3. **Detección temprana**: ejecuta cada nuevo test 50 veces en CI en PR. Si varía, es flaky antes de merge.\n4. **Eliminación de sleeps**: todo `sleep` en test es olor. Reemplaza por wait-for-condition con timeout determinista.\n5. **Aislamiento**: cada test crea y destruye su propio estado. Nada global.\n6. **Seeds fijas**: para cualquier uso de randomness, fija la seed y reporta la seed en el fallo.\n7. **Mock de tiempo**: usa reloj falso (`freezegun`, `jest.useFakeTimers`, `clock`).\n\n## Cierre\n\nLos tests son activos de confianza. Un test flaky es deuda técnica con intereses compuestos: cada día el equipo se acostumbra más a ignorar señales rojas. Mejor un suite pequeño, verde, determinista que 500 tests que \"a veces fallan\" y que nadie ya mira.\n\nSi tienes tests flaky hoy, no los añadas más. Pausa las features nuevas un sprint y límpialos. La deuda de confianza se paga con tiempo de equipo; el test flaky es el impago.\n\n## Checklist antes de mergear un test\n\n- [ ] Determinista: mismo input → mismo resultado, 100 ejecuciones.\n- [ ] Sin sleeps.\n- [ ] Sin estado compartido.\n- [ ] Sin dependencias externas (red, FS real, reloj) no controladas.\n- [ ] Sin dependencias de orden entre tests.\n- [ ] Falla rápido cuando algo va mal (no timeouts largos).\n- [ ] El mensaje de fallo permite diagnosticar sin re-ejecutar.\n",
+              "filePath": "/var/tmp/bench/ws-ZSE24wDK/post-tests-flaky.md"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-ZSE24wDK/post-tests-flaky.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-ZSE24wDK/post-tests-flaky.md",
+            "time": {
+              "start": 1795144499228,
+              "end": 1795144499235
+            }
+          },
+          "id": "prt_1f6f34018001JmZkS24vU4YdIr",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f32e0b001SCCorwp2KewWSF"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10484,
+            "input": 1250,
+            "output": 1298,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7936
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f34066001QFZrez2FX2ddM0",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f32e0b001SCCorwp2KewWSF"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f2d10c001zjWyc4mTaL8t0D",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-ZSE24wDK",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10543,
+          "input": 1348,
+          "output": 43,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 9152
+          }
+        },
+        "modelID": "beam",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144499310,
+          "completed": 1795144500100
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f3406e001kLuscwKMdrAyek",
+        "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f342bf001cHdtkmKIuwx3Ou",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f3406e001kLuscwKMdrAyek"
+        },
+        {
+          "type": "reasoning",
+          "text": "Archivo guardado. Confirmo rápido.",
+          "time": {
+            "start": 1795144499905,
+            "end": 1795144500004
+          },
+          "id": "prt_1f6f342c1001rNOODChbQOR3ks",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f3406e001kLuscwKMdrAyek"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_1p9d90v7",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "ls -la /var/tmp/bench/ws-ZSE24wDK"
+            },
+            "output": "total 8\ndrwx------ 2 root root 4096 Nov 20 03:14 .\ndrwxrwxrwt 3 root root   60 Nov 20 03:14 ..\n-rw-r--r-- 1 root root 4057 Nov 20 03:14 post-tests-flaky.md\n",
+            "metadata": {
+              "output": "total 8\ndrwx------ 2 root root 4096 Nov 20 03:14 .\ndrwxrwxrwt 3 root root   60 Nov 20 03:14 ..\n-rw-r--r-- 1 root root 4057 Nov 20 03:14 post-tests-flaky.md\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "ls -la /var/tmp/bench/ws-ZSE24wDK",
+            "time": {
+              "start": 1795144500009,
+              "end": 1795144500018
+            }
+          },
+          "id": "prt_1f6f34325001vtZ8xVMjLfrZF7",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f3406e001kLuscwKMdrAyek"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10543,
+            "input": 1348,
+            "output": 43,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 9152
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f34381001DsIUTz7IB2IdQK",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f3406e001kLuscwKMdrAyek"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f2d10c001zjWyc4mTaL8t0D",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-ZSE24wDK",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10667,
+          "input": 141,
+          "output": 30,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 10496
+          }
+        },
+        "modelID": "beam",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144500103,
+          "completed": 1795144500824
+        },
+        "finish": "stop",
+        "id": "msg_1f6f34387001AX2B5MBQo36StX",
+        "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f34562001JnCKG5iQBlZXry",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f34387001AX2B5MBQo36StX"
+        },
+        {
+          "type": "reasoning",
+          "text": "Archivo guardado correctamente, confirma con ls.",
+          "time": {
+            "start": 1795144500581,
+            "end": 1795144500725
+          },
+          "id": "prt_1f6f34565001joP70pxhjQT2Lw",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f34387001AX2B5MBQo36StX"
+        },
+        {
+          "type": "text",
+          "text": "Guardado en `post-tests-flaky.md`.",
+          "time": {
+            "start": 1795144500726,
+            "end": 1795144500819
+          },
+          "id": "prt_1f6f345f6001uClNF7oJ632PA4",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f34387001AX2B5MBQo36StX"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10667,
+            "input": 141,
+            "output": 30,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 10496
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f34655001t6IoBnmt2ubdA9",
+          "sessionID": "ses_e090d2f05ffeeFbHvl80e5h3J1",
+          "messageID": "msg_1f6f34387001AX2B5MBQo36StX"
+        }
+      ]
+    }
+  ]
+}

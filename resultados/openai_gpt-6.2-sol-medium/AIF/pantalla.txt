@@ -1,0 +1,2005 @@
+Reading additional input from stdin...
+OpenAI Codex v0.171.0
+--------
+workdir: /private/var/tmp/bench/ws-gNI8ozR8
+model: gpt-6.2-sol
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR] (network access enabled)
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a1f839-97c5-7900-a54a-8ba9d67755b6
+--------
+user
+Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.
+codex
+Voy a revisar la carpeta y consultar Web Reactiva para crear un juego de alquimia con recetas propias, en un único HTML.
+web search: 
+exec
+/bin/zsh -lc "pwd && rg --files --hidden -g '"'!.git'"' && git status --short" in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 1 in 0ms:
+/private/var/tmp/bench/ws-gNI8ozR8
+
+web search: Web Reactiva Dani Primo comunidad podcast formación webreactiva ...
+web search: 
+exec
+/bin/zsh -lc 'ls -la && git status --short --branch && ls -la /private/var/tmp/bench && which node && which playwright' in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 128 in 0ms:
+total 0
+drwx------  2 daniel  wheel  64 Nov 20 10:11 .
+drwxr-xr-x  3 daniel  wheel  96 Nov 20 10:11 ..
+fatal: not a git repository (or any of the parent directories): .git
+
+web search: site:webreactiva.com Paellator PUSH Esperando a Eskainet Web Reactiva
+web search: 
+exec
+/bin/zsh -lc 'command -v node; command -v npm; command -v chromium; ls /Applications; ls -la /private/var/tmp/bench' in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 0ms:
+/usr/local/bin/node
+/usr/local/bin/npm
+1Password 7.app
+Alfred 4.app
+AppCleaner.app
+Audio Hijack.app
+Brave Browser.app
+CaffeinateBar.app
+Camo Studio.app
+ChatGPT.app
+Claude.app
+Descript.app
+DiffMerge.app
+Docker.app
+Elgato Control Center.app
+Farrago.app
+FileZilla.app
+Firefox.app
+Fork.app
+GIMP-2.10.app
+GarageBand.app
+Google Chrome Canary.app
+Google Chrome.app
+Google Docs.app
+Google Drive.app
+Google Sheets.app
+Google Slides.app
+HTTP Toolkit.app
+Herd.app
+Heynote.app
+Hindenburg.app
+Hypernotes.app
+Jan.app
+JetBrains Toolbox.app
+Keynote.app
+Kindle.app
+LibreOffice.app
+Microsoft Edge.app
+Mp3tag.app
+Numbers.app
+Obsidian.app
+Ollama.app
+PSequel.app
+Pages.app
+Postman.app
+Purely PDF To Image.app
+Raven Reader.app
+Safari.app
+ScreenFlow.app
+Sequel Pro.app
+Setapp
+Setapp.app
+Skype.app
+Spotify.app
+Sublime Merge.app
+Sublime Text.app
+Telegram.app
+The Unarchiver.app
+Transmission.app
+Trello.app
+Twitter.app
+Typora.app
+Upscayl.app
+Utilities
+VLC.app
+Vimeo.app
+VirtualBox.app
+Visual Studio Code.app
+Windows App.app
+Zettelkasten
+autoEdit 3.app
+calibre.app
+iMovie.app
+iTerm.app
+zoom.us.app
+total 0
+drwxr-xr-x  3 daniel  wheel   96 Nov 20 10:11 .
+drwxrwxrwt  6 root    wheel  192 Nov 20 10:11 ..
+drwx------  2 daniel  wheel   64 Nov 20 10:11 ws-gNI8ozR8
+
+web search: Paellator Daniel Primo site:webreactiva.com OR site:danielprimo.io ...
+web search: 
+exec
+/bin/bash -lc "curl -fsSL -A 'Mozilla/5.0' 'https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Space+Grotesk:wght@400..700&display=swap' | tail -70
+curl -fsSL -A 'Mozilla/5.0' 'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_forward,arrow_outward,auto_awesome,bookmark,check,close,delete,emoji_objects,experiment,help,history,inventory_2,keyboard_arrow_right,science,search,touch_app&display=block' | head -30
+ls -d /private/tmp/*playwright* /private/tmp/*puppeteer* 2>/dev/null" in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 1 in 153ms:
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7oUUsj.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7aUUsj.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj42Vksj.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVksj.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(https://fonts.gstatic.com/l/font?kit=syl0-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190FjpZIvDmUSVOK7BDB_Qb9vUSzq3wzLK-P0J-V_Zs-QtQth3-jOcbTCVpeRL2w5rwZu2rIelXxKRNqo9eMxp7TMMRixBGV9G6AbFcT8dX8NcTrBYqGLZj2j2l_rNDkXA0MeYBkbOLZkDmlLE8zSitHC51w&skey=70ddea8fe54d532e&v=v386) format('truetype');
+}
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}
+
+web search: 'Wikipoke'
+codex
+El juego partirá de Código, Curiosidad, Café y Comunidad. Las recetas llevarán al podcast, la newsletter y otros proyectos de Web Reactiva, con pistas para seguir explorando.
+exec
+/bin/zsh -lc "mkdir -p /private/tmp/alquimia-reactiva-work
+curl -fsSL -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' 'https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Space+Grotesk:wght@400..700&display=swap' > /private/tmp/alquimia-reactiva-work/fonts.css
+curl -fsSL -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' 'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_outward,auto_awesome,check,close,emoji_objects,help,history,inventory_2,science,search,touch_app&display=block' > /private/tmp/alquimia-reactiva-work/icons.css
+awk '/latin \\*/{p=1} p{print} /"'^}/{p=0}'"' /private/tmp/alquimia-reactiva-work/fonts.css
+head -12 /private/tmp/alquimia-reactiva-work/icons.css
+npm list -g --depth=0" in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 255 in 1121ms:
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(https://fonts.gstatic.com/l/font?kit=syl0-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190FjpZIvDmUSVOK7BDB_Qb9vUSzq3wzLK-P0J-V_Zs-QtQth3-jOcbTCVpeRL2w5rwZu2rIelXxeJKJBiCa84nmQ1QCZLF1FC7ALBbSAARMZYSrxUtAiBLTi9SKnHD0KmwE6QO0Mdia0EP5Rk_vhnmA&skey=70ddea8fe54d532e&v=v386) format('woff2');
+}
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+npm ERR! code EPERM
+npm ERR! syscall mkdir
+npm ERR! path /Users/daniel/.codex-bench/openai_gpt-6.2-sol-medium/home/.npm
+npm ERR! errno -1
+npm ERR! 
+npm ERR! Your cache folder contains root-owned files, due to a bug in
+npm ERR! previous versions of npm which has since been addressed.
+npm ERR! 
+npm ERR! To permanently fix this problem, please run:
+npm ERR!   sudo chown -R 501:20 "/Users/daniel/.codex-bench/openai_gpt-6.2-sol-medium/home/.npm"
+
+npm ERR! Log files were not written due to an error writing to the directory: /Users/daniel/.codex-bench/openai_gpt-6.2-sol-medium/home/.npm/_logs
+npm ERR! You can rerun the command with `--loglevel=verbose` to see the logs in your terminal
+
+exec
+/bin/zsh -lc "python3 - <<'PY'
+import re, urllib.request
+from pathlib import Path
+p=Path('/private/tmp/alquimia-reactiva-work')
+fonts=re.findall(r'\\* latin \\*/.*?url\\((.*?)\\)', (p/'fonts.css').read_text(), re.S)
+fonts+=re.findall(r'url\\((.*?)\\)', (p/'icons.css').read_text())
+for name,url in zip(('inter','space','icons'),fonts):
+    (p/(name+'.woff2')).write_bytes(urllib.request.urlopen(url).read())
+PY" in /private/var/tmp/bench/ws-gNI8ozR8
+exec
+/bin/zsh -lc 'npm install --prefix /private/tmp/alquimia-reactiva-work --cache /private/tmp/alquimia-reactiva-work/npm-cache playwright-core' in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 524ms:
+python3: error: couldn't create cache file '/var/folders/2b/k_922dnd3tq2l6yyc6fkgh9r0000gn/T/xcrun_db-Yz5wwIam' (errno=Operation not permitted)
+
+ succeeded in 1072ms:
+
+added 1 package in 895ms
+npm notice 
+npm notice New major version of npm available! 9.8.0 -> 12.2.3
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v12.2.3>
+npm notice Run `npm install -g npm@12.2.3` to update!
+npm notice 
+
+exec
+/bin/zsh -lc "cat > index.html <<'EOF'
+<"'!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#11101a">
+<meta name="description" content="Un juego de alquimia sobre el universo de Web Reactiva. Mezcla elementos y descubre nuevas recetas.">
+<title>Alquimia Reactiva</title>
+<style>
+/* EMBEDDED_FONTS */
+:root {
+  color-scheme: dark;
+  --bg: #11101a;
+  --panel: #191725;
+  --border: #302b42;
+  --text: #f4f0ff;
+  --muted: #a6a0ba;
+  --accent: #bb9cff;
+  --bright: #a176ff;
+  --display: "Space Grotesk", system-ui, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 300px; }
+button, input { font: inherit; }
+button { color: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid #d2bdff; outline-offset: 3px; }
+[hidden] { display: none !important; }
+.icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  font: 400 20px/1 "Lab Icons"; font-feature-settings: "liga"; white-space: nowrap;
+  letter-spacing: normal; direction: ltr; width: 1em; height: 1em; overflow: hidden;
+  flex: none;
+}
+.wrap { width: min(1280px, calc(100% - 88px)); margin-inline: auto; }
+.topbar { border-bottom: 1px solid #282437; background: #15131f; }
+.topbar-inner { height: 67px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.brand { display: flex; align-items: center; gap: 11px; color: var(--text); font: 700 20px/1 var(--display); letter-spacing: -.55px; }
+.brand:hover { text-decoration: none; color: var(--accent); }
+.brand-mark { background: #a77aff; color: #1d1235; width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; }
+.brand-mark .icon { font-size: 22px; }
+.subtle {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  background: transparent; border: 1px solid var(--border); border-radius: 9px;
+  padding: 8px 11px; font-size: 12px; font-weight: 600; color: #c6bfd8;
+}
+.subtle .icon { font-size: 16px; }
+.subtle:hover, .library-card:hover { border-color: #7e60bd; background: #282039; color: var(--text); }
+.intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 42px 0 32px; }
+.overline { color: var(--accent); display: flex; gap: 9px; align-items: center; margin: 0 0 10px; font: 600 11px/1.45 ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; }
+.overline::before { content: ""; width: 18px; height: 1px; background: #a77aff; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font: 700 clamp(42px, 5.15vw, 74px)/.99 var(--display); letter-spacing: -.065em; margin-bottom: 15px; }
+h1 span { color: var(--accent); }
+.intro p:last-child { margin-bottom: 0; color: #b2abc4; font-size: 15px; line-height: 1.55; }
+.progress-card { flex: 0 0 216px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); padding: 13px 15px; }
+.progress-top { display: flex; align-items: center; gap: 11px; }
+.progress-icon { width: 37px; height: 37px; background: #2b2143; color: #c4a5ff; border-radius: 9px; display: grid; place-items: center; flex: none; }
+.progress-number { font: 700 22px/1 var(--display); margin-bottom: 4px; }
+.progress-number span { font: 500 14px/1 var(--display); color: #a19ab4; }
+.progress-label { font-size: 11px; color: var(--muted); }
+progress { display: block; width: 100%; height: 5px; appearance: none; border: 0; border-radius: 99px; overflow: hidden; background: #332941; margin-top: 11px; }
+progress::-webkit-progress-bar { background: #332941; }
+progress::-webkit-progress-value { background: linear-gradient(90deg, #975fff, #ccadff); border-radius: 99px; }
+progress::-moz-progress-bar { background: #a77aff; border-radius: 99px; }
+.game { display: grid; grid-template-columns: minmax(0, 1fr) minmax(310px, 28%); gap: 18px; }
+.panel { min-width: 0; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 17px 19px; min-height: 76px; }
+.panel-name { display: flex; min-width: 0; align-items: center; gap: 11px; }
+.panel-icon { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 9px; background: #2b2240; color: #c2a4ff; }
+.panel-name h2 { font: 700 18px/1.15 var(--display); letter-spacing: -.025em; margin: 0 0 3px; }
+.panel-name p { font-size: 11px; line-height: 1.4; color: var(--muted); margin: 0; }
+.stage {
+  isolation: isolate; position: relative; min-height: 333px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px; padding: 10px 18px 22px;
+  text-align: center; border-block: 1px solid #2d273e;
+  background: radial-gradient(ellipse at 50% 40%, #2a1b45 0%, transparent 67%), #151322;
+}
+.stage::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1;
+  background: radial-gradient(circle, #8b6eb65a 1px, transparent 1.35px) 50% 50% / 22px 22px;
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+}
+.reactor { position: relative; width: 234px; height: 125px; display: grid; place-items: center; flex: none; }
+.reactor::before, .reactor::after, .orbit { content: ""; position: absolute; inset: 13px 11px; border-radius: 50%; border: 1px solid #8262ba50; transform: rotate(-15deg); pointer-events: none; }
+.reactor::after { transform: rotate(15deg); inset: 20px 12px; border-color: #8b69c541; }
+.reactor .orbit { inset: 4px 39px; border-style: dashed; transform: rotate(-30deg); border-color: #9470c858; }
+.reactor-core {
+  position: relative; z-index: 1; width: 80px; height: 80px; display: grid; place-items: center;
+  color: #dfc8ff; background: radial-gradient(circle at 44% 27%, #573785, #31204c 78%);
+  border: 1px solid #b68bf079; border-radius: 24px;
+  box-shadow: 0 0 30px #a072ff3b, inset 0 0 18px #b281ff24;
+}
+.reactor-core .icon { font-size: 40px; }
+.spark { position: absolute; color: #c6aaff; text-shadow: 0 0 12px #a46bff; z-index: 1; font: 16px/1 system-ui; }
+.spark.one { top: 20px; right: 31px; }
+.spark.two { bottom: 26px; left: 17px; font-size: 12px; }
+.spark.three { top: 10px; left: 54px; font-size: 10px; opacity: .72; }
+.spark.four { bottom: 17px; right: 45px; font-size: 10px; opacity: .72; }
+.reactor.is-ready .reactor-core { box-shadow: 0 0 42px #af7aff78, inset 0 0 18px #b281ff42; }
+.slots { display: grid; grid-template-columns: minmax(0, 1fr) 35px minmax(0, 1fr); align-items: center; width: min(100%, 396px); }
+.operator { color: #af8ee8; font: 500 24px/1 var(--display); }
+.slot {
+  min-width: 0; min-height: 63px; border: 1px dashed #73569b; border-radius: 11px; padding: 7px 10px;
+  background: #1c172abf; color: #c2acd9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  font-size: 11px; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere;
+}
+.slot .icon { font-size: 20px; color: #b38ce8; }
+.slot.filled { border-style: solid; border-color: #9a73d2; background: #312345; color: var(--text); font-size: 12px; }
+.slot[aria-pressed="true"], .slot.drop-target, .slot:hover { border-color: #d1aaff; background: #38264f; }
+.slot-emoji { font-size: 19px; line-height: 1; }
+.mix {
+  min-width: 164px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px;
+  border: 1px solid #c6a5ff; border-radius: 9px; background: #b28aff; color: #211337; font-weight: 700; font-size: 13px;
+  box-shadow: 0 4px 16px #a777ff2b; min-height: 40px;
+}
+.mix .icon { font-size: 17px; }
+.mix:not(:disabled):hover { background: #cdadff; }
+.mix:disabled { background: #483561; color: #d3bde9; border-color: #674b8b; box-shadow: none; }
+.stage-status { margin: 0; min-height: 17px; font-size: 11px; line-height: 1.5; color: #b8a9ce; }
+.stage-status.error { color: #ffb4cd; }
+.hint-row { padding: 10px 17px; min-height: 57px; display: flex; align-items: center; gap: 10px; }
+.hint-row p { color: var(--muted); font-size: 12px; line-height: 1.4; margin: 0; flex: 1; }
+.hint { color: #dac5ff; border-color: #47365e; background: #251d36; flex: none; }
+.hint:disabled { opacity: .7; }
+.shelf { display: flex; flex-direction: column; }
+.shelf .panel-head { padding-bottom: 13px; }
+.search {
+  display: flex; align-items: center; gap: 8px; margin: 0 15px 12px; padding: 0 10px;
+  min-height: 39px; border: 1px solid #393149; border-radius: 8px; background: #14121e; color: #a69ab9;
+}
+.search:focus-within { border-color: #a580de; }
+.search .icon { font-size: 17px; }
+.search input { width: 100%; min-width: 0; border: 0; outline: 0; padding: 9px 0; color: var(--text); background: transparent; font-size: 12px; }
+.search input::placeholder { color: #9a91af; }
+.filters { display: flex; gap: 5px; margin: 0 15px 13px; padding: 3px; border: 1px solid #322b42; border-radius: 9px; background: #151320; }
+.filter { flex: 1; background: transparent; border: 1px solid transparent; border-radius: 6px; color: #a9a0bb; padding: 6px 3px; font-size: 11px; font-weight: 600; }
+.filter[aria-pressed="true"] { background: #2c2241; border-color: #412e59; color: #dcc7ff; }
+.filter:hover { color: var(--text); }
+.inventory {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 8px;
+  padding: 2px 15px 12px; margin-bottom: 0; overflow-y: auto; scrollbar-color: #5c487b transparent;
+  height: 0; flex: 1 1 0; min-height: 158px;
+}
+.library-card {
+  display: flex; align-items: center; gap: 8px; min-height: 48px; text-align: left; min-width: 0;
+  background: #211c2f; border: 1px solid #3c324f; border-radius: 9px; padding: 6px 8px;
+  font-weight: 600; font-size: 11px; line-height: 1.22; overflow-wrap: anywhere; user-select: none;
+}
+.library-card[draggable="true"] { cursor: grab; }
+.library-emoji { font-size: 16px; display: grid; place-items: center; width: 24px; height: 27px; flex: none; touch-action: none; }
+.library-card.new { border-color: #9f76df; }
+.empty-inventory { grid-column: 1 / -1; padding: 12px 4px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+.shelf-foot { margin-top: auto; padding: 12px 15px 14px; border-top: 1px solid #2d273c; color: var(--muted); font-size: 11px; display: flex; align-items: center; gap: 7px; }
+.shelf-foot .icon { color: #ae90dc; font-size: 16px; }
+.journal { margin-top: 17px; }
+.journal .panel-head { min-height: 74px; }
+.journal-body { color: var(--muted); font-size: 12px; padding: 0 19px 16px; }
+.journal-body p { margin: 0; }
+.log { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; flex-wrap: wrap; max-height: 180px; overflow: auto; }
+.log button { min-height: 34px; padding: 6px 9px; text-align: left; }
+.log button strong { color: var(--text); font-weight: 600; }
+footer.wrap { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 9px; padding-block: 17px 20px; font-size: 11px; color: #a29ab4; }
+footer a { color: #c0addb; display: inline-flex; gap: 3px; align-items: center; }
+footer .icon { font-size: 13px; }
+.result-view { display: grid; justify-items: center; align-content: center; gap: 9px; width: min(100%, 550px); padding: 13px 17px; }
+.result-emoji {
+  display: grid; place-items: center; width: 58px; height: 58px; font-size: 30px; border: 1px solid #9a75c8;
+  background: #392650; border-radius: 17px; box-shadow: 0 0 30px #a973ff45;
+}
+.result-tag { color: #c8aaff; font: 600 10px/1.25 ui-monospace, monospace; text-transform: uppercase; letter-spacing: .13em; margin: 0; }
+.result-view h3 { font: 700 clamp(24px, 4vw, 37px)/1 var(--display); margin: 0; letter-spacing: -.04em; }
+.result-view p:not(.result-tag) { font-size: 12px; line-height: 1.5; color: #d1c5e0; max-width: 440px; margin: 0; }
+.result-view a, dialog a { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; }
+.result-view a .icon { font-size: 14px; }
+.result-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 3px; }
+.result-actions .mix { min-width: 0; }
+.result-view.reveal { animation: reveal .28s ease-out both; }
+@keyframes reveal { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; transform: none; } }
+dialog {
+  width: min(450px, calc(100% - 32px)); max-height: calc(100% - 32px); color: var(--text); background: #211a30;
+  border: 1px solid #604781; border-radius: 16px; padding: 22px; box-shadow: 0 15px 65px #0d081abf;
+}
+dialog::backdrop { background: #0d0a16c9; }
+.dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.dialog-head h2 { font: 700 24px/1.1 var(--display); margin: 5px 0 14px; }
+dialog p, dialog ol { color: #cec3dd; font-size: 13px; line-height: 1.6; }
+dialog ol { padding-left: 22px; }
+dialog li + li { margin-top: 7px; }
+dialog form { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+.danger { color: #ffc2d3; }
+.drag-ghost {
+  position: fixed; z-index: 10; display: none; pointer-events: none; padding: 7px 10px; border: 1px solid #a57bdc;
+  border-radius: 8px; background: #302143; color: #fff; font-size: 12px; white-space: nowrap; transform: translate(-50%, -120%);
+}
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (max-width: 850px) {
+  .wrap { width: calc(100% - 40px); }
+  .game { grid-template-columns: minmax(0, 1fr) minmax(270px, 34%); gap: 12px; }
+  .panel-head { padding-inline: 13px; }
+  .progress-card { flex-basis: 196px; }
+}
+@media (max-width: 665px) {
+  .wrap { width: calc(100% - 28px); }
+  .topbar-inner { height: 57px; }
+  .intro { padding: 27px 0 19px; flex-wrap: wrap; gap: 15px; }
+  h1 { margin-bottom: 10px; }
+  .intro p:last-child { font-size: 13px; }
+  .progress-card { flex: 1 1 100%; padding: 8px 10px; display: flex; align-items: center; gap: 12px; }
+  .progress-top { min-width: max-content; gap: 8px; }
+  .progress-icon { width: 31px; height: 31px; }
+  .progress-number { font-size: 18px; margin-bottom: 2px; }
+  progress { margin: 0; }
+  .game { grid-template-columns: 1fr; }
+  .panel-head { min-height: 64px; padding-block: 12px; }
+  .stage { min-height: 258px; gap: 8px; padding-block: 7px 12px; }
+  .reactor { height: 94px; transform: scale(.88); }
+  .reactor .orbit { inset: 1px 39px; }
+  .slot { min-height: 53px; }
+  .hint-row { min-height: 50px; padding: 8px 12px; }
+  .inventory { max-height: 230px; min-height: 0; height: auto; flex-basis: auto; }
+  .journal { margin-top: 12px; }
+  .journal .panel-head { min-height: 62px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="https://www.webreactiva.com/" target="_blank" rel="noopener">
+      <span class="brand-mark"><span class="icon" aria-hidden="true">science</span></span>
+      <span>web reactiva</span>
+    </a>
+    <button class="subtle" id="help-button" type="button"><span class="icon" aria-hidden="true">help</span> Cómo jugar</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro" aria-labelledby="title">
+    <div>
+      <p class="overline">Laboratorio de alquimia</p>
+      <h1 id="title">Alquimia <span>Reactiva</span></h1>
+      <p>Mezcla elementos y descubre el universo de Web Reactiva.</p>
+    </div>
+    <div class="progress-card">
+      <div class="progress-top">
+        <div class="progress-icon"><span class="icon" aria-hidden="true">auto_awesome</span></div>
+        <div><div class="progress-number" id="progress-number"></div><div class="progress-label" id="progress-label">Elementos descubiertos</div></div>
+      </div>
+      <progress id="progress" aria-labelledby="progress-label"></progress>
+    </div>
+  </section>
+
+  <div class="game">
+    <section class="panel bench" aria-labelledby="bench-title">
+      <header class="panel-head">
+        <div class="panel-name">
+          <div class="panel-icon"><span class="icon" aria-hidden="true">science</span></div>
+          <div><h2 id="bench-title">Mesa de mezclas</h2><p>Arrastra dos elementos a la mesa o selecciónalos.</p></div>
+        </div>
+        <button class="subtle" id="clear" type="button"><span class="icon" aria-hidden="true">close</span> Limpiar</button>
+      </header>
+      <div class="stage" id="stage">
+        <div class="reactor" id="reactor" aria-hidden="true">
+          <span class="orbit"></span>
+          <span class="spark one">✦</span><span class="spark two">✧</span><span class="spark three">✦</span><span class="spark four">✧</span>
+          <span class="reactor-core"><span class="icon">science</span></span>
+        </div>
+        <div class="slots" id="slots">
+          <button class="slot" type="button" data-slot="0" aria-pressed="false"></button>
+          <span class="operator" aria-hidden="true">+</span>
+          <button class="slot" type="button" data-slot="1" aria-pressed="false"></button>
+        </div>
+        <button class="mix" id="mix" type="button" disabled><span class="icon" aria-hidden="true">auto_awesome</span> Combinar</button>
+        <p class="stage-status" id="status" role="status"></p>
+        <div class="result-view" id="result" hidden></div>
+      </div>
+      <div class="hint-row">
+        <button class="subtle hint" id="hint" type="button"><span class="icon" aria-hidden="true">emoji_objects</span> Pista</button>
+        <p id="hint-text" role="status">Las pistas usan elementos que ya tienes.</p>
+      </div>
+    </section>
+
+    <aside class="panel shelf" aria-labelledby="shelf-title">
+      <header class="panel-head">
+        <div class="panel-name">
+          <div class="panel-icon"><span class="icon" aria-hidden="true">inventory_2</span></div>
+          <div><h2 id="shelf-title">Inventario</h2><p>Tus elementos disponibles</p></div>
+        </div>
+      </header>
+      <label class="search"><span class="icon" aria-hidden="true">search</span><span class="visually-hidden">Buscar elementos</span><input id="search" type="search" placeholder="Buscar elementos…" autocomplete="off"></label>
+      <div class="filters" role="group" aria-label="Filtrar inventario">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true">Todos</button>
+        <button class="filter" type="button" data-filter="base" aria-pressed="false">Base</button>
+        <button class="filter" type="button" data-filter="found" aria-pressed="false">Hallazgos</button>
+      </div>
+      <div class="inventory" id="inventory"></div>
+      <div class="shelf-foot"><span class="icon" aria-hidden="true">touch_app</span> Puedes reutilizar cualquier elemento.</div>
+    </aside>
+  </div>
+
+  <section class="panel journal" aria-labelledby="journal-title">
+    <header class="panel-head">
+      <div class="panel-name">
+        <div class="panel-icon"><span class="icon" aria-hidden="true">history</span></div>
+        <div><h2 id="journal-title">Bitácora</h2><p>Las recetas que has descubierto</p></div>
+      </div>
+    </header>
+    <div class="journal-body"><p id="log-empty">Tu primera receta aparecerá aquí.</p><ol class="log" id="log"></ol></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span id="save-status">El progreso se guarda en este navegador.</span>
+  <a href="https://www.webreactiva.com/" target="_blank" rel="noopener">Explorar Web Reactiva <span class="icon" aria-hidden="true">arrow_outward</span></a>
+</footer>
+
+<dialog id="help-dialog" aria-labelledby="help-title">
+  <div class="dialog-head">
+    <h2 id="help-title">Cómo jugar</h2>
+    <form method="dialog" style="margin:0"><button class="subtle" aria-label="Cerrar" autofocus><span class="icon" aria-hidden="true">close</span></button></form>
+  </div>
+  <ol>
+    <li>Arrastra dos elementos a la mesa o selecciónalos en el inventario. Puedes usar el mismo dos veces.</li>
+    <li>Pulsa <strong>Combinar</strong>. Si existe una receta, el resultado se añade al inventario y puedes mezclarlo de nuevo.</li>
+    <li>Usa las pistas si te atascas y consulta la bitácora para volver a ver tus recetas.</li>
+  </ol>
+  <button class="subtle danger" id="reset" type="button">Reiniciar partida</button>
+</dialog>
+<dialog id="reset-dialog" aria-labelledby="reset-title">
+  <div class="dialog-head"><h2 id="reset-title">¿Reiniciar la partida?</h2></div>
+  <p>Se borrarán tus hallazgos y empezarás con los cuatro elementos base.</p>
+  <form method="dialog"><button class="subtle" autofocus>Cancelar</button><button class="subtle danger" id="confirm-reset" type="button">Reiniciar</button></form>
+</dialog>
+<dialog id="detail-dialog" aria-labelledby="detail-title">
+  <div class="dialog-head">
+    <h2 id="detail-title"></h2>
+    <form method="dialog" style="margin:0"><button class="subtle" aria-label="Cerrar" autofocus><span class="icon" aria-hidden="true">close</span></button></form>
+  </div>
+  <div id="detail"></div>
+</dialog>
+<div class="drag-ghost" id="drag-ghost" aria-hidden="true"></div>
+<noscript><p class="wrap">Activa JavaScript para jugar.</p></noscript>
+
+<script>
+'"'use strict';
+
+const web = 'https://www.webreactiva.com';
+const podcast = web + '/podcast';
+const personal = 'https://www.danielprimo.io';
+const base = ['codigo', 'curiosidad', 'cafe', 'comunidad'];
+const elements = {
+  codigo: ['💻', 'Código'],
+  curiosidad: ['🔍', 'Curiosidad'],
+  cafe: ['☕', 'Café'],
+  comunidad: ['🤝', 'Comunidad'],
+  proyecto: ['🧪', 'Proyecto'],
+  terminal: ['⌨️', 'Terminal'],
+  bug: ['🐛', 'Bug'],
+  conversacion: ['💬', 'Conversación'],
+  idea: ['💡', 'Idea'],
+  meetup: ['🗓️', 'Meetup'],
+  podcast: ['🎙️', 'Podcast', 'El podcast de Web Reactiva reúne entrevistas y experiencias sobre desarrollo de software y programación con IA.', podcast],
+  newsletter: ['💌', 'Newsletter', 'Cada domingo, Web Reactiva comparte una idea de IA aplicada y una selección de recursos para developers.', web + '/newsletter'],
+  recurso: ['📎', 'Recurso'],
+  directo: ['📡', 'Directo'],
+  dani: ['🎧', 'Dani Primo', 'Daniel Primo fundó Web Reactiva en 2017. Allí comparte su experiencia como desarrollador y formador.', personal],
+  webreactiva: ['⚡', 'Web Reactiva', 'Podcast, newsletter, formación y una comunidad de developers que aprenden a programar con IA.', web],
+  pantuflas: ['🥿', 'En pantuflas', 'Así llama Web Reactiva a su manera de aprender, compartir y programar con comodidad.', web + '/en-pantuflas'],
+  premium: ['💜', 'Web Reactiva Premium', 'La suscripción reúne talleres en directo, guías prácticas y una comunidad privada en Telegram.', web + '/'],
+  telegram: ['✈️', 'Telegram', 'La comunidad privada de Web Reactiva Premium se reúne en Telegram para compartir pruebas, dudas y hallazgos.', web + '/'],
+  entrevista: ['🎤', 'Entrevista'],
+  episodio: ['🎚️', 'Episodio'],
+  taller: ['🛠️', 'Taller'],
+  guia: ['🧭', 'Guía práctica'],
+  curso: ['🎓', 'Curso'],
+  cursosia: ['📚', 'Cursos de Web Reactiva', 'El catálogo incluye cursos gratuitos para practicar la programación con IA y probar un flujo de SDD con OpenSpec.', web + '/cursos'],
+  masterclass: ['🎬', 'Masterclass', 'Talleres en directo de Web Reactiva donde se programa con herramientas reales y se responden preguntas.', web + '/'],
+  reto: ['🏁', 'Reto'],
+  git: ['🌿', 'Git'],
+  github: ['🐙', 'GitHub'],
+  opensource: ['🔓', 'Código abierto'],
+  ia: ['🤖', 'Inteligencia artificial'],
+  prompt: ['✍️', 'Prompt'],
+  modelo: ['🧠', 'Modelo de IA'],
+  agente: ['🦾', 'Agente de IA'],
+  skill: ['🧩', 'Skill'],
+  wrskills: ['🧰', 'Web Reactiva Skills', 'Una colección de skills abiertas para agentes como Claude Code, Codex, OpenCode y Cursor.', web + '/skills'],
+  mcp: ['🔌', 'MCP'],
+  wrmcp: ['🗂️', 'MCP de Web Reactiva', 'Conecta tu agente al catálogo de recursos de Web Reactiva y consulta el contenido desde el editor.', web + '/'],
+  plan: ['📋', 'Plan'],
+  spec: ['📐', 'Especificación'],
+  sdd: ['🏗️', 'Spec Driven Development', 'Una forma de desarrollar partiendo de especificaciones. Web Reactiva ofrece materiales para probarla con OpenSpec.', web + '/cursos'],
+  openspec: ['📏', 'OpenSpec'],
+  test: ['🧫', 'Test'],
+  tdd: ['🔁', 'TDD'],
+  refactor: ['♻️', 'Refactorización'],
+  escal: ['🛰️', 'Esperando a Eskainet', 'El spin-off de Web Reactiva que explora el impacto de la IA en la programación.', podcast],
+  tokens: ['🪙', 'Tokens'],
+  ahorro: ['💰', 'Cómo ahorrar tokens', 'En el episodio 353, Dani repasa cómo influyen el modelo, el contexto, la caché y la planificación en el consumo de tokens.', podcast],
+  wikipoke: ['📖', 'Wikipoke', 'Proyecto de Dani Primo para generar y mantener una wiki del código que escribe tu agente.', personal + '/#proyectos'],
+  learnable: ['📝', 'make-it-learnable', 'Una skill de Dani Primo que transforma documentación o un repositorio en una lección interactiva en un solo HTML.', personal + '/#proyectos'],
+  paella: ['🥘', 'Paella'],
+  paellator: ['🦿', 'Paellator', 'El proyecto que Dani Primo llevó al WordPress Tech Congress para hablar de prototipos.', 'https://valencia.wordcamp.org/2025/files/2025/11/09-Daniel-Primo-Cuando-haces-un-POC-ya-no-hay-Stop.pdf']
+};
+
+// Cada fila contiene los dos ingredientes y el resultado.
+const recipes = [
+  ['codigo', 'curiosidad', 'proyecto'], ['codigo', 'cafe', 'terminal'], ['codigo', 'codigo', 'bug'],
+  ['curiosidad', 'comunidad', 'conversacion'], ['curiosidad', 'cafe', 'idea'], ['cafe', 'comunidad', 'meetup'],
+  ['comunidad', 'comunidad', 'meetup'], ['curiosidad', 'curiosidad', 'idea'],
+  ['conversacion', 'comunidad', 'podcast'], ['conversacion', 'cafe', 'podcast'],
+  ['idea', 'comunidad', 'newsletter'], ['codigo', 'proyecto', 'recurso'],
+  ['meetup', 'conversacion', 'directo'], ['podcast', 'cafe', 'dani'],
+  ['podcast', 'newsletter', 'webreactiva'], ['dani', 'comunidad', 'webreactiva'],
+  ['dani', 'cafe', 'pantuflas'], ['webreactiva', 'cafe', 'pantuflas'],
+  ['webreactiva', 'comunidad', 'premium'], ['webreactiva', 'taller', 'premium'],
+  ['conversacion', 'directo', 'telegram'], ['premium', 'conversacion', 'telegram'],
+  ['podcast', 'curiosidad', 'entrevista'], ['podcast', 'conversacion', 'entrevista'],
+  ['podcast', 'idea', 'episodio'], ['podcast', 'entrevista', 'episodio'],
+  ['codigo', 'meetup', 'taller'], ['proyecto', 'comunidad', 'taller'],
+  ['recurso', 'curiosidad', 'guia'], ['guia', 'proyecto', 'curso'],
+  ['guia', 'taller', 'curso'], ['curso', 'webreactiva', 'cursosia'], ['curso', 'ia', 'cursosia'],
+  ['taller', 'directo', 'masterclass'], ['taller', 'premium', 'masterclass'],
+  ['proyecto', 'idea', 'reto'], ['taller', 'proyecto', 'reto'],
+  ['terminal', 'proyecto', 'git'], ['git', 'comunidad', 'github'],
+  ['github', 'proyecto', 'opensource'], ['github', 'comunidad', 'opensource'],
+  ['codigo', 'idea', 'ia'], ['ia', 'conversacion', 'prompt'], ['ia', 'curiosidad', 'prompt'],
+  ['ia', 'codigo', 'modelo'], ['ia', 'prompt', 'modelo'],
+  ['modelo', 'terminal', 'agente'], ['modelo', 'proyecto', 'agente'],
+  ['agente', 'guia', 'skill'], ['agente', 'recurso', 'skill'],
+  ['skill', 'webreactiva', 'wrskills'], ['skill', 'comunidad', 'wrskills'],
+  ['agente', 'opensource', 'mcp'], ['agente', 'terminal', 'mcp'],
+  ['mcp', 'webreactiva', 'wrmcp'], ['premium', 'mcp', 'wrmcp'],
+  ['proyecto', 'curiosidad', 'plan'], ['idea', 'terminal', 'plan'],
+  ['plan', 'recurso', 'spec'], ['plan', 'codigo', 'spec'],
+  ['spec', 'agente', 'sdd'], ['spec', 'proyecto', 'sdd'],
+  ['sdd', 'opensource', 'openspec'], ['spec', 'opensource', 'openspec'],
+  ['bug', 'curiosidad', 'test'], ['bug', 'codigo', 'test'],
+  ['test', 'plan', 'tdd'], ['test', 'test', 'tdd'],
+  ['test', 'codigo', 'refactor'], ['tdd', 'proyecto', 'refactor'],
+  ['podcast', 'ia', 'escal'], ['episodio', 'agente', 'escal'],
+  ['modelo', 'prompt', 'tokens'], ['prompt', 'prompt', 'tokens'],
+  ['tokens', 'plan', 'ahorro'], ['tokens', 'episodio', 'ahorro'],
+  ['agente', 'refactor', 'wikipoke'], ['agente', 'github', 'wikipoke'],
+  ['skill', 'curso', 'learnable'], ['skill', 'guia', 'learnable'],
+  ['meetup', 'cafe', 'paella'], ['dani', 'meetup', 'paella'],
+  ['paella', 'ia', 'paellator'], ['paella', 'agente', 'paellator']
+];
+EOF" in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 0ms:
+exec
+/bin/zsh -lc "cat >> index.html <<'EOF'
+
+const byId = (id) => document.getElementById(id);
+const stage = byId('stage');
+const slots = Array.from(stage.querySelectorAll('.slot'));
+const mixButton = byId('mix');
+const status = byId('status');
+const resultView = byId('result');
+const hintButton = byId('hint');
+const hintText = byId('hint-text');
+const inventory = byId('inventory');
+const search = byId('search');
+const filters = Array.from(document.querySelectorAll('.filter'));
+const storageKey = 'alquimia-reactiva-v1';
+const idleHint = hintText.textContent;
+const keyFor = (a, b) => [a, b].sort().join('+');
+const recipeBook = new Map(recipes.map((recipe) => [keyFor(recipe[0], recipe[1]), recipe]));
+const normalize = (value) => value.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
+const nameOf = (id) => elements[id][1];
+
+let discoveries = new Set(base);
+let journal = [];
+let selected = [null, null];
+let activeSlot = null;
+let filter = 'all';
+let lastDiscovery = null;
+let lastHint = null;
+let dragItem = null;
+let touchDrag = null;
+let ignoreClickUntil = 0;
+
+function load() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    if ("'!Array.isArray(saved)) return;
+    for (const key of new Set(saved)) {
+      const recipe = recipeBook.get(key);
+      if (!recipe) continue;
+      journal.push(key);
+      discoveries.add(recipe[2]);
+    }
+  } catch {
+    byId('"'save-status').textContent = 'El navegador no ha podido leer el progreso guardado.';
+  }
+}
+
+function save() {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(journal));
+    byId('save-status').textContent = 'El progreso se guarda en este navegador.';
+  } catch {
+    byId('save-status').textContent = 'El navegador no permite guardar el progreso.';
+  }
+}
+
+function icon(name) {
+  return '<span class=\"icon\" aria-hidden=\"true\">' + name + '</span>';
+}
+
+function externalLink(url) {
+  return '<a href=\"' + url + '\" target=\"_blank\" rel=\"noopener\">Ver recurso ' + icon('arrow_outward') + '</a>';
+}
+
+function updateProgress() {
+  const total = Object.keys(elements).length;
+  const count = discoveries.size;
+  byId('progress-number').innerHTML = String(count).padStart(2, '0') + ' <span>/ ' + total + '</span>';
+  const progress = byId('progress');
+  progress.max = total;
+  progress.value = count;
+  hintButton.disabled = count === total;
+  if (count === total) hintText.textContent = '¡Has descubierto todos los elementos"'!'"';
+}
+
+function renderInventory() {
+  const query = normalize(search.value.trim());
+  const visible = [...discoveries].filter((id) => {
+    const inFilter = filter === 'all' || base.includes(id) === (filter === 'base');
+    return inFilter && normalize(nameOf(id)).includes(query);
+  });
+  inventory.innerHTML = visible.map((id) => {
+    const [emoji, label] = elements[id];
+    const recent = id === lastDiscovery ? ' new' : '';
+    return '<button class=\"library-card' + recent + '\" type=\"button\" draggable=\"true\" data-item=\"' + id + '\">' +
+      '<span class=\"library-emoji\" aria-hidden=\"true\">' + emoji + '</span><span>' + label + '</span></button>';
+  }).join('');
+  if ("'!visible.length) {
+    inventory.innerHTML = '"'<p class=\"empty-inventory\">' +
+      (query ? 'No hay elementos que coincidan con la búsqueda.' : 'Los elementos que descubras aparecerán aquí.') + '</p>';
+  }
+}
+
+function renderJournal() {
+  byId('log-empty').hidden = journal.length > 0;
+  byId('log').innerHTML = [...journal].reverse().map((key) => {
+    const [a, b, result] = recipeBook.get(key);
+    return '<li><button type=\"button\" class=\"subtle\" data-recipe=\"' + key + '\">' +
+      nameOf(a) + ' + ' + nameOf(b) + ' → <strong>' + nameOf(result) + '</strong></button></li>';
+  }).join('');
+}
+
+function showStatus(message = '', error = false) {
+  status.textContent = message;
+  status.classList.toggle('error', error);
+}
+
+function renderBench() {
+  for (const [index, slot] of slots.entries()) {
+    const id = selected[index];
+    slot.classList.toggle('filled', Boolean(id));
+    slot.setAttribute('aria-pressed', String(activeSlot === index));
+    slot.setAttribute('aria-label', 'Ingrediente ' + (index + 1) + (id ? ', ' + nameOf(id) + ', quitar' : ', vacío'));
+    slot.innerHTML = id
+      ? '<span class=\"slot-emoji\" aria-hidden=\"true\">' + elements[id][0] + '</span><span>' + nameOf(id) + '</span>'
+      : '<span class=\"operator\" aria-hidden=\"true\">+</span><span>Ingrediente ' + (index + 1) + '</span>';
+  }
+  const ready = selected.every(Boolean);
+  mixButton.disabled = "'!ready;
+  byId('"'reactor').classList.toggle('is-ready', ready);
+}
+
+function openBench() {
+  resultView.hidden = true;
+  resultView.classList.remove('reveal');
+  for (const id of ['reactor', 'slots', 'mix', 'status']) byId(id).hidden = false;
+}
+
+function clearBench() {
+  selected = [null, null];
+  activeSlot = null;
+  openBench();
+  renderBench();
+  showStatus();
+}
+
+function placeItem(id, index = null) {
+  if ("'!discoveries.has(id)) return;
+  openBench();
+  const empty = selected.indexOf(null);
+  const target = index ?? activeSlot ?? (empty === -1 ? 1 : empty);
+  selected[target] = id;
+  activeSlot = null;
+  renderBench();
+  showStatus();
+}
+
+function showResult(a, b, id, isNew) {
+  const [emoji, label, description, url] = elements[id];
+  const tag = discoveries.size === Object.keys(elements).length && isNew
+    ? '"'Colección completa'
+    : isNew ? 'Nuevo descubrimiento' : 'Receta conocida';
+  resultView.innerHTML =
+    '<span class=\"result-emoji\" aria-hidden=\"true\">' + emoji + '</span>' +
+    '<p class=\"result-tag\">' + tag + '</p>' +
+    '<h3 tabindex=\"-1\">' + label + '</h3>' +
+    '<p>' + nameOf(a) + ' + ' + nameOf(b) + '</p>' +
+    (description ? '<p>' + description + '</p>' : '') +
+    (url ? externalLink(url) : '') +
+    '<div class=\"result-actions\"><button type=\"button\" class=\"mix\" id=\"use-result\">Usar en una mezcla</button>' +
+    '<button type=\"button\" class=\"subtle\" id=\"new-mix\">Nueva mezcla</button></div>';
+  for (const part of ['reactor', 'slots', 'mix', 'status']) byId(part).hidden = true;
+  resultView.hidden = false;
+  resultView.classList.add('reveal');
+  resultView.querySelector('h3').focus({ preventScroll: true });
+
+  byId('use-result').addEventListener('click', () => {
+    placeItem(id);
+    slots[0].focus();
+  });
+  byId('new-mix').addEventListener('click', () => {
+    clearBench();
+    slots[0].focus();
+  });
+}
+
+function combine() {
+  const [a, b] = selected;
+  if ("'!a || !b) return;
+  const key = keyFor(a, b);
+  const recipe = recipeBook.get(key);
+  if (!recipe) {
+    showStatus('"'Esta mezcla no ha reaccionado. Prueba con otro ingrediente.', true);
+    return;
+  }
+
+  const id = recipe[2];
+  const isNew = "'!discoveries.has(id);
+  if (!journal.includes(key)) {
+    journal.push(key);
+    discoveries.add(id);
+    if (isNew) {
+      lastDiscovery = id;
+      hintText.textContent = idleHint;
+    }
+    save();
+    updateProgress();
+    renderInventory();
+    renderJournal();
+  }
+
+  selected = [null, null];
+  activeSlot = null;
+  showResult(a, b, id, isNew);
+}
+
+function showHint() {
+  const available = recipes.filter(([a, b, result]) => discoveries.has(a) && discoveries.has(b) && !discoveries.has(result));
+  if (!available.length) {
+    hintText.textContent = '"'¡Has descubierto todos los elementos"'!'"';
+    return;
+  }
+  const previous = available.indexOf(lastHint);
+  const recipe = available[(previous + 1) % available.length];
+  lastHint = recipe;
+  hintText.textContent = 'Prueba con ' + nameOf(recipe[0]) + ' + ' + nameOf(recipe[1]) + '.';
+}
+
+function resetGame() {
+  discoveries = new Set(base);
+  journal = [];
+  lastDiscovery = null;
+  lastHint = null;
+  search.value = '';
+  setFilter('all');
+  clearBench();
+  updateProgress();
+  renderJournal();
+  hintText.textContent = idleHint;
+  save();
+  byId('reset-dialog').close();
+  byId('help-button').focus();
+}
+
+function setFilter(value) {
+  filter = value;
+  for (const button of filters) button.setAttribute('aria-pressed', String(button.dataset.filter === filter));
+  inventory.scrollTop = 0;
+  renderInventory();
+}
+
+function updateDropTarget(target) {
+  for (const slot of slots) slot.classList.toggle('drop-target', slot === target);
+}
+
+function dropItem(id, target) {
+  if ("'!target || !stage.contains(target)) return;
+  const slot = target.closest('"'.slot');
+  placeItem(id, slot ? Number(slot.dataset.slot) : null);
+}
+
+function moveTouch(event) {
+  if (event.pointerId "'!== touchDrag?.pointer) return;
+  if (!touchDrag.moved && Math.hypot(event.clientX - touchDrag.x, event.clientY - touchDrag.y) < 8) return;
+  touchDrag.moved = true;
+  const ghost = byId('"'drag-ghost');
+  ghost.style.display = 'block';
+  ghost.style.left = event.clientX + 'px';
+  ghost.style.top = event.clientY + 'px';
+  const target = document.elementFromPoint(event.clientX, event.clientY);
+  updateDropTarget(target?.closest('.slot'));
+}
+
+function endTouch(event) {
+  if (event.pointerId "'!== touchDrag?.pointer) return;
+  if (touchDrag.moved) {
+    ignoreClickUntil = performance.now() + 350;
+    if (event.type === '"'pointerup') dropItem(touchDrag.id, document.elementFromPoint(event.clientX, event.clientY));
+  }
+  byId('drag-ghost').style.display = 'none';
+  updateDropTarget(null);
+  touchDrag = null;
+}
+
+for (const [index, slot] of slots.entries()) {
+  slot.addEventListener('click', () => {
+    if (selected[index]) {
+      selected[index] = null;
+      activeSlot = index;
+    } else {
+      activeSlot = activeSlot === index ? null : index;
+    }
+    renderBench();
+    showStatus(activeSlot === null ? '' : 'Selecciona un elemento del inventario.');
+  });
+}
+mixButton.addEventListener('click', combine);
+byId('clear').addEventListener('click', clearBench);
+hintButton.addEventListener('click', showHint);
+byId('help-button').addEventListener('click', () => byId('help-dialog').showModal());
+byId('reset').addEventListener('click', () => {
+  byId('help-dialog').close();
+  byId('reset-dialog').showModal();
+});
+byId('confirm-reset').addEventListener('click', resetGame);
+for (const button of filters) button.addEventListener('click', () => setFilter(button.dataset.filter));
+search.addEventListener('input', () => {
+  inventory.scrollTop = 0;
+  renderInventory();
+});
+inventory.addEventListener('click', (event) => {
+  const card = event.target.closest('[data-item]');
+  if (card && (event.detail === 0 || performance.now() >= ignoreClickUntil)) placeItem(card.dataset.item);
+});
+inventory.addEventListener('dragstart', (event) => {
+  const card = event.target.closest('[data-item]');
+  if ("'!card || touchDrag) {
+    event.preventDefault();
+    return;
+  }
+  dragItem = card.dataset.item;
+  event.dataTransfer.effectAllowed = '"'copy';
+  event.dataTransfer.setData('text/plain', dragItem);
+});
+inventory.addEventListener('dragend', () => {
+  dragItem = null;
+  updateDropTarget(null);
+});
+stage.addEventListener('dragover', (event) => {
+  if ("'!dragItem) return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = '"'copy';
+  updateDropTarget(event.target.closest('.slot'));
+});
+stage.addEventListener('dragleave', (event) => {
+  if ("'!stage.contains(event.relatedTarget)) updateDropTarget(null);
+});
+stage.addEventListener('"'drop', (event) => {
+  if ("'!dragItem) return;
+  event.preventDefault();
+  dropItem(dragItem, event.target);
+  dragItem = null;
+  updateDropTarget(null);
+});
+inventory.addEventListener('"'pointerdown', (event) => {
+  const card = event.target.closest('.library-emoji')?.closest('[data-item]');
+  if ("'!card || event.pointerType === '"'mouse' || touchDrag) return;
+  const id = card.dataset.item;
+  touchDrag = { id, pointer: event.pointerId, x: event.clientX, y: event.clientY, moved: false };
+  byId('drag-ghost').textContent = elements[id][0] + ' ' + nameOf(id);
+});
+window.addEventListener('pointermove', moveTouch);
+window.addEventListener('pointerup', endTouch);
+window.addEventListener('pointercancel', endTouch);
+byId('log').addEventListener('click', (event) => {
+  const button = event.target.closest('[data-recipe]');
+  if ("'!button) return;
+  const [a, b, id] = recipeBook.get(button.dataset.recipe);
+  const [emoji, label, description, url] = elements[id];
+  byId('"'detail-title').textContent = emoji + ' ' + label;
+  byId('detail').innerHTML = '<p>' + nameOf(a) + ' + ' + nameOf(b) + '</p>' +
+    (description ? '<p>' + description + '</p>' : '') + (url ? externalLink(url) : '');
+  byId('detail-dialog').showModal();
+});
+
+load();
+updateProgress();
+renderInventory();
+renderJournal();
+renderBench();
+</script>
+</body>
+</html>
+EOF
+TMPDIR=/private/tmp python3 - <<'PY'
+import base64
+from pathlib import Path
+root = Path('/private/tmp/alquimia-reactiva-work')
+faces = []
+for file, family, weight, display in [('inter', 'Inter', '400 700', 'swap'), ('space', 'Space Grotesk', '400 700', 'swap'), ('icons', 'Lab Icons', '400', 'block')]:
+    data = base64.b64encode((root / (file + '.woff2')).read_bytes()).decode()
+    faces.append(f'@font-face {{ font-family: \"{family}\"; font-weight: {weight}; font-style: normal; font-display: {display}; src: url(data:font/woff2;base64,{data}) format(\"woff2\"); }}')
+page = Path('index.html')
+page.write_text(page.read_text().replace('/* EMBEDDED_FONTS */', '\\n'.join(faces)))
+PY
+wc -c index.html" in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 44ms:
+python3: error: couldn't create cache file '/var/folders/2b/k_922dnd3tq2l6yyc6fkgh9r0000gn/T/xcrun_db-YS0QgG70' (errno=Operation not permitted)
+  139882 index.html
+
+web search: 
+exec
+/bin/zsh -lc "cat >/private/tmp/alquimia-reactiva-work/check.cjs <<'EOF'
+const assert = require('node:assert/strict');
+const { chromium } = require('playwright-core');
+const url = 'file:///private/var/tmp/bench/ws-gNI8ozR8/index.html';
+
+(async () => {
+  const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', args: ['--no-sandbox'] });
+  try {
+    const desktop = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    const errors = [];
+    desktop.on('pageerror', error => errors.push(error.message));
+    await desktop.goto(url);
+    await desktop.evaluate(() => document.fonts.ready);
+    await desktop.screenshot({ path: '/private/tmp/alquimia-reactiva-work/desktop.png' });
+    const info = await desktop.evaluate(() => {
+      const keys = recipes.map(([a, b]) => keyFor(a, b));
+      const reachable = new Set(base);
+      let size;
+      do {
+        size = reachable.size;
+        for (const [a, b, r] of recipes) if (reachable.has(a) && reachable.has(b)) reachable.add(r);
+      } while (size "'!== reachable.size);
+      return { total: Object.keys(elements).length, reachable: reachable.size, recipes: recipes.length, unique: new Set(keys).size, availableFonts: [...document.fonts].map(f => [f.family, f.status]) };
+    });
+    assert.equal(info.total, info.reachable);
+    assert.equal(info.recipes, info.unique);
+    assert.ok(info.availableFonts.every(([,status]) => status === '"'loaded'));
+    const card = (name) => desktop.getByRole('button', { name, exact: true });
+    await card('Pista').click();
+    assert.match(await desktop.locator('#hint-text').innerText(), /Código \\+ Curiosidad/);
+    await card('Código').dragTo(desktop.locator('[data-slot=\"1\"]'));
+    assert.match(await desktop.locator('[data-slot=\"1\"]').innerText(), /Código/);
+    await card('Curiosidad').click();
+    await card('Combinar').click();
+    assert.equal(await desktop.locator('#result h3').innerText(), 'Proyecto');
+    assert.equal(await desktop.locator('progress').evaluate(el => el.value), 5);
+    await card('Usar en una mezcla').click();
+    await card('Código').click();
+    await card('Combinar').click();
+    assert.equal(await desktop.locator('#result h3').innerText(), 'Recurso');
+    await desktop.reload();
+    assert.equal(await desktop.locator('progress').evaluate(el => el.value), 6);
+    await card('Hallazgos').click();
+    assert.equal(await desktop.locator('[data-item]').count(), 2);
+    await desktop.getByRole('searchbox').fill('RECURSO');
+    assert.equal(await desktop.locator('[data-item]').count(), 1);
+    await desktop.getByRole('searchbox').fill('');
+    await card('Todos').click();
+    await card('Café').click();
+    await card('Café').click();
+    await card('Combinar').click();
+    assert.match(await desktop.locator('#status').innerText(), /no ha reaccionado/);
+    await desktop.getByRole('button', { name: /Código.*Curiosidad.*Proyecto/ }).click();
+    assert.equal(await desktop.locator('#detail-dialog').evaluate(el => el.open), true);
+    await desktop.locator('#detail-dialog').getByRole('button', { name: 'Cerrar' }).click();
+    await card('Cómo jugar').click();
+    await card('Reiniciar partida').click();
+    await card('Cancelar').click();
+    assert.equal(await desktop.locator('progress').evaluate(el => el.value), 6);
+    await card('Cómo jugar').click();
+    await card('Reiniciar partida').click();
+    await card('Reiniciar').click();
+    await desktop.reload();
+    assert.equal(await desktop.locator('progress').evaluate(el => el.value), 4);
+
+    await desktop.evaluate(() => {
+      for (const [a, b, r] of recipes) assertRecipe(a, b, r);
+      function assertRecipe(a, b, r) {
+        const key = keyFor(a, b);
+        if (recipeBook.get(key)[2] "'!== r || recipeBook.get(keyFor(b, a))[2] !== r) throw Error('"'Invalid recipe ' + key);
+      }
+      while (discoveries.size < Object.keys(elements).length) {
+        showHint();
+        const [a, b] = lastHint;
+        placeItem(a); placeItem(b); combine();
+      }
+    });
+    assert.equal(await desktop.locator('progress').evaluate(el => el.value), info.total);
+    assert.equal(await card('Pista').isDisabled(), true);
+    assert.deepEqual(errors, []);
+
+    const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
+    await mobile.goto(url);
+    await mobile.evaluate(() => document.fonts.ready);
+    await mobile.screenshot({ path: '/private/tmp/alquimia-reactiva-work/mobile.png', fullPage: true });
+    assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth), 390);
+    const session = await mobile.context().newCDPSession(mobile);
+    const ingredient = await mobile.locator('[data-item=\"codigo\"] .library-emoji').boundingBox();
+    const target = await mobile.locator('[data-slot=\"0\"]').boundingBox();
+    const touch = (type, box) => session.send('Input.dispatchTouchEvent', {
+      type, touchPoints: box ? [{ x: Math.round(box.x + box.width / 2), y: Math.round(box.y + box.height / 2) }] : []
+    });
+    await touch('touchStart', ingredient);
+    await touch('touchMove', target);
+    await touch('touchEnd');
+    assert.match(await mobile.locator('[data-slot=\"0\"]').innerText(), /Código/);
+    await mobile.waitForTimeout(400);
+    await mobile.getByRole('button', { name: 'Curiosidad', exact: true }).tap();
+    await mobile.getByRole('button', { name: 'Combinar' }).tap();
+    assert.equal(await mobile.locator('#result h3').innerText(), 'Proyecto');
+    console.log(info);
+    console.log('Desktop and mobile interactions passed');
+  } finally {
+    await browser.close();
+  }
+})().catch(error => { console.error(error); process.exitCode = 1; });
+EOF
+node /private/tmp/alquimia-reactiva-work/check.cjs" in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 1 in 407ms:
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-RSn8Ir --remote-debugging-pipe --no-startup-window
+<launched> pid=79990
+[pid=79990] <process did exit: exitCode=null, signal=SIGABRT>
+[pid=79990] starting temporary directories cleanup
+Call log:
+[2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-RSn8Ir --remote-debugging-pipe --no-startup-window[22m
+[2m  - <launched> pid=79990[22m
+[2m  - [pid=79990] <process did exit: exitCode=null, signal=SIGABRT>[22m
+[2m  - [pid=79990] starting temporary directories cleanup[22m
+[2m  - [pid=79990] <gracefully close start>[22m
+[2m  - [pid=79990] <kill>[22m
+[2m  - [pid=79990] <skipped force kill spawnedProcess.killed=false processClosed=true>[22m
+[2m  - [pid=79990] finished temporary directories cleanup[22m
+[2m  - [pid=79990] <gracefully close end>[22m
+
+    at /private/tmp/alquimia-reactiva-work/check.cjs:6:34
+    at Object.<anonymous> (/private/tmp/alquimia-reactiva-work/check.cjs:105:3) {
+  log: [
+    '  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-RSn8Ir --remote-debugging-pipe --no-startup-window',
+    '  - <launched> pid=79990',
+    '  - [pid=79990] <process did exit: exitCode=null, signal=SIGABRT>',
+    '  - [pid=79990] starting temporary directories cleanup',
+    '  - [pid=79990] <gracefully close start>',
+    '  - [pid=79990] <kill>',
+    '  - [pid=79990] <skipped force kill spawnedProcess.killed=false processClosed=true>',
+    '  - [pid=79990] finished temporary directories cleanup',
+    '  - [pid=79990] <gracefully close end>'
+  ]
+}
+
+web search: site:webreactiva.com/podcast estreno nuevo podcast sobre IA Esperando Eskainet Web Reactiva
+web search: 
+exec
+/bin/zsh -lc 'ls -la /private/tmp/alquimia-reactiva-work
+sw_vers
+uname -m
+ls /Applications/Firefox.app/Contents/MacOS
+ls -d /private/tmp/* /Users/daniel/Library/Caches/ms-playwright/* 2>/dev/null | head -45' in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 0ms:
+total 200
+drwxr-xr-x   12 daniel  wheel    384 Nov 20 10:17 .
+drwxrwxrwt  372 root    wheel  11904 Nov 20 10:17 ..
+-rw-r--r--    1 daniel  wheel   5682 Nov 20 10:17 check.cjs
+-rw-r--r--    1 daniel  wheel   3852 Nov 20 10:12 fonts.css
+-rw-r--r--    1 daniel  wheel    778 Nov 20 10:12 icons.css
+-rw-r--r--    1 daniel  wheel   3104 Nov 20 10:12 icons.woff2
+-rw-r--r--    1 daniel  wheel  48432 Nov 20 10:12 inter.woff2
+drwxr-xr-x    5 daniel  wheel    160 Nov 20 10:12 node_modules
+drwxr-xr-x    5 daniel  wheel    160 Nov 20 10:12 npm-cache
+-rw-r--r--    1 daniel  wheel    582 Nov 20 10:12 package-lock.json
+-rw-r--r--    1 daniel  wheel     61 Nov 20 10:12 package.json
+-rw-r--r--    1 daniel  wheel  22320 Nov 20 10:12 space.woff2
+ProductName:		macOS
+ProductVersion:		13.7.8
+BuildVersion:		22H730
+x86_64
+XUL
+crashhelper
+crashreporter.app
+firefox
+gpu-helper.app
+libEGL.dylib
+libGLESv2.dylib
+libfreebl3.dylib
+libgkcodecs.dylib
+liblgpllibs.dylib
+libmozavcodec.dylib
+libmozavutil.dylib
+libmozglue.dylib
+libmozinference.dylib
+libnss3.dylib
+libonnxruntime.dylib
+libsoftokn3.dylib
+media-plugin-helper.app
+nmhproxy
+pingsender
+plugin-container.app
+updater.app
+/Users/daniel/Library/Caches/ms-playwright/b
+/Users/daniel/Library/Caches/ms-playwright/chromium-1084
+/Users/daniel/Library/Caches/ms-playwright/chromium-1140
+/Users/daniel/Library/Caches/ms-playwright/chromium-1200
+/Users/daniel/Library/Caches/ms-playwright/chromium-1208
+/Users/daniel/Library/Caches/ms-playwright/chromium-1217
+/Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1200
+/Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1208
+/Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217
+/Users/daniel/Library/Caches/ms-playwright/daemon
+/Users/daniel/Library/Caches/ms-playwright/ffmpeg-1009
+/Users/daniel/Library/Caches/ms-playwright/ffmpeg-1010
+/Users/daniel/Library/Caches/ms-playwright/ffmpeg-1011
+/Users/daniel/Library/Caches/ms-playwright/firefox-1425
+/Users/daniel/Library/Caches/ms-playwright/firefox-1465
+/Users/daniel/Library/Caches/ms-playwright/firefox-1497
+/Users/daniel/Library/Caches/ms-playwright/mcp-chrome
+/Users/daniel/Library/Caches/ms-playwright/mcp-chrome-eaf95f2
+/Users/daniel/Library/Caches/ms-playwright/webkit-2083
+/Users/daniel/Library/Caches/ms-playwright/webkit_mac10.15_special-1616
+/Users/daniel/Library/Caches/ms-playwright/webkit_mac13_special-2140
+/private/tmp/Sublime Text.4cff18d2bab96a93366319a9e0fa060d.aa47f8215c6f30a0dcdb2a36a9f4168e.sock
+/private/tmp/alh-app.js
+/private/tmp/alh-build.py
+/private/tmp/alh-canvas-test.cjs
+/private/tmp/alh-dm-license
+/private/tmp/alh-font-0.woff2
+/private/tmp/alh-font-1.woff2
+/private/tmp/alh-fonts.css
+/private/tmp/alh-hs
+/private/tmp/alh-map-mobile.png
+/private/tmp/alh-map.png
+/private/tmp/alh-npm-cache
+/private/tmp/alh-play-license
+/private/tmp/alh-software.js
+/private/tmp/alh-template.html
+/private/tmp/alh-test-deps
+/private/tmp/alh-test-log
+/private/tmp/alh-test.cjs
+/private/tmp/alh-three-license
+/private/tmp/alh-three.js
+/private/tmp/alh-variable.css
+/private/tmp/alquimia-reactiva-work
+/private/tmp/cc-socks
+/private/tmp/claude-501
+
+web search: 'Estreno nuevo podcast'
+web search: 
+exec
+/bin/zsh -lc "rg --files --hidden /Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217 | rg 'headless_shell"'$'"'" in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 0ms:
+/Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/LICENSE.headless_shell
+
+web search: 
+exec
+/bin/zsh -lc 'ls -la /Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64
+ls -la /private/tmp/alh-hs | head' in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 0ms:
+total 394640
+drwxr-xr-x  16 daniel  staff        512 Apr 13  2026 .
+drwxr-xr-x   5 daniel  staff        160 Apr 13  2026 ..
+-rw-r--r--   1 daniel  staff        248 Apr 13  2026 ABOUT
+-rw-r--r--   1 daniel  staff    1741976 Apr 13  2026 LICENSE.headless_shell
+drwxr-xr-x   4 daniel  staff        128 Apr 13  2026 PrivacySandboxAttestationsPreloaded
+-rwxr-xr-x   1 daniel  staff  171669928 Apr 13  2026 chrome-headless-shell
+-rw-r--r--   1 daniel  staff       2923 Apr 13  2026 headless_command_resources.pak
+-rw-r--r--   1 daniel  staff     751504 Apr 13  2026 headless_lib_data.pak
+-rw-r--r--   1 daniel  staff    4216088 Apr 13  2026 headless_lib_strings.pak
+-rw-r--r--   1 daniel  staff   10822192 Apr 13  2026 icudtl.dat
+-rwxr-xr-x   1 daniel  staff      58332 Apr 13  2026 libEGL.dylib
+-rwxr-xr-x   1 daniel  staff    7553568 Apr 13  2026 libGLESv2.dylib
+-rwxr-xr-x   1 daniel  staff    4489760 Apr 13  2026 libvk_swiftshader.dylib
+drwxr-xr-x   3 daniel  staff         96 Apr 13  2026 resources
+-rw-r--r--   1 daniel  staff     715800 Apr 13  2026 v8_context_snapshot.x86_64.bin
+-rw-r--r--   1 daniel  staff        110 Apr 13  2026 vk_swiftshader_icd.json
+total 0
+drwx------    2 daniel  wheel     64 Nov 20 10:08 .
+drwxrwxrwt  372 root    wheel  11904 Nov 20 10:17 ..
+
+exec
+/bin/zsh -lc "sed -i '' 's|/Applications/Google Chrome.app/Contents/MacOS/Google Chrome|/Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/chrome-headless-shell|' /private/tmp/alquimia-reactiva-work/check.cjs
+node /private/tmp/alquimia-reactiva-work/check.cjs" in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 1 in 514ms:
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SkUiew --remote-debugging-pipe --no-startup-window
+<launched> pid=80017
+[pid=80017][err] [1120/101751.223534:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+Call log:
+[2m  - <launching> /Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SkUiew --remote-debugging-pipe --no-startup-window[22m
+[2m  - <launched> pid=80017[22m
+[2m  - [pid=80017][err] [1120/101751.223534:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9[22m
+[2m  - [pid=80017] <gracefully close start>[22m
+[2m  - [pid=80017] <kill>[22m
+[2m  - [pid=80017] <will force kill>[22m
+[2m  - [pid=80017] exception while trying to kill process: Error: kill ESRCH[22m
+[2m  - [pid=80017] <process did exit: exitCode=null, signal=SIGTRAP>[22m
+[2m  - [pid=80017] starting temporary directories cleanup[22m
+[2m  - [pid=80017] finished temporary directories cleanup[22m
+[2m  - [pid=80017] <gracefully close end>[22m
+
+    at /private/tmp/alquimia-reactiva-work/check.cjs:6:34
+    at Object.<anonymous> (/private/tmp/alquimia-reactiva-work/check.cjs:105:3) {
+  log: [
+    '  - <launching> /Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-SkUiew --remote-debugging-pipe --no-startup-window',
+    '  - <launched> pid=80017',
+    '  - [pid=80017][err] [1120/101751.223534:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9',
+    '  - [pid=80017] <gracefully close start>',
+    '  - [pid=80017] <kill>',
+    '  - [pid=80017] <will force kill>',
+    '  - [pid=80017] exception while trying to kill process: Error: kill ESRCH',
+    '  - [pid=80017] <process did exit: exitCode=null, signal=SIGTRAP>',
+    '  - [pid=80017] starting temporary directories cleanup',
+    '  - [pid=80017] finished temporary directories cleanup',
+    '  - [pid=80017] <gracefully close end>'
+  ]
+}
+
+exec
+/bin/zsh -lc 'ls -lat /Users/daniel/Library/Logs/DiagnosticReports | head -12
+npm install --prefix /private/tmp/alquimia-reactiva-work --cache /private/tmp/alquimia-reactiva-work/npm-cache happy-dom' in /private/var/tmp/bench/ws-gNI8ozR8
+exec
+/bin/zsh -lc "sed -i '' \"s/args: \\['--no-sandbox'\\]/args: ['--no-sandbox','--single-process','--disable-gpu','--disable-crash-reporter','--disable-in-process-stack-traces']/\" /private/tmp/alquimia-reactiva-work/check.cjs
+TMPDIR=/private/tmp node /private/tmp/alquimia-reactiva-work/check.cjs" in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 1 in 421ms:
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --single-process --disable-gpu --disable-crash-reporter --disable-in-process-stack-traces --user-data-dir=/private/tmp/playwright_chromiumdev_profile-MT2e15 --remote-debugging-pipe --no-startup-window
+<launched> pid=80025
+[pid=80025][err] [1120/101758.080851:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+Call log:
+[2m  - <launching> /Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --single-process --disable-gpu --disable-crash-reporter --disable-in-process-stack-traces --user-data-dir=/private/tmp/playwright_chromiumdev_profile-MT2e15 --remote-debugging-pipe --no-startup-window[22m
+[2m  - <launched> pid=80025[22m
+[2m  - [pid=80025][err] [1120/101758.080851:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9[22m
+[2m  - [pid=80025] <gracefully close start>[22m
+[2m  - [pid=80025] <kill>[22m
+[2m  - [pid=80025] <will force kill>[22m
+[2m  - [pid=80025] exception while trying to kill process: Error: kill ESRCH[22m
+[2m  - [pid=80025] <process did exit: exitCode=null, signal=SIGTRAP>[22m
+[2m  - [pid=80025] starting temporary directories cleanup[22m
+[2m  - [pid=80025] finished temporary directories cleanup[22m
+[2m  - [pid=80025] <gracefully close end>[22m
+
+    at /private/tmp/alquimia-reactiva-work/check.cjs:6:34
+    at Object.<anonymous> (/private/tmp/alquimia-reactiva-work/check.cjs:105:3) {
+  log: [
+    '  - <launching> /Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --single-process --disable-gpu --disable-crash-reporter --disable-in-process-stack-traces --user-data-dir=/private/tmp/playwright_chromiumdev_profile-MT2e15 --remote-debugging-pipe --no-startup-window',
+    '  - <launched> pid=80025',
+    '  - [pid=80025][err] [1120/101758.080851:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9',
+    '  - [pid=80025] <gracefully close start>',
+    '  - [pid=80025] <kill>',
+    '  - [pid=80025] <will force kill>',
+    '  - [pid=80025] exception while trying to kill process: Error: kill ESRCH',
+    '  - [pid=80025] <process did exit: exitCode=null, signal=SIGTRAP>',
+    '  - [pid=80025] starting temporary directories cleanup',
+    '  - [pid=80025] finished temporary directories cleanup',
+    '  - [pid=80025] <gracefully close end>'
+  ]
+}
+
+ succeeded in 10486ms:
+total 875648
+-rw-------@     1 daniel  _analyticsusers   12334 Nov 20 10:17 chrome-headless-shell-2026-11-20-101758.ips
+drwxrwx---  28068 daniel  _analyticsusers  898176 Nov 20 10:17 .
+-rw-------@     1 daniel  _analyticsusers   12334 Nov 20 10:17 chrome-headless-shell-2026-11-20-101751.ips
+-rw-------@     1 daniel  _analyticsusers   14072 Nov 20 10:17 .Google Chrome-2026-11-20-101732.ips
+-rw-------@     1 daniel  _analyticsusers   16759 Nov 20 10:08 firefox-2026-11-20-100842.ips
+-rw-------@     1 daniel  _analyticsusers   12335 Nov 20 10:08 chrome-headless-shell-2026-11-20-100835.ips
+-rw-------@     1 daniel  _analyticsusers   12334 Nov 20 10:08 chrome-headless-shell-2026-11-20-100825.ips
+-rw-------@     1 daniel  _analyticsusers   11986 Nov 20 10:07 .Google Chrome-2026-11-20-100755.ips
+-rw-------@     1 daniel  _analyticsusers     341 Nov 19 00:20 SiriSearchFeedback-2026-11-19-002016.diag
+-rw-------@     1 daniel  _analyticsusers     341 Nov 18 16:04 SiriSearchFeedback-2026-11-18-160405.diag
+-rw-------@     1 daniel  _analyticsusers     341 Nov 18 03:04 SiriSearchFeedback-2026-11-18-030437.diag
+
+added 9 packages, and audited 11 packages in 2s
+
+1 package is looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+exec
+/bin/zsh -lc 'mkdir -p /private/tmp/alquimia-reactiva-work/firefox-profile
+MOZ_HEADLESS=1 MOZ_DISABLE_CONTENT_SANDBOX=1 TMPDIR=/private/tmp /Applications/Firefox.app/Contents/MacOS/firefox --headless --no-remote --profile /private/tmp/alquimia-reactiva-work/firefox-profile --window-size 1440,900 --screenshot /private/tmp/alquimia-reactiva-work/ff.png file:///private/var/tmp/bench/ws-gNI8ozR8/index.html' in /private/var/tmp/bench/ws-gNI8ozR8
+exec
+/bin/zsh -lc 'curl -fsSL https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt -o /private/tmp/alquimia-reactiva-work/inter.license
+curl -fsSL https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/OFL.txt -o /private/tmp/alquimia-reactiva-work/space.license
+curl -fsSL https://raw.githubusercontent.com/google/material-design-icons/master/LICENSE -o /private/tmp/alquimia-reactiva-work/icons.license
+head -4 /private/tmp/alquimia-reactiva-work/{inter,space,icons}.license' in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 134 in 82ms:
+*** You are running in headless mode.
+
+ succeeded in 552ms:
+==> /private/tmp/alquimia-reactiva-work/inter.license <==
+Copyright 2020 The Inter Project Authors (https://github.com/rsms/inter)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+
+==> /private/tmp/alquimia-reactiva-work/space.license <==
+Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+
+==> /private/tmp/alquimia-reactiva-work/icons.license <==
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+codex
+El HTML ya está creado. Estoy comprobando que todas las recetas se puedan alcanzar desde los cuatro elementos iniciales y que la partida se recupere al volver a abrirlo.
+exec
+/bin/zsh -lc 'ls /Users/daniel/Library/Caches/ms-playwright/chromium-1140
+ls /Users/daniel/Library/Caches/ms-playwright/webkit_mac13_special-2140
+ls /Users/daniel/Library/Caches/ms-playwright/daemon
+ls /private/tmp/alquimia-reactiva-work/node_modules' in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 0ms:
+DEPENDENCIES_VALIDATED
+INSTALLATION_COMPLETE
+chrome-mac
+DEPENDENCIES_VALIDATED
+INSTALLATION_COMPLETE
+JavaScriptCore.framework
+Playwright.app
+WebCore.framework
+WebInspectorUI.framework
+WebKit.framework
+WebKitLegacy.framework
+com.apple.WebKit.GPU.xpc
+com.apple.WebKit.Networking.xpc
+com.apple.WebKit.WebContent.xpc
+libANGLE-shared.dylib
+libwebrtc.dylib
+protocol.json
+pw_run.sh
+1b83d199403a3e11
+d0a0e240ca50dc31
+f2f835c0bfc1136e
+@types
+buffer-image-size
+entities
+happy-dom
+playwright-core
+undici-types
+whatwg-mimetype
+ws
+
+exec
+/bin/zsh -lc "TMPDIR=/private/tmp python3 - <<'PY'
+from pathlib import Path
+page = Path('index.html')
+source = page.read_text()
+source = source.replace(\"programación.', podcast],\", \"programación.', podcast + '/estreno-nuevo-podcast-sobre-ia-esperando-a-eskainet'],\")
+source = source.replace(\"consumo de tokens.', podcast],\", \"consumo de tokens.', podcast + '/como-ahorrar-tokens-derribando-mitos'],\")
+source = source.replace(\"que escribe tu agente.', personal + '/#proyectos'],\", \"que escribe tu agente.', 'https://github.com/webreactiva/wikipoke'],\")
+source = source.replace(\"en un solo HTML.', personal + '/#proyectos'],\", \"en un solo HTML.', web + '/blog/make-it-learnable'],\")
+root = Path('/private/tmp/alquimia-reactiva-work')
+names = ['Inter', 'Space Grotesk', 'Material Symbols Rounded']
+licenses = [root.joinpath(file + '.license').read_text().strip() for file in ('inter', 'space', 'icons')]
+notice = '\\n\\n'.join(name + '\\n' + license for name, license in zip(names, licenses))
+page.write_text(source.replace('</body>', '<"'!-- Licencias de las fuentes integradas'"\\n\\n' + notice + '\\n-->\\n</body>'))
+PY" in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 33ms:
+python3: error: couldn't create cache file '/var/folders/2b/k_922dnd3tq2l6yyc6fkgh9r0000gn/T/xcrun_db-vclGngy7' (errno=Operation not permitted)
+
+exec
+/bin/zsh -lc "sed 's|/Users/daniel/Library/Caches/ms-playwright/chromium_headless_shell-1217/chrome-headless-shell-mac-x64/chrome-headless-shell|/Users/daniel/Library/Caches/ms-playwright/chromium-1140/chrome-mac/Chromium.app/Contents/MacOS/Chromium|' /private/tmp/alquimia-reactiva-work/check.cjs > /private/tmp/alquimia-reactiva-work/check-old.cjs
+TMPDIR=/private/tmp node /private/tmp/alquimia-reactiva-work/check-old.cjs" in /private/var/tmp/bench/ws-gNI8ozR8
+exec
+/bin/zsh -lc "cat >/private/tmp/alquimia-reactiva-work/check-dom.mjs <<'EOF'
+import { Window } from 'happy-dom';
+import { readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+
+const html = readFileSync('index.html', 'utf8');
+const [markup,script] = html.split('<script>');
+const code = script.split('</script>')[0];
+const start = (saved) => {
+  const window = new Window({ url: 'http://localhost/', settings: { disableCSSFileLoading: true } });
+  window.document.write(markup + '</body></html>');
+  if (saved "'!== undefined) window.localStorage.setItem('"'alquimia-reactiva-v1', saved);
+  return {
+    win: window,
+    "'$: selector => window.document.querySelector(selector),
+    $$: selector => Array.from(window.document.querySelectorAll(selector)),
+    run: extra => window.eval(code + '"'\\n' + extra)
+  };
+};
+const game = start();
+const info = game.run("'`(() => {
+  const total = Object.keys(elements).length;
+  const unique = recipeBook.size;
+  if (unique !== recipes.length || recipes.some(recipe => recipe.some(id => !Object.hasOwn(elements, id)))) {
+    throw new Error('"'Invalid recipe data');
+  }
+  const reached = new Set(base);
+  let previous;
+  do {
+    previous = reached.size;
+    for (const [a,b,result] of recipes) if (reached.has(a) && reached.has(b)) reached.add(result);
+  } while (previous "'!== reached.size);
+  return { total, unique, reached: reached.size };
+})()`);
+assert.equal(info.total, info.reached);
+const { $, $$ } = game;
+const click = selector => $(selector).click();
+const type = value => {
+  $('"'#search').value = value;
+  "'$('"'#search').dispatchEvent(new game.win.Event('input', { bubbles: true }));
+};
+assert.equal("'$('"'progress').value, 4);
+assert.equal("'$$('"'[data-item]').length, 4);
+click('#hint');
+assert.match("'$('"'#hint-text').textContent, /Código \\+ Curiosidad/);
+click('[data-slot=\"1\"]');
+click('[data-item=\"curiosidad\"]');
+assert.match("'$('"'[data-slot=\"1\"]').textContent, /Curiosidad/);
+click('[data-item=\"codigo\"]');
+click('#mix');
+assert.equal("'$('"'#result h3').textContent, 'Proyecto');
+assert.equal("'$('"'progress').value, 5);
+click('#use-result');
+click('[data-item=\"codigo\"]');
+click('#mix');
+assert.equal("'$('"'#result h3').textContent, 'Recurso');
+assert.equal("'$('"'progress').value, 6);
+click('[data-filter=\"found\"]');
+assert.equal("'$$('"'[data-item]').length, 2);
+type('RECURSO');
+assert.equal("'$$('"'[data-item]').length, 1);
+click('[data-filter=\"all\"]');
+type('CAFE');
+assert.equal("'$('"'[data-item]').dataset.item, 'cafe');
+type('');
+click('[data-item=\"cafe\"]');
+click('[data-item=\"cafe\"]');
+click('#mix');
+assert.match("'$('"'#status').textContent, /no ha reaccionado/);
+click('[data-recipe=\"codigo+curiosidad\"]');
+assert.equal("'$('"'#detail-dialog').open, true);
+"'$('"'#detail-dialog').close();
+const saved = game.win.localStorage.getItem('alquimia-reactiva-v1');
+const restored = start(saved);
+restored.run('');
+assert.equal(restored."'$('"'progress').value, 6);
+assert.equal(restored."'$$('"'[data-recipe]').length, 2);
+click('#help-button');
+assert.equal("'$('"'#help-dialog').open, true);
+click('#reset');
+assert.equal("'$('"'#reset-dialog').open, true);
+click('#confirm-reset');
+assert.equal("'$('"'progress').value, 4);
+assert.equal("'$$('"'[data-recipe]').length, 0);
+assert.equal(game.win.localStorage.getItem('alquimia-reactiva-v1'), '[]');
+const full = start();
+assert.equal(full.run("'`
+  const max = Object.keys(elements).length;
+  let attempts = 0;
+  while (discoveries.size < max && attempts++ < max) {
+    showHint();
+    const [a, b] = lastHint;
+    placeItem(b);
+    placeItem(a);
+    combine();
+  }
+  discoveries.size;
+`), info.total);
+assert.equal(full.$('"'#hint').disabled, true);
+assert.equal(full."'$('"'#result .result-tag').textContent, 'Colección completa');
+console.log(info);
+console.log('Game, search, hints, history, persistence and reset passed');
+EOF
+node /private/tmp/alquimia-reactiva-work/check-dom.mjs" in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 649ms:
+{ total: 52, unique: 84, reached: 52 }
+Game, search, hints, history, persistence and reset passed
+
+ exited 1 in 5909ms:
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Users/daniel/Library/Caches/ms-playwright/chromium-1140/chrome-mac/Chromium.app/Contents/MacOS/Chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --single-process --disable-gpu --disable-crash-reporter --disable-in-process-stack-traces --user-data-dir=/private/tmp/playwright_chromiumdev_profile-xI2BEl --remote-debugging-pipe --no-startup-window
+<launched> pid=80753
+[pid=80753][err] [1120/101853.977704:ERROR:bootstrap.cc(65)] bootstrap_check_in org.chromium.crashpad.child_port_handshake.80799.25160867.SAXAELCHRLGTCEJR: Permission denied (1100)
+[pid=80753][err] [1120/101853.978056:FATAL:child_port_handshake.cc(118)] Check failed: server_port.is_valid(). 
+[pid=80753][err] 0   chrome_crashpad_handler             0x0000000108995702 base::debug::CollectStackTrace(base::span<void const*, 18446744073709551615ul, void const**>) + 18
+[pid=80753][err] 1   chrome_crashpad_handler             0x000000010899440e base::debug::StackTrace::StackTrace() + 62
+[pid=80753][err] 2   chrome_crashpad_handler             0x0000000108972eee logging::LogMessage::Flush() + 190
+[pid=80753][err] 3   chrome_crashpad_handler             0x0000000108972dbd logging::LogMessage::~LogMessage() + 29
+[pid=80753][err] 4   chrome_crashpad_handler             0x000000010896e460 logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 112
+[pid=80753][err] 5   chrome_crashpad_handler             0x000000010896e4be logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 14
+[pid=80753][err] 6   chrome_crashpad_handler             0x000000010896e2e3 logging::CheckError::~CheckError() + 35
+[pid=80753][err] 7   chrome_crashpad_handler             0x000000010896e339 logging::CheckError::~CheckError() + 9
+[pid=80753][err] 8   chrome_crashpad_handler             0x00000001089b68bf crashpad::ChildPortHandshake::RunServerForFD(base::ScopedGeneric<int, base::internal::ScopedFDCloseTraits>, crashpad::ChildPortHandshake::PortRightType) + 2063
+[pid=80753][err] 9   chrome_crashpad_handler             0x0000000108968149 crashpad::HandlerMain(int, char**, std::__Cr::vector<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>, std::__Cr::allocator<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>>> const*) + 2857
+[pid=80753][err] 10  chrome_crashpad_handler             0x0000000108917281 CrashpadHandlerMain + 177
+[pid=80753][err] 11  dyld                                0x00007ff80c43b418 start + 1896
+[pid=80753][err] 
+[pid=80753][err] [1120/101853.978959:ERROR:file_io.cc(94)] ReadExactly: expected 4, observed 0
+[pid=80753][err] [1120/101853.980101:ERROR:bootstrap.cc(65)] bootstrap_check_in org.chromium.crashpad.child_port_handshake.80797.25160865.CDXXFVOYTTYVNZBV: Permission denied (1100)
+[pid=80753][err] [1120/101853.980368:FATAL:child_port_handshake.cc(118)] Check failed: server_port.is_valid(). 
+[pid=80753][err] 0   chrome_crashpad_handler             0x0000000106fab702 base::debug::CollectStackTrace(base::span<void const*, 18446744073709551615ul, void const**>) + 18
+[pid=80753][err] 1   chrome_crashpad_handler             0x0000000106faa40e base::debug::StackTrace::StackTrace() + 62
+[pid=80753][err] 2   chrome_crashpad_handler             0x0000000106f88eee logging::LogMessage::Flush() + 190
+[pid=80753][err] 3   chrome_crashpad_handler             0x0000000106f88dbd logging::LogMessage::~LogMessage() + 29
+[pid=80753][err] 4   chrome_crashpad_handler             0x0000000106f84460 logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 112
+[pid=80753][err] 5   chrome_crashpad_handler             0x0000000106f844be logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 14
+[pid=80753][err] 6   chrome_crashpad_handler             0x0000000106f842e3 logging::CheckError::~CheckError() + 35
+[pid=80753][err] 7   chrome_crashpad_handler             0x0000000106f84339 logging::CheckError::~CheckError() + 9
+[pid=80753][err] 8   chrome_crashpad_handler             0x0000000106fcc8bf crashpad::ChildPortHandshake::RunServerForFD(base::ScopedGeneric<int, base::internal::ScopedFDCloseTraits>, crashpad::ChildPortHandshake::PortRightType) + 2063
+[pid=80753][err] 9   chrome_crashpad_handler             0x0000000106f7e149 crashpad::HandlerMain(int, char**, std::__Cr::vector<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>, std::__Cr::allocator<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>>> const*) + 2857
+[pid=80753][err] 10  chrome_crashpad_handler             0x0000000106f2d281 CrashpadHandlerMain + 177
+[pid=80753][err] 11  dyld                                0x00007ff80c43b418 start + 1896
+[pid=80753][err] 
+[pid=80753][err] [1120/101853.981589:ERROR:file_io.cc(94)] ReadExactly: expected 4, observed 0
+[pid=80753][err] [1120/101853.982667:ERROR:file_io_posix.cc(208)] open /Users/daniel/Library/Application Support/Chromium/Crashpad/settings.dat: Operation not permitted (1)
+[pid=80753][err] [1120/101853.983041:ERROR:file_io_posix.cc(208)] open /Users/daniel/Library/Application Support/Chromium/Crashpad/settings.dat: Operation not permitted (1)
+Call log:
+[2m  - <launching> /Users/daniel/Library/Caches/ms-playwright/chromium-1140/chrome-mac/Chromium.app/Contents/MacOS/Chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --single-process --disable-gpu --disable-crash-reporter --disable-in-process-stack-traces --user-data-dir=/private/tmp/playwright_chromiumdev_profile-xI2BEl --remote-debugging-pipe --no-startup-window[22m
+[2m  - <launched> pid=80753[22m
+[2m  - [pid=80753][err] [1120/101853.977704:ERROR:bootstrap.cc(65)] bootstrap_check_in org.chromium.crashpad.child_port_handshake.80799.25160867.SAXAELCHRLGTCEJR: Permission denied (1100)[22m
+[2m  - [pid=80753][err] [1120/101853.978056:FATAL:child_port_handshake.cc(118)] Check failed: server_port.is_valid().[22m
+[2m  - [pid=80753][err] 0   chrome_crashpad_handler             0x0000000108995702 base::debug::CollectStackTrace(base::span<void const*, 18446744073709551615ul, void const**>) + 18[22m
+[2m  - [pid=80753][err] 1   chrome_crashpad_handler             0x000000010899440e base::debug::StackTrace::StackTrace() + 62[22m
+[2m  - [pid=80753][err] 2   chrome_crashpad_handler             0x0000000108972eee logging::LogMessage::Flush() + 190[22m
+[2m  - [pid=80753][err] 3   chrome_crashpad_handler             0x0000000108972dbd logging::LogMessage::~LogMessage() + 29[22m
+[2m  - [pid=80753][err] 4   chrome_crashpad_handler             0x000000010896e460 logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 112[22m
+[2m  - [pid=80753][err] 5   chrome_crashpad_handler             0x000000010896e4be logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 14[22m
+[2m  - [pid=80753][err] 6   chrome_crashpad_handler             0x000000010896e2e3 logging::CheckError::~CheckError() + 35[22m
+[2m  - [pid=80753][err] 7   chrome_crashpad_handler             0x000000010896e339 logging::CheckError::~CheckError() + 9[22m
+[2m  - [pid=80753][err] 8   chrome_crashpad_handler             0x00000001089b68bf crashpad::ChildPortHandshake::RunServerForFD(base::ScopedGeneric<int, base::internal::ScopedFDCloseTraits>, crashpad::ChildPortHandshake::PortRightType) + 2063[22m
+[2m  - [pid=80753][err] 9   chrome_crashpad_handler             0x0000000108968149 crashpad::HandlerMain(int, char**, std::__Cr::vector<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>, std::__Cr::allocator<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>>> const*) + 2857[22m
+[2m  - [pid=80753][err] 10  chrome_crashpad_handler             0x0000000108917281 CrashpadHandlerMain + 177[22m
+[2m  - [pid=80753][err] 11  dyld                                0x00007ff80c43b418 start + 1896[22m
+[2m  - [pid=80753][err][22m
+[2m  - [pid=80753][err] [1120/101853.978959:ERROR:file_io.cc(94)] ReadExactly: expected 4, observed 0[22m
+[2m  - [pid=80753][err] [1120/101853.980101:ERROR:bootstrap.cc(65)] bootstrap_check_in org.chromium.crashpad.child_port_handshake.80797.25160865.CDXXFVOYTTYVNZBV: Permission denied (1100)[22m
+[2m  - [pid=80753][err] [1120/101853.980368:FATAL:child_port_handshake.cc(118)] Check failed: server_port.is_valid().[22m
+[2m  - [pid=80753][err] 0   chrome_crashpad_handler             0x0000000106fab702 base::debug::CollectStackTrace(base::span<void const*, 18446744073709551615ul, void const**>) + 18[22m
+[2m  - [pid=80753][err] 1   chrome_crashpad_handler             0x0000000106faa40e base::debug::StackTrace::StackTrace() + 62[22m
+[2m  - [pid=80753][err] 2   chrome_crashpad_handler             0x0000000106f88eee logging::LogMessage::Flush() + 190[22m
+[2m  - [pid=80753][err] 3   chrome_crashpad_handler             0x0000000106f88dbd logging::LogMessage::~LogMessage() + 29[22m
+[2m  - [pid=80753][err] 4   chrome_crashpad_handler             0x0000000106f84460 logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 112[22m
+[2m  - [pid=80753][err] 5   chrome_crashpad_handler             0x0000000106f844be logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 14[22m
+[2m  - [pid=80753][err] 6   chrome_crashpad_handler             0x0000000106f842e3 logging::CheckError::~CheckError() + 35[22m
+[2m  - [pid=80753][err] 7   chrome_crashpad_handler             0x0000000106f84339 logging::CheckError::~CheckError() + 9[22m
+[2m  - [pid=80753][err] 8   chrome_crashpad_handler             0x0000000106fcc8bf crashpad::ChildPortHandshake::RunServerForFD(base::ScopedGeneric<int, base::internal::ScopedFDCloseTraits>, crashpad::ChildPortHandshake::PortRightType) + 2063[22m
+[2m  - [pid=80753][err] 9   chrome_crashpad_handler             0x0000000106f7e149 crashpad::HandlerMain(int, char**, std::__Cr::vector<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>, std::__Cr::allocator<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>>> const*) + 2857[22m
+[2m  - [pid=80753][err] 10  chrome_crashpad_handler             0x0000000106f2d281 CrashpadHandlerMain + 177[22m
+[2m  - [pid=80753][err] 11  dyld                                0x00007ff80c43b418 start + 1896[22m
+[2m  - [pid=80753][err][22m
+[2m  - [pid=80753][err] [1120/101853.981589:ERROR:file_io.cc(94)] ReadExactly: expected 4, observed 0[22m
+[2m  - [pid=80753][err] [1120/101853.982667:ERROR:file_io_posix.cc(208)] open /Users/daniel/Library/Application Support/Chromium/Crashpad/settings.dat: Operation not permitted (1)[22m
+[2m  - [pid=80753][err] [1120/101853.983041:ERROR:file_io_posix.cc(208)] open /Users/daniel/Library/Application Support/Chromium/Crashpad/settings.dat: Operation not permitted (1)[22m
+[2m  - [pid=80753] <gracefully close start>[22m
+[2m  - [pid=80753] <kill>[22m
+[2m  - [pid=80753] <will force kill>[22m
+[2m  - [pid=80753] exception while trying to kill process: Error: kill EPERM[22m
+[2m  - [pid=80753] <process did exit: exitCode=null, signal=SIGABRT>[22m
+[2m  - [pid=80753] starting temporary directories cleanup[22m
+[2m  - [pid=80753] finished temporary directories cleanup[22m
+[2m  - [pid=80753] <gracefully close end>[22m
+
+    at /private/tmp/alquimia-reactiva-work/check-old.cjs:6:34
+    at Object.<anonymous> (/private/tmp/alquimia-reactiva-work/check-old.cjs:105:3) {
+  log: [
+    '  - <launching> /Users/daniel/Library/Caches/ms-playwright/chromium-1140/chrome-mac/Chromium.app/Contents/MacOS/Chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --single-process --disable-gpu --disable-crash-reporter --disable-in-process-stack-traces --user-data-dir=/private/tmp/playwright_chromiumdev_profile-xI2BEl --remote-debugging-pipe --no-startup-window',
+    '  - <launched> pid=80753',
+    '  - [pid=80753][err] [1120/101853.977704:ERROR:bootstrap.cc(65)] bootstrap_check_in org.chromium.crashpad.child_port_handshake.80799.25160867.SAXAELCHRLGTCEJR: Permission denied (1100)',
+    '  - [pid=80753][err] [1120/101853.978056:FATAL:child_port_handshake.cc(118)] Check failed: server_port.is_valid().',
+    '  - [pid=80753][err] 0   chrome_crashpad_handler             0x0000000108995702 base::debug::CollectStackTrace(base::span<void const*, 18446744073709551615ul, void const**>) + 18',
+    '  - [pid=80753][err] 1   chrome_crashpad_handler             0x000000010899440e base::debug::StackTrace::StackTrace() + 62',
+    '  - [pid=80753][err] 2   chrome_crashpad_handler             0x0000000108972eee logging::LogMessage::Flush() + 190',
+    '  - [pid=80753][err] 3   chrome_crashpad_handler             0x0000000108972dbd logging::LogMessage::~LogMessage() + 29',
+    '  - [pid=80753][err] 4   chrome_crashpad_handler             0x000000010896e460 logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 112',
+    '  - [pid=80753][err] 5   chrome_crashpad_handler             0x000000010896e4be logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 14',
+    '  - [pid=80753][err] 6   chrome_crashpad_handler             0x000000010896e2e3 logging::CheckError::~CheckError() + 35',
+    '  - [pid=80753][err] 7   chrome_crashpad_handler             0x000000010896e339 logging::CheckError::~CheckError() + 9',
+    '  - [pid=80753][err] 8   chrome_crashpad_handler             0x00000001089b68bf crashpad::ChildPortHandshake::RunServerForFD(base::ScopedGeneric<int, base::internal::ScopedFDCloseTraits>, crashpad::ChildPortHandshake::PortRightType) + 2063',
+    '  - [pid=80753][err] 9   chrome_crashpad_handler             0x0000000108968149 crashpad::HandlerMain(int, char**, std::__Cr::vector<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>, std::__Cr::allocator<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>>> const*) + 2857',
+    '  - [pid=80753][err] 10  chrome_crashpad_handler             0x0000000108917281 CrashpadHandlerMain + 177',
+    '  - [pid=80753][err] 11  dyld                                0x00007ff80c43b418 start + 1896',
+    '  - [pid=80753][err]',
+    '  - [pid=80753][err] [1120/101853.978959:ERROR:file_io.cc(94)] ReadExactly: expected 4, observed 0',
+    '  - [pid=80753][err] [1120/101853.980101:ERROR:bootstrap.cc(65)] bootstrap_check_in org.chromium.crashpad.child_port_handshake.80797.25160865.CDXXFVOYTTYVNZBV: Permission denied (1100)',
+    '  - [pid=80753][err] [1120/101853.980368:FATAL:child_port_handshake.cc(118)] Check failed: server_port.is_valid().',
+    '  - [pid=80753][err] 0   chrome_crashpad_handler             0x0000000106fab702 base::debug::CollectStackTrace(base::span<void const*, 18446744073709551615ul, void const**>) + 18',
+    '  - [pid=80753][err] 1   chrome_crashpad_handler             0x0000000106faa40e base::debug::StackTrace::StackTrace() + 62',
+    '  - [pid=80753][err] 2   chrome_crashpad_handler             0x0000000106f88eee logging::LogMessage::Flush() + 190',
+    '  - [pid=80753][err] 3   chrome_crashpad_handler             0x0000000106f88dbd logging::LogMessage::~LogMessage() + 29',
+    '  - [pid=80753][err] 4   chrome_crashpad_handler             0x0000000106f84460 logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 112',
+    '  - [pid=80753][err] 5   chrome_crashpad_handler             0x0000000106f844be logging::(anonymous namespace)::CheckLogMessage::~CheckLogMessage() + 14',
+    '  - [pid=80753][err] 6   chrome_crashpad_handler             0x0000000106f842e3 logging::CheckError::~CheckError() + 35',
+    '  - [pid=80753][err] 7   chrome_crashpad_handler             0x0000000106f84339 logging::CheckError::~CheckError() + 9',
+    '  - [pid=80753][err] 8   chrome_crashpad_handler             0x0000000106fcc8bf crashpad::ChildPortHandshake::RunServerForFD(base::ScopedGeneric<int, base::internal::ScopedFDCloseTraits>, crashpad::ChildPortHandshake::PortRightType) + 2063',
+    '  - [pid=80753][err] 9   chrome_crashpad_handler             0x0000000106f7e149 crashpad::HandlerMain(int, char**, std::__Cr::vector<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>, std::__Cr::allocator<std::__Cr::unique_ptr<crashpad::UserStreamDataSource, std::__Cr::default_delete<crashpad::UserStreamDataSource>>>> const*) + 2857',
+    '  - [pid=80753][err] 10  chrome_crashpad_handler             0x0000000106f2d281 CrashpadHandlerMain + 177',
+    '  - [pid=80753][err] 11  dyld                                0x00007ff80c43b418 start + 1896',
+    '  - [pid=80753][err]',
+    '  - [pid=80753][err] [1120/101853.981589:ERROR:file_io.cc(94)] ReadExactly: expected 4, observed 0',
+    '  - [pid=80753][err] [1120/101853.982667:ERROR:file_io_posix.cc(208)] open /Users/daniel/Library/Application Support/Chromium/Crashpad/settings.dat: Operation not permitted (1)',
+    '  - [pid=80753][err] [1120/101853.983041:ERROR:file_io_posix.cc(208)] open /Users/daniel/Library/Application Support/Chromium/Crashpad/settings.dat: Operation not permitted (1)',
+    '  - [pid=80753] <gracefully close start>',
+    '  - [pid=80753] <kill>',
+    '  - [pid=80753] <will force kill>',
+    '  - [pid=80753] exception while trying to kill process: Error: kill EPERM',
+    '  - [pid=80753] <process did exit: exitCode=null, signal=SIGABRT>',
+    '  - [pid=80753] starting temporary directories cleanup',
+    '  - [pid=80753] finished temporary directories cleanup',
+    '  - [pid=80753] <gracefully close end>'
+  ]
+}
+
+exec
+/bin/zsh -lc "cat >> /private/tmp/alquimia-reactiva-work/check-dom.mjs <<'EOF'
+const drag = start();
+drag.run('');
+const transfer = new drag.win.DataTransfer();
+const dispatchDrag = (element, type) => element.dispatchEvent(new drag.win.DragEvent(type, {
+  bubbles: true, cancelable: true, dataTransfer: transfer
+}));
+dispatchDrag(drag."'$('"'[data-item=\"codigo\"]'), 'dragstart');
+const dropSlot = drag."'$('"'[data-slot=\"1\"]');
+assert.equal(dispatchDrag(dropSlot, 'dragover'), false);
+assert.equal(dropSlot.classList.contains('drop-target'), true);
+dispatchDrag(dropSlot, 'drop');
+assert.match(dropSlot.textContent, /Código/);
+assert.equal(dropSlot.classList.contains('drop-target'), false);
+const touch = drag."'$('"'[data-item=\"curiosidad\"] .library-emoji');
+const firstSlot = drag."'$('"'[data-slot=\"0\"]');
+drag.win.document.elementFromPoint = () => firstSlot;
+const pointer = (element, type, x, y) => element.dispatchEvent(new drag.win.PointerEvent(type, {
+  bubbles: true, pointerId: 1, pointerType: 'touch', clientX: x, clientY: y
+}));
+pointer(touch, 'pointerdown', 50, 50);
+pointer(touch, 'pointermove', 80, 100);
+assert.equal(firstSlot.classList.contains('drop-target'), true);
+pointer(touch, 'pointerup', 80, 100);
+assert.match(firstSlot.textContent, /Curiosidad/);
+drag."'$('"'#mix').click();
+assert.equal(drag."'$('"'#result h3').textContent, 'Proyecto');
+const urls = html.matchAll(/url\\((["'^)]+)'"\\)/g);
+assert.ok([...urls].every(([, url]) => url.startsWith('data:font/woff2;base64,')));
+console.log('Desktop and touch drag handlers passed in DOM simulation');
+EOF
+node /private/tmp/alquimia-reactiva-work/check-dom.mjs
+ls -la" in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 608ms:
+{ total: 52, unique: 84, reached: 52 }
+Game, search, hints, history, persistence and reset passed
+node:internal/process/esm_loader:46
+      internalBinding('errors').triggerUncaughtException(
+                                ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at file:///private/tmp/alquimia-reactiva-work/check-dom.mjs:111:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:192:25)
+    at async DefaultModuleLoader.import (node:internal/modules/esm/loader:228:24)
+    at async loadESM (node:internal/process/esm_loader:40:7)
+    at async handleMainPromise (node:internal/modules/run_main:66:12) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual'
+}
+
+Node.js v20.5.1
+total 320
+drwx------  3 daniel  wheel      96 Nov 20 10:15 .
+drwxr-xr-x  3 daniel  wheel      96 Nov 20 10:11 ..
+-rw-r--r--  1 daniel  wheel  160201 Nov 20 10:18 index.html
+
+exec
+/bin/zsh -lc 'nl -ba /private/tmp/alquimia-reactiva-work/check-dom.mjs | tail -32' in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 0ms:
+    99	assert.equal(full.$('#result .result-tag').textContent, 'Colección completa');
+   100	console.log(info);
+   101	console.log('Game, search, hints, history, persistence and reset passed');
+   102	const drag = start();
+   103	drag.run('');
+   104	const transfer = new drag.win.DataTransfer();
+   105	const dispatchDrag = (element, type) => element.dispatchEvent(new drag.win.DragEvent(type, {
+   106	  bubbles: true, cancelable: true, dataTransfer: transfer
+   107	}));
+   108	dispatchDrag(drag.$('[data-item="codigo"]'), 'dragstart');
+   109	const dropSlot = drag.$('[data-slot="1"]');
+   110	assert.equal(dispatchDrag(dropSlot, 'dragover'), false);
+   111	assert.equal(dropSlot.classList.contains('drop-target'), true);
+   112	dispatchDrag(dropSlot, 'drop');
+   113	assert.match(dropSlot.textContent, /Código/);
+   114	assert.equal(dropSlot.classList.contains('drop-target'), false);
+   115	const touch = drag.$('[data-item="curiosidad"] .library-emoji');
+   116	const firstSlot = drag.$('[data-slot="0"]');
+   117	drag.win.document.elementFromPoint = () => firstSlot;
+   118	const pointer = (element, type, x, y) => element.dispatchEvent(new drag.win.PointerEvent(type, {
+   119	  bubbles: true, pointerId: 1, pointerType: 'touch', clientX: x, clientY: y
+   120	}));
+   121	pointer(touch, 'pointerdown', 50, 50);
+   122	pointer(touch, 'pointermove', 80, 100);
+   123	assert.equal(firstSlot.classList.contains('drop-target'), true);
+   124	pointer(touch, 'pointerup', 80, 100);
+   125	assert.match(firstSlot.textContent, /Curiosidad/);
+   126	drag.$('#mix').click();
+   127	assert.equal(drag.$('#result h3').textContent, 'Proyecto');
+   128	const urls = html.matchAll(/url\(([^)]+)\)/g);
+   129	assert.ok([...urls].every(([, url]) => url.startsWith('data:font/woff2;base64,')));
+   130	console.log('Desktop and touch drag handlers passed in DOM simulation');
+
+exec
+/bin/zsh -lc "sed '111s/.*/console.log(dropSlot.outerHTML, drag."'$("#stage").outerHTML.slice(0,1230));/'"' /private/tmp/alquimia-reactiva-work/check-dom.mjs > /private/tmp/alquimia-reactiva-work/debug-dom.mjs
+node /private/tmp/alquimia-reactiva-work/debug-dom.mjs" in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 654ms:
+{ total: 52, unique: 84, reached: 52 }
+Game, search, hints, history, persistence and reset passed
+<button class="slot" type="button" data-slot="1" aria-pressed="false" aria-label="Ingrediente 2, vacío"><span class="operator" aria-hidden="true">+</span><span>Ingrediente 2</span></button> <div class="stage" id="stage">
+        <div class="reactor" id="reactor" aria-hidden="true">
+          <span class="orbit"></span>
+          <span class="spark one">✦</span><span class="spark two">✧</span><span class="spark three">✦</span><span class="spark four">✧</span>
+          <span class="reactor-core"><span class="icon">science</span></span>
+        </div>
+        <div class="slots" id="slots">
+          <button class="slot" type="button" data-slot="0" aria-pressed="false" aria-label="Ingrediente 1, vacío"><span class="operator" aria-hidden="true">+</span><span>Ingrediente 1</span></button>
+          <span class="operator" aria-hidden="true">+</span>
+          <button class="slot" type="button" data-slot="1" aria-pressed="false" aria-label="Ingrediente 2, vacío"><span class="operator" aria-hidden="true">+</span><span>Ingrediente 2</span></button>
+        </div>
+        <button class="mix" id="mix" type="button" disabled=""><span class="icon" aria-hidden="true">auto_awesome</span> Combinar</button>
+        <p class="stage-status" id="status" role="status"></p>
+        <div class="result-view" id="result" hidden=""></div>
+      </div>
+Desktop and touch drag handlers passed in DOM simulation
+
+exec
+/bin/zsh -lc "sed -i '' \"110s/dispatchDrag(dropSlot,/dispatchDrag(dropSlot.firstElementChild,/\" /private/tmp/alquimia-reactiva-work/check-dom.mjs
+node /private/tmp/alquimia-reactiva-work/check-dom.mjs" in /private/var/tmp/bench/ws-gNI8ozR8
+ exited 1 in 570ms:
+{ total: 52, unique: 84, reached: 52 }
+Game, search, hints, history, persistence and reset passed
+node:internal/process/esm_loader:46
+      internalBinding('errors').triggerUncaughtException(
+                                ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at file:///private/tmp/alquimia-reactiva-work/check-dom.mjs:111:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:192:25)
+    at async DefaultModuleLoader.import (node:internal/modules/esm/loader:228:24)
+    at async loadESM (node:internal/process/esm_loader:40:7)
+    at async handleMainPromise (node:internal/modules/run_main:66:12) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual'
+}
+
+Node.js v20.5.1
+
+exec
+/bin/zsh -lc "node --input-type=module - <<'EOF'
+import { readFileSync, writeFileSync } from 'node:fs';
+const f = '/private/tmp/alquimia-reactiva-work/check-dom.mjs';
+const content = readFileSync(f, 'utf8');
+writeFileSync(f, content.replace(/const dispatchDrag = [\\s\\S]*?\\n\\}\\)\\);/, "'`const dispatchDrag = (element, type) => {
+  const event = new drag.win.Event(type, { bubbles: true, cancelable: true });
+  Object.defineProperty(event, '"'dataTransfer', { value: transfer });
+  return element.dispatchEvent(event);
+};"'`));
+EOF
+node /private/tmp/alquimia-reactiva-work/check-dom.mjs' in /private/var/tmp/bench/ws-gNI8ozR8
+ succeeded in 707ms:
+{ total: 52, unique: 84, reached: 52 }
+Game, search, hints, history, persistence and reset passed
+Desktop and touch drag handlers passed in DOM simulation
+
+codex
+Creé [Alquimia Reactiva](/private/var/tmp/bench/ws-gNI8ozR8/index.html) en un único archivo HTML. Ábrelo en el navegador y combina Código, Curiosidad, Café y Comunidad para explorar 84 recetas inspiradas en [Web Reactiva](https://www.webreactiva.com/).
+
+El juego funciona sin conexión e incluye pistas, inventario con búsqueda, bitácora y guardado local. Verifiqué con pruebas automatizadas que se pueden descubrir los 52 elementos. La comprobación visual quedó pendiente porque el navegador de pruebas no arrancó en este entorno.
+tokens used
+87.589
+Creé [Alquimia Reactiva](/private/var/tmp/bench/ws-gNI8ozR8/index.html) en un único archivo HTML. Ábrelo en el navegador y combina Código, Curiosidad, Café y Comunidad para explorar 84 recetas inspiradas en [Web Reactiva](https://www.webreactiva.com/).
+
+El juego funciona sin conexión e incluye pistas, inventario con búsqueda, bitácora y guardado local. Verifiqué con pruebas automatizadas que se pueden descubrir los 52 elementos. La comprobación visual quedó pendiente porque el navegador de pruebas no arrancó en este entorno.

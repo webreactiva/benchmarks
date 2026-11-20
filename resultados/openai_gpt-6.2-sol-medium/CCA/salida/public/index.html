@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f7f3">
+  <meta name="description" content="Savia · Objetos para vivir despacio. Revisa tu carrito y prepara tu próximo pedido.">
+  <title>Tu carrito · Savia</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#tienda" aria-label="Savia, tienda">
+        <span class="brand-icon" data-icon="sprout"></span><span>savia<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a href="#tienda">Tienda</a>
+        <a href="#colecciones">Colecciones</a>
+      </nav>
+      <a class="header-cart" href="#carrito" aria-current="page">
+        <span data-icon="bag"></span><span class="header-cart-label">Carrito</span><span class="cart-count">0</span>
+      </a>
+    </div>
+  </header>
+  <main id="contenido" class="wrap" tabindex="-1"></main>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a class="brand" href="#tienda" aria-label="Savia, tienda">
+        <span class="brand-icon" data-icon="sprout"></span><span>savia<span class="brand-dot">.</span></span>
+      </a>
+      <span>Objetos para vivir despacio.</span>
+      <a href="#tienda">Volver a la tienda <span data-icon="arrow-right"></span></a>
+    </div>
+  </footer>
+  <div id="notification" class="notification" hidden>
+    <p role="status"></p><button type="button" data-action="undo" hidden>Deshacer</button>
+  </div>
+  <dialog id="checkout" aria-labelledby="checkout-title"></dialog>
+</body>
+</html>

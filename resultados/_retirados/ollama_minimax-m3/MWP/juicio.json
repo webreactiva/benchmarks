@@ -1,0 +1,20 @@
+{
+  "nota": 8,
+  "veredicto": "el más completo",
+  "resumen": "Cuatro diagramas que compilan (arquitectura por 8 capas, reparto en centros de datos, flujo de lectura y flujo de edición) más un .md que los explica. Tiene lo que a otros les falta: anycast, Varnish, API Gateway, APCu y Memcached WAN, réplicas, Kafka, data lake, Kubernetes. Pero el diagrama general es una maraña, quita las tildes en los diagramas y numera los títulos de forma que Mermaid 11.4 los rompe.",
+  "rarezas": [
+    "Es el único que entendió la pregunta como un pequeño informe: 4 diagramas, PNG y SVG de cada uno y un Markdown con lectura por capas y notas de simplificación.",
+    "Comprobó que compilaba con mermaid-cli y entregó las imágenes.",
+    "Escribe los diagramas sin tildes («movil», «Busqueda», «gestioned de configuracion») y el .md con ellas.",
+    "21 peticiones y 359 k tokens para un diagrama."
+  ],
+  "nota_previa": 8,
+  "rubrica": {
+    "compila": 2,
+    "en español": 1,
+    "camino conectado": 2,
+    "piezas clave": 2,
+    "sin errores ni inventos": 1,
+    "se puede leer": 0
+  }
+}

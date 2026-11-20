@@ -1,0 +1,1 @@
+Guardado en `tests-que-fallan-peor-que-no-tener-tests.md`. Cubre tipos de fallo (flaky, rojos congelados, desincronizados), por qué erosionan más que ausencia de tests, y cómo salir (presupuesto de flakiness, cuarentena, causa raíz, borrado de tests sin señal).

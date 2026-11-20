@@ -1,0 +1,26 @@
+{
+  "html": [
+    {
+      "fichero": "index.html",
+      "errores": [],
+      "titulo": "Alquimia Reactiva",
+      "canvas": 0,
+      "texto": "science\nweb reactiva\nhelp\nCómo jugar\n\nLABORATORIO DE ALQUIMIA\n\nAlquimia Reactiva\n\nMezcla elementos y descubre el universo de Web Reactiva.\n\nauto_awesome\n04 / 52\nElementos descubiertos\nscience\nMesa de mezclas\n\nArrastra dos elementos a la mesa o selecciónalos.\n\nclose\nLimpiar\n✦\n✧\n✦\n✧\nscience\n+\nIngrediente 1\n+\n+\nIngrediente 2\nauto_awesome\nCombinar\n\nemoji_objects\nPista\n\nLas pistas usan elementos que ya",
+      "scripts": [],
+      "captura": "capturas/index.html.png"
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ abre sin errores de consola",
+    "✔ Código + Curiosidad → Proyecto; Café + Código → Terminal",
+    "✔ guarda el progreso al recargar",
+    "✔ 52 de 52 elementos alcanzables con 84 recetas (juez/alcanzables con node)",
+    "✖ una mezcla sin receta no da nada («Esta mezcla no ha reaccionado»)",
+    "~ se combina en dos ranuras y un botón, no en un lienzo libre",
+    "✔ contenido de Web Reactiva: En pantuflas, Esperando a Eskainet, Wikipoke, Premium, Telegram, OpenSpec"
+  ],
+  "capturas_extra": [
+    "capturas/jugando.png"
+  ]
+}

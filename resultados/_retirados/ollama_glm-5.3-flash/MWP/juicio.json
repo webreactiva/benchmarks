@@ -1,0 +1,18 @@
+{
+  "nota": 8,
+  "veredicto": "correcto con inventos",
+  "resumen": "Compila, todo en español, con GeoDNS, Memcached, MariaDB maestro y réplicas separando lecturas y escrituras, Elasticsearch, Swift y Kafka. Pero pone la CDN en Cloudflare (Wikipedia tiene la suya), coloca Apache Traffic Server detrás del balanceador como «gateway» y olvida Varnish, la cola de trabajos y las miniaturas.",
+  "rarezas": [
+    "2 peticiones y 1,1 k tokens de salida: el más barato de todos en este prompt.",
+    "Se inventa un proveedor: «CDN (Cloudflare / cachés de borde)»."
+  ],
+  "nota_previa": 6,
+  "rubrica": {
+    "compila": 2,
+    "en español": 1,
+    "camino conectado": 2,
+    "piezas clave": 2,
+    "sin errores ni inventos": 0,
+    "se puede leer": 1
+  }
+}

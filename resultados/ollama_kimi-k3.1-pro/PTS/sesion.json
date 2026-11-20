@@ -1,0 +1,470 @@
+{
+  "info": {
+    "id": "ses_e0948044cffe5zu5tZsldM5i5k",
+    "slug": "neon-garden",
+    "projectID": "global",
+    "directory": "/var/tmp/bench/ws-FHPtsIVZ",
+    "path": "var/tmp/bench/ws-FHPtsIVZ",
+    "title": "Post: tests inestables peores que no tener tests",
+    "agent": "build",
+    "model": {
+      "id": "kimi-k3.1-pro",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 9470,
+      "output": 3504,
+      "reasoning": 0,
+      "cache": {
+        "read": 29361,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795140615092,
+      "updated": 1795140658115
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795140615116
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "kimi-k3.1-pro"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f6b7fbcc001KXZDlCOiLojvvn",
+        "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f6b7fbce001evp4s67O7J46n6",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b7fbcc001KXZDlCOiLojvvn"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6b7fbcc001KXZDlCOiLojvvn",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-FHPtsIVZ",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 7451,
+          "input": 3109,
+          "output": 246,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 4096
+          }
+        },
+        "modelID": "kimi-k3.1-pro",
+        "providerID": "ol",
+        "time": {
+          "created": 1795140615133,
+          "completed": 1795140619201
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6b7fbdd001N5qAcfYh28q0eZ",
+        "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6b803c3001qYnuyr76JLDdHh",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b7fbdd001N5qAcfYh28q0eZ"
+        },
+        {
+          "type": "reasoning",
+          "text": "I need respond Spanish, create blog post file in current dir. Should inspect cwd, project? Task create markdown. Must use tools, perhaps glob directory/AGENTS. Should decide title slug and content. User wants post why flaky tests worse than none. Should save generated current folder. I should inspect directory, perhaps existing style. Use read directory, glob AGENTS.md maybe README. Current dir /var/tmp/bench/ws-FHPtsIVZ. Tools read absolute directory allowed. Should likely simple but substantive. I should read dir and glob docs in parallel? I need use plan? Single file straightforward no todo necessary. I should check files.",
+          "time": {
+            "start": 1795140617158,
+            "end": 1795140619074
+          },
+          "id": "prt_1f6b803c600126t6gMiHlDl2W4",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b7fbdd001N5qAcfYh28q0eZ"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_dveln0j2",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-FHPtsIVZ"
+            },
+            "output": "<path>/var/tmp/bench/ws-FHPtsIVZ</path>\n<type>directory</type>\n<entries>\n\n\n(0 entries)\n</entries>",
+            "metadata": {
+              "preview": "",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "directory",
+                "path": "/var/tmp/bench/ws-FHPtsIVZ",
+                "entries": [],
+                "offset": 1,
+                "totalEntries": 0,
+                "truncated": false
+              }
+            },
+            "title": "var/tmp/bench/ws-FHPtsIVZ",
+            "time": {
+              "start": 1795140619084,
+              "end": 1795140619097
+            }
+          },
+          "id": "prt_1f6b80b45001u6I4bpC1enxBOy",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b7fbdd001N5qAcfYh28q0eZ"
+        },
+        {
+          "type": "tool",
+          "tool": "glob",
+          "callID": "call_ugg0xi3s",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "**/*.md",
+              "path": "/var/tmp/bench/ws-FHPtsIVZ"
+            },
+            "output": "No files found",
+            "metadata": {
+              "count": 0,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-FHPtsIVZ",
+            "time": {
+              "start": 1795140619091,
+              "end": 1795140619109
+            }
+          },
+          "id": "prt_1f6b80b4f001lRvL3nIjF02BQ2",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b7fbdd001N5qAcfYh28q0eZ"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 7451,
+            "input": 3109,
+            "output": 246,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 4096
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6b80bb9001UggDf7TDPQ4vrJ",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b7fbdd001N5qAcfYh28q0eZ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6b7fbcc001KXZDlCOiLojvvn",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-FHPtsIVZ",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10495,
+          "input": 331,
+          "output": 2960,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7204
+          }
+        },
+        "modelID": "kimi-k3.1-pro",
+        "providerID": "ol",
+        "time": {
+          "created": 1795140619204,
+          "completed": 1795140653201
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6b80bc4001TQar6G5wP0ffIu",
+        "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6b80e4c001MfaD5YI2yIMTfT",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b80bc4001TQar6G5wP0ffIu"
+        },
+        {
+          "type": "reasoning",
+          "text": "I'll write post. Empty folder. I'll generate quality Spanish blog post programming. Could file tests-que-fallan-a-veces.md. Must write. Content likely 1000 words? Post should be well structured, engaging, nuances, examples, actionable. Topic why flaky tests worse than no tests. Should avoid overly generic. I'll craft in Spanish, title, hook, false signal, costs, alarm fatigue, normalization deviance, debugging, trust, nondeterminism causes, practical handling quarantine perhaps not indefinite, rerun hiding, deletion as valid, formula? Could include code example JavaScript fake timers? Should be useful. Blog post not docs? Explicit requested content generation so md okay. Save. Then read verify per general media? Files text read. Could write and read. Perhaps no front matter unless needed. Filename. Post approx 1000-1300 Spanish words. User only asks one post. I shouldn't extra. I'll create around 900 words. Avoid claim categorical all flaky worse than none nuance: tests fail sometimes produce negative value when train ignore. Opening: suite 99.9 etc. Example login test random failure. Costs direct and opportunity. The problem isn't red but unreliable red. No tests known risk; flaky tests unknown risk disguised as control. Rerun erases evidence. Good practical playbook. Perhaps phrase \"Un test intermitente no es medio test: es un generador de ruido con acceso a tu pipeline.\" Good.\n\nShould use write.",
+          "time": {
+            "start": 1795140619855,
+            "end": 1795140653071
+          },
+          "id": "prt_1f6b80e4f001gZg22KZEy3bIhr",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b80bc4001TQar6G5wP0ffIu"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_g84kmqzo",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-FHPtsIVZ/tests-intermitentes-peores-que-no-tener-tests.md",
+              "content": "# Por qué los tests que fallan a veces son peores que no tener tests\n\nUna suite sin tests es una habitación a oscuras: sabes que puedes tropezar. Una suite con tests intermitentes es una habitación con una alarma que suena al azar: al principio corresponde a una señal de peligro, pero con el tiempo aprendes a ignorarla.\n\nEse es el verdadero problema de los *flaky tests*, esos tests que pasan y fallan sin que nadie haya cambiado el código relevante. No solo dejan de aportar información. Además, consumen tiempo, contaminan decisiones y enseñan al equipo a desconfiar de todas las pruebas, incluidas las que sí funcionan.\n\nLa ausencia de tests es una carencia visible. La intermitencia es una carencia disfrazada de cobertura.\n\n## Un test debe reducir incertidumbre, no fabricarla\n\nEl valor de un test está en la relación entre su resultado y el estado del software. Si falla, debería aumentar razonablemente nuestra sospecha de que hay un defecto. Si pasa, debería aportar cierta confianza sobre el comportamiento que verifica.\n\nUn test intermitente rompe ese contrato. Cuando aparece en rojo, surgen dos explicaciones: hemos introducido un error o el test ha vuelto a hacer de las suyas. La segunda opción suele ser más cómoda, así que repetimos el pipeline. Si entonces pasa, cerramos el caso y seguimos adelante.\n\nPero un reintento exitoso no demuestra que el código esté bien. Solo demuestra que el test es capaz de pasar, algo que ya sabíamos.\n\nCon suficientes repeticiones, la pregunta deja de ser «¿qué hemos roto?» y se convierte en «¿cuántas veces hay que ejecutar esto para obtener un check verde?». En ese momento la suite ya no está evaluando el producto: el equipo está aprendiendo a negociar con la suite.\n\n## El coste no es solamente el tiempo perdido\n\nEs tentador medir un test inestable por los minutos que añade a integración continua. Ese coste es real, pero suele ser el menor.\n\n### 1. Oculta regresiones auténticas\n\nSi un test falla una de cada diez veces «porque sí», un fallo genuino puede camuflarse entre los falsos positivos. El desarrollador repite la ejecución, obtiene un verde y publica una regresión con el sello de aprobación del pipeline.\n\nNo tener ese test habría dejado un hueco conocido. Tenerlo crea una falsa sensación de que ese hueco está vigilado.\n\n### 2. Entrena al equipo para ignorar alertas\n\nLa intermitencia rara vez queda contenida en un único archivo. Cambia los hábitos de quienes trabajan con ella: primero se ignora un test conocido, después cualquier error que se le parezca y, finalmente, cualquier pipeline rojo que pueda arreglarse con otro intento.\n\nUn día falla una prueba distinta, estable y útil. La respuesta automática vuelve a ser repetir. El problema ya no es técnico, sino cultural: el rojo ha dejado de exigir una explicación.\n\n### 3. Hace más lentos los cambios pequeños\n\nUna corrección de una línea puede terminar bloqueada durante media hora por un fallo que no tiene relación con ella. Quien abrió el cambio debe investigar infraestructura ajena, pedir ayuda o convencer a alguien de que su modificación es inocente.\n\nLa fricción se repite hasta que publicar deja de ser una rutina y se convierte en una lotería. Entonces llegan los cambios más grandes, con más commits acumulados, precisamente para evitar pasar tantas veces por el pipeline. El test inestable no solo ralentiza la entrega: también empeora su tamaño y su riesgo.\n\n### 4. Desperdicia la atención de quienes depuran\n\nInvestigar un fallo no determinista exige reconstruir un contexto que quizá ya no existe: datos de una ejecución anterior, orden de tests, hora del sistema, latencia de red o estado de un servicio externo. Sin registros adecuados, la depuración consiste en lanzar la suite muchas veces y esperar que el problema reaparezca.\n\nMientras tanto, ese test sigue figurando como cobertura en los informes.\n\n## La métrica engañosa del porcentaje de éxito\n\nUn test que pasa el 99 % de las veces puede parecer bastante fiable. Sin embargo, una suite ejecuta muchas oportunidades de fallo. Si hubiera 200 tests independientes con esa misma tasa de fallo individual, la probabilidad de que al menos uno falle en una ejecución sería aproximadamente del 87 %.\n\nLa independencia no siempre se cumple, pero el cálculo ilustra una idea importante: pequeñas inestabilidades se acumulan hasta convertirse en una experiencia diaria. Cada test puede parecer tolerable por separado y, aun así, hacer que el conjunto resulte inservible.\n\nAdemás, el porcentaje de ejecuciones verdes no mide la propiedad esencial de una suite: que un resultado rojo signifique algo.\n\n## De dónde sale la intermitencia\n\nLos tests inestables no suelen estar poseídos. Sus causas más habituales son bastante concretas:\n\n- **Tiempo real y esperas arbitrarias:** `sleep` que funcionan en una máquina local, pero no en un runner saturado.\n- **Concurrencia:** carreras entre procesos, promesas no esperadas o recursos compartidos sin sincronización.\n- **Estado residual:** bases de datos, cachés, archivos o variables globales que sobreviven entre pruebas.\n- **Dependencias externas:** red, reloj del sistema, zona horaria, generadores aleatorios y servicios de terceros.\n- **Orden y paralelismo:** tests que solo pasan si otro se ejecutó antes o si ninguno compite por el mismo recurso.\n- **Datos ambiguos:** colecciones sin orden garantizado, identificadores no deterministas o fechas construidas con el momento actual.\n\nFijarse en estos patrones es útil, pero no basta con conocer la lista. Hace falta una política para actuar cuando aparece el primer fallo inexplicable.\n\n## Qué hacer cuando un test empieza a fallar «a veces»\n\nLa peor respuesta es aceptar el reintento como procedimiento normal. Una estrategia más sana puede resumirse así:\n\n1. **Conservar la evidencia.** Guardar logs, semilla aleatoria, trazas, versión del entorno y artefactos del fallo antes de volver a ejecutar. Un reintento no debería borrar la única pista disponible.\n2. **Medir su frecuencia y su alcance.** Saber si falla en una rama, en un runner concreto, en paralelo o a determinadas horas suele reducir mucho la búsqueda.\n3. **Hacerlo reproducible.** Fijar el reloj, controlar la aleatoriedad, aislar el estado y sustituir esperas de tiempo por condiciones observables.\n4. **Aislarlo temporalmente si bloquea al equipo.** La cuarentena debe tener responsable, fecha límite y visibilidad. No es un cementerio de tests ni un permiso para ignorarlos indefinidamente.\n5. **Arreglarlo o eliminarlo.** Si nadie puede explicar qué comportamiento protege o el coste de estabilizarlo supera su valor, borrarlo puede ser más honesto que conservarlo.\n\nLos reintentos automáticos pueden servir como mecanismo temporal de contención, nunca como solución. Si se usan, deberían seguir registrando el primer fallo y alimentar una métrica de intermitencia. Ocultar el fallo detrás de un check verde solo privatiza el coste y lo reparte entre quienes lleguen después.\n\n## Estabilidad también es diseño\n\nPrevenir es mejor que perseguir fallos fantasma. Algunas decisiones sencillas mejoran mucho la fiabilidad:\n\n- Inyectar reloj y generador aleatorio en lugar de leer valores globales.\n- Esperar eventos o condiciones, no una cantidad arbitraria de milisegundos.\n- Crear y limpiar los datos necesarios dentro de cada test.\n- Hacer explícitas las dependencias entre procesos y evitar recursos compartidos cuando sea posible.\n- Probar el comportamiento observable, no detalles internos sensibles al orden de ejecución.\n- Ejecutar periódicamente la suite en condiciones parecidas a las de CI, incluido el paralelismo real.\n\nTambién conviene recordar que no toda verificación pertenece al mismo nivel. Un test end-to-end puede aportar mucho valor y, al mismo tiempo, tener más fuentes de ruido que una prueba unitaria. La respuesta no es llenar el sistema de esperas, sino reservar esos recorridos para los riesgos que realmente necesitan cubrir y apoyarse en pruebas más pequeñas para el resto.\n\n## La confianza es el verdadero resultado de una suite\n\nNo tener tests obliga a asumir un riesgo evidente: cada cambio depende más de revisión manual, memoria y suerte. Es una situación mejorable, pero al menos el equipo sabe dónde está el vacío.\n\nUna suite intermitente añade otra capa de riesgo: ya no se sabe si el mecanismo destinado a detectar errores está funcionando. Esa ambigüedad contamina revisiones, despliegues y prioridades.\n\nPor eso la estabilidad no es un lujo ni una tarea de limpieza para cuando sobre tiempo. Es parte de la corrección de la suite. Un test útil debe comportarse como un buen instrumento de medida: producir resultados comparables y obligar a investigar cuando cambia su lectura.\n\nAnte un test que falla a veces, la pregunta correcta no es «¿cómo conseguimos que vuelva a ponerse verde?». Es «¿qué información nos dará la próxima vez que falle?». Si la respuesta sigue siendo «ninguna», ese test no está protegiendo el software. Está cobrando un peaje por aparentar que lo hace.\n"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-FHPtsIVZ/tests-intermitentes-peores-que-no-tener-tests.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-FHPtsIVZ/tests-intermitentes-peores-que-no-tener-tests.md",
+            "time": {
+              "start": 1795140653078,
+              "end": 1795140653085
+            }
+          },
+          "id": "prt_1f6b89011001dyEnbPiAuCiwEU",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b80bc4001TQar6G5wP0ffIu"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10495,
+            "input": 331,
+            "output": 2960,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7204
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6b89089001BLJL2UType7gG6",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b80bc4001TQar6G5wP0ffIu"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6b7fbcc001KXZDlCOiLojvvn",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-FHPtsIVZ",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10667,
+          "input": 2994,
+          "output": 139,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7534
+          }
+        },
+        "modelID": "kimi-k3.1-pro",
+        "providerID": "ol",
+        "time": {
+          "created": 1795140653204,
+          "completed": 1795140655621
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6b89094001CWsX3thkyKbqLt",
+        "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6b893a7001KjEYbATVhj3QR9",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b89094001CWsX3thkyKbqLt"
+        },
+        {
+          "type": "reasoning",
+          "text": "Should verify read file perhaps word count? Use read perhaps first lines enough but generated whole known. Guidelines after generate media try read. For text verify read perhaps entire 177 lines. Also math assertion check: failure rate 1%= p at least =1-.99^200=86.6 yes. Good. Should inspect saved.",
+          "time": {
+            "start": 1795140653993,
+            "end": 1795140655491
+          },
+          "id": "prt_1f6b893a90012rdJ9CTTWXSt1U",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b89094001CWsX3thkyKbqLt"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_pizwoaqr",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-FHPtsIVZ/tests-intermitentes-peores-que-no-tener-tests.md"
+            },
+            "output": "<path>/var/tmp/bench/ws-FHPtsIVZ/tests-intermitentes-peores-que-no-tener-tests.md</path>\n<type>file</type>\n<content>\n1: # Por qué los tests que fallan a veces son peores que no tener tests\n2: \n3: Una suite sin tests es una habitación a oscuras: sabes que puedes tropezar. Una suite con tests intermitentes es una habitación con una alarma que suena al azar: al principio corresponde a una señal de peligro, pero con el tiempo aprendes a ignorarla.\n4: \n5: Ese es el verdadero problema de los *flaky tests*, esos tests que pasan y fallan sin que nadie haya cambiado el código relevante. No solo dejan de aportar información. Además, consumen tiempo, contaminan decisiones y enseñan al equipo a desconfiar de todas las pruebas, incluidas las que sí funcionan.\n6: \n7: La ausencia de tests es una carencia visible. La intermitencia es una carencia disfrazada de cobertura.\n8: \n9: ## Un test debe reducir incertidumbre, no fabricarla\n10: \n11: El valor de un test está en la relación entre su resultado y el estado del software. Si falla, debería aumentar razonablemente nuestra sospecha de que hay un defecto. Si pasa, debería aportar cierta confianza sobre el comportamiento que verifica.\n12: \n13: Un test intermitente rompe ese contrato. Cuando aparece en rojo, surgen dos explicaciones: hemos introducido un error o el test ha vuelto a hacer de las suyas. La segunda opción suele ser más cómoda, así que repetimos el pipeline. Si entonces pasa, cerramos el caso y seguimos adelante.\n14: \n15: Pero un reintento exitoso no demuestra que el código esté bien. Solo demuestra que el test es capaz de pasar, algo que ya sabíamos.\n16: \n17: Con suficientes repeticiones, la pregunta deja de ser «¿qué hemos roto?» y se convierte en «¿cuántas veces hay que ejecutar esto para obtener un check verde?». En ese momento la suite ya no está evaluando el producto: el equipo está aprendiendo a negociar con la suite.\n18: \n19: ## El coste no es solamente el tiempo perdido\n20: \n21: Es tentador medir un test inestable por los minutos que añade a integración continua. Ese coste es real, pero suele ser el menor.\n22: \n23: ### 1. Oculta regresiones auténticas\n24: \n25: Si un test falla una de cada diez veces «porque sí», un fallo genuino puede camuflarse entre los falsos positivos. El desarrollador repite la ejecución, obtiene un verde y publica una regresión con el sello de aprobación del pipeline.\n26: \n27: No tener ese test habría dejado un hueco conocido. Tenerlo crea una falsa sensación de que ese hueco está vigilado.\n28: \n29: ### 2. Entrena al equipo para ignorar alertas\n30: \n31: La intermitencia rara vez queda contenida en un único archivo. Cambia los hábitos de quienes trabajan con ella: primero se ignora un test conocido, después cualquier error que se le parezca y, finalmente, cualquier pipeline rojo que pueda arreglarse con otro intento.\n32: \n33: Un día falla una prueba distinta, estable y útil. La respuesta automática vuelve a ser repetir. El problema ya no es técnico, sino cultural: el rojo ha dejado de exigir una explicación.\n34: \n35: ### 3. Hace más lentos los cambios pequeños\n36: \n37: Una corrección de una línea puede terminar bloqueada durante media hora por un fallo que no tiene relación con ella. Quien abrió el cambio debe investigar infraestructura ajena, pedir ayuda o convencer a alguien de que su modificación es inocente.\n38: \n39: La fricción se repite hasta que publicar deja de ser una rutina y se convierte en una lotería. Entonces llegan los cambios más grandes, con más commits acumulados, precisamente para evitar pasar tantas veces por el pipeline. El test inestable no solo ralentiza la entrega: también empeora su tamaño y su riesgo.\n40: \n41: ### 4. Desperdicia la atención de quienes depuran\n42: \n43: Investigar un fallo no determinista exige reconstruir un contexto que quizá ya no existe: datos de una ejecución anterior, orden de tests, hora del sistema, latencia de red o estado de un servicio externo. Sin registros adecuados, la depuración consiste en lanzar la suite muchas veces y esperar que el problema reaparezca.\n44: \n45: Mientras tanto, ese test sigue figurando como cobertura en los informes.\n46: \n47: ## La métrica engañosa del porcentaje de éxito\n48: \n49: Un test que pasa el 99 % de las veces puede parecer bastante fiable. Sin embargo, una suite ejecuta muchas oportunidades de fallo. Si hubiera 200 tests independientes con esa misma tasa de fallo individual, la probabilidad de que al menos uno falle en una ejecución sería aproximadamente del 87 %.\n50: \n51: La independencia no siempre se cumple, pero el cálculo ilustra una idea importante: pequeñas inestabilidades se acumulan hasta convertirse en una experiencia diaria. Cada test puede parecer tolerable por separado y, aun así, hacer que el conjunto resulte inservible.\n52: \n53: Además, el porcentaje de ejecuciones verdes no mide la propiedad esencial de una suite: que un resultado rojo signifique algo.\n54: \n55: ## De dónde sale la intermitencia\n56: \n57: Los tests inestables no suelen estar poseídos. Sus causas más habituales son bastante concretas:\n58: \n59: - **Tiempo real y esperas arbitrarias:** `sleep` que funcionan en una máquina local, pero no en un runner saturado.\n60: - **Concurrencia:** carreras entre procesos, promesas no esperadas o recursos compartidos sin sincronización.\n61: - **Estado residual:** bases de datos, cachés, archivos o variables globales que sobreviven entre pruebas.\n62: - **Dependencias externas:** red, reloj del sistema, zona horaria, generadores aleatorios y servicios de terceros.\n63: - **Orden y paralelismo:** tests que solo pasan si otro se ejecutó antes o si ninguno compite por el mismo recurso.\n64: - **Datos ambiguos:** colecciones sin orden garantizado, identificadores no deterministas o fechas construidas con el momento actual.\n65: \n66: Fijarse en estos patrones es útil, pero no basta con conocer la lista. Hace falta una política para actuar cuando aparece el primer fallo inexplicable.\n67: \n68: ## Qué hacer cuando un test empieza a fallar «a veces»\n69: \n70: La peor respuesta es aceptar el reintento como procedimiento normal. Una estrategia más sana puede resumirse así:\n71: \n72: 1. **Conservar la evidencia.** Guardar logs, semilla aleatoria, trazas, versión del entorno y artefactos del fallo antes de volver a ejecutar. Un reintento no debería borrar la única pista disponible.\n73: 2. **Medir su frecuencia y su alcance.** Saber si falla en una rama, en un runner concreto, en paralelo o a determinadas horas suele reducir mucho la búsqueda.\n74: 3. **Hacerlo reproducible.** Fijar el reloj, controlar la aleatoriedad, aislar el estado y sustituir esperas de tiempo por condiciones observables.\n75: 4. **Aislarlo temporalmente si bloquea al equipo.** La cuarentena debe tener responsable, fecha límite y visibilidad. No es un cementerio de tests ni un permiso para ignorarlos indefinidamente.\n76: 5. **Arreglarlo o eliminarlo.** Si nadie puede explicar qué comportamiento protege o el coste de estabilizarlo supera su valor, borrarlo puede ser más honesto que conservarlo.\n77: \n78: Los reintentos automáticos pueden servir como mecanismo temporal de contención, nunca como solución. Si se usan, deberían seguir registrando el primer fallo y alimentar una métrica de intermitencia. Ocultar el fallo detrás de un check verde solo privatiza el coste y lo reparte entre quienes lleguen después.\n79: \n80: ## Estabilidad también es diseño\n81: \n82: Prevenir es mejor que perseguir fallos fantasma. Algunas decisiones sencillas mejoran mucho la fiabilidad:\n83: \n84: - Inyectar reloj y generador aleatorio en lugar de leer valores globales.\n85: - Esperar eventos o condiciones, no una cantidad arbitraria de milisegundos.\n86: - Crear y limpiar los datos necesarios dentro de cada test.\n87: - Hacer explícitas las dependencias entre procesos y evitar recursos compartidos cuando sea posible.\n88: - Probar el comportamiento observable, no detalles internos sensibles al orden de ejecución.\n89: - Ejecutar periódicamente la suite en condiciones parecidas a las de CI, incluido el paralelismo real.\n90: \n91: También conviene recordar que no toda verificación pertenece al mismo nivel. Un test end-to-end puede aportar mucho valor y, al mismo tiempo, tener más fuentes de ruido que una prueba unitaria. La respuesta no es llenar el sistema de esperas, sino reservar esos recorridos para los riesgos que realmente necesitan cubrir y apoyarse en pruebas más pequeñas para el resto.\n92: \n93: ## La confianza es el verdadero resultado de una suite\n94: \n95: No tener tests obliga a asumir un riesgo evidente: cada cambio depende más de revisión manual, memoria y suerte. Es una situación mejorable, pero al menos el equipo sabe dónde está el vacío.\n96: \n97: Una suite intermitente añade otra capa de riesgo: ya no se sabe si el mecanismo destinado a detectar errores está funcionando. Esa ambigüedad contamina revisiones, despliegues y prioridades.\n98: \n99: Por eso la estabilidad no es un lujo ni una tarea de limpieza para cuando sobre tiempo. Es parte de la corrección de la suite. Un test útil debe comportarse como un buen instrumento de medida: producir resultados comparables y obligar a investigar cuando cambia su lectura.\n100: \n101: Ante un test que falla a veces, la pregunta correcta no es «¿cómo conseguimos que vuelva a ponerse verde?». Es «¿qué información nos dará la próxima vez que falle?». Si la respuesta sigue siendo «ninguna», ese test no está protegiendo el software. Está cobrando un peaje por aparentar que lo hace.\n\n(End of file - total 101 lines)\n</content>",
+            "metadata": {
+              "preview": "# Por qué los tests que fallan a veces son peores que no tener tests\n\nUna suite sin tests es una habitación a oscuras: sabes que puedes tropezar. Una suite con tests intermitentes es una habitación con una alarma que suena al azar: al principio corresponde a una señal de peligro, pero con el tiempo aprendes a ignorarla.\n\nEse es el verdadero problema de los *flaky tests*, esos tests que pasan y fallan sin que nadie haya cambiado el código relevante. No solo dejan de aportar información. Además, consumen tiempo, contaminan decisiones y enseñan al equipo a desconfiar de todas las pruebas, incluidas las que sí funcionan.\n\nLa ausencia de tests es una carencia visible. La intermitencia es una carencia disfrazada de cobertura.\n\n## Un test debe reducir incertidumbre, no fabricarla\n\nEl valor de un test está en la relación entre su resultado y el estado del software. Si falla, debería aumentar razonablemente nuestra sospecha de que hay un defecto. Si pasa, debería aportar cierta confianza sobre el comportamiento que verifica.\n\nUn test intermitente rompe ese contrato. Cuando aparece en rojo, surgen dos explicaciones: hemos introducido un error o el test ha vuelto a hacer de las suyas. La segunda opción suele ser más cómoda, así que repetimos el pipeline. Si entonces pasa, cerramos el caso y seguimos adelante.\n\nPero un reintento exitoso no demuestra que el código esté bien. Solo demuestra que el test es capaz de pasar, algo que ya sabíamos.\n\nCon suficientes repeticiones, la pregunta deja de ser «¿qué hemos roto?» y se convierte en «¿cuántas veces hay que ejecutar esto para obtener un check verde?». En ese momento la suite ya no está evaluando el producto: el equipo está aprendiendo a negociar con la suite.\n\n## El coste no es solamente el tiempo perdido\n",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/var/tmp/bench/ws-FHPtsIVZ/tests-intermitentes-peores-que-no-tener-tests.md",
+                "text": "# Por qué los tests que fallan a veces son peores que no tener tests\n\nUna suite sin tests es una habitación a oscuras: sabes que puedes tropezar. Una suite con tests intermitentes es una habitación con una alarma que suena al azar: al principio corresponde a una señal de peligro, pero con el tiempo aprendes a ignorarla.\n\nEse es el verdadero problema de los *flaky tests*, esos tests que pasan y fallan sin que nadie haya cambiado el código relevante. No solo dejan de aportar información. Además, consumen tiempo, contaminan decisiones y enseñan al equipo a desconfiar de todas las pruebas, incluidas las que sí funcionan.\n\nLa ausencia de tests es una carencia visible. La intermitencia es una carencia disfrazada de cobertura.\n\n## Un test debe reducir incertidumbre, no fabricarla\n\nEl valor de un test está en la relación entre su resultado y el estado del software. Si falla, debería aumentar razonablemente nuestra sospecha de que hay un defecto. Si pasa, debería aportar cierta confianza sobre el comportamiento que verifica.\n\nUn test intermitente rompe ese contrato. Cuando aparece en rojo, surgen dos explicaciones: hemos introducido un error o el test ha vuelto a hacer de las suyas. La segunda opción suele ser más cómoda, así que repetimos el pipeline. Si entonces pasa, cerramos el caso y seguimos adelante.\n\nPero un reintento exitoso no demuestra que el código esté bien. Solo demuestra que el test es capaz de pasar, algo que ya sabíamos.\n\nCon suficientes repeticiones, la pregunta deja de ser «¿qué hemos roto?» y se convierte en «¿cuántas veces hay que ejecutar esto para obtener un check verde?». En ese momento la suite ya no está evaluando el producto: el equipo está aprendiendo a negociar con la suite.\n\n## El coste no es solamente el tiempo perdido\n\nEs tentador medir un test inestable por los minutos que añade a integración continua. Ese coste es real, pero suele ser el menor.\n\n### 1. Oculta regresiones auténticas\n\nSi un test falla una de cada diez veces «porque sí», un fallo genuino puede camuflarse entre los falsos positivos. El desarrollador repite la ejecución, obtiene un verde y publica una regresión con el sello de aprobación del pipeline.\n\nNo tener ese test habría dejado un hueco conocido. Tenerlo crea una falsa sensación de que ese hueco está vigilado.\n\n### 2. Entrena al equipo para ignorar alertas\n\nLa intermitencia rara vez queda contenida en un único archivo. Cambia los hábitos de quienes trabajan con ella: primero se ignora un test conocido, después cualquier error que se le parezca y, finalmente, cualquier pipeline rojo que pueda arreglarse con otro intento.\n\nUn día falla una prueba distinta, estable y útil. La respuesta automática vuelve a ser repetir. El problema ya no es técnico, sino cultural: el rojo ha dejado de exigir una explicación.\n\n### 3. Hace más lentos los cambios pequeños\n\nUna corrección de una línea puede terminar bloqueada durante media hora por un fallo que no tiene relación con ella. Quien abrió el cambio debe investigar infraestructura ajena, pedir ayuda o convencer a alguien de que su modificación es inocente.\n\nLa fricción se repite hasta que publicar deja de ser una rutina y se convierte en una lotería. Entonces llegan los cambios más grandes, con más commits acumulados, precisamente para evitar pasar tantas veces por el pipeline. El test inestable no solo ralentiza la entrega: también empeora su tamaño y su riesgo.\n\n### 4. Desperdicia la atención de quienes depuran\n\nInvestigar un fallo no determinista exige reconstruir un contexto que quizá ya no existe: datos de una ejecución anterior, orden de tests, hora del sistema, latencia de red o estado de un servicio externo. Sin registros adecuados, la depuración consiste en lanzar la suite muchas veces y esperar que el problema reaparezca.\n\nMientras tanto, ese test sigue figurando como cobertura en los informes.\n\n## La métrica engañosa del porcentaje de éxito\n\nUn test que pasa el 99 % de las veces puede parecer bastante fiable. Sin embargo, una suite ejecuta muchas oportunidades de fallo. Si hubiera 200 tests independientes con esa misma tasa de fallo individual, la probabilidad de que al menos uno falle en una ejecución sería aproximadamente del 87 %.\n\nLa independencia no siempre se cumple, pero el cálculo ilustra una idea importante: pequeñas inestabilidades se acumulan hasta convertirse en una experiencia diaria. Cada test puede parecer tolerable por separado y, aun así, hacer que el conjunto resulte inservible.\n\nAdemás, el porcentaje de ejecuciones verdes no mide la propiedad esencial de una suite: que un resultado rojo signifique algo.\n\n## De dónde sale la intermitencia\n\nLos tests inestables no suelen estar poseídos. Sus causas más habituales son bastante concretas:\n\n- **Tiempo real y esperas arbitrarias:** `sleep` que funcionan en una máquina local, pero no en un runner saturado.\n- **Concurrencia:** carreras entre procesos, promesas no esperadas o recursos compartidos sin sincronización.\n- **Estado residual:** bases de datos, cachés, archivos o variables globales que sobreviven entre pruebas.\n- **Dependencias externas:** red, reloj del sistema, zona horaria, generadores aleatorios y servicios de terceros.\n- **Orden y paralelismo:** tests que solo pasan si otro se ejecutó antes o si ninguno compite por el mismo recurso.\n- **Datos ambiguos:** colecciones sin orden garantizado, identificadores no deterministas o fechas construidas con el momento actual.\n\nFijarse en estos patrones es útil, pero no basta con conocer la lista. Hace falta una política para actuar cuando aparece el primer fallo inexplicable.\n\n## Qué hacer cuando un test empieza a fallar «a veces»\n\nLa peor respuesta es aceptar el reintento como procedimiento normal. Una estrategia más sana puede resumirse así:\n\n1. **Conservar la evidencia.** Guardar logs, semilla aleatoria, trazas, versión del entorno y artefactos del fallo antes de volver a ejecutar. Un reintento no debería borrar la única pista disponible.\n2. **Medir su frecuencia y su alcance.** Saber si falla en una rama, en un runner concreto, en paralelo o a determinadas horas suele reducir mucho la búsqueda.\n3. **Hacerlo reproducible.** Fijar el reloj, controlar la aleatoriedad, aislar el estado y sustituir esperas de tiempo por condiciones observables.\n4. **Aislarlo temporalmente si bloquea al equipo.** La cuarentena debe tener responsable, fecha límite y visibilidad. No es un cementerio de tests ni un permiso para ignorarlos indefinidamente.\n5. **Arreglarlo o eliminarlo.** Si nadie puede explicar qué comportamiento protege o el coste de estabilizarlo supera su valor, borrarlo puede ser más honesto que conservarlo.\n\nLos reintentos automáticos pueden servir como mecanismo temporal de contención, nunca como solución. Si se usan, deberían seguir registrando el primer fallo y alimentar una métrica de intermitencia. Ocultar el fallo detrás de un check verde solo privatiza el coste y lo reparte entre quienes lleguen después.\n\n## Estabilidad también es diseño\n\nPrevenir es mejor que perseguir fallos fantasma. Algunas decisiones sencillas mejoran mucho la fiabilidad:\n\n- Inyectar reloj y generador aleatorio en lugar de leer valores globales.\n- Esperar eventos o condiciones, no una cantidad arbitraria de milisegundos.\n- Crear y limpiar los datos necesarios dentro de cada test.\n- Hacer explícitas las dependencias entre procesos y evitar recursos compartidos cuando sea posible.\n- Probar el comportamiento observable, no detalles internos sensibles al orden de ejecución.\n- Ejecutar periódicamente la suite en condiciones parecidas a las de CI, incluido el paralelismo real.\n\nTambién conviene recordar que no toda verificación pertenece al mismo nivel. Un test end-to-end puede aportar mucho valor y, al mismo tiempo, tener más fuentes de ruido que una prueba unitaria. La respuesta no es llenar el sistema de esperas, sino reservar esos recorridos para los riesgos que realmente necesitan cubrir y apoyarse en pruebas más pequeñas para el resto.\n\n## La confianza es el verdadero resultado de una suite\n\nNo tener tests obliga a asumir un riesgo evidente: cada cambio depende más de revisión manual, memoria y suerte. Es una situación mejorable, pero al menos el equipo sabe dónde está el vacío.\n\nUna suite intermitente añade otra capa de riesgo: ya no se sabe si el mecanismo destinado a detectar errores está funcionando. Esa ambigüedad contamina revisiones, despliegues y prioridades.\n\nPor eso la estabilidad no es un lujo ni una tarea de limpieza para cuando sobre tiempo. Es parte de la corrección de la suite. Un test útil debe comportarse como un buen instrumento de medida: producir resultados comparables y obligar a investigar cuando cambia su lectura.\n\nAnte un test que falla a veces, la pregunta correcta no es «¿cómo conseguimos que vuelva a ponerse verde?». Es «¿qué información nos dará la próxima vez que falle?». Si la respuesta sigue siendo «ninguna», ese test no está protegiendo el software. Está cobrando un peaje por aparentar que lo hace.",
+                "lineStart": 1,
+                "lineEnd": 101,
+                "totalLines": 101,
+                "truncated": false
+              }
+            },
+            "title": "var/tmp/bench/ws-FHPtsIVZ/tests-intermitentes-peores-que-no-tener-tests.md",
+            "time": {
+              "start": 1795140655495,
+              "end": 1795140655504
+            }
+          },
+          "id": "prt_1f6b89984001OZxtQjIG5N3v1c",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b89094001CWsX3thkyKbqLt"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10667,
+            "input": 2994,
+            "output": 139,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7534
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6b89a02001LV9yu6adxgox1c",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b89094001CWsX3thkyKbqLt"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6b7fbcc001KXZDlCOiLojvvn",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-FHPtsIVZ",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 13722,
+          "input": 3036,
+          "output": 159,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 10527
+          }
+        },
+        "modelID": "kimi-k3.1-pro",
+        "providerID": "ol",
+        "time": {
+          "created": 1795140655624,
+          "completed": 1795140658110
+        },
+        "finish": "stop",
+        "id": "msg_1f6b89a080016UHSxHT1d4xBDn",
+        "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6b89d44001iZuSJAyGhT7dnT",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b89a080016UHSxHT1d4xBDn"
+        },
+        {
+          "type": "reasoning",
+          "text": "I'll respond in Spanish, concise, mentioning file saved path and perhaps contents. No need full post since saved. \"He creado ... en `tests...md`.\" Could say includes costs, causes, strategy. Link relative perhaps markdown. Current working. Respond with no more tools.",
+          "time": {
+            "start": 1795140656454,
+            "end": 1795140657226
+          },
+          "id": "prt_1f6b89d460011D03TRw5p1eR0P",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b89a080016UHSxHT1d4xBDn"
+        },
+        {
+          "type": "text",
+          "text": "He escrito el post y lo he guardado en la carpeta actual:\n\n[`tests-intermitentes-peores-que-no-tener-tests.md`](tests-intermitentes-peores-que-no-tener-tests.md)\n\nIncluye los costes de los tests intermitentes, sus causas habituales, un ejemplo probabilístico y recomendaciones prácticas para gestionarlos y prevenirlos.",
+          "time": {
+            "start": 1795140657228,
+            "end": 1795140658106
+          },
+          "id": "prt_1f6b8a04c001u0YWCv9QM8vTMj",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b89a080016UHSxHT1d4xBDn"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 13722,
+            "input": 3036,
+            "output": 159,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 10527
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6b8a3bb001EHP02BHkEyK6iO",
+          "sessionID": "ses_e0948044cffe5zu5tZsldM5i5k",
+          "messageID": "msg_1f6b89a080016UHSxHT1d4xBDn"
+        }
+      ]
+    }
+  ]
+}

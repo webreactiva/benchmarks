@@ -1,0 +1,11 @@
+{
+  "nota": 0,
+  "veredicto": "no entregó nada",
+  "resumen": "Investigó bien (leyó webreactiva.com y sacó Claude Code, skills, MCP, SDD, malandriner, En pantuflas), pero al escribir el HTML de golpe llegó a los 32 000 tokens de salida y OpenCode cortó la respuesta (finish: length) antes de guardar nada.",
+  "rarezas": [
+    "Salió de su carpeta a curiosear: listó /tmp/bench-ws y vio los nombres de los ficheros de los otros modelos. Razonó «might be considered cheating» y no abrió ninguno. Desde entonces cada prueba corre encerrada (scripts/encierro.sh) y no ve nada fuera de su carpeta.",
+    "También hizo «find / -iname '*reactiva*'» y leyó /container_info.json buscando contexto.",
+    "Fue a internet a por el contenido, como Haiku: leyó la portada de webreactiva.com.",
+    "Tercer corte por el tope de 32 000 tokens de salida en la tanda de Ollama (antes, GLM en A3D y AIF)."
+  ]
+}

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1016">
+<meta name="description" content="Alquimia Web Reactiva: un juego de alquimia estilo Infinite Craft con el contenido de Web Reactiva: agentes, skills, MCP, SDD, modelos y mucho más.">
+<title>⚗️ Alquimia Web Reactiva</title>
+<style>
+/* ============================ BASE ============================ */
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#0b1016;
+  --bg2:#121a24;
+  --panel:#151d27;
+  --panel2:#1b2531;
+  --line:rgba(255,255,255,.10);
+  --txt:#e8eef6;
+  --muted:#94a3b8;
+  --p:#7582ff;
+  --s:#ff71cf;
+  --a:#00cfbd;
+  --wa:#ffc22d;
+  --er:#ff6f70;
+  --radius:16px;
+  --head:60px;
+}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--txt);
+  background:var(--bg);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+button{font-family:inherit;color:inherit}
+body.is-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+body.is-dragging *{cursor:grabbing !important}
+
+/* fondo animado */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg i{position:absolute;display:block;border-radius:50%;filter:blur(70px);opacity:.30;animation:float 22s ease-in-out infinite}
+.bg i:nth-child(1){width:46vmax;height:46vmax;background:#491eff;left:-14vmax;top:-12vmax}
+.bg i:nth-child(2){width:38vmax;height:38vmax;background:#ff41c7;right:-12vmax;top:8vmax;animation-delay:-7s}
+.bg i:nth-child(3){width:40vmax;height:40vmax;background:#00c7b5;left:22vmax;bottom:-16vmax;animation-delay:-13s}
+.bg::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(1200px 600px at 50% -10%,rgba(117,130,255,.16),transparent 60%),
+  linear-gradient(180deg,#0b1016 0%,#0e1520 60%,#0b1016 100%)}
+@keyframes float{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(3vmax,-4vmax,0) scale(1.12)}}
+
+/* ============================ CABECERA ============================ */
+header{
+  position:relative;z-index:20;height:var(--head);
+  display:flex;align-items:center;gap:14px;
+  padding:0 14px;
+  background:linear-gradient(180deg,rgba(21,29,39,.92),rgba(21,29,39,.72));
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{
+  width:38px;height:38px;flex:0 0 auto;border-radius:12px;display:grid;place-items:center;font-size:20px;
+  background:linear-gradient(135deg,#7582ff,#ff71cf);
+  box-shadow:0 6px 18px rgba(117,130,255,.35);
+}
+.brand h1{font-size:16px;margin:0;font-weight:800;letter-spacing:-.2px;white-space:nowrap}
+.brand p{margin:1px 0 0;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.stats{display:flex;align-items:center;gap:10px;margin-left:auto}
+.stat{text-align:right;line-height:1}
+.stat b{font-size:15px;font-weight:800}
+.stat span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+.pbar{width:110px;height:6px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden}
+.pbar div{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#00cfbd,#7582ff,#ff71cf);transition:width .5s cubic-bezier(.2,.9,.3,1)}
+
+.tools{display:flex;gap:6px;margin-left:6px}
+.btn{
+  border:1px solid var(--line);background:rgba(255,255,255,.05);
+  padding:8px 11px;border-radius:11px;cursor:pointer;font-size:12.5px;font-weight:600;
+  display:inline-flex;align-items:center;gap:6px;transition:.16s;white-space:nowrap;
+}
+.btn:hover{background:rgba(255,255,255,.11);transform:translateY(-1px)}
+.btn:active{transform:translateY(0) scale(.97)}
+.btn.primary{background:linear-gradient(135deg,rgba(117,130,255,.30),rgba(255,113,207,.28));border-color:rgba(117,130,255,.55)}
+.btn.icon{padding:8px 10px;font-size:14px}
+
+/* ============================ LAYOUT ============================ */
+main{position:relative;z-index:10;display:flex;height:calc(100% - var(--head));height:calc(100dvh - var(--head))}
+
+#mesa{
+  position:relative;flex:1;min-width:0;overflow:hidden;touch-action:none;
+  background-image:radial-gradient(rgba(255,255,255,.075) 1px,transparent 1px);
+  background-size:26px 26px;
+  cursor:default;
+}
+.hint{
+  position:absolute;left:50%;top:14px;transform:translateX(-50%);
+  font-size:12px;color:var(--muted);background:rgba(11,16,22,.6);border:1px solid var(--line);
+  padding:6px 12px;border-radius:99px;pointer-events:none;transition:opacity .4s;z-index:5;
+}
+.hint.gone{opacity:0}
+
+/* ============================ TARJETA DE ELEMENTO ============================ */
+.el{
+  position:absolute;display:flex;align-items:center;gap:9px;
+  padding:9px 14px 9px 11px;border-radius:15px;cursor:grab;touch-action:none;
+  background:linear-gradient(135deg,rgba(var(--crgb),.26),rgba(var(--crgb),.08));
+  border:1px solid rgba(var(--crgb),.45);
+  box-shadow:0 8px 22px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;
+  transition:box-shadow .18s,transform .14s,border-color .18s,opacity .18s;
+  animation:cardIn .32s cubic-bezier(.2,1.2,.4,1);
+  z-index:2;
+}
+@keyframes cardIn{from{transform:scale(.72);opacity:0}to{transform:scale(1);opacity:1}}
+.el:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.5), 0 0 0 1px rgba(var(--crgb),.35)}
+.el .em{font-size:21px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.el .nm{font-size:13.5px;font-weight:700;letter-spacing:-.1px;white-space:nowrap;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.el.sel{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.55),0 12px 30px rgba(0,0,0,.5)}
+.el.over{transform:scale(1.07);box-shadow:0 0 0 2px rgba(var(--crgb),.9),0 14px 34px rgba(0,0,0,.55)}
+.el.drag-src{opacity:.28}
+.el.pop{animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+@keyframes pop{0%{transform:scale(.4);opacity:0}55%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+.el.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.el.fresh{animation:fresh 1.1s ease-out}
+@keyframes fresh{0%{box-shadow:0 0 0 0 rgba(var(--crgb),.9),0 8px 22px rgba(0,0,0,.42)}100%{box-shadow:0 0 0 26px rgba(var(--crgb),0),0 8px 22px rgba(0,0,0,.42)}}
+.el.rare{border-color:rgba(255,194,45,.75);box-shadow:0 8px 22px rgba(0,0,0,.42),0 0 18px rgba(255,194,45,.35)}
+.ghost{position:fixed;z-index:9999;pointer-events:none;transform:rotate(-3deg) scale(1.06);opacity:.95;box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.ring{position:absolute;width:40px;height:40px;border-radius:50%;border:2px solid rgba(var(--crgb),.9);pointer-events:none;animation:ring .6s ease-out forwards;z-index:3}
+@keyframes ring{to{transform:scale(3.6);opacity:0}}
+
+/* ============================ BIBLIOTECA ============================ */
+aside{
+  width:330px;flex:0 0 330px;display:flex;flex-direction:column;
+  background:linear-gradient(180deg,rgba(21,29,39,.95),rgba(16,22,30,.95));
+  border-left:1px solid var(--line);z-index:15;
+}
+.lib-head{padding:12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.lib-title{display:flex;align-items:center;justify-content:space-between}
+.lib-title h2{margin:0;font-size:13px;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);font-weight:800}
+.lib-title span{font-size:11px;color:var(--muted)}
+#buscar{
+  width:100%;padding:9px 12px;border-radius:11px;border:1px solid var(--line);
+  background:rgba(0,0,0,.28);color:var(--txt);font-size:13px;outline:none;
+}
+#buscar:focus{border-color:rgba(117,130,255,.7);box-shadow:0 0 0 3px rgba(117,130,255,.14)}
+.lib-list{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin}
+.lib-list::-webkit-scrollbar{width:8px}
+.lib-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px}
+.lib-item{
+  display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:12px;cursor:grab;
+  background:linear-gradient(135deg,rgba(var(--crgb),.18),rgba(var(--crgb),.05));
+  border:1px solid rgba(var(--crgb),.30);transition:.14s;text-align:left;touch-action:none;
+}
+.lib-item:hover{transform:translateX(-3px);border-color:rgba(var(--crgb),.7);background:linear-gradient(135deg,rgba(var(--crgb),.30),rgba(var(--crgb),.10))}
+.lib-item .em{font-size:18px}
+.lib-item .nm{font-size:12.5px;font-weight:650;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lib-item .badge{font-size:9px;padding:2px 6px;border-radius:99px;background:rgba(255,194,45,.18);color:var(--wa);font-weight:800;white-space:nowrap}
+.lib-item .badge.gold{background:linear-gradient(135deg,rgba(255,194,45,.35),rgba(255,113,207,.3));color:#fff}
+.lib-item.rare{border-color:rgba(255,194,45,.55)}
+.lib-item.new{animation:libnew 1.4s ease-out}
+@keyframes libnew{0%{box-shadow:0 0 0 0 rgba(117,130,255,.85);transform:translateX(-8px)}100%{box-shadow:0 0 0 18px rgba(117,130,255,0);transform:translateX(0)}}
+.lib-item.base{opacity:.92}
+.lib-empty{padding:24px 12px;text-align:center;color:var(--muted);font-size:12.5px;line-height:1.6}
+.lib-desc{
+  padding:11px 13px;border-top:1px solid var(--line);font-size:11.5px;line-height:1.55;color:var(--muted);
+  min-height:52px;background:rgba(0,0,0,.18)
+}
+.lib-desc b{color:var(--txt);display:block;font-size:12.5px;margin-bottom:2px}
+
+/* ============================ TOASTS ============================ */
+#toasts{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:9000;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:min(92vw,520px)}
+.toast{
+  background:rgba(16,22,30,.94);border:1px solid var(--line);border-radius:14px;padding:10px 15px;
+  font-size:13px;font-weight:600;box-shadow:0 14px 40px rgba(0,0,0,.55);display:flex;align-items:center;gap:9px;
+  animation:tin .3s cubic-bezier(.2,1.3,.4,1);backdrop-filter:blur(10px);max-width:100%;
+}
+.toast.out{animation:tout .3s forwards}
+@keyframes tin{from{transform:translateY(14px) scale(.95);opacity:0}to{transform:none;opacity:1}}
+@keyframes tout{to{transform:translateY(10px) scale(.96);opacity:0}}
+.toast.big{border-color:rgba(255,194,45,.55);box-shadow:0 14px 44px rgba(0,0,0,.6),0 0 30px rgba(255,194,45,.22);padding:13px 17px}
+.toast .em{font-size:22px}
+.toast small{display:block;font-weight:500;color:var(--muted);font-size:11.5px;margin-top:2px}
+
+/* ============================ MODAL ============================ */
+.overlay{position:fixed;inset:0;background:rgba(5,8,12,.72);backdrop-filter:blur(6px);z-index:9500;display:none;align-items:center;justify-content:center;padding:18px}
+.overlay.on{display:flex;animation:fade .2s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{
+  width:min(680px,100%);max-height:84vh;display:flex;flex-direction:column;border-radius:20px;overflow:hidden;
+  background:linear-gradient(180deg,#1b2531,#141c26);border:1px solid var(--line);
+  box-shadow:0 30px 80px rgba(0,0,0,.65);animation:min .28s cubic-bezier(.2,1.2,.4,1)
+}
+@keyframes min{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.modal header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+.modal header h3{margin:0;font-size:16px;font-weight:800}
+.modal .body{padding:16px 18px;overflow-y:auto;line-height:1.62;font-size:14px;color:#cdd8e6}
+.modal .body h4{margin:16px 0 6px;font-size:13px;color:var(--wa);text-transform:uppercase;letter-spacing:.5px}
+.modal .body ul{margin:6px 0;padding-left:20px}
+.modal .body code{background:rgba(0,0,0,.35);padding:2px 6px;border-radius:6px;font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.x{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);cursor:pointer;font-size:16px;line-height:1}
+.x:hover{background:rgba(255,111,112,.2)}
+.recipes{display:flex;flex-direction:column;gap:6px}
+.recipe{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;padding:8px 11px;border-radius:11px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.recipe .a,.recipe .b,.recipe .r{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-weight:650;font-size:12px}
+.recipe .r{background:rgba(255,194,45,.16);border:1px solid rgba(255,194,45,.35)}
+.recipe .plus{color:var(--muted);font-weight:800}
+.sharebox{display:flex;gap:8px;margin-top:10px}
+.sharebox input{flex:1;padding:10px;border-radius:11px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--txt);font-family:ui-monospace,monospace;font-size:12px;min-width:0}
+.foot{font-size:11.5px;color:var(--muted);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+
+/* ============================ MÓVIL ============================ */
+#libtoggle{display:none;position:fixed;right:16px;bottom:18px;z-index:8000;width:54px;height:54px;border-radius:50%;
+  border:1px solid var(--line);background:linear-gradient(135deg,#7582ff,#ff71cf);font-size:22px;cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.5)}
+@media (max-width:900px){
+  .brand p{display:none}
+  .stat.hidden-m{display:none}
+  .pbar{width:64px}
+  .tools .lbl{display:none}
+  .btn{padding:8px 10px}
+  aside{
+    position:fixed;top:var(--head);right:0;bottom:0;width:min(320px,86vw);flex-basis:auto;
+    transform:translateX(102%);transition:transform .28s cubic-bezier(.2,.9,.3,1);box-shadow:-18px 0 50px rgba(0,0,0,.5)
+  }
+  aside.on{transform:none}
+  #libtoggle{display:block}
+  #toasts{bottom:84px}
+}
+@media (max-width:560px){
+  header{gap:8px;padding:0 9px}
+  .brand{flex:0 1 auto;min-width:0}
+  .brand>div{min-width:0}
+  .brand h1{font-size:13.5px;overflow:hidden;text-overflow:ellipsis}
+  .brand h1 .l{display:none}
+  .brand h1 .s{display:inline}
+  .logo{width:33px;height:33px;font-size:17px;flex:0 0 auto}
+  .stats{gap:7px;flex:0 0 auto}
+  .stat span{display:none}
+  .stat b{font-size:16px}
+  .pbar{display:none}
+  .tools{gap:4px;margin-left:4px}
+  .tools .btn{padding:7px 8px;font-size:12px}
+}
+@media (max-width:430px){
+  .brand h1{display:none}
+}
+</style>
+</head>
+<body>
+<div class="bg"><i></i><i></i><i></i></div>
+
+<header>
+  <div class="brand">
+    <div class="logo">⚗️</div>
+    <div>
+      <h1><span class="l">Alquimia Web Reactiva</span><span class="s">Alquimia</span></h1>
+      <p>Programa con la IA… sin alucinar</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="nDesc">0</b><span>descubiertos</span></div>
+    <div class="stat hidden-m"><b id="nTot">0</b><span>posibles</span></div>
+    <div class="pbar"><div id="pbarFill"></div></div>
+  </div>
+
+  <div class="tools">
+    <button class="btn icon" id="btnHint" title="Pista">💡</button>
+    <button class="btn" id="btnRecetas" title="Recetas descubiertas">📖 <span class="lbl">Recetas</span></button>
+    <button class="btn" id="btnShare" title="Compartir progreso">🔗 <span class="lbl">Compartir</span></button>
+    <button class="btn icon" id="btnSound" title="Sonido">🔊</button>
+    <button class="btn icon" id="btnHelp" title="Ayuda">?</button>
+    <button class="btn icon" id="btnReset" title="Reiniciar">↺</button>
+  </div>
+</header>
+
+<main>
+  <div id="mesa">
+    <div class="hint" id="hintBar">Arrastra un elemento sobre otro para combinarlo · toca uno y luego otro si prefieres</div>
+  </div>
+
+  <aside id="lib">
+    <div class="lib-head">
+      <div class="lib-title">
+        <h2>Biblioteca</h2>
+        <span id="libCount">0</span>
+      </div>
+      <input id="buscar" type="search" placeholder="Buscar entre lo descubierto…" autocomplete="off">
+    </div>
+    <div class="lib-list" id="libList"></div>
+    <div class="lib-desc" id="libDesc"><b>Biblioteca</b>Pasa el ratón por un elemento para leer de qué va.</div>
+  </aside>
+</main>
+
+<button id="libtoggle" title="Biblioteca">📚</button>
+
+<div id="toasts"></div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <header>
+      <h3 id="modalTitle">Título</h3>
+      <button class="x" id="modalClose">✕</button>
+    </header>
+    <div class="body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   ALQUIMIA WEB REACTIVA — datos del juego
+   Cada elemento: [id, emoji, nombre, descripcion, color]
+   Cada receta:   [resultado, ingredienteA, ingredienteB]  (combinación conmutativa)
+   ========================================================================= */
+
+const ELEMENTS = [
+  /* ---- Nivel 0: los cuatro elementos base ---- */
+  ["prompt",      "💬", "Prompt",          "La orden que le das a la máquina.",                       "#ff71cf"],
+  ["modelo",      "🤖", "Modelo",          "El motor que responde.",                                  "#7582ff"],
+  ["contexto",    "📚", "Contexto",        "Todo lo que la IA sabe de tu proyecto.",                   "#00cfbd"],
+  ["herramienta", "🔧", "Herramienta",     "Lo que la IA puede usar.",                                "#ffc22d"],
+
+  /* ---- Nivel 1 ---- */
+  ["tarea",       "🎯", "Tarea",           "Qué quieres conseguir.",                                  "#ff71cf"],
+  ["regla",       "📋", "Regla",           "Cómo quieres que lo haga.",                               "#00cfbd"],
+  ["comando",     "⚡", "Comando",         "Una acción concreta y ejecutable.",                        "#ffc22d"],
+  ["rag",         "🗃️", "RAG",             "Que responda con tu propia documentación.",               "#22d3ee"],
+  ["mcp",         "🔌", "MCP",             "El protocolo que conecta modelos con servicios.",           "#ffc22d"],
+  ["skill",       "🧩", "Skill",           "Instrucciones reutilizables que el agente carga solo.",     "#a3e635"],
+
+  /* ---- Nivel 2 ---- */
+  ["plan",        "🗺️", "Plan",            "Pensar antes de programar.",                              "#7582ff"],
+  ["agente",      "🛰️", "Agente",          "Un modelo con herramientas que resuelve tareas enteras.",  "#7582ff"],
+  ["bucle",       "🔁", "Bucle",           "Observa, actúa, corrige… y repite.",                       "#a78bfa"],
+  ["respuesta",   "💡", "Respuesta",       "La IA contesta.",                                         "#00cfbd"],
+  ["ejecucion",   "⏱️", "Ejecución",       "Algo ocurre de verdad.",                                   "#ffc22d"],
+  ["agents_md",   "📄", "AGENTS.md",       "Las reglas que viven en tu repositorio.",                  "#00cfbd"],
+  ["permisos",    "🔐", "Permisos",        "Lo que el agente tiene permiso para tocar.",              "#ff6f70"],
+  ["terminal",    "🖥️", "Terminal",        "La casa de los CLI.",                                      "#94a3b8"],
+  ["conversacion","🗣️", "Conversación",    "Un hilo de mensajes y respuestas.",                        "#ff71cf"],
+  ["comparador",  "🆚", "Comparador",      "Dos cosas, lado a lado.",                                  "#7582ff"],
+  ["chunking",    "✂️", "Chunking",        "El contexto troceado en trozos.",                          "#00cfbd"],
+  ["toolbox",     "🧰", "Caja de herramientas", "Todas las utilidades, juntas.",                       "#ffc22d"],
+  ["integracion", "🔗", "Integración",     "Dos piezas conectadas de verdad.",                         "#fbbf24"],
+  ["manual",      "📑", "Manual",          "Lo que el agente debe saber hacer.",                       "#a3e635"],
+  ["system_prompt","🎭","System prompt",   "Las instrucciones que van delante de todo.",                "#7582ff"],
+  ["web",         "🌐", "Web",             "La web abierta.",                                         "#00b3f0"],
+  ["proyecto",    "🏕️", "Proyecto",        "Tu repo con todo dentro.",                                "#4ade80"],
+
+  /* ---- Nivel 3 ---- */
+  ["spec",        "📐", "Spec",            "Lo que quieres, escrito y verificable.",                   "#7582ff"],
+  ["sdd",         "🧱", "SDD",             "Spec-Driven Development: la spec dirige al código.",        "#7582ff"],
+  ["plantilla",   "📦", "Plantilla",       "El esqueleto de una spec.",                                "#94a3b8"],
+  ["openspec",    "📃", "OpenSpec",        "Tu ciclo de SDD en ficheros Markdown.",                     "#7582ff"],
+  ["spec_kit",    "🏺", "Spec Kit",        "Specs y código como artefactos del repo.",                 "#7582ff"],
+  ["gsd",         "🏎️", "GSD",             "Un sistema que escupe un plan y lo ejecuta.",               "#7582ff"],
+  ["superpowers", "🦸", "Superpowers",     "Un método de desarrollo disfrazado de skill.",              "#a78bfa"],
+  ["paull",       "🧑‍⚖️","PAUL",            "Un sistema de specs con personalidad.",                    "#7582ff"],
+  ["constructor_specs","🔨","Constructor de specs","Tú eliges los bloques y su orden.",               "#7582ff"],
+  ["revisor_specs","🔎", "Revisor de specs","Te dice qué le sobra y qué le falta.",                     "#7582ff"],
+  ["odd",         "🌿", "ODD",             "Organic Driven Development: manda la conversación.",       "#4ade80"],
+  ["objetivo",    "🏹", "Objetivo verificable", "Se puede comprobar o no sirve.",                       "#4ade80"],
+  ["agente_codigo","🧑‍💻","Agente de código","Un agente que vive en tu repositorio.",                  "#a78bfa"],
+  ["multiagente", "👥", "Multiagente",     "Varios agentes trabajando a la vez.",                       "#a78bfa"],
+  ["orquestacion","🎼", "Orquestación",    "Tú marcas el ritmo y quién hace qué.",                     "#a78bfa"],
+  ["harness",     "🔩", "Harness",         "El arnés que le pones al agente para que no se desvíe.",     "#a78bfa"],
+  ["subagente",   "👷", "Subagente",       "Un agente que trabaja dentro de otro.",                    "#a78bfa"],
+  ["plan_mode",   "🧭", "Plan Mode",       "Piensa en el terminal antes de tocar nada.",                "#a78bfa"],
+  ["tokens",      "🔢", "Tokens",          "Las unidades con las que se mide todo.",                    "#fbbf24"],
+  ["ventana",     "🪟", "Ventana de contexto", "Cuánto cabe de golpe en la cabeza del agente.",          "#fbbf24"],
+  ["cache",       "🥧", "Caché",           "No volver a pagar por lo mismo.",                          "#fbbf24"],
+  ["headroom",    "🗜️", "Headroom",        "Compresión reversible de lo que lee el agente.",            "#fbbf24"],
+  ["coste",       "💰", "Coste",           "Lo que cuesta una sesión de agente.",                      "#ff8b3d"],
+  ["factura",     "🧾", "Factura",         "El paso 30 no cuesta como el paso 1.",                     "#ff8b3d"],
+  ["presupuesto", "💸", "Presupuesto",     "El límite que te pones.",                                  "#ff8b3d"],
+  ["suscripcion", "💳", "Suscripción",     "Pagas plano y casi no lo notas.",                           "#ff8b3d"],
+  ["codigo",      "💻", "Código",          "Lo que el modelo escribe.",                                "#4ade80"],
+  ["test",        "🧪", "Test",            "La prueba que falla si el código falla.",                  "#00b3f0"],
+  ["evals",       "📈", "Evals",           "Evaluar al agente con casos, no con opiniones.",          "#00b3f0"],
+  ["repositorio", "🗂️", "Repositorio",     "Tus ficheros y su historia.",                              "#94a3b8"],
+  ["commit",      "💾", "Commit",          "Un punto de retorno con nombre.",                          "#94a3b8"],
+  ["conventional","📏", "Conventional Commits", "Los commits que se leen solos.",                       "#94a3b8"],
+  ["github",      "🐙", "GitHub",          "Dónde vive todo esto.",                                    "#94a3b8"],
+  ["diff",        "🔀", "Diff",            "Lo que cambió entre dos versiones.",                       "#00b3f0"],
+  ["rama",        "🌱", "Rama",            "Una línea de trabajo paralela.",                           "#4ade80"],
+  ["pull_request","🔃", "Pull Request",    "Tu trabajo pidiendo sitio para entrar.",                    "#00b3f0"],
+  ["merge",       "🪾", "Merge",           "Fusionar dos líneas sin perder nada.",                    "#4ade80"],
+  ["hooks",       "🪝", "Hooks",           "Los gatitos que saltan antes de cada commit.",              "#a78bfa"],
+  ["ci",          "🔂", "CI",              "Cada push, alguien comprueba.",                            "#00b3f0"],
+  ["codigo_limpio","💎","Código limpio",   "Se lee, se prueba, se mantiene.",                          "#4ade80"],
+  ["slop",        "🗑️", "AI Slop",         "Código que parece código y no lo es.",                     "#ff6f70"],
+  ["refactor",    "♻️", "Refactor",        "Tocar sin cambiar el comportamiento.",                     "#4ade80"],
+  ["bug",         "🐛", "Bug",             "El comportamiento que no esperabas.",                      "#ff6f70"],
+  ["fix",         "🩹", "Arreglo",         "Un bug menos.",                                           "#4ade80"],
+  ["alucinacion", "🌀", "Alucinación",     "El agente afirmando algo que no existe.",                 "#ff6f70"],
+  ["alucinacion_control","🩺","Control de alucinaciones","Verificar lo que el agente afirma antes de creértelo.","#ff6f70"],
+  ["prompt_injection","💉","Prompt injection","Tu documentación con instrucciones dentro.",             "#ff6f70"],
+  ["seguridad",   "🛡️", "Seguridad",       "Lo que no puedes permitir.",                               "#ff6f70"],
+  ["secretos",    "🔑", "Secretos",        "Las claves que nunca van en un prompt.",                    "#ff6f70"],
+  ["ssh",         "🔒", "Acceso SSH",      "Entrar al servidor sin darle la contraseña.",              "#ff6f70"],
+  ["componente",  "🔷", "Componente",      "La pieza de interfaz que se reutiliza.",                   "#00b3f0"],
+  ["react",       "⚛️", "React",           "Componentes con estado.",                                 "#00b3f0"],
+  ["tailwind",    "🎨", "Tailwind",        "Estilos con clases utilitarias.",                          "#00b3f0"],
+  ["shadcn",      "🎛️", "shadcn/ui",       "Componentes que copias en tu repo.",                       "#00b3f0"],
+  ["astro",       "🪐", "Astro",           "La web que envía menos JavaScript.",                       "#00b3f0"],
+  ["guia",        "📘", "Guía",            "Un camino con pasos y orden.",                            "#a3e635"],
+  ["editor",      "📝", "Editor",          "Donde escribes y el agente mira por encima del hombro.",   "#94a3b8"],
+
+  /* ---- Agentes y herramientas ---- */
+  ["claude_code", "🟠", "Claude Code",     "El agente de referencia: skills, hooks y MCP.",             "#ff8b3d"],
+  ["codex",       "🟣", "Codex",           "Un agente que sigue tus reglas al pie de la letra.",       "#a78bfa"],
+  ["opencode",    "🔵", "OpenCode",        "Abierto, con los modelos que tú elijas.",                  "#00b3f0"],
+  ["cursor",      "🖱️", "Cursor",          "El editor que se escribe solo.",                           "#00b3f0"],
+  ["copilot",     "🧑‍🚀", "GitHub Copilot",  "El copiloto que ya vive en tu editor.",                    "#94a3b8"],
+  ["gemini_cli",  "✨", "Gemini CLI",      "La terminal de Google con contexto gigante.",              "#00b3f0"],
+  ["antigravity", "🛩️", "Antigravity",     "Un IDE que se despega del teclado.",                        "#a78bfa"],
+  ["devin",       "👤", "Devin",           "Un compañero que se apaña con la tarea entera.",           "#a78bfa"],
+  ["comparador_agentes","🤝","Comparador de agentes","Claude Code vs Codex vs Cursor, con precios.",   "#7582ff"],
+  ["comparador_sdd","⚖️","Comparador de SDD","OpenSpec, Spec Kit, GSD, PAUL… cuál te encaja.",         "#7582ff"],
+  ["selector_agente","🔰","Selector de agente","Qué agente usar según cómo trabajas.",                "#7582ff"],
+
+  /* ---- Skills ---- */
+  ["skill_md",    "🗎️", "SKILL.md",        "El fichero de una skill: nombre, descripción y cómo.",     "#a3e635"],
+  ["description", "🏷️", "Description",     "La frase que decide si la skill salta.",                   "#a3e635"],
+  ["skill_creator","🏗️","skill-creator",   "La skill que crea skills y las evalúa.",                   "#a3e635"],
+  ["eli5",        "🧒", "ELI5",            "Te lo explica como si tuvieras cinco años.",                "#a3e635"],
+  ["grill_me",    "🔥", "grill-me",        "Te fríe a preguntas hasta que no queda ninguna duda.",      "#ff8b3d"],
+  ["commit_organizer","🧹","git-commit-organizer","Agrupa tu working tree caótico en commits atómicos.","#a3e635"],
+  ["skills_sh",   "🛍️", "skills.sh",       "El registro donde viven las skills.",                       "#a3e635"],
+  ["skillpector", "🔬", "SkillSpector",    "Escanea una skill antes de instalarla.",                  "#00b3f0"],
+  ["plugins",     "🧷", "Plugins",         "Extensiones que añaden comandos y skills.",                "#a3e635"],
+  ["cook_first",  "🍳", "Cook-First",      "Primero lo resuelves, después lo escribes.",               "#ff8b3d"],
+  ["pack_skills", "🎒", "Pack de skills",  "Varias skills de la misma tarea, en una mochila.",            "#a3e635"],
+
+  /* ---- Contexto, memoria y coste ---- */
+  ["memoria",         "🧠", "Memoria",              "Lo que el agente recuerda entre sesiones.",       "#a78bfa"],
+  ["handoff",         "🔦", "handoff-torch",        "Un documento para que otra sesión siga tu tarea.", "#a3e635"],
+  ["memoria_persistente","🗄️","Memoria persistente","Memoria que sobrevive a la sesión.",            "#a78bfa"],
+  ["memoria_hybrid",  "🧬", "Memoria híbrida",      "La memoria que se comprime al entrar.",            "#a78bfa"],
+  ["progressive",     "🪄", "Progressive disclosure","Lo que se enseña poco a poco.",                  "#a78bfa"],
+  ["embedding",       "🧮", "Embedding",            "Tu contexto convertido en números.",             "#22d3ee"],
+  ["vector_db",       "🧊", "Vector DB",            "Tu base de datos de vectores.",                  "#22d3ee"],
+  ["busqueda",        "🔍", "Búsqueda",             "Recuperar lo relevante de tu documentación.",      "#22d3ee"],
+  ["cita",            "📎", "Cita",                 "De dónde sale cada respuesta.",                    "#22d3ee"],
+  ["wiki",            "📂", "Wiki",                 "La documentación que escribe tu agente.",          "#a3e635"],
+  ["okf",             "🪢", "OKF",                  "El formato que convierte enlaces en wiki.",       "#a3e635"],
+
+  /* ---- Prompting y modelos ---- */
+  ["ejemplo",      "🖼️", "Ejemplo",             "Un caso que enseña sin explicar.",            "#ff71cf"],
+  ["zero_shot",    "🥇", "Zero-shot",            "Pides sin ejemplos.",                          "#ff71cf"],
+  ["few_shot",     "🎖️", "Few-shot",             "Pides con ejemplos.",                          "#ff71cf"],
+  ["cot",          "➰", "Chain of Thought",      "Pienso paso a paso antes de responder.",       "#ff71cf"],
+  ["razonamiento", "🔭", "Razonamiento",         "Cuando la cadena de thoughts se pone seria.",  "#ff71cf"],
+  ["multimodal",   "👁️", "Multimodal",           "Enseña imágenes y lee píxeles.",               "#22d3ee"],
+  ["vision",       "📸", "Visión",                "Cuando el modelo mira una pantalla.",         "#22d3ee"],
+  ["esquema",      "🪤", "Esquema",              "La forma exacta que quieres devolver.",        "#94a3b8"],
+  ["structured",   "🟦", "Structured output",     "JSON que siempre se parece.",                  "#94a3b8"],
+  ["configuracion","⚙️", "Configuración",        "Los parámetros que nadie lee.",                "#94a3b8"],
+  ["temperatura",  "🌡️", "Temperatura",          "Cuánto se arriesga el modelo.",                "#94a3b8"],
+  ["top_p",        "🎚️", "Top-p",                "El filtro de palabras improbables.",           "#94a3b8"],
+  ["muestreo",     "⚗️", "Muestreo",             "Cómo se elige cada token.",                    "#94a3b8"],
+  ["benchmark",    "📊", "Benchmark",            "La tabla que compara modelos.",                "#7582ff"],
+  ["selector",     "🗝️", "Selector de modelo",   "Dile qué vas a hacer y te dice con qué modelo.","#7582ff"],
+  ["router",       "🛬", "Router",               "Enruta cada tarea al modelo que le toca.",     "#7582ff"],
+  ["precio",       "💵", "Precio",               "Lo que cuesta cada modelo.",                   "#ff8b3d"],
+
+  /* ---- Ops, producto y web ---- */
+  ["cli",          "⌨️", "CLI",             "La interfaz de línea de comandos.",                "#94a3b8"],
+  ["api",          "🚪", "API",             "La puerta a otro servicio.",                       "#00b3f0"],
+  ["sdk",          "⚒️", "SDK",             "Herramientas para construir herramientas.",        "#00b3f0"],
+  ["rate_limit",   "🚦", "Rate limit",      "El muro de peticiones por minuto.",                 "#ff6f70"],
+  ["latencia",     "🐌", "Latencia",        "Los segundos que tardas en pensar.",                "#ff8b3d"],
+  ["streaming",    "🌊", "Streaming",       "La respuesta que llega a trozos.",                  "#22d3ee"],
+  ["sse",          "🔄", "SSE",             "El Server-Sent Events que lo empuja todo.",         "#22d3ee"],
+  ["docker",       "🐳", "Docker",          "El mismo entorno en tu máquina y en el servidor.", "#00b3f0"],
+  ["deploy",       "🚀", "Deploy",          "Sacar el código de tu portátil.",                  "#4ade80"],
+  ["produccion",   "🏭", "Producción",      "Donde los usuarios te odiarán si fallas.",          "#4ade80"],
+  ["incidente",    "🚨", "Incidente",       "Producción rota y todos mirando.",                  "#ff6f70"],
+  ["postmortem",   "🕯️", "Post-mortem",     "Lo que se aprende cuando se rompe.",                "#ff6f70"],
+  ["boilerplate",  "🖨️", "Boilerplate",     "El código que no quieres volver a escribir.",       "#94a3b8"],
+  ["deuda",        "🧳", "Deuda técnica",   "Lo que te vas a dejar tú mismo.",                   "#ff8b3d"],
+  ["documentacion","📗", "Documentación",    "Lo que se escribe para que otro entienda.",         "#a3e635"],
+  ["changelog",    "🗒️", "Changelog",       "Lo que cambió, sin rodeos.",                        "#94a3b8"],
+  ["tutorial",     "📺", "Tutorial",        "Un artículo que te lleva de A a B.",                 "#a3e635"],
+  ["curso",        "🎓", "Curso",           "Tutorial con seguimiento y ejercicios.",            "#a3e635"],
+  ["masterclass",  "🎬", "Masterclass",     "Una sesión en directo que se queda grabada.",        "#a3e635"],
+  ["roadmap",      "🛣️", "Roadmap",         "El mapa con principio, fin y sentido.",              "#a3e635"],
+  ["glosario",     "📖", "Glosario",        "Las palabras que hay que saber.",                    "#a3e635"],
+  ["checklist",    "✅", "Checklist",       "La lista antes de empezar.",                        "#4ade80"],
+  ["session",      "🕰️", "Sesión",          "Una conversación larga con un agente.",              "#ff71cf"],
+  ["cron",         "⏰", "Cron",            "La tarea que se repite sola.",                      "#a78bfa"],
+  ["webhook",      "📨", "Webhook",         "El aviso de que algo ha pasado.",                   "#00b3f0"],
+  ["oauth",        "🎟️", "OAuth",           "Permiso sin darle tu contraseña.",                  "#ff6f70"],
+  ["billing",      "🏦", "Facturación",     "Quién paga la API y con qué límites.",               "#ff8b3d"],
+  ["guardrails",   "🚧", "Guardrails",      "Las vallas que el agente no puede saltar.",         "#ff6f70"],
+  ["redteam",      "🔴", "Red team",        "Probar tu agente como si fuera el enemigo.",        "#ff6f70"],
+  ["n8n",          "🧿", "n8n",             "Automatización entre herramientas, sin código.",     "#fbbf24"],
+  ["bot",          "🔔", "Bot",             "Un agente en un chat de Telegram.",                  "#a78bfa"],
+  ["slack",        "🗨️", "Slack",           "El chat donde el equipo vive.",                      "#94a3b8"],
+  ["pixel",        "🕹️", "Pixel art",       "El estilo retro de los logos y el bot.",              "#fb7185"],
+
+  /* ---- Calidad, seguridad y equipo ---- */
+  ["auditoria",    "🕵️", "Auditoría",       "Mirar lo que hay con lupa.",                         "#00b3f0"],
+  ["sesgo",        "🫧", "Sesgo",           "Lo que el modelo arrastra de sus datos.",            "#22d3ee"],
+  ["privacidad",   "🔏", "Privacidad",      "Lo que sale de tu máquina… y lo que no.",             "#ff6f70"],
+  ["privacidad_local","🏰","Privacidad local","Todo se queda en tu máquina.",                    "#4ade80"],
+  ["local",        "🏠", "Local",           "Todo corre en tu máquina.",                          "#4ade80"],
+  ["ollama",       "🦙", "Ollama",          "Modelos en local y sin gates.",                      "#4ade80"],
+  ["self_hosted",  "🏯", "Self-hosted",     "Tu infraestructura, tu responsabilidad.",            "#4ade80"],
+  ["mentor",       "🧙", "Mentor",          "Una IA que te enseña en vez de hacerlo por ti.",     "#ff71cf"],
+  ["error",        "💥", "Error",           "El stack trace que empieza la noche.",               "#ff6f70"],
+  ["traza",        "🕸️", "Traza",           "El camino que dejó el fallo.",                       "#ff6f70"],
+  ["a2a",          "🕊️", "A2A",             "Un protocolo para que los agentes hablen entre ellos.","#a78bfa"],
+  ["developer",    "👨‍💻","Developer",       "Una persona con contexto y un plan.",                "#ff71cf"],
+  ["equipo",       "👨‍👩‍👧‍👦","Equipo",         "Gente que trabaja con los mismos ficheros.",          "#fb7185"],
+
+  /* ---- Comunidad y marca ---- */
+  ["comunidad",    "🫶", "Comunidad",       "7.500 developers aprendiendo lo mismo.",               "#fb7185"],
+  ["newsletter",   "📮", "Newsletter",      "12 recursos cada domingo en tu bandeja.",             "#fb7185"],
+  ["podcast",      "🎙️", "Podcast",         "Conversaciones largas para el trayecto.",             "#fb7185"],
+  ["telegram",     "✈️", "Telegram",        "El grupo donde se habla de verdad.",                  "#fb7185"],
+  ["dani",         "🧔", "Dani Primo",      "El que escribe todo esto desde 2017.",                "#fb7185"],
+  ["web_reactiva", "🟪", "Web Reactiva",    "El sitio: del podcast de JavaScript a la era de la IA.","#fb7185"],
+  ["premium",      "⭐", "Premium",         "El club de los 15€ al mes.",                          "#fbbf24"],
+  ["malandriner",  "🌶️", "Zona Malandriner","El grupo privado donde no se quejan.",                "#ff8b3d"],
+  ["atlas",        "🗿", "Atlas Malandriner","+1.600 recursos y +2.500 enlaces, también como MCP.","#ff8b3d"],
+  ["en_pantuflas","🩴", "En pantuflas",    "Programar con zapatillas, y con criterio.",           "#fb7185"],
+  ["robotito",     "🐻", "Robotito",        "El que te encuentra el artículo que te falta.",       "#fb7185"],
+  ["hype",         "📣", "Hype",            "El ruido que sube antes que la tecnología.",          "#ff6f70"],
+  ["ruido",        "📉", "Ruido",           "Información que no cambia nada.",                     "#94a3b8"],
+  ["fomo",         "😰", "FOMO",            "Miedo a perderse algo.",                              "#ff6f70"],
+  ["valor",        "🌟", "Valor",           "Lo que una sesión bien hecha te ahorra.",             "#4ade80"],
+  ["tiempo",       "⏳", "Tiempo",          "El único presupuesto que no puedes ampliar.",          "#ff8b3d"],
+
+  /* ---- Nivel final ---- */
+  ["autopiloto",  "🛸", "Autopiloto",      "El bucle con el arnés puesto y un objetivo claro.",  "#a78bfa"],
+  ["sistema",      "🏛️", "Sistema agéntico","Harness, SDD y subagentes trabajando a la vez.",      "#a78bfa"],
+  ["maestro",      "🌠", "Maestro",         "Objetivos verificables y un mentor que te vigila.",   "#4ade80"],
+  ["prompt_definitivo","📜","Prompt definitivo","El prompt que ya no tendrás que escribir nunca.",  "#ff71cf"],
+  ["diamante",     "💠", "El diamante",     "Código limpio con valor real detrás.",                 "#4ade80"],
+  ["programa_con_ia","🏅","Programa con IA","Aprender a programar con IA, de verdad.",              "#fbbf24"],
+  ["web_infinita", "🌌", "Web infinita",    "Todos los recursos, siempre a mano.",                 "#fb7185"]
+];
+
+const RECIPES = [
+  /* Nivel 1 */
+  ["tarea",        "prompt", "modelo"],
+  ["regla",        "prompt", "contexto"],
+  ["comando",      "prompt", "herramienta"],
+  ["rag",          "modelo", "contexto"],
+  ["mcp",          "modelo", "herramienta"],
+  ["skill",        "contexto", "herramienta"],
+
+  /* Nivel 2 */
+  ["plan",         "tarea", "regla"],
+  ["agente",       "tarea", "mcp"],
+  ["bucle",        "tarea", "skill"],
+  ["respuesta",    "tarea", "rag"],
+  ["ejecucion",    "tarea", "comando"],
+  ["agents_md",    "regla", "contexto"],
+  ["permisos",     "regla", "herramienta"],
+  ["terminal",     "comando", "herramienta"],
+  ["conversacion", "prompt", "prompt"],
+  ["comparador",   "modelo", "modelo"],
+  ["chunking",     "contexto", "contexto"],
+  ["toolbox",      "herramienta", "herramienta"],
+  ["integracion",  "mcp", "herramienta"],
+  ["manual",       "skill", "regla"],
+  ["system_prompt","modelo", "regla"],
+  ["web",          "terminal", "integracion"],
+  ["proyecto",     "contexto", "plan"],
+
+  /* Nivel 3 */
+  ["spec",         "plan", "regla"],
+  ["sdd",          "spec", "tarea"],
+  ["plantilla",    "spec", "contexto"],
+  ["openspec",     "plantilla", "sdd"],
+  ["spec_kit",     "plantilla", "agente"],
+  ["gsd",          "plantilla", "bucle"],
+  ["superpowers",  "plantilla", "toolbox"],
+  ["paull",        "plantilla", "comparador"],
+  ["constructor_specs", "spec", "plantilla"],
+  ["revisor_specs","spec", "comparador"],
+  ["odd",          "plan", "conversacion"],
+  ["objetivo",     "sdd", "bucle"],
+  ["agente_codigo","agente", "terminal"],
+  ["multiagente",  "agente", "agente"],
+  ["orquestacion", "multiagente", "plan"],
+  ["harness",      "agente", "bucle"],
+  ["subagente",    "agente", "skill"],
+  ["plan_mode",    "plan", "terminal"],
+  ["tokens",       "contexto", "ejecucion"],
+  ["ventana",      "tokens", "contexto"],
+  ["cache",        "tokens", "herramienta"],
+  ["headroom",     "cache", "regla"],
+  ["coste",        "tokens", "modelo"],
+  ["factura",      "coste", "ejecucion"],
+  ["presupuesto",  "coste", "plan"],
+  ["suscripcion",  "coste", "comparador"],
+  ["codigo",       "modelo", "ejecucion"],
+  ["test",         "ejecucion", "regla"],
+  ["evals",        "test", "comparador"],
+  ["repositorio",  "contexto", "comando"],
+  ["commit",       "repositorio", "ejecucion"],
+  ["conventional", "commit", "regla"],
+  ["github",       "repositorio", "mcp"],
+  ["diff",         "repositorio", "comparador"],
+  ["rama",         "commit", "comparador"],
+  ["pull_request", "diff", "commit"],
+  ["merge",        "pull_request", "rama"],
+  ["hooks",        "pull_request", "ejecucion"],
+  ["ci",           "test", "github"],
+  ["codigo_limpio","codigo", "test"],
+  ["slop",         "codigo", "modelo"],
+  ["refactor",     "codigo", "plan"],
+  ["bug",          "codigo", "ejecucion"],
+  ["fix",          "bug", "skill"],
+  ["alucinacion",  "respuesta", "rag"],
+  ["prompt_injection", "prompt", "agente"],
+  ["seguridad",    "permisos", "test"],
+  ["secretos",     "permisos", "contexto"],
+  ["ssh",          "secretos", "terminal"],
+  ["componente",   "codigo", "contexto"],
+  ["react",        "componente", "modelo"],
+  ["tailwind",     "componente", "regla"],
+  ["shadcn",       "componente", "toolbox"],
+  ["astro",        "web", "react"],
+  ["guia",         "manual", "contexto"],
+  ["editor",       "terminal", "componente"],
+
+  /* Agentes */
+  ["claude_code",  "agente_codigo", "skill"],
+  ["codex",        "agente_codigo", "agents_md"],
+  ["opencode",     "agente_codigo", "modelo"],
+  ["cursor",       "agente_codigo", "editor"],
+  ["copilot",      "agente_codigo", "github"],
+  ["gemini_cli",   "agente_codigo", "contexto"],
+  ["antigravity",  "agente_codigo", "web"],
+  ["devin",        "agente", "proyecto"],
+  ["comparador_agentes", "comparador", "agente"],
+  ["comparador_sdd",      "comparador", "sdd"],
+  ["selector_agente",     "comparador_agentes", "selector"],
+
+  /* Skills */
+  ["skill_md",     "skill", "contexto"],
+  ["description",  "skill", "prompt"],
+  ["skill_creator","skill", "manual"],
+  ["eli5",         "skill", "modelo"],
+  ["grill_me",     "skill", "plan"],
+  ["commit_organizer", "skill", "commit"],
+  ["skills_sh",    "skill", "toolbox"],
+  ["skillpector",  "skill", "seguridad"],
+  ["plugins",      "skill", "mcp"],
+  ["cook_first",   "skill", "bucle"],
+  ["pack_skills",  "skills_sh", "plugins"],
+
+  /* Contexto y memoria */
+  ["memoria",      "agente", "contexto"],
+  ["handoff",      "skill", "memoria"],
+  ["memoria_persistente", "memoria", "herramienta"],
+  ["memoria_hybrid", "memoria", "handoff"],
+  ["progressive",  "memoria_hybrid", "ventana"],
+  ["embedding",    "chunking", "modelo"],
+  ["vector_db",    "embedding", "rag"],
+  ["busqueda",     "vector_db", "tarea"],
+  ["cita",         "busqueda", "respuesta"],
+  ["wiki",         "documentacion", "busqueda"],
+  ["okf",          "wiki", "spec"],
+
+  /* Prompting y modelos */
+  ["ejemplo",      "contexto", "respuesta"],
+  ["zero_shot",    "tarea", "prompt"],
+  ["few_shot",     "zero_shot", "ejemplo"],
+  ["cot",          "zero_shot", "bucle"],
+  ["razonamiento", "cot", "modelo"],
+  ["multimodal",   "modelo", "web"],
+  ["vision",       "multimodal", "componente"],
+  ["esquema",      "respuesta", "regla"],
+  ["structured",   "system_prompt", "esquema"],
+  ["configuracion","comando", "regla"],
+  ["temperatura",  "configuracion", "modelo"],
+  ["top_p",        "configuracion", "tokens"],
+  ["muestreo",     "temperatura", "top_p"],
+  ["benchmark",    "comparador", "tarea"],
+  ["selector",     "comparador", "contexto"],
+  ["router",       "selector", "agente"],
+  ["precio",       "comparador", "tokens"],
+
+  /* Ops */
+  ["cli",          "terminal", "comando"],
+  ["api",          "web", "integracion"],
+  ["sdk",          "api", "toolbox"],
+  ["rate_limit",   "api", "permisos"],
+  ["latencia",     "api", "comparador"],
+  ["streaming",    "respuesta", "comparador"],
+  ["sse",          "streaming", "api"],
+  ["docker",       "ejecucion", "toolbox"],
+  ["deploy",       "ci", "agente"],
+  ["produccion",   "deploy", "comparador"],
+  ["incidente",    "produccion", "bug"],
+  ["postmortem",   "incidente", "manual"],
+  ["boilerplate",  "plantilla", "codigo"],
+  ["deuda",        "codigo", "tiempo"],
+  ["documentacion","codigo", "manual"],
+  ["changelog",    "commit", "documentacion"],
+  ["tutorial",     "documentacion", "plan"],
+  ["curso",        "tutorial", "memoria"],
+  ["masterclass",  "curso", "podcast"],
+  ["roadmap",      "curso", "plan"],
+  ["glosario",     "manual", "conversacion"],
+  ["checklist",    "spec", "ejecucion"],
+  ["session",      "ejecucion", "conversacion"],
+  ["cron",         "bucle", "tiempo"],
+  ["webhook",      "api", "comando"],
+  ["oauth",        "permisos", "web"],
+  ["billing",      "suscripcion", "factura"],
+  ["guardrails",   "seguridad", "regla"],
+  ["redteam",      "guardrails", "sesgo"],
+  ["n8n",          "integracion", "bucle"],
+  ["bot",          "telegram", "agente"],
+  ["slack",        "bot", "webhook"],
+  ["pixel",        "web", "componente"],
+
+  /* Calidad, seguridad, equipo */
+  ["auditoria",    "seguridad", "comparador"],
+  ["sesgo",        "modelo", "comparador"],
+  ["privacidad",   "secretos", "permisos"],
+  ["privacidad_local", "privacidad", "local"],
+  ["local",        "terminal", "modelo"],
+  ["ollama",       "local", "integracion"],
+  ["self_hosted",  "local", "seguridad"],
+  ["mentor",       "modelo", "developer"],
+  ["error",        "bug", "comparador"],
+  ["traza",        "error", "ejecucion"],
+  ["a2a",          "multiagente", "mcp"],
+  ["developer",    "plan", "tarea"],
+  ["equipo",       "comunidad", "developer"],
+  ["alucinacion_control", "alucinacion", "evals"],
+
+  /* Comunidad */
+  ["comunidad",    "curso", "web"],
+  ["newsletter",   "comunidad", "conversacion"],
+  ["podcast",      "newsletter", "modelo"],
+  ["telegram",     "comunidad", "mcp"],
+  ["dani",         "podcast", "developer"],
+  ["web_reactiva", "dani", "web"],
+  ["premium",      "masterclass", "coste"],
+  ["malandriner",  "premium", "telegram"],
+  ["atlas",        "malandriner", "mcp"],
+  ["en_pantuflas","dani", "conversacion"],
+  ["robotito",     "selector", "web_reactiva"],
+  ["hype",         "podcast", "modelo"],
+  ["ruido",        "hype", "coste"],
+  ["fomo",         "newsletter", "hype"],
+  ["valor",        "respuesta", "coste"],
+  ["tiempo",       "ejecucion", "bucle"],
+
+  /* Final */
+  ["autopiloto",   "bucle", "harness"],
+  ["sistema",      "harness", "sdd"],
+  ["maestro",      "mentor", "objetivo"],
+  ["prompt_definitivo", "prompt", "objetivo"],
+  ["diamante",     "codigo_limpio", "valor"],
+  ["programa_con_ia", "web_reactiva", "premium"],
+  ["web_infinita", "web_reactiva", "atlas"]
+];
+
+
+/* ============================ DATOS DERIVADOS ============================ */
+const BASE_IDS = ["prompt","modelo","contexto","herramienta"];
+const E = new Map(ELEMENTS.map(e => [e[0], e]));
+const R = new Map();
+RECIPES.forEach(([res,a,b]) => { const k = [a,b].sort().join("||"); if(!R.has(k)) R.set(k,res); });
+const BY_RESULT = new Map(RECIPES.map(r => [r[0], r]));
+const nameOf = id => (E.get(id) || [id,"❓",id])[2];
+const emojiOf = id => (E.get(id) || [id,"❓"])[1];
+
+/* profundidad de cada elemento en el árbol de combinaciones */
+const LEVEL = {};
+(function computeLevels(){
+  const memo = id => {
+    if(LEVEL[id] !== undefined) return LEVEL[id];
+    const r = BY_RESULT.get(id);
+    if(!r){ LEVEL[id] = 0; return 0; }
+    const v = Math.max(memo(r[1]), memo(r[2])) + 1;
+    LEVEL[id] = v;
+    return v;
+  };
+  ELEMENTS.forEach(e=>memo(e[0]));
+})();
+const RARE_LEVEL = 11;
+
+function hexToRgb(hex){
+  const h = hex.replace("#","");
+  return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)].join(",");
+}
+
+/* ============================ ESTADO ============================ */
+const STORE = "alquimia-web-reactiva-v1";
+const state = {
+  discovered: new Set(BASE_IDS),
+  firstFound: null,
+  cards: [],
+  selected: null,
+  sound: true
+};
+
+const mesa = document.getElementById("mesa");
+const libList = document.getElementById("libList");
+const libPanel = document.getElementById("lib");
+const toasts = document.getElementById("toasts");
+const overlay = document.getElementById("overlay");
+
+/* ============================ SONIDO ============================ */
+let actx = null;
+function tone(freq, dur, type, vol){
+  if(!state.sound) return;
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type || "sine"; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol || .05, actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + dur);
+    o.connect(g); g.connect(actx.destination);
+    o.start(); o.stop(actx.currentTime + dur);
+  }catch(e){}
+}
+const sfx = {
+  combine(){ tone(520,.10,"triangle",.05); },
+  nope(){ tone(150,.16,"sawtooth",.035); },
+  discover(){ [523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.22,"triangle",.05), i*85)); }
+};
+
+/* ============================ TOASTS ============================ */
+function toast(text, opts){
+  opts = opts || {};
+  const t = document.createElement("div");
+  t.className = "toast" + (opts.big ? " big" : "");
+  t.innerHTML = opts.html || ("<span>"+text+"</span>");
+  toasts.appendChild(t);
+  setTimeout(()=>{ t.classList.add("out"); setTimeout(()=>t.remove(), 320); }, opts.ms || 2600);
+}
+
+/* ============================ TARJETAS ============================ */
+function makeCard(id){
+  const el = E.get(id);
+  const d = document.createElement("div");
+  d.className = "el";
+  d.dataset.id = id;
+  d.style.setProperty("--c", el[4]);
+  d.style.setProperty("--crgb", hexToRgb(el[4]));
+  d.innerHTML = '<span class="em">'+el[1]+'</span><span class="nm">'+el[2]+'</span>';
+  d.title = el[3];
+  if((LEVEL[id]||0) >= RARE_LEVEL) d.classList.add("rare");
+  return d;
+}
+function addCard(id, x, y){
+  const d = makeCard(id);
+  d.style.left = x+"px"; d.style.top = y+"px";
+  mesa.appendChild(d);
+  state.cards.push(d);
+  return d;
+}
+function removeCardEl(d){
+  const i = state.cards.indexOf(d);
+  if(i>-1) state.cards.splice(i,1);
+  d.remove();
+}
+function clampCards(){
+  const w = mesa.clientWidth, h = mesa.clientHeight;
+  state.cards.forEach(c=>{
+    const cw = c.offsetWidth, ch = c.offsetHeight;
+    let x = parseFloat(c.style.left)||0, y = parseFloat(c.style.top)||0;
+    x = Math.max(6, Math.min(w-cw-6, x));
+    y = Math.max(6, Math.min(h-ch-6, y));
+    c.style.left = x+"px"; c.style.top = y+"px";
+  });
+}
+
+/* ============================ BIBLIOTECA ============================ */
+function renderLibrary(filter){
+  const q = (filter||"").trim().toLowerCase();
+  libList.innerHTML = "";
+  const ids = [...state.discovered].sort((a,b)=>{
+    const ia = ELEMENTS.findIndex(e=>e[0]===a), ib = ELEMENTS.findIndex(e=>e[0]===b);
+    return ia-ib;
+  });
+  let shown = 0;
+  ids.forEach(id=>{
+    const el = E.get(id);
+    if(q && !el[2].toLowerCase().includes(q) && !el[3].toLowerCase().includes(q)) return;
+    shown++;
+    const b = document.createElement("button");
+    b.className = "lib-item" + (BASE_IDS.includes(id) ? " base" : "") + ((LEVEL[id]||0) >= RARE_LEVEL ? " rare" : "");
+    b.dataset.id = id;
+    b.style.setProperty("--crgb", hexToRgb(el[4]));
+    b.innerHTML = '<span class="em">'+el[1]+'</span><span class="nm">'+el[2]+'</span>' +
+      (state.firstFound===id ? '<span class="badge">★ 1º</span>' :
+       ((LEVEL[id]||0) >= RARE_LEVEL ? '<span class="badge gold">✦</span>' : ""));
+    b.title = el[3];
+    libList.appendChild(b);
+  });
+  document.getElementById("libCount").textContent = shown + (shown===1?" elemento":" elementos");
+  if(!shown){
+    libList.innerHTML = '<div class="lib-empty">Nada por aquí todavía.<br>Combina elementos en la mesa para llenar la biblioteca.</div>';
+  }
+}
+
+/* ============================ CONTADORES ============================ */
+function updateStats(){
+  const n = state.discovered.size, t = ELEMENTS.length;
+  document.getElementById("nDesc").textContent = n;
+  document.getElementById("nTot").textContent = t;
+  document.getElementById("pbarFill").style.width = (n/t*100).toFixed(1)+"%";
+  renderLibrary(document.getElementById("buscar").value);
+}
+
+/* ============================ COMBINAR ============================ */
+function ringAt(x,y,id){
+  const el = E.get(id);
+  const r = document.createElement("div");
+  r.className = "ring";
+  r.style.left = (x-20)+"px"; r.style.top = (y-20)+"px";
+  r.style.setProperty("--crgb", hexToRgb(el[4]));
+  mesa.appendChild(r);
+  setTimeout(()=>r.remove(), 620);
+}
+
+function doCombine(a, b, px, py, toRemove){
+  const key = [a,b].sort().join("||");
+  const res = R.get(key);
+  if(!res){
+    (toRemove||[]).forEach(el=>{ if(el){ el.classList.add("shake"); setTimeout(()=>el.classList.remove("shake"), 420); } });
+    sfx.nope();
+    toast("🤷 <b>"+nameOf(a)+"</b> + <b>"+nameOf(b)+"</b> no reaccionan. Prueba otra cosa.");
+    return null;
+  }
+  (toRemove||[]).forEach(el=>{ if(el) removeCardEl(el); });
+  const isNew = !state.discovered.has(res);
+  const card = addCard(res, px, py);
+  card.classList.add("pop");
+  ringAt(px+30, py+16, res);
+  if(isNew){
+    state.discovered.add(res);
+    if(!state.firstFound) state.firstFound = res;
+    sfx.discover();
+    const el = E.get(res);
+    toast("", {html:'<span class="em">'+el[1]+'</span><span><b>¡Nuevo descubrimiento!</b> '+el[2]+'<small>'+el[3]+'</small></span>', big:true, ms:3600});
+  }else{
+    sfx.combine();
+    toast("✨ "+emojiOf(res)+" <b>"+nameOf(res)+"</b>");
+  }
+  document.getElementById("hintBar").classList.add("gone");
+  updateStats();
+  if(isNew){
+    if(state.discovered.size === ELEMENTS.length){
+      setTimeout(()=>{
+        toast("", {html:'<span class="em">🏅</span><span><b>¡Has descubierto los '+ELEMENTS.length+' elementos!</b><small>El Atlas Malandriner completo, en tu mesa.</small></span>', big:true, ms:9000});
+        sfx.discover(); setTimeout(sfx.discover, 900);
+      }, 400);
+    }
+    const item = libList.querySelector('.lib-item[data-id="'+res+'"]');
+    if(item){ item.classList.add("new"); item.scrollIntoView({block:"nearest"}); }
+  }
+  save();
+  return res;
+}
+
+/* ============================ ARRASTRE ============================ */
+let drag = null;
+
+function startDrag(id, ev, fromLib){
+  const src = fromLib ? null : ev.target.closest(".el");
+  let w = 150, offx = 70, offy = 24;
+  if(src){
+    const r = src.getBoundingClientRect();
+    w = r.width; offx = ev.clientX - r.left; offy = ev.clientY - r.top;
+  }
+  const ghost = makeCard(id);
+  ghost.classList.add("ghost");
+  ghost.style.width = w+"px";
+  document.body.appendChild(ghost);
+  drag = { id, ghost, src, fromLib, offx, offy, sx:ev.clientX, sy:ev.clientY, moved:false, target:null };
+  if(src) src.classList.add("drag-src");
+  document.body.classList.add("is-dragging");
+  moveGhost(ev.clientX, ev.clientY);
+}
+
+function moveGhost(x,y){
+  if(!drag) return;
+  drag.ghost.style.left = (x - drag.offx)+"px";
+  drag.ghost.style.top  = (y - drag.offy)+"px";
+}
+
+function canvasPos(x,y){
+  const r = mesa.getBoundingClientRect();
+  return { x: x - r.left, y: y - r.top };
+}
+
+window.addEventListener("pointermove", ev=>{
+  if(!drag) return;
+  if(Math.abs(ev.clientX-drag.sx) + Math.abs(ev.clientY-drag.sy) > 5) drag.moved = true;
+  moveGhost(ev.clientX, ev.clientY);
+  const under = document.elementFromPoint(ev.clientX, ev.clientY);
+  const t = under && under.closest ? under.closest(".el") : null;
+  if(t !== drag.target){
+    if(drag.target) drag.target.classList.remove("over");
+    if(t && t !== drag.src) t.classList.add("over");
+    drag.target = t;
+  }
+});
+
+window.addEventListener("pointerup", ev=>{
+  if(!drag) return;
+  const d = drag; drag = null;
+  document.body.classList.remove("is-dragging");
+  d.ghost.remove();
+  if(d.src) d.src.classList.remove("drag-src");
+  if(d.target) d.target.classList.remove("over");
+
+  const under = document.elementFromPoint(ev.clientX, ev.clientY);
+  const overCanvas = !!under && (mesa.contains(under) || mesa === under);
+  const hit = under && under.closest ? under.closest(".el") : null;
+  const target = (hit && hit !== d.src) ? hit : null;
+
+  /* --- toque simple (sin arrastre) --- */
+  if(!d.moved){
+    if(d.src){ clickElement(d.src); return; }
+    if(d.fromLib){
+      const p = { x: Math.max(8, mesa.clientWidth/2 - 80), y: 30 + (state.cards.length%5)*46 };
+      const c = addCard(d.id, p.x, p.y);
+      c.classList.add("pop");
+      save();
+      if(window.innerWidth <= 900) libPanel.classList.remove("on");
+    }
+    return;
+  }
+
+  /* --- arrastrado y soltado sobre otro elemento --- */
+  if(target){
+    const tid = target.dataset.id;
+    const p = canvasPos(ev.clientX - d.offx, ev.clientY - d.offy);
+    doCombine(d.id, tid, p.x, p.y, [d.src, target]);
+    return;
+  }
+
+  /* --- arrastrado y soltado en la mesa (mover / colocar) --- */
+  if(overCanvas){
+    const p = canvasPos(ev.clientX - d.offx, ev.clientY - d.offy);
+    if(d.src){
+      d.src.style.left = p.x+"px";
+      d.src.style.top = p.y+"px";
+    }else{
+      const c = addCard(d.id, p.x, p.y);
+      c.classList.add("pop");
+    }
+    clampCards();
+    save();
+  }
+});
+
+/* clic para seleccionar y combinar (alternativa al arrastre) */
+function clickElement(el){
+  const id = el.dataset.id;
+  if(state.selected && state.selected !== el){
+    const sel = state.selected;
+    const a = sel.dataset.id;
+    state.selected = null;
+    sel.classList.remove("sel");
+    doCombine(a, id, parseFloat(el.style.left)||0, parseFloat(el.style.top)||0, [sel, el]);
+    return;
+  }
+  if(state.selected === el){
+    el.classList.remove("sel");
+    state.selected = null;
+    return;
+  }
+  if(state.selected) state.selected.classList.remove("sel");
+  state.selected = el;
+  el.classList.add("sel");
+}
+
+mesa.addEventListener("pointerdown", ev=>{
+  const el = ev.target.closest(".el");
+  if(!el) { if(state.selected){ state.selected.classList.remove("sel"); state.selected=null; } return; }
+  ev.preventDefault();
+  startDrag(el.dataset.id, ev, false);
+});
+
+function showDesc(id){
+  const box = document.getElementById("libDesc");
+  const el = E.get(id);
+  if(!el){ box.innerHTML = "<b>Biblioteca</b>Pasa el ratón por un elemento para leer de qué va."; return; }
+  box.innerHTML = "<b>"+el[1]+" "+el[2]+"</b>"+el[3];
+}
+libList.addEventListener("pointerover", ev=>{
+  const it = ev.target.closest(".lib-item");
+  if(it) showDesc(it.dataset.id);
+});
+libList.addEventListener("pointerleave", ()=> showDesc(null));
+libList.addEventListener("focusin", ev=>{
+  const it = ev.target.closest(".lib-item");
+  if(it) showDesc(it.dataset.id);
+});
+libList.addEventListener("keydown", ev=>{
+  const it = ev.target.closest(".lib-item");
+  if(!it) return;
+  if(ev.key === "Enter" || ev.key === " "){
+    ev.preventDefault();
+    const p = { x: Math.max(8, mesa.clientWidth/2 - 80), y: 30 + (state.cards.length%5)*46 };
+    const c = addCard(it.dataset.id, p.x, p.y);
+    c.classList.add("pop");
+    save();
+  }
+});
+libList.addEventListener("pointerdown", ev=>{
+  const it = ev.target.closest(".lib-item");
+  if(!it) return;
+  ev.preventDefault();
+  startDrag(it.dataset.id, ev, true);
+});
+
+/* ============================ GUARDADO ============================ */
+function save(){
+  try{
+    localStorage.setItem(STORE, JSON.stringify({
+      d:[...state.discovered],
+      f:state.firstFound,
+      c:state.cards.map(c=>[c.dataset.id, Math.round(parseFloat(c.style.left)), Math.round(parseFloat(c.style.top))])
+    }));
+  }catch(e){}
+}
+function load(){
+  try{
+    const raw = localStorage.getItem(STORE);
+    if(!raw) return false;
+    const o = JSON.parse(raw);
+    if(!o || !Array.isArray(o.d)) return false;
+    state.discovered = new Set(o.d.filter(id=>E.has(id)));
+    BASE_IDS.forEach(b=>state.discovered.add(b));
+    state.firstFound = o.f && state.discovered.has(o.f) ? o.f : null;
+    (o.c||[]).forEach(([id,x,y])=>{
+      if(E.has(id)){ const c = addCard(id, x||0, y||0); c.style.animation="none"; }
+    });
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ============================ MODALES ============================ */
+function openModal(title, html){
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalBody").innerHTML = html;
+  overlay.classList.add("on");
+}
+function closeModal(){ overlay.classList.remove("on"); }
+document.getElementById("modalClose").addEventListener("click", closeModal);
+overlay.addEventListener("click", e=>{ if(e.target===overlay) closeModal(); });
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape"){ closeModal(); libPanel.classList.remove("on"); }
+  if(e.key==="?" && e.target===document.body) showHelp();
+});
+
+function showHelp(){
+  openModal("Cómo se juega", `
+    <p>Combina elementos como en un hornillo de alquimia: cada par produce otro elemento nuevo. No existen combinaciones al azar: cada receta es real y viene del mundo de la <b>programación con IA</b>.</p>
+    <h4>Controles</h4>
+    <ul>
+      <li><b>Arrastra</b> un elemento sobre otro para combinarlos.</li>
+      <li>También puedes <b>tocar</b> un elemento y después tocar otro.</li>
+      <li>Arrastra desde la <b>Biblioteca</b> para colocar más elementos en la mesa.</li>
+      <li>Arrastra por la mesa vacía para <b>recolocar</b> los elementos.</li>
+    </ul>
+    <h4>Los 4 elementos base</h4>
+    <ul>
+      <li>💬 <b>Prompt</b> — la orden que le das a la máquina.</li>
+      <li>🤖 <b>Modelo</b> — el motor que responde.</li>
+      <li>📚 <b>Contexto</b> — lo que la IA sabe de tu proyecto.</li>
+      <li>🔧 <b>Herramienta</b> — lo que la IA puede usar.</li>
+    </ul>
+    <h4>Ayudas</h4>
+    <ul>
+      <li>💡 <b>Pista</b> te sugiere una combinación que puedes hacer ya mismo.</li>
+      <li>📖 <b>Recetas</b> muestra todo lo que has desbloqueado.</li>
+      <li>🔗 <b>Compartir</b> genera un código con tu progreso.</li>
+    </ul>
+    <div class="foot">Juego de fans hecho con cariño. El contenido (agentes, skills, MCP, SDD, modelos, herramientas) viene de <b>Web Reactiva</b> (webreactiva.com) de Daniel Primo. Sin relación oficial con el sitio.</div>
+  `);
+}
+
+function showRecipes(){
+  const found = RECIPES.filter(r=>state.discovered.has(r[0]) && state.discovered.has(r[1]) && state.discovered.has(r[2]));
+  found.sort((a,b)=> nameOf(a[0]).localeCompare(nameOf(b[0])));
+  const rows = found.map(r=>{
+    const A=E.get(r[1]), B=E.get(r[2]), C=E.get(r[0]);
+    return '<div class="recipe"><span class="a" style="background:rgba('+hexToRgb(A[4])+',.2)">'+A[1]+" "+A[2]+'</span>'+
+           '<span class="plus">+</span>'+
+           '<span class="b" style="background:rgba('+hexToRgb(B[4])+',.2)">'+B[1]+" "+B[2]+'</span>'+
+           '<span class="plus">=</span>'+
+           '<span class="r" style="background:rgba('+hexToRgb(C[4])+',.22)">'+C[1]+" "+C[2]+'</span></div>';
+  }).join("");
+  openModal("Recetas descubiertas ("+found.length+")",
+    (found.length ? '<div class="recipes">'+rows+'</div>'
+      : '<p>Todavía no has desbloqueado ninguna receta. Empieza combinando Prompt y Modelo para conseguir 🎯 Tarea.</p>') +
+    '<div class="foot">Cada receta corresponde a una idea real del mundo de la IA: agentes, skills, MCP, Spec-Driven Development, RAG, hooks, evals, costes…</div>');
+}
+
+function shareCode(){
+  const ids = [...state.discovered].sort();
+  const str = "WR1:"+ids.join(",");
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function showShare(){
+  const code = shareCode();
+  openModal("Compartir tu progreso", `
+    <p>Este código guarda los <b>${state.discovered.size}</b> elementos que has descubierto. Envíaselo a alguien o guárdalo para continuar más tarde.</p>
+    <div class="sharebox">
+      <input id="shareInput" readonly value="${code}">
+      <button class="btn primary" id="copyBtn">Copiar</button>
+    </div>
+    <h4>Progreso</h4>
+    <ul>
+      <li>Elementos descubiertos: <b>${state.discovered.size}</b> de ${ELEMENTS.length}.</li>
+      <li>Recetas desbloqueadas: <b>${RECIPES.filter(r=>state.discovered.has(r[0])&&state.discovered.has(r[1])&&state.discovered.has(r[2])).length}</b> de ${RECIPES.length}.</li>
+    </ul>
+    <div class="foot">Los elementos se guardan también en este navegador. Si borras los datos del sitio, se pierde el progreso.</div>
+  `);
+  const btn = document.getElementById("copyBtn");
+  btn.addEventListener("click", async ()=>{
+    const inp = document.getElementById("shareInput");
+    try{ await navigator.clipboard.writeText(code); }
+    catch(e){ inp.select(); document.execCommand("copy"); }
+    btn.textContent = "¡Copiado!";
+    setTimeout(()=>btn.textContent="Copiar", 1600);
+  });
+}
+
+function showHint(){
+  const known = [...state.discovered];
+  const cand = RECIPES.filter(r=>!state.discovered.has(r[0]) && known.includes(r[1]) && known.includes(r[2]));
+  if(cand.length){
+    const r = cand[Math.floor(Math.random()*cand.length)];
+    const A=E.get(r[1]), B=E.get(r[2]), C=E.get(r[0]);
+    toast("", {html:'<span class="em">💡</span><span>Prueba <b>'+A[1]+" "+A[2]+'</b> + <b>'+B[1]+" "+B[2]+'</b><small>Y verás: '+C[1]+" "+C[2]+'</small></span>', big:true, ms:5200});
+    return;
+  }
+  const pair = RECIPES.filter(r=>known.includes(r[1]) || known.includes(r[2]));
+  if(pair.length){
+    const r = pair[Math.floor(Math.random()*pair.length)];
+    const other = known.includes(r[1]) ? r[2] : r[1];
+    const A=E.get(r[1]), B=E.get(r[2]), C=E.get(r[0]);
+    toast("", {html:'<span class="em">💡</span><span>Te falta <b>'+emojiOf(other)+" "+nameOf(other)+'</b><small>Con eso: '+A[1]+" "+A[2]+' + '+B[1]+" "+B[2]+' = '+C[1]+" "+C[2]+'</small></span>', big:true, ms:5200});
+    return;
+  }
+  toast("💡 Empieza combinando Prompt + Modelo → 🎯 Tarea.");
+}
+
+/* ============================ BOTONES ============================ */
+document.getElementById("btnHelp").addEventListener("click", showHelp);
+document.getElementById("btnRecetas").addEventListener("click", showRecipes);
+document.getElementById("btnShare").addEventListener("click", showShare);
+document.getElementById("btnHint").addEventListener("click", showHint);
+document.getElementById("btnSound").addEventListener("click", e=>{
+  state.sound = !state.sound;
+  e.currentTarget.textContent = state.sound ? "🔊" : "🔇";
+  if(state.sound) tone(660,.12,"triangle",.05);
+});
+document.getElementById("btnReset").addEventListener("click", ()=>{
+  if(!confirm("¿Reiniciar la partida? Se perderán todos los descubrimientos.")) return;
+  try{ localStorage.removeItem(STORE); }catch(e){}
+  location.reload();
+});
+document.getElementById("buscar").addEventListener("input", e=>renderLibrary(e.target.value));
+document.getElementById("libtoggle").addEventListener("click", ()=>libPanel.classList.toggle("on"));
+
+/* ============================ ARRANQUE ============================ */
+(function init(){
+  const restored = load();
+  if(!restored){
+    let x = 28;
+    BASE_IDS.forEach(id=>{
+      const c = addCard(id, x, 58);
+      x += c.offsetWidth + 16;
+    });
+  }
+  document.getElementById("nTot").textContent = ELEMENTS.length;
+  updateStats();
+  setTimeout(()=>document.getElementById("hintBar").classList.add("gone"), 9000);
+  window.addEventListener("resize", clampCards);
+  if(!restored){
+    setTimeout(()=>toast("", {html:'<span class="em">⚗️</span><span><b>Bienvenido a la alquimia</b><small>Combina Prompt + Modelo y empieza a construir tu mundo.</small></span>', big:true, ms:5200}), 700);
+  }else{
+    setTimeout(()=>toast("💾 Progreso restaurado: "+state.discovered.size+" elementos.", {ms:2600}), 500);
+  }
+})();
+</script>
+</body>
+</html>

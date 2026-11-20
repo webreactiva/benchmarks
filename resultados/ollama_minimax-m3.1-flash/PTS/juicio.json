@@ -1,0 +1,19 @@
+{
+  "nota": 7,
+  "veredicto": "un manual, no un post",
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 0,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 1,
+    "slop": 1,
+    "extensión": 0
+  },
+  "resumen": "3011 palabras con muy buen código (test que se «arregla» afirmando lo contrario, reloj congelado, espera activa en lugar de sleep, xfail con strict=True) y un plan por fases para salir de una suite roja. Pero cambia el tema: el título quita el «a veces», casi todo va de tests en rojo permanente y los intermitentes ocupan una sección. Tres veces más largo que un post, 66 negritas y palabras rotas.",
+  "rarezas": [
+    "Se le cuelan palabras de otro idioma, como a MiniMax M3 en su A3D y su PTS: «todos|scale-targeted», «discoverirse».",
+    "27 ediciones sobre el borrador y 15 peticiones para un post.",
+    "Frontmatter YAML de blog que nadie pidió."
+  ]
+}

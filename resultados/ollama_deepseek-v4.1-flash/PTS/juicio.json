@@ -1,0 +1,20 @@
+{
+  "nota": 8,
+  "veredicto": "bueno, pero se desvía",
+  "resumen": "1426 palabras con buenos argumentos (habituación, fatiga de alarmas, «500 tests con 30 en rojo son 470 con un 100 % de desconfianza», el test que se vuelve «guardián del error») y un ejemplo de skip en pytest. Pero trata sobre todo de tests que fallan siempre o se ignoran, no de los que fallan «a veces», y tiene más slop de formato: 20 negritas, listas con etiqueta y «Conclusión».",
+  "rarezas": [
+    "El más largo de todos (1426 palabras) y el que más se aleja del tema pedido: los tests intermitentes ocupan una sección de nueve.",
+    "Usa variante americana en un texto por lo demás neutro: «costo», «monitoreo», «la falla».",
+    "3 peticiones y 2,9 k tokens de salida."
+  ],
+  "nota_previa": 7,
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 0,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 1,
+    "slop": 1,
+    "extensión": 1
+  }
+}

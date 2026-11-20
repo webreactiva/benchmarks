@@ -1,0 +1,19 @@
+{
+  "nota": 8,
+  "veredicto": "bien",
+  "resumen": "Diagrama que compila, todo en español, con el camino real de una petición (DNS geográfico, CDN con Varnish y ATS, acierto/fallo de caché, LVS, MediaWiki) y las piezas que importan: Memcached, MariaDB por secciones, Parsoid, Thumbor, Swift, CirrusSearch, Kafka, WDQS. Fallos: imágenes y ediciones que se saltan la CDN y MediaWiki leyendo de WDQS.",
+  "rarezas": [
+    "Guardó el mismo diagrama dos veces: en un .md con explicación y en un .mmd suelto.",
+    "Avisa por su cuenta en el fichero y en el chat de que es una vista aproximada hecha de memoria.",
+    "De los 95 k tokens, 47 k son escritura de caché del arranque de Claude Code: el trabajo en sí son 5,7 k de salida."
+  ],
+  "nota_previa": 8,
+  "rubrica": {
+    "compila": 2,
+    "en español": 1,
+    "camino conectado": 2,
+    "piezas clave": 2,
+    "sin errores ni inventos": 0,
+    "se puede leer": 1
+  }
+}

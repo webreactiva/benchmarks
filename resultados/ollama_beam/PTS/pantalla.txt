@@ -1,0 +1,36 @@
+  ┃   57 ## Checklist antes de mergear un test
+  ┃   58
+  ┃   59 - [ ] Determinista: mismo input → mismo resultado, 100 ejecuciones.
+  ┃   60 - [ ] Sin sleeps.
+  ┃   61 - [ ] Sin estado compartido.
+  ┃   62 - [ ] Sin dependencias externas (red, FS real, reloj) no controladas.
+  ┃   63 - [ ] Sin dependencias de orden entre tests.
+  ┃   64 - [ ] Falla rápido cuando algo va mal (no timeouts largos).
+  ┃   65 - [ ] El mensaje de fallo permite diagnosticar sin re-ejecutar.
+  ┃   66
+  ┃
+
+     + Thought: 99ms
+
+  ┃
+  ┃  $ ls -la /var/tmp/bench/ws-ZSE24wDK
+  ┃
+  ┃  total 8
+  ┃  drwx------ 2 root root 4096 Nov 20 03:14 .
+  ┃  drwxrwxrwt 3 root root   60 Nov 20 03:14 ..
+  ┃  -rw-r--r-- 1 root root 4057 Nov 20 03:14 post-tests-flaky.md
+  ┃
+
+     + Thought: 144ms
+
+     Guardado en post-tests-flaky.md.
+
+     ▣  Build · beam · 30.0s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · beam Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-ZSE24wDK                                                              10.7K (1%)  ctrl+p commands
+

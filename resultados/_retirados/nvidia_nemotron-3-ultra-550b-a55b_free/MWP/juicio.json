@@ -1,0 +1,18 @@
+{
+  "nota": 4,
+  "veredicto": "funciona a medias",
+  "resumen": "Compila a la primera y tiene las piezas grandes (MediaWiki, Varnish, MariaDB con réplicas, Elasticsearch, Swift, Parsoid). Pero el cliente no conecta con nada, no dibuja Memcached, la caché en memoria que MediaWiki usa para casi todo, y mezcla etiquetas en inglés pese a «En español».",
+  "rarezas": [
+    "Lo guarda como .mmd suelto, sin Markdown alrededor ni explicación del diagrama.",
+    "En la primera tanda (descartada, con skills del HOME) dibujó otro diagrama distinto: misma idea, otras piezas."
+  ],
+  "nota_previa": 5,
+  "rubrica": {
+    "compila": 2,
+    "en español": 0,
+    "camino conectado": 0,
+    "piezas clave": 1,
+    "sin errores ni inventos": 0,
+    "se puede leer": 1
+  }
+}

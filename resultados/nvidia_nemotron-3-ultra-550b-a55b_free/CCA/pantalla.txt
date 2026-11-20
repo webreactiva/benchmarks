@@ -1,0 +1,36 @@
+     - Configurable limits - Max items per cart, max quantity per item
+     - Type-safe - Full TypeScript support with declarations
+     - Persistence - FileStorage survives app restarts
+
+     Usage
+
+     import { createDefaultCartService } from './src';
+
+     const cart = createDefaultCartService();
+
+     await cart.addItem('user-123', {
+       productId: 'prod-1',
+       name: 'Product',
+       price: 29.99,
+       currency: 'USD',
+       quantity: 2
+     });
+
+     const summary = cart.getSummary(await cart.getCart('user-123'));
+     // { itemCount: 1, totalQuantity: 2, subtotal: 59.98, currency: 'USD' }
+
+     Commands
+
+     - npm run build - Compile TypeScript
+     - npm test - Run tests (24 passing)
+     - npm run dev - Run examples
+
+     ▣  Build · nvidia/nemotron-3-ultra-550b-a55b:free · 2m 52s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · nvidia/nemotron-3-ultra-550b-a55b:free OpenRouter
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/CCA                                     27.1K  ctrl+p commands
+

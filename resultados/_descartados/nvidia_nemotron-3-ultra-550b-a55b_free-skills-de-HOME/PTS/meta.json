@@ -1,0 +1,27 @@
+{
+  "codigo": "PTS",
+  "modelo": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T20:44:21Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 21694,
+    "output": 3429,
+    "reasoning": 369,
+    "cache_read": 87680,
+    "cache_write": 0,
+    "total": 113172
+  },
+  "peticiones": 6,
+  "error": null,
+  "herramientas": {
+    "skill": 1,
+    "read": 2,
+    "write": 1,
+    "bash": 1
+  },
+  "sesion": "ses_e0a725d03ffebS3oGC4cV6fMuf",
+  "ficheros": [
+    "por-que-tests-que-fallan-a-veces-son-peores-que-no-tener-tests.md"
+  ]
+}

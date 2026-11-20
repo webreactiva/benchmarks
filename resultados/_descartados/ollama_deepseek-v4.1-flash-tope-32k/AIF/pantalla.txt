@@ -1,0 +1,36 @@
+  ┃  drwxr-xr-x  22 root root  4096 Nov 19 20:35 ..
+  ┃  lrwxrwxrwx   1 root root     7 Apr 22  2024 bin -> usr/bin
+  ┃  drwxr-xr-x   2 root root  4096 Apr  8  2024 bin.usr-is-merged
+  ┃  drwxr-xr-x   2 root root  4096 Apr 22  2024 boot
+  ┃  -rw-r--r--   1 root root   512 Nov 19 22:37 container_info.json
+  ┃  drwxr-xr-x   6 root root  2280 Nov 19 22:37 dev
+  ┃  drwxr-xr-x  82 root root  4096 Nov 19 20:36 etc
+  ┃  drwxr-xr-x   5 root root  4096 Nov 19 20:36 home
+  ┃  …
+  ┃
+  ┃  Click to expand
+  ┃
+
+     + Thought: 543ms
+
+     % WebFetch https://webreactiva.com
+
+  ┃
+  ┃  $ cat /container_info.json 2>/dev/null
+  ┃
+  ┃  {
+  ┃    "container_name": "container_<oculto>"
+  ┃  }
+  ┃
+
+     + Thought: 1m 5s
+
+     ▣  Build · deepseek-v4.1-flash · 1m 14s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · deepseek-v4.1-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/ollama_deepseek-v4.1-flash/AIF                                                 48.1K  ctrl+p commands
+

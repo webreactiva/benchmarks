@@ -1,0 +1,364 @@
+{
+  "info": {
+    "id": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+    "slug": "shiny-comet",
+    "projectID": "global",
+    "directory": "/var/tmp/bench/ws-cJ1neecZ",
+    "path": "var/tmp/bench/ws-cJ1neecZ",
+    "title": "Tests inestables vs no tener tests",
+    "agent": "build",
+    "model": {
+      "id": "glm-5.3-flash",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 10115,
+      "output": 2551,
+      "reasoning": 0,
+      "cache": {
+        "read": 16960,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795128512872,
+      "updated": 1795128525313
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795128512910
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "glm-5.3-flash"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f5ff518e001Im2IkWeCpc6Ssh",
+        "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f5ff5194001K67W274T5FM9qq",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff518e001Im2IkWeCpc6Ssh"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5ff518e001Im2IkWeCpc6Ssh",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-cJ1neecZ",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 9681,
+          "input": 7437,
+          "output": 2244,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "glm-5.3-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128512943,
+          "completed": 1795128523354
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5ff51af0017Cf1Y7SYChTnUz",
+        "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5ff5a56001UFZpyLkHMKHhfC",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff51af0017Cf1Y7SYChTnUz"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user wants a blog post in Spanish for a programming blog about why flaky tests (tests that fail sometimes) are worse than having no tests at all. They want it saved to the current directory.\n\nThis is a content creation task — writing a file. I should write a well-crafted, engaging blog post in Spanish about flaky tests. Key points to cover:\n\n1. What flaky tests are\n2. Why they're worse than no tests:\n   - They erode trust in the test suite (\"alarm fatigue\" / \"cry wolf\" effect)\n   - Developers start ignoring failures, which means real regressions slip through\n   - They waste CI time and engineer time on retries and re-runs\n   - They block deployments / slow down pipelines\n   - They normalize red builds (\"broken window\" effect)\n   - The false sense of security paradox\n3. Common causes: race conditions, time dependencies, network mocks, shared state, order dependence\n4. How to deal with them: quarantine, retry policies (and their dangers), fixing root causes, deleting or marking tests\n5. Conclusion\n\nThe instructions say to be concise in responses, but the actual deliverable is a file, so the file itself can be a full blog post. The response after writing should be short — just confirm the file was created.\n\nThe filename should be in the current working directory /var/tmp/bench/ws-cJ1neecZ. I'll pick something like `tests-flaky.md` or a descriptive Spanish name. Maybe `tests-que-fallan-a-veces.md` or `flaky-tests.md`. Let me use something clear: `tests-flancos.md`? Better Spanish-sensible: \"los-tests-que-fallan-a-veces.md\" — or simpler: `flaky-tests.md` since that's the common term in programming. I'll go with `tests-flaky.md`... Actually a nice blog-style slug: `por-que-los-tests-flaky-son-peores-que-no-tener-tests.md`. That's descriptive.\n\nLet me write a quality blog post in Spanish with a good structure, engaging tone, practical advice, and code snippet example perhaps showing a flaky test pattern. No emojis (rules say avoid unless requested). Markdown format for a blog.\n\nI should not add comments in code — that rule is about code, but code snippets in a blog post are fine with minimal comments. Actually \"DO NOT ADD ANY COMMENTS unless asked\" applies to code I write; in a blog post illustrative comments are part of the content and arguably fine, but I'll keep them minimal.\n\nLength: a good blog post, maybe 800-1200 words. Let me write it well.\n\nStructure:\n- Title\n- Intro hook: the test that passes on retry\n- The cry-wolf effect / erosion of trust\n- A failing test suite trains people to ignore it\n- Flaky tests are silent: worse than silence, they lie\n- Hidden costs: CI time, retries, deploy blocking, mental overhead\n- The paradox: feeling of security while broken\n- Common causes (with a small code example of a flaky test)\n- What to do: quarantine, retries with caution, fix or delete\n- Rule of thumb\n- Conclusion\n\nI'll write the file, then respond briefly. After completing, I could mention the filename. Keep final response to 1-2 lines.",
+          "time": {
+            "start": 1795128515163,
+            "end": 1795128523235
+          },
+          "id": "prt_1f5ff5a5b001IfXMahAYZlQdP3",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff51af0017Cf1Y7SYChTnUz"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_lj2lkg27",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "# Por qué los tests que fallan a veces son peores que no tener tests\n\nTodos hemos visto ese test. El que pasa en tu máquina, falla en CI, vuelve a pasar si le das a \"re-run\", y falla otra vez el jueves por la tarde. El test flaky: el que a veces se equivoca.\n\nLa reacción instintiva es tolerarlo. \"Es solo uno\", \"ya le echaré un ojo\", \"vuelve a lanzarlo y listo\". Pero un test que falla a veces no es un test casi funcional: es un test que introduce un problema activo en tu equipo, y en la práctica puede ser peor que no tener cobertura alguna.\n\n## El efecto del lobo cibernético\n\nUna suite de tests vale exactamente lo que vale la confianza que el equipo deposita en ella. Cuando un test falla, su único mensaje es: \"algo puede estar mal\". No sabe distinguir entre un bug real y una carrera de Goroutines, un timeout de red o una fecha del sistema.\n\nSi ese mensaje es falso con la suficiente frecuencia, ocurre algo inevitable: el equipo aprende a ignorarlo. Los desarrolladores empiezan a hacer skip mental de los rojos, a lanzar CI otra vez sin mirar, a aprobar PRs con builds en falta. Y ahí está la trampa, porque cuando un test **de verdad** detecta un bug real, ese bug llega disfrazado con el mismo uniforme del ruido habitual. Nadie se detiene a mirarlo.\n\nCon cero tests, todo el mundo sabe que no hay red de seguridad y actúa en consecuencia: más cuidado al revisar, más miedo razonable a desplegar. Con una suite plagada de flaky tests, la gente cree que hay red de seguridad, pero no la hay. La falsa confianza es más peligrosa que la conciencia de riesgo.\n\n## La suite roja se convierte en el ruido de fondo\n\nUn pipeline permanentemente en rojo funciona como una ventana rota: normaliza el desorden. Una vez que el build rojo se convierte en el estado por defecto, cada regla del proceso se degrada un poco:\n\n- Los PRs se mergean con builds fallando \"porque ya sabrán a qué se debe\".\n- Las alarmas de CI dejan de notificarse o se silencian directamente.\n- El nuevo desarrollador que llega aprende en su primera semana que rojo es normal.\n\nRecuperar una suite que todos han aprendido a ignorar es mucho más difícil que construir confianza desde cero.\n\n## Los costes ocultos, que nadie pone en el backlog\n\nUn test flaky no cuesta solo cuando falla. Cuesta siempre:\n\n**Tiempo de ingeniería.** Cada re-run manual es un contexto switch. Si un test flaky falla una vez de cada cincuenta y tu pipeline corre cien veces al día, alguien del equipo está interrumpido casi a diario para una nada.\n\n**Latencia de entrega.** Los equipos suelen compensar la flakiness con retries automáticos y builds duplicados. Un pipeline de diez minutos con tres re-lanzamientos de media es un pipeline de diez minutos que entrega en media hora.\n\n**Cuellos de botella en release.** Cuando \"el build está en rojo\" bloquea un despliegue, y el rojo es flaky, tienes un equipo parado esperando a que la lotería saque un número verde.\n\n**Falsa calibración mental.** Depurar tests flaky es una de las tareas más frustrantes del oficio: el bug no se reproduce, desaparece al poner un breakpoint, y reaparece tres días después. Es tiempo de investigación sin salida.\n\n## Un ejemplo mínimo de flakiness\n\nNo hace falta exotismo para romper una suite. Este test pasa casi siempre:\n\n```go\nfunc TestUsuarioSeGuarda(t *testing.T) {\n    repo := NewInMemoryRepo()\n    go CreateUsuario(repo, \"ana\")\n\n    u, err := repo.Get(\"ana\")\n    if err != nil {\n        t.Fatalf(\"usuario no encontrado: %v\", err)\n    }\n    if u.Nombre != \"ana\" {\n        t.Fatalf(\"nombre incorrecto: %s\", u.Nombre)\n    }\n}\n```\n\nEl `go` introduce una carrera: el test pasa si la goroutine llega a tiempo. Pasará el 99% de las veces, y ese \"casi\" es exactamente el problema. Cada causa común de flakiness comparte este patrón: el test depende de algo que no controla.\n\n- **Tiempo y concurrencia:** `sleep`s, goroutines sin sincronizar, timeouts ajustados.\n- **Estado compartido:** tests que dependen de una Base de datos, orden de ejecución, singletons mutables.\n- **El mundo exterior:** red, filesystem, fecha y hora, zona horaria, random sin seed.\n- **Dependencia del entorno:** el test solo pasa en la máquina de quien lo escribió.\n\n## Qué hacer con ellos\n\nLa respuesta sensata no es noble, es quirúrgica:\n\n1. **Detectarlos.** Mide la flakiness: retries en CI que registren qué test falló y pasó en el re-lanzamiento. Lo que no se mide se tolera.\n2. **Ponerlos en cuarentena.** Marca el test para que no bloquee el pipeline. Un test aislado y visible es honesto; un test que rompe el build a veces, no.\n3. **Reparar o eliminar.** Un test en cuarentena es una deuda con fecha de caducidad. O se arregla la causa raíz o se borra. Mantener \"por si acaso\" un test que miente es acumular desconfianza.\n4. **No normalizar el retry como solución.** Retries automáticos pueden amortiguar picos de flakiness externa (infraestructura, red), pero como política general solo enterrán el problema bajo una capa de ruido estadístico.\n5. **Prevenir.** Prioriza tests deterministas: controla el tiempo con clock inyectable, usa fixtures por test, simula la red en vez de usarla, y haz explícito cualquier paralelismo.\n\n## La regla de bolsillo\n\nUn test debe tener una propiedad no negociable: **que haga lo que dice, siempre**. Un test verde es una promesa y un test rojo es una alerta; un test a veces verde y a veces rojo no es ni una cosa ni otra, es ruido calibrado para destrenzar la señal.\n\nSi tuvieras que elegir entre una suite con un 3% de tests flaky y una suite vacía, no es una pregunta tonta: con la suite vacía, al menos todos saben dónde están. Con la suite mentirosa, nadie sabe que están perdidos.\n\nDedica el mismo rigor a tus tests que a tu código de producción. Porque tus tests lo son.\n",
+              "filePath": "/var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md",
+            "time": {
+              "start": 1795128523254,
+              "end": 1795128523281
+            }
+          },
+          "id": "prt_1f5ff79ec001UNsZshWzGMRcgZ",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff51af0017Cf1Y7SYChTnUz"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 9681,
+            "input": 7437,
+            "output": 2244,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5ff7a4e001sE5bJp4pyXdpzA",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff51af0017Cf1Y7SYChTnUz"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5ff518e001Im2IkWeCpc6Ssh",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-cJ1neecZ",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 9934,
+          "input": 2330,
+          "output": 244,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7360
+          }
+        },
+        "modelID": "glm-5.3-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128523362,
+          "completed": 1795128524720
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5ff7a62001LShHWU7bmme1mT",
+        "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5ff7ce6001cdwjV08bf8sCOd",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff7a62001LShHWU7bmme1mT"
+        },
+        {
+          "type": "reasoning",
+          "text": "The file is written. I should respond briefly per the instructions. One correction I notice: I wrote \"destrenzar\" and \"enterrán\" — wait, let me check those words. \"enterrán\" — that's wrong, should be \"entierran\". And \"destrenzar\" isn't quite right either — maybe \"desactivar\" or \"confundir\". Let me fix those typos before responding.",
+          "time": {
+            "start": 1795128524009,
+            "end": 1795128524487
+          },
+          "id": "prt_1f5ff7ce9001FcwRE1Mkpqn9H6",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff7a62001LShHWU7bmme1mT"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_sk9x4ec9",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md",
+              "oldString": "como política general solo enterrán el problema bajo una capa de ruido estadístico.",
+              "newString": "como política general solo entierran el problema bajo una capa de ruido estadístico."
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n===================================================================\n--- /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n+++ /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n@@ -66,9 +66,9 @@\n \n 1. **Detectarlos.** Mide la flakiness: retries en CI que registren qué test falló y pasó en el re-lanzamiento. Lo que no se mide se tolera.\n 2. **Ponerlos en cuarentena.** Marca el test para que no bloquee el pipeline. Un test aislado y visible es honesto; un test que rompe el build a veces, no.\n 3. **Reparar o eliminar.** Un test en cuarentena es una deuda con fecha de caducidad. O se arregla la causa raíz o se borra. Mantener \"por si acaso\" un test que miente es acumular desconfianza.\n-4. **No normalizar el retry como solución.** Retries automáticos pueden amortiguar picos de flakiness externa (infraestructura, red), pero como política general solo enterrán el problema bajo una capa de ruido estadístico.\n+4. **No normalizar el retry como solución.** Retries automáticos pueden amortiguar picos de flakiness externa (infraestructura, red), pero como política general solo entierran el problema bajo una capa de ruido estadístico.\n 5. **Prevenir.** Prioriza tests deterministas: controla el tiempo con clock inyectable, usa fixtures por test, simula la red en vez de usarla, y haz explícito cualquier paralelismo.\n \n ## La regla de bolsillo\n \n",
+              "filediff": {
+                "file": "/var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md",
+                "patch": "Index: /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n===================================================================\n--- /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n+++ /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n@@ -66,9 +66,9 @@\n \n 1. **Detectarlos.** Mide la flakiness: retries en CI que registren qué test falló y pasó en el re-lanzamiento. Lo que no se mide se tolera.\n 2. **Ponerlos en cuarentena.** Marca el test para que no bloquee el pipeline. Un test aislado y visible es honesto; un test que rompe el build a veces, no.\n 3. **Reparar o eliminar.** Un test en cuarentena es una deuda con fecha de caducidad. O se arregla la causa raíz o se borra. Mantener \"por si acaso\" un test que miente es acumular desconfianza.\n-4. **No normalizar el retry como solución.** Retries automáticos pueden amortiguar picos de flakiness externa (infraestructura, red), pero como política general solo enterrán el problema bajo una capa de ruido estadístico.\n+4. **No normalizar el retry como solución.** Retries automáticos pueden amortiguar picos de flakiness externa (infraestructura, red), pero como política general solo entierran el problema bajo una capa de ruido estadístico.\n 5. **Prevenir.** Prioriza tests deterministas: controla el tiempo con clock inyectable, usa fixtures por test, simula la red en vez de usarla, y haz explícito cualquier paralelismo.\n \n ## La regla de bolsillo\n \n",
+                "additions": 1,
+                "deletions": 1
+              },
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md",
+            "time": {
+              "start": 1795128524505,
+              "end": 1795128524532
+            }
+          },
+          "id": "prt_1f5ff7ecd001zjv36mj1P9zOya",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff7a62001LShHWU7bmme1mT"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_vojpjcb9",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md",
+              "oldString": "es ruido calibrado para destrenzar la señal.",
+              "newString": "es ruido calibrado para ahogar la señal."
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n===================================================================\n--- /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n+++ /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n@@ -71,9 +71,9 @@\n 5. **Prevenir.** Prioriza tests deterministas: controla el tiempo con clock inyectable, usa fixtures por test, simula la red en vez de usarla, y haz explícito cualquier paralelismo.\n \n ## La regla de bolsillo\n \n-Un test debe tener una propiedad no negociable: **que haga lo que dice, siempre**. Un test verde es una promesa y un test rojo es una alerta; un test a veces verde y a veces rojo no es ni una cosa ni otra, es ruido calibrado para destrenzar la señal.\n+Un test debe tener una propiedad no negociable: **que haga lo que dice, siempre**. Un test verde es una promesa y un test rojo es una alerta; un test a veces verde y a veces rojo no es ni una cosa ni otra, es ruido calibrado para ahogar la señal.\n \n Si tuvieras que elegir entre una suite con un 3% de tests flaky y una suite vacía, no es una pregunta tonta: con la suite vacía, al menos todos saben dónde están. Con la suite mentirosa, nadie sabe que están perdidos.\n \n Dedica el mismo rigor a tus tests que a tu código de producción. Porque tus tests lo son.\n",
+              "filediff": {
+                "file": "/var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md",
+                "patch": "Index: /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n===================================================================\n--- /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n+++ /var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md\n@@ -71,9 +71,9 @@\n 5. **Prevenir.** Prioriza tests deterministas: controla el tiempo con clock inyectable, usa fixtures por test, simula la red en vez de usarla, y haz explícito cualquier paralelismo.\n \n ## La regla de bolsillo\n \n-Un test debe tener una propiedad no negociable: **que haga lo que dice, siempre**. Un test verde es una promesa y un test rojo es una alerta; un test a veces verde y a veces rojo no es ni una cosa ni otra, es ruido calibrado para destrenzar la señal.\n+Un test debe tener una propiedad no negociable: **que haga lo que dice, siempre**. Un test verde es una promesa y un test rojo es una alerta; un test a veces verde y a veces rojo no es ni una cosa ni otra, es ruido calibrado para ahogar la señal.\n \n Si tuvieras que elegir entre una suite con un 3% de tests flaky y una suite vacía, no es una pregunta tonta: con la suite vacía, al menos todos saben dónde están. Con la suite mentirosa, nadie sabe que están perdidos.\n \n Dedica el mismo rigor a tus tests que a tu código de producción. Porque tus tests lo son.\n",
+                "additions": 1,
+                "deletions": 1
+              },
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-cJ1neecZ/tests-flaky-son-peores-que-no-tener-tests.md",
+            "time": {
+              "start": 1795128524649,
+              "end": 1795128524658
+            }
+          },
+          "id": "prt_1f5ff7f5c001Y0tgx93iHwDNMD",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff7a62001LShHWU7bmme1mT"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 9934,
+            "input": 2330,
+            "output": 244,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7360
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5ff7fa6001ji74mS4svPZ2x6",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff7a62001LShHWU7bmme1mT"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5ff518e001Im2IkWeCpc6Ssh",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-cJ1neecZ",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10011,
+          "input": 348,
+          "output": 63,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 9600
+          }
+        },
+        "modelID": "glm-5.3-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128524726,
+          "completed": 1795128525301
+        },
+        "finish": "stop",
+        "id": "msg_1f5ff7fb6001bbqC63SY8vns0U",
+        "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5ff80e5001yVGLu6iv6nmOAu",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff7fb6001bbqC63SY8vns0U"
+        },
+        {
+          "type": "text",
+          "text": "Guardado en `tests-flaky-son-peores-que-no-tener-tests.md`, con estructura de blog: el efecto del lobo cibernético, costes ocultos, un ejemplo de código en Go, y consejos accionables (cuarentena, reparar o eliminar).",
+          "time": {
+            "start": 1795128525035,
+            "end": 1795128525290
+          },
+          "id": "prt_1f5ff80eb001i1rBSSUSsu1eap",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff7fb6001bbqC63SY8vns0U"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10011,
+            "input": 348,
+            "output": 63,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 9600
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5ff81ee001DjQbQ1XHFYPsrK",
+          "sessionID": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+          "messageID": "msg_1f5ff7fb6001bbqC63SY8vns0U"
+        }
+      ]
+    }
+  ]
+}

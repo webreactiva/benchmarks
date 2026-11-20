@@ -1,0 +1,63 @@
+{
+  "codigo": "CCA",
+  "modelo": "ollama/inkling-2-small",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T01:44:50Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 145201,
+    "output": 31371,
+    "reasoning": 0,
+    "cache_read": 865792,
+    "cache_write": 0,
+    "total": 1042364
+  },
+  "peticiones": 40,
+  "error": null,
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "Decide tú."
+  ],
+  "herramientas": {
+    "bash": 11,
+    "question": 1,
+    "todowrite": 3,
+    "write": 22,
+    "edit": 3
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e095f43e7ffe0UL8rTd6JWCkS5",
+  "ficheros": [
+    ".gitignore",
+    "README.md",
+    "package-lock.json",
+    "package.json",
+    "src/application/cartService.ts",
+    "src/application/cartView.ts",
+    "src/application/ports.ts",
+    "src/config.ts",
+    "src/domain/cart.ts",
+    "src/domain/catalog.ts",
+    "src/domain/errors.ts",
+    "src/domain/events.ts",
+    "src/domain/pricing.ts",
+    "src/http/app.ts",
+    "src/http/schemas.ts",
+    "src/infrastructure/inMemoryCartRepository.ts",
+    "src/infrastructure/inMemoryCouponRepository.ts",
+    "src/infrastructure/inMemoryEventBus.ts",
+    "src/infrastructure/inMemoryProductCatalog.ts",
+    "src/main.ts",
+    "tests/api.test.ts",
+    "tests/cartService.test.ts",
+    "tests/pricing.test.ts",
+    "tsconfig.json"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 131072,
+    "output_proveedor": 131072,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 1
+}

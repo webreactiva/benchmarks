@@ -1,0 +1,552 @@
+<!doctype html><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Benchmark de modelos</title>
+<style>
+:root{--bg:#faf8f5;--fg:#222;--muted:#666;--line:#e3ddd5;--ok:#2f7d4f;--mid:#b07a12;--bad:#b23b3b}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1a19;--fg:#eee;--muted:#aaa;--line:#3a3633}}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,sans-serif;margin:0;padding:24px 16px}
+h1{margin:0 0 4px} p,li{color:var(--muted)} a{color:inherit}
+.wrap{overflow-x:auto} table{border-collapse:collapse;width:100%;min-width:1100px}
+th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;color:var(--muted)}
+.n{text-align:right;font-variant-numeric:tabular-nums} .nota{font-size:22px;font-weight:700;text-align:center}
+.n0{color:var(--bad)} .n1{color:var(--mid)} .n2{color:var(--ok)}
+.cap img{width:180px;border:1px solid var(--line);border-radius:4px}
+</style>
+<h1>Benchmark de modelos</h1>
+<p>Cada prompt se manda tal cual, en una sesión nueva de OpenCode aislado, con una sola frase añadida: «Guarda lo que generes en la carpeta actual.». Sin segundo mensaje ni correcciones. Tokens: suma de todas las peticiones de la sesión (entrada sin caché, salida, razonamiento y lectura de caché). Nota del juez de 0 a 10.</p>
+<ul><li><b>A3D</b> · Una ruta en 3D en la Alhambra de Granada en un solo fichero html</li><li><b>AIF</b> · Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML.</li><li><b>CCA</b> · Implementa un carrito de la compra escalable</li><li><b>PTS</b> · Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests.</li></ul>
+<div class=wrap><table>
+<tr><th>Prompt</th><th>Modelo</th><th>Tokens</th><th>Pet.</th><th>Ficheros</th><th>Validación</th><th>Nota</th><th>Juicio</th><th>Captura</th></tr>
+<tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-19 21:07 UTC</small></td>
+<td class=n><b>981.1 k</b><br><small>in 22 · out 55.5 k<br>razon. 0 · caché 856.3 k</small></td>
+<td class=n>11</td>
+<td><small><a href="resultados/anthropic_claude-haiku-5-5/A3D/salida/alhambra-ruta-3d.html">alhambra-ruta-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-ruta-3d.html<br>✔ carga sin errores, three.js 0.160 desde jsDelivr<br>✔ tour, anterior/siguiente y velocidad funcionan<br>✖ el tubo de la ruta y el marcador tapan la vista en el tour</small></td>
+<td class="nota n2">8<br><small>funciona, la ruta tapa la Alhambra</small></td>
+<td><small>Un HTML con three.js sin errores, con paisaje (cielo, Sierra Nevada nevada, torres con tejado, cipreses del Generalife), 10 paradas con texto bueno y controles completos. Pero el tubo amarillo de la ruta y el marcador ocupan media pantalla durante el tour, y los edificios siguen siendo bloques.</small> <a href="resultados/anthropic_claude-haiku-5-5/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/anthropic_claude-haiku-5-5/A3D/capturas/alhambra-ruta-3d.html.png"><img src="resultados/anthropic_claude-haiku-5-5/A3D/capturas/alhambra-ruta-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-19 21:11 UTC</small></td>
+<td class=n><b>268.4 k</b><br><small>in 10 · out 28.8 k<br>razon. 0 · caché 200.6 k</small></td>
+<td class=n>5</td>
+<td><small><a href="resultados/anthropic_claude-haiku-5-5/AIF/salida/alquimia-web-reactiva.html">alquimia-web-reactiva.html</a></small></td>
+<td><small>✔ carga · alquimia-web-reactiva.html<br>✔ carga sin errores, sin dependencias<br>✔ arrastrar: Código + Humano → Programador, Humano + Idea → Prompt<br>✔ 54 de 54 elementos alcanzables (juez/alcanzables.js)</small></td>
+<td class="nota n2">9<br><small>se juega y es de Web Reactiva</small></td>
+<td><small>Mesa de juego como Infinite Craft (arrastrar y soltar una cosa sobre otra), 54 elementos y 50 recetas, todas alcanzables desde Código, Humano, Idea y Café. El contenido sale de webreactiva.com de verdad: agentes, skills, MCP, SDD, OpenSpec, AI slop, podcast, cursos. Le falta lo infinito: con una tabla fija, la mayoría de mezclas no dan nada.</small> <a href="resultados/anthropic_claude-haiku-5-5/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/anthropic_claude-haiku-5-5/AIF/capturas/alquimia-web-reactiva.html.png"><img src="resultados/anthropic_claude-haiku-5-5/AIF/capturas/alquimia-web-reactiva.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-19 21:04 UTC</small></td>
+<td class=n><b>635.8 k</b><br><small>in 22 · out 32.1 k<br>razon. 0 · caché 561.6 k</small></td>
+<td class=n>11</td>
+<td><small><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/examples/basic.js">examples/basic.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/package.json">package.json</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/cart-service.js">src/cart-service.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/cart.js">src/cart.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/catalog.js">src/catalog.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/errors.js">src/errors.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/events.js">src/events.js</a><br>… y 7 más</small></td>
+<td><small>✔ npm test: 30/30 (node:test, sin dependencias)<br>✔ npm run example cuadra a mano<br>✔ 50 escrituras concurrentes: ninguna se pierde<br>✔ rechaza USD en carrito EUR y el id ../<br>~ 44 de 50 acaban en CONCURRENCY_CONFLICT con 5 reintentos</small></td>
+<td class="nota n2">9<br><small>escala de verdad</small></td>
+<td><small>Librería JS sin dependencias que resuelve lo que «escalable» exige: servicio sin estado, concurrencia optimista por versión con reintentos, dinero en céntimos, una moneda por carrito, precios del catálogo y no del cliente, dominio inmutable, reglas de precio e impuestos. 30 tests en verde. Le falta un adaptador real (solo memoria), caducidad de carritos y espera entre reintentos.</small> <a href="resultados/anthropic_claude-haiku-5-5/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-19 21:03 UTC</small></td>
+<td class=n><b>75.1 k</b><br><small>in 4 · out 3.1 k<br>razon. 0 · caché 61.1 k</small></td>
+<td class=n>2</td>
+<td><small><a href="resultados/anthropic_claude-haiku-5-5/PTS/salida/tests-que-fallan-peor-que-no-tenerlos.md">tests-que-fallan-peor-que-no-tenerlos.md</a></small></td>
+<td><small>953 palabras · slop 14.0 (1.47/100 pal.)</small></td>
+<td class="nota n1">6<br><small>bien</small></td>
+<td><small>953 palabras con un argumento de verdad: un test inestable enseña al equipo a ignorar el rojo («normalización del fallo») y da una seguridad falsa que sin tests no existe. Un caso concreto (timeout de red, regresión de facturación que se pierde) y cinco prácticas útiles. Le sobran la lista con etiquetas en negrita, la «Conclusión» y una cita inventada.</small> <a href="resultados/anthropic_claude-haiku-5-5/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 10:23 UTC</small></td>
+<td class=n><b>22.5 k</b><br><small>in 10.3 k · out 2.2 k<br>razon. 734 · caché 9.3 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/google_gemini-4-carbon/PTS/salida/tests-que-fallan-a-veces.md">tests-que-fallan-a-veces.md</a></small></td>
+<td><small>✔ un post en Markdown, en español, de 1196 palabras<br>~ 1,3 marcas de slop por cada 100 palabras: 18 negritas, listas con etiqueta, ❌/✅, sección «Conclusión»<br>✔ código antes y después (TTL de un token con setTimeout frente a reloj inyectado)<br>✔ la cifra de las colas de merge es correcta: 1 − 0,95³ ≈ 14 %, uno de cada siete</small></td>
+<td class="nota n2">9<br><small>completo, con tics de formato</small></td>
+<td><small>Defiende bien la tesis (no tener tests es una incertidumbre honesta; un test intermitente da permiso para ignorar la prueba) con un ejemplo de código antes y después y una cifra correcta sobre colas de merge. Pierde un punto por el formato de blog generado: dieciocho negritas, listas con etiqueta, emojis y una sección «Conclusión».</small> <a href="resultados/google_gemini-4-carbon/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:41 UTC</small></td>
+<td class=n><b>111.6 k</b><br><small>in 18.4 k · out 6.4 k<br>razon. 23 · caché 86.8 k</small></td>
+<td class=n>5</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-default/A3D/salida/alhambra.html">alhambra.html</a></small></td>
+<td><small>✔ carga · alhambra.html<br>✔ abre sin errores de consola<br>✔ 3D propio en canvas 2D (sin librerías, 7,9 KB): se gira arrastrando y tiene zoom<br>✖ «Siguiente parada» solo cambia el texto y resalta la chincheta: la cámara no se mueve<br>✔ ruta de 5 paradas reales en orden de visita<br>~ se reconocen las torres de la Alcazaba y el patio circular de Carlos V; las albercas apenas se ven<br>✔ textos de las paradas correctos</small></td>
+<td class="nota n1">6<br><small>maqueta limpia, la cámara no viaja</small></td>
+<td><small>Una maqueta en 3D hecha a mano en canvas, sin librerías y en 8 KB, con torres almenadas y el patio circular de Carlos V, y una ruta de cinco paradas reales con textos correctos. Pero «Siguiente parada» solo cambia el texto: la cámara se queda quieta, así que la ruta no se recorre.</small> <a href="resultados/openai_gpt-6.2-astra-default/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/openai_gpt-6.2-astra-default/A3D/capturas/alhambra.html.png"><img src="resultados/openai_gpt-6.2-astra-default/A3D/capturas/alhambra.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:43 UTC</small></td>
+<td class=n><b>129.8 k</b><br><small>in 15.6 k · out 6.8 k<br>razon. 54 · caché 107.4 k</small></td>
+<td class=n>5</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-default/AIF/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ abre sin errores de consola<br>✔ Código + Idea → Proyecto; IA + Código → Copilot; Comunidad + IA → Programa con IA<br>✔ guarda el progreso al recargar<br>✔ 35 de 35 elementos alcanzables con 32 recetas<br>✖ una mezcla sin receta no da nada («Sin reacción»)<br>~ dos casillas y un botón; se arrastra o se pulsa, no hay lienzo libre<br>✔ Web Reactiva de verdad sin buscar en la web: Zona Malandriner, En pantuflas, Programa con IA, Atlas MCP, OpenSpec</small></td>
+<td class="nota n2">8<br><small>pequeño, completo y de la casa</small></td>
+<td><small>Un juego de casillas con 35 elementos y 32 recetas, todos alcanzables, con contenido reconocible de Web Reactiva (Zona Malandriner, En pantuflas, Atlas MCP) sin haber consultado la web. Guarda, busca y da pistas en 9 KB, pero no hay lienzo libre y las mezclas sin receta no dan nada.</small> <a href="resultados/openai_gpt-6.2-astra-default/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/openai_gpt-6.2-astra-default/AIF/capturas/index.html.png"><img src="resultados/openai_gpt-6.2-astra-default/AIF/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:46 UTC</small></td>
+<td class=n><b>191.7 k</b><br><small>in 16.4 k · out 6.0 k<br>razon. 73 · caché 169.2 k</small></td>
+<td class=n>9</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/cart.js">cart.js</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/alpes.jpg">media/alpes.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/bosque.jpg">media/bosque.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/lago.jpg">media/lago.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/valle.jpg">media/valle.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/style.css">style.css</a></small></td>
+<td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula envío y total; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: cantidades negativas, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
+<td class="nota n1">4<br><small>maqueta de carrito, sin escalar</small></td>
+<td><small>Una página de carrito bien acabada con cuatro láminas, envío gratis desde 75 € y persistencia en localStorage que valida lo que lee. No hay tests, ni servidor, ni README: «escalable» se queda en que el catálogo es una lista que se puede ampliar.</small> <a href="resultados/openai_gpt-6.2-astra-default/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:39 UTC</small></td>
+<td class=n><b>95.4 k</b><br><small>in 6.3 k · out 1.9 k<br>razon. 0 · caché 87.2 k</small></td>
+<td class=n>5</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-default/PTS/salida/tests-intermitentes.md">tests-intermitentes.md</a></small></td>
+<td><small>✔ un post en Markdown, en español, de 611 palabras<br>✔ 0,2 marcas de slop por cada 100 palabras (una negrita, un cierre «La próxima vez que»)<br>✖ por debajo de 700 palabras<br>✔ un caso con código (sleep de 0,5 s) y números (20 ms en local, 700 ms en CI)</small></td>
+<td class="nota n2">9<br><small>afilado, con código, corto</small></td>
+<td><small>Defiende la tesis con el mecanismo correcto: relanzar el rojo es racional para cada persona y, repetido por todo el equipo, esconde la regresión real del IVA. Tiene un caso con código y números bien elegidos, sin slop ni errores, pero se queda en 611 palabras.</small> <a href="resultados/openai_gpt-6.2-astra-default/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-20 09:56 UTC</small></td>
+<td class=n><b>94.6 k</b><br><small>in 15.3 k · out 7.1 k<br>razon. 79 · caché 72.1 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-medium/A3D/salida/alhambra.html">alhambra.html</a></small></td>
+<td><small>✔ carga · alhambra.html<br>✔ abre sin errores de consola<br>✔ 3D propio en canvas (17 KB, sin librerías): se gira arrastrando y tiene zoom<br>✖ «Siguiente parada» cambia la parada activa y su texto, pero la cámara no se mueve<br>✔ ruta de 6 paradas en orden de visita, con el Paseo de las Torres<br>~ se ven las torres de la Alcazaba y la alberca del Partal; el patio de Carlos V no se distingue<br>✔ textos de las paradas correctos</small></td>
+<td class="nota n1">6<br><small>maqueta bonita, la cámara no viaja</small></td>
+<td><small>Una maqueta 3D hecha a mano en canvas, más trabajada que con el esfuerzo por defecto, con una ruta de seis paradas reales y textos correctos. Pero repite el fallo: «Siguiente parada» no mueve la cámara, así que la ruta no se recorre.</small> <a href="resultados/openai_gpt-6.2-astra-medium/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/openai_gpt-6.2-astra-medium/A3D/capturas/alhambra.html.png"><img src="resultados/openai_gpt-6.2-astra-medium/A3D/capturas/alhambra.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-20 09:59 UTC</small></td>
+<td class=n><b>67.3 k</b><br><small>in 12.1 k · out 5.8 k<br>razon. 86 · caché 49.3 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-medium/AIF/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ abre sin errores de consola<br>✔ Código + Micrófono → Podcast; Código + Idea → Proyecto; Comunidad + Comunidad → Zona Malandriner<br>✔ guarda el progreso al recargar<br>✔ 36 de 36 elementos alcanzables con 32 recetas<br>✖ una mezcla sin receta no da nada («Sin reacción»)<br>~ se pulsan o arrastran dos elementos a la mesa, sin lienzo libre<br>~ Web Reactiva a medias: Zona Malandriner, Top Malandriner, podcast premium y newsletter; el resto es desarrollo web genérico</small></td>
+<td class="nota n1">7<br><small>se juega, Web Reactiva a medias</small></td>
+<td><small>Un juego de mesa de mezclas con 36 elementos y 32 recetas, todos alcanzables, que guarda, busca y da pistas. Lo de Web Reactiva se queda en Zona Malandriner, Top Malandriner, el podcast premium y la newsletter: el resto es frontend, backend, API y framework, y las mezclas sin receta no dan nada.</small> <a href="resultados/openai_gpt-6.2-astra-medium/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/openai_gpt-6.2-astra-medium/AIF/capturas/index.html.png"><img src="resultados/openai_gpt-6.2-astra-medium/AIF/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-20 10:01 UTC</small></td>
+<td class=n><b>177.8 k</b><br><small>in 13.9 k · out 6.1 k<br>razon. 116 · caché 157.7 k</small></td>
+<td class=n>8</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/app.js">app.js</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product0.webp">assets/product0.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product1.webp">assets/product1.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product2.webp">assets/product2.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/cart.js">cart.js</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/style.css">style.css</a></small></td>
+<td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula; envío gratis desde 60 €; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: negativos, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
+<td class="nota n1">4<br><small>tienda de café, sin escalar</small></td>
+<td><small>Una página de carrito cuidada para una tienda de café, con fotos generadas, guardar para después y envío gratis desde 60 €, que valida lo que lee de localStorage. No hay tests, ni servidor, ni README: «escalable» es que el catálogo es una lista ampliable.</small> <a href="resultados/openai_gpt-6.2-astra-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-20 09:55 UTC</small></td>
+<td class=n><b>67.0 k</b><br><small>in 6.9 k · out 1.4 k<br>razon. 0 · caché 58.8 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-medium/PTS/salida/tests-intermitentes.md">tests-intermitentes.md</a></small></td>
+<td><small>✔ un post en Markdown, en español, de 709 palabras<br>✔ 0,14 marcas de slop por cada 100 palabras (un cierre «La próxima vez que»)<br>✔ dos bloques de Python: el test que falla al cruzar la medianoche y su arreglo; el juez comprueba que el ejemplo de 23:30 UTC-5 da el 1 de febrero</small></td>
+<td class="nota n2">10<br><small>el post completo</small></td>
+<td><small>Explica por qué un test intermitente puede salir más caro que el hueco que deja: da una falsa sensación de cobertura y enseña a ignorar el único aviso útil. Lo ilustra con un test de Python que falla al cruzar la medianoche y su arreglo, ambos correctos, sin slop y con la extensión justa.</small> <a href="resultados/openai_gpt-6.2-astra-medium/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-20 09:01 UTC</small></td>
+<td class=n><b>1688.3 k</b><br><small>in 70.6 k · out 21.4 k<br>razon. 2.9 k · caché 1593.5 k</small></td>
+<td class=n>32</td>
+<td><small><a href="resultados/openai_gpt-6.2-sol-medium/A3D/salida/alhambra.html">alhambra.html</a></small></td>
+<td><small>✔ carga · alhambra.html<br>✔ abre sin errores de consola<br>✔ «Siguiente» lleva la cámara por las 5 paradas<br>~ «Iniciar ruta» encuadra la primera parada y no avanza sola<br>✔ se reconocen las torres de la Alcazaba, el patio circular de Carlos V y la acequia del Generalife<br>✔ textos de las paradas correctos<br>~ 790 KB: three.js y las fuentes van dentro del HTML</small></td>
+<td class="nota n2">10<br><small>maqueta clara y se recorre</small></td>
+<td><small>Una maqueta 3D en low-poly con las torres de la Alcazaba, el patio circular de Carlos V y la acequia del Generalife, y una ruta de cinco paradas en orden de visita que la cámara recorre con «Siguiente». La vista no se tapa, las etiquetas se leen y los textos son correctos; el botón «Iniciar ruta» solo encuadra la primera parada.</small> <a href="resultados/openai_gpt-6.2-sol-medium/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/openai_gpt-6.2-sol-medium/A3D/capturas/alhambra.html.png"><img src="resultados/openai_gpt-6.2-sol-medium/A3D/capturas/alhambra.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-20 09:11 UTC</small></td>
+<td class=n><b>1479.8 k</b><br><small>in 66.3 k · out 19.2 k<br>razon. 2.1 k · caché 1392.3 k</small></td>
+<td class=n>27</td>
+<td><small><a href="resultados/openai_gpt-6.2-sol-medium/AIF/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ abre sin errores de consola<br>✔ Código + Curiosidad → Proyecto; Café + Código → Terminal<br>✔ guarda el progreso al recargar<br>✔ 52 de 52 elementos alcanzables con 84 recetas (juez/alcanzables con node)<br>✖ una mezcla sin receta no da nada («Esta mezcla no ha reaccionado»)<br>~ se combina en dos ranuras y un botón, no en un lienzo libre<br>✔ contenido de Web Reactiva: En pantuflas, Esperando a Eskainet, Wikipoke, Premium, Telegram, OpenSpec</small></td>
+<td class="nota n2">8<br><small>pulido y muy de la casa</small></td>
+<td><small>Un juego de ranuras con 52 elementos y 84 recetas, todos alcanzables, sacados de lo que encontró en webreactiva.com: el podcast, En pantuflas, Esperando a Eskainet, Wikipoke o el MCP de Web Reactiva. Guarda, busca y da pistas, pero no hay lienzo libre y las mezclas sin receta no dan nada.</small> <a href="resultados/openai_gpt-6.2-sol-medium/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/openai_gpt-6.2-sol-medium/AIF/capturas/index.html.png"><img src="resultados/openai_gpt-6.2-sol-medium/AIF/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-20 09:19 UTC</small></td>
+<td class=n><b>1193.2 k</b><br><small>in 47.9 k · out 18.9 k<br>razon. 2.7 k · caché 1123.7 k</small></td>
+<td class=n>27</td>
+<td><small><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/package.json">package.json</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/bolsa.webp">public/assets/bolsa.webp</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/cuenco.webp">public/assets/cuenco.webp</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-sans-OFL.txt">public/assets/dm-sans-OFL.txt</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-sans.woff2">public/assets/dm-sans.woff2</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-serif-display-OFL.txt">public/assets/dm-serif-display-OFL.txt</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-serif-display.woff2">public/assets/dm-serif-display.woff2</a><br>… y 13 más</small></td>
+<td><small>✔ npm start sin dependencias: sirve la app en el puerto 3000<br>✔ npm test: 4 de 4<br>✔ precios en céntimos; 0,10 × 3 = 30<br>✔ id con ../ ignorado; cantidades negativas o decimales, a 0; por encima de las existencias, al tope<br>✔ el localStorage manipulado solo conserva id y cantidad válidos<br>✖ no hay API: el carrito vive en el navegador (localStorage); el servidor solo sirve ficheros<br>✖ las 50 altas a la vez no se pueden probar: no hay servicio<br>✖ quoteCart devuelve el producto del catálogo: cambiar su precio cambia el catálogo<br>~ no hay botón de vaciar; el carrito se vacía al confirmar el pedido</small></td>
+<td class="nota n1">5<br><small>bonita tienda, no escala</small></td>
+<td><small>Una tienda en el navegador muy cuidada, con fotos generadas, cupón, envío y deshacer, y un carrito con funciones puras en céntimos que valida bien lo que lee de localStorage. «Escalable» lo entiende como un catálogo ampliable: no hay servicio, ni almacenamiento compartido, ni concurrencia, y el README solo dice que para producción haría falta un servidor.</small> <a href="resultados/openai_gpt-6.2-sol-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-20 09:01 UTC</small></td>
+<td class=n><b>48.8 k</b><br><small>in 5.1 k · out 989<br>razon. 38 · caché 42.6 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/openai_gpt-6.2-sol-medium/PTS/salida/tests-que-fallan-a-veces.md">tests-que-fallan-a-veces.md</a></small></td>
+<td><small>✔ un post en Markdown, en español, de 607 palabras<br>✔ 0 marcas de slop<br>✖ por debajo de 700 palabras<br>~ un solo caso (cola de correos con espera de 100 ms), sin código</small></td>
+<td class="nota n2">8<br><small>limpio, centrado y corto</small></td>
+<td><small>Defiende la tesis con el mecanismo correcto: un rojo que se relanza enseña a ignorar el rojo, y el día que es una regresión real nadie lo mira. Sin slop ni errores, con un caso bien contado, pero se queda en 607 palabras y sin código.</small> <a href="resultados/openai_gpt-6.2-sol-medium/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>nvidia/nemotron-3-ultra-550b-a55b:free</small><br><small>OpenCode · 2026-11-19 20:57 UTC</small></td>
+<td class=n><b>54.3 k</b><br><small>in 8.9 k · out 10.0 k<br>razon. 333 · caché 35.1 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/A3D/salida/alhambra-3d-route.html">alhambra-3d-route.html</a></small></td>
+<td><small>✔ carga · alhambra-3d-route.html<br>✔ carga sin errores, three.js 0.160 desde unpkg<br>✔ el tour avanza (captura a 8 s y 38 s)<br>✖ 2 errores al iniciar el tour (CatmullRomCurve3.getPoint)</small></td>
+<td class="nota n1">6<br><small>funciona, poco Alhambra</small></td>
+<td><small>Un HTML con three.js que carga, enseña 14 paradas con nombre y un tour animado con cámara que sigue una curva, lista de paradas y teclas. Las paradas y el orden son los de una visita real, pero los edificios son cajas y cilindros sin nada nazarí, la cámara atraviesa los volúmenes y salen dos errores al empezar.</small> <a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/A3D/capturas/alhambra-3d-route.html.png"><img src="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/A3D/capturas/alhambra-3d-route.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>nvidia/nemotron-3-ultra-550b-a55b:free</small><br><small>OpenCode · 2026-11-19 21:00 UTC</small></td>
+<td class=n><b>77.3 k</b><br><small>in 14.0 k · out 14.9 k<br>razon. 195 · caché 48.2 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/AIF/salida/alchemy.html">alchemy.html</a></small></td>
+<td><small>✔ carga · alchemy.html<br>✔ carga sin errores<br>✔ HTML + JavaScript → HTML Dinámico<br>✖ HTML + CSS → «No hay combinación válida»<br>✖ solo 4 de 62 recetas descubribles (juez/alcanzables.js)</small></td>
+<td class="nota n0">3<br><small>se ve bien, no se puede jugar</small></td>
+<td><small>Interfaz muy cuidada (barra lateral con búsqueda, lienzo, ranuras, avisos, exportar), pero el juego está roto: getKey ordena los ids y 35 de las 62 recetas tienen la clave al revés, así que HTML + CSS no da nada y solo se pueden descubrir 4 elementos. 11 recetas usan ingredientes que no existen. De Web Reactiva solo tiene el título: el contenido son tecnologías web genéricas.</small> <a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/AIF/capturas/alchemy.html.png"><img src="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/AIF/capturas/alchemy.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>nvidia/nemotron-3-ultra-550b-a55b:free</small><br><small>OpenCode · 2026-11-19 20:47 UTC</small></td>
+<td class=n><b>459.6 k</b><br><small>in 69.1 k · out 12.7 k<br>razon. 760 · caché 377.0 k</small></td>
+<td class=n>25</td>
+<td><small><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/salida/examples/basic.ts">examples/basic.ts</a><br><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/salida/jest.config.js">jest.config.js</a><br><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/salida/package.json">package.json</a><br><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/salida/src/cart.ts">src/cart.ts</a><br><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/salida/src/event-bus.ts">src/event-bus.ts</a><br><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/salida/src/index.ts">src/index.ts</a><br><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/salida/src/storage.ts">src/storage.ts</a><br><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/salida/src/types.ts">src/types.ts</a><br>… y 24 más</small></td>
+<td><small>✔ npm ci + tsc compila<br>✔ 24/24 tests suyos en verde<br>✔ npm run dev corre los ejemplos<br>✖ 50 addItem concurrentes → guarda 1<br>✖ suma EUR + USD como EUR<br>✖ id con ../ escribe fuera de la carpeta</small></td>
+<td class="nota n1">4<br><small>funciona, pero no escala</small></td>
+<td><small>Librería TypeScript ordenada (servicio, adaptadores de almacenamiento, bus de eventos) que compila y pasa sus 24 tests. Lo que pedía el prompt, «escalable», no aguanta: 50 peticiones concurrentes al mismo carrito dejan 1 línea, sin TTL, sin control de versiones y dinero en coma flotante.</small> <a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>nvidia/nemotron-3-ultra-550b-a55b:free</small><br><small>OpenCode · 2026-11-19 20:46 UTC</small></td>
+<td class=n><b>17.6 k</b><br><small>in 8.1 k · out 682<br>razon. 71 · caché 8.8 k</small></td>
+<td class=n>2</td>
+<td><small><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/PTS/salida/por-que-tests-flaky-son-peores-que-no-tener-tests.md">por-que-tests-flaky-son-peores-que-no-tener-tests.md</a></small></td>
+<td><small>359 palabras · slop 8.0 (2.23/100 pal.)</small></td>
+<td class="nota n1">4<br><small>cumple el mínimo</small></td>
+<td><small>Post de 359 palabras con estructura de listado: cinco razones y cinco consejos sin un solo ejemplo, dato o caso. Tesis clara y limpio de muletillas, pero cierre de chatbot, «costo», anglicismos y nada que no esté en el primer resultado de Google.</small> <a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>ollama/beam</small><br><small>OpenCode · 2026-11-20 03:10 UTC</small></td>
+<td class=n><b>63.9 k</b><br><small>in 15.0 k · out 9.9 k<br>razon. 0 · caché 39.1 k</small></td>
+<td class=n>5</td>
+<td><small><a href="resultados/ollama_beam/A3D/salida/alhambra.html">alhambra.html</a></small></td>
+<td><small>✔ carga · alhambra.html<br>✔ carga sin errores; 8 KB<br>✔ el tour mueve la cámara de parada en parada<br>✖ la Alhambra son cajas y pilares</small></td>
+<td class="nota n1">7<br><small>funciona, pero son cajas</small></td>
+<td><small>El A3D más pequeño (8 KB, 209 líneas, 5 peticiones): seis paradas reales, botones para cada una y un tour automático que mueve la cámara de la Alcazaba al Generalife. Pero la Alhambra son cajas de colores rodeadas de un anillo de pilares, la cámara se pega a los volúmenes y el panel no muestra el texto de la parada durante el tour.</small> <a href="resultados/ollama_beam/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_beam/A3D/capturas/alhambra.html.png"><img src="resultados/ollama_beam/A3D/capturas/alhambra.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>ollama/beam</small><br><small>OpenCode · 2026-11-20 03:11 UTC</small></td>
+<td class=n><b>202.7 k</b><br><small>in 52.9 k · out 27.9 k<br>razon. 0 · caché 121.9 k</small></td>
+<td class=n>7</td>
+<td><small><a href="resultados/ollama_beam/AIF/salida/web-reactiva-alchemy.html">web-reactiva-alchemy.html</a></small></td>
+<td><small>✔ carga · web-reactiva-alchemy.html<br>✔ carga sin errores; 21 KB<br>✔ HTML + CSS y Terminal + Git combinan<br>✖ solo 12 de 169 elementos alcanzables<br>✖ contenido genérico</small></td>
+<td class="nota n1">5<br><small>solo se alcanzan 12 de 169</small></td>
+<td><small>Mesa de dos ranuras con siete elementos iniciales de desarrollo web (HTML, CSS, JavaScript, Navegador, Servidor, Terminal, Git). Las primeras mezclas funcionan, pero de 169 elementos solo se pueden alcanzar 12: muchas recetas piden ingredientes, como React, que no salen de ninguna. De Web Reactiva tiene el nombre y algún «Podcast».</small> <a href="resultados/ollama_beam/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_beam/AIF/capturas/web-reactiva-alchemy.html.png"><img src="resultados/ollama_beam/AIF/capturas/web-reactiva-alchemy.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/beam</small><br><small>OpenCode · 2026-11-20 03:28 UTC</small></td>
+<td class=n><b>240.5 k</b><br><small>in 29.8 k · out 8.6 k<br>razon. 0 · caché 202.1 k</small></td>
+<td class=n>20</td>
+<td><small><a href="resultados/ollama_beam/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_beam/CCA/salida/src/cart.js">src/cart.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/cartManager.js">src/cartManager.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/events.js">src/events.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/http/server.js">src/http/server.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/index.js">src/index.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/inventory.js">src/inventory.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/locking.js">src/locking.js</a><br>… y 3 más</small></td>
+<td><small>✔ npm test 4/4<br>✔ 50 altas a la vez: 50 unidades (cerrojo en memoria)<br>✖ dinero en coma flotante: 0,10 × 3 = 0.30000000000000004<br>✖ el precio lo manda el cliente<br>✖ sin almacenamiento compartido ni README</small></td>
+<td class="nota n1">4<br><small>funciona, no escala</small></td>
+<td><small>Node sin dependencias, 413 líneas: carrito, gestor con un cerrojo en memoria por carrito, repositorio en memoria, inventario opcional, eventos, cupones y una API HTTP, con 4 tests en verde. Pero el dinero va en coma flotante, el precio lo manda el cliente, todo vive en un proceso y no hay README.</small> <a href="resultados/ollama_beam/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>ollama/beam</small><br><small>OpenCode · 2026-11-20 03:14 UTC</small></td>
+<td class=n><b>55.5 k</b><br><small>in 13.9 k · out 3.8 k<br>razon. 0 · caché 37.8 k</small></td>
+<td class=n>6</td>
+<td><small><a href="resultados/ollama_beam/PTS/salida/post-tests-flaky.md">post-tests-flaky.md</a></small></td>
+<td><small>662 palabras · slop 8.8 (1.32/100 pal.)</small></td>
+<td class="nota n1">7<br><small>esquema útil, poco post</small></td>
+<td><small>662 palabras que van al grano y no se salen del tema: un test intermitente es información falsa y sin tests al menos «no te mientes»; el test como sensor, la regla de reproducirlo en 5 minutos o borrarlo en 24 horas, siete estrategias y una checklist. Pero es casi un esquema en listas, sin un caso ni código, y mezcla inglés («beats», «un test suite», «Des moralización»).</small> <a href="resultados/ollama_beam/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-19 22:38 UTC</small></td>
+<td class=n><b>2231.2 k</b><br><small>in 90.7 k · out 73.6 k<br>razon. 0 · caché 2066.9 k</small></td>
+<td class=n>33</td>
+<td><small><a href="resultados/ollama_deepseek-v4.1-flash/A3D/salida/alhambra-3d.html">alhambra-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-3d.html<br>✔ carga sin errores, three.js desde jsDelivr<br>✔ vista general con colina, muralla, Carlos V, Generalife y Sierra Nevada<br>✖ en el tour la cámara se mete en la muralla y a los 35 s sigue en la parada 1</small></td>
+<td class="nota n1">6<br><small>la mejor maqueta, el tour falla</small></td>
+<td><small>La vista general es la mejor de todo el benchmark: colina de la Sabika amurallada, Alcazaba con torres, Palacio de Carlos V con su patio circular, Generalife con la acequia, casas alrededor y Sierra Nevada. Pero al iniciar el recorrido la cámara se mete dentro de la muralla y a los 35 s sigue en la primera de solo 5 paradas.</small> <a href="resultados/ollama_deepseek-v4.1-flash/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_deepseek-v4.1-flash/A3D/capturas/alhambra-3d.html.png"><img src="resultados/ollama_deepseek-v4.1-flash/A3D/capturas/alhambra-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-19 23:50 UTC</small></td>
+<td class=n><b>2646.1 k</b><br><small>in 136.5 k · out 92.1 k<br>razon. 0 · caché 2417.4 k</small></td>
+<td class=n>32</td>
+<td><small><a href="resultados/ollama_deepseek-v4.1-flash/AIF/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ carga sin errores; 86 KB sin dependencias<br>✔ arrastrar: Developer + IA → Copiloto, Café + Prompt → Idea<br>✔ 78 de 78 elementos alcanzables, el Atlas Malandriner incluido (juez/alcanzables.js)</small></td>
+<td class="nota n2">9<br><small>Infinite Craft de verdad</small></td>
+<td><small>La mecánica más fiel a Infinite Craft de todo el benchmark: lienzo libre donde se suelta una pieza sobre otra, almacén con buscador y una misión (descubrir el Atlas Malandriner). 78 elementos y 90 recetas sacados de webreactiva.com, todos alcanzables, con pistas, sonido y guardado. Pero no es infinito: fuera de las 90 recetas, las mezclas no dan nada.</small> <a href="resultados/ollama_deepseek-v4.1-flash/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_deepseek-v4.1-flash/AIF/capturas/index.html.png"><img src="resultados/ollama_deepseek-v4.1-flash/AIF/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-19 22:47 UTC</small></td>
+<td class=n><b>1143.5 k</b><br><small>in 62.4 k · out 49.7 k<br>razon. 0 · caché 1031.4 k</small></td>
+<td class=n>26</td>
+<td><small><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/index.html">index.html</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/server.js">server.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/config/pricing.js">src/config/pricing.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/Cart.js">src/core/Cart.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/CheckoutService.js">src/core/CheckoutService.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/EventEmitter.js">src/core/EventEmitter.js</a><br>… y 12 más</small></td>
+<td><small>✔ carga · index.html<br>✔ npm test: 23/23<br>✔ npm start sirve la tienda y añadir al carrito funciona<br>~ el carrito vive en localStorage: no hay backend que escalar</small></td>
+<td class="nota n1">6<br><small>bonito, escala el código, no el sistema</small></td>
+<td><small>Una tienda completa y muy cuidada (catálogo, búsqueda, carrito, cupones, envío, IVA, checkout) con un motor de precios por reglas, dinero en céntimos, almacenamiento intercambiable y 23 tests. Pero el carrito vive en localStorage y el servidor solo sirve estáticos: «escalable» lo resuelve como código fácil de ampliar, sin nada que aguante muchos usuarios.</small> <a href="resultados/ollama_deepseek-v4.1-flash/CCA/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_deepseek-v4.1-flash/CCA/capturas/tienda.png"><img src="resultados/ollama_deepseek-v4.1-flash/CCA/capturas/tienda.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-19 22:49 UTC</small></td>
+<td class=n><b>29.6 k</b><br><small>in 9.2 k · out 2.9 k<br>razon. 0 · caché 17.5 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/ollama_deepseek-v4.1-flash/PTS/salida/tests-que-fallan-peores-que-no-tener-tests.md">tests-que-fallan-peores-que-no-tener-tests.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n2">8<br><small>bueno, pero se desvía</small></td>
+<td><small>1426 palabras con buenos argumentos (habituación, fatiga de alarmas, «500 tests con 30 en rojo son 470 con un 100 % de desconfianza», el test que se vuelve «guardián del error») y un ejemplo de skip en pytest. Pero trata sobre todo de tests que fallan siempre o se ignoran, no de los que fallan «a veces», y tiene más slop de formato: 20 negritas, listas con etiqueta y «Conclusión».</small> <a href="resultados/ollama_deepseek-v4.1-flash/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-20 00:36 UTC</small></td>
+<td class=n><b>1822.9 k</b><br><small>in 77.6 k · out 63.8 k<br>razon. 0 · caché 1681.5 k</small></td>
+<td class=n>29</td>
+<td><small><a href="resultados/ollama_glm-5.3-flash/A3D/salida/alhambra-3d.html">alhambra-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-3d.html<br>✔ carga sin errores; 37 KB<br>✔ la ruta guiada arranca sola y avanza (15, 35 y 60 s)<br>✔ vista libre: Comares, Carlos V, Leones, Alcazaba, Justicia, Darro<br>✖ empieza dentro de un muro y en el recorrido roza las paredes</small></td>
+<td class="nota n2">9<br><small>se recorre y se reconoce</small></td>
+<td><small>Ruta guiada a pie de calle que arranca sola y avanza por 8 puntos (Justicia, Vino, Alcazaba, Carlos V, Leones, Arrayanes y Comares, Generalife) más un modo libre con una de las mejores maquetas del benchmark: la Torre de Comares, Carlos V con su patio circular, el anillo de columnas de los Leones, la Alcazaba almenada y el Darro. Pero empieza dentro de un muro y en el recorrido la cámara roza las paredes.</small> <a href="resultados/ollama_glm-5.3-flash/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_glm-5.3-flash/A3D/capturas/alhambra-3d.html.png"><img src="resultados/ollama_glm-5.3-flash/A3D/capturas/alhambra-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-20 00:42 UTC</small></td>
+<td class=n><b>250.7 k</b><br><small>in 65.3 k · out 57.8 k<br>razon. 0 · caché 127.6 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/ollama_glm-5.3-flash/AIF/salida/web-reactiva-craft.html">web-reactiva-craft.html</a></small></td>
+<td><small>✔ carga · web-reactiva-craft.html<br>✔ carga sin errores; 25 KB<br>✔ tras cerrar la bienvenida, soltar una ficha sobre otra combina<br>✔ 145 de 145 recetas alcanzables; las mezclas sin receta dan «invenciones raras»<br>✖ contenido inventado: «Nacho Ojea», «Trece Tigres», «La Red» no son de Web Reactiva</small></td>
+<td class="nota n2">8<br><small>buen juego, Web Reactiva inventado</small></td>
+<td><small>Mecánica muy fiel a Infinite Craft (mesa infinita con zoom, soltar una ficha sobre otra, panel de descubrimientos con buscador, sonidos), 145 recetas todas alcanzables y un generador de «invenciones raras» para las mezclas sin receta. Pero el contenido de Web Reactiva es inventado: «Nacho Ojea», «Trece Tigres», «La Red», ZX Spectrum y GeoCities; parte de Internet, Radio, Cine y Juego.</small> <a href="resultados/ollama_glm-5.3-flash/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_glm-5.3-flash/AIF/capturas/web-reactiva-craft.html.png"><img src="resultados/ollama_glm-5.3-flash/AIF/capturas/web-reactiva-craft.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-19 22:45 UTC</small></td>
+<td class=n><b>1083.0 k</b><br><small>in 45.9 k · out 32.9 k<br>razon. 0 · caché 1004.2 k</small></td>
+<td class=n>33</td>
+<td><small><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/.gitignore">.pytest_cache/.gitignore</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/CACHEDIR.TAG">.pytest_cache/CACHEDIR.TAG</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/README.md">.pytest_cache/README.md</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/v/cache/lastfailed">.pytest_cache/v/cache/lastfailed</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/v/cache/nodeids">.pytest_cache/v/cache/nodeids</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/__pycache__/conftest.cpython-313-pytest-9.1.1.pyc">__pycache__/conftest.cpython-313-pytest-9.1.1.pyc</a><br>… y 44 más</small></td>
+<td><small>✔ pytest: 24/24<br>✔ 50 hilos concurrentes en memoria: 50 líneas<br>✔ Decimal: 0,10 × 3 = 0.30<br>✖ adaptador Redis: cualquier excepción acaba en AttributeError (self._client.WatchError no existe)</small></td>
+<td class="nota n2">8<br><small>bien diseñado, Redis roto</small></td>
+<td><small>Python con capas (dominio, aplicación, infraestructura, API HTTP), Decimal para el dinero, precios del catálogo, bloqueo por carrito en memoria, límites y 24 tests en verde. Pero el adaptador de Redis, que es lo que lo haría escalar, captura self._client.WatchError, que no existe: un conflicto de concurrencia o cualquier error de negocio acaba en AttributeError.</small> <a href="resultados/ollama_glm-5.3-flash/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-19 22:48 UTC</small></td>
+<td class=n><b>29.6 k</b><br><small>in 10.1 k · out 2.6 k<br>razon. 0 · caché 17.0 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/ollama_glm-5.3-flash/PTS/salida/tests-flaky-son-peores-que-no-tener-tests.md">tests-flaky-son-peores-que-no-tener-tests.md</a></small></td>
+<td><small>981 palabras · slop 7.8 (0.79/100 pal.)</small></td>
+<td class="nota n2">9<br><small>el mejor post</small></td>
+<td><small>981 palabras con la tesis bien defendida (sin tests sabes que no hay red; con tests que mienten crees que la hay), costes con números (un test que falla 1 de cada 50 con 100 ejecuciones al día interrumpe a diario), un ejemplo en Go, las causas típicas y cinco pasos. El menos slop de todos. Falla en el ejemplo: dice que pasa el 99 % y casi siempre fallará.</small> <a href="resultados/ollama_glm-5.3-flash/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-20 01:35 UTC</small></td>
+<td class=n><b>1202.2 k</b><br><small>in 176.1 k · out 47.9 k<br>razon. 0 · caché 978.2 k</small></td>
+<td class=n>24</td>
+<td><small><a href="resultados/ollama_inkling-2-small/A3D/salida/alhambra-3d.html">alhambra-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-3d.html<br>✔ carga sin errores; 43 KB<br>✔ el recorrido automático viaja de parada en parada<br>✖ en los patios la cámara se mete en los muros</small></td>
+<td class="nota n2">9<br><small>bonita y se recorre</small></td>
+<td><small>Maqueta clara del cerro de la Sabika con muralla, Alcazaba con bandera, Comares, Generalife con su alberca, Albaicín, el Darro y Sierra Nevada, 9 paradas con textos correctos y un recorrido automático que viaja de verdad. Pero al bajar a los patios la cámara se mete en los muros, y Comares sale como una torre redonda con cúpula.</small> <a href="resultados/ollama_inkling-2-small/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_inkling-2-small/A3D/capturas/alhambra-3d.html.png"><img src="resultados/ollama_inkling-2-small/A3D/capturas/alhambra-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-20 01:41 UTC</small></td>
+<td class=n><b>688.7 k</b><br><small>in 152.8 k · out 42.1 k<br>razon. 0 · caché 493.8 k</small></td>
+<td class=n>15</td>
+<td><small><a href="resultados/ollama_inkling-2-small/AIF/salida/alquimia-reactiva.html">alquimia-reactiva.html</a></small></td>
+<td><small>✔ carga · alquimia-reactiva.html<br>✔ carga sin errores; 41 KB<br>✔ ficha sobre ficha combina; 125 de 125 alcanzables<br>~ soltar desde la barra sobre una ficha no combina<br>~ contenido de Web Reactiva a medias</small></td>
+<td class="nota n2">9<br><small>se juega, Web Reactiva a medias</small></td>
+<td><small>Mesa libre con fichas que se combinan soltando una sobre otra, 125 elementos todos alcanzables y un generador para las mezclas sin receta. Parte de Agua, Fuego, Aire y Tierra y mezcla programación genérica (React, Rust, Docker) con algo de Web Reactiva (podcast, masterclass, «Maratón WR», «Membresía WR», «Slow Content»), sin mirar la web.</small> <a href="resultados/ollama_inkling-2-small/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_inkling-2-small/AIF/capturas/alquimia-reactiva.html.png"><img src="resultados/ollama_inkling-2-small/AIF/capturas/alquimia-reactiva.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-20 01:44 UTC</small></td>
+<td class=n><b>1042.4 k</b><br><small>in 145.2 k · out 31.4 k<br>razon. 0 · caché 865.8 k</small></td>
+<td class=n>40</td>
+<td><small><a href="resultados/ollama_inkling-2-small/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/cartService.ts">src/application/cartService.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/cartView.ts">src/application/cartView.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/ports.ts">src/application/ports.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/config.ts">src/config.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br>… y 16 más</small></td>
+<td><small>✔ build y 21/21 tests<br>✔ 50 altas a la vez: 50 guardadas<br>✔ precio del catálogo, céntimos, CAS por versión, TTL<br>~ solo repositorios en memoria: varias instancias no comparten carrito</small></td>
+<td class="nota n2">9<br><small>bien diseñado, sin Redis</small></td>
+<td><small>API Fastify sin estado en TypeScript, con capas y puertos, dinero en céntimos, precio del catálogo, cupones, IVA, envío, caducidad de carritos y compare-and-set por versión en el repositorio. Compila, pasa 21 tests y 50 altas a la vez no pierden nada. Pero solo trae repositorios en memoria: Redis o Postgres quedan como «pendiente».</small> <a href="resultados/ollama_inkling-2-small/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-20 01:47 UTC</small></td>
+<td class=n><b>30.7 k</b><br><small>in 11.4 k · out 2.2 k<br>razon. 0 · caché 17.2 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/ollama_inkling-2-small/PTS/salida/tests-que-fallan-peor-que-no-tener-tests.md">tests-que-fallan-peor-que-no-tener-tests.md</a></small></td>
+<td><small>1045 palabras · slop 9.8 (0.93/100 pal.)</small></td>
+<td class="nota n2">8<br><small>limpio y útil, se abre de tema</small></td>
+<td><small>1045 palabras con la tesis bien defendida (fatiga de alertas, el rojo que deja de bloquear, «saltar con una red que no sabes si está atada»), un caso concreto de flujo de CI y un plan de salida útil (presupuesto de flakiness, cuarentena con dueño, orden aleatorio, reloj inyectado). Poco slop. Pero reparte el post entre cuatro tipos de test que falla y los intermitentes son solo uno.</small> <a href="resultados/ollama_inkling-2-small/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>ollama/kimi-k3.1-pro</small><br><small>OpenCode · 2026-11-20 01:48 UTC</small></td>
+<td class=n><b>1008.0 k</b><br><small>in 53.4 k · out 44.6 k<br>razon. 0 · caché 910.0 k</small></td>
+<td class=n>23</td>
+<td><small><a href="resultados/ollama_kimi-k3.1-pro/A3D/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ carga sin errores; 67 KB sin dependencias<br>✔ el recorrido lleva la cámara de parada en parada<br>✔ vista limpia y textos correctos</small></td>
+<td class="nota n2">10<br><small>el mejor A3D, sin librerías</small></td>
+<td><small>Una maqueta 3D con motor propio, sin three.js ni nada externo, que se reconoce (murallas almenadas, Alcazaba, Carlos V con su patio circular, los patios nazaríes con su fuente, el Generalife entre cipreses) y un recorrido de 6 paradas que lleva la cámara de una a otra sin atravesar nada. Diseño de guía turística: itinerario con tiempos, fichas, plano, atardecer, historia y consejos.</small> <a href="resultados/ollama_kimi-k3.1-pro/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_kimi-k3.1-pro/A3D/capturas/index.html.png"><img src="resultados/ollama_kimi-k3.1-pro/A3D/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>ollama/kimi-k3.1-pro</small><br><small>OpenCode · 2026-11-20 01:58 UTC</small></td>
+<td class=n><b>1714.8 k</b><br><small>in 85.5 k · out 49.5 k<br>razon. 0 · caché 1579.7 k</small></td>
+<td class=n>25</td>
+<td><small><a href="resultados/ollama_kimi-k3.1-pro/AIF/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ carga sin errores; 90 KB<br>✔ ficha sobre ficha combina; 98 de 98 alcanzables<br>✔ contenido real de webreactiva.com<br>✖ soltar desde la colección sobre una ficha la borra</small></td>
+<td class="nota n2">9<br><small>pulido y de Web Reactiva</small></td>
+<td><small>Contenido sacado de cuatro páginas de webreactiva.com (Malandriner, En pantuflas, Claude Code, Skills, MCP, SDD, «Deploy en viernes»), 98 elementos todos alcanzables, rangos («Aprendiz en pantuflas»), hitos, pistas, bitácora y una interfaz de producto. Mesa libre donde se combina soltando una ficha sobre otra. No es infinito: las mezclas sin receta dan un mensaje.</small> <a href="resultados/ollama_kimi-k3.1-pro/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_kimi-k3.1-pro/AIF/capturas/index.html.png"><img src="resultados/ollama_kimi-k3.1-pro/AIF/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/kimi-k3.1-pro</small><br><small>OpenCode · 2026-11-20 02:07 UTC</small></td>
+<td class=n><b>174.6 k</b><br><small>in 17.6 k · out 12.7 k<br>razon. 0 · caché 144.3 k</small></td>
+<td class=n>11</td>
+<td><small><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/main.py">main.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__init__.py">models/__init__.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/__init__.cpython-313.pyc">models/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/carrito.cpython-313.pyc">models/__pycache__/carrito.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/item_carrito.cpython-313.pyc">models/__pycache__/item_carrito.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/producto.cpython-313.pyc">models/__pycache__/producto.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/carrito.py">models/carrito.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/item_carrito.py">models/item_carrito.py</a><br>… y 8 más</small></td>
+<td><small>✔ 17/17 tests y main.py<br>✔ Decimal, una moneda, precio del catálogo, stock<br>✔ 50 hilos a la vez: 50 líneas<br>✖ una clase en memoria: sin servicio, sin persistencia, sin nada para escalar</small></td>
+<td class="nota n1">6<br><small>correcto, pero no escala</small></td>
+<td><small>Una clase Carrito en Python, limpia y bien validada (Decimal, una moneda por carrito, precio y stock del catálogo, 17 tests), pero sin servicio, sin persistencia y sin nada que responda a «escalable»: el carrito vive en un objeto en memoria y no hay README que lo explique.</small> <a href="resultados/ollama_kimi-k3.1-pro/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>ollama/kimi-k3.1-pro</small><br><small>OpenCode · 2026-11-20 02:10 UTC</small></td>
+<td class=n><b>42.3 k</b><br><small>in 9.5 k · out 3.5 k<br>razon. 0 · caché 29.4 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/ollama_kimi-k3.1-pro/PTS/salida/tests-intermitentes-peores-que-no-tener-tests.md">tests-intermitentes-peores-que-no-tener-tests.md</a></small></td>
+<td><small>1409 palabras · slop 10.8 (0.76/100 pal.)</small></td>
+<td class="nota n2">10<br><small>el mejor post</small></td>
+<td><small>1409 palabras sin salirse de los tests intermitentes, con la tesis defendida desde el principio («una habitación a oscuras» frente a «una alarma que suena al azar»), cuatro costes con mecanismo (oculta regresiones, entrena a ignorar el rojo, agranda los cambios, gasta atención), la cuenta bien hecha (200 tests al 99 % → 87 % de ejecuciones con algún fallo) y un plan práctico. El menos slop de todos.</small> <a href="resultados/ollama_kimi-k3.1-pro/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-19 22:39 UTC</small></td>
+<td class=n><b>11368.3 k</b><br><small>in 232.8 k · out 199.5 k<br>razon. 0 · caché 10935.9 k</small></td>
+<td class=n>80</td>
+<td><small><a href="resultados/ollama_minimax-m3/A3D/salida/alhambra-3d.html">alhambra-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-3d.html<br>✔ carga sin errores; 15 paradas, 4 vistas, hora del día, voz, minimapa<br>✖ el recorrido apenas avanza (1-3 % en 25 s)<br>✖ saltar a una parada cambia la ficha pero no mueve la cámara<br>✖ el minimapa tapa las paradas 11-15 de la lista</small></td>
+<td class="nota n1">4<br><small>lo más ambicioso, no se recorre</small></td>
+<td><small>El A3D con más cosas: 15 paradas con textos ricos y consejos de visita, 4 vistas, deslizador de hora del día, narración por voz, minimapa y arcos de herradura generados por código. Pero el recorrido apenas avanza, saltar a una parada no mueve la cámara (se queda en la plaza de entrada) y el minimapa tapa las paradas 11 a 15 de la lista.</small> <a href="resultados/ollama_minimax-m3/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_minimax-m3/A3D/capturas/alhambra-3d.html.png"><img src="resultados/ollama_minimax-m3/A3D/capturas/alhambra-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-19 23:13 UTC</small></td>
+<td class=n><b>11453.8 k</b><br><small>in 226.6 k · out 168.8 k<br>razon. 0 · caché 11058.4 k</small></td>
+<td class=n>76</td>
+<td><small><a href="resultados/ollama_minimax-m3/AIF/salida/alquimia-reactiva.html">alquimia-reactiva.html</a></small></td>
+<td><small>✔ carga · alquimia-reactiva.html<br>✔ carga sin errores; 192 KB, funciona sin conexión<br>✔ 6 de 6 mezclas probadas dan un elemento nuevo<br>✔ logo, colores y tipografía de Web Reactiva</small></td>
+<td class="nota n2">9<br><small>el mejor AIF, con mucho</small></td>
+<td><small>399 elementos y 1780 recetas sacados de webreactiva.com de verdad (glosario, cursos, skills, comunidad Malandriner), un generador para las mezclas sin receta, 7 legendarios, pistas, bitácora, compartir por URL, y el logo, los colores y la tipografía de la marca. Funciona sin conexión. Le falta el lienzo libre de Infinite Craft: combina en dos calderos.</small> <a href="resultados/ollama_minimax-m3/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_minimax-m3/AIF/capturas/alquimia-reactiva.html.png"><img src="resultados/ollama_minimax-m3/AIF/capturas/alquimia-reactiva.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-20 00:06 UTC</small></td>
+<td class=n><b>12922.7 k</b><br><small>in 137.4 k · out 112.2 k<br>razon. 0 · caché 12673.1 k</small></td>
+<td class=n>155</td>
+<td><small><a href="resultados/ollama_minimax-m3/CCA/salida/.env.example">.env.example</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.prettierignore">.prettierignore</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.prettierrc.json">.prettierrc.json</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/docker-compose.yml">docker-compose.yml</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/eslint.config.js">eslint.config.js</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/package.json">package.json</a><br>… y 254 más</small></td>
+<td><small>✔ npm ci, build, typecheck y lint<br>✔ 69/69 tests, también los de integración con Redis<br>✔ dos instancias con el mismo Redis: 40 altas a la vez, 22 guardadas = 22 aceptadas, 18 con 409 explícito<br>✔ límite de 10 unidades por línea (422)</small></td>
+<td class="nota n2">10<br><small>escala de verdad, con Redis</small></td>
+<td><small>Monorepo TypeScript con dominio hexagonal, API Fastify sin estado, Redis con scripts Lua (CAS por versión, reserva de stock, idempotencia), outbox, métricas, SSE y una tienda React. Compila, pasa 69 tests y, con dos instancias sobre el mismo Redis, 40 altas a la vez no pierden ni un dato. Lo único discutible: bajo mucha contención devuelve 409 en vez de reintentar más.</small> <a href="resultados/ollama_minimax-m3/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-19 23:44 UTC</small></td>
+<td class=n><b>103.9 k</b><br><small>in 15.2 k · out 11.0 k<br>razon. 0 · caché 77.7 k</small></td>
+<td class=n>6</td>
+<td><small><a href="resultados/ollama_minimax-m3/PTS/salida/tests-que-fallan.md">tests-que-fallan.md</a></small></td>
+<td><small>2800 palabras · slop 26.8 (0.96/100 pal.)</small></td>
+<td class="nota n2">8<br><small>un ensayo, no un post</small></td>
+<td><small>2800 palabras con lo que no tiene ningún otro: la cuenta de por qué la suite casi nunca sale verde (0,95^1000), tablas de coste, código TypeScript con el antes y el después, niveles de suite y caducidad de la cuarentena. Pero es tres veces más largo que un post, tiene errores dentro de sus propios ejemplos y 43 negritas, 8 rayas y emojis.</small> <a href="resultados/ollama_minimax-m3/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-20 02:11 UTC</small></td>
+<td class=n><b>8784.4 k</b><br><small>in 134.5 k · out 120.7 k<br>razon. 0 · caché 8529.3 k</small></td>
+<td class=n>90</td>
+<td><small><a href="resultados/ollama_minimax-m3.1-flash/A3D/salida/alhambra-3d.html">alhambra-3d.html</a><br><a href="resultados/ollama_minimax-m3.1-flash/A3D/salida/build.py">build.py</a><br><a href="resultados/ollama_minimax-m3.1-flash/A3D/salida/src/js/01_core.js">src/js/01_core.js</a><br><a href="resultados/ollama_minimax-m3.1-flash/A3D/salida/src/js/02_entorno.js">src/js/02_entorno.js</a><br><a href="resultados/ollama_minimax-m3.1-flash/A3D/salida/src/js/03_arquitectura.js">src/js/03_arquitectura.js</a><br><a href="resultados/ollama_minimax-m3.1-flash/A3D/salida/src/js/03b_jardines.js">src/js/03b_jardines.js</a><br><a href="resultados/ollama_minimax-m3.1-flash/A3D/salida/src/js/04_recorrido.js">src/js/04_recorrido.js</a><br><a href="resultados/ollama_minimax-m3.1-flash/A3D/salida/src/js/05_ui.js">src/js/05_ui.js</a><br>… y 4 más</small></td>
+<td><small>✔ carga · alhambra-3d.html<br>✔ carga sin errores; 751 KB sin conexión<br>✔ el recorrido avanza (lento)<br>✖ fichas con datos inventados<br>✖ paneles y etiquetas tapan la escena</small></td>
+<td class="nota n2">8<br><small>mucho detalle, textos inventados</small></td>
+<td><small>El A3D más grande: 16 paradas, cámara sobre una curva que recorre el recinto, Carlos V con su patio circular, murallas, jardines, Sierra Nevada, minimapa, cuatro luces y three.js incrustado para funcionar sin conexión. Pero los paneles tapan media escena, las etiquetas se pisan y las fichas tienen datos inventados: una figura de «El Descubridor» que «señala La Meca» sobre la Puerta de la Justicia, Carlos V «erigido entre 1527 y 1537», Santa María como «la referencia más reconocible».</small> <a href="resultados/ollama_minimax-m3.1-flash/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_minimax-m3.1-flash/A3D/capturas/alhambra-3d.html.png"><img src="resultados/ollama_minimax-m3.1-flash/A3D/capturas/alhambra-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-20 02:37 UTC</small></td>
+<td class=n><b>4636.5 k</b><br><small>in 124.0 k · out 91.3 k<br>razon. 0 · caché 4421.2 k</small></td>
+<td class=n>55</td>
+<td><small><a href="resultados/ollama_minimax-m3.1-flash/AIF/salida/alquimia-web-reactiva.html">alquimia-web-reactiva.html</a></small></td>
+<td><small>✔ carga · alquimia-web-reactiva.html<br>✔ carga sin errores; 70 KB<br>✔ elemento sobre elemento combina; 203 de 203 alcanzables<br>✔ contenido real y amplio de webreactiva.com<br>~ sin generador para mezclas sin receta</small></td>
+<td class="nota n2">9<br><small>203 elementos de Web Reactiva</small></td>
+<td><small>Mesa libre donde se suelta un elemento sobre otro, 203 elementos y 199 recetas todos alcanzables, sacados de varias páginas de webreactiva.com: agentes, skills, SDD con OpenSpec y Spec Kit, MCP, costes de tokens, seguridad y la capa de marca (Dani Primo, Zona y Atlas Malandriner, En pantuflas). Pistas, recetario, compartir y guardado. Fuera de las recetas no hay generador.</small> <a href="resultados/ollama_minimax-m3.1-flash/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_minimax-m3.1-flash/AIF/capturas/alquimia-web-reactiva.html.png"><img src="resultados/ollama_minimax-m3.1-flash/AIF/capturas/alquimia-web-reactiva.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-20 02:48 UTC</small></td>
+<td class=n><b>14602.0 k</b><br><small>in 135.3 k · out 113.4 k<br>razon. 0 · caché 14353.3 k</small></td>
+<td class=n>154</td>
+<td><small><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.dockerignore">.dockerignore</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.env.example">.env.example</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/Dockerfile">Dockerfile</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/docker-compose.yml">docker-compose.yml</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/eslint.config.js">eslint.config.js</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/package.json">package.json</a><br>… y 119 más</small></td>
+<td><small>✔ build, typecheck, lint y 42/42 tests (arrancan su Redis)<br>✔ dos instancias sobre el mismo Redis: 40 altas a la vez, 40 aceptadas, 40 guardadas<br>✔ JWT (401 sin token), precio del servidor, céntimos</small></td>
+<td class="nota n2">10<br><small>el carrito más completo</small></td>
+<td><small>API Fastify sin estado con todo el carrito en Redis y cada mutación atómica en un script Lua, más concurrencia optimista por versión, idempotencia, outbox con worker y grupo de consumidores, rate limiting distribuido, JWT, métricas, Docker Compose para escalar réplicas y una prueba de carga con k6. Compila, pasa 42 tests y, con dos instancias, 40 altas a la vez entran todas sin un conflicto.</small> <a href="resultados/ollama_minimax-m3.1-flash/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-20 03:08 UTC</small></td>
+<td class=n><b>331.8 k</b><br><small>in 29.8 k · out 10.8 k<br>razon. 0 · caché 291.2 k</small></td>
+<td class=n>15</td>
+<td><small><a href="resultados/ollama_minimax-m3.1-flash/PTS/salida/post-tests-que-fallan.md">post-tests-que-fallan.md</a></small></td>
+<td><small>3011 palabras · slop 40.5 (1.35/100 pal.)</small></td>
+<td class="nota n1">7<br><small>un manual, no un post</small></td>
+<td><small>3011 palabras con muy buen código (test que se «arregla» afirmando lo contrario, reloj congelado, espera activa en lugar de sleep, xfail con strict=True) y un plan por fases para salir de una suite roja. Pero cambia el tema: el título quita el «a veces», casi todo va de tests en rojo permanente y los intermitentes ocupan una sección. Tres veces más largo que un post, 66 negritas y palabras rotas.</small> <a href="resultados/ollama_minimax-m3.1-flash/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>A3D</b><br><small>visual</small></td>
+<td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-20 03:15 UTC</small></td>
+<td class=n><b>88.0 k</b><br><small>in 8.3 k · out 16.2 k<br>razon. 0 · caché 63.5 k</small></td>
+<td class=n>5</td>
+<td><small><a href="resultados/ollama_muse-spark-open/A3D/salida/alhambra-ruta-3d.html">alhambra-ruta-3d.html</a></small></td>
+<td><small>✔ carga · alhambra-ruta-3d.html<br>✔ carga sin errores; 45 KB<br>✔ el recorrido automático avanza<br>✖ ~150 errores al saltar de parada<br>✖ la cámara va pegada a la geometría, también en vista aérea</small></td>
+<td class="nota n1">7<br><small>bonita por fuera, cámara perdida</small></td>
+<td><small>Interfaz muy cuidada (Cinzel, fichas con datos, progreso, minimapa, leyenda, día y noche) y 7 paradas con textos correctos, y el recorrido automático avanza. Pero la escena está tan a escala que la cámara va siempre pegada a los volúmenes, hasta en «vista aérea», y al saltar de parada con «Siguiente» la consola se llena de errores (unos 150, uno por fotograma).</small> <a href="resultados/ollama_muse-spark-open/A3D/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_muse-spark-open/A3D/capturas/alhambra-ruta-3d.html.png"><img src="resultados/ollama_muse-spark-open/A3D/capturas/alhambra-ruta-3d.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>AIF</b><br><small>visual</small></td>
+<td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-20 03:16 UTC</small></td>
+<td class=n><b>391.6 k</b><br><small>in 126.7 k · out 24.2 k<br>razon. 0 · caché 240.7 k</small></td>
+<td class=n>9</td>
+<td><small><a href="resultados/ollama_muse-spark-open/AIF/salida/index.html">index.html</a></small></td>
+<td><small>✔ carga · index.html<br>✔ carga sin errores; 52 KB<br>✔ ficha sobre ficha combina<br>✖ Código + IA da Python, no Prompt: 68 de 102 alcanzables<br>✖ el botón Combinar no registra</small></td>
+<td class="nota n2">8<br><small>muy de la casa, rama de IA bloqueada</small></td>
+<td><small>Contenido sacado de cuatro páginas de webreactiva.com con mucho humor de la casa («Combustible oficial del developer. 100 % malandriner», «Dirigible (400 € en tokens)»), mesa libre donde se combina soltando una ficha sobre otra, filtros, pistas y recetas secretas. Pero una receta posterior (IA + Código = Python) pisa a la que anuncia como clave (Código + IA = Prompt): sin Prompt no se puede llegar a agentes, skills, MCP, Claude Code ni SDD. Solo 68 de 102 alcanzables, y el botón «Combinar» no registra nada.</small> <a href="resultados/ollama_muse-spark-open/AIF/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_muse-spark-open/AIF/capturas/index.html.png"><img src="resultados/ollama_muse-spark-open/AIF/capturas/index.html.png" loading="lazy"></a></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-20 03:26 UTC</small></td>
+<td class=n><b>603.7 k</b><br><small>in 16.6 k · out 25.7 k<br>razon. 0 · caché 561.4 k</small></td>
+<td class=n>24</td>
+<td><small><a href="resultados/ollama_muse-spark-open/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__init__.py">api/__init__.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__pycache__/__init__.cpython-313.pyc">api/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__pycache__/app.cpython-313.pyc">api/__pycache__/app.cpython-313.pyc</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/app.py">api/app.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/fastapi_app.py">api/fastapi_app.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/cart/__init__.py">cart/__init__.py</a><br>… y 22 más</small></td>
+<td><small>✔ pytest 12/12 y main.py<br>✔ 50 hilos con 4 shards: 50 unidades<br>✔ versión optimista en el almacenamiento, Decimal, precio del inventario<br>~ sin almacenamiento compartido real (Redis/DynamoDB «intercambiable»)</small></td>
+<td class="nota n2">9<br><small>bien pensado, sin Redis</small></td>
+<td><small>Python sin dependencias: agregado de carrito con límites, motor de precios con reglas (por volumen, categoría, cupón), IVA y envío, reserva de stock, bus de eventos, servicio sin estado con versión optimista y reintentos, almacenamiento en memoria, en fichero o repartido en shards, y una API REST. Pasa 12 tests y 50 hilos no pierden nada. Pero Redis o DynamoDB son solo un contrato.</small> <a href="resultados/ollama_muse-spark-open/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>PTS</b><br><small>texto</small></td>
+<td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-20 03:28 UTC</small></td>
+<td class=n><b>26.3 k</b><br><small>in 6.3 k · out 1.2 k<br>razon. 0 · caché 18.8 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/ollama_muse-spark-open/PTS/salida/blog-tests-que-fallan.md">blog-tests-que-fallan.md</a></small></td>
+<td><small>444 palabras · slop 2.0 (0.45/100 pal.)</small></td>
+<td class="nota n2">8<br><small>limpio y corto, se va al rojo fijo</small></td>
+<td><small>444 palabras directas y con muy poco slop (0,45 por cada 100 palabras): la tesis en dos frases (sin tests sabes que estás desprotegido; con tests rojos que ignoras crees que estás cubierto), dos imágenes que funcionan (la alarma del coche, quitar la pila al detector de humo), la salida de `npm test` con «3 failed» y cuatro reglas. Pero arranca con tests que «fallan constantemente» y apenas toca los que fallan a veces, y es corto para un post.</small> <a href="resultados/ollama_muse-spark-open/PTS/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr>
+</table></div>

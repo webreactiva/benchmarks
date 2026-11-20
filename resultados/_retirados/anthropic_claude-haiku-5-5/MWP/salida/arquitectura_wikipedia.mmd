@@ -1,0 +1,98 @@
+%% Arquitectura simplificada de Wikipedia (Wikimedia Foundation)
+%% Diagrama aproximado: los nombres y servicios exactos evolucionan con el tiempo.
+flowchart TD
+
+    %% ---------- Usuarios ----------
+    subgraph USR["Usuarios"]
+        LECTOR["Lectores"]
+        EDITOR["Editores"]
+        BOT["Bots y clientes de la API"]
+    end
+
+    %% ---------- Borde / CDN ----------
+    subgraph EDGE["Capa de borde"]
+        DNS["DNS con enrutamiento geográfico"]
+        CDN["CDN y caché HTTP<br/>(Varnish y Apache Traffic Server)"]
+        LB["Balanceadores de carga<br/>(LVS y nginx)"]
+    end
+
+    %% ---------- Aplicación ----------
+    subgraph APP["Capa de aplicación"]
+        MW["MediaWiki<br/>(PHP, php-fpm)"]
+        PARSOID["Parsoid<br/>(Node.js, wikitexto ↔ HTML)"]
+        REST["API REST y Action API"]
+        JOBS["Ejecutores de trabajos asíncronos<br/>(job queue)"]
+        THUMB["Thumbor<br/>(miniaturas de imágenes)"]
+    end
+
+    %% ---------- Datos ----------
+    subgraph DATA["Almacenamiento y datos"]
+        DB[("MariaDB<br/>primario + réplicas por sección")]
+        MC[("Memcached<br/>caché de objetos y de parser")]
+        SWIFT[("Swift<br/>archivos multimedia")]
+        ES[("Elasticsearch<br/>CirrusSearch")]
+        WDQS[("Wikidata Query Service<br/>grafo RDF / SPARQL")]
+    end
+
+    %% ---------- Eventos y analítica ----------
+    subgraph EVT["Eventos y análisis"]
+        KAFKA["Apache Kafka<br/>flujos de eventos"]
+        ANAL["Pipeline de analítica<br/>(Hadoop, Hive, Spark)"]
+    end
+
+    %% ---------- Flujos de lectura ----------
+    LECTOR -->|"HTTPS"| DNS
+    BOT -->|"HTTPS"| DNS
+    EDITOR -->|"HTTPS"| DNS
+    DNS --> CDN
+    CDN -->|"acierto de caché"| LECTOR
+    CDN -->|"fallo de caché"| LB
+    LB --> MW
+    LB --> REST
+
+    %% ---------- Flujos de edición ----------
+    EDITOR -.->|"guardar página"| LB
+
+    %% ---------- Procesado de contenido ----------
+    MW -->|"wikitexto"| PARSOID
+    PARSOID -->|"HTML renderizado"| MW
+    REST --> MW
+    REST --> PARSOID
+
+    %% ---------- Acceso a datos ----------
+    MW -->|"lecturas y escrituras"| DB
+    MW -->|"caché"| MC
+    MW -->|"búsqueda"| ES
+    MW -->|"encolar tareas"| JOBS
+    JOBS --> DB
+    JOBS --> ES
+
+    %% ---------- Medios ----------
+    MW -->|"subida de archivos"| SWIFT
+    LECTOR -.->|"imágenes"| THUMB
+    THUMB --> SWIFT
+    CDN -.->|"imágenes cacheadas"| LECTOR
+
+    %% ---------- Wikidata y consultas ----------
+    BOT -->|"consultas SPARQL"| WDQS
+    MW -->|"datos de Wikidata"| WDQS
+
+    %% ---------- Eventos ----------
+    MW -->|"publica eventos"| KAFKA
+    JOBS -->|"publica eventos"| KAFKA
+    KAFKA --> ANAL
+    KAFKA --> ES
+    KAFKA --> WDQS
+
+    %% ---------- Estilos ----------
+    classDef usuario fill:#e3f2fd,stroke:#1565c0,color:#0d47a1
+    classDef borde fill:#fff3e0,stroke:#ef6c00,color:#e65100
+    classDef app fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
+    classDef datos fill:#f3e5f5,stroke:#6a1b9a,color:#4a148c
+    classDef evento fill:#fce4ec,stroke:#ad1457,color:#880e4f
+
+    class LECTOR,EDITOR,BOT usuario
+    class DNS,CDN,LB borde
+    class MW,PARSOID,REST,JOBS,THUMB app
+    class DB,MC,SWIFT,ES,WDQS datos
+    class KAFKA,ANAL evento

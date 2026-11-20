@@ -1,0 +1,93 @@
+%% Arquitectura de Wikipedia (simplificada)
+%% Diagrama en Mermaid - Etiquetas en español
+
+flowchart TD
+
+    %% ===== Clientes =====
+    subgraph clientes["Clientes / Usuarios"]
+        U1["Navegador de escritorio"]
+        U2["Navegador móvil"]
+        U3["Apps móviles (iOS / Android)"]
+    end
+
+    %% ===== Borde de red =====
+    subgraph borde["Borde de red"]
+        GDNS["GeoDNS<br/>(resolución según ubicación)"]
+        CDN["CDN (Cloudflare / cachés de borde)<br/>Contenido estático y texto cacheado"]
+        LB["Balanceadores de carga<br/>(LVS + keepalived)"]
+    end
+
+    %% ===== Capa de aplicación =====
+    subgraph aplicacion["Capa de aplicación"]
+        GW["Enrutador / gateway<br/>(ATS - Apache Traffic Server)"]
+        subgraph servidores["Granja de servidores de aplicación"]
+            APP1["Servidor PHP 1<br/>(MediaWiki)"]
+            APP2["Servidor PHP 2<br/>(MediaWiki)"]
+            APP3["Servidor PHP N<br/>(MediaWiki)"]
+        end
+        PARS["Servicios de análisis / Render<br/>(Parser, RESTBase, API REST)"]
+    end
+
+    %% ===== Capa de caché =====
+    subgraph cache["Capa de caché"]
+        MC["Memcached<br/>(caché de objetos y fragmentos)"]
+    end
+
+    %% ===== Capa de datos =====
+    subgraph datos["Capa de datos"]
+        DBM["MariaDB Maestro<br/>(escrituras)"]
+        DBR1["Réplica MariaDB 1<br/>(lecturas)"]
+        DBR2["Réplica MariaDB N<br/>(lecturas)"]
+        SW["Ceph / Swift<br/>(archivos e imágenes)"]
+        ES["Elasticsearch<br/>(motor de búsqueda)"]
+        KC["Kafka + EventPlatform<br/>(eventos y telemetría)"]
+    end
+
+    %% ===== Relaciones =====
+    U1 --> GDNS
+    U2 --> GDNS
+    U3 --> GDNS
+    GDNS --> CDN
+    CDN -- "fallo de caché (miss)" --> LB
+    LB --> GW
+    GW --> APP1
+    GW --> APP2
+    GW --> APP3
+
+    APP1 --> MC
+    APP2 --> MC
+    APP3 --> MC
+
+    APP1 -- "escrituras" --> DBM
+    APP2 -- "escrituras" --> DBM
+    APP3 -- "escrituras" --> DBM
+    DBM -- "replicación" --> DBR1
+    DBM -- "replicación" --> DBR2
+    APP1 -- "lecturas" --> DBR1
+    APP2 -- "lecturas" --> DBR2
+    APP3 -- "lecturas" --> DBR1
+
+    APP1 --> PARS
+    APP2 --> PARS
+    APP3 --> PARS
+
+    PARS --> SW
+    APP1 --> ES
+    APP2 --> ES
+    APP3 --> ES
+
+    APP1 --> KC
+    PARS --> KC
+
+    %% ===== Estilos =====
+    classDef clientes fill:#e1f5fe,stroke:#0288d1,color:#000
+    classDef borde fill:#fff3e0,stroke:#f57c00,color:#000
+    classDef aplicacion fill:#e8f5e9,stroke:#388e3c,color:#000
+    classDef cache fill:#f3e5f5,stroke:#7b1fa2,color:#000
+    classDef datos fill:#fce4ec,stroke:#c2185b,color:#000
+
+    class U1,U2,U3 clientes
+    class GDNS,CDN,LB borde
+    class GW,APP1,APP2,APP3,PARS aplicacion
+    class MC cache
+    class DBM,DBR1,DBR2,SW,ES,KC datos

@@ -1,0 +1,25 @@
+{
+  "codigo": "PTS",
+  "modelo": "ollama/deepseek-v4.1-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T22:49:49Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 9200,
+    "output": 2883,
+    "reasoning": 0,
+    "cache_read": 17506,
+    "cache_write": 0,
+    "total": 29589
+  },
+  "peticiones": 3,
+  "error": null,
+  "herramientas": {
+    "bash": 1,
+    "write": 1
+  },
+  "sesion": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
+  "ficheros": [
+    "tests-que-fallan-peores-que-no-tener-tests.md"
+  ]
+}

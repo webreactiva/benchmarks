@@ -1,0 +1,18 @@
+{
+  "nota": 9,
+  "veredicto": "bonita y se recorre",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  },
+  "resumen": "Maqueta clara del cerro de la Sabika con muralla, Alcazaba con bandera, Comares, Generalife con su alberca, Albaicín, el Darro y Sierra Nevada, 9 paradas con textos correctos y un recorrido automático que viaja de verdad. Pero al bajar a los patios la cámara se mete en los muros, y Comares sale como una torre redonda con cúpula.",
+  "rarezas": [
+    "Lo probó en Chrome headless en varias paradas y lo retocó con 11 ediciones.",
+    "Buscó navegadores (chromium, puppeteer, playwright) para probarlo; corría encerrado y solo vio lo del sistema.",
+    "24 peticiones y 1,2 millones de tokens, sin compactaciones."
+  ]
+}

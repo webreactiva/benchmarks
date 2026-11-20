@@ -1,0 +1,28 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra.html",
+      "errores": [],
+      "titulo": "Ruta 3D - Alhambra de Granada",
+      "canvas": 1,
+      "texto": "Alhambra de Granada\n\nRuta 3D por el conjunto monumental. Pulsa un punto o \"Tour\".\n\nEntrada\nAlcazaba\nPalacios Nazaríes\nPatio de los Leones\nPalacio de Carlos V\nGeneralife\nRuta completa\nTour automático\nVista general\nSelecciona un punto de la ruta.\nPalacios nasridas\nFortaleza (Alcazaba)\nJardines (Generalife)\nOtros edificios\nEntrada / Puerta de la Justicia\nAlcazaba\nPalacios Nazaríes\nPatio de los Leones",
+      "scripts": [
+        "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js",
+        "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js",
+        "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"
+      ],
+      "captura": "capturas/alhambra.html.png",
+      "capturas_extra": [
+        "capturas/inicio.png",
+        "capturas/auto-10s.png",
+        "capturas/auto-30s.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores; 8 KB",
+    "✔ el tour mueve la cámara de parada en parada",
+    "✖ la Alhambra son cajas y pilares"
+  ]
+}

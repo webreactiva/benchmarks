@@ -1,0 +1,26 @@
+{
+  "codigo": "PTS",
+  "modelo": "claude-haiku-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-19T21:03:52Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 4,
+    "output": 3129,
+    "reasoning": 0,
+    "cache_read": 61111,
+    "cache_write": 10867,
+    "total": 75111
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "Write": 1
+  },
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "tests-que-fallan-peor-que-no-tenerlos.md"
+  ]
+}

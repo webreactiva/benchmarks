@@ -1,0 +1,30 @@
+{
+  "codigo": "AIF",
+  "modelo": "ollama/minimax-m3",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T23:13:35Z",
+  "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 226573,
+    "output": 168823,
+    "reasoning": 0,
+    "cache_read": 11058380,
+    "cache_write": 0,
+    "total": 11453776
+  },
+  "peticiones": 76,
+  "error": null,
+  "herramientas": {
+    "bash": 69,
+    "webfetch": 1,
+    "task": 1,
+    "read": 4,
+    "todowrite": 2,
+    "write": 5,
+    "edit": 8
+  },
+  "sesion": "ses_e09e9b737ffeYxosWOzzacnj19",
+  "ficheros": [
+    "alquimia-reactiva.html"
+  ]
+}

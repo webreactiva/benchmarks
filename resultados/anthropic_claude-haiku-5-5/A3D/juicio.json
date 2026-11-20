@@ -1,0 +1,19 @@
+{
+  "nota": 8,
+  "veredicto": "funciona, la ruta tapa la Alhambra",
+  "resumen": "Un HTML con three.js sin errores, con paisaje (cielo, Sierra Nevada nevada, torres con tejado, cipreses del Generalife), 10 paradas con texto bueno y controles completos. Pero el tubo amarillo de la ruta y el marcador ocupan media pantalla durante el tour, y los edificios siguen siendo bloques.",
+  "rarezas": [
+    "Se hizo capturas de su propia página con Chrome headless, las miró y corrigió la cámara y el grosor del tubo. Es el único modelo que ha comprobado visualmente lo que hizo.",
+    "981 k tokens en 11 peticiones, el que más ha gastado: leer tres capturas y reescribir 55 k tokens de salida.",
+    "Avisa en la propia página de que es una «maqueta esquemática» con posiciones aproximadas."
+  ],
+  "nota_previa": 6,
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 1,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  }
+}

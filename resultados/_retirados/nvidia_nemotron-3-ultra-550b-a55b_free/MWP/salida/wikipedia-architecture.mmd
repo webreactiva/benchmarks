@@ -1,0 +1,56 @@
+graph TB
+    subgraph "Cliente"
+        A[Navegador Web] --> B[API Cliente]
+        A --> C[App Móvil]
+    end
+
+    subgraph "Edge Layer"
+        D[CDN / Varnish Cache] --> E[Load Balancer]
+        F[SSL Termination] --> E
+    end
+
+    subgraph "Application Layer"
+        E --> G[MediaWiki PHP App Servers]
+        G --> H[Job Queue - Redis/Kafka]
+        G --> I[Session Store - Redis]
+    end
+
+    subgraph "Data Layer"
+        G --> J[(MariaDB/MySQL Primary)]
+        J --> K[(MariaDB/MySQL Replicas)]
+        G --> L[(Elasticsearch - Búsqueda)]
+        G --> M[(Cassandra - Sesiones/Contadores)]
+        G --> N[(Swift/Blob Storage - Archivos)]
+    end
+
+    subgraph "Servicios Auxiliares"
+        O[Parsoid - Parser HTML]
+        P[RESTBase - API REST]
+        Q[VisualEditor]
+        R[Mathoid - Fórmulas]
+        S[Electron - PDF Rendering]
+    end
+
+    G --> O
+    G --> P
+    G --> Q
+    G --> R
+    G --> S
+
+    subgraph "Infraestructura"
+        T[Kubernetes / Docker]
+        U[Prometheus / Grafana]
+        V[Logstash / Elasticsearch Logs]
+        W[Gerrit / CI/CD]
+    end
+
+    G -.-> T
+    T -.-> U
+    T -.-> V
+    W --> G
+
+    style A fill:#e1f5fe
+    style D fill:#fff3e0
+    style G fill:#e8f5e9
+    style J fill:#fce4ec
+    style O fill:#f3e5f5

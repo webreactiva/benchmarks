@@ -1,0 +1,20 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ npm test: 30/30 (node:test, sin dependencias)",
+    "✔ npm run example cuadra a mano",
+    "✔ 50 escrituras concurrentes: ninguna se pierde",
+    "✔ rechaza USD en carrito EUR y el id ../",
+    "~ 44 de 50 acaban en CONCURRENCY_CONFLICT con 5 reintentos"
+  ],
+  "comprobacion": "Copia en /tmp, npm test, npm run example y juez/juez.mjs (script del juez, no del modelo)",
+  "juez_salida": [
+    "concurrencia (maxRetries 5): ok 6 rechazadas 44 · líneas guardadas 6 · CONCURRENCY_CONFLICT",
+    "mismo SKU, maxRetries 100: cantidad 50 de 50",
+    "USD en carrito EUR: rechazado CURRENCY_MISMATCH",
+    "0,10 × 3 = 30 céntimos",
+    "id ../ rechazado INVALID_CART_ID",
+    "tras tocar el objeto devuelto, líneas 1"
+  ]
+}

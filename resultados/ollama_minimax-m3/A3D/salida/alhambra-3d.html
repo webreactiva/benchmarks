@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>La Alhambra · Ruta 3D — Granada</title>
+<style>
+:root{
+  --gold:#d9b26a; --gold-lt:#f2dcb0; --ink:#08090b; --panel:rgba(14,16,20,.74);
+  --txt:#f0e8dc; --muted:#a1978a; --line:rgba(217,178,106,.28); --accent:#79b3c8;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#08090b;color:var(--txt);
+  font-family:"Inter","Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+canvas#scene{position:fixed;inset:0;display:block;touch-action:none}
+#ui{position:fixed;inset:0;pointer-events:none;z-index:5}
+.pane{pointer-events:auto;background:var(--panel);backdrop-filter:blur(14px) saturate(1.1);
+  -webkit-backdrop-filter:blur(14px) saturate(1.1);border:1px solid var(--line);
+  border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+
+/* ---------- cabecera ---------- */
+header{position:absolute;top:16px;left:16px;padding:13px 18px 12px;max-width:min(430px,46vw)}
+header h1{margin:0;font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:.4px}
+header h1 b{color:var(--gold);font-weight:600}
+header p{margin:4px 0 0;font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- lista de paradas ---------- */
+#stops{position:absolute;top:16px;right:16px;width:305px;max-height:calc(100vh - 32px);
+  display:flex;flex-direction:column;overflow:hidden}
+#stops .ttl{padding:11px 15px;border-bottom:1px solid var(--line);font-size:10.5px;
+  letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:flex;justify-content:space-between}
+#stops ol{margin:0;padding:6px 8px 10px;overflow-y:auto;list-style:none;scrollbar-width:thin;
+  scrollbar-color:rgba(217,178,106,.35) transparent}
+#stops ol::-webkit-scrollbar{width:6px}
+#stops ol::-webkit-scrollbar-thumb{background:rgba(217,178,106,.35);border-radius:3px}
+#stops li{display:flex;gap:10px;align-items:flex-start;padding:7px 8px;border-radius:9px;cursor:pointer;
+  transition:background .18s}
+#stops li:hover{background:rgba(217,178,106,.09)}
+#stops li .n{flex:0 0 22px;height:22px;border-radius:50%;border:1px solid var(--line);
+  display:grid;place-items:center;font-size:11px;color:var(--gold-lt);font-variant-numeric:tabular-nums;
+  background:rgba(0,0,0,.25)}
+#stops li.on .n{background:var(--gold);color:#151007;border-color:var(--gold);font-weight:700}
+#stops li.on{background:rgba(217,178,106,.14)}
+#stops li .t{font-size:12.5px;line-height:1.35;color:#efe6d8}
+#stops li.on .t{color:#fff}
+#stops li .s{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+
+/* ---------- ficha de la parada ---------- */
+#info{position:absolute;left:16px;bottom:104px;width:min(430px,44vw);padding:15px 18px 16px;
+  transition:opacity .45s,transform .45s}
+#info .kicker{font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold)}
+#info h2{margin:5px 0 2px;font-family:var(--serif);font-size:23px;font-weight:600;line-height:1.15}
+#info .sub{font-size:11.5px;color:var(--accent);letter-spacing:.6px}
+#info p{margin:9px 0 0;font-size:12.8px;line-height:1.62;color:#ded5c8}
+#info .tip{margin-top:10px;font-size:11.5px;color:var(--gold-lt);border-left:2px solid var(--gold);
+  padding-left:9px;line-height:1.5}
+#info.swap{opacity:0;transform:translateY(8px)}
+
+/* ---------- controles ---------- */
+#bar{position:absolute;left:50%;transform:translateX(-50%);bottom:16px;padding:10px 14px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;max-width:min(1000px,94vw)}
+button,.btn{pointer-events:auto;background:rgba(255,255,255,.06);color:var(--txt);border:1px solid var(--line);
+  border-radius:9px;padding:7px 12px;font-size:11.5px;letter-spacing:.6px;cursor:pointer;font-family:inherit;
+  transition:background .16s,border-color .16s,color .16s;white-space:nowrap}
+button:hover,.btn:hover{background:rgba(217,178,106,.18);border-color:rgba(217,178,106,.6)}
+button.on{background:var(--gold);color:#150f05;border-color:var(--gold);font-weight:600}
+#bar .sep{width:1px;height:22px;background:var(--line)}
+#bar label{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:7px}
+input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:rgba(255,255,255,.18);
+  outline:none;cursor:pointer;width:120px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;
+  background:var(--gold);border:none;box-shadow:0 0 0 3px rgba(217,178,106,.2)}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--gold);border:none}
+#clock{font-variant-numeric:tabular-nums;font-size:12px;color:var(--gold-lt);min-width:42px;text-align:center}
+
+/* ---------- minimapa ---------- */
+#map{position:absolute;right:16px;bottom:16px;padding:10px}
+#map canvas{display:block;border-radius:8px;background:rgba(0,0,0,.32)}
+#map .cap{margin-top:6px;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);
+  display:flex;justify-content:space-between;gap:10px}
+
+/* ---------- etiquetas 3D ---------- */
+#labels{position:absolute;inset:0;overflow:hidden}
+.lbl{position:absolute;transform:translate(-50%,-100%);white-space:nowrap;pointer-events:none;
+  font-size:11px;letter-spacing:.4px;color:#fff;text-shadow:0 2px 8px #000,0 0 2px #000;
+  background:rgba(10,12,15,.5);border:1px solid rgba(217,178,106,.35);border-radius:20px;padding:3px 9px;
+  backdrop-filter:blur(3px)}
+.lbl.big{font-family:var(--serif);font-size:13px;letter-spacing:.5px;border-color:rgba(217,178,106,.55);
+  background:rgba(10,12,15,.62)}
+.lbl .idx{color:var(--gold);margin-right:5px;font-weight:700}
+
+/* ---------- carga ---------- */
+#load{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#08090b;transition:opacity .8s}
+#load .in{text-align:center;max-width:520px;padding:24px}
+#load .orn{font-family:var(--serif);font-size:13px;letter-spacing:7px;color:var(--gold);text-transform:uppercase}
+#load h2{font-family:var(--serif);font-size:34px;margin:12px 0 6px;font-weight:600}
+#load p{color:var(--muted);font-size:12.5px;line-height:1.7;margin:6px 0 0}
+#load .arc{width:200px;height:200px;margin:18px auto 6px;border:1px solid rgba(217,178,106,.35);border-radius:50%;
+  position:relative;animation:spin 9s linear infinite}
+#load .arc::before{content:"";position:absolute;inset:26px;border:1px solid rgba(217,178,106,.25);border-radius:50%}
+#load .arc::after{content:"";position:absolute;inset:52px;border:1px solid rgba(217,178,106,.5);border-radius:50%;
+  background:radial-gradient(circle,rgba(217,178,106,.35),transparent 70%)}
+@keyframes spin{to{transform:rotate(360deg)}}
+#load.gone{opacity:0;pointer-events:none}
+#err{color:#e58b7a;font-size:12px;margin-top:10px}
+@media (max-width:900px){
+  #stops{width:250px}#info{width:min(360px,60vw);bottom:120px}
+  header{max-width:60vw}
+}
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+
+<div id="ui">
+  <div id="labels"></div>
+
+  <header class="pane">
+    <h1><b>Alhambra</b> de Granada</h1>
+    <p id="sub">Ruta 3D · 15 paradas</p>
+  </header>
+
+  <section id="stops" class="pane">
+    <div class="ttl"><span>Recorrido</span><span id="prog">0%</span></div>
+    <ol id="list"></ol>
+  </section>
+
+  <section id="info" class="pane">
+    <div class="kicker" id="i-k">Parada 1 de 14</div>
+    <h2 id="i-t">—</h2>
+    <div class="sub" id="i-s">—</div>
+    <p id="i-p"></p>
+    <div class="tip" id="i-tip"></div>
+  </section>
+
+  <div id="bar" class="pane">
+    <button id="play" class="on">▶ Reproducir</button>
+    <button id="restart" title="Volver al inicio">↺</button>
+    <div class="sep"></div>
+    <label>Velocidad <button class="btn" id="spd">1×</button></label>
+    <div class="sep"></div>
+    <label>Vista <button class="btn on" data-view="guia">Guía</button></label>
+    <button class="btn" data-view="cine">Cinemática</button>
+    <button class="btn" data-view="libre">Libre</button>
+    <button class="btn" data-view="pea">Peatón</button>
+    <div class="sep"></div>
+    <label>☀ <input type="range" id="tod" min="5.5" max="21.5" step="0.05" value="17.6"><span id="clock">17:36</span></label>
+    <div class="sep"></div>
+    <button class="btn on" id="lbl">Etiquetas</button>
+    <button class="btn" id="voice">Voz</button>
+  </div>
+
+  <div id="map" class="pane">
+    <canvas id="mmap" width="240" height="252"></canvas>
+    <div class="cap"><span>Plano</span><span>Alhambra</span></div>
+  </div>
+</div>
+
+<div id="load">
+  <div class="in">
+    <div class="arc"></div>
+    <div class="orn">Alhambra</div>
+    <h2>La Alhambra de Granada</h2>
+    <p>Recorrido tridimensional por la ciudadela nazarí: Alcazaba, Palacios Nazaríes,<br>Partal y Generalife.</p>
+    <p id="err"></p>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ============================================================
+   0 · UTILIDADES
+   ============================================================ */
+const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp  = (a,b,t)=>a+(b-a)*t;
+const smooth= t=>t*t*(3-2*t);
+const rad   = d=>d*Math.PI/180;
+
+function mergeGeos(list){
+  const gs = list.map(g=>g.index?g.toNonIndexed():g);
+  const total = gs.reduce((s,g)=>s+g.attributes.position.count,0);
+  const out = new THREE.BufferGeometry();
+  for(const [name,size] of [['position',3],['normal',3],['uv',2]]){
+    const arr = new Float32Array(total*size);
+    let off=0;
+    for(const g of gs){
+      const a=g.attributes[name];
+      if(a){ arr.set(a.array.subarray(0,a.count*size), off); }
+      off += g.attributes.position.count*size;
+    }
+    out.setAttribute(name, new THREE.BufferAttribute(arr,size));
+  }
+  return out;
+}
+
+/* ============================================================
+   1 · TEXTURAS PROCEDURALES
+   ============================================================ */
+function cvs(size,draw){
+  const c=document.createElement('canvas'); c.width=c.height=size;
+  draw(c.getContext('2d'),size);
+  const t=new THREE.CanvasTexture(c);
+  t.colorSpace=THREE.SRGBColorSpace;
+  t.wrapS=t.wrapT=THREE.RepeatWrapping;
+  t.anisotropy=8;
+  return t;
+}
+function rnd(seed){ let s=seed; return ()=> (s=(s*16807)%2147483647)/2147483647; }
+
+/* azulejo: zócalo nazarí de estrella de ocho puntas */
+function texAzulejo(){
+  const t=cvs(512,(x,S)=>{
+    x.fillStyle='#efe7d6'; x.fillRect(0,0,S,S);
+    const r=rnd(7), n=8, c=S/n;
+    const pal=['#1f6f8f','#2f7d4f','#b8442f','#c8a13c','#5c4b8a'];
+    for(let i=0;i<n;i++)for(let j=0;j<n;j++){
+      const ox=i*c, oy=j*c, col=pal[Math.floor(r()*pal.length)];
+      x.fillStyle= r()>.55?'#f6f1e4':'#e6dcc6';
+      x.fillRect(ox,oy,c,c);
+      x.strokeStyle=col; x.lineWidth=2.4; x.strokeRect(ox+3,oy+3,c-6,c-6);
+      x.save(); x.translate(ox+c/2,oy+c/2);
+      x.fillStyle=col; x.globalAlpha=.85;
+      x.beginPath();
+      for(let k=0;k<16;k++){
+        const a=k*Math.PI/8-Math.PI/2, rad2=(k%2?c*.12:c*.31);
+        k?x.lineTo(Math.cos(a)*rad2,Math.sin(a)*rad2):x.moveTo(Math.cos(a)*rad2,Math.sin(a)*rad2);
+      }
+      x.closePath(); x.fill();
+      x.globalAlpha=1; x.fillStyle='#fff';
+      x.beginPath(); x.arc(0,0,c*.07,0,7); x.fill();
+      x.restore();
+    }
+  });
+  return t;
+}
+/* revoco encalado */
+function texStucco(base){
+  return cvs(256,(x,S)=>{
+    x.fillStyle=base; x.fillRect(0,0,S,S);
+    const r=rnd(21);
+    for(let i=0;i<5200;i++){
+      const a=r()*.16; x.fillStyle=r()>.5?`rgba(255,255,255,${a})`:`rgba(90,64,36,${a})`;
+      x.fillRect(r()*S,r()*S,1+r()*2,1+r()*2);
+    }
+    for(let i=0;i<90;i++){ x.fillStyle='rgba(120,96,64,.05)'; x.fillRect(r()*S,0,1+r()*3,S); }
+  });
+}
+/* teja árabe */
+function texRoof(){
+  return cvs(256,(x,S)=>{
+    x.fillStyle='#8d4b30'; x.fillRect(0,0,S,S);
+    const r=rnd(3);
+    for(let row=0;row<8;row++){
+      const y=row*S/8;
+      for(let col=-1;col<9;col++){
+        const xx=col*S/8 + (row%2?S/16:0);
+        x.fillStyle=`hsl(${14+r()*8},${38+r()*14}%,${28+r()*12}%)`;
+        x.beginPath(); x.ellipse(xx+S/16,y+S/16,S/16,S/9,0,Math.PI,0,true); x.fill();
+        x.strokeStyle='rgba(40,20,10,.45)'; x.lineWidth=1.2; x.stroke();
+      }
+    }
+  });
+}
+/* empedrado */
+function texPaving(){
+  return cvs(256,(x,S)=>{
+    x.fillStyle='#8c8172'; x.fillRect(0,0,S,S);
+    const r=rnd(11);
+    for(let i=0;i<900;i++){
+      const px=r()*S,py=r()*S,w=7+r()*7,h=6+r()*6;
+      const l=40+r()*28;
+      x.fillStyle=`hsl(${34+r()*16},${8+r()*10}%,${l}%)`;
+      x.beginPath(); x.ellipse(px,py,w/2,h/2,r()*3,0,7); x.fill();
+    }
+  });
+}
+/* madera del techo (taracea) */
+function texWood(){
+  return cvs(256,(x,S)=>{
+    x.fillStyle='#4a2c18'; x.fillRect(0,0,S,S);
+    const r=rnd(5);
+    for(let i=0;i<420;i++){
+      x.strokeStyle=`rgba(${120+r()*70|0},${70+r()*40|0},30,.35)`;
+      x.lineWidth=.6+r();
+      x.beginPath(); const y=r()*S; x.moveTo(0,y); x.bezierCurveTo(S*.3,y+r()*8,S*.7,y-r()*8,S,y+r()*3); x.stroke();
+    }
+    for(let i=0;i<12;i++){
+      x.strokeStyle='rgba(210,180,120,.18)'; x.lineWidth=1.4;
+      x.beginPath(); x.arc(S/2,S/2,20+i*9,0,7); x.stroke();
+    }
+  });
+}
+
+/* ============================================================
+   2 · MATERIALES
+   ============================================================ */
+const T = { az:texAzulejo(), stucco:texStucco('#e7d7b4'), stuccoW:texStucco('#f2ece0'),
+            roof:texRoof(), pave:texPaving(), wood:texWood() };
+function rep(t,rx,ry){ const c=t.clone(); c.needsUpdate=true; c.repeat.set(rx,ry); return c; }
+
+const M = {
+  earth : new THREE.MeshStandardMaterial({color:0xb79468,roughness:.97}),
+  earthD: new THREE.MeshStandardMaterial({color:0x9c7a52,roughness:.97}),
+  white : new THREE.MeshStandardMaterial({color:0xf0e6d4,roughness:.9}),
+  wall  : new THREE.MeshStandardMaterial({color:0xd8c5a4,roughness:.93}),
+  wall2 : new THREE.MeshStandardMaterial({color:0xc0a781,roughness:.95}),
+  stone : new THREE.MeshStandardMaterial({color:0x9d9382,roughness:.92}),
+  stone2: new THREE.MeshStandardMaterial({color:0x776f61,roughness:.9}),
+  wood  : new THREE.MeshStandardMaterial({color:0x5b3a22,roughness:.8}),
+  woodD : new THREE.MeshStandardMaterial({color:0x3a2415,roughness:.85}),
+  gold  : new THREE.MeshStandardMaterial({color:0xc9a227,roughness:.32,metalness:.75}),
+  iron  : new THREE.MeshStandardMaterial({color:0x2e2a26,roughness:.6,metalness:.5}),
+  leaf  : new THREE.MeshStandardMaterial({color:0x4e7a3a,roughness:.95}),
+  leaf2 : new THREE.MeshStandardMaterial({color:0x3d6430,roughness:.95}),
+  cyp   : new THREE.MeshStandardMaterial({color:0x2f4d2c,roughness:.95}),
+  grass : new THREE.MeshStandardMaterial({color:0x6d7d4a,roughness:1}),
+  water : new THREE.MeshStandardMaterial({color:0x2f7f9e,roughness:.06,metalness:.5,transparent:true,opacity:.82}),
+  glass : new THREE.MeshStandardMaterial({color:0x8fd0e8,roughness:.05,metalness:.2,transparent:true,opacity:.4}),
+};
+M.roof   = new THREE.MeshStandardMaterial({map:rep(T.roof,3,3),roughness:.88});
+M.roofS  = new THREE.MeshStandardMaterial({map:rep(T.roof,1,1),roughness:.88});
+M.dado   = new THREE.MeshStandardMaterial({map:rep(T.az,4,1),roughness:.35});
+M.dadoW  = new THREE.MeshStandardMaterial({map:rep(T.az,2,1),roughness:.35});
+M.pool   = new THREE.MeshStandardMaterial({map:rep(T.az,8,1),roughness:.3});
+M.pave   = new THREE.MeshStandardMaterial({map:rep(T.pave,8,8),roughness:.95});
+M.pave2  = new THREE.MeshStandardMaterial({map:rep(T.pave,20,20),roughness:.95});
+M.stuccoT= new THREE.MeshStandardMaterial({map:rep(T.stucco,4,4),roughness:.95});
+M.stuccoW= new THREE.MeshStandardMaterial({map:rep(T.stuccoW,3,3),roughness:.93});
+M.ceil   = new THREE.MeshStandardMaterial({map:rep(T.wood,3,3),roughness:.7});
+
+/* ============================================================
+   3 · PRIMITIVAS DE CONSTRUCCIÓN
+   ============================================================ */
+const G = new THREE.Group();                       // mundo
+
+function box(w,h,d,mat,x=0,y=0,z=0,ry=0){
+  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
+  m.position.set(x,y,z); m.rotation.y=ry; m.castShadow=true; m.receiveShadow=true; return m;
+}
+function cyl(rt,rb,h,seg,mat,x=0,y=0,z=0){
+  const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);
+  m.position.set(x,y,z); m.castShadow=true; m.receiveShadow=true; return m;
+}
+/* arco de herradura como agujero en un muro */
+function archHole(cx,w,h){
+  const a=w/2, R=a/Math.cos(rad(20)), yc=h-R;
+  const p=new THREE.Path();
+  p.moveTo(cx-a,0);
+  p.lineTo(cx-a, yc-0.342*R);
+  p.absarc(cx,yc,R,Math.PI+rad(20),-rad(20),true);
+  p.lineTo(cx+a,0);
+  p.closePath();
+  return p;
+}
+/* muro con arcos (extrusión con huecos) */
+function archWall(len,h,depth,openings,mat){
+  const s=new THREE.Shape();
+  s.moveTo(-len/2,0); s.lineTo(len/2,0); s.lineTo(len/2,h); s.lineTo(-len/2,h); s.closePath();
+  for(const o of openings) s.holes.push(archHole(o.cx,o.w,o.h));
+  const g=new THREE.ExtrudeGeometry(s,{depth,bevelEnabled:false,curveSegments:14});
+  g.translate(0,0,-depth/2);
+  const m=new THREE.Mesh(g,mat); m.castShadow=true; m.receiveShadow=true; return m;
+}
+/* columna esbelta con capitel y basa */
+function columnGeo(h,r=0.14){
+  const parts=[];
+  const c=new THREE.CylinderGeometry(r*.88,r,h-0.34,10,1); c.translate(0,(h-0.34)/2+0.2,0);
+  parts.push(c);
+  const cap=new THREE.BoxGeometry(r*3.1,.2,r*3.1); cap.translate(0,h-.08,0); parts.push(cap);
+  const bas=new THREE.BoxGeometry(r*2.9,.18,r*2.9); bas.translate(0,.09,0); parts.push(bas);
+  const collar=new THREE.BoxGeometry(r*2.5,.14,r*2.5); collar.translate(0,h-.34,0); parts.push(collar);
+  return mergeGeos(parts);
+}
+function column(h,r=0.14,mat=M.white,x=0,y=0,z=0){
+  const m=new THREE.Mesh(columnGeo(h,r),mat); m.position.set(x,y,z);
+  m.castShadow=true; m.receiveShadow=true; return m;
+}
+/* arquería: muro de arcos + columnas */
+function arcade(len,h,bays,depth,mat=M.stuccoT,cols=true,r=0.14){
+  const g=new THREE.Group(), bw=len/bays, op=[];
+  for(let i=0;i<bays;i++) op.push({cx:-len/2+bw*(i+.5),w:bw*.66,h:h*.7});
+  g.add(archWall(len,h,depth,op,mat));
+  if(cols) for(let i=0;i<=bays;i++){
+    const x=-len/2+bw*i;
+    g.add(column(h*.7-.4,r,M.white,x,0,depth/2+.12));
+    g.add(column(h*.7-.4,r,M.white,x,0,-depth/2-.12));
+  }
+  return g;
+}
+/* azotea con teja */
+function roofBlock(w,d,h,mat=M.roof,y=0){
+  const g=new THREE.Group();
+  const slab=box(w+.7,.45,d+.7,M.stuccoT,0,y+.22,0); g.add(slab);
+  const t=box(w,.55,d,mat,0,y+.72,0); g.add(t);
+  return g;
+}
+/* torre rectangular */
+function tower(w,d,h,mat=M.stuccoT,roof=true){
+  const g=new THREE.Group();
+  g.add(box(w,h,d,mat,0,h/2,0));
+  g.add(box(w+.5,.6,d+.5,M.dadoW,0,h*.24,0));
+  g.add(box(w+.7,.5,d+.7,M.stuccoW,0,h-.25,0));
+  if(roof){ const r=roofBlock(w,d,0,M.roofS,h-.5); g.add(r); }
+  return g;
+}
+/* torre circular (Torre de la Vela) */
+function roundTower(r,h,lantern=true){
+  const g=new THREE.Group();
+  g.add(cyl(r,r*1.08,h,20,M.stuccoT,0,h/2,0));
+  g.add(cyl(r*1.03,r*1.03,1.6,20,M.dadoW,0,h*.28,0));
+  g.add(cyl(r*1.08,r*1.08,.6,20,M.stuccoW,0,h-.3,0));
+  if(lantern){
+    g.add(cyl(r*.62,r*.66,3.2,12,M.stuccoW,0,h+1.6,0));
+    const roof=new THREE.Mesh(new THREE.ConeGeometry(r*.8,2.6,12),M.roofS);
+    roof.position.y=h+4.5; roof.castShadow=true; g.add(roof);
+    const bell=cyl(.55,.75,1.1,10,M.gold,0,h+.9,0); g.add(bell);
+  }
+  return g;
+}
+/* chimenea de tejado (torre de Comares) */
+function merlon(x,y,z,w=1.6,h=1.2,d=1.6,mat=M.stuccoT){
+  const g=new THREE.Group();
+  g.add(box(w,h,d,mat,x,y+h/2,z));
+  return g;
+}
+
+/* ============================================================
+   4 · RELIEVE DEL TERRENO
+   ============================================================ */
+function gauss(x,z,cx,cz,sx,sz){ const dx=(x-cx)/sx,dz=(z-cz)/sz; return Math.exp(-(dx*dx+dz*dz)); }
+function flatMask(x,z,x0,x1,z0,z1,m=22){
+  const dx=Math.max(x0-x,0,x-x1), dz=Math.max(z0-z,0,z-z1);
+  return 1-smooth(clamp(Math.hypot(dx,dz)/m,0,1));
+}
+function terrainH(x,z){
+  let h=0;
+  h += 11*gauss(x,z,-155,40,52,48);      // cerro de la Sabika (Alcazaba)
+  h += 13*gauss(x,z,-140,-132,50,60);    // terraza del Generalife
+  h -=  9*gauss(x,z,-40,-106,72,14);     // valle del Darro
+  h +=  6*gauss(x,z,80,40,60,70);        // Silla del Moro
+  h -=  1.2*gauss(x,z,-5,-15,70,60);     // leve hundimiento del palacio
+  h +=  3*gauss(x,z,-70,10,40,40);
+  // explanadas: explanada de los palacios + plaza, y patio de Carlos V
+  h=lerp(h,0,flatMask(x,z,-74,74,-106,152,24));
+  h=lerp(h,0,flatMask(x,z,-112,-52,18,86,20));
+  return h;
+}
+
+/* ============================================================
+   5 · RECORRIDO (puntos del trazado y paradas)
+   ============================================================ */
+const NODES=[
+ [-20,112],[-38,100],[-44,92],[-44,86],[-44,62],[-40,48],[-40,28],[-52,10],[-78,4],
+ [-106,10],[-128,24],[-146,40],[-160,46],[-178,54],[-158,60],[-132,60],[-116,46],[-108,20],
+ [-84,10],[-58,14],[-46,32],[-58,50],[-80,50],[-80,72],[-80,88],[-54,74],[-42,44],[-30,20],
+ [-16,10],[-14,-6],[10,-18],[20,-20],[45,-14],[56,-12],[61,-18],[64,-34],[30,-50],[14,-50],
+ [8,-36],[-10,-38],[-26,-40],[-38,-48],[-40,-62],[-30,-72],[-12,-74],[-40,-70],[-70,-66],
+ [-88,-62],[-100,-64],[-118,-84],[-140,-98],[-140,-110],[-130,-114],[-128,-124],[-132,-138],
+ [-144,-138],[-142,-158],[-110,-170],[-75,-152],[-48,-128],[-30,-104],[12,-100],[30,-78],
+ [52,-50],[86,-30],[92,-4],[88,28],[86,62],[72,96],[40,124],[12,130]
+];
+const STOPS=[
+ {p:[-20,112], t:'Plaza de los Alhambra', s:'Puerta de las Granadas · acceso a la ciudadela',
+  p:'Todo empieza en esta explanada de tierra batida al pie de la muralla. Aquí se abre la Alhambra: a la derecha el jardín de la Alameda, al frente la fachada de los Palacios Nazaríes y a la izquierda la puerta que sube hacia el recinto fortificado.',
+  tip:'El acceso a los Palacios Nazaríes se hace por el Patio de los Arrayanes, unos 80 m al norte. Compra el pase anticipado: en temporada alta la cola de la Puerta de las Granadas supera las dos horas.'},
+ {p:[-44,86], t:'Puerta de la Justicia', s:'Torre de la Justa · paso al recinto',
+  p:'Erigida en el siglo XIV, esta torre blanca de ladrillo encalado marca el paso al interior del recinto. Sobre el arco corre el lema nazarí en azulejo y, en el interior, una escena de victoria pintada por Manuel Gómez-Moreno tras la Guerra Civil.',
+  tip:'Al pasar bajo el arco se lee el lema en árabe: "Solo Dios concede la victoria y la gloria, considera la causa de los musulmanes". Por aquí se accede al recinto general, no a los palacios.'},
+ {p:[-160,46], t:'Alcazaba · Torre de la Vela', s:'La fortaleza más antigua',
+  p:'Alzada en el siglo XI, la Alcazaba es el recinto militar más antiguo de la Alhambra. La Torre de la Vela fue reloj y vigía del conjunto y aún conserva la campana que marcaba las horas y avisaba a la guarnición.',
+  tip:'Sube a la torre: es el mejor mirador de Granada. La campana que todavía cuelga es de 1840 y fue regalada por la ciudad tras la Guerra Civil.'},
+ {p:[-80,50], t:'Palacio de Carlos V', s:'Renacimiento italiano en clave mudéjar',
+  p:'Mandado construir por Carlos I entre 1527 y 1637, este palacio renacentista se planta como un símbolo de poder junto al recinto nazarí. Su patio circular de dos plantas con 32 columnas de mármol denuncia el choque de estilos con los palacios islámicos.',
+  tip:'Dentro de este palacio está PROHIBIDO hacer fotos. Sube a la planta alta: la cornisa de piedra caliza corona la mejor vista del valle del Darro.'},
+ {p:[-14,-6], t:'Patio de los Arrayanes', s:'Patio de los Myrtos · Comares al fondo',
+  p:'Creado entre 1302 y 1309, este patio es un rectángulo perfectamente geométrico rodeado de galerías. Los arrayanes (mirto) que flanquean el estanque central y al fondo se alza la maciza Torre de Comares.',
+  tip:'El estanque es una réplica del que se conserva en el Generalife. La galería norte es un mirador perfecto sobre los tejados de la Alcazaba.'},
+ {p:[20,-20], t:'Sala de los Abencerrajes', s:'Leyendas del último sultán',
+  p:'A los pies de la Torre de los Leones, esta sala alimenta la Leyenda de los Infantes de Lara. Su bóveda de mocárabes reúne las piezas que cuentan la historia de Boabdil, el último rey nazarí, tras la conquista de 1492.',
+  tip:'La bóveda de mocárabes es una de las obras más delicadas del palacio: cada celda es una pequeña cúpula de nogal que produce el clásico efecto de "nido de palomas".'},
+ {p:[45,-14], t:'Patio de los Leones', s:'Patio de los Leones · fuente de los doce leones',
+  p:'Coronada por Muhammad V entre 1365 y 1390, este patio cuadrado de 28 metros está rodeado por cuatro galerías de arcos. En el centro, la fuente con los doce leones de piedra que le dan nombre, y junto a ella el jardín de los Cuatro Ríos.',
+  tip:'Los leones originales están en el Museo de la Alhambra. Al fondo, la galería de la Sala de los Reyes conserva el techo mudéjar más bello del conjunto.'},
+ {p:[61,-18], t:'Mirador de Lindaraja', s:'La vista más famosa de la Alhambra',
+  p:'Al final del Patio de los Leones se abre un mirador sobre la Vega de Granada. Los jardines de la Lindaraja fueron la antesala del Generalife y el gran balcón de los reyes nazaríes hacia el valle del Darro.',
+  tip:'Es el punto de la postal: la Alhambra en primer plano y Sierra Nevada al fondo. Al atardecer, la luz rasante baña toda la fachada del conjunto.'},
+ {p:[-10,-38], t:'Torre de Comares', s:'Salón de Comares · salón de Embajadores',
+  p:'Coronada por Yusuf I en 1330, la Torre de Comares esconde el salón más grande de la Alhambra: 58 metros de altura y una techumbre de marquetería con más de 8.000 piezas de madera formando estrellas. Era la sala de recepciones de los sultanes.',
+  tip:'La techumbre de madera es una de las pocas que se conservan intactas. Entra con tiempo: el salón oriental del palacio se ilumina con un único lucernario.'},
+ {p:[-12,-74], t:'Mexuar', s:'El lugar de la justicia del sultán',
+  p:'El Mexuar, o "almecah", era el recinto donde el sultán impartía justicia y recibía a los enviados. En su portada de cinco arcos se alinean columnas renacentistas del siglo XVII sobre bases árabes: dos estilos en una sola obra.',
+  tip:'Al fondo, el Cuarto Dorado conserva importantes pinturas murales al secco del siglo XIV, uno de los pocos conjuntos mudéjares conservados.'},
+ {p:[-100,-64], t:'Partal · Torre de las Damas', s:'Pórtico del Aljibe y torre cautiva',
+  p:'Este rincón recrea el puesto avanzado nazarí que defendía el puente sobre el Darro. El pórtico del Aljibe conserva su arco y la Torre de las Damas, la "Torre de la Cautiva" de las leyendas, se alzó como vigía sobre el valle.',
+  tip:'La Leyenda cuenta que Boabdil miró por última vez Granada desde esta torre antes de entregar la ciudad. Hoy el valle del Darro sigue siendo el mejor balcón.'},
+ {p:[-130,-114], t:'Generalife · Patio de la Acequia', s:'Paseo del agua y riqueros',
+  p:'La quinta baja del Generalife es un jardín de placer: el patio de la Acequia debe su nombre al canal de agua que lo cruza y riega. Los riqueros y chorros dan vida al conjunto; el agua procede del río Darro por la acequia madre.',
+  tip:'El "Paseo del Agua" va desde la acequia hasta el mirador. En verano el agua se refrigera y el paseo es el mejor antídoto contra el calor granadino.'},
+ {p:[-132,-138], t:'Generalife · Salón de los Reyes', s:'La sala de los tres reyes',
+  p:'El Salón de los Reyes, de Muhammad III (1350), es una de las salas más importantes del Generalife. Su bóveda de mocárabes y sus pinturas murales del siglo XIV recogen escenas de caza, música y corte que muestran la vida de la corte nazarí.',
+  tip:'Las pinturas fueron restauradas a finales del siglo XIX por Manuel Gómez-Moreno y son, junto al Mexuar, el mayor conjunto mural mudéjar conservado.'},
+ {p:[-30,-104], t:'Puente de los Espinoles', s:'Sobre el valle del Darro',
+  p:'Este puente sobre el Darro unía la Alhambra con el Generalife y con la ciudad. Es el punto donde el visitante se detiene a mirar el barranco: el río pasa 100 m abajo entre nogales y tarrosales.',
+  tip:'Desde el centro del puente, la vista de la Alhambra es la que ilustró los libros de viajes del siglo XIX. Al amanecer, la niebla del Darro sube justo por aquí.'},
+ {p:[72,96], t:'Jardines de la Alameda', s:'Jardín de la Reina · acequias y aclimatación',
+  p:'El jardín de la Alameda, fundado en el siglo XI, fue uno de los primeros jardines de aclimatación de Europa. Sus paseos de acequias, sus fuentes y sus árboles milenarios esconden el lado verde de la Granada nazarí.',
+  tip:'Aquí se conserva el "Árbol de la Reina", un schinus molle plantado en el siglo XV. La Puerta del Perdón, copiada de Córdoba, marca el acceso desde la ciudad.'}
+];
+/* el indice de cada parada se localiza por su coordenada */
+STOPS.forEach(s=>{ s.i=NODES.findIndex(n=>n[0]===s.p[0]&&n[1]===s.p[1]); });
+
+/* ============================================================
+   6 · CURVA DEL RECORRIDO
+   ============================================================ */
+function pathH(x,z){
+  return terrainH(x,z)+0.35+10.2*gauss(x,z,-30,-105,22,8.5);
+}
+const pts = NODES.map(([x,z])=>new THREE.Vector3(x,pathH(x,z),z));
+const base = new THREE.CatmullRomCurve3(pts,true,'centripetal',0.5);
+const dense=[];
+for(let i=0;i<900;i++){
+  const q=base.getPointAt(i/900);
+  dense.push(new THREE.Vector3(q.x,pathH(q.x,q.z),q.z));
+}
+const curve = new THREE.CatmullRomCurve3(dense,true,'centripetal',0.5);
+const LEN = curve.getLength();
+const SAMPLES=520;
+const routePts=curve.getSpacedPoints(SAMPLES);
+
+function distRoute(x,z){
+  let best=1e9;
+  for(let i=0;i<routePts.length;i+=2){
+    const dx=routePts[i].x-x, dz=routePts[i].z-z;
+    const d=dx*dx+dz*dz;
+    if(d<best) best=d;
+  }
+  return Math.sqrt(best);
+}
+
+/* ============================================================
+   7 · TERRENO
+   ============================================================ */
+function buildTerrain(){
+  const SIZE=820, SEG=220;
+  const geo=new THREE.PlaneGeometry(SIZE,SIZE,SEG,SEG);
+  geo.rotateX(-Math.PI/2);
+  const p=geo.attributes.position;
+  const col=new Float32Array(p.count*3);
+  const c=new THREE.Color();
+  const grass=new THREE.Color(0x69794a), rock=new THREE.Color(0x8c7d63),
+        sand=new THREE.Color(0xb59a72), dirt=new THREE.Color(0x94795a),
+        dark=new THREE.Color(0x4a5b3c);
+  for(let i=0;i<p.count;i++){
+    const x=p.getX(i), z=p.getZ(i), y=terrainH(x,z);
+    p.setY(i,y);
+    const d=distRoute(x,z);
+    if(d<4.2)      c.copy(sand);
+    else if(d<8)   c.copy(sand).lerp(dirt,(d-4.2)/3.8);
+    else if(y>6)   c.copy(grass).lerp(rock,clamp((y-6)/9,0,1));
+    else if(y<-3)  c.copy(dark).lerp(rock,clamp((-y-3)/8,0,1));
+    else           c.copy(grass).lerp(dark,clamp((Math.abs(x)-20)/220,0,.55));
+    const n=Math.sin(x*0.31)*Math.cos(z*0.27)*0.045;
+    c.offsetHSL(n*0.4,n*0.3,n);
+    col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+  }
+  geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+  geo.computeVertexNormals();
+  const m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1}));
+  m.receiveShadow=true;
+  G.add(m);
+}
+
+/* ============================================================
+   8 · CONSTRUCCIONES
+   ============================================================ */
+const PLAN=[];
+function planRect(x0,x1,z0,z1,c){ PLAN.push({t:'r',v:[x0,x1,z0,z1],c:c||'#8b8272'}); }
+function planCirc(x,z,r,c){ PLAN.push({t:'c',v:[x,z,r],c:c||'#8b8272'}); }
+
+const TREES=[], CYPS=[], HEDGES=[];
+function tree(x,z,s=1){ TREES.push({x,z,s}); }
+function cyp(x,z,s=1){ CYPS.push({x,z,s}); }
+function hedge(x,z,w,d,h=1.1){ HEDGES.push({x,z,w,d,h}); }
+
+/* sector de anillo (para el patio circular de Carlos V) */
+function ringSector(a0,a1,rOut,rIn,h,mat){
+  const s=new THREE.Shape();
+  s.moveTo(Math.cos(rad(a0))*rOut, Math.sin(rad(a0))*rOut);
+  s.absarc(0,0,rOut,rad(a0),rad(a1),false);
+  s.lineTo(Math.cos(rad(a1))*rIn, Math.sin(rad(a1))*rIn);
+  s.absarc(0,0,rIn,rad(a1),rad(a0),true);
+  s.closePath();
+  const geo=new THREE.ExtrudeGeometry(s,{depth:h,bevelEnabled:false,curveSegments:44});
+  geo.rotateX(-Math.PI/2);
+  const m=new THREE.Mesh(geo,mat); m.castShadow=true; m.receiveShadow=true; return m;
+}
+
+/* --- 8.1 Plaza de los Alhambra --- */
+function buildPlaza(){
+  G.add(box(112,0.5,72,M.pave2,-13,0.02,110));
+  planRect(-69,43,74,146,'#a89c88');
+  // Puerta de las Granadas (sur)
+  const gate=new THREE.Group();
+  gate.add(box(8,7,3.4,M.stuccoW,0,3.5,0));
+  gate.add(archWall(7,7,3.4,[{cx:0,w:2.6,h:4.6}],M.stuccoW));
+  gate.add(box(8.4,.5,4,M.dado,0,7.1,0));
+  for(let i=0;i<6;i++){
+    gate.add(box(.9,.9,.2,M.dado,-3.5+i*1.4,7.7,1.8));
+    gate.add(box(.9,.9,.2,M.dado,-3.5+i*1.4,7.7,-1.8));
+  }
+  gate.position.set(-6,0,143);
+  G.add(gate);
+  // pórtico de Comares (fachada norte de la plaza)
+  const port=arcade(66,7.4,9,2.4,M.stuccoT,true,0.17);
+  port.position.set(4,0,74);
+  G.add(port);
+  G.add(box(66,1.2,3.2,M.dadoW,4,0.6,74));
+  // muralla norte de la plaza
+  G.add(box(11,8,2.4,M.stuccoT,-64,4,74));
+  G.add(box(11,.9,2.8,M.dadoW,-64,0.45,74));
+  for(let i=0;i<3;i++) G.add(box(1.2,1.9,2.6,M.wood,-68+i*3.4,1.2,74));
+  // iglesia de Santa María
+  const ch=new THREE.Group();
+  ch.add(box(11,7,22,M.stuccoW,0,3.5,0));
+  ch.add(box(12,1.1,23,M.roofS,0,7.4,0));
+  ch.add(box(4.5,2.4,4.5,M.stuccoW,0,9.2,-11));
+  ch.add(box(1.2,2.4,.6,M.wood,0,8.6,-8.8));
+  ch.position.set(34,0,68); G.add(ch);
+  planRect(28,40,57,79,'#b0a596');
+  // farolas
+  for(let i=0;i<8;i++){
+    const l=new THREE.Group();
+    l.add(cyl(.1,.13,4.4,6,M.iron,0,2.2,0));
+    const bulb=new THREE.Mesh(new THREE.SphereGeometry(.35,10,8),
+      new THREE.MeshStandardMaterial({color:0xffe9b0,emissive:0xffcc66,emissiveIntensity:.5,roughness:.4}));
+    bulb.position.y=4.6; l.add(bulb);
+    l.position.set(-58+i*15,0,i%2?120:84);
+    G.add(l);
+  }
+  for(let i=0;i<6;i++) tree(-54+i*18,138,0.9+(i%2)*0.2);
+  for(let i=0;i<5;i++) tree(-60+i*20,88,0.85);
+}
+
+/* --- 8.2 Palacios Nazaríes --- */
+function buildNasrid(){
+  G.add(box(102,0.4,168,M.pave2,17,0.05,-12));
+
+  /* Patio de los Arrayanes (x -25..5, z -25..5) */
+  const myr=new THREE.Group();
+  myr.add(box(30,0.3,30,M.pave,-10,0.15,-10));
+  const gN=arcade(30,7.6,5,2.4,M.stuccoT,true,0.16); gN.position.set(-10,0.3,-25); myr.add(gN);
+  const gS=arcade(30,7.6,5,2.4,M.stuccoT,true,0.16); gS.position.set(-10,0.3,5);   myr.add(gS);
+  const gW=arcade(30,7.6,5,2.4,M.stuccoT,true,0.16); gW.position.set(-25,0.3,-10); gW.rotation.y=Math.PI/2; myr.add(gW);
+  const gE=arcade(30,7.6,5,2.4,M.stuccoT,true,0.16); gE.position.set(5,0.3,-10);   gE.rotation.y=Math.PI/2; myr.add(gE);
+  myr.add(box(30,1.3,.35,M.dado,-10,0.95,-25.9));
+  myr.add(box(30,1.3,.35,M.dado,-10,0.95,4.1));
+  myr.add(box(17,0.55,1.6,M.stone,-10,0.55,-10));
+  myr.add(box(16,0.2,1.0,M.pool,-10,0.77,-10));
+  myr.add(box(16,0.12,1.0,M.water,-10,0.85,-10));
+  for(let i=0;i<7;i++){ hedge(-19+i*3,-20,1.6,1.6,1.5); hedge(-19+i*3,-4,1.6,1.6,1.5); }
+  for(let i=0;i<5;i++){ hedge(-23,-15+i*2.6,1.4,1.4,1.4); hedge(3,-15+i*2.6,1.4,1.4,1.4); }
+  G.add(myr);
+  planRect(-26,6,-26,6,'#b3a790');
+
+  /* Torre de Comares (centro -10,-50) */
+  const com=new THREE.Group();
+  com.add(box(19,38,19,M.stuccoT,0,19,0));
+  com.add(box(20,1.2,20,M.dadoW,0,9,0));
+  com.add(box(20,1.2,20,M.dadoW,0,27,0));
+  com.add(box(20.4,1,20.4,M.stuccoW,0,38,0));
+  com.add(box(13,6,13,M.stuccoT,0,41.5,0));
+  com.add(box(14,0.8,14,M.dadoW,0,45,0));
+  const cr=new THREE.Mesh(new THREE.ConeGeometry(9.6,6,4),M.roofS);
+  cr.position.y=48.5; cr.rotation.y=Math.PI/4; cr.castShadow=true; com.add(cr);
+  for(let s=0;s<4;s++){
+    const ang=s*Math.PI/2, cs=Math.cos(ang), sn=Math.sin(ang);
+    for(let lvl=0;lvl<3;lvl++) for(let i=0;i<3;i++){
+      const off=(i-1)*5.2;
+      const px=cs*9.6+(s%2?off:0), pz=sn*9.6+(s%2?0:off);
+      const w=box(1.3,2.6,.5,M.wood,px,13+lvl*11,pz);
+      w.rotation.y=ang; com.add(w);
+    }
+  }
+  const port=arcade(19,9,3,2.6,M.stuccoT,true,0.2); port.position.set(0,0,9.6); com.add(port);
+  com.position.set(-10,0,-50); G.add(com);
+  planRect(-20,0,-60,-40,'#a89a86');
+
+  /* Mexuar (x -28..4, z -92..-76) */
+  const mx=new THREE.Group();
+  mx.add(box(32,10,16,M.stuccoT,0,5,0));
+  mx.add(box(33,1.1,17,M.dadoW,0,7.6,0));
+  mx.add(box(33,0.9,17,M.stuccoW,0,10.2,0));
+  mx.add(box(30,1.2,14,M.roofS,0,11.2,0));
+  const fac=archWall(32,10,1.6,[{cx:-11,w:4.4,h:7},{cx:-5.5,w:4.4,h:7},{cx:0,w:4.4,h:7},
+    {cx:5.5,w:4.4,h:7},{cx:11,w:4.4,h:7}],M.stuccoT);
+  fac.position.set(0,0,8.2); mx.add(fac);
+  for(let i=0;i<5;i++) mx.add(cyl(.22,.26,7.2,10,M.stone,-11+i*5.5,3.6,8.9));
+  const dome=new THREE.Mesh(new THREE.SphereGeometry(4.2,20,12,0,Math.PI*2,0,Math.PI/2),M.stuccoW);
+  dome.position.set(6,11,0); dome.castShadow=true; mx.add(dome);
+  mx.add(cyl(4.4,4.4,1.2,20,M.dadoW,6,10.9,0));
+  mx.position.set(-12,0,-84); G.add(mx);
+  planRect(-28,4,-92,-76,'#a89a86');
+
+  /* Sala de los Abencerrajes (x 12..28, z -30..-14) */
+  const ab=new THREE.Group();
+  ab.add(box(16,0.4,16,M.pave,0,0.15,0));
+  ab.add(box(16,9,1.6,M.stuccoT,0,4.5,-7.4));
+  ab.add(box(16,9,1.6,M.stuccoT,0,4.5,7.4));
+  const ops=[{cx:-4,w:2.8,h:6},{cx:0,w:2.8,h:6},{cx:4,w:2.8,h:6}];
+  const aw=archWall(16,9,1.6,ops,M.stuccoT);
+  aw.position.set(-7.4,0,0); aw.rotation.y=Math.PI/2; ab.add(aw);
+  const ae=archWall(16,9,1.6,ops,M.stuccoT);
+  ae.position.set(7.4,0,0); ae.rotation.y=Math.PI/2; ab.add(ae);
+  const muq=[];
+  for(let r=0;r<4;r++){
+    for(let i=-2;i<=2;i++) for(let j=-2;j<=-1;j++){
+      if(Math.abs(i)+Math.abs(j+1)>3-r*0.6) continue;
+      const b=new THREE.BoxGeometry(1.5,0.5,1.5);
+      b.translate(i*1.5,9+r*0.5,j*1.5); muq.push(b);
+    }
+  }
+  const muqM=new THREE.Mesh(mergeGeos(muq),M.woodD);
+  muqM.castShadow=true; ab.add(muqM);
+  ab.add(box(13,0.4,6,M.ceil,0,10.6,-5));
+  ab.position.set(20,0,-22); G.add(ab);
+  planRect(12,28,-30,-14,'#9d9280');
+
+  /* Patio de los Leones (centro 45,-20) */
+  const lio=new THREE.Group();
+  lio.add(box(28,0.4,28,M.pave,0,0.15,0));
+  const lN=arcade(28,8,4,2.6,M.stuccoT,true,0.18); lN.position.set(0,0.3,-14); lio.add(lN);
+  const lS=arcade(28,8,4,2.6,M.stuccoT,true,0.18); lS.position.set(0,0.3,14);  lio.add(lS);
+  const lW=arcade(28,8,4,2.6,M.stuccoT,true,0.18); lW.position.set(-14,0.3,0); lW.rotation.y=Math.PI/2; lio.add(lW);
+  const lE=arcade(28,8,4,2.6,M.stuccoT,true,0.18); lE.position.set(14,0.3,0);  lE.rotation.y=Math.PI/2; lio.add(lE);
+  lio.add(box(28,1.3,.35,M.dado,0,0.95,-13.1));
+  lio.add(box(28,1.3,.35,M.dado,0,0.95,13.1));
+  lio.add(cyl(4.6,4.6,0.9,12,M.stone,0,0.7,0));
+  lio.add(cyl(4.2,4.2,0.25,12,M.pool,0,1.25,0));
+  lio.add(cyl(4.2,4.2,0.12,12,M.water,0,1.35,0));
+  lio.add(cyl(1.1,1.3,1.7,12,M.stone,0,2.05,0));
+  lio.add(cyl(1.5,1.2,0.35,12,M.pool,0,3.0,0));
+  for(let i=0;i<12;i++){
+    const a=i/12*Math.PI*2;
+    const l=box(1.5,1.0,1.1,M.stone,Math.cos(a)*4.0,1.65,Math.sin(a)*4.0);
+    l.rotation.y=-a; lio.add(l);
+    lio.add(cyl(.28,.3,.35,8,M.stone,Math.cos(a)*4.7,1.45,Math.sin(a)*4.7));
+  }
+  const salas=[[61,-4],[29,-36],[29,-4]];
+  salas.forEach(([sx,sz])=>{
+    const rm=new THREE.Group();
+    rm.add(box(9,5,7,M.stuccoT,0,2.5,0));
+    rm.add(box(9.8,0.8,7.8,M.dadoW,0,5.2,0));
+    rm.add(box(10,0.7,8,M.roofS,0,6,0));
+    rm.position.set(sx-45,0,sz+20);
+    lio.add(rm);
+  });
+  lio.position.set(45,0,-20); G.add(lio);
+  planRect(31,59,-34,-6,'#b0a48d');
+
+  /* Mirador de Lindaraja (x 59..68) */
+  const mir=new THREE.Group();
+  mir.add(box(9,3,20,M.stone2,0,1.5,0));
+  for(let i=0;i<5;i++){
+    mir.add(cyl(.2,.24,4.2,10,M.white,-3.4+i*1.7,3.1,8.6));
+    mir.add(cyl(.2,.24,4.2,10,M.white,-3.4+i*1.7,3.1,-8.6));
+  }
+  mir.add(box(9,0.7,20,M.stuccoW,0,5.4,0));
+  mir.add(box(8,0.6,19,M.dadoW,0,6.1,0));
+  mir.position.set(72,0,-20); G.add(mir);
+  planRect(67,77,-30,-10,'#a1977f');
+}
+
+/* --- 8.3 Palacio de Carlos V --- */
+function buildCarlosV(){
+  const g=new THREE.Group();
+  const R=24, RIN=13.5;
+  // anillo con dos vanos: este (0 grados) y sur (270 grados)
+  const secA=ringSector(18,252,R,RIN,7,M.stuccoT); g.add(secA);
+  const secB=ringSector(288,342,R,RIN,7,M.stuccoT); g.add(secB);
+  const secC=ringSector(18,252,R,RIN,7,M.stuccoW); secC.position.y=7; g.add(secC);
+  const secD=ringSector(288,342,R,RIN,7,M.stuccoW); secD.position.y=7; g.add(secD);
+  // columnas del patio circular
+  for(let lvl=0;lvl<2;lvl++) for(let i=0;i<32;i++){
+    const a=i/32*Math.PI*2, deg=a*180/Math.PI;
+    if(deg<20||deg>340||(deg>70&&deg<110)) continue;      // vanos este y sur
+    const c=cyl(.26,.3,6.4,12,M.stone,Math.cos(a)*(RIN-0.7),3.4+lvl*7,Math.sin(a)*(RIN-0.7));
+    g.add(c);
+    g.add(box(.9,.4,.9,M.stone,Math.cos(a)*(RIN-0.7),6.6+lvl*7,Math.sin(a)*(RIN-0.7)));
+  }
+  g.add(cyl(RIN,RIN,0.4,36,M.pave,0,0.15,0));
+  // cornisa y cubierta (mismos vanos que el anillo: los pasos quedan al cielo)
+  const cor1=ringSector(18,252,R+.8,RIN-.3,1.1,M.stone2); cor1.position.y=14.4; g.add(cor1);
+  const cor2=ringSector(288,342,R+.8,RIN-.3,1.1,M.stone2); cor2.position.y=14.4; g.add(cor2);
+  const rf1=ringSector(18,252,R+.7,RIN,.6,M.roof); rf1.position.y=15.3; g.add(rf1);
+  const rf2=ringSector(288,342,R+.7,RIN,.6,M.roof); rf2.position.y=15.3; g.add(rf2);
+  // portada sur
+  const por=arcade(14,7,4,3,M.stuccoW,true,0.3); por.position.set(0,0,R+1.4); g.add(por);
+  g.add(box(16,1,4,M.dadoW,0,6.6,R+1.4));
+  // pórtico este (vano abierto al cielo)
+  for(let i=0;i<6;i++){
+    const a=rad(-30+i*12), r=RIN+3.2;
+    g.add(cyl(.26,.3,13,12,M.stone,Math.cos(a)*r,6.5,Math.sin(a)*r));
+  }
+  g.position.set(-80,0,50); G.add(g);
+  planRect(-104,-56,26,74,'#9c9280');
+}
+
+/* --- 8.4 Puerta de la Justicia --- */
+function buildJusticia(){
+  const g=new THREE.Group();
+  const wall=archWall(10,17,4,[{cx:0,w:3.2,h:5.6}],M.stuccoW);
+  wall.rotation.y=Math.PI/2; g.add(wall);
+  g.add(box(1.4,1.4,5,M.dadoW,4.8,0.7,0));
+  g.add(box(1.4,1.4,5,M.dadoW,-4.8,0.7,0));
+  g.add(box(11.5,.8,5.5,M.stuccoT,0,17.4,0));
+  g.add(box(10,.7,4.4,M.roofS,0,18.1,0));
+  for(let i=0;i<5;i++) g.add(box(.9,.9,.25,M.dado,-2+i*1.2,12.4,2.6));
+  g.position.set(-44,0,76); G.add(g);
+  planRect(-49,-39,71,81,'#b3a894');
+}
+
+/* --- 8.5 Alcazaba --- */
+function buildAlcazaba(){
+  const g=new THREE.Group();
+  const wall=(x,z,len,rot)=>{
+    const w=box(len,11,4.5,M.stuccoT,x,5.5,z); w.rotation.y=rot; g.add(w);
+    const d=box(len,1.6,5,M.dadoW,x,0.8,z); d.rotation.y=rot; g.add(d);
+    const n=Math.floor(len/3.2);
+    for(let i=0;i<n;i++){
+      const o=(i-(n-1)/2)*3.2;
+      const m=box(1.7,1.4,4.6,M.stuccoT,x+Math.cos(rot)*o,11.8,z-Math.sin(rot)*o);
+      m.rotation.y=rot; g.add(m);
+    }
+  };
+  wall(-152,70,68,0);
+  wall(-186,48,44,Math.PI/2);
+  wall(-163,26,46,0);
+  wall(-118,66,8,Math.PI/2);
+  const vela=roundTower(6.4,18,true); vela.position.set(-172,0,42); g.add(vela);
+  planCirc(-172,42,8,'#a39683');
+  const pol=roundTower(3.6,9,false); pol.position.set(-140,0,28); g.add(pol);
+  g.add(box(9,13,9,M.stuccoT,-126,6.5,66));
+  g.add(box(10,1.5,10,M.dadoW,-126,0.75,66));
+  g.add(box(10,.7,10,M.roofS,-126,13.4,66));
+  g.add(box(26,0.4,22,M.pave,-152,0.2,44));
+  for(let i=0;i<4;i++) tree(-158+i*4,38,0.8);
+  G.add(g);
+  planRect(-184,-120,20,68,'#9d9280');
+}
+
+/* --- 8.6 Partal --- */
+function buildPartal(){
+  const g=new THREE.Group();
+  g.add(box(9,19,9,M.stuccoW,-104,9.5,-72));
+  g.add(box(10,2.2,10,M.dadoW,-104,1.1,-72));
+  g.add(box(10,1,10,M.stuccoT,-104,19.6,-72));
+  g.add(box(9,.7,9,M.roofS,-104,20.4,-72));
+  for(let s=0;s<4;s++){
+    const a=s*Math.PI/2;
+    const w=box(1.2,2.2,.6,M.wood,-104+Math.cos(a)*4.55,14,-72+Math.sin(a)*4.55);
+    w.rotation.y=a; g.add(w);
+  }
+  planRect(-109,-99,-77,-67,'#b0a48f');
+  const por=arcade(18,9,3,2.4,M.stuccoT,true,0.2); por.position.set(-88,0,-64); por.rotation.y=Math.PI/2;
+  g.add(por);
+  g.add(cyl(2.6,2.8,7,12,M.stuccoT,-84,3.5,-64));
+  g.add(cyl(3,3,.7,12,M.roofS,-84,7.3,-64));
+  g.add(box(22,9,4,M.stuccoT,-100,4.5,-52));
+  g.add(box(22,1.5,4.5,M.dadoW,-100,0.75,-52));
+  for(let i=0;i<6;i++) g.add(box(1.6,1.3,4.1,M.stuccoT,-108+i*3.6,9.6,-52));
+  planRect(-98,-78,-72,-58,'#a3977f');
+}
+
+/* --- 8.7 Generalife --- */
+function buildGeneralife(){
+  const g=new THREE.Group();
+  const BY=terrainH(-133,-140);
+  const p=new THREE.Group();
+  // alas del palacio alrededor de un patio
+  p.add(box(9,9,9,M.stuccoT,-19,4.5,-12.5));      // ala norte (oeste)
+  p.add(box(31,9,9,M.stuccoT,8.5,4.5,-12.5));     // ala norte (este)
+  p.add(box(18,9,17,M.stuccoT,15,4.5,0.5));        // ala este
+  p.add(box(12,9,5,M.stuccoT,-18,4.5,6.5));        // ala oeste (sur)
+  p.add(box(9,1.2,9.4,M.dadoW,-19,7.6,-12.5));
+  p.add(box(31,1.2,9.4,M.dadoW,8.5,7.6,-12.5));
+  p.add(box(18.4,1.2,17.4,M.dadoW,15,7.6,0.5));
+  p.add(box(12.4,1.2,5.4,M.dadoW,-18,7.6,6.5));
+  p.add(box(9.6,1.1,9.6,M.roofS,-19,10,-12.5));
+  p.add(box(31.6,1.1,9.6,M.roofS,8.5,10,-12.5));
+  p.add(box(18.6,1.1,17.6,M.roofS,15,10,0.5));
+  p.add(box(12.6,1.1,5.6,M.roofS,-18,10,6.5));
+  p.add(box(7,13,7,M.stuccoW,21,6.5,-12.5));
+  p.add(box(8,1,8,M.roofS,21,13.6,-12.5));
+  // patio interior
+  p.add(box(18,0.4,15,M.pave,-3,0.2,0));
+  // Salón de los Reyes: bóveda de mocárabes en el ala este
+  const muq=[];
+  for(let r=0;r<3;r++) for(let i=-1;i<=1;i++) for(let j=-1;j<=1;j++){
+    const b=new THREE.BoxGeometry(1.4,.5,1.4); b.translate(i*1.4,8+r*.5,j*1.4); muq.push(b);
+  }
+  const mm=new THREE.Mesh(mergeGeos(muq),M.woodD); mm.position.set(15,0,0.5); mm.castShadow=true; p.add(mm);
+  const aw=archWall(15,8,1.4,[{cx:-3.5,w:3,h:5.6},{cx:3.5,w:3,h:5.6}],M.stuccoT);
+  aw.position.set(-3,0,7.5); p.add(aw);
+  p.position.set(-133,BY,-140); g.add(p);
+  planRect(-157,-109,-157,-131,'#9f947f');
+
+  // Patio de la Acequia
+  const ay=terrainH(-133,-118);
+  g.add(box(46,0.6,4.6,M.stone,-133,ay-0.1,-118));
+  g.add(box(44,0.3,2.6,M.pool,-133,ay+0.15,-118));
+  g.add(box(44,0.14,2.6,M.water,-133,ay+0.32,-118));
+  for(let i=0;i<5;i++){
+    g.add(cyl(.16,.18,1.6,8,M.gold,-151+i*9,ay+1.1,-118));
+    g.add(cyl(.35,.2,.5,8,M.gold,-151+i*9,ay+2.1,-118));
+  }
+  const cy2=terrainH(-162,-118);
+  g.add(box(26,0.3,1.4,M.stone,-162,cy2-0.05,-118));
+  g.add(box(26,0.14,1.0,M.water,-162,cy2+0.15,-118));
+  planRect(-156,-110,-120,-116,'#9ec7d8');
+
+  // jardines en terrazas
+  for(let i=0;i<5;i++){
+    const tz=-100-i*9;
+    g.add(box(26,0.5,7,M.pave2,-172,terrainH(-172,tz)+0.2,tz));
+    for(let k=0;k<7;k++) cyp(-184+k*3.2,tz,0.9+((k%3)*0.12));
+  }
+  for(let i=0;i<9;i++) tree(-178+(i%2)*3,-96-i*8,1);
+  for(let i=0;i<5;i++) cyp(-158+i*2,-100,1);
+  g.add(box(10,3.5,10,M.stone2,-150,terrainH(-150,-104)+1.75,-104));
+  G.add(g);
+}
+
+/* --- 8.8 Darro y puente --- */
+function buildRiver(){
+  const N=60, pos=[], idx=[];
+  for(let i=0;i<=N;i++){
+    const x=-230+i*6.5;
+    const z=-104-3*Math.sin(x*0.008);
+    const y=terrainH(x,z)+0.25;
+    pos.push(x,y,z, x,y,z-3.8);
+  }
+  for(let i=0;i<N;i++){
+    const a=i*2;
+    idx.push(a,a+2,a+1, a+1,a+2,a+3);
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  geo.setIndex(idx); geo.computeVertexNormals();
+  const w=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x2e6f8a,roughness:.15,metalness:.35,
+    transparent:true,opacity:.85,side:THREE.DoubleSide}));
+  w.receiveShadow=true; G.add(w);
+  // Puente de los Espinoles
+  const b=new THREE.Group();
+  const by=0.6;
+  const deck=archWall(7,2.4,26,[{cx:-7,w:5,h:5},{cx:0,w:5,h:5},{cx:7,w:5,h:5}],M.stone);
+  deck.rotation.y=Math.PI/2; deck.position.set(0,by-2.4,0); b.add(deck);
+  b.add(box(9,1.2,28,M.stone2,0,by-0.6,0));
+  b.add(box(9,0.9,28,M.stone,0,by+0.45,0));
+  b.add(box(0.8,1.6,28,M.stone,4.2,by+1.2,0));
+  b.add(box(0.8,1.6,28,M.stone,-4.2,by+1.2,0));
+  b.position.set(-30,by,-104); G.add(b);
+}
+
+/* --- 8.9 Alameda --- */
+function buildAlameda(){
+  const g=new THREE.Group();
+  g.add(box(64,0.4,86,M.pave2,72,0.1,100));
+  planRect(40,104,57,143,'#8f9a6d');
+  g.add(box(2.2,0.3,70,M.stone,52,0.35,100));
+  g.add(box(1.6,0.16,68,M.water,52,0.5,100));
+  g.add(box(26,0.5,8,M.stone,78,0.3,66));
+  g.add(box(24,0.2,6,M.pool,78,0.55,66));
+  g.add(box(24,0.14,6,M.water,78,0.68,66));
+  for(let i=0;i<6;i++){
+    g.add(cyl(.16,.18,3.4,8,M.wood,68+i*5,1.7,72));
+    g.add(cyl(.16,.18,3.4,8,M.wood,68+i*5,1.7,80));
+  }
+  for(let i=0;i<8;i++) g.add(box(26,0.22,0.7,M.wood,80.5,3.5,72+i*1.15));
+  const pg=new THREE.Group();
+  pg.add(box(2,9,3,M.stuccoW,-4,4.5,0));
+  pg.add(box(2,9,3,M.stuccoW,4,4.5,0));
+  pg.add(box(8,2,3,M.stuccoW,0,9.5,0));
+  pg.add(archWall(6.4,9,3,[{cx:0,w:3.4,h:6}],M.stuccoW));
+  pg.position.set(98,0,112); g.add(pg);
+  for(let i=0;i<10;i++) tree(46+i*6,64+(i%3)*4,1);
+  for(let i=0;i<8;i++) tree(44+i*7,132,0.95);
+  for(let i=0;i<6;i++) cyp(38,70+i*12,1.05);
+  G.add(g);
+}
+
+/* ============================================================
+   9 · VEGETACIÓN (instanciada)
+   ============================================================ */
+function buildVegetation(){
+  const trunkG=new THREE.CylinderGeometry(0.22,0.34,3,6); trunkG.translate(0,1.5,0);
+  const leavesG=new THREE.SphereGeometry(1.9,10,8); leavesG.translate(0,4.2,0);
+  const bark=new THREE.MeshStandardMaterial({color:0x5a4432,roughness:.95});
+  const leafM=new THREE.MeshStandardMaterial({color:0x4f7b38,roughness:.95,flatShading:true});
+  if(TREES.length){
+    const ti=new THREE.InstancedMesh(trunkG,bark,TREES.length);
+    const li=new THREE.InstancedMesh(leavesG,leafM,TREES.length);
+    const m=new THREE.Matrix4();
+    TREES.forEach((t,i)=>{
+      const y=terrainH(t.x,t.z);
+      m.makeScale(t.s,t.s,t.s); m.setPosition(t.x,y,t.z); ti.setMatrixAt(i,m);
+      m.makeScale(t.s*1.05,t.s*.9,t.s*1.05); m.setPosition(t.x,y,t.z); li.setMatrixAt(i,m);
+    });
+    ti.castShadow=li.castShadow=true; ti.receiveShadow=li.receiveShadow=true;
+    G.add(ti); G.add(li);
+  }
+  if(CYPS.length){
+    const cg=new THREE.ConeGeometry(1.15,8,9); cg.translate(0,4,0);
+    const ci=new THREE.InstancedMesh(cg,M.cyp,CYPS.length);
+    const m=new THREE.Matrix4();
+    CYPS.forEach((t,i)=>{
+      const y=terrainH(t.x,t.z);
+      m.makeScale(t.s,t.s,t.s); m.setPosition(t.x,y,t.z); ci.setMatrixAt(i,m);
+    });
+    ci.castShadow=true; G.add(ci);
+  }
+  if(HEDGES.length){
+    const hg=new THREE.BoxGeometry(1,1,1);
+    const hi=new THREE.InstancedMesh(hg,M.leaf2,HEDGES.length);
+    const m=new THREE.Matrix4();
+    HEDGES.forEach((t,i)=>{
+      const y=terrainH(t.x,t.z);
+      m.makeScale(t.w,t.h,t.d); m.setPosition(t.x,y+t.h/2,t.z); hi.setMatrixAt(i,m);
+    });
+    hi.castShadow=true; hi.receiveShadow=true; G.add(hi);
+  }
+}
+
+/* ============================================================
+   10 · ESCENA, CIELO Y LUZ
+   ============================================================ */
+const canvas=document.getElementById('scene');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.08;
+
+const scene=new THREE.Scene();
+scene.fog=new THREE.FogExp2(0xb9c6c6,0.0018);
+const camera=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,0.3,4000);
+camera.position.set(90,95,190);
+
+const controls=new OrbitControls(camera,canvas);
+controls.enableDamping=true; controls.dampingFactor=.07;
+controls.maxPolarAngle=Math.PI*.495;
+controls.minDistance=3; controls.maxDistance=900;
+controls.target.set(-45,8,-30);
+
+/* --- cielo --- */
+const skyU={
+  top:{value:new THREE.Color(0x4b86c4)}, bot:{value:new THREE.Color(0xd7e6ee)},
+  sun:{value:new THREE.Vector3(1,.4,.2)}, sunCol:{value:new THREE.Color(0xffe3b0)},
+  off:{value:12}, ex:{value:.75}
+};
+const sky=new THREE.Mesh(new THREE.SphereGeometry(1600,40,24),new THREE.ShaderMaterial({
+  uniforms:skyU,side:THREE.BackSide,depthWrite:false,fog:false,
+  vertexShader:`varying vec3 vW; void main(){ vW=(modelMatrix*vec4(position,1.)).xyz;
+    gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+  fragmentShader:`uniform vec3 top,bot,sun,sunCol; uniform float off,ex; varying vec3 vW;
+    void main(){ vec3 d=normalize(vW+vec3(0.,off,0.));
+      float f=pow(max(d.y,0.),ex);
+      vec3 c=mix(bot,top,f);
+      float s=max(dot(normalize(vW),normalize(sun)),0.);
+      c+=sunCol*pow(s,10.)*.55 + sunCol*pow(s,220.)*1.6;
+      gl_FragColor=vec4(c,1.); }`
+}));
+sky.renderOrder=-1; scene.add(sky);
+
+/* --- luces --- */
+const sun=new THREE.DirectionalLight(0xfff2dd,3);
+sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);
+sun.shadow.camera.left=-240; sun.shadow.camera.right=240;
+sun.shadow.camera.top=240; sun.shadow.camera.bottom=-240;
+sun.shadow.camera.near=1; sun.shadow.camera.far=900;
+sun.shadow.bias=-0.0012; sun.shadow.normalBias=0.6;
+scene.add(sun); scene.add(sun.target);
+
+const hemi=new THREE.HemisphereLight(0xbcd6ef,0x6b5a44,.75); scene.add(hemi);
+const amb=new THREE.AmbientLight(0xffffff,.18); scene.add(amb);
+
+/* --- estrellas --- */
+const starPos=new Float32Array(900*3);
+for(let i=0;i<900;i++){
+  const a=Math.random()*Math.PI*2, b=Math.acos(Math.random()*.9+.05), r=1400;
+  starPos[i*3]=Math.sin(b)*Math.cos(a)*r;
+  starPos[i*3+1]=Math.cos(b)*r;
+  starPos[i*3+2]=Math.sin(b)*Math.sin(a)*r;
+}
+const starGeo=new THREE.BufferGeometry();
+starGeo.setAttribute('position',new THREE.BufferAttribute(starPos,3));
+const starMat=new THREE.PointsMaterial({color:0xffffff,size:9,sizeAttenuation:false,transparent:true,opacity:0});
+scene.add(new THREE.Points(starGeo,starMat));
+
+/* ============================================================
+   11 · TUBO DEL RECORRIDO Y VIAJERO
+   ============================================================ */
+function dashTexture(){
+  const c=document.createElement('canvas'); c.width=64; c.height=4;
+  const x=c.getContext('2d');
+  x.clearRect(0,0,64,4);
+  const g=x.createLinearGradient(0,0,40,0);
+  g.addColorStop(0,'rgba(255,235,190,1)');
+  g.addColorStop(.7,'rgba(255,200,110,1)');
+  g.addColorStop(1,'rgba(255,200,110,0)');
+  x.fillStyle=g; x.fillRect(0,0,40,4);
+  const t=new THREE.CanvasTexture(c);
+  t.colorSpace=THREE.SRGBColorSpace; t.wrapS=t.wrapT=THREE.RepeatWrapping;
+  t.repeat.set(140,1); return t;
+}
+const dash=dashTexture();
+const tubeMat=new THREE.MeshStandardMaterial({
+  map:dash, emissiveMap:dash, emissive:0xffb347, emissiveIntensity:1.5,
+  color:0xffd9a0, roughness:.4, transparent:true, opacity:.95
+});
+const tube=new THREE.Mesh(new THREE.TubeGeometry(curve,900,0.62,10,true),tubeMat);
+G.add(tube);
+const glowMat=new THREE.MeshBasicMaterial({color:0xffb347,transparent:true,opacity:.12,
+  blending:THREE.AdditiveBlending,depthWrite:false});
+const glow=new THREE.Mesh(new THREE.TubeGeometry(curve,900,2.1,8,true),glowMat);
+G.add(glow);
+
+/* --- viajero --- */
+const traveler=new THREE.Group();
+const orb=new THREE.Mesh(new THREE.SphereGeometry(.75,20,16),
+  new THREE.MeshStandardMaterial({color:0xffe9b5,emissive:0xffa030,emissiveIntensity:2.4,roughness:.35}));
+traveler.add(orb);
+const halo=new THREE.Mesh(new THREE.TorusGeometry(2.4,.12,8,40),
+  new THREE.MeshBasicMaterial({color:0xffc069,transparent:true,opacity:.85}));
+halo.rotation.x=-Math.PI/2; halo.position.y=-2.6; traveler.add(halo);
+const beam=new THREE.Mesh(new THREE.CylinderGeometry(.35,.9,26,12,1,true),
+  new THREE.MeshBasicMaterial({color:0xffb347,transparent:true,opacity:.13,
+    blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide}));
+beam.position.y=8; traveler.add(beam);
+const tlight=new THREE.PointLight(0xffb050,26,42,2); tlight.position.y=2.4; traveler.add(tlight);
+scene.add(traveler);
+
+/* --- marcadores de parada --- */
+function numberTexture(n){
+  const c=document.createElement('canvas'); c.width=c.height=128;
+  const x=c.getContext('2d');
+  x.clearRect(0,0,128,128);
+  x.beginPath(); x.arc(64,64,52,0,7);
+  x.fillStyle='rgba(12,14,18,.82)'; x.fill();
+  x.lineWidth=5; x.strokeStyle='#d9b26a'; x.stroke();
+  x.fillStyle='#f6e2b4'; x.font='bold 58px Georgia, serif';
+  x.textAlign='center'; x.textBaseline='middle';
+  x.fillText(String(n),64,68);
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t;
+}
+const stopU=[];
+STOPS.forEach((s,i)=>{
+  const p=new THREE.Vector3(s.p[0],pathH(s.p[0],s.p[1]),s.p[1]);
+  const grp=new THREE.Group();
+  const spr=new THREE.Sprite(new THREE.SpriteMaterial({map:numberTexture(i+1),depthTest:true}));
+  spr.scale.set(4.6,4.6,1); spr.position.y=5.2; grp.add(spr);
+  const ped=new THREE.Mesh(new THREE.CylinderGeometry(1.5,1.7,.35,16),
+    new THREE.MeshStandardMaterial({color:0x2a2f36,roughness:.8,emissive:0x6a4a18,emissiveIntensity:.4}));
+  ped.position.y=.15; ped.receiveShadow=true; grp.add(ped);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(1.9,.07,6,28),
+    new THREE.MeshBasicMaterial({color:0xd9b26a,transparent:true,opacity:.6}));
+  ring.rotation.x=-Math.PI/2; ring.position.y=.4; grp.add(ring);
+  grp.position.copy(p);
+  scene.add(grp);
+  stopU.push({u:closestU(p),p,grp,spr});
+});
+function closestU(p){
+  let best=1e9,bu=0;
+  for(let i=0;i<1200;i++){
+    const q=curve.getPointAt(i/1200);
+    const d=q.distanceToSquared(p);
+    if(d<best){best=d;bu=i/1200;}
+  }
+  return bu;
+}
+
+/* ============================================================
+   12 · ETIQUETAS HTML
+   ============================================================ */
+const labelBox=document.getElementById('labels');
+const LABELS=[];
+function addLabel(text,pos,big=false,cls=''){
+  const el=document.createElement('div');
+  el.className='lbl'+(big?' big':'');
+  el.innerHTML=cls?`<span class="idx">${cls}</span>${text}`:text;
+  labelBox.appendChild(el);
+  LABELS.push({el,p:pos.clone(),y:pos.y});
+}
+const SIGHT=[
+ ['Alcazaba',-150,44,22],['Torre de la Vela',-172,20,26],['Palacio de Carlos V',-80,17,18],
+ ['Puerta de la Justicia',-44,19,17],['Patio de los Arrayanes',-10,9,10],
+ ['Torre de Comares',-10,50,8],['Mexuar',-12,13,7],['Sala de los Abencerrajes',20,11,7],
+ ['Patio de los Leones',45,10,8],['Mirador de Lindaraja',72,8,10],
+ ['Partal',-100,22,10],['Generalife',-133,32,12],['Puente de los Espinoles',-30,4,10],
+ ['Jardines de la Alameda',72,8,10],['Iglesia de Santa María',34,12,9]
+];
+SIGHT.forEach(([t,x,y,z])=>addLabel(t,new THREE.Vector3(x,y,z),true));
+STOPS.forEach((s,i)=>{
+  const p=new THREE.Vector3(s.p[0],pathH(s.p[0],s.p[1])+6,s.p[1]);
+  addLabel(s.t,p,false,String(i+1));
+});
+let labelsOn=true;
+
+/* ============================================================
+   13 · INTERFAZ
+   ============================================================ */
+const listEl=document.getElementById('list');
+STOPS.forEach((s,i)=>{
+  const li=document.createElement('li');
+  li.innerHTML=`<span class="n">${i+1}</span><span class="t">${s.t}<span class="s">${s.s}</span></span>`;
+  li.onclick=()=>goTo(i);
+  listEl.appendChild(li);
+});
+const items=[...listEl.children];
+const info=document.getElementById('info');
+const iK=document.getElementById('i-k'), iT=document.getElementById('i-t'),
+      iS=document.getElementById('i-s'), iP=document.getElementById('i-p'), iTip=document.getElementById('i-tip');
+let current=-1;
+function showStop(i,speak=true){
+  if(i===current) return;
+  current=i;
+  const s=STOPS[i];
+  items.forEach((el,k)=>el.classList.toggle('on',k===i));
+  info.classList.add('swap');
+  setTimeout(()=>{
+    iK.textContent=`Parada ${i+1} de ${STOPS.length}`;
+    iT.textContent=s.t; iS.textContent=s.s; iP.textContent=s.p; iTip.textContent='▸ '+s.tip;
+    info.classList.remove('swap');
+  },260);
+  if(speak&&voiceOn&&window.speechSynthesis){
+    try{
+      const u=new SpeechSynthesisUtterance(`${s.t}. ${s.p}`);
+      u.lang='es-ES'; u.rate=.96; u.pitch=1;
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    }catch(e){}
+  }
+}
+
+/* controles */
+let playing=true, spd=1, view='guia', voiceOn=false, tod=17.6;
+const playBtn=document.getElementById('play');
+playBtn.onclick=()=>{ playing=!playing; playBtn.textContent=playing?'❚❚ Pausa':'▶ Reproducir';
+  playBtn.classList.toggle('on',playing); };
+document.getElementById('restart').onclick=()=>{ u=0; lastU=0; curStop=-1; };
+const spdBtn=document.getElementById('spd');
+const SPEEDS=[.5,1,2,4];
+spdBtn.onclick=()=>{ spd=SPEEDS[(SPEEDS.indexOf(spd)+1)%SPEEDS.length]; spdBtn.textContent=spd+'×'; };
+document.querySelectorAll('[data-view]').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('[data-view]').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); view=b.dataset.view;
+    controls.enabled=(view==='libre');
+    if(view==='libre'){ controls.target.copy(curPos); }
+  };
+});
+const todEl=document.getElementById('tod'), clockEl=document.getElementById('clock');
+todEl.oninput=()=>{ tod=parseFloat(todEl.value);
+  const h=Math.floor(tod), m=Math.round((tod-h)*60);
+  clockEl.textContent=`${String(h).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`; };
+document.getElementById('lbl').onclick=function(){ labelsOn=!labelsOn; this.classList.toggle('on',labelsOn);
+  if(!labelsOn) LABELS.forEach(l=>l.el.style.display='none'); };
+document.getElementById('voice').onclick=function(){ voiceOn=!voiceOn; this.classList.toggle('on',voiceOn);
+  if(!voiceOn&&window.speechSynthesis) speechSynthesis.cancel(); };
+
+/* salto a una parada */
+let tween=null;
+function goTo(i){
+  const target=stopU[i].u;
+  tween={from:u,to:target,t:0,dur:1.6};
+  showStop(i);
+}
+
+/* ============================================================
+   14 · SOL Y HORA DEL DÍA
+   ============================================================ */
+const LAMPS=[];
+scene.traverse(o=>{ if(o.material&&o.material.emissive&&o.material.emissiveIntensity>0.4&&o.material.emissive.getHex()===0xffcc66) LAMPS.push(o.material); });
+const cTop=new THREE.Color(), cBot=new THREE.Color(), cTmp=new THREE.Color();
+const SUN_TGT=new THREE.Vector3(-45,0,-30);
+const V_UP=new THREE.Vector3(0,1,0), V_LVL=new THREE.Vector3(0,2,0);
+const progEl=document.getElementById('prog');
+const PAL=[
+ [0.0,0x070c1a,0x0d1626],[0.12,0x2a3f6b,0xe08a4e],[0.26,0x4b86c4,0xd7e6ee],
+ [0.62,0x4b86c4,0xd7e6ee],[0.76,0x2f3f6d,0xef9450],[0.88,0x141c33,0x2b3550],[1.0,0x070c1a,0x0d1626]
+];
+function skyPal(t){
+  for(let i=0;i<PAL.length-1;i++){
+    if(t>=PAL[i][0]&&t<=PAL[i+1][0]){
+      const f=(t-PAL[i][0])/(PAL[i+1][0]-PAL[i][0]||1);
+      cTop.setHex(PAL[i][1]).lerp(cTmp.setHex(PAL[i+1][1]),f);
+      cBot.setHex(PAL[i][2]).lerp(cTmp.setHex(PAL[i+1][2]),f);
+      return;
+    }
+  }
+}
+function updateSun(h){
+  const dayT=clamp((h-6)/14,0,1);
+  const az=Math.PI*dayT, el=Math.sin(dayT*Math.PI)*1.12;
+  const dir=new THREE.Vector3(Math.cos(az)*Math.cos(el),Math.sin(el),0.45*Math.sin(el)+0.22).normalize();
+  const dayF=clamp(Math.sin(el)*3.4,0,1);
+  sun.position.copy(dir).multiplyScalar(340).add(SUN_TGT);
+  sun.target.position.copy(SUN_TGT);
+  sun.intensity=0.25+3.3*dayF;
+  sun.color.setHex(0xff9c4e).lerp(cTmp.setHex(0xfff4e2),clamp(el/0.9,0,1));
+  skyPal(clamp((h-6)/14,0,1));
+  skyU.top.value.copy(cTop); skyU.bot.value.copy(cBot);
+  skyU.sun.value.copy(dir); skyU.sunCol.value.copy(sun.color);
+  hemi.intensity=0.28+0.85*dayF;
+  hemi.color.copy(cTop).lerp(cTmp.setHex(0xffffff),.35);
+  hemi.groundColor.setHex(0x3a3226).lerp(cTmp.setHex(0x6b5a44),dayF);
+  amb.intensity=0.1+0.14*dayF;
+  starMat.opacity=clamp(0.85-dayF*1.6,0,0.85);
+  scene.fog.color.copy(cBot);
+  scene.fog.density=0.0016+ (1-dayF)*0.0008;
+  renderer.toneMappingExposure=0.95+0.22*dayF;
+  LAMPS.forEach(m=>{ m.emissiveIntensity=0.35+1.5*(1-dayF); });
+}
+
+/* ============================================================
+   15 · MINIMAPA
+   ============================================================ */
+const mm=document.getElementById('mmap'), mx=mm.getContext('2d');
+const MB={x0:-196,x1:106,z0:-186,z1:158};
+const MS=Math.min(mm.width/(MB.x1-MB.x0),mm.height/(MB.z1-MB.z0));
+const MOX=(mm.width-(MB.x1-MB.x0)*MS)/2, MOZ=(mm.height-(MB.z1-MB.z0)*MS)/2;
+const mX=x=>MOX+(x-MB.x0)*MS, mZ=z=>MOZ+(MB.z1-z)*MS;
+function drawMap(){
+  mx.clearRect(0,0,mm.width,mm.height);
+  // río
+  mx.strokeStyle='rgba(80,150,190,.55)'; mx.lineWidth=2;
+  mx.beginPath();
+  for(let x=-230;x<=140;x+=8){
+    const z=-104-3*Math.sin(x*.008);
+    x===-230?mx.moveTo(mX(x),mZ(z)):mx.lineTo(mX(x),mZ(z));
+  }
+  mx.stroke();
+  // masas de edificio
+  PLAN.forEach(p=>{
+    mx.fillStyle='rgba(146,136,116,.30)'; mx.strokeStyle='rgba(196,184,160,.45)'; mx.lineWidth=.7;
+    mx.beginPath();
+    if(p.t==='r') mx.rect(mX(p.v[0]),mZ(p.v[3]),(p.v[1]-p.v[0])*MS,(p.v[3]-p.v[2])*MS);
+    else mx.arc(mX(p.v[0]),mZ(p.v[1]),p.v[2]*MS,0,7);
+    mx.fill(); mx.stroke();
+  });
+  // trazado (con borde oscuro para que destaque)
+  mx.lineJoin='round'; mx.lineCap='round';
+  mx.strokeStyle='rgba(0,0,0,.55)'; mx.lineWidth=4; mx.setLineDash([]);
+  mx.beginPath();
+  routePts.forEach((p,i)=> i?mx.lineTo(mX(p.x),mZ(p.z)):mx.moveTo(mX(p.x),mZ(p.z)));
+  mx.stroke();
+  mx.strokeStyle='#ffc978'; mx.lineWidth=1.8; mx.setLineDash([5,3]);
+  mx.beginPath();
+  routePts.forEach((p,i)=> i?mx.lineTo(mX(p.x),mZ(p.z)):mx.moveTo(mX(p.x),mZ(p.z)));
+  mx.stroke(); mx.setLineDash([]);
+  // paradas
+  stopU.forEach((s,i)=>{
+    mx.fillStyle=(i===current)?'#f5d79a':'rgba(217,178,106,.85)';
+    mx.beginPath(); mx.arc(mX(s.p.x),mZ(s.p.z),(i===current)?4.6:3,0,7); mx.fill();
+    mx.fillStyle='#101214'; mx.font='bold 7px sans-serif'; mx.textAlign='center'; mx.textBaseline='middle';
+    mx.fillText(String(i+1),mX(s.p.x),mZ(s.p.z)+.4);
+  });
+  // viajero
+  const p=curPos;
+  mx.save();
+  mx.translate(mX(p.x),mZ(p.z));
+  mx.rotate(Math.atan2(dir3.x,dir3.z));
+  mx.fillStyle='#fff'; mx.beginPath();
+  mx.moveTo(0,-6); mx.lineTo(4,4); mx.lineTo(0,1.5); mx.lineTo(-4,4); mx.closePath(); mx.fill();
+  mx.restore();
+  // norte
+  mx.fillStyle='rgba(255,255,255,.55)'; mx.font='9px sans-serif'; mx.textAlign='center';
+  mx.fillText('N',mm.width-12,14);
+  mx.strokeStyle='rgba(255,255,255,.5)'; mx.beginPath();
+  mx.moveTo(mm.width-12,18); mx.lineTo(mm.width-12,30); mx.stroke();
+  mx.beginPath(); mx.moveTo(mm.width-12,16); mx.lineTo(mm.width-15,22); mx.lineTo(mm.width-9,22); mx.closePath();
+  mx.fillStyle='rgba(255,255,255,.6)'; mx.fill();
+}
+
+/* ============================================================
+   16 · BUCLE DE ANIMACIÓN
+   ============================================================ */
+let u=0, lastU=0, lastT=performance.now(), curStop=-1, lastPr=-1;
+const curPos=new THREE.Vector3(), dir3=new THREE.Vector3(), tmpV=new THREE.Vector3();
+const tmpA=new THREE.Vector3(), tmpB=new THREE.Vector3(), tmpC=new THREE.Vector3(), tmpD=new THREE.Vector3();
+const TOUR=175;
+
+function frame(now){
+  requestAnimationFrame(frame);
+  const dt=Math.min(Math.max((now-lastT)/1000,0),.05); lastT=now;
+
+  // avance del recorrido
+  if(tween){
+    tween.t+=dt;
+    const k=clamp(tween.t/tween.dur,0,1);
+    let d=tween.to-tween.from;
+    if(d>0.5) d-=1; if(d<-0.5) d+=1;
+    u=((tween.from+d*smooth(k))%1+1)%1;
+    if(k>=1){ tween=null; lastU=u; }
+  } else if(playing){
+    u=((u+dt*spd/TOUR)%1+1)%1;
+  }
+  lastU=u;
+
+  // posición y dirección
+  curve.getPointAt(u,curPos);
+  curve.getTangentAt(u,dir3); dir3.y=0; dir3.normalize();
+  traveler.position.copy(curPos);
+  halo.rotation.z+=dt*1.2;
+  orb.scale.setScalar(1+Math.sin(now*0.004)*0.07);
+
+  // detección de paradas
+  let best=-1,bd=1e9;
+  stopU.forEach((s,i)=>{
+    let d=Math.abs(s.u-u); if(d>0.5) d=1-d;
+    if(d<bd){bd=d;best=i;}
+  });
+  if(best>=0&&bd<0.0045&&best!==curStop){ curStop=best; showStop(best); }
+
+  // cámara
+  const fwd=tmpA.copy(dir3);
+  const side=tmpB.set(-fwd.z,0,fwd.x);
+  const want=tmpC, look=tmpD;
+  if(view==='guia'){
+    want.copy(curPos).addScaledVector(fwd,-17).setY(curPos.y+8.5);
+    look.copy(curPos).addScaledVector(fwd,7).setY(curPos.y+2);
+  } else if(view==='cine'){
+    want.copy(curPos).addScaledVector(side,30).addScaledVector(fwd,-12).setY(curPos.y+17);
+    look.copy(curPos).addScaledVector(fwd,9).setY(curPos.y+1);
+  } else if(view==='pea'){
+    want.copy(curPos).setY(curPos.y+1.75);
+    look.copy(curPos).addScaledVector(fwd,12).setY(curPos.y+1.75);
+  }
+  if(view!=='libre'){
+    const k=1-Math.pow(0.0015,dt);
+    camera.position.lerp(want,k);
+    tmpV.copy(look); camera.lookAt(tmpV);
+  } else {
+    controls.update();
+  }
+
+  // tubería animada
+  dash.offset.x=(-now*0.00009)%1;
+  glowMat.opacity=0.10+0.05*Math.sin(now*0.002);
+
+  // etiquetas
+  if(labelsOn){
+    for(const L of LABELS){
+      tmpV.copy(L.p).project(camera);
+      if(tmpV.z>1||tmpV.z<-1||Math.abs(tmpV.x)>1.2||Math.abs(tmpV.y)>1.2){ L.el.style.display='none'; continue; }
+      L.el.style.display='block';
+      L.el.style.left=((tmpV.x*0.5+0.5)*innerWidth)+'px';
+      L.el.style.top=((-tmpV.y*0.5+0.5)*innerHeight)+'px';
+      L.el.style.opacity=String(clamp(1.6-Math.abs(tmpV.z)*1.2,.25,1));
+    }
+  }
+
+  updateSun(tod);
+  drawMap();
+
+  // progreso
+  const pr=Math.round(u*100);
+  if(pr!==lastPr){ lastPr=pr; progEl.textContent=pr+'%'; }
+
+  renderer.render(scene,camera);
+}
+
+/* ============================================================
+   17 · ARRANQUE
+   ============================================================ */
+function init(){
+  buildTerrain();
+  buildPlaza();
+  buildNasrid();
+  buildCarlosV();
+  buildJusticia();
+  buildAlcazaba();
+  buildPartal();
+  buildGeneralife();
+  buildRiver();
+  buildAlameda();
+  buildVegetation();
+  scene.add(G);
+  document.getElementById('sub').textContent=`Ruta 3D · ${STOPS.length} paradas · ${(LEN/1000).toFixed(1)} km`;
+  showStop(0,false);
+  addEventListener('resize',()=>{
+    camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth,innerHeight);
+  });
+  updateSun(tod);
+  requestAnimationFrame(frame);
+  setTimeout(()=>{ document.getElementById('load').classList.add('gone'); },700);
+}
+try{ init(); }
+catch(err){
+  console.error(err);
+  document.getElementById('err').textContent='Error al iniciar: '+err.message;
+}
+</script>
+</body>
+</html>

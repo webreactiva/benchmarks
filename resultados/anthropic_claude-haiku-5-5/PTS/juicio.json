@@ -1,0 +1,20 @@
+{
+  "nota": 6,
+  "veredicto": "bien",
+  "resumen": "953 palabras con un argumento de verdad: un test inestable enseña al equipo a ignorar el rojo («normalización del fallo») y da una seguridad falsa que sin tests no existe. Un caso concreto (timeout de red, regresión de facturación que se pierde) y cinco prácticas útiles. Le sobran la lista con etiquetas en negrita, la «Conclusión» y una cita inventada.",
+  "rarezas": [
+    "«Como decía alguien en una charla que no recuerdo bien»: se inventa una fuente que no puede nombrar.",
+    "Amplía el tema a los tests que llevan semanas en rojo, no solo a los que fallan a veces.",
+    "Responde a su propio título con «Entonces, ¿mejor no tener tests? No.», que matiza la tesis que le pedían defender."
+  ],
+  "nota_previa": 7,
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 0,
+    "ejemplos concretos": 1,
+    "sin errores ni inventos": 0,
+    "slop": 1,
+    "extensión": 1
+  }
+}

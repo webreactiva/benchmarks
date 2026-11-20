@@ -1,0 +1,17 @@
+{
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 1,
+    "slop": 2,
+    "extensión": 1
+  },
+  "nota": 10,
+  "veredicto": "el post completo",
+  "resumen": "Explica por qué un test intermitente puede salir más caro que el hueco que deja: da una falsa sensación de cobertura y enseña a ignorar el único aviso útil. Lo ilustra con un test de Python que falla al cruzar la medianoche y su arreglo, ambos correctos, sin slop y con la extensión justa.",
+  "rarezas": [
+    "Comprueba sus dos fragmentos de código antes de entregarlo"
+  ]
+}

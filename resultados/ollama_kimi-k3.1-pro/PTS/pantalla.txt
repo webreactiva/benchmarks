@@ -1,0 +1,36 @@
+  ┃    96
+  ┃    97 Una suite intermitente añade otra capa de riesgo: ya no se sabe si el mecanismo destinado a detectar
+  ┃       errores está funcionando. Esa ambigüedad contamina revisiones, despliegues y prioridades.
+  ┃    98
+  ┃    99 Por eso la estabilidad no es un lujo ni una tarea de limpieza para cuando sobre tiempo. Es parte de la
+  ┃       corrección de la suite. Un test útil debe comportarse como un buen instrumento de medida: producir
+  ┃       resultados comparables y obligar a investigar cuando cambia su lectura.
+  ┃   100
+  ┃   101 Ante un test que falla a veces, la pregunta correcta no es «¿cómo conseguimos que vuelva a ponerse verde?».
+  ┃        Es «¿qué información nos dará la próxima vez que falle?». Si la respuesta sigue siendo «ninguna», ese
+  ┃       test no está protegiendo el software. Está cobrando un peaje por aparentar que lo hace.
+  ┃   102
+  ┃
+
+     + Thought: 1.5s
+
+     → Read tests-intermitentes-peores-que-no-tener-tests.md
+
+     + Thought: 772ms
+
+     He escrito el post y lo he guardado en la carpeta actual:
+
+     tests-intermitentes-peores-que-no-tener-tests.md (tests-intermitentes-peores-que-no-tener-tests.md)
+
+     Incluye los costes de los tests intermitentes, sus causas habituales, un ejemplo probabilístico y
+     recomendaciones prácticas para gestionarlos y prevenirlos.
+
+     ▣  Build · kimi-k3.1-pro · 43.0s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · kimi-k3.1-pro Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-FHPtsIVZ                                                              13.7K (1%)  ctrl+p commands
+

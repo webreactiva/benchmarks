@@ -1,0 +1,62 @@
+{
+  "html": [],
+  "mermaid": [],
+  "slop": {
+    "palabras": 2800,
+    "titulos": 19,
+    "lineas_lista": 26,
+    "bloques_codigo": 6,
+    "frase_media": 21.7,
+    "marcas": {
+      "13-raya": {
+        "que": "rayas (—)",
+        "n": 8,
+        "ejemplos": [
+          "—",
+          "—",
+          "—",
+          "—",
+          "—",
+          "—"
+        ]
+      },
+      "15-negritas": {
+        "que": "negritas",
+        "n": 43,
+        "ejemplos": [
+          "**ya no puedes fiarte de él**",
+          "**en ciertas circunstancias, una suite de tests que falla de forma crónica es peor que no tener tests**",
+          "**no se trata de que el test sea rojo, se trata de que el equipo haya aprendido a ignorar el rojo**",
+          "**el test depende de algo que el test no controla**",
+          "**consume la atención del equipo cuando se rompe el código de verdad**",
+          "**La fiabilidad de la suite es (aproximadamente) el producto de la fiabilidad de sus tests.**"
+        ]
+      },
+      "16-lista-con-titulo": {
+        "que": "listas con etiqueta en negrita y dos puntos",
+        "n": 4,
+        "ejemplos": [
+          "\n- **Nivel 0 — Smoke (bloqueante, < 5 min).**",
+          "- **Nivel 1 — Rápidos (bloqueante, < 15 min).**",
+          "- **Nivel 2 — Integración / E2E (informativo, no bloqueante).**",
+          "- **Caducidad obligatoria**:"
+        ]
+      },
+      "18-emojis": {
+        "que": "emojis decorativos",
+        "n": 4,
+        "ejemplos": [
+          "❌",
+          "✅",
+          "❌",
+          "✅"
+        ]
+      }
+    },
+    "puntos": 26.8,
+    "densidad_100": 0.96
+  },
+  "extra": [
+    "2800 palabras · slop 26.8 (0.96/100 pal.)"
+  ]
+}

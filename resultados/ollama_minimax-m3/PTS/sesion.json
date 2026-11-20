@@ -1,0 +1,652 @@
+{
+  "info": {
+    "id": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+    "slug": "glowing-wizard",
+    "projectID": "global",
+    "directory": "/var/tmp/bench/ws-s444EOyD",
+    "path": "var/tmp/bench/ws-s444EOyD",
+    "title": "Por qué los tests que fallan son peores",
+    "agent": "build",
+    "model": {
+      "id": "minimax-m3",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 15243,
+      "output": 10953,
+      "reasoning": 0,
+      "cache": {
+        "read": 77696,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795131850881,
+      "updated": 1795131980963
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795131850904
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "minimax-m3"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f6324098001JkePxCFjVdyR7k",
+        "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f632409a0014pyT9BFdsMfgoy",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6324098001JkePxCFjVdyR7k"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6324098001JkePxCFjVdyR7k",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-s444EOyD",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 7824,
+          "input": 5801,
+          "output": 103,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 1920
+          }
+        },
+        "modelID": "minimax-m3",
+        "providerID": "ol",
+        "time": {
+          "created": 1795131850922,
+          "completed": 1795131853472
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f63240aa001EAIhq1S3fU5KIo",
+        "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f632477a001kJOVPXViCd5Oki",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63240aa001EAIhq1S3fU5KIo"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user wants a blog post in Spanish about why failing tests are sometimes worse than having no tests. Save in the current folder.\n\nLet me check the current directory first.",
+          "time": {
+            "start": 1795131852675,
+            "end": 1795131853249
+          },
+          "id": "prt_1f63247830010YuEeZ55CRPQY4",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63240aa001EAIhq1S3fU5KIo"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call-c830522d-aea8-44ad-894e-c97bd9c95166",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "ls -la"
+            },
+            "output": "total 4\ndrwx------ 2 root root 4096 Nov 19 23:44 .\ndrwxrwxrwt 3 root root   60 Nov 19 23:44 ..\n",
+            "metadata": {
+              "output": "total 4\ndrwx------ 2 root root 4096 Nov 19 23:44 .\ndrwxrwxrwt 3 root root   60 Nov 19 23:44 ..\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "ls -la",
+            "time": {
+              "start": 1795131853262,
+              "end": 1795131853460
+            }
+          },
+          "id": "prt_1f63249c4001KtwyIsZNvZmT6k",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63240aa001EAIhq1S3fU5KIo"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call-1833bd91-71a1-464c-a315-c9f2a368a9f2",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "find . -maxdepth 3 -type f -name \"*.md\" | head -50"
+            },
+            "output": "(no output)",
+            "metadata": {
+              "output": "(no output)",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "find . -maxdepth 3 -type f -name \"*.md\" | head -50",
+            "time": {
+              "start": 1795131853284,
+              "end": 1795131853450
+            }
+          },
+          "id": "prt_1f63249d8001VQyp14XYzA0a4U",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63240aa001EAIhq1S3fU5KIo"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 7824,
+            "input": 5801,
+            "output": 103,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 1920
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6324a9a001bjI70m9eEmnXPC",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63240aa001EAIhq1S3fU5KIo"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6324098001JkePxCFjVdyR7k",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-s444EOyD",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 12986,
+          "input": 80,
+          "output": 5098,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7808
+          }
+        },
+        "modelID": "minimax-m3",
+        "providerID": "ol",
+        "time": {
+          "created": 1795131853478,
+          "completed": 1795131924302
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6324aa6001RdSbtRnmTqkJ9o",
+        "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6324f24001bM7g733EgCa3K9",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6324aa6001RdSbtRnmTqkJ9o"
+        },
+        {
+          "type": "reasoning",
+          "text": "Empty directory. I'll write a blog post in Spanish. Let me create a well-structured markdown file with frontmatter (typical for a programming blog).\n\nLet me write a thoughtful, high-quality post in Spanish about why failing tests can be worse than no tests. Key themes:\n\n1. Tests que fallan de forma intermitente (flaky tests) — destruyen la confianza\n2. El \"alert fatigue\" / ruido en CI\n3. Tests que fallan por el environment, no por el código\n4. La falsa sensación de seguridad — tests que pasan sin probar nada\n5. Tests que codifican el comportamiento equivocado\n6. La deuda de tests: tests que nadie mantiene → suite roja permanente\n7. Cuando la suite está rota, el equipo deja de ejecutar los tests\n8. El coste: tiempo de ejecución, fricción,和产品 decisiones\n9. Señales: cómo detectar, métricas (flaky rate, tiempo de reparación)\n10. Soluciones: quarantine, budgets de flakes, CI en stages, testSmoke, etc.\n\nStructure:\n- Title\n- Frontmatter (title, date, tags, excerpt)\n- Intro: la paradoja\n- El test que miente\n- Anatomía de un test que falla siempre\n- La erosión de la confianza\n- El coste oculto\n- Cuándo \"peor que no tener tests\" es literalmente cierto\n- Cómo evitarlo: reglas\n- Señales de alarma (checklist / heurísticas)\n- Conclusión\n\nLet me make it substantive with code examples. Include some code examples in JS/TS or Python. Let me check if there's a language preference... empty folder, so I'll use a mostly language-agnostic approach with a couple of TypeScript/Python snippets.\n\nLet me write a good long-form post. I'll aim for quality over length — maybe 1800-2500 words.\n\nI'll create the file `posts/tests-que-fallan.md` or just `tests-que-fallan.md` in the current folder. The instruction says \"Guarda lo que generes en la carpeta actual\" — current folder = working dir /var/tmp/bench/ws-s444EOyD. I'll just write it directly there.\n\nLet me write it.\n\nAlso consider adding a series of posts? The user asked for \"un post\". One post.\n\nLet me write the content carefully in Spanish (Spain/neutral). Avoid overly flowery language, be technical and concrete.\n\nI'll include:\n- Frontmatter\n- TL;DR\n- Sections with concrete examples\n- Code snippets: a flaky test example, a test that asserts nothing meaningful, a \"test de，产生ление\n- Anti-patterns list\n- Checklist\n- Métricas\n- Conclusión\n\nLet me be careful with the code examples so they're correct.\n\nExample 1: flaky test due to timing\nExample 2: test asserting on implementation details / mocks\nExample 3: a test that asserts nothing (tautological)\n\nAlso discuss \"test que falla por la razón equivocada\" — mutation testing angle: tests that fail for the wrong reason give false positives.\n\nAlso the concept of \"trust budget\" —团队的 confianza.\n\nAlso: tests failing in CI but passing locally (environment divergence) — \"works on my machine\".\n\nAlso: the economics — a red suite consumes attention, and attention is the scarcest resource.\n\nAlso: \"the suite that cries wolf\" — Boy Scout rule vs. the reality.\n\nAlso add \"cuándo sí conviene aunque fallen\": tests que fallan de forma determinista y revelan un bug real son los más valiosos; el problema es la ambigüedad.\n\nLet me write it now.\n\nI'll write with an appropriate title: \"El test que miente: por qué una suite roja puede ser peor que no tener tests\"\n\nLet me write the markdown.\n\nAlso good to add a short section on the \"segundo efecto\" — la erosión de la confianza reduce el número de tests escritos en el futuro (tests are a cost; if they don't pay off, teams stop writing them) — killing the future value of testing.\n\nI'll also add practical advice:\n1. Test分级: smoke rápido bloqueante vs. suite completa no bloqueante\n2. Quarantine /flake auto-detección con reintentos + quarantine\n3. Presupuesto de flakiness (max 1% flake rate); el resto del CI no bloquea\n4. Tests deterministas: nada de sleeps, nada de tiempo real, nada de red, control del reloj, DI para dependencias externas, ids fixtures\n5. Aserciones sobre comportamiento observable, no implementación\n6. Nada de tests tautológicos\n7. Ownership: cada test roto es un bug en el repo, se arregla o se borra (no se deja pudrirse)\n8. Timeouts y presupuesto de tiempo de la suite\n\nAnd a checklist \"Red flags de una suite enferma\".\n\nLet me write it.\n\nLength: good, detailed but not bloated. Let's go.",
+          "time": {
+            "start": 1795131854631,
+            "end": 1795131924246
+          },
+          "id": "prt_1f6324f27001A0XfNss0EGKG96",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6324aa6001RdSbtRnmTqkJ9o"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call-b5e29600-1283-4752-8f4e-67d52d07f260",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "---\ntitle: \"El test que miente: por qué una suite roja puede ser peor que no tener tests\"\ndate: 2026-11-19\nlang: es\ntags: [testing, ci, calidad, ingeniería-de-software]\nexcerpt: \"Un test que falla sin motivo hace más daño que un bug: erosiona la confianza, ralentiza el equipo y acaba matando la práctica de testear. Guía de síntomas, causas y reglas para que la suite vuelva a ser una red y no una alarma.\"\n---\n\n> Un test que falla te dice que algo está mal.\n> Un test que falla *a veces*, *sin motivo aparente* o *siempre*, te dice que **ya no puedes fiarte de él**.\n> Y un test en el que ya no confías no es un test: es ruido con presupuesto de CPU.\n\nHay una intuición muy extendida entre equipos junior: *\"más tests es mejor\"*. Con esa métrica, cualquier suite parece un éxito. Pero la realidad es que un test solo tiene valor si, cuando falla, cambia una decisión. Un test que falla sin cambiar nada —porque nadie lo lee, porque nadie sabe qué significa, porque nadie tiene tiempo de arreglarlo— tiene un coste positivo y un valor negativo.\n\nEste post es un argumento a favor de una tesis incómoda: **en certains circumstances, una suite de tests que falla de forma crónica es peor que no tener tests**. No es un argumento contra los tests, sino a favor de tests que *sean* fiables, o que no existan.\n\n---\n\n## 1. El problema no es el fallo: es la ambigüedad\n\nUn test tiene dos salidas: verde o rojo. El rojo es el estado *deseable* cuando revela un defecto real, porque es una señal accionable: \"algo cambió y no debería haber cambiado\".\n\nEl problema aparece cuando el rojo deja de ser accionable. Si un test falla por razones que el equipo no puede reproducir,\\Localizar y explicar, entonces el rojo deja de ser información y pasa a ser ruido. Y el ruido tiene un coste muy alto, porque el equipo paga por distinguir señal de ruido cada vez que corre la suite.\n\nPiensa en la diferencia entre dos notificaciones:\n\n| Escenario | Señal | Acción del equipo | Coste |\n|---|---|---|---|\n| Test rojo, causa clara y reciente | Real | Investigar y corregir | 5–30 min |\n| Test rojo, causa desconocida | Ruido | Ignorar / reintentar / marcar como flaky | 2 h de debugging para nada |\n\nEse segundo escenario no es raro. En equipos medianos es la norma. Y ahí está la trampa: **no se trata de que el test sea rojo, se trata de que el equipo haya aprendido a ignorar el rojo**. Cuando eso ocurre, la suite sigue corriendo, sigue consumiendo minutos de CI, sigue occupyendo RAM... y ya no cumple su función. Es un coste sin contrapartida.\n\n## 2. Anatomía de un test que \"falla a veces\"\n\nEl test intermitente (*flaky*) es el caso más dañino, porque rompe la relación causa-efecto. Si el rojo es determinista, la gente aprende rápido. Si el rojo es aleatorio, la gente deja de aprender.\n\nCausas habituales:\n\n```ts\n// 1. Dependencia del reloj real\ntest(\"caduca la oferta a medianoche\", async () => {\n  await avanzaElRelojHasta(\"2026-01-01T00:00:01Z\");\n  expect(await_ofertaIsActiva()).toBe(false);\n});\n// 2. Dependencia de la red, el disco o una API externa\nconst res = await fetch(\"https://api.proveedor.com/precios\");\n// 3. Dependencia del orden de ejecución o de estado compartido\n// 4. Dependencia de la zona horaria del runner (CI en UTC, tu máquina en CET)\n// 5. Carrera entre dos asíncronos sin sincronización\n```\n\nTodos estos casos comparten un patrón: **el test depende de algo que el test no controla**. El principio de diseño que se viola aquí es simple y old:\n\n> Un test debe ser una función determinista de su entrada.\n\nSi el resultado depende del reloj, de la red, del orden o de la configuración regional del runner, ya no es una función: es unalotería con distribución conocida. Y una lotería no se puede usar como criterio de aceptación.\n\n### La versióneau de \"tests que pasan pero no verifican nada\"\n\nHay un caso aún peor que el flaky: el test verde que no prueba nada. Si el rojo de un test es ruido, el verde es propaganda.\n\n```ts\n// Test tautológico: pasa siempre\nexpect(true).toBe(true);\n\n// Test que solo comprueba que el mock se llamó\nexpect(repo.save).toHaveBeenCalled();\n\n// Test que reimplementa la lógica del SUT en el test\nconst expected = computeDiscount(items, 10); // copia de la implementación\nexpect(computeDiscount(items, 10)).toEqual(expected);\n```\n\nUn test que no puede fallar es peor que un test que falla: ocupa la misma parte del presupuesto, da la misma falsa confianza, y además **consume la atención del equipo cuando se rompe el código de verdad**, porque el equipo descubre que la cobertura erafiction.\n\nRegla práctica: si no puedes señalar al menos un cambio en el código que rompería ese test, el test no existe.\n\n## 3. El efecto erosión: por qué un único test tóxico contamina el conjunto\n\nLos tests no son independientes: formanse un sistema social. Y ahí hay unaproperty emergente que casi nadie documenta:\n\n**La fiabilidad de la suite es (aproximadamente) el producto de la fiabilidad de sus tests.**\n\nSi tu suite tiene 1.000 tests y el 5% es intermitente, tu probabilidad de tener un rojo espurio en una ejecución cualquiera es alta. Con 1.000 tests independientes a un 95% de fiabilidad cada uno:\n\n```\nP(suite completamente verde) = 0.95^1000 ≈ 0.006\n```\n\nEs decir, **tu CI pasa limpio menos del 1% de las veces**. A partir de ese momento, el CI rojo deja de ser una señal: es el estado *normal*. Cuando el estado normal es rojo, aparece el phenomenon de la **alerta por fatiga** (*alert fatigue*), documentado enavia la aviación y en la medicina de urgencias: cuando la alarma suena el 40% de las veces, la gente deja de mirar la pantalla.\n\nY aquí está el golpe de gracia. Un CI que falla el 99% de las veces se resuelve de la forma más lenta posible: **con un botón de \"re-run\"**. Un re-run es la承认 práctica de la derrota:\n\n- El pipeline tarda el doble, el triple, lo que haga falta.\n- Nadie mira el log. Nadie distingue el fallo real del fallo espurio.\n- Cuando *sí* hay un fallo real, nadie lo ve: estaba esconde detrás de los otros doce.\n- Y, peor: **nadie vuelve a escribir tests nuevos**. Si el equipo ha interiorizado que \"tests = ruido + demora\", el test se percibe como coste puro y la cobertura del repo se congela. Has perdido el valor futuro del testing, no solo el presente.\n\n### El caso límite: la suite roja permanente\n\nHay un estado degenerado y muy reconocible: la rama `main` está rota desde hace semanas. Nadie la arregla. El equipo entra en la形態 de \"rojo permanente\", donde el estado del CI ya no se consulta:\n\n- Las alertas de CI se silencian o se silencian en el canal de Slack.\n- Los nuevos miembros del equipo no saben si un rojo significa algo.\n- Los merges se hacen con `--no-verify` o se desactiva el CI en el fork.\n- Cuando ocurre un incidente real, nadie distingue \"el CI estaba roto de siempre\" de \"el CI se acaba de romper\".\n\nEn ese estado, los tests ya no son una red de seguridad: son **ruido con presupuesto de CI**. Y el presupuesto de CI no es gratis: son minutos de runner, dinero de la plataforma y, sobre todo, tiempo de latencia en cada pull request. Un PR que tarda 25 minutos en \"pasar\" tiene un coste real en el tiempo de revisión y en el tiempo de integración de cambios. Nadie contabiliza ese coste, porque aparece como \"el CI tardó\".\n\n## 4. Por qué \"no tener tests\" puede ser mejor\n\nEl argumento extreme es el de la ausencia total: sin tests, el fallo aparece en producción. Eso es cierto y es gravísimo. Pero el argumento intermedio es más preciso y más útil:\n\n> **Un contrato fiable pero incompleto es más valioso que un contrato completo pero caprichoso.**\n\nComparte el coste de un test que nunca ha funcionado con el de uno que falla de forma intermitente, y el primero te da una falsa señal que nadie usa.\n\nPiénsalo como cualquier otro sistema de medición. Un sensor que a veces marca 0 y a veces marca 100 no es \"medio fiable\": es peor que un sensor que marcara siempre 50, porque el primero te hace *tomar decisiones* con información falsa. En tu caso:\n\n| | Sin tests | Suite roja crónica | Suite verde fiable |\n|---|---|---|---|\n| Señal de regresión | Ausente | Presente pero inutilizable | Presente y accionable |\n| Latencia de detección | Alta (producción) | Indefinida | Baja |\n| Coste por ejecución | ~0 | Alto (CI + triaje + re-runs) | Moderado |\n| Capacidad de refactorizar | Baja | Baja | Alta |\n| Crecimiento del codebase | Caótico | Caótico | Ordenado |\n\nLa columna intermedia es la trampa. Y hay una paradoja amarga: **la suite roja crónica suele ser más cara que no tener tests**, porque el equipo paga la infraestructura (CI, reporters, plugins, triaje, re-runs) *y* el coste de no tener la red de seguridad.\n\n## 5. Las cuatro causas raíz del rojo crónico\n\nCuando una suite está enferma, el diagnóstico casi siempre cae en una de estas cuatro categorías:\n\n**a) Tests acoplados al entorno.** Dependen del reloj, de la red, del orden, del filesystem, de variables de entorno de la máquina de cada uno. Se arregla con inyección de dependencias: tiempo, red, ids y filesystem se pasan como parámetros explícitos y se usan dobles deterministas en los tests.\n\n**b) Tests acoplados a la implementación.** Afirman sobre nombres de funciones privadas, sobre el número de llamadas a una dependencia, sobre la forma de un objeto interno. Se rompen con refactors inocuos. Se arregla afirmaciones sobre comportamiento observable: entradas, salidas y efectos visibles.\n\n**c) Tests mal designed que nunca funcionaron.** Duplicados, redundantes, copiados y pegados de un ejemplo de documentación que no compila. Se detectan con mutation testing o, más barato, con la pregunta de la sección 2: *¿qué cambio rompería esto?*.\n\n**d) Deuda de mantenimiento sin dueño.** La suite creció a 5.000 tests y nadie tiene tiempo de actualizarlos cuando cambia una API interna. Se resuelve con política, no con heroísmo (ver más abajo).\n\n## 6. Señales de alarma: cómo saber que tu suite está enferma\n\nEsta checklist es sorprendentemente predictiva. Si marcas más de tres, tienes un problema estructural:\n\n- [ ] El equipo **re-lanza** el pipeline antes que mirar el log.\n- [ ] Alguien ha pedido **desactivar una parte de la suite** \"porque tarda mucho\" y nadie protestó.\n- [ ] Hay tests marcados como `@skip`, `xfail` o \"quarantine\" que llevan **semanas** sin revisarse.\n- [ ] Nadie sabe decir cuál es el **tiempo de ejecución total** de la suite, ni cuál fue el mes pasado.\n- [ ] Nadie puede afirmar con datos **qué porcentaje de la suite ha fallado el mes pasado**.\n- [ ] El equipo **no distingue** entre \"el CI está roto\" y \"el CI está en rojo\".\n- [ ] Nadie recuerda la última vez que un test **rojo bloqueó un merge** y.Errara que era un bug real.\n- [ ] La **cobertura** se mide, pero no se usa para nada: nadie sabe qué partes del código no cubren los tests.\n\nY un indicador cuantitativo que casi nadie mide y que vale la pena medir desde mañana:\n\n> **Flake rate** = (ejecuciones de CI en rojo) / (ejecuciones totales)\n\nUn equipo sano está por debajo del 1–2%. Si estás en el 10%, tu suite no está probando tu software: te está shapedando el día.\n\n## 7. Reglas para que la suite sea una red y no una alarma\n\nEsto es lo que funciona en la práctica, y va de política más que de herramientas.\n\n### 7.1 Nada entra en la suite si no es determinista\n\nAntes de escribir un test, pregúntate cómo podría fallar sin que el código esté mal. Si la respuesta es \"por un timing, por la red, por el orden\", el test no se escribe así: primero se hace determinista.\n\n```ts\n// ❌ Test dependiente del reloj del sistema\nexpect(new Date() < deadline).toBe(true);\n\n// ✅ Tiempo inyectado\nconst now = new Date(\"2026-03-01T10:00:00Z\");\nexpect(isExpired(offer, now)).toBe(true);\n```\n\n### 7.2 El test debe poder fallar\n\nSi mutas una línea y el test sigue verde, ese test no vale su coste. Herramientas como Stryker (JS), mutmut (Python) o Cosmic Ray dan una señal objetiva. No hace falta mutar el 100% del código: con una muestra aleatoria del 10% ya descubres los tests tautológicos.\n\n### 7.3 Nada de sleeps ni de esperas por tiempo\n\n`await sleep(500)` es una apuesta con el reloj. Si necesitas esperar, **espera a la condición**, no al tiempo:\n\n```ts\n// ❌\nawait sleep(500);\nexpect(status).toBe(\"done\");\n\n// ✅\nawait waitFor(() => status === \"done\", { timeout: 2000 });\n```\n\n### 7.4 Un test rojo es un bug *en el repositorio*, no un evento del mundo\n\nNi \"es que el entorno de CI es raro\", ni \"ha sido un problema de red\". Si el rojo no está causedado por un cambio tuyo, es porque el test era frágil y ahora lo sabes. Eso no es una excusa, es información.\n\n### 7.5 Divide la suite en niveles con distinta severidad\n\nEste es el cambio con mejor relación coste/beneficio:\n\n- **Nivel 0 — Smoke (bloqueante, < 5 min).** Build, arranque, healthcheck, un puñado de casos críticos. Debe ser casi imposible que falle.\n- **Nivel 1 — Rápidos (bloqueante, < 15 min).** La mayor parte de la suite unitaria. Sin flake.\n- **Nivel 2 — Integración / E2E (informativo, no bloqueante).** Aquí es razonable queLive el flaky; se ejecuta en nightly o post-merge y **nunca bloquea a nadie**.\n\nLa regla que lo hace funcionar: **lo que bloquea un merge tiene que ser de una fiabilidad casi perfecta**. Un gate que falla el 5% de las veces no es un gate, es un incremento de fricción que entrena al equipo a hacer push --force o a pedir excepciones.\n\n### 7.6 Presupuesto de flakiness y cuarentena con caducidad\n\n- Detecta intermitencia de forma automática: re-ejecuta los tests rojos una vez y, si pasan, el primero queda marcado como **flaky**.\n- Quarantena: un test en cuarentena **no bloquea** la integración, pero se cuenta y se revisa semanalmente.\n- **Caducidad obligatoria**: ningún test en cuarentena más de X días (una semana, quince días). Si no se arregla, **se borra**. Un test que nadie va a arreglar no vale su coste de mantenimiento, y mantenerlo da la falsa impresión de cobertura.\n\n### 7.7 Regla de \"si no lo arreglas, bórralo\"\n\nEsta es la más difícil de aceptar y la más valiosa. Un test que está roto desde hace seis meses no protege nada. Cuesta tiempo de ejecución, cuesta atención, y cada vez que alguien lo arregla, lo reintroduce.\n\nLa cobertura no es un inventario que haya que mantener a toda costa. La cobertura es una *estimación* de lo que tu suite verifica; dejarla pudrirse la convierte en una estimación falsa.\n\n### 7.8 Presupuesto de tiempo de la suite\n\nLa suite debe caber en el tiempo de espera del equipo. Si la suite tarda 40 minutos, el equipo deja de correrla localmente y solo espera al CI, y entonces **toda la señal aparece tarde**, cuando ya has cambiado el contexto mental. UnDeveloper que no ha ejecutado los tests en local ya ha roto el bucle de retroalimentación rápido, que es el motivo principal por el que existen los tests.\n\n## 8. El bucle correcto\n\nLa forma sana de trabajar es un bucle corto y cerrado:\n\n```\nEscribir código  →  Ejecutar tests localmente  →  Fallo rápido  →  Corregir  →  Commit\n                                   ↑\n                            (segundos, no horas)\n```\n\nUn test rojo debe ser una **molestia barata**: cuesta segundos y da un mensaje claro. Cuando esa relación se invierte —el fallo cuesta media hora de triaje y un mensaje incomprensible— el bucle se rompe y la práctica se muere sola. Nadie deja de escribir tests por una decisión; se deja de escribir tests porque el sistema de retroalimentación dejó de funcionar.\n\nLa括étesis final se puede resumir en una frase:\n\n> **El objetivo de los tests no es tener tests: es que el rojo signifique algo.** Un rojo que significa algo vale más que cien tests verdes que no verifican nada. Y una suite cuyo rojo no significa nada es, desde el punto de vista del negocio, un gasto sin retorno.\n\n---\n\n### Bonus: tres preguntas que puedes hacerte hoy\n\n1. **¿Cuánto tardó la última vez que un test rojo te-Paró a hacer algo?** Si la respuesta es \"no me acuerdo\", tu suite probablemente no bloquea nada y es decorativa.\n2. **¿Puedes nombrar el último test que modificaste porque había fallado?** Si no puedes, tus tests no están influyendo en tu código.\n3. **¿Cuántos tests would fail si duplicaras una condición en el código?** Si la respuesta es 0, tu suite no está probando esa lógica.\n\nY una cuarta, la más incómoda:\n\n4. **¿Qué pasaría si mañana apagaras la suite y apagaras el CI?** Si la respuesta es \"cambiaría poco\", tus tests no están haciendo su trabajo — y la suite roja crónica es exactamente ese estado: ruido caro en lugar de red útil.\n",
+              "filePath": "/var/tmp/bench/ws-s444EOyD/tests-que-fallan.md"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-s444EOyD/tests-que-fallan.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-s444EOyD/tests-que-fallan.md",
+            "time": {
+              "start": 1795131924267,
+              "end": 1795131924278
+            }
+          },
+          "id": "prt_1f6335f1f001LkhBQYXjWFjDaA",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6324aa6001RdSbtRnmTqkJ9o"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12986,
+            "input": 80,
+            "output": 5098,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7808
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6335f45001MXINeKu7YP2EoP",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6324aa6001RdSbtRnmTqkJ9o"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6324098001JkePxCFjVdyR7k",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-s444EOyD",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 13467,
+          "input": 4429,
+          "output": 462,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8576
+          }
+        },
+        "modelID": "minimax-m3",
+        "providerID": "ol",
+        "time": {
+          "created": 1795131924309,
+          "completed": 1795131930199
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6335f55001tHFLIgNIdapti6",
+        "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f633626f00190vxjjDIfuB2RV",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6335f55001tHFLIgNIdapti6"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me review the file quickly for typos — I noticed I introduced some accidental errors in the text (like \"ocupando\" with a stray space, \"aún más\" etc.). Let me check for issues: I wrote some words that appear broken, e.g. \"ocupando RAM\" (extra space), \"Escribe\", \"enavia\", \"unallotería\", \"old:\", \"state\" etc. Let me grep for suspicious things.\n\nActually I wrote a bunch of weird tokens: \"Localizar\", \"\\Localizar\", \"ocupando\", \"aun\", \"apena\", \"sobredad\", \"Propiedad\" (\"unaaproperty\" → \"una propiedad\"), \"aproperty emergente\" → \"propiedad emergente\", \"laforma\" → \"la forma\", \"la承认\" → \"la承认\" hmm I wrote \"es la承认 práctica de la derrota\" — that's broken, should be \"es la承认\"? Let me fix: \"es el reconocimiento tácito de la derrota\". \"形態\" → \"modalidad\". \"oLive el flaky\" → \"vive el flaky\". \"es shapedando\" → \"es devorando\"? Actually I wrote \"te está shapedando el día\" → should be \"te está dando forma el día\"? Let me fix to \"te está Poisonando el día\"... no. \"tu suite no está probando tu software: te está dando forma el día\" hmm. Better: \"te está consumiendo el día\". \"causedado\" → \"causado\". \"unDeveloper\" → \"un developer\". \"La括étesis\" → \"La tesis\". \"would fail\" → \"fallarían\". \"no me acuerdo\" fine. \"la承认\" fix. \"Que海\" no. \"es discovery\". \"unallotería\" → \"una lotería\". \"enavia\" → \"en aviación\". \"la aviación y en la medicina de urgencias\" fine.\n\nLet me read the file and clean these up.",
+          "time": {
+            "start": 1795131925105,
+            "end": 1795131930109
+          },
+          "id": "prt_1f6336271001b7IVLAYVPKao4O",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6335f55001tHFLIgNIdapti6"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call-612d1b80-e886-4c79-bad5-3e472ec46066",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-s444EOyD/tests-que-fallan.md"
+            },
+            "output": "<path>/var/tmp/bench/ws-s444EOyD/tests-que-fallan.md</path>\n<type>file</type>\n<content>\n1: ---\n2: title: \"El test que miente: por qué una suite roja puede ser peor que no tener tests\"\n3: date: 2026-11-19\n4: lang: es\n5: tags: [testing, ci, calidad, ingeniería-de-software]\n6: excerpt: \"Un test que falla sin motivo hace más daño que un bug: erosiona la confianza, ralentiza el equipo y acaba matando la práctica de testear. Guía de síntomas, causas y reglas para que la suite vuelva a ser una red y no una alarma.\"\n7: ---\n8: \n9: > Un test que falla te dice que algo está mal.\n10: > Un test que falla *a veces*, *sin motivo aparente* o *siempre*, te dice que **ya no puedes fiarte de él**.\n11: > Y un test en el que ya no confías no es un test: es ruido con presupuesto de CPU.\n12: \n13: Hay una intuición muy extendida entre equipos junior: *\"más tests es mejor\"*. Con esa métrica, cualquier suite parece un éxito. Pero la realidad es que un test solo tiene valor si, cuando falla, cambia una decisión. Un test que falla sin cambiar nada —porque nadie lo lee, porque nadie sabe qué significa, porque nadie tiene tiempo de arreglarlo— tiene un coste positivo y un valor negativo.\n14: \n15: Este post es un argumento a favor de una tesis incómoda: **en certains circumstances, una suite de tests que falla de forma crónica es peor que no tener tests**. No es un argumento contra los tests, sino a favor de tests que *sean* fiables, o que no existan.\n16: \n17: ---\n18: \n19: ## 1. El problema no es el fallo: es la ambigüedad\n20: \n21: Un test tiene dos salidas: verde o rojo. El rojo es el estado *deseable* cuando revela un defecto real, porque es una señal accionable: \"algo cambió y no debería haber cambiado\".\n22: \n23: El problema aparece cuando el rojo deja de ser accionable. Si un test falla por razones que el equipo no puede reproducir,\\Localizar y explicar, entonces el rojo deja de ser información y pasa a ser ruido. Y el ruido tiene un coste muy alto, porque el equipo paga por distinguir señal de ruido cada vez que corre la suite.\n24: \n25: Piensa en la diferencia entre dos notificaciones:\n26: \n27: | Escenario | Señal | Acción del equipo | Coste |\n28: |---|---|---|---|\n29: | Test rojo, causa clara y reciente | Real | Investigar y corregir | 5–30 min |\n30: | Test rojo, causa desconocida | Ruido | Ignorar / reintentar / marcar como flaky | 2 h de debugging para nada |\n31: \n32: Ese segundo escenario no es raro. En equipos medianos es la norma. Y ahí está la trampa: **no se trata de que el test sea rojo, se trata de que el equipo haya aprendido a ignorar el rojo**. Cuando eso ocurre, la suite sigue corriendo, sigue consumiendo minutos de CI, sigue occupyendo RAM... y ya no cumple su función. Es un coste sin contrapartida.\n33: \n34: ## 2. Anatomía de un test que \"falla a veces\"\n35: \n36: El test intermitente (*flaky*) es el caso más dañino, porque rompe la relación causa-efecto. Si el rojo es determinista, la gente aprende rápido. Si el rojo es aleatorio, la gente deja de aprender.\n37: \n38: Causas habituales:\n39: \n40: ```ts\n41: // 1. Dependencia del reloj real\n42: test(\"caduca la oferta a medianoche\", async () => {\n43:   await avanzaElRelojHasta(\"2026-01-01T00:00:01Z\");\n44:   expect(await_ofertaIsActiva()).toBe(false);\n45: });\n46: // 2. Dependencia de la red, el disco o una API externa\n47: const res = await fetch(\"https://api.proveedor.com/precios\");\n48: // 3. Dependencia del orden de ejecución o de estado compartido\n49: // 4. Dependencia de la zona horaria del runner (CI en UTC, tu máquina en CET)\n50: // 5. Carrera entre dos asíncronos sin sincronización\n51: ```\n52: \n53: Todos estos casos comparten un patrón: **el test depende de algo que el test no controla**. El principio de diseño que se viola aquí es simple y old:\n54: \n55: > Un test debe ser una función determinista de su entrada.\n56: \n57: Si el resultado depende del reloj, de la red, del orden o de la configuración regional del runner, ya no es una función: es unalotería con distribución conocida. Y una lotería no se puede usar como criterio de aceptación.\n58: \n59: ### La versióneau de \"tests que pasan pero no verifican nada\"\n60: \n61: Hay un caso aún peor que el flaky: el test verde que no prueba nada. Si el rojo de un test es ruido, el verde es propaganda.\n62: \n63: ```ts\n64: // Test tautológico: pasa siempre\n65: expect(true).toBe(true);\n66: \n67: // Test que solo comprueba que el mock se llamó\n68: expect(repo.save).toHaveBeenCalled();\n69: \n70: // Test que reimplementa la lógica del SUT en el test\n71: const expected = computeDiscount(items, 10); // copia de la implementación\n72: expect(computeDiscount(items, 10)).toEqual(expected);\n73: ```\n74: \n75: Un test que no puede fallar es peor que un test que falla: ocupa la misma parte del presupuesto, da la misma falsa confianza, y además **consume la atención del equipo cuando se rompe el código de verdad**, porque el equipo descubre que la cobertura erafiction.\n76: \n77: Regla práctica: si no puedes señalar al menos un cambio en el código que rompería ese test, el test no existe.\n78: \n79: ## 3. El efecto erosión: por qué un único test tóxico contamina el conjunto\n80: \n81: Los tests no son independientes: formanse un sistema social. Y ahí hay unaproperty emergente que casi nadie documenta:\n82: \n83: **La fiabilidad de la suite es (aproximadamente) el producto de la fiabilidad de sus tests.**\n84: \n85: Si tu suite tiene 1.000 tests y el 5% es intermitente, tu probabilidad de tener un rojo espurio en una ejecución cualquiera es alta. Con 1.000 tests independientes a un 95% de fiabilidad cada uno:\n86: \n87: ```\n88: P(suite completamente verde) = 0.95^1000 ≈ 0.006\n89: ```\n90: \n91: Es decir, **tu CI pasa limpio menos del 1% de las veces**. A partir de ese momento, el CI rojo deja de ser una señal: es el estado *normal*. Cuando el estado normal es rojo, aparece el phenomenon de la **alerta por fatiga** (*alert fatigue*), documentado enavia la aviación y en la medicina de urgencias: cuando la alarma suena el 40% de las veces, la gente deja de mirar la pantalla.\n92: \n93: Y aquí está el golpe de gracia. Un CI que falla el 99% de las veces se resuelve de la forma más lenta posible: **con un botón de \"re-run\"**. Un re-run es la承认 práctica de la derrota:\n94: \n95: - El pipeline tarda el doble, el triple, lo que haga falta.\n96: - Nadie mira el log. Nadie distingue el fallo real del fallo espurio.\n97: - Cuando *sí* hay un fallo real, nadie lo ve: estaba esconde detrás de los otros doce.\n98: - Y, peor: **nadie vuelve a escribir tests nuevos**. Si el equipo ha interiorizado que \"tests = ruido + demora\", el test se percibe como coste puro y la cobertura del repo se congela. Has perdido el valor futuro del testing, no solo el presente.\n99: \n100: ### El caso límite: la suite roja permanente\n101: \n102: Hay un estado degenerado y muy reconocible: la rama `main` está rota desde hace semanas. Nadie la arregla. El equipo entra en la形態 de \"rojo permanente\", donde el estado del CI ya no se consulta:\n103: \n104: - Las alertas de CI se silencian o se silencian en el canal de Slack.\n105: - Los nuevos miembros del equipo no saben si un rojo significa algo.\n106: - Los merges se hacen con `--no-verify` o se desactiva el CI en el fork.\n107: - Cuando ocurre un incidente real, nadie distingue \"el CI estaba roto de siempre\" de \"el CI se acaba de romper\".\n108: \n109: En ese estado, los tests ya no son una red de seguridad: son **ruido con presupuesto de CI**. Y el presupuesto de CI no es gratis: son minutos de runner, dinero de la plataforma y, sobre todo, tiempo de latencia en cada pull request. Un PR que tarda 25 minutos en \"pasar\" tiene un coste real en el tiempo de revisión y en el tiempo de integración de cambios. Nadie contabiliza ese coste, porque aparece como \"el CI tardó\".\n110: \n111: ## 4. Por qué \"no tener tests\" puede ser mejor\n112: \n113: El argumento extreme es el de la ausencia total: sin tests, el fallo aparece en producción. Eso es cierto y es gravísimo. Pero el argumento intermedio es más preciso y más útil:\n114: \n115: > **Un contrato fiable pero incompleto es más valioso que un contrato completo pero caprichoso.**\n116: \n117: Comparte el coste de un test que nunca ha funcionado con el de uno que falla de forma intermitente, y el primero te da una falsa señal que nadie usa.\n118: \n119: Piénsalo como cualquier otro sistema de medición. Un sensor que a veces marca 0 y a veces marca 100 no es \"medio fiable\": es peor que un sensor que marcara siempre 50, porque el primero te hace *tomar decisiones* con información falsa. En tu caso:\n120: \n121: | | Sin tests | Suite roja crónica | Suite verde fiable |\n122: |---|---|---|---|\n123: | Señal de regresión | Ausente | Presente pero inutilizable | Presente y accionable |\n124: | Latencia de detección | Alta (producción) | Indefinida | Baja |\n125: | Coste por ejecución | ~0 | Alto (CI + triaje + re-runs) | Moderado |\n126: | Capacidad de refactorizar | Baja | Baja | Alta |\n127: | Crecimiento del codebase | Caótico | Caótico | Ordenado |\n128: \n129: La columna intermedia es la trampa. Y hay una paradoja amarga: **la suite roja crónica suele ser más cara que no tener tests**, porque el equipo paga la infraestructura (CI, reporters, plugins, triaje, re-runs) *y* el coste de no tener la red de seguridad.\n130: \n131: ## 5. Las cuatro causas raíz del rojo crónico\n132: \n133: Cuando una suite está enferma, el diagnóstico casi siempre cae en una de estas cuatro categorías:\n134: \n135: **a) Tests acoplados al entorno.** Dependen del reloj, de la red, del orden, del filesystem, de variables de entorno de la máquina de cada uno. Se arregla con inyección de dependencias: tiempo, red, ids y filesystem se pasan como parámetros explícitos y se usan dobles deterministas en los tests.\n136: \n137: **b) Tests acoplados a la implementación.** Afirman sobre nombres de funciones privadas, sobre el número de llamadas a una dependencia, sobre la forma de un objeto interno. Se rompen con refactors inocuos. Se arregla afirmaciones sobre comportamiento observable: entradas, salidas y efectos visibles.\n138: \n139: **c) Tests mal designed que nunca funcionaron.** Duplicados, redundantes, copiados y pegados de un ejemplo de documentación que no compila. Se detectan con mutation testing o, más barato, con la pregunta de la sección 2: *¿qué cambio rompería esto?*.\n140: \n141: **d) Deuda de mantenimiento sin dueño.** La suite creció a 5.000 tests y nadie tiene tiempo de actualizarlos cuando cambia una API interna. Se resuelve con política, no con heroísmo (ver más abajo).\n142: \n143: ## 6. Señales de alarma: cómo saber que tu suite está enferma\n144: \n145: Esta checklist es sorprendentemente predictiva. Si marcas más de tres, tienes un problema estructural:\n146: \n147: - [ ] El equipo **re-lanza** el pipeline antes que mirar el log.\n148: - [ ] Alguien ha pedido **desactivar una parte de la suite** \"porque tarda mucho\" y nadie protestó.\n149: - [ ] Hay tests marcados como `@skip`, `xfail` o \"quarantine\" que llevan **semanas** sin revisarse.\n150: - [ ] Nadie sabe decir cuál es el **tiempo de ejecución total** de la suite, ni cuál fue el mes pasado.\n151: - [ ] Nadie puede afirmar con datos **qué porcentaje de la suite ha fallado el mes pasado**.\n152: - [ ] El equipo **no distingue** entre \"el CI está roto\" y \"el CI está en rojo\".\n153: - [ ] Nadie recuerda la última vez que un test **rojo bloqueó un merge** y.Errara que era un bug real.\n154: - [ ] La **cobertura** se mide, pero no se usa para nada: nadie sabe qué partes del código no cubren los tests.\n155: \n156: Y un indicador cuantitativo que casi nadie mide y que vale la pena medir desde mañana:\n157: \n158: > **Flake rate** = (ejecuciones de CI en rojo) / (ejecuciones totales)\n159: \n160: Un equipo sano está por debajo del 1–2%. Si estás en el 10%, tu suite no está probando tu software: te está shapedando el día.\n161: \n162: ## 7. Reglas para que la suite sea una red y no una alarma\n163: \n164: Esto es lo que funciona en la práctica, y va de política más que de herramientas.\n165: \n166: ### 7.1 Nada entra en la suite si no es determinista\n167: \n168: Antes de escribir un test, pregúntate cómo podría fallar sin que el código esté mal. Si la respuesta es \"por un timing, por la red, por el orden\", el test no se escribe así: primero se hace determinista.\n169: \n170: ```ts\n171: // ❌ Test dependiente del reloj del sistema\n172: expect(new Date() < deadline).toBe(true);\n173: \n174: // ✅ Tiempo inyectado\n175: const now = new Date(\"2026-03-01T10:00:00Z\");\n176: expect(isExpired(offer, now)).toBe(true);\n177: ```\n178: \n179: ### 7.2 El test debe poder fallar\n180: \n181: Si mutas una línea y el test sigue verde, ese test no vale su coste. Herramientas como Stryker (JS), mutmut (Python) o Cosmic Ray dan una señal objetiva. No hace falta mutar el 100% del código: con una muestra aleatoria del 10% ya descubres los tests tautológicos.\n182: \n183: ### 7.3 Nada de sleeps ni de esperas por tiempo\n184: \n185: `await sleep(500)` es una apuesta con el reloj. Si necesitas esperar, **espera a la condición**, no al tiempo:\n186: \n187: ```ts\n188: // ❌\n189: await sleep(500);\n190: expect(status).toBe(\"done\");\n191: \n192: // ✅\n193: await waitFor(() => status === \"done\", { timeout: 2000 });\n194: ```\n195: \n196: ### 7.4 Un test rojo es un bug *en el repositorio*, no un evento del mundo\n197: \n198: Ni \"es que el entorno de CI es raro\", ni \"ha sido un problema de red\". Si el rojo no está causedado por un cambio tuyo, es porque el test era frágil y ahora lo sabes. Eso no es una excusa, es información.\n199: \n200: ### 7.5 Divide la suite en niveles con distinta severidad\n201: \n202: Este es el cambio con mejor relación coste/beneficio:\n203: \n204: - **Nivel 0 — Smoke (bloqueante, < 5 min).** Build, arranque, healthcheck, un puñado de casos críticos. Debe ser casi imposible que falle.\n205: - **Nivel 1 — Rápidos (bloqueante, < 15 min).** La mayor parte de la suite unitaria. Sin flake.\n206: - **Nivel 2 — Integración / E2E (informativo, no bloqueante).** Aquí es razonable queLive el flaky; se ejecuta en nightly o post-merge y **nunca bloquea a nadie**.\n207: \n208: La regla que lo hace funcionar: **lo que bloquea un merge tiene que ser de una fiabilidad casi perfecta**. Un gate que falla el 5% de las veces no es un gate, es un incremento de fricción que entrena al equipo a hacer push --force o a pedir excepciones.\n209: \n210: ### 7.6 Presupuesto de flakiness y cuarentena con caducidad\n211: \n212: - Detecta intermitencia de forma automática: re-ejecuta los tests rojos una vez y, si pasan, el primero queda marcado como **flaky**.\n213: - Quarantena: un test en cuarentena **no bloquea** la integración, pero se cuenta y se revisa semanalmente.\n214: - **Caducidad obligatoria**: ningún test en cuarentena más de X días (una semana, quince días). Si no se arregla, **se borra**. Un test que nadie va a arreglar no vale su coste de mantenimiento, y mantenerlo da la falsa impresión de cobertura.\n215: \n216: ### 7.7 Regla de \"si no lo arreglas, bórralo\"\n217: \n218: Esta es la más difícil de aceptar y la más valiosa. Un test que está roto desde hace seis meses no protege nada. Cuesta tiempo de ejecución, cuesta atención, y cada vez que alguien lo arregla, lo reintroduce.\n219: \n220: La cobertura no es un inventario que haya que mantener a toda costa. La cobertura es una *estimación* de lo que tu suite verifica; dejarla pudrirse la convierte en una estimación falsa.\n221: \n222: ### 7.8 Presupuesto de tiempo de la suite\n223: \n224: La suite debe caber en el tiempo de espera del equipo. Si la suite tarda 40 minutos, el equipo deja de correrla localmente y solo espera al CI, y entonces **toda la señal aparece tarde**, cuando ya has cambiado el contexto mental. UnDeveloper que no ha ejecutado los tests en local ya ha roto el bucle de retroalimentación rápido, que es el motivo principal por el que existen los tests.\n225: \n226: ## 8. El bucle correcto\n227: \n228: La forma sana de trabajar es un bucle corto y cerrado:\n229: \n230: ```\n231: Escribir código  →  Ejecutar tests localmente  →  Fallo rápido  →  Corregir  →  Commit\n232:                                    ↑\n233:                             (segundos, no horas)\n234: ```\n235: \n236: Un test rojo debe ser una **molestia barata**: cuesta segundos y da un mensaje claro. Cuando esa relación se invierte —el fallo cuesta media hora de triaje y un mensaje incomprensible— el bucle se rompe y la práctica se muere sola. Nadie deja de escribir tests por una decisión; se deja de escribir tests porque el sistema de retroalimentación dejó de funcionar.\n237: \n238: La括étesis final se puede resumir en una frase:\n239: \n240: > **El objetivo de los tests no es tener tests: es que el rojo signifique algo.** Un rojo que significa algo vale más que cien tests verdes que no verifican nada. Y una suite cuyo rojo no significa nada es, desde el punto de vista del negocio, un gasto sin retorno.\n241: \n242: ---\n243: \n244: ### Bonus: tres preguntas que puedes hacerte hoy\n245: \n246: 1. **¿Cuánto tardó la última vez que un test rojo te-Paró a hacer algo?** Si la respuesta es \"no me acuerdo\", tu suite probablemente no bloquea nada y es decorativa.\n247: 2. **¿Puedes nombrar el último test que modificaste porque había fallado?** Si no puedes, tus tests no están influyendo en tu código.\n248: 3. **¿Cuántos tests would fail si duplicaras una condición en el código?** Si la respuesta es 0, tu suite no está probando esa lógica.\n249: \n250: Y una cuarta, la más incómoda:\n251: \n252: 4. **¿Qué pasaría si mañana apagaras la suite y apagaras el CI?** Si la respuesta es \"cambiaría poco\", tus tests no están haciendo su trabajo — y la suite roja crónica es exactamente ese estado: ruido caro en lugar de red útil.\n\n(End of file - total 252 lines)\n</content>",
+            "metadata": {
+              "preview": "---\ntitle: \"El test que miente: por qué una suite roja puede ser peor que no tener tests\"\ndate: 2026-11-19\nlang: es\ntags: [testing, ci, calidad, ingeniería-de-software]\nexcerpt: \"Un test que falla sin motivo hace más daño que un bug: erosiona la confianza, ralentiza el equipo y acaba matando la práctica de testear. Guía de síntomas, causas y reglas para que la suite vuelva a ser una red y no una alarma.\"\n---\n\n> Un test que falla te dice que algo está mal.\n> Un test que falla *a veces*, *sin motivo aparente* o *siempre*, te dice que **ya no puedes fiarte de él**.\n> Y un test en el que ya no confías no es un test: es ruido con presupuesto de CPU.\n\nHay una intuición muy extendida entre equipos junior: *\"más tests es mejor\"*. Con esa métrica, cualquier suite parece un éxito. Pero la realidad es que un test solo tiene valor si, cuando falla, cambia una decisión. Un test que falla sin cambiar nada —porque nadie lo lee, porque nadie sabe qué significa, porque nadie tiene tiempo de arreglarlo— tiene un coste positivo y un valor negativo.\n\nEste post es un argumento a favor de una tesis incómoda: **en certains circumstances, una suite de tests que falla de forma crónica es peor que no tener tests**. No es un argumento contra los tests, sino a favor de tests que *sean* fiables, o que no existan.\n\n---\n\n## 1. El problema no es el fallo: es la ambigüedad\n",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/var/tmp/bench/ws-s444EOyD/tests-que-fallan.md",
+                "text": "---\ntitle: \"El test que miente: por qué una suite roja puede ser peor que no tener tests\"\ndate: 2026-11-19\nlang: es\ntags: [testing, ci, calidad, ingeniería-de-software]\nexcerpt: \"Un test que falla sin motivo hace más daño que un bug: erosiona la confianza, ralentiza el equipo y acaba matando la práctica de testear. Guía de síntomas, causas y reglas para que la suite vuelva a ser una red y no una alarma.\"\n---\n\n> Un test que falla te dice que algo está mal.\n> Un test que falla *a veces*, *sin motivo aparente* o *siempre*, te dice que **ya no puedes fiarte de él**.\n> Y un test en el que ya no confías no es un test: es ruido con presupuesto de CPU.\n\nHay una intuición muy extendida entre equipos junior: *\"más tests es mejor\"*. Con esa métrica, cualquier suite parece un éxito. Pero la realidad es que un test solo tiene valor si, cuando falla, cambia una decisión. Un test que falla sin cambiar nada —porque nadie lo lee, porque nadie sabe qué significa, porque nadie tiene tiempo de arreglarlo— tiene un coste positivo y un valor negativo.\n\nEste post es un argumento a favor de una tesis incómoda: **en certains circumstances, una suite de tests que falla de forma crónica es peor que no tener tests**. No es un argumento contra los tests, sino a favor de tests que *sean* fiables, o que no existan.\n\n---\n\n## 1. El problema no es el fallo: es la ambigüedad\n\nUn test tiene dos salidas: verde o rojo. El rojo es el estado *deseable* cuando revela un defecto real, porque es una señal accionable: \"algo cambió y no debería haber cambiado\".\n\nEl problema aparece cuando el rojo deja de ser accionable. Si un test falla por razones que el equipo no puede reproducir,\\Localizar y explicar, entonces el rojo deja de ser información y pasa a ser ruido. Y el ruido tiene un coste muy alto, porque el equipo paga por distinguir señal de ruido cada vez que corre la suite.\n\nPiensa en la diferencia entre dos notificaciones:\n\n| Escenario | Señal | Acción del equipo | Coste |\n|---|---|---|---|\n| Test rojo, causa clara y reciente | Real | Investigar y corregir | 5–30 min |\n| Test rojo, causa desconocida | Ruido | Ignorar / reintentar / marcar como flaky | 2 h de debugging para nada |\n\nEse segundo escenario no es raro. En equipos medianos es la norma. Y ahí está la trampa: **no se trata de que el test sea rojo, se trata de que el equipo haya aprendido a ignorar el rojo**. Cuando eso ocurre, la suite sigue corriendo, sigue consumiendo minutos de CI, sigue occupyendo RAM... y ya no cumple su función. Es un coste sin contrapartida.\n\n## 2. Anatomía de un test que \"falla a veces\"\n\nEl test intermitente (*flaky*) es el caso más dañino, porque rompe la relación causa-efecto. Si el rojo es determinista, la gente aprende rápido. Si el rojo es aleatorio, la gente deja de aprender.\n\nCausas habituales:\n\n```ts\n// 1. Dependencia del reloj real\ntest(\"caduca la oferta a medianoche\", async () => {\n  await avanzaElRelojHasta(\"2026-01-01T00:00:01Z\");\n  expect(await_ofertaIsActiva()).toBe(false);\n});\n// 2. Dependencia de la red, el disco o una API externa\nconst res = await fetch(\"https://api.proveedor.com/precios\");\n// 3. Dependencia del orden de ejecución o de estado compartido\n// 4. Dependencia de la zona horaria del runner (CI en UTC, tu máquina en CET)\n// 5. Carrera entre dos asíncronos sin sincronización\n```\n\nTodos estos casos comparten un patrón: **el test depende de algo que el test no controla**. El principio de diseño que se viola aquí es simple y old:\n\n> Un test debe ser una función determinista de su entrada.\n\nSi el resultado depende del reloj, de la red, del orden o de la configuración regional del runner, ya no es una función: es unalotería con distribución conocida. Y una lotería no se puede usar como criterio de aceptación.\n\n### La versióneau de \"tests que pasan pero no verifican nada\"\n\nHay un caso aún peor que el flaky: el test verde que no prueba nada. Si el rojo de un test es ruido, el verde es propaganda.\n\n```ts\n// Test tautológico: pasa siempre\nexpect(true).toBe(true);\n\n// Test que solo comprueba que el mock se llamó\nexpect(repo.save).toHaveBeenCalled();\n\n// Test que reimplementa la lógica del SUT en el test\nconst expected = computeDiscount(items, 10); // copia de la implementación\nexpect(computeDiscount(items, 10)).toEqual(expected);\n```\n\nUn test que no puede fallar es peor que un test que falla: ocupa la misma parte del presupuesto, da la misma falsa confianza, y además **consume la atención del equipo cuando se rompe el código de verdad**, porque el equipo descubre que la cobertura erafiction.\n\nRegla práctica: si no puedes señalar al menos un cambio en el código que rompería ese test, el test no existe.\n\n## 3. El efecto erosión: por qué un único test tóxico contamina el conjunto\n\nLos tests no son independientes: formanse un sistema social. Y ahí hay unaproperty emergente que casi nadie documenta:\n\n**La fiabilidad de la suite es (aproximadamente) el producto de la fiabilidad de sus tests.**\n\nSi tu suite tiene 1.000 tests y el 5% es intermitente, tu probabilidad de tener un rojo espurio en una ejecución cualquiera es alta. Con 1.000 tests independientes a un 95% de fiabilidad cada uno:\n\n```\nP(suite completamente verde) = 0.95^1000 ≈ 0.006\n```\n\nEs decir, **tu CI pasa limpio menos del 1% de las veces**. A partir de ese momento, el CI rojo deja de ser una señal: es el estado *normal*. Cuando el estado normal es rojo, aparece el phenomenon de la **alerta por fatiga** (*alert fatigue*), documentado enavia la aviación y en la medicina de urgencias: cuando la alarma suena el 40% de las veces, la gente deja de mirar la pantalla.\n\nY aquí está el golpe de gracia. Un CI que falla el 99% de las veces se resuelve de la forma más lenta posible: **con un botón de \"re-run\"**. Un re-run es la承认 práctica de la derrota:\n\n- El pipeline tarda el doble, el triple, lo que haga falta.\n- Nadie mira el log. Nadie distingue el fallo real del fallo espurio.\n- Cuando *sí* hay un fallo real, nadie lo ve: estaba esconde detrás de los otros doce.\n- Y, peor: **nadie vuelve a escribir tests nuevos**. Si el equipo ha interiorizado que \"tests = ruido + demora\", el test se percibe como coste puro y la cobertura del repo se congela. Has perdido el valor futuro del testing, no solo el presente.\n\n### El caso límite: la suite roja permanente\n\nHay un estado degenerado y muy reconocible: la rama `main` está rota desde hace semanas. Nadie la arregla. El equipo entra en la形態 de \"rojo permanente\", donde el estado del CI ya no se consulta:\n\n- Las alertas de CI se silencian o se silencian en el canal de Slack.\n- Los nuevos miembros del equipo no saben si un rojo significa algo.\n- Los merges se hacen con `--no-verify` o se desactiva el CI en el fork.\n- Cuando ocurre un incidente real, nadie distingue \"el CI estaba roto de siempre\" de \"el CI se acaba de romper\".\n\nEn ese estado, los tests ya no son una red de seguridad: son **ruido con presupuesto de CI**. Y el presupuesto de CI no es gratis: son minutos de runner, dinero de la plataforma y, sobre todo, tiempo de latencia en cada pull request. Un PR que tarda 25 minutos en \"pasar\" tiene un coste real en el tiempo de revisión y en el tiempo de integración de cambios. Nadie contabiliza ese coste, porque aparece como \"el CI tardó\".\n\n## 4. Por qué \"no tener tests\" puede ser mejor\n\nEl argumento extreme es el de la ausencia total: sin tests, el fallo aparece en producción. Eso es cierto y es gravísimo. Pero el argumento intermedio es más preciso y más útil:\n\n> **Un contrato fiable pero incompleto es más valioso que un contrato completo pero caprichoso.**\n\nComparte el coste de un test que nunca ha funcionado con el de uno que falla de forma intermitente, y el primero te da una falsa señal que nadie usa.\n\nPiénsalo como cualquier otro sistema de medición. Un sensor que a veces marca 0 y a veces marca 100 no es \"medio fiable\": es peor que un sensor que marcara siempre 50, porque el primero te hace *tomar decisiones* con información falsa. En tu caso:\n\n| | Sin tests | Suite roja crónica | Suite verde fiable |\n|---|---|---|---|\n| Señal de regresión | Ausente | Presente pero inutilizable | Presente y accionable |\n| Latencia de detección | Alta (producción) | Indefinida | Baja |\n| Coste por ejecución | ~0 | Alto (CI + triaje + re-runs) | Moderado |\n| Capacidad de refactorizar | Baja | Baja | Alta |\n| Crecimiento del codebase | Caótico | Caótico | Ordenado |\n\nLa columna intermedia es la trampa. Y hay una paradoja amarga: **la suite roja crónica suele ser más cara que no tener tests**, porque el equipo paga la infraestructura (CI, reporters, plugins, triaje, re-runs) *y* el coste de no tener la red de seguridad.\n\n## 5. Las cuatro causas raíz del rojo crónico\n\nCuando una suite está enferma, el diagnóstico casi siempre cae en una de estas cuatro categorías:\n\n**a) Tests acoplados al entorno.** Dependen del reloj, de la red, del orden, del filesystem, de variables de entorno de la máquina de cada uno. Se arregla con inyección de dependencias: tiempo, red, ids y filesystem se pasan como parámetros explícitos y se usan dobles deterministas en los tests.\n\n**b) Tests acoplados a la implementación.** Afirman sobre nombres de funciones privadas, sobre el número de llamadas a una dependencia, sobre la forma de un objeto interno. Se rompen con refactors inocuos. Se arregla afirmaciones sobre comportamiento observable: entradas, salidas y efectos visibles.\n\n**c) Tests mal designed que nunca funcionaron.** Duplicados, redundantes, copiados y pegados de un ejemplo de documentación que no compila. Se detectan con mutation testing o, más barato, con la pregunta de la sección 2: *¿qué cambio rompería esto?*.\n\n**d) Deuda de mantenimiento sin dueño.** La suite creció a 5.000 tests y nadie tiene tiempo de actualizarlos cuando cambia una API interna. Se resuelve con política, no con heroísmo (ver más abajo).\n\n## 6. Señales de alarma: cómo saber que tu suite está enferma\n\nEsta checklist es sorprendentemente predictiva. Si marcas más de tres, tienes un problema estructural:\n\n- [ ] El equipo **re-lanza** el pipeline antes que mirar el log.\n- [ ] Alguien ha pedido **desactivar una parte de la suite** \"porque tarda mucho\" y nadie protestó.\n- [ ] Hay tests marcados como `@skip`, `xfail` o \"quarantine\" que llevan **semanas** sin revisarse.\n- [ ] Nadie sabe decir cuál es el **tiempo de ejecución total** de la suite, ni cuál fue el mes pasado.\n- [ ] Nadie puede afirmar con datos **qué porcentaje de la suite ha fallado el mes pasado**.\n- [ ] El equipo **no distingue** entre \"el CI está roto\" y \"el CI está en rojo\".\n- [ ] Nadie recuerda la última vez que un test **rojo bloqueó un merge** y.Errara que era un bug real.\n- [ ] La **cobertura** se mide, pero no se usa para nada: nadie sabe qué partes del código no cubren los tests.\n\nY un indicador cuantitativo que casi nadie mide y que vale la pena medir desde mañana:\n\n> **Flake rate** = (ejecuciones de CI en rojo) / (ejecuciones totales)\n\nUn equipo sano está por debajo del 1–2%. Si estás en el 10%, tu suite no está probando tu software: te está shapedando el día.\n\n## 7. Reglas para que la suite sea una red y no una alarma\n\nEsto es lo que funciona en la práctica, y va de política más que de herramientas.\n\n### 7.1 Nada entra en la suite si no es determinista\n\nAntes de escribir un test, pregúntate cómo podría fallar sin que el código esté mal. Si la respuesta es \"por un timing, por la red, por el orden\", el test no se escribe así: primero se hace determinista.\n\n```ts\n// ❌ Test dependiente del reloj del sistema\nexpect(new Date() < deadline).toBe(true);\n\n// ✅ Tiempo inyectado\nconst now = new Date(\"2026-03-01T10:00:00Z\");\nexpect(isExpired(offer, now)).toBe(true);\n```\n\n### 7.2 El test debe poder fallar\n\nSi mutas una línea y el test sigue verde, ese test no vale su coste. Herramientas como Stryker (JS), mutmut (Python) o Cosmic Ray dan una señal objetiva. No hace falta mutar el 100% del código: con una muestra aleatoria del 10% ya descubres los tests tautológicos.\n\n### 7.3 Nada de sleeps ni de esperas por tiempo\n\n`await sleep(500)` es una apuesta con el reloj. Si necesitas esperar, **espera a la condición**, no al tiempo:\n\n```ts\n// ❌\nawait sleep(500);\nexpect(status).toBe(\"done\");\n\n// ✅\nawait waitFor(() => status === \"done\", { timeout: 2000 });\n```\n\n### 7.4 Un test rojo es un bug *en el repositorio*, no un evento del mundo\n\nNi \"es que el entorno de CI es raro\", ni \"ha sido un problema de red\". Si el rojo no está causedado por un cambio tuyo, es porque el test era frágil y ahora lo sabes. Eso no es una excusa, es información.\n\n### 7.5 Divide la suite en niveles con distinta severidad\n\nEste es el cambio con mejor relación coste/beneficio:\n\n- **Nivel 0 — Smoke (bloqueante, < 5 min).** Build, arranque, healthcheck, un puñado de casos críticos. Debe ser casi imposible que falle.\n- **Nivel 1 — Rápidos (bloqueante, < 15 min).** La mayor parte de la suite unitaria. Sin flake.\n- **Nivel 2 — Integración / E2E (informativo, no bloqueante).** Aquí es razonable queLive el flaky; se ejecuta en nightly o post-merge y **nunca bloquea a nadie**.\n\nLa regla que lo hace funcionar: **lo que bloquea un merge tiene que ser de una fiabilidad casi perfecta**. Un gate que falla el 5% de las veces no es un gate, es un incremento de fricción que entrena al equipo a hacer push --force o a pedir excepciones.\n\n### 7.6 Presupuesto de flakiness y cuarentena con caducidad\n\n- Detecta intermitencia de forma automática: re-ejecuta los tests rojos una vez y, si pasan, el primero queda marcado como **flaky**.\n- Quarantena: un test en cuarentena **no bloquea** la integración, pero se cuenta y se revisa semanalmente.\n- **Caducidad obligatoria**: ningún test en cuarentena más de X días (una semana, quince días). Si no se arregla, **se borra**. Un test que nadie va a arreglar no vale su coste de mantenimiento, y mantenerlo da la falsa impresión de cobertura.\n\n### 7.7 Regla de \"si no lo arreglas, bórralo\"\n\nEsta es la más difícil de aceptar y la más valiosa. Un test que está roto desde hace seis meses no protege nada. Cuesta tiempo de ejecución, cuesta atención, y cada vez que alguien lo arregla, lo reintroduce.\n\nLa cobertura no es un inventario que haya que mantener a toda costa. La cobertura es una *estimación* de lo que tu suite verifica; dejarla pudrirse la convierte en una estimación falsa.\n\n### 7.8 Presupuesto de tiempo de la suite\n\nLa suite debe caber en el tiempo de espera del equipo. Si la suite tarda 40 minutos, el equipo deja de correrla localmente y solo espera al CI, y entonces **toda la señal aparece tarde**, cuando ya has cambiado el contexto mental. UnDeveloper que no ha ejecutado los tests en local ya ha roto el bucle de retroalimentación rápido, que es el motivo principal por el que existen los tests.\n\n## 8. El bucle correcto\n\nLa forma sana de trabajar es un bucle corto y cerrado:\n\n```\nEscribir código  →  Ejecutar tests localmente  →  Fallo rápido  →  Corregir  →  Commit\n                                   ↑\n                            (segundos, no horas)\n```\n\nUn test rojo debe ser una **molestia barata**: cuesta segundos y da un mensaje claro. Cuando esa relación se invierte —el fallo cuesta media hora de triaje y un mensaje incomprensible— el bucle se rompe y la práctica se muere sola. Nadie deja de escribir tests por una decisión; se deja de escribir tests porque el sistema de retroalimentación dejó de funcionar.\n\nLa括étesis final se puede resumir en una frase:\n\n> **El objetivo de los tests no es tener tests: es que el rojo signifique algo.** Un rojo que significa algo vale más que cien tests verdes que no verifican nada. Y una suite cuyo rojo no significa nada es, desde el punto de vista del negocio, un gasto sin retorno.\n\n---\n\n### Bonus: tres preguntas que puedes hacerte hoy\n\n1. **¿Cuánto tardó la última vez que un test rojo te-Paró a hacer algo?** Si la respuesta es \"no me acuerdo\", tu suite probablemente no bloquea nada y es decorativa.\n2. **¿Puedes nombrar el último test que modificaste porque había fallado?** Si no puedes, tus tests no están influyendo en tu código.\n3. **¿Cuántos tests would fail si duplicaras una condición en el código?** Si la respuesta es 0, tu suite no está probando esa lógica.\n\nY una cuarta, la más incómoda:\n\n4. **¿Qué pasaría si mañana apagaras la suite y apagaras el CI?** Si la respuesta es \"cambiaría poco\", tus tests no están haciendo su trabajo — y la suite roja crónica es exactamente ese estado: ruido caro en lugar de red útil.",
+                "lineStart": 1,
+                "lineEnd": 252,
+                "totalLines": 252,
+                "truncated": false
+              }
+            },
+            "title": "var/tmp/bench/ws-s444EOyD/tests-que-fallan.md",
+            "time": {
+              "start": 1795131930122,
+              "end": 1795131930139
+            }
+          },
+          "id": "prt_1f63376010019MqCbvH74HJjXi",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6335f55001tHFLIgNIdapti6"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 13467,
+            "input": 4429,
+            "output": 462,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8576
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6337651001FnFm2WfFbs0ehi",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6335f55001tHFLIgNIdapti6"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6324098001JkePxCFjVdyR7k",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-s444EOyD",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 22995,
+          "input": 4713,
+          "output": 4842,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 13440
+          }
+        },
+        "modelID": "minimax-m3",
+        "providerID": "ol",
+        "time": {
+          "created": 1795131930204,
+          "completed": 1795131973788
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f633765c001F7QSv3eq2aWmJu",
+        "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f63378e5001cjWh9UOwXGiEI4",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f633765c001F7QSv3eq2aWmJu"
+        },
+        {
+          "type": "reasoning",
+          "text": "There are several corrupted tokens (likely from generation glitches). Let me fix each one with edits.\n\nList of fixes:\n1. Line 15: \"en certains circumstances\" → \"en ciertas circunstancias\"\n2. Line 23: \"reproducir,\\Localizar y explicar\" → \"reproducir, localizar y explicar\"\n3. Line 32: \"sigue occupying RAM\" → \"sigue ocupando RAM\"\n4. Line 53: \"es simple y old\" → \"es simple y antiguo\"\n5. Line 57: \"ya no es unalotería con distribución conocida\" → \"ya no es una lotería con distribución conocida\"\n6. Line 59: \"La versióneau de\" → \"La versión de\"\n7. Line 75: \"la cobertura erafiction\" → \"la cobertura era ficción\"\n8. Line 81: \"formanse un sistema social\" → \"forman un sistema social\"; \"y unaaproperty emergente\" → \"y hay una propiedad emergente\"\n9. Line 91: \"aparece el phenomenon\" → \"aparece el fenómeno\"; \"documentado enavia la aviación\" → \"documentado en la aviación\"\n10. Line 93: \"Un re-run es la承认 práctica de la derrota\" → \"Un re-run es el reconocimiento tácito de la derrota\"\n11. Line 97: \"estaba esconde detrás\" → \"estaba escondido detrás\"\n12. Line 102: \"entra en la形態 de\" → \"entra en la modalidad de\"\n13. Line 113: \"El argumento extreme\" → \"El argumento extremo\"\n14. Line 139: \"Tests mal designed\" → \"Tests mal diseñados\"\n15. Line 153: \"y.Errara que era un bug real\" → \"y que fuera que era un bug real\"\n16. Line 160: \"te está shapedando el día\" → \"te está devorando el día\"\n17. Line 198: \"no está causedado\" → \"no está causado\"\n18. Line 206: \"queLive el flaky\" → \"que viva el flaky\"\n19. Line 224: \"UnDeveloper\" → \"Un developer\"\n20. Line 238: \"La括étesis final\" → \"La tesis final\"\n21. Line 246: \"te-Paró a hacer algo\" → \"te paró a hacer algo\"\n22. Line 248: \"¿Cuántos tests would fail\" → \"¿Cuántos tests fallarían\"\n23. Line 15 also \"tests que *sean* fiables\" fine.\n\nAlso line 3 \"lang: es\" fine.\n\nLet me also double-check the code example at line 42-45: `await avanzaElRelojHasta(...)` is pseudo-code in TS, acceptable but slightly odd. Let me make it clearer.\n\nAlso line 202 etc. fine.\n\nLet me apply the edits. I'll use a bash sed? No — use edit tool for each. That's ~23 edits. Alternatively, I can use a single bash command with python to do replacements. That's more efficient. But the instructions say prefer Edit tool over sed. However, many small replacements... I'll use the edit tool with replaceAll where applicable. Actually let me just do multiple edit calls in parallel — but they're all in the same file, which could conflict. The edit tool applies sequentially; parallel edits to the same file may fail due to file modification detection.\n\nBetter: use the edit tool one at a time but batch them? The tool requires separate calls. Alternatively rewrite the whole file with write — it's cleaner and faster. Let me rewrite with the fixed content.",
+          "time": {
+            "start": 1795131930855,
+            "end": 1795131938422
+          },
+          "id": "prt_1f63378e7001nEm3Sl2C7fAF4z",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f633765c001F7QSv3eq2aWmJu"
+        },
+        {
+          "type": "text",
+          "text": "Corrijo algunos tokens corruptos que se colaron al generar el texto:",
+          "time": {
+            "start": 1795131938424,
+            "end": 1795131973782
+          },
+          "id": "prt_1f63396780010J4sVk8iZoOdQz",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f633765c001F7QSv3eq2aWmJu"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call-23f7e9c1-6266-4bf8-856a-a8d57ad20c76",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "---\ntitle: \"El test que miente: por qué una suite roja puede ser peor que no tener tests\"\ndate: 2026-11-19\nlang: es\ntags: [testing, ci, calidad, ingeniería-de-software]\nexcerpt: \"Un test que falla sin motivo hace más daño que un bug: erosiona la confianza, ralentiza al equipo y acaba matando la práctica de testear. Guía de síntomas, causas y reglas para que la suite vuelva a ser una red y no una alarma.\"\n---\n\n> Un test que falla te dice que algo está mal.\n> Un test que falla *a veces*, *sin motivo aparente* o *siempre*, te dice que **ya no puedes fiarte de él**.\n> Y un test en el que ya no confías no es un test: es ruido con presupuesto de CPU.\n\nHay una intuición muy extendida entre equipos junior: *\"más tests es mejor\"*. Con esa métrica, cualquier suite parece un éxito. Pero la realidad es que un test solo tiene valor si, cuando falla, cambia una decisión. Un test que falla sin cambiar nada —porque nadie lo lee, porque nadie sabe qué significa, porque nadie tiene tiempo de arreglarlo— tiene un coste positivo y un valor negativo.\n\nEste post es un argumento a favor de una tesis incómoda: **en ciertas circunstancias, una suite de tests que falla de forma crónica es peor que no tener tests**. No es un argumento contra los tests, sino a favor de tests que *sean* fiables, o que no existan.\n\n---\n\n## 1. El problema no es el fallo: es la ambigüedad\n\nUn test tiene dos salidas: verde o rojo. El rojo es el estado *deseable* cuando revela un defecto real, porque es una señal accionable: \"algo cambió y no debería haber cambiado\".\n\nEl problema aparece cuando el rojo deja de ser accionable. Si un test falla por razones que el equipo no puede reproducir, localizar y explicar, entonces el rojo deja de ser información y pasa a ser ruido. Y el ruido tiene un coste muy alto, porque el equipo paga por distinguir señal de ruido cada vez que corre la suite.\n\nPiensa en la diferencia entre dos notificaciones:\n\n| Escenario | Señal | Acción del equipo | Coste |\n|---|---|---|---|\n| Test rojo, causa clara y reciente | Real | Investigar y corregir | 5–30 min |\n| Test rojo, causa desconocida | Ruido | Ignorar / reintentar / marcar como flaky | 2 h de debugging para nada |\n\nEse segundo escenario no es raro. En equipos medianos es la norma. Y ahí está la trampa: **no se trata de que el test sea rojo, se trata de que el equipo haya aprendido a ignorar el rojo**. Cuando eso ocurre, la suite sigue corriendo, sigue consumiendo minutos de CI, sigue ocupando RAM... y ya no cumple su función. Es un coste sin contrapartida.\n\n## 2. Anatomía de un test que \"falla a veces\"\n\nEl test intermitente (*flaky*) es el caso más dañino, porque rompe la relación causa-efecto. Si el rojo es determinista, la gente aprende rápido. Si el rojo es aleatorio, la gente deja de aprender.\n\nCausas habituales:\n\n```ts\n// 1. Dependencia del reloj real\ntest(\"caduca la oferta a medianoche\", async () => {\n  clock.setSystemTime(new Date(\"2026-01-01T00:00:01Z\"));\n  expect(await ofertaIsActiva(oferta)).toBe(false);\n});\n\n// 2. Dependencia de la red, del disco o de una API externa\nconst res = await fetch(\"https://api.proveedor.com/precios\");\n\n// 3. Dependencia del orden de ejecución o de estado compartido\n// 4. Dependencia de la zona horaria del runner (CI en UTC, tu máquina en CET)\n// 5. Carrera entre dos asíncronos sin sincronización\n```\n\nTodos estos casos comparten un patrón: **el test depende de algo que el test no controla**. El principio de diseño que se viola aquí es simple y antiguo:\n\n> Un test debe ser una función determinista de su entrada.\n\nSi el resultado depende del reloj, de la red, del orden o de la configuración regional del runner, ya no es una función: es una lotería con distribución conocida. Y una lotería no se puede usar como criterio de aceptación.\n\n### La versión de \"tests que pasan pero no verifican nada\"\n\nHay un caso aún peor que el flaky: el test verde que no prueba nada. Si el rojo de un test es ruido, el verde es propaganda.\n\n```ts\n// Test tautológico: pasa siempre\nexpect(true).toBe(true);\n\n// Test que solo comprueba que el mock se llamó\nexpect(repo.save).toHaveBeenCalled();\n\n// Test que reimplementa la lógica del SUT en el test\nconst expected = computeDiscount(items, 10); // copia de la implementación\nexpect(computeDiscount(items, 10)).toEqual(expected);\n```\n\nUn test que no puede fallar es peor que un test que falla: ocupa la misma parte del presupuesto, da la misma falsa confianza y además **consume la atención del equipo cuando se rompe el código de verdad**, porque el equipo descubre que la cobertura era ficción.\n\nRegla práctica: si no puedes señalar al menos un cambio en el código que rompería ese test, el test no existe.\n\n## 3. El efecto erosión: por qué un único test tóxico contamina el conjunto\n\nLos tests no son independientes: forman un sistema social. Y ahí hay una propiedad emergente que casi nadie documenta:\n\n**La fiabilidad de la suite es (aproximadamente) el producto de la fiabilidad de sus tests.**\n\nSi tu suite tiene 1.000 tests y el 5% es intermitente, tu probabilidad de tener un rojo espurio en una ejecución cualquiera es alta. Con 1.000 tests independientes al 95% de fiabilidad cada uno:\n\n```\nP(suite completamente verde) = 0.95^1000 ≈ 0.006\n```\n\nEs decir, **tu CI pasa limpio menos del 1% de las veces**. A partir de ese momento, el CI rojo deja de ser una señal: es el estado *normal*. Cuando el estado normal es rojo, aparece el fenómeno de la **alerta por fatiga** (*alert fatigue*), documentado en la aviación y en la medicina de urgencias: cuando la alarma suena el 40% de las veces, la gente deja de mirar la pantalla.\n\nY aquí está el golpe de gracia. Un CI que falla el 99% de las veces se resuelve de la forma más lenta posible: **con un botón de \"re-run\"**. Un re-run es el reconocimiento tácito de la derrota:\n\n- El pipeline tarda el doble, el triple, lo que haga falta.\n- Nadie mira el log. Nadie distingue el fallo real del fallo espurio.\n- Cuando *sí* hay un fallo real, nadie lo ve: estaba escondido detrás de los otros doce.\n- Y, peor: **nadie vuelve a escribir tests nuevos**. Si el equipo ha interiorizado que \"tests = ruido + demora\", el test se percibe como coste puro y la cobertura del repo se congela. Has perdido el valor futuro del testing, no solo el presente.\n\n### El caso límite: la suite roja permanente\n\nHay un estado degenerado y muy reconocible: la rama `main` está rota desde hace semanas. Nadie la arregla. El equipo entra en la modalidad de \"rojo permanente\", donde el estado del CI ya no se consulta:\n\n- Las alertas de CI se silencian o se silencian en el canal de Slack.\n- Los nuevos miembros del equipo no saben si un rojo significa algo.\n- Los merges se hacen con `--no-verify` o se desactiva el CI en el fork.\n- Cuando ocurre un incidente real, nadie distingue \"el CI estaba roto de siempre\" de \"el CI se acaba de romper\".\n\nEn ese estado, los tests ya no son una red de seguridad: son **ruido con presupuesto de CI**. Y el presupuesto de CI no es gratis: son minutos de runner, dinero de la plataforma y, sobre todo, tiempo de latencia en cada pull request. Un PR que tarda 25 minutos en \"pasar\" tiene un coste real en el tiempo de revisión y en el tiempo de integración de cambios. Nadie contabiliza ese coste, porque aparece como \"el CI tardó\".\n\n## 4. Por qué \"no tener tests\" puede ser mejor\n\nEl argumento extremo es el de la ausencia total: sin tests, el fallo aparece en producción. Eso es cierto y es gravísimo. Pero el argumento intermedio es más preciso y más útil:\n\n> **Un contrato fiable pero incompleto es más valioso que un contrato completo pero caprichoso.**\n\nComparte el coste de un test que nunca ha funcionado con el de uno que falla de forma intermitente, y el primero te da una falsa señal que nadie usa.\n\nPiénsalo como cualquier otro sistema de medición. Un sensor que a veces marca 0 y a veces marca 100 no es \"medio fiable\": es peor que un sensor que marcara siempre 50, porque el primero te hace *tomar decisiones* con información falsa. En tu caso:\n\n| | Sin tests | Suite roja crónica | Suite verde fiable |\n|---|---|---|---|\n| Señal de regresión | Ausente | Presente pero inutilizable | Presente y accionable |\n| Latencia de detección | Alta (producción) | Indefinida | Baja |\n| Coste por ejecución | ~0 | Alto (CI + triaje + re-runs) | Moderado |\n| Capacidad de refactorizar | Baja | Baja | Alta |\n| Crecimiento del codebase | Caótico | Caótico | Ordenado |\n\nLa columna intermedia es la trampa. Y hay una paradoja amarga: **la suite roja crónica suele ser más cara que no tener tests**, porque el equipo paga la infraestructura (CI, reporters, plugins, triaje, re-runs) *y* el coste de no tener la red de seguridad.\n\n## 5. Las cuatro causas raíz del rojo crónico\n\nCuando una suite está enferma, el diagnóstico casi siempre cae en una de estas cuatro categorías:\n\n**a) Tests acoplados al entorno.** Dependen del reloj, de la red, del orden, del filesystem o de variables de entorno de la máquina de cada uno. Se arregla con inyección de dependencias: tiempo, red, ids y filesystem se pasan como parámetros explícitos y se usan dobles deterministas en los tests.\n\n**b) Tests acoplados a la implementación.** Afirman sobre nombres de funciones privadas, sobre el número de llamadas a una dependencia, sobre la forma de un objeto interno. Se rompen con refactors inocuos. Se arregla con afirmaciones sobre comportamiento observable: entradas, salidas y efectos visibles.\n\n**c) Tests mal diseñados que nunca funcionaron.** Duplicados, redundantes, copiados y pegados de un ejemplo de documentación que no compila. Se detectan con mutation testing o, más barato, con la pregunta de la sección 2: *¿qué cambio rompería esto?*.\n\n**d) Deuda de mantenimiento sin dueño.** La suite creció a 5.000 tests y nadie tiene tiempo de actualizarlos cuando cambia una API interna. Se resuelve con política, no con heroísmo (ver más abajo).\n\n## 6. Señales de alarma: cómo saber que tu suite está enferma\n\nEsta checklist es sorprendentemente predictiva. Si marcas más de tres, tienes un problema estructural:\n\n- [ ] El equipo **re-lanza** el pipeline antes que mirar el log.\n- [ ] Alguien ha pedido **desactivar una parte de la suite** \"porque tarda mucho\" y nadie protestó.\n- [ ] Hay tests marcados como `@skip`, `xfail` o \"quarantine\" que llevan **semanas** sin revisarse.\n- [ ] Nadie sabe decir cuál es el **tiempo de ejecución total** de la suite, ni cuál fue el mes pasado.\n- [ ] Nadie puede afirmar con datos **qué porcentaje de la suite ha fallado el mes pasado**.\n- [ ] El equipo **no distingue** entre \"el CI está roto\" y \"el CI está en rojo\".\n- [ ] Nadie recuerda la última vez que un test **rojo bloqueó un merge** y que fuera un bug real.\n- [ ] La **cobertura** se mide, pero no se usa para nada: nadie sabe qué partes del código no cubren los tests.\n\nY un indicador cuantitativo que casi nadie mide y que vale la pena medir desde mañana:\n\n> **Flake rate** = (ejecuciones de CI en rojo) / (ejecuciones totales)\n\nUn equipo sano está por debajo del 1–2%. Si estás en el 10%, tu suite no está probando tu software: te está devorando el día.\n\n## 7. Reglas para que la suite sea una red y no una alarma\n\nEsto es lo que funciona en la práctica, y va de política más que de herramientas.\n\n### 7.1 Nada entra en la suite si no es determinista\n\nAntes de escribir un test, pregúntate cómo podría fallar sin que el código esté mal. Si la respuesta es \"por un timing, por la red, por el orden\", el test no se escribe así: primero se hace determinista.\n\n```ts\n// ❌ Test dependiente del reloj del sistema\nexpect(new Date() < deadline).toBe(true);\n\n// ✅ Tiempo inyectado\nconst now = new Date(\"2026-03-01T10:00:00Z\");\nexpect(isExpired(offer, now)).toBe(true);\n```\n\n### 7.2 El test debe poder fallar\n\nSi mutas una línea y el test sigue verde, ese test no vale su coste. Herramientas como Stryker (JS), mutmut (Python) o Cosmic Ray dan una señal objetiva. No hace falta mutar el 100% del código: con una muestra aleatoria del 10% ya descubres los tests tautológicos.\n\n### 7.3 Nada de sleeps ni de esperas por tiempo\n\n`await sleep(500)` es una apuesta con el reloj. Si necesitas esperar, **espera a la condición**, no al tiempo:\n\n```ts\n// ❌\nawait sleep(500);\nexpect(status).toBe(\"done\");\n\n// ✅\nawait waitFor(() => status === \"done\", { timeout: 2000 });\n```\n\n### 7.4 Un test rojo es un bug *en el repositorio*, no un evento del mundo\n\nNi \"es que el entorno de CI es raro\", ni \"ha sido un problema de red\". Si el rojo no está causado por un cambio tuyo, es porque el test era frágil y ahora lo sabes. Eso no es una excusa, es información.\n\n### 7.5 Divide la suite en niveles con distinta severidad\n\nEste es el cambio con mejor relación coste/beneficio:\n\n- **Nivel 0 — Smoke (bloqueante, < 5 min).** Build, arranque, healthcheck y un puñado de casos críticos. Debe ser casi imposible que falle.\n- **Nivel 1 — Rápidos (bloqueante, < 15 min).** La mayor parte de la suite unitaria. Sin flake.\n- **Nivel 2 — Integración / E2E (informativo, no bloqueante).** Aquí es razonable que viva el flaky; se ejecuta en nightly o post-merge y **nunca bloquea a nadie**.\n\nLa regla que lo hace funcionar: **lo que bloquea un merge tiene que ser de una fiabilidad casi perfecta**. Un gate que falla el 5% de las veces no es un gate, es un incremento de fricción que entrena al equipo a hacer push --force o a pedir excepciones.\n\n### 7.6 Presupuesto de flakiness y cuarentena con caducidad\n\n- Detecta intermitencia de forma automática: re-ejecuta los tests rojos una vez y, si pasan, el primero queda marcado como **flaky**.\n- Quarantena: un test en cuarentena **no bloquea** la integración, pero se cuenta y se revisa semanalmente.\n- **Caducidad obligatoria**: ningún test en cuarentena más de X días (una semana, quince días). Si no se arregla, **se borra**. Un test que nadie va a arreglar no vale su coste de mantenimiento, y mantenerlo da la falsa impresión de cobertura.\n\n### 7.7 Regla de \"si no lo arreglas, bórralo\"\n\nEsta es la más difícil de aceptar y la más valiosa. Un test que está roto desde hace seis meses no protege nada. Cuesta tiempo de ejecución, cuesta atención y, cada vez que alguien lo arregla, lo reintroduce.\n\nLa cobertura no es un inventario que haya que mantener a toda costa. La cobertura es una *estimación* de lo que tu suite verifica; dejarla pudrirse la convierte en una estimación falsa.\n\n### 7.8 Presupuesto de tiempo de la suite\n\nLa suite debe caber en el tiempo de espera del equipo. Si la suite tarda 40 minutos, el equipo deja de correrla localmente y solo espera al CI, y entonces **toda la señal aparece tarde**, cuando ya has cambiado el contexto mental. Un developer que no ha ejecutado los tests en local ya ha roto el bucle de retroalimentación rápido, que es el motivo principal por el que existen los tests.\n\n## 8. El bucle correcto\n\nLa forma sana de trabajar es un bucle corto y cerrado:\n\n```\nEscribir código  →  Ejecutar tests localmente  →  Fallo rápido  →  Corregir  →  Commit\n                                   ↑\n                            (segundos, no horas)\n```\n\nUn test rojo debe ser una **molestia barata**: cuesta segundos y da un mensaje claro. Cuando esa relación se invierte —el fallo cuesta media hora de triaje y un mensaje incomprensible— el bucle se rompe y la práctica se muere sola. Nadie deja de escribir tests por una decisión; se deja de escribir tests porque el sistema de retroalimentación dejó de funcionar.\n\nLa tesis final se puede resumir en una frase:\n\n> **El objetivo de los tests no es tener tests: es que el rojo signifique algo.** Un rojo que significa algo vale más que cien tests verdes que no verifican nada. Y una suite cuyo rojo no significa nada es, desde el punto de vista del negocio, un gasto sin retorno.\n\n---\n\n### Bonus: cuatro preguntas que puedes hacerte hoy\n\n1. **¿Cuánto tardó la última vez que un test rojo te paró a hacer algo?** Si la respuesta es \"no me acuerdo\", tu suite probablemente no bloquea nada y es decorativa.\n2. **¿Puedes nombrar el último test que modificaste porque había fallado?** Si no puedes, tus tests no están influyendo en tu código.\n3. **¿Cuántos tests fallarían si duplicaras una condición en el código?** Si la respuesta es 0, tu suite no está probando esa lógica.\n\nY una cuarta, la más incómoda:\n\n4. **¿Qué pasaría si mañana apagaras la suite y apagaras el CI?** Si la respuesta es \"cambiaría poco\", tus tests no están haciendo su trabajo — y la suite roja crónica es exactamente ese estado: ruido caro en lugar de red útil.\n",
+              "filePath": "/var/tmp/bench/ws-s444EOyD/tests-que-fallan.md"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-s444EOyD/tests-que-fallan.md",
+              "exists": true,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-s444EOyD/tests-que-fallan.md",
+            "time": {
+              "start": 1795131973747,
+              "end": 1795131973758
+            }
+          },
+          "id": "prt_1f634206a001oruAyxA3h8PHRk",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f633765c001F7QSv3eq2aWmJu"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 22995,
+            "input": 4713,
+            "output": 4842,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 13440
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6342099001hyaQKcKnUpcHtj",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f633765c001F7QSv3eq2aWmJu"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6324098001JkePxCFjVdyR7k",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-s444EOyD",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 23132,
+          "input": 102,
+          "output": 118,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 22912
+          }
+        },
+        "modelID": "minimax-m3",
+        "providerID": "ol",
+        "time": {
+          "created": 1795131973792,
+          "completed": 1795131976240
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f63420a0001uzbBFKA4Novrc2",
+        "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f63425aa001BOR9xe1dfHI14Z",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63420a0001uzbBFKA4Novrc2"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me verify no remaining corrupted tokens by checking for suspicious patterns (non-Spanish words that slipped in). Let me grep for a few known ones.",
+          "time": {
+            "start": 1795131975084,
+            "end": 1795131976168
+          },
+          "id": "prt_1f63425ac0012lfYe3LI63OtUj",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63420a0001uzbBFKA4Novrc2"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call-424e585b-187b-4acc-955d-e1f09bf2fcfa",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rg -n \"\\b(the|old|extreme|would|shapedando|Localizar|veri|phenomenon|apena|formed|acknowl)\\b\" tests-que-fallan.md; echo \"---\"; wc -w tests-que-fallan.md"
+            },
+            "output": "---\n2884 tests-que-fallan.md\n",
+            "metadata": {
+              "output": "---\n2884 tests-que-fallan.md\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rg -n \"\\b(the|old|extreme|would|shapedando|Localizar|veri|phenomenon|apena|formed|acknowl)\\b\" tests-que-fallan.md; echo \"---\"; wc -w tests-que-fallan.md",
+            "time": {
+              "start": 1795131976182,
+              "end": 1795131976202
+            }
+          },
+          "id": "prt_1f63429ec001Tjg50CC6pKfYFF",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63420a0001uzbBFKA4Novrc2"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 23132,
+            "input": 102,
+            "output": 118,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 22912
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6342a2c001AhunucdyI2n599",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f63420a0001uzbBFKA4Novrc2"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6324098001JkePxCFjVdyR7k",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-s444EOyD",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 23488,
+          "input": 118,
+          "output": 330,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 23040
+          }
+        },
+        "modelID": "minimax-m3",
+        "providerID": "ol",
+        "time": {
+          "created": 1795131976243,
+          "completed": 1795131980954
+        },
+        "finish": "stop",
+        "id": "msg_1f6342a33001YZkLkFTCPnOri4",
+        "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6342cd80015zizkPxYUe4bE7",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6342a33001YZkLkFTCPnOri4"
+        },
+        {
+          "type": "text",
+          "text": "Listo: `tests-que-fallan.md` en la carpeta actual.\n\n**Contenido del post** (~2.900 palabras, con frontmatter listo para un motor de blog estático):\n\n1. **El problema no es el fallo, es la ambigüedad** — tabla señal/ruido\n2. **Anatomía del test intermitente** — causas (reloj, red, orden, zona horaria) + el caso peor: el test verde que no verifica nada (tautológico, reimplementa la lógica, solo comprueba mocks)\n3. **El efecto erosión** — `P(verde) = 0.95^1000 ≈ 0.006`, el CI rojo como estado normal, alerta por fatiga, y el \"re-run\" como derrota tácita que congela la cobertura\n4. **Por qué \"sin tests\" puede ser mejor** — tabla comparativa y la paradoja de que la suite roja crónica es más cara que no tener tests\n5. **Cuatro causas raíz** — entorno, implementación, tests nunca funcionaron, deuda sin dueño\n6. **Checklist de señales de alarma** + la métrica de flake rate\n7. **Ocho reglas prácticas** — determinismo, \"el test debe poder fallar\" (mutation testing), sin sleeps, suite por niveles (smoke/rápidos/E2E no bloqueante), cuarentena con caducidad, \"si no lo arreglas bórralo\", presupuesto de tiempo\n8. **El bucle correcto** y una tesis final + 4 preguntas de autodiagnóstico",
+          "time": {
+            "start": 1795131976922,
+            "end": 1795131980947
+          },
+          "id": "prt_1f6342cda001NvQ7VSxS4GgghG",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6342a33001YZkLkFTCPnOri4"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 23488,
+            "input": 118,
+            "output": 330,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 23040
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6343c96001KEnEr01eHpK29x",
+          "sessionID": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+          "messageID": "msg_1f6342a33001YZkLkFTCPnOri4"
+        }
+      ]
+    }
+  ]
+}

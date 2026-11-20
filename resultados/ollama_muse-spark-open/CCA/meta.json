@@ -1,0 +1,68 @@
+{
+  "codigo": "CCA",
+  "modelo": "ollama/muse-spark-open",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T03:26:33Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 16589,
+    "output": 25722,
+    "reasoning": 0,
+    "cache_read": 561408,
+    "cache_write": 0,
+    "total": 603719
+  },
+  "peticiones": 24,
+  "error": null,
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 2,
+    "bash": 8,
+    "todowrite": 8,
+    "write": 19,
+    "edit": 2
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e090222c1ffeaiJdxBW6ZeWjtG",
+  "ficheros": [
+    ".gitignore",
+    "README.md",
+    "api/__init__.py",
+    "api/__pycache__/__init__.cpython-313.pyc",
+    "api/__pycache__/app.cpython-313.pyc",
+    "api/app.py",
+    "api/fastapi_app.py",
+    "cart/__init__.py",
+    "cart/__pycache__/__init__.cpython-313.pyc",
+    "cart/__pycache__/cart.cpython-313.pyc",
+    "cart/__pycache__/events.cpython-313.pyc",
+    "cart/__pycache__/exceptions.cpython-313.pyc",
+    "cart/__pycache__/inventory.cpython-313.pyc",
+    "cart/__pycache__/models.cpython-313.pyc",
+    "cart/__pycache__/pricing.cpython-313.pyc",
+    "cart/__pycache__/service.cpython-313.pyc",
+    "cart/__pycache__/storage.cpython-313.pyc",
+    "cart/cart.py",
+    "cart/events.py",
+    "cart/exceptions.py",
+    "cart/inventory.py",
+    "cart/models.py",
+    "cart/pricing.py",
+    "cart/service.py",
+    "cart/storage.py",
+    "config.py",
+    "main.py",
+    "requirements.txt",
+    "tests/__init__.py",
+    "tests/test_cart.py"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

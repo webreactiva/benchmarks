@@ -1,0 +1,19 @@
+{
+  "nota": 9,
+  "veredicto": "se juega, Web Reactiva a medias",
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 1,
+    "contenido de Web Reactiva": 1,
+    "acabado": 1
+  },
+  "resumen": "Mesa libre con fichas que se combinan soltando una sobre otra, 125 elementos todos alcanzables y un generador para las mezclas sin receta. Parte de Agua, Fuego, Aire y Tierra y mezcla programación genérica (React, Rust, Docker) con algo de Web Reactiva (podcast, masterclass, «Maratón WR», «Membresía WR», «Slow Content»), sin mirar la web.",
+  "rarezas": [
+    "Dice «no puedo ver imágenes en este modelo» y comprueba la captura por el DOM. El modelo sí acepta imágenes: es nuestra configuración de OpenCode, que no declara qué entradas admite cada modelo.",
+    "No consultó la web para el contenido.",
+    "15 peticiones y 689 k tokens."
+  ]
+}

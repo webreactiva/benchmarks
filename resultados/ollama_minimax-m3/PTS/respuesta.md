@@ -1,0 +1,16 @@
+Corrijo algunos tokens corruptos que se colaron al generar el texto:
+
+---
+
+Listo: `tests-que-fallan.md` en la carpeta actual.
+
+**Contenido del post** (~2.900 palabras, con frontmatter listo para un motor de blog estático):
+
+1. **El problema no es el fallo, es la ambigüedad** — tabla señal/ruido
+2. **Anatomía del test intermitente** — causas (reloj, red, orden, zona horaria) + el caso peor: el test verde que no verifica nada (tautológico, reimplementa la lógica, solo comprueba mocks)
+3. **El efecto erosión** — `P(verde) = 0.95^1000 ≈ 0.006`, el CI rojo como estado normal, alerta por fatiga, y el "re-run" como derrota tácita que congela la cobertura
+4. **Por qué "sin tests" puede ser mejor** — tabla comparativa y la paradoja de que la suite roja crónica es más cara que no tener tests
+5. **Cuatro causas raíz** — entorno, implementación, tests nunca funcionaron, deuda sin dueño
+6. **Checklist de señales de alarma** + la métrica de flake rate
+7. **Ocho reglas prácticas** — determinismo, "el test debe poder fallar" (mutation testing), sin sleeps, suite por niveles (smoke/rápidos/E2E no bloqueante), cuarentena con caducidad, "si no lo arreglas bórralo", presupuesto de tiempo
+8. **El bucle correcto** y una tesis final + 4 preguntas de autodiagnóstico

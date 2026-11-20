@@ -1,0 +1,30 @@
+{
+  "codigo": "MWP",
+  "modelo": "ollama/deepseek-v4.1-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T22:44:00Z",
+  "prompt_enviado": "Dibuja en Mermaid la arquitectura de Wikipedia. En español. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 20110,
+    "output": 4562,
+    "reasoning": 0,
+    "cache_read": 88832,
+    "cache_write": 0,
+    "total": 113504
+  },
+  "peticiones": 10,
+  "error": null,
+  "herramientas": {
+    "bash": 6,
+    "write": 2,
+    "read": 1,
+    "edit": 1
+  },
+  "sesion": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+  "ficheros": [
+    "README.md",
+    "arquitectura-wikipedia.mmd",
+    "arquitectura-wikipedia.png",
+    "arquitectura-wikipedia.svg"
+  ]
+}

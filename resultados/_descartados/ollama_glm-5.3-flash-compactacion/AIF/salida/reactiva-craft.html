@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Reactiva Craft</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='86'%3E⚡%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#0b1222;--panel:#0f1729;--panel2:#141d33;--line:#263454;--chip:#223050;--chiph:#2c3d63;--ink:#eaf0ff;--dim:#9fb0d1}
+*{box-sizing:border-box;margin:0;padding:0}
+button{font:inherit;color:inherit}
+html,body{height:100%}
+body{display:grid;grid-template-columns:1fr 300px;grid-template-rows:58px 1fr;grid-template-areas:"hd hd" "main side";height:100vh;height:100dvh;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation;overscroll-behavior:none}
+header{grid-area:hd;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;background:var(--panel);border-bottom:1px solid var(--line);z-index:20}
+.brand h1{font-size:22px;letter-spacing:.5px;background:linear-gradient(90deg,#ff6a3d,#8b5cf6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.brand .sub{font-size:11px;color:var(--dim);margin-top:2px}
+.tools{display:flex;gap:6px}
+.tool{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font-size:15px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.tool:hover{background:var(--chip)}
+.tool.on{border-color:#ffd166}
+#bag{display:none}
+#play{grid-area:main;position:relative;overflow:hidden;background:var(--bg);background-image:radial-gradient(#1d2742 1.5px,transparent 1.5px);background-size:26px 26px;touch-action:none;z-index:0}
+#hint{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:40;color:var(--dim);font-size:13px;background:rgba(15,23,41,.75);border:1px solid var(--line);border-radius:999px;padding:6px 14px;pointer-events:none;transition:opacity .4s}
+#hint.off{opacity:0}
+#banner{position:absolute;top:14px;left:50%;transform:translate(-50%,0);z-index:90;display:none;text-align:center;padding:12px 22px;background:var(--panel2);border:1px solid #ffd166;border-radius:14px;pointer-events:none}
+#banner.show{display:block;animation:banner-in .5s}
+#banner .b-t{font-size:17px;font-weight:700}
+#banner .b-s{font-size:12px;color:var(--dim);margin-top:4px}
+@keyframes banner-in{from{transform:translate(-50%,-8px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+#toasts{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.toast{opacity:0;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;white-space:nowrap}
+.toast.in{animation:toast-in .3s forwards}
+.toast.out{animation:none;opacity:0;transform:translateY(8px)}
+@keyframes toast-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+#confetti{position:absolute;inset:0;z-index:80;pointer-events:none;overflow:hidden}
+.cf{position:absolute;top:-14px;border-radius:2px;animation-name:cf-fall;animation-timing-function:linear;animation-fill-mode:forwards}
+@keyframes cf-fall{from{transform:translateY(0) rotate(0deg);opacity:1}to{transform:translateY(110vh) rotate(660deg);opacity:1}}
+.pchip{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;background:var(--chip);border:1px solid #3a4f7d;color:var(--ink);font-size:13px;cursor:grab;max-width:250px;white-space:nowrap;user-select:none;-webkit-user-select:none;touch-action:none}
+.pchip:hover{background:var(--chiph)}
+.pchip .e{font-size:16px;pointer-events:none}
+.pchip .n{overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+.pchip.drag{transform:translate(-50%,-50%) scale(1.08);cursor:grabbing;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.pchip.bye{transform:translate(-50%,-50%) scale(.85);opacity:.35}
+.pchip.pop{animation:pop-in .34s}
+@keyframes pop-in{from{transform:translate(-50%,-50%) scale(.4);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
+#side{grid-area:side;display:flex;flex-direction:column;min-height:0;background:var(--panel);border-left:1px solid var(--line)}
+.s-head{display:flex;gap:8px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}
+#goal{flex:1;display:flex;align-items:center;gap:8px;min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;text-align:left}
+#goal:hover{background:var(--panel)}
+#goal.done{border-color:#ffd166}
+#ge{font-size:16px}
+#gn{font-weight:600;font-size:13px;white-space:nowrap}
+#gs{font-size:11px;color:var(--dim);margin-left:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#count{font-size:11px;color:var(--dim);white-space:nowrap}
+.s-search{padding:10px;border-bottom:1px solid var(--line)}
+#search{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font:inherit;outline:none;user-select:text;-webkit-user-select:text}
+#search:focus{border-color:#8b5cf6}
+#grid{flex:1;min-height:0;overflow:auto;padding:10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;align-content:start}
+.gchip{display:flex;align-items:center;gap:6px;min-width:0;padding:7px 9px;border-radius:9px;background:var(--chip);border:1px solid transparent;color:var(--ink);font-size:12px;cursor:pointer;text-align:left}
+.gchip:hover{background:var(--chiph)}
+.gchip .e{font-size:14px;flex-shrink:0}
+.gchip .n{overflow:hidden;text-overflow:ellipsis}
+.gchip.new{border-color:#ffd166;animation:pop-in .34s}
+.modal{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(4,8,18,.6)}
+.modal.open{display:flex}
+.mbox{width:100%;max-width:360px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:18px}
+.mbox h2{font-size:16px;margin-bottom:10px}
+.mbox ul{margin:0 0 14px;padding-left:18px;color:var(--dim);font-size:13px;line-height:1.6}
+.mbox p{color:var(--dim);font-size:13px;margin-bottom:14px}
+.mrow{display:flex;gap:8px;justify-content:flex-end}
+.btn{padding:9px 14px;border-radius:9px;border:1px solid var(--line);background:var(--chip);color:var(--ink);cursor:pointer}
+.btn:hover{background:var(--chiph)}
+.btn.danger{background:#7f1d1d;border-color:#b91c1c}
+.btn.danger:hover{background:#991b1b}
+@media (max-width:820px){
+body{grid-template-columns:1fr;grid-template-rows:52px 1fr;grid-template-areas:"hd" "main"}
+.brand .sub,#count{display:none}
+.tool{width:30px;height:30px}
+#bag{display:inline-flex}
+#side{position:fixed;left:0;right:0;bottom:0;top:auto;height:62vh;height:62dvh;z-index:70;transform:translateY(101%);transition:transform .3s;border-radius:16px 16px 0 0;border-left:none;border-top:1px solid var(--line)}
+#side.open{transform:translateY(0)}
+#hint{top:12px}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="brand"><h1>Reactiva Craft</h1><p class="sub">La alquimia del podcast</p></div>
+<div class="tools">
+<button id="bag" class="tool" type="button" aria-label="Inventario">🎒</button>
+<button id="sound" class="tool" type="button" aria-label="Sonido">🔊</button>
+<button id="undo" class="tool" type="button" aria-label="Deshacer">↩️</button>
+<button id="clear" class="tool" type="button" aria-label="Limpiar tablero">🧹</button>
+<button id="reset" class="tool" type="button" aria-label="Reiniciar">🔄</button>
+<button id="help" class="tool" type="button" aria-label="Ayuda">❓</button>
+</div>
+</header>
+<main id="play">
+<div id="hint">Arrastra dos ingredientes y crúzalos ⛓️</div>
+<div id="banner"><div class="b-t">🎙️ ¡Podcast conseguido!</div><div class="b-s">¡Enhorabuena, crafter!</div></div>
+<div id="toasts" aria-live="polite"></div>
+<div id="confetti"></div>
+</main>
+<aside id="side">
+<div class="s-head">
+<button id="goal" type="button"><span id="ge">🔒</span><span id="gn">???</span><span id="gs">Objetivo secreto</span></button>
+<span id="count"></span>
+</div>
+<div class="s-search"><input id="search" type="search" placeholder="Buscar descubrimiento..." autocomplete="off"></div>
+<div id="grid"></div>
+</aside>
+<div id="modHelp" class="modal">
+<div class="mbox">
+<h2>¿Cómo se juega?</h2>
+<ul>
+<li>Arrastra una ficha sobre otra para descubrir algo nuevo.</li>
+<li>Café, HTML, JavaScript y Humor son tus ingredientes base.</li>
+<li>Toca una ficha para duplicarla y arrástrala fuera del tablero para tirarla.</li>
+<li>Hay 255 descubrimientos y uno es el objetivo secreto: consíguelo.</li>
+</ul>
+<button id="helpClose" class="btn" type="button">Entendido</button>
+</div>
+</div>
+<div id="modReset" class="modal">
+<div class="mbox">
+<h2>¿Reiniciar partida?</h2>
+<p>Se borrarán todos tus descubrimientos.</p>
+<div class="mrow">
+<button id="resetNo" class="btn" type="button">Cancelar</button>
+<button id="resetYes" class="btn danger" type="button">Reiniciar</button>
+</div>
+</div>
+</div>
+<script>
+const RECIPES = [["Café","Café","Cafeína","⚡"],["Cafeína","Café","Insomnio","🌙"],["Cafeína","Cafeína","Palpitaciones","💓"],["Insomnio","Café","Programar a las 3 AM","🌌"],["JavaScript","Insomnio","Coding nocturno","🦉"],["Café","Programar a las 3 AM","Energía infinita","🔋"],["CSS","Cafeína","Vaporwave","🌴"],["Vaporwave","JavaScript","Synthwave","🕶️"],["CSS","Coding nocturno","Tema oscuro","🖤"],["Café","Tema oscuro","Ojos secos","👁️"],["Café","Ojos secos","Gafas de programador","👓"],["Gafas de programador","JavaScript","Senior","🧙"],["Café","Senior","Junior","🐣"],["Depresión","Junior","Junior++","📈"],["Depresión","Senior","Entrevista técnica","🎤"],["Café","Entrevista técnica","Oferta de trabajo","💼"],["Depresión","Oferta de trabajo","Mala noticia","😩"],["Café","Depresión","Burnout","🔥"],["Burnout","Café","Vacaciones","🏝️"],["CSS","JavaScript","Depresión","🚬"],["CSS","Café","Diseño bonito","🎨"],["HTML","JavaScript","DOM","🌳"],["JavaScript","DOM","React","⚛️"],["HTML","React","Astro","🚀"],["Astro","Plantilla","Astro Bot","🤖"],["HTML","Café","Plantilla","📄"],["Plantilla","React","Vue","🥬"],["Café","Vue","Nuxt","🗼"],["JavaScript","Vue","Svelte","🧡"],["Plantilla","Svelte","SvelteKit","🧗"],["Plantilla","CSS","Tailwind","🌬️"],["Tailwind","Plantilla","Config de Tailwind","⚙️"],["Tailwind","Café","Clases de 12 caracteres","📏"],["Tailwind","Humor","class=\"flex justify-center\"","🤪"],["Plantilla","Plantilla","WordPress","🐘"],["WordPress","Humor","Plugin del plugin","🔩"],["WordPress","Server","Actualización crítica","🚨"],["Plantilla","JavaScript","Componente","🧩"],["Componente","Componente","Props","🎁"],["React","Componente","Estado","🧠"],["Componente","Estado","Hook","🪝"],["Hook","Café","useEffect","🔁"],["useEffect","Plantilla","Render infinito","♾️"],["Render infinito","Palpitaciones","Memory leak","🫠"],["HTML","Componente","Web component","🫧"],["Web component","Humor","Shadow DOM","👻"],["Estado","Humor","Estado global","🌍"],["Estado global","Plantilla","Redux","🔄"],["Props","Humor","Props drilling","🕳️"],["HTML","HTML","CSS","🪄"],["HTML","CSS","Sitio web","🌐"],["Sitio web","Café","Web 2.0","💬"],["Web 2.0","Café","Web 3.0","⛓️"],["Web 3.0","Chicharrón","NFT de un chicharrón","🐽"],["Web 2.0","Humor","RSS","🧷"],["CSS","CSS","Bootstrap","🟪"],["Bootstrap","Humor","Botón azul gigante","🔵"],["Humor","CSS","Comic Sans","🖌️"],["Humor","Comic Sans","Papyrus","🪶"],["CSS","Papyrus","Fuentes web","🔤"],["HTML","Plantilla","Formulario","📋"],["Plantilla","Formulario","Validación","✅"],["Café","Formulario","reCAPTCHA","🚦"],["reCAPTCHA","Humor","Soy un humano","🙋"],["Humor","Validación","No es un bug, es una feature","🤡"],["CSS","Formulario","Centrar un div","🎯"],["Café","Centrar un div","Flexbox","🧘"],["CSS","Flexbox","Grid","🏗️"],["Grid","Humor","Layout","🗺️"],["Humor","JavaScript","Error","❌"],["Error","Depresión","Exception","💥"],["Café","JavaScript","Callback","📞"],["Callback","Café","Node.js","🟢"],["Callback","Callback","Callback Hell","🌋"],["Callback Hell","Humor","Pirámide de la muerte","🔺"],["Callback Hell","Café","Promise","🤝"],["Promise","Humor","Promise.all","🎼"],["Promise","Café","Async/Await","⏳"],["Async/Await","Humor","try/catch","🧯"],["try/catch","Café","Silenciar errores","🤐"],["JavaScript","Depresión","TypeScript","🔷"],["Humor","TypeScript","any","🤷"],["any","JavaScript","Bug en producción","🐛"],["JavaScript","JavaScript","console.log","🖨️"],["console.log","Café","En mi máquina funciona","🖥️"],["Plantilla","console.log","Debugging","🔍"],["Debugging","Humor","Rubber duck","🦆"],["Rubber duck","Café","Solved","🥂"],["DOM","Café","getElementById","🆔"],["getElementById","Humor","undefined","🫥"],["undefined","Café","null","⚫"],["null","Humor","Billion dollar mistake","💸"],["JavaScript","Node.js","NPM","📦"],["NPM","Humor","Dependencias de terceros","🪤"],["Node.js","Humor","Event loop","🎡"],["Event loop","Café","Microtasks","🐜"],["Node.js","Café","Backend","🗄️"],["Node.js","Server","Full-stack","🥞"],["Backend","Humor","CRUD","📝"],["CRUD","Café","API","🔌"],["API","Café","API Key","🔑"],["API Key","Humor","API key en el frontend","🙈"],["Café","Plantilla","Server","🛠️"],["Plantilla","Server","package.json","🧾"],["package.json","Café","npm ci","🔒"],["npm ci","Humor","node_modules","🗃️"],["node_modules","Café","Más pesado que node_modules","🪨"],["Café","Server","Proxy","🛡️"],["Proxy","Humor","CORS","🚫"],["CORS","Café","Cabecera","🧢"],["Senior","JavaScript","Git","🌱"],["Git","Café","GitHub","🐙"],["Git","Plantilla","Pull Request","⤴️"],["Pull Request","Humor","LGTM","👌"],["Git","Humor","Merge conflict","⚔️"],["Merge conflict","Humor","Commits tipo \"fix\"","🩹"],["Git","Junior","git push --force","😤"],["git push --force","Café","Suerte","🍀"],["Git","Server","CI/CD","🚦"],["Café","CI/CD","CD roto","💣"],["Café","CD roto","Pager","📟"],["Café","Pager","Cena en familia","🍽️"],["CI/CD","Humor","Test rojo","🟥"],["Test rojo","Café","Rebase","🔀"],["Server","Humor","Docker","🐳"],["Server","Docker","Kubernetes","☸️"],["Kubernetes","Café","YAML","🖇️"],["YAML","Humor","YAML con tabs","😡"],["Depresión","Server","Miedo","😰"],["Server","Miedo","Despliegue a producción","🚀"],["Despliegue a producción","Café","Rollback","⏪"],["Miedo","Café","Miedo al despliegue","😨"],["Miedo","Humor","Deadline","⏰"],["Deadline","Café","Milagro","✨"],["Milagro","Humor","Funciona en producción","🙏"],["Server","Página web","404","🚧"],["404","Café","Página en mantenimiento","🧰"],["404","Humor","Página no encontrada","🕵️"],["Sitio web","HTML","Página web","📄"],["Página web","Depresión","Bug","🐞"],["Página web","Café","Cookie banner","🍪"],["Cookie banner","Humor","Aceptar todo","😬"],["Cookie banner","Café","GDPR","⚖️"],["Plantilla","Página web","Blog","✍️"],["Blog","Plantilla","Blog post","📰"],["Blog","Café","Medium","📖"],["Blog post","Humor","Comentarios","💬"],["JavaScript","Página web","SPA","🌀"],["CSS","Página web","Carrusel","🎠"],["HTML","Carrusel","Pop-up","🪟"],["Carrusel","Café","Autoplay de vídeo","🎬"],["Humor","Pop-up","Ad blockers","🛡️"],["Café","Pop-up","Newsletter","📬"],["Newsletter","Humor","Spam","💌"],["Spam","Café","Mensajes del grupo de la familia","👪"],["Humor","Página web","Foro","📢"],["Foro","Café","Flame war","🔥"],["Foro","Comunidad","r/webdev","🧵"],["Humor","HTML","Marquesina","🎪"],["Humor","Humor","Meme doble","🤣"],["Humor","Plantilla","Meme","🐸"],["Meme","Café","GIF","🎞️"],["Meme","JavaScript","Programador troll","👺"],["Café","Humor","Stack Overflow","📚"],["Stack Overflow","JavaScript","Copypaste","📎"],["Copypaste","Café","Preguntas cerradas","🔐"],["Humor","Comunidad","Google","🌏"],["Café","Google","¿Buscaste en Google?","😏"],["Google","Humor","Resultados en inglés","🇬🇧"],["Energía infinita","Plantilla","IA","🦾"],["IA","Café","ChatGPT","🤖"],["IA","Humor","Alucinación","🌈"],["Alucinación","Café","Referencias inventadas","📚"],["ChatGPT","Café","Prompt","🪧"],["Prompt","Humor","Prompt engineering","🎩"],["IA","Plantilla","Machine learning","🧮"],["Machine learning","Café","Red neuronal","🪸"],["Machine learning","JavaScript","TensorFlow.js","📊"],["Machine learning","Humor","Overfitting","🍩"],["Overfitting","Café","Underfitting","😪"],["IA","JavaScript","Copilot","🧑‍✈️"],["Copilot","Humor","Código inventado","🤥"],["IA","Server","GPU","🧊"],["GPU","Humor","Criptominería","⛏️"],["Criptominería","Café","Factura de la luz","💡"],["ChatGPT","Chicharrón","Chicharrón digital","🐽"],["Cafeína","HTML","Web Reactiva","🎙️"],["Web Reactiva","Café","Javier Ferrer","🧔"],["Café","Javier Ferrer","Programar es más fácil de lo que crees","🌟"],["Javier Ferrer","Humor","Chiste malo","🤦"],["Javier Ferrer","Chicharrón","El chicharrón es mío","🥩"],["Web Reactiva","TypeScript","Midudev","👨‍💻"],["Midudev","TypeScript","Aprende TypeScript","📘"],["Midudev","JavaScript","Demo en directo","💻"],["Midudev","Git","Commit con más de 1000 cambios","💪"],["Midudev","Café","Mate","🧉"],["Midudev","Error","Pobrecito","😭"],["Midudev","Midudev","¡Supremo!","👑"],["¡Supremo!","Pobrecito","Chicharrón caído","🍖"],["Chicharrón","Pobrecito","El Culebrón","🐍"],["El Culebrón","Café","Temporada 2","📺"],["El Culebrón","Humor","Cliffhanger","🫨"],["Pobrecito","Pobrecito","¡Solamente una víctima!","💔"],["Javier Ferrer","Midudev","Directo","🔴"],["Directo","Café","Directo de madrugada","🌃"],["Directo","Humor","Cortes de Twitch","✂️"],["Directo","Plantilla","Programa","📼"],["Programa","Comunidad","Sorteo","🎟️"],["Sorteo","Chicharrón","Bote de chicharrones","🫙"],["Web Reactiva","HTML","Episodio","🎧"],["Episodio","Café","Chicharrón","🥓"],["Episodio","Episodio","Maratón","🏃"],["Episodio","Maratón","Clásicos","🏺"],["Episodio","Humor","Cortes de X","🐦"],["Chicharrón","Chicharrón","Comunidad","👥"],["Chicharrón","Comunidad","Comunidad chicharronera","🫂"],["Chicharrón","Directo","La Maldición","📠"],["La Maldición","Café","Exorcismo","✝️"],["La Maldición","Miedo","La Maldición II","📽️"],["Miedo","Chicharrón","Miedo escénico","🎭"],["Miedo","CSS","Sombra","🌫️"],["Web Reactiva","Chicharrón","¡Buenas, buenas!","👋"],["Chicharrón","Plantilla","Chicharrón de la semana","🏅"],["Web Reactiva","CSS","Píldora","💊"],["Píldora","Humor","Píldora viral","🧪"],["Web Reactiva","Plantilla","webreactiva.com","🛰️"],["webreactiva.com","Café","Dominio","🗝️"],["Comunidad","Server","Twitch","🟣"],["Directo","Twitch","Twitch Directo","🎥"],["Twitch Directo","Comunidad","Raid","🐺"],["Web Reactiva","Humor","Chat","🗨️"],["Chat","Café","Discord","🎮"],["Discord","Humor","Mod","🔨"],["Web Reactiva","JavaScript","Bot de Discord","🤖"],["Web Reactiva","GitHub","Código del directo","📜"],["Café","Comunidad","Los apuntes de Majo","📓"],["Midudev","Comunidad","Hype","🤩"],["Comunidad","Comunidad","Ruido de fondo","🔊"],["Ruido de fondo","Humor","Sígueme sígueme","📣"],["Chicharrón","Midudev","Chicharronizador","🎛️"],["Senior","Humor","War stories","🗡️"],["Junior","Café","Primera PR","🫡"],["Tema oscuro","Plantilla","Modo claro","☀️"],["Diseño bonito","HTML","Landing page","🛬"],["Landing page","Humor","Hero section","🦸"],["Diseño bonito","Café","Café de especialidad","☕"],["Diseño bonito","Comunidad","Dribbble","🏀"],["Diseño bonito","Humor","Skeuomorphism","🧼"],["Skeuomorphism","Café","Flat design","🧈"],["Diseño bonito","JavaScript","Animación","🎈"],["Animación","Café","Easing","🎢"]];
+const LOOK=new Map();
+for(const r of RECIPES){LOOK.set([r[0],r[1]].sort().join("~"),{n:r[2],e:r[3]});}
+const GOAL="Web Reactiva";
+const GOALE="🎙️";
+const BASES=["Café","HTML","JavaScript","Humor"];
+const BASEE={"Café":"☕",HTML:"🧱",JavaScript:"📜",Humor:"🤣"};
+const PRE=["Nano","Micro","Turbo","Neo","Meta","Hiper","Ultra","Retro","Cyber","Proto"];
+const NOUN=["reactor","compilador","framework","píldora","cajón de sastre","gizmo","aparato","módulo","servicio","chisme"];
+const ADJ=["reactivo","cuántico","oxidado","glitchado","enfadado","curioso","misterioso","cachondo","zumbado","veterano"];
+const EMOBANK=["🌀","⚗️","🧬","🛰️","🧿","🔌","🎲","🧲","📻","📡","🔭","🧨","🪄","🦾","🛠️"];
+const COLORS=["#ff6a3d","#8b5cf6","#ffd166","#2dd4bf","#f472b6","#38bdf8"];
+const EK="reactiva-craft-v1";
+const EL={};
+for(const id of ["play","side","grid","count","bag","sound","undo","clear","reset","help","goal","banner","toasts","search","confetti","hint","modHelp","modReset","helpClose","resetYes","resetNo","ge","gn","gs"]){EL[id]=document.getElementById(id);}
+const ELC=new Map();
+let idSeq=1;
+const state={disc:new Map(),order:[],items:[],muted:false,hintOn:true,goalOn:false,undoStack:[],z:10};
+try{
+const sv=JSON.parse(localStorage.getItem(EK)||"null");
+if(sv&&Array.isArray(sv.d)){
+for(const x of sv.d){state.disc.set(x[0],x[1]);}
+state.order=Array.isArray(sv.o)?sv.o:[];
+state.items=Array.isArray(sv.i)?sv.i:[];
+state.muted=!!sv.m;
+state.hintOn=sv.h===false?false:true;
+state.goalOn=!!sv.g;
+}
+}catch(e){}
+function initIdSeq(){
+for(const it of state.items){
+const v=parseInt(String(it.id).slice(1),10);
+if(v>=idSeq)idSeq=v+1;
+}
+}
+function save(){
+try{localStorage.setItem(EK,JSON.stringify({d:[...state.disc],o:state.order,i:state.items,m:state.muted,h:state.hintOn,g:state.goalOn}));}catch(e){}
+}
+function emojiOf(n){return state.disc.get(n)||(n===GOAL?GOALE:undefined)||BASEE[n]||"✨";}
+function mountChip(it,cls){
+const old=ELC.get(it.id);
+if(old)old.remove();
+const b=document.createElement("button");
+b.type="button";
+b.className="pchip"+(cls?" "+cls:"");
+b.dataset.id=it.id;
+const se=document.createElement("span");
+se.className="e";
+se.textContent=emojiOf(it.n);
+const sn=document.createElement("span");
+sn.className="n";
+sn.textContent=it.n;
+b.appendChild(se);
+b.appendChild(sn);
+b.style.left=it.x+"px";
+b.style.top=it.y+"px";
+state.z+=1;
+b.style.zIndex=state.z;
+EL.play.appendChild(b);
+ELC.set(it.id,b);
+setTimeout(function(){b.classList.remove("pop","new");},340);
+}
+function addItem(n,x,y,cls){
+const it={id:"c"+idSeq,n,x:Math.round(x),y:Math.round(y)};
+idSeq+=1;
+state.items.push(it);
+mountChip(it,cls);
+save();
+return it;
+}
+function removeItem(id){
+const i=state.items.findIndex(function(t){return t.id===id;});
+if(i!==-1)state.items.splice(i,1);
+const el=ELC.get(id);
+if(el)el.remove();
+ELC.delete(id);
+save();
+}
+function remountAll(){
+for(const el of ELC.values()){el.remove();}
+ELC.clear();
+for(const it of state.items){mountChip(it,"");}
+}
+function pushUndo(){
+state.undoStack.push(JSON.stringify(state.items));
+if(state.undoStack.length>50)state.undoStack.shift();
+}
+function undo(){
+const s=state.undoStack.pop();
+if(!s){toast("Nada que deshacer");return;}
+try{state.items=JSON.parse(s);}catch(e){return;}
+remountAll();
+save();
+}
+function clampXY(x,y,pad){
+const r=EL.play.getBoundingClientRect();
+const p=Math.min(pad,r.width/2,r.height/2);
+const cx=Math.min(Math.max(x,p),Math.max(r.width-p,p));
+const cy=Math.min(Math.max(y,p),Math.max(r.height-p,p));
+return [cx,cy];
+}
+function w0(s){return s.split(" ")[0];}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function hashStr(s){
+let h=5381;
+for(const ch of s){h=((h*33)^ch.codePointAt(0))>>>0;}
+return h;
+}
+function fallbackPair(a,b){
+const h=hashStr(a+"\u0001"+b);
+const i=Math.floor(h/31);
+const p=h%3;
+let nm;
+if(p===0){nm=cap(ADJ[i%10]+" "+NOUN[Math.floor(i/3)%10]+" de "+w0(a)+" y "+w0(b));}
+else if(p===1){nm=PRE[i%10]+w0(b);}
+else{nm=cap(NOUN[i%10]+" "+ADJ[Math.floor(i/7)%10]+" de "+w0(a));}
+return [nm,EMOBANK[i%15]];
+}
+let AC=null;
+function ctx(){
+if(state.muted)return null;
+if(!AC){
+try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}
+}
+if(AC.state==="suspended"){try{AC.resume();}catch(e){}}
+return AC;
+}
+function tone(f,f2,dur,delay,type,gain){
+const c=ctx();
+if(!c)return;
+try{
+const at=c.currentTime+delay;
+const o=c.createOscillator();
+const g=c.createGain();
+o.type=type;
+o.frequency.setValueAtTime(f,at);
+if(f2){o.frequency.exponentialRampToValueAtTime(Math.max(f2,1),at+dur);}
+g.gain.setValueAtTime(gain,at);
+g.gain.exponentialRampToValueAtTime(0.0001,at+dur);
+o.connect(g);
+g.connect(c.destination);
+o.start(at);
+o.stop(at+dur+0.02);
+}catch(e){}
+}
+function playPlace(){tone(320,300,0.09,0,"triangle",0.07);}
+function playCraft(){tone(440,440,0.12,0,"triangle",0.08);tone(560,560,0.12,0.06,"triangle",0.07);}
+function playNew(){const fs=[660,880,990,1320];for(let i=0;i<fs.length;i++){tone(fs[i],fs[i],0.12,i*0.09,"square",0.05);}}
+function playGoal(){const fs=[523,659,784,1047,1319];for(let i=0;i<fs.length;i++){tone(fs[i],fs[i],0.22,i*0.12,"square",0.06);}}
+function playSweep(){tone(320,80,0.3,0,"sawtooth",0.06);}
+function toast(msg){
+const t=document.createElement("div");
+t.className="toast";
+t.textContent=msg;
+EL.toasts.appendChild(t);
+if(EL.toasts.children.length>2)EL.toasts.removeChild(EL.toasts.firstChild);
+setTimeout(function(){t.classList.add("in");},30);
+setTimeout(function(){t.classList.add("out");},2000);
+setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},2600);
+}
+function renderCount(){
+EL.count.textContent=(state.disc.size+4)+" / "+(RECIPES.length+4);
+}
+function renderGrid(newFlag){
+const q=EL.search.value.trim().toLowerCase();
+const names=BASES.concat(state.order);
+const n0=state.order.length?state.order[0]:null;
+const f=document.createDocumentFragment();
+for(let i=names.length-1;i>=0;i--){
+const n=names[i];
+if(q&&n.toLowerCase().indexOf(q)===-1)continue;
+const b=document.createElement("button");
+b.type="button";
+b.className="gchip";
+const isNewChip=newFlag&&!q&&n===n0;
+if(isNewChip)b.classList.add("new");
+const se=document.createElement("span");
+se.className="e";
+se.textContent=emojiOf(n);
+const sn=document.createElement("span");
+sn.className="n";
+sn.textContent=n;
+b.appendChild(se);
+b.appendChild(sn);
+b.addEventListener("click",function(){closeSheet();randSpawn(n);});
+f.appendChild(b);
+if(isNewChip){setTimeout(function(){b.classList.remove("new");},2600);}
+}
+EL.grid.replaceChildren(f);
+}
+function renderGoal(){
+const on=state.goalOn;
+EL.ge.textContent=on?GOALE:"🔒";
+EL.gn.textContent=on?GOAL:"???";
+EL.gs.textContent=on?"¡Enhorabuena, crafter!":"Objetivo secreto";
+EL.goal.classList.toggle("done",on);
+}
+function closeSheet(){
+EL.side.classList.remove("open");
+EL.bag.classList.remove("on");
+}
+EL.bag.addEventListener("click",function(){EL.side.classList.toggle("open");EL.bag.classList.toggle("on");});
+EL.sound.addEventListener("click",function(){
+state.muted=!state.muted;
+save();
+EL.sound.textContent=state.muted?"🔇":"🔊";
+});
+EL.undo.addEventListener("click",function(){undo();});
+EL.clear.addEventListener("click",function(){
+if(!state.items.length)return;
+pushUndo();
+state.items=[];
+remountAll();
+save();
+playSweep();
+});
+EL.reset.addEventListener("click",function(){EL.modReset.classList.add("open");});
+EL.help.addEventListener("click",function(){EL.modHelp.classList.add("open");});
+EL.helpClose.addEventListener("click",function(){EL.modHelp.classList.remove("open");});
+EL.resetNo.addEventListener("click",function(){EL.modReset.classList.remove("open");});
+EL.resetYes.addEventListener("click",function(){resetAll();});
+EL.modHelp.addEventListener("click",function(e){if(e.target===EL.modHelp)EL.modHelp.classList.remove("open");});
+EL.modReset.addEventListener("click",function(e){if(e.target===EL.modReset)EL.modReset.classList.remove("open");});
+EL.goal.addEventListener("click",function(){
+if(!state.goalOn){toast("🔒 Todavía no lo has descubierto");return;}
+closeSheet();
+randSpawn(GOAL);
+});
+EL.search.addEventListener("input",function(){renderGrid(false);});
+const S={el:null,it:null,sx:0,sy:0,ox:0,oy:0,pl:0,pt:0,pw:0,ph:0,moved:false,kill:false,t0:0};
+function onDown(e){
+if(e.button&&e.button!==0)return;
+const c=e.target&&e.target.closest?e.target.closest(".pchip"):null;
+if(!c)return;
+e.preventDefault();
+const it=state.items.find(function(v){return v.id===c.dataset.id;});
+if(!it)return;
+const cr=c.getBoundingClientRect();
+const pr=EL.play.getBoundingClientRect();
+S.el=c;S.it=it;
+S.sx=e.clientX;S.sy=e.clientY;
+S.ox=e.clientX-cr.left-cr.width/2;
+S.oy=e.clientY-cr.top-cr.height/2;
+S.pl=pr.left;S.pt=pr.top;S.pw=pr.width;S.ph=pr.height;
+S.moved=false;S.kill=false;S.t0=Date.now();
+state.z+=1;
+c.style.zIndex=state.z;
+try{c.setPointerCapture(e.pointerId);}catch(err){}
+}
+function onMove(e){
+if(!S.el)return;
+if(Math.abs(e.clientX-S.sx)>6||Math.abs(e.clientY-S.sy)>6)S.moved=true;
+if(!S.moved)return;
+e.preventDefault();
+const cx=e.clientX-S.ox;
+const cy=e.clientY-S.oy;
+S.kill=cx<S.pl-24||cx>S.pl+S.pw+24||cy<S.pt-24||cy>S.pt+S.ph+24;
+S.el.classList.toggle("bye",S.kill);
+S.el.classList.add("drag");
+const x=cx-S.pl;
+const y=cy-S.pt;
+S.it.x=Math.round(x);
+S.it.y=Math.round(y);
+S.el.style.left=x+"px";
+S.el.style.top=y+"px";
+}
+function onUp(e){
+if(!S.el)return;
+const el=S.el,it=S.it,moved=S.moved,kill=S.kill,t0=S.t0;
+el.classList.remove("drag","bye");
+try{el.releasePointerCapture(e.pointerId);}catch(err){}
+S.el=null;
+S.it=null;
+if(!moved){
+if(Date.now()-t0<400){
+pushUndo();
+const p=clampXY(it.x+22,it.y+26,26);
+addItem(it.n,p[0],p[1],"pop");
+playPlace();
+}
+return;
+}
+if(kill){
+pushUndo();
+removeItem(it.id);
+playSweep();
+return;
+}
+const p=clampXY(it.x,it.y,52);
+it.x=Math.round(p[0]);
+it.y=Math.round(p[1]);
+el.style.left=it.x+"px";
+el.style.top=it.y+"px";
+tryCraftAt(it,el);
+save();
+}
+EL.play.addEventListener("pointerdown",onDown);
+window.addEventListener("pointermove",onMove,{passive:false});
+window.addEventListener("pointerup",onUp);
+window.addEventListener("pointercancel",onUp);
+function tryCraftAt(src,sel){
+if(!sel||!sel.isConnected)return;
+const sr=sel.getBoundingClientRect();
+const sa=sr.width*sr.height;
+let best=null,ba=-1;
+for(const it of state.items){
+if(it.id===src.id)continue;
+const o=ELC.get(it.id);
+if(!o||!o.isConnected)continue;
+const br=o.getBoundingClientRect();
+const ix=Math.max(0,Math.min(sr.right,br.right)-Math.max(sr.left,br.left));
+const iy=Math.max(0,Math.min(sr.bottom,br.bottom)-Math.max(sr.top,br.top));
+const ia=ix*iy;
+if(ia<=0)continue;
+const oa=br.width*br.height;
+if(ia<0.45*Math.min(sa,oa))continue;
+if(ia>ba){ba=ia;best=it;}
+}
+if(!best)return;
+doCraft(src,best,(src.x+best.x)/2,(src.y+best.y)/2);
+}
+function doCraft(a,b,mx,my){
+pushUndo();
+const k=[a.n,b.n].sort().join("~");
+const hit=LOOK.get(k);
+let res,em;
+if(hit){
+res=hit.n;
+em=hit.e;
+}else{
+const fb=fallbackPair(a.n,b.n);
+res=fb[0];
+em=fb[1];
+}
+removeItem(a.id);
+removeItem(b.id);
+const p=clampXY(mx,my,52);
+addItem(res,p[0],p[1],"pop");
+playCraft();
+if(state.hintOn){
+state.hintOn=false;
+EL.hint.classList.add("off");
+save();
+}
+const isNew=res!==GOAL&&!state.disc.has(res);
+if(isNew){
+state.disc.set(res,em);
+state.order.unshift(res);
+renderCount();
+renderGrid(true);
+toast("✨ "+res);
+setTimeout(function(){playNew();},150);
+}
+if(res===GOAL&&!state.goalOn){
+win();
+}
+}
+function win(){
+state.goalOn=true;
+state.hintOn=false;
+EL.hint.classList.add("off");
+save();
+renderGoal();
+EL.banner.classList.add("show");
+playGoal();
+confetti();
+toast("🎙️ ¡Podcast conseguido!");
+}
+function confetti(){
+const f=document.createDocumentFragment();
+for(let i=0;i<120;i++){
+const s=document.createElement("span");
+s.className="cf";
+s.style.left=Math.random()*100+"%";
+const z=5+Math.random()*6;
+s.style.width=z+"px";
+s.style.height=z+"px";
+s.style.background=COLORS[i%6];
+s.style.animationDuration=(2.2+Math.random()*2.4)+"s";
+s.style.animationDelay=Math.random()*0.6+"s";
+f.appendChild(s);
+}
+EL.confetti.replaceChildren(f);
+setTimeout(function(){EL.confetti.replaceChildren();},5800);
+}
+function randSpawn(n){
+pushUndo();
+const r=EL.play.getBoundingClientRect();
+const x=30+Math.random()*(r.width-90);
+const y=30+Math.random()*(r.height-90);
+addItem(n,x,y,"pop");
+playPlace();
+}
+function seedBases(){
+const r=EL.play.getBoundingClientRect();
+const spots=[[0.30,0.35],[0.62,0.28],[0.30,0.64],[0.62,0.66]];
+for(let i=0;i<BASES.length;i++){
+const it={id:"c"+idSeq,n:BASES[i],x:Math.round(spots[i][0]*r.width),y:Math.round(spots[i][1]*r.height)};
+idSeq+=1;
+state.items.push(it);
+mountChip(it,"pop");
+}
+save();
+}
+function resetAll(){
+state.items=[];
+state.disc=new Map();
+state.order=[];
+state.undoStack=[];
+state.goalOn=false;
+state.hintOn=true;
+state.z=10;
+idSeq=1;
+remountAll();
+seedBases();
+EL.banner.classList.remove("show");
+EL.hint.classList.remove("off");
+EL.modReset.classList.remove("open");
+renderCount();
+renderGrid(false);
+renderGoal();
+save();
+closeSheet();
+}
+function boot(){
+initIdSeq();
+if(!state.items.length&&!state.disc.size){
+seedBases();
+}else{
+for(const it of state.items){
+const p=clampXY(it.x,it.y,26);
+it.x=Math.round(p[0]);
+it.y=Math.round(p[1]);
+mountChip(it,"");
+}
+}
+renderCount();
+renderGrid(false);
+renderGoal();
+EL.sound.textContent=state.muted?"🔇":"🔊";
+if(state.goalOn)EL.banner.classList.add("show");
+if(!state.hintOn)EL.hint.classList.add("off");
+}
+let rz=0;
+window.addEventListener("resize",function(){
+clearTimeout(rz);
+rz=setTimeout(function(){
+for(const it of state.items){
+const p=clampXY(it.x,it.y,26);
+it.x=Math.round(p[0]);
+it.y=Math.round(p[1]);
+const el=ELC.get(it.id);
+if(el){
+el.style.left=it.x+"px";
+el.style.top=it.y+"px";
+}
+}
+save();
+},140);
+});
+window.addEventListener("pointerdown",function(){ctx();},true);
+boot();
+</script>
+</body>
+</html>

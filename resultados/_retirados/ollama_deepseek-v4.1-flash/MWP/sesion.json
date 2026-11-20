@@ -1,0 +1,1019 @@
+{
+  "info": {
+    "id": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+    "slug": "lucky-knight",
+    "projectID": "global",
+    "directory": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+    "path": "tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+    "title": "Diagrama Mermaid de arquitectura de Wikipedia",
+    "agent": "build",
+    "model": {
+      "id": "deepseek-v4.1-flash",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 20110,
+      "output": 4562,
+      "reasoning": 0,
+      "cache": {
+        "read": 88832,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795128241889,
+      "updated": 1795128294958
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795128242618
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "deepseek-v4.1-flash"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Dibuja en Mermaid la arquitectura de Wikipedia. En español. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f5fb31bc001am4altCAe1gwyY",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 7813,
+          "input": 7738,
+          "output": 75,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128243397,
+          "completed": 1795128245401
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fb34c50015dLYBETLEoOXD7",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fb3bb9001Gd5RJ6dsOlT5MC",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb34c50015dLYBETLEoOXD7"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user wants me to draw Wikipedia's architecture in Mermaid, in Spanish, and save what I generate in the current folder. Let me look at the current folder first.",
+          "time": {
+            "start": 1795128245185,
+            "end": 1795128245200
+          },
+          "id": "prt_1f5fb3bc10011H3Yn6xZQd73fa",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb34c50015dLYBETLEoOXD7"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_0mqce11m",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "ls -la"
+            },
+            "output": "total 8\ndrwxr-xr-x 2 root root 4096 Nov 19 22:43 .\ndrwxr-xr-x 4 root root 4096 Nov 19 22:43 ..\n",
+            "metadata": {
+              "output": "total 8\ndrwxr-xr-x 2 root root 4096 Nov 19 22:43 .\ndrwxr-xr-x 4 root root 4096 Nov 19 22:43 ..\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "ls -la",
+            "time": {
+              "start": 1795128245217,
+              "end": 1795128245386
+            }
+          },
+          "id": "prt_1f5fb3bd5001pKq17V62k4VLQ3",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb34c50015dLYBETLEoOXD7"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 7813,
+            "input": 7738,
+            "output": 75,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fb3c900017eLSB994fvGWW6",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb34c50015dLYBETLEoOXD7"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8151,
+          "input": 6078,
+          "output": 281,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 1792
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128245410,
+          "completed": 1795128246842
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fb3ca20012IRML2oo5xRz5r",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fb3e5e001MKg9foNuQelrtD",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb3ca20012IRML2oo5xRz5r"
+        },
+        {
+          "type": "reasoning",
+          "text": "Empty folder. The user wants a Mermaid diagram of Wikipedia's architecture in Spanish. I'll create a .mmd file (or .md with mermaid block). Let me check if mermaid CLI is available to validate.\n\nLet me produce a comprehensive architecture diagram. Wikipedia's architecture (MediaWiki platform): clients (web browser, mobile apps, API clients), CDN/caching layer (Varnish, Wikimedia CDN), load balancers, Apache/nginx app servers running MediaWiki (PHP), memcached, MariaDB databases, Elasticsearch (CirrusSearch), Parsoid, RESTBase, object storage (Swift), image scalers, job queue (Kafka), etc.\n\nI'll write in Spanish. Maybe create both diagram and a small README? User said \"Guarda lo que generes en la carpeta actual.\" So save generated file(s).\n\nLet me create `arquitectura-wikipedia.mmd` and maybe `arquitectura-wikipedia.md` containing explanation and diagram. Keep it focused.\n\nLet me check if mmdc exists for validation.",
+          "time": {
+            "start": 1795128245856,
+            "end": 1795128246744
+          },
+          "id": "prt_1f5fb3e60001JIMTJoBSgKQDp6",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb3ca20012IRML2oo5xRz5r"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_je9l58r2",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "which mmdc npx node 2>/dev/null; echo \"---\"; ls /usr/bin | grep -i mermaid"
+            },
+            "output": "/opt/node22/bin/npx\n/opt/node22/bin/node\n---\n",
+            "metadata": {
+              "output": "/opt/node22/bin/npx\n/opt/node22/bin/node\n---\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "which mmdc npx node 2>/dev/null; echo \"---\"; ls /usr/bin | grep -i mermaid",
+            "time": {
+              "start": 1795128246761,
+              "end": 1795128246801
+            }
+          },
+          "id": "prt_1f5fb41dc001bJXSkK3coQvZVr",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb3ca20012IRML2oo5xRz5r"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8151,
+            "input": 6078,
+            "output": 281,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 1792
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fb422d001iCcQAizG1DNWZh",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb3ca20012IRML2oo5xRz5r"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 11255,
+          "input": 113,
+          "output": 3078,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8064
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128246845,
+          "completed": 1795128256229
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fb423d001FdlmXALVa4hN5A",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fb4331001Fyv5pT6UCmKHWM",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb423d001FdlmXALVa4hN5A"
+        },
+        {
+          "type": "reasoning",
+          "text": "No mmdc. I could try npx @mermaid-js/mermaid-cli but that might require downloading and a browser. Maybe not necessary. I can validate syntax mentally. But better to try? It may take long. Let's first write the file, then optionally attempt validation with a timeout.\n\nLet me design the Mermaid diagram. Use flowchart TB with subgraphs.\n\nStructure:\n\n```\nflowchart TB\n    subgraph Clientes[\"Clientes\"]\n        C1[Navegador web]\n        C2[Apps móviles]\n        C3[Clientes API / bots]\n    end\n\n    subgraph Borde[\"Borde / CDN\"]\n        DNS[DNS Wikimedia]\n        CDN[CDN / Caché HTTP<br/>Varnish]\n        LB[Balanceadores de carga<br/>LVS]\n    end\n\n    subgraph Aplicacion[\"Capa de aplicación\"]\n        MH[MediaWiki<br/>PHP-FPM + Apache]\n        API[API REST / Action API]\n        PAR[Parsoid<br/>Wikitexto ↔ HTML]\n        RB[RESTBase / API de servicios]\n        ES[Elasticsearch<br/>CirrusSearch]\n    end\n    ...\n```\n\nNeed to be careful with `<br/>` in labels inside quotes is fine. Spanish accents fine.\n\nLayers:\n- Clientes\n- CDN (Varnish front, cache)\n- Load balancing (LVS)\n- Application servers: MediaWiki PHP, Apache\n- Session/cache: Memcached, Redis? Wikimedia uses Memcached (and formerly Redis for job queue, Kafka now).\n- Databases: MariaDB (core, sharded), multiple clusters\n- Search: Elasticsearch (CirrusSearch)\n- Media: Swift object storage, Thumbnail scalers\n- Async: Kafka, JobQueue (Redis/Kafka), ChangeProp\n- Services: Parsoid, RESTBase, Wikidata Query Service (Blazegraph)\n- Observability: etc. Maybe optional.\n\nLet me make a clean layered diagram with edges showing request flow.\n\nAlso add a request flow numbered:\n1. Usuario → DNS → CDN\n2. CDN hit → response; miss → LB\n3. LB → MediaWiki app servers\n4. MediaWiki → Memcached (cache), MariaDB (data), Elasticsearch (search), Swift (media)\n5. MediaWiki → job queue Kafka async → services (Parsoid, etc.)\n\nI'll write two files maybe: .mmd with just diagram and .md with diagram + explanation? User asked \"Dibuja en Mermaid ... Guarda lo que generes\". A single `.mmd` plus a `.md` with notes could be good. I'll create a .md that includes the mermaid code block and a brief explanation, and also a standalone .mmd. Actually to avoid redundancy, maybe just one `.md` with diagram and notes. But \"dibuja en Mermaid\" — saving .mmd is natural. I'll do both: `arquitectura-wikipedia.mmd` (standalone) and `arquitectura-wikipedia.md` (diagram + explanation). Hmm, duplication. Simplicity: one .mmd and a README.md? They said save what you generate. I'll create `arquitectura-wikipedia.md` containing the Mermaid diagram and notes — a single deliverable. But a .mmd is easier to render. Let me create `arquitectura-wikipedia.mmd` as primary and `README.md` explaining how to render. That's two files but sensible.\n\nActually minimal: `arquitectura-wikipedia.mmd` only. I'll validate.\n\nLet me consider Mermaid syntax pitfalls:\n- Subgraph IDs with quotes: `subgraph Clientes[\"Clientes\"]` valid.\n- Node labels with parentheses need quotes: `C1[\"Navegador web\"]`.\n- Edge labels: `-->|\"texto\"|` or `-- texto -->`. Use `-->|texto|`.\n- Avoid special chars unquoted.\n- `<br/>` works inside quoted labels in HTML mode. Mermaid uses htmlLabels by default for flowchart. Fine.\n\nLet me write the diagram carefully.\n\nI'll include:\n\n```\nflowchart TB\n    %% ===== Clientes =====\n    subgraph CL[\"Clientes\"]\n        direction LR\n        WEB[\"Navegador web\"]\n        MOV[\"Apps móviles<br/>(iOS / Android)\"]\n        BOT[\"Bots y clientes API\"]\n    end\n\n    %% ===== Borde =====\n    subgraph EDGE[\"Borde: DNS y CDN\"]\n        direction LR\n        DNS[\"DNS de Wikimedia\"]\n        CDN[\"CDN / caché HTTP<br/>Varnish\"]\n        LB[\"Balanceo de carga<br/>LVS\"]\n    end\n\n    %% ===== Aplicación =====\n    subgraph APP[\"Capa de aplicación (PHP)\"]\n        direction LR\n        MW[\"Servidores MediaWiki<br/>Apache + PHP-FPM\"]\n        API[\"API de MediaWiki<br/>Action API / REST\"]\n        AUTH[\"CentralAuth /<br/>autenticación\"]\n        SESS[\"Gestión de sesiones\"]\n    end\n\n    %% ===== Servicios =====\n    subgraph SVC[\"Servicios de contenido\"]\n        direction LR\n        PARSOID[\"Parsoid<br/>wikitexto ↔ HTML\"]\n        RESTBASE[\"RESTBase /<br/>API de servicios\"]\n        CIRRUS[\"CirrusSearch\"]\n        WDQS[\"Wikidata Query Service\"]\n    end\n\n    %% ===== Almacenamiento =====\n    subgraph DATA[\"Datos y almacenamiento\"]\n        direction LR\n        MEM[\"Memcached<br/>caché de objetos\"]\n        DB[\"MariaDB<br/>clústeres de bases de datos\"]\n        ES[\"Elasticsearch<br/>índice de búsqueda\"]\n        SWIFT[\"Swift<br/>almacenamiento de objetos\"]\n        MEDIA[\"Almacén de medios<br/>imágenes y miniaturas\"]\n    end\n\n    %% ===== Asíncrono =====\n    subgraph ASYNC[\"Procesamiento asíncrono\"]\n        direction LR\n        KAFKA[\"Kafka<br/>bus de eventos\"]\n        JOBS[\"Cola de trabajos<br/>JobQueue\"]\n        CHANGEPROP[\"ChangeProp\"]\n        SCALERS[\"Escaladores de miniaturas\"]\n    end\n```\n\nEdges:\n\n```\nWEB --> DNS\nMOV --> DNS\nBOT --> DNS\nDNS --> CDN\nCDN -->|\"fallo de caché\"| LB\nLB --> MW\nMW --> API\nMW --> AUTH\nMW --> SESS\nMW --> PARSOID\nMW --> RESTBASE\nMW --> CIRRUS\nMW --> WDQS\nMW --> MEM\nMW --> DB\nMW --> SWIFT\nMW --> MEDIA\nMW --> KAFKA\nKAFKA --> JOBS\nKAFKA --> CHANGEPROP\nJOBS --> SCALERS\nSCALERS --> MEDIA\nCIRRUS --> ES\nRESTBASE --> PARSOID\nRESTBASE --> MW\n```\n\nHmm media storage and scalers relationship. Wikimedia: uploaded images in Swift; thumbnails generated by 404 handler / thumbor-like. Fine.\n\nMaybe split DB into \"MariaDB (wikis)\" and \"esquema\". Keep simple.\n\nAdd a \"Monitoreo\" maybe not necessary.\n\nCould also add numbered request flow in comment.\n\nAlso maybe include \"wikimedia REST API\" gateway. Fine.\n\nLet me be accurate: Wikipedia runs on MediaWiki. Frontend: Varnish caching, then LVS load balancing, then Apache/nginx with PHP-FPM. Memcached for object cache. MariaDB for data (sharded/multi-master). Elasticsearch (CirrusSearch) for search. Swift for media. Kafka for event streams, job queue (Redis historically, now Kafka). Parsoid for parsing (now integrated). RESTBase for REST API (being deprecated in favor of MediaWiki REST API). Wikidata Query Service Blazegraph. ChangeProp for change propagation. Thumbnail generation via media scalers (Swift + scaling). Good.\n\nI might mark RESTBase as \"en transición\" to be accurate-ish. Keep simple.\n\nNow create files. I'll create `arquitectura-wikipedia.mmd` and `README.md`. Maybe also an SVG render if possible. Let's try npx mermaid-cli, could take a while and need chromium. There may be no network. Check quickly `npm ls -g` or npx cache? Let me check if mermaid is installed globally.\n\nLet me just write files first.",
+          "time": {
+            "start": 1795128247092,
+            "end": 1795128253349
+          },
+          "id": "prt_1f5fb43340012czKqtylzhKI8E",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb423d001FdlmXALVa4hN5A"
+        },
+        {
+          "type": "text",
+          "text": "Carpeta vacía. Voy a crear el diagrama Mermaid y una breve guía de uso.",
+          "time": {
+            "start": 1795128253352,
+            "end": 1795128256189
+          },
+          "id": "prt_1f5fb5ba7001552TaSZZJSP173",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb423d001FdlmXALVa4hN5A"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_kfqczcsy",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/arquitectura-wikipedia.mmd",
+              "content": "%% Arquitectura de Wikipedia (Wikimedia) - diagrama de alto nivel\n%% Flujo: clientes -> DNS/CDN -> balanceo -> MediaWiki -> datos/servicios\nflowchart TB\n\n    subgraph CL[\"Clientes\"]\n        direction LR\n        WEB[\"Navegador web\"]\n        MOV[\"Apps móviles<br/>iOS / Android\"]\n        BOT[\"Bots y clientes API\"]\n    end\n\n    subgraph EDGE[\"Borde: DNS y CDN\"]\n        direction LR\n        DNS[\"DNS de Wikimedia\"]\n        CDN[\"CDN / caché HTTP<br/>Varnish\"]\n        LB[\"Balanceo de carga<br/>LVS\"]\n    end\n\n    subgraph APP[\"Capa de aplicación (PHP)\"]\n        direction LR\n        MW[\"Servidores MediaWiki<br/>Apache + PHP-FPM\"]\n        API[\"API de MediaWiki<br/>Action API / REST\"]\n        AUTH[\"CentralAuth<br/>autenticación\"]\n        SESS[\"Gestión de sesiones\"]\n    end\n\n    subgraph SVC[\"Servicios de contenido\"]\n        direction LR\n        PARSOID[\"Parsoid<br/>wikitexto ↔ HTML\"]\n        RESTBASE[\"RESTBase<br/>API de servicios\"]\n        CIRRUS[\"CirrusSearch\"]\n        WDQS[\"Wikidata Query Service\"]\n    end\n\n    subgraph DATA[\"Datos y almacenamiento\"]\n        direction LR\n        MEM[\"Memcached<br/>caché de objetos\"]\n        DB[\"MariaDB<br/>clústeres de bases de datos\"]\n        ES[\"Elasticsearch<br/>índice de búsqueda\"]\n        SWIFT[\"Swift<br/>almacenamiento de objetos\"]\n        MEDIA[\"Almacén de medios<br/>imágenes y miniaturas\"]\n    end\n\n    subgraph ASYNC[\"Procesamiento asíncrono\"]\n        direction LR\n        KAFKA[\"Kafka<br/>bus de eventos\"]\n        JOBS[\"Cola de trabajos<br/>JobQueue\"]\n        CHANGEPROP[\"ChangeProp<br/>propagación de cambios\"]\n        SCALERS[\"Escaladores<br/>de miniaturas\"]\n    end\n\n    WEB --> DNS\n    MOV --> DNS\n    BOT --> DNS\n\n    DNS --> CDN\n    CDN -->|\"fallo de caché\"| LB\n    LB --> MW\n\n    MW --> API\n    MW --> AUTH\n    MW --> SESS\n\n    MW --> PARSOID\n    MW --> RESTBASE\n    MW --> CIRRUS\n    MW --> WDQS\n\n    MW --> MEM\n    MW --> DB\n    MW --> SWIFT\n    MW --> MEDIA\n\n    MW --> KAFKA\n    KAFKA --> JOBS\n    KAFKA --> CHANGEPROP\n    JOBS --> SCALERS\n    SCALERS --> MEDIA\n\n    CIRRUS --> ES\n    RESTBASE --> PARSOID\n    RESTBASE --> MW\n"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/arquitectura-wikipedia.mmd",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/arquitectura-wikipedia.mmd",
+            "time": {
+              "start": 1795128256125,
+              "end": 1795128256157
+            }
+          },
+          "id": "prt_1f5fb666f0013KQV4vRz9714vW",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb423d001FdlmXALVa4hN5A"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_wg5nzpax",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md",
+              "content": "# Arquitectura de Wikipedia en Mermaid\n\nDiagrama de alto nivel de la arquitectura de Wikipedia/Wikimedia, escrito en español.\n\n## Archivo\n\n- `arquitectura-wikipedia.mmd`: código Mermaid del diagrama.\n\n## Cómo renderizarlo\n\nCon la CLI oficial de Mermaid:\n\n```bash\nnpx @mermaid-js/mermaid-cli -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.svg\n```\n\nTambién puedes pegar el contenido en <https://mermaid.live> o incluirlo en Markdown:\n\n````markdown\n```mermaid\nflowchart TB\n    %% ... contenido de arquitectura-wikipedia.mmd ...\n```\n````\n\n## Capas representadas\n\n1. **Clientes**: navegadores, apps móviles, bots y clientes de la API.\n2. **Borde**: DNS, CDN con caché HTTP (Varnish) y balanceo de carga (LVS).\n3. **Aplicación**: servidores MediaWiki (Apache + PHP-FPM), API, autenticación y sesiones.\n4. **Servicios de contenido**: Parsoid, RESTBase, CirrusSearch y Wikidata Query Service.\n5. **Datos**: Memcached, MariaDB, Elasticsearch, Swift y almacén de medios.\n6. **Asíncrono**: Kafka, cola de trabajos, ChangeProp y escaladores de miniaturas.\n\n## Flujo de una petición\n\n1. El cliente resuelve el dominio por **DNS** y llega a la **CDN**.\n2. Si hay acierto de caché, la CDN responde directamente.\n3. Si hay fallo de caché, el **balanceador** envía la petición a **MediaWiki**.\n4. MediaWiki usa **Memcached** para caché, **MariaDB** para el contenido, **Elasticsearch** para búsquedas y **Swift** para medios.\n5. Los trabajos pesados o diferidos se envían a **Kafka** y se procesan en segundo plano.\n"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md",
+            "time": {
+              "start": 1795128256142,
+              "end": 1795128256162
+            }
+          },
+          "id": "prt_1f5fb66830019Y0mZz9k7p7yuM",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb423d001FdlmXALVa4hN5A"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11255,
+            "input": 113,
+            "output": 3078,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8064
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fb66cf001pUVtfQokV2lMd4",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb423d001FdlmXALVa4hN5A"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 11448,
+          "input": 146,
+          "output": 166,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11136
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128256247,
+          "completed": 1795128283582
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fb66f70012piWUohNUbgZkl",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fb6899001Ll7TlqgxuuzD3r",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb66f70012piWUohNUbgZkl"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me try validate with mermaid-cli if network available. Use timeout maybe 120s. Try `npx --yes @mermaid-js/mermaid-cli@latest -i ... -o ...svg`. It may need chromium which might not be installed. Let's attempt with a shorter timeout and see.",
+          "time": {
+            "start": 1795128256668,
+            "end": 1795128256963
+          },
+          "id": "prt_1f5fb689c001GTEgDLBlHtm5w6",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb66f70012piWUohNUbgZkl"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_hvaoz7dn",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "timeout 100 npx --yes @mermaid-js/mermaid-cli -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.svg 2>&1 | tail -20; echo \"exit=$?\"",
+              "timeout": 120000
+            },
+            "output": "Generating single mermaid chart\n\nError: Failed to launch the browser process:  Code: 1\n\nstderr:\n[1119/224443.467785:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:117] Running as root without --no-sandbox is not supported. See https://crbug.com/638180.\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n\n    at ChildProcess.onClose (file:///root/.opencode-bench/ollama_deepseek-v4.1-flash/home/.npm/_npx/668c188756b835f3/node_modules/@puppeteer/browsers/lib/launch.js:346:24)\n    at ChildProcess.emit (node:events:531:35)\n    at ChildProcess._handle.onexit (node:internal/child_process:293:12)\n\nnpm notice\nnpm notice New major version of npm available! 10.9.9 -> 12.2.3\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3\nnpm notice To update run: npm install -g npm@12.2.3\nnpm notice\nexit=0\n",
+            "metadata": {
+              "output": "Generating single mermaid chart\n\nError: Failed to launch the browser process:  Code: 1\n\nstderr:\n[1119/224443.467785:ERROR:content/browser/zygote_host/zygote_host_impl_linux.cc:117] Running as root without --no-sandbox is not supported. See https://crbug.com/638180.\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n\n    at ChildProcess.onClose (file:///root/.opencode-bench/ollama_deepseek-v4.1-flash/home/.npm/_npx/668c188756b835f3/node_modules/@puppeteer/browsers/lib/launch.js:346:24)\n    at ChildProcess.emit (node:events:531:35)\n    at ChildProcess._handle.onexit (node:internal/child_process:293:12)\n\nnpm notice\nnpm notice New major version of npm available! 10.9.9 -> 12.2.3\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3\nnpm notice To update run: npm install -g npm@12.2.3\nnpm notice\nexit=0\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "timeout 100 npx --yes @mermaid-js/mermaid-cli -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.svg 2>&1 | tail -20; echo \"exit=$?\"",
+            "time": {
+              "start": 1795128256983,
+              "end": 1795128283576
+            }
+          },
+          "id": "prt_1f5fb69c60013LVOEZFk1NaicA",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb66f70012piWUohNUbgZkl"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11448,
+            "input": 146,
+            "output": 166,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11136
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fbd1ba001l0z2yR0DlLxcEN",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fb66f70012piWUohNUbgZkl"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 11939,
+          "input": 341,
+          "output": 206,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11392
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128283586,
+          "completed": 1795128287270
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fbd1c2001bImc1jkj2t8EP1",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fbd2d2001XPWXUNR0jayMsS",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbd1c2001bImc1jkj2t8EP1"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need puppeteer config with --no-sandbox. Create a temp config in /tmp or current. Use `-p` puppeteerConfigFile. Create /tmp/opencode/pptr.json with args no-sandbox. Then run.",
+          "time": {
+            "start": 1795128283861,
+            "end": 1795128284250
+          },
+          "id": "prt_1f5fbd2d5001f2o4ptFt6vCfeV",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbd1c2001bImc1jkj2t8EP1"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_vqpvywrb",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "printf '{\"args\":[\"--no-sandbox\",\"--disable-setuid-sandbox\"]}\\n' > /tmp/opencode/pptr.json && timeout 100 npx --yes @mermaid-js/mermaid-cli -p /tmp/opencode/pptr.json -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.svg 2>&1 | tail -10; ls -la arquitectura-wikipedia.svg 2>/dev/null",
+              "timeout": 120000
+            },
+            "output": "Generating single mermaid chart\n-rw-r--r-- 1 root root 232700 Nov 19 22:44 arquitectura-wikipedia.svg\n",
+            "metadata": {
+              "output": "Generating single mermaid chart\n-rw-r--r-- 1 root root 232700 Nov 19 22:44 arquitectura-wikipedia.svg\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "printf '{\"args\":[\"--no-sandbox\",\"--disable-setuid-sandbox\"]}\\n' > /tmp/opencode/pptr.json && timeout 100 npx --yes @mermaid-js/mermaid-cli -p /tmp/opencode/pptr.json -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.svg 2>&1 | tail -10; ls -la arquitectura-wikipedia.svg 2>/dev/null",
+            "time": {
+              "start": 1795128284260,
+              "end": 1795128287261
+            }
+          },
+          "id": "prt_1f5fbd45c001c6SEpyXNw6iwGz",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbd1c2001bImc1jkj2t8EP1"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11939,
+            "input": 341,
+            "output": 206,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11392
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fbe01f0016RcrXdzK7n40Z0",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbd1c2001bImc1jkj2t8EP1"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 12147,
+          "input": 79,
+          "output": 164,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11904
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128287274,
+          "completed": 1795128289204
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fbe02a001eHTCTt6DYOo08a",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fbe13a001mctdvPRGJIwlYD",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbe02a001eHTCTt6DYOo08a"
+        },
+        {
+          "type": "reasoning",
+          "text": "Rendered successfully. Maybe also render PNG. Not necessary. Let me view SVG? Could convert to png to inspect visually. Read tool can read images (png). Let's generate png and read it to verify layout.",
+          "time": {
+            "start": 1795128287548,
+            "end": 1795128287869
+          },
+          "id": "prt_1f5fbe13c001pnCkQ18MFO6c0C",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbe02a001eHTCTt6DYOo08a"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_8nh8legx",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "timeout 100 npx --yes @mermaid-js/mermaid-cli -p /tmp/opencode/pptr.json -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.png -w 1600 -b white 2>&1 | tail -5; ls -la",
+              "timeout": 120000
+            },
+            "output": "error: unknown option '-w'\ntotal 244\ndrwxr-xr-x 2 root root   4096 Nov 19 22:44 .\ndrwxr-xr-x 4 root root   4096 Nov 19 22:43 ..\n-rw-r--r-- 1 root root   1526 Nov 19 22:44 README.md\n-rw-r--r-- 1 root root   2109 Nov 19 22:44 arquitectura-wikipedia.mmd\n-rw-r--r-- 1 root root 232700 Nov 19 22:44 arquitectura-wikipedia.svg\n",
+            "metadata": {
+              "output": "error: unknown option '-w'\ntotal 244\ndrwxr-xr-x 2 root root   4096 Nov 19 22:44 .\ndrwxr-xr-x 4 root root   4096 Nov 19 22:43 ..\n-rw-r--r-- 1 root root   1526 Nov 19 22:44 README.md\n-rw-r--r-- 1 root root   2109 Nov 19 22:44 arquitectura-wikipedia.mmd\n-rw-r--r-- 1 root root 232700 Nov 19 22:44 arquitectura-wikipedia.svg\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "timeout 100 npx --yes @mermaid-js/mermaid-cli -p /tmp/opencode/pptr.json -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.png -w 1600 -b white 2>&1 | tail -5; ls -la",
+            "time": {
+              "start": 1795128287877,
+              "end": 1795128289197
+            }
+          },
+          "id": "prt_1f5fbe27e001Cq07H0bqVEcKeq",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbe02a001eHTCTt6DYOo08a"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12147,
+            "input": 79,
+            "output": 164,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11904
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fbe7af001q2uV5vjklEI5uL",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbe02a001eHTCTt6DYOo08a"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 12411,
+          "input": 256,
+          "output": 123,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 12032
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128289207,
+          "completed": 1795128292654
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fbe7b700107pyTbMxU6XfLv",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fbe973001oRSTcgD6ia1J8A",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbe7b700107pyTbMxU6XfLv"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_tcwe0der",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "timeout 100 npx --yes @mermaid-js/mermaid-cli -p /tmp/opencode/pptr.json -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.png -b white 2>&1 | tail -5; ls -la arquitectura-wikipedia.png 2>/dev/null",
+              "timeout": 120000
+            },
+            "output": "Generating single mermaid chart\n-rw-r--r-- 1 root root 48921 Nov 19 22:44 arquitectura-wikipedia.png\n",
+            "metadata": {
+              "output": "Generating single mermaid chart\n-rw-r--r-- 1 root root 48921 Nov 19 22:44 arquitectura-wikipedia.png\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "timeout 100 npx --yes @mermaid-js/mermaid-cli -p /tmp/opencode/pptr.json -i arquitectura-wikipedia.mmd -o arquitectura-wikipedia.png -b white 2>&1 | tail -5; ls -la arquitectura-wikipedia.png 2>/dev/null",
+            "time": {
+              "start": 1795128289675,
+              "end": 1795128292640
+            }
+          },
+          "id": "prt_1f5fbe985001eTBvea6hbKB1JA",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbe7b700107pyTbMxU6XfLv"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12411,
+            "input": 256,
+            "output": 123,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 12032
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fbf527001MmubSb5lPikXPy",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbe7b700107pyTbMxU6XfLv"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 12520,
+          "input": 167,
+          "output": 65,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 12288
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128292657,
+          "completed": 1795128293125
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fbf531001RvwgikanNAHYQV",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fbf69e0019eJGQoT1FZRYZS",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbf531001RvwgikanNAHYQV"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_qyyi5550",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/arquitectura-wikipedia.png"
+            },
+            "output": "Image read successfully",
+            "metadata": {
+              "preview": "Image read successfully",
+              "truncated": false,
+              "loaded": []
+            },
+            "title": "tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/arquitectura-wikipedia.png",
+            "time": {
+              "start": 1795128293030,
+              "end": 1795128293095
+            },
+            "attachments": [
+              {
+                "type": "file",
+                "mime": "image/png",
+                "url": "data:image/png;base64,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",
+                "id": "prt_1f5fbf6ac001y9jJFkenSc5jns",
+                "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+                "messageID": "msg_1f5fbf531001RvwgikanNAHYQV"
+              }
+            ]
+          },
+          "id": "prt_1f5fbf6a0001Po7b64yxr2FWxK",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbf531001RvwgikanNAHYQV"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12520,
+            "input": 167,
+            "output": 65,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 12288
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fbf700001EUZ7dPzj1s76rd",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbf531001RvwgikanNAHYQV"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 12843,
+          "input": 4751,
+          "output": 284,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7808
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128293130,
+          "completed": 1795128294272
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f5fbf70a001hV4eLYd8Mnohxm",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fbf83a001RTKiC2AvtmlwTi",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbf70a001hV4eLYd8Mnohxm"
+        },
+        {
+          "type": "reasoning",
+          "text": "Can't view. Fine. But diagram validation succeeded. Let me check SVG for text presence maybe. Not needed. I should maybe verify that subgraph direction works and labels don't overlap. Mermaid compiled, so syntax is valid.\n\nCould remove the PNG? The user asked save what you generate — PNG is a nice bonus. Keep.\n\nUpdate README to mention generated SVG/PNG and fix? README says file only .mmd. Add rendered outputs. Let me edit briefly.\n\nAlso note `-w` invalid; not relevant. Let me update README.",
+          "time": {
+            "start": 1795128293435,
+            "end": 1795128294172
+          },
+          "id": "prt_1f5fbf83b001EVMxiMU1R361jj",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbf70a001hV4eLYd8Mnohxm"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_48vawmpr",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md",
+              "oldString": "## Archivo\n\n- `arquitectura-wikipedia.mmd`: código Mermaid del diagrama.",
+              "newString": "## Archivos\n\n- `arquitectura-wikipedia.mmd`: código Mermaid del diagrama.\n- `arquitectura-wikipedia.svg`: versión renderizada (vectorial).\n- `arquitectura-wikipedia.png`: versión renderizada (imagen)."
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md\n===================================================================\n--- /tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md\n+++ /tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md\n@@ -1,11 +1,13 @@\n # Arquitectura de Wikipedia en Mermaid\n \n Diagrama de alto nivel de la arquitectura de Wikipedia/Wikimedia, escrito en español.\n \n-## Archivo\n+## Archivos\n \n - `arquitectura-wikipedia.mmd`: código Mermaid del diagrama.\n+- `arquitectura-wikipedia.svg`: versión renderizada (vectorial).\n+- `arquitectura-wikipedia.png`: versión renderizada (imagen).\n \n ## Cómo renderizarlo\n \n Con la CLI oficial de Mermaid:\n",
+              "filediff": {
+                "file": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md",
+                "patch": "Index: /tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md\n===================================================================\n--- /tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md\n+++ /tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md\n@@ -1,11 +1,13 @@\n # Arquitectura de Wikipedia en Mermaid\n \n Diagrama de alto nivel de la arquitectura de Wikipedia/Wikimedia, escrito en español.\n \n-## Archivo\n+## Archivos\n \n - `arquitectura-wikipedia.mmd`: código Mermaid del diagrama.\n+- `arquitectura-wikipedia.svg`: versión renderizada (vectorial).\n+- `arquitectura-wikipedia.png`: versión renderizada (imagen).\n \n ## Cómo renderizarlo\n \n Con la CLI oficial de Mermaid:\n",
+                "additions": 3,
+                "deletions": 1
+              },
+              "truncated": false
+            },
+            "title": "tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP/README.md",
+            "time": {
+              "start": 1795128294217,
+              "end": 1795128294249
+            }
+          },
+          "id": "prt_1f5fbfb3b001uadkQPKDwCuDdy",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbf70a001hV4eLYd8Mnohxm"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12843,
+            "input": 4751,
+            "output": 284,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7808
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fbfb790019KR7EQ6ZM7ts1N",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbf70a001hV4eLYd8Mnohxm"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f5fb31ba001WbU5Q6k1b6X9Bl",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 12977,
+          "input": 441,
+          "output": 120,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 12416
+          }
+        },
+        "modelID": "deepseek-v4.1-flash",
+        "providerID": "ol",
+        "time": {
+          "created": 1795128294277,
+          "completed": 1795128294947
+        },
+        "finish": "stop",
+        "id": "msg_1f5fbfb850017x1THNO8jzJaVd",
+        "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f5fbfcd7001IF00BrKvgYnWZB",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbfb850017x1THNO8jzJaVd"
+        },
+        {
+          "type": "text",
+          "text": "Listo. Generé en la carpeta actual:\n\n- `arquitectura-wikipedia.mmd` — diagrama Mermaid en español.\n- `arquitectura-wikipedia.svg` y `.png` — renderizados y validados.\n- `README.md` — capas y flujo de una petición.\n\nIncluye clientes, DNS/CDN (Varnish), balanceo (LVS), MediaWiki (PHP), Parsoid/RESTBase/CirrusSearch, Memcached, MariaDB, Elasticsearch, Swift y Kafka/JobQueue.",
+          "time": {
+            "start": 1795128294618,
+            "end": 1795128294936
+          },
+          "id": "prt_1f5fbfcda00174kBLTBruHLna0",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbfb850017x1THNO8jzJaVd"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12977,
+            "input": 441,
+            "output": 120,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 12416
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f5fbfe1f0013EXbaLQby5ckfy",
+          "sessionID": "ses_e0a04d122ffesUgmBFwV4zhm3n",
+          "messageID": "msg_1f5fbfb850017x1THNO8jzJaVd"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alquimia Reactiva</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#121019;color:#faf5ff;font:16px "Trebuchet MS",Arial,sans-serif}header{height:66px;border-bottom:1px solid #393042;display:flex;align-items:center;justify-content:space-between;padding:0 max(5%,calc((100% - 1100px)/2));background:#1a1522}header b{font-size:21px;letter-spacing:-1px}header b i{font: bold 18px monospace;background:#c8fa78;color:#222;padding:5px;margin-right:8px}button,input{font:inherit}button{cursor:pointer;background:#302737;color:inherit;border:1px solid #54455f;border-radius:6px;padding:9px 14px}button:hover{border-color:#c6a0dd}button:focus-visible,input:focus-visible{outline:3px solid #c8fa78}main{max-width:1140px;margin:auto;padding:24px 20px}.hero,section{border:1px solid #45394e;border-radius:12px;overflow:hidden}.hero{position:relative;isolation:isolate;background:linear-gradient(105deg,#332140,#533268);padding:32px}.hero canvas{position:absolute;z-index:-1;right:0;bottom:0;width:43%;height:100%;image-rendering:pixelated}.tag,small{font: bold 11px monospace;letter-spacing:1.8px;color:#d5b7ed}h1{font-size:clamp(39px,5vw,66px);letter-spacing:-3px;margin:12px 0}em{font-style:normal;color:#ccfa83}p{color:#cdc1d5;font-size:14px;margin:0;line-height:1.5}section{background:#211b29;padding:22px 25px;margin-top:17px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}h2{margin:0;font-size:23px;letter-spacing:-.8px}h2 span{color:#c498eb;margin-right:8px}.board{display:flex;align-items:center;justify-content:center;gap:22px;background-color:#19151f;background-image:radial-gradient(#463a50 1px,transparent 1px);background-size:13px 13px;border:1px solid #45384e;border-radius:8px;margin:17px 0 13px;padding:22px 10px}.slot{width:160px;height:85px;display:grid;align-content:center;justify-items:center;gap:6px;background:#282030;border:1px dashed #80658e;font:13px monospace}.slot strong{font-size:25px;color:#c49dda}.action{background:#c8fa78;color:#241e29;font-weight:bold;border:0}.action:disabled{background:#504756;color:#d1c6d8;cursor:default}.count{background:#33392d;color:#c8ef98;padding:5px 9px;border-radius:5px;font:12px monospace}.tools{display:flex;gap:10px;margin:16px 0}.tools input{min-width:0;flex:1;border:1px solid #4c4054;border-radius:6px;background:#19151f;color:white;padding:10px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card{display:flex;align-items:center;gap:10px;text-align:left;font-weight:bold}.card small{display:block;margin-top:4px;font-size:9px}.icon{display:inline-grid;place-items:center;width:37px;height:37px;border-radius:6px;font:bold 20px monospace}dialog{max-width:min(420px,90vw);padding:24px;background:#2a2132;color:white;border:1px solid #826594;border-radius:10px}dialog p{margin:15px 0}dialog::backdrop{background:#09060dc9}footer{text-align:center;color:#a193aa;font:12px monospace;margin:22px}a{color:inherit}@media(max-width:680px){main{padding:12px}.hero,section{padding:18px 14px}.hero canvas{opacity:.4}.hero p{max-width:66%}.cards{grid-template-columns:repeat(2,1fr)}.slot{width:40%}.board{gap:10px}.card{padding:8px}.row p{max-width:62%}}
+</style>
+<header><b><i>W↗</i> Web Reactiva</b><button id="help">ⓘ &nbsp; Cómo jugar</button></header>
+<main><div class="hero"><canvas id="art" width="230" height="94" aria-hidden="true"></canvas><div class="tag">✦ &nbsp; LABORATORIO DE IDEAS</div><h1>Alquimia <em>Reactiva</em></h1><p>Mezcla ideas del universo Web Reactiva y descubre qué surge.</p></div>
+<section><div class="row"><h2><span>⚗</span>Mesa de mezclas</h2></div><div class="board"><button class="slot"></button><b>+</b><button class="slot"></button></div><div class="row"><p id="message" aria-live="polite">Elige dos elementos de tu colección.</p><button class="action" id="mix" disabled>✦ Combinar</button></div></section>
+<section><div class="row"><h2><span>▦</span>Colección</h2><span class="count" id="count"></span></div><div class="tools"><input id="search" aria-label="Buscar elemento" type="search" placeholder="Buscar elemento…"><button id="hint">✧ Pista</button></div><div class="cards" id="cards"></div></section><footer>Inspirado en el universo de <a href="https://www.webreactiva.com/">Web Reactiva</a></footer></main>
+<dialog id="guide"><h2>Cómo jugar</h2><p>Pulsa dos elementos de la colección o arrástralos a la mesa. Puedes usar el mismo dos veces. Pulsa «Combinar» para probar tu receta.</p><p>Toca una casilla para vaciarla. Cada descubrimiento pasa a tu colección y sirve para crear nuevas mezclas. Si te atascas, pide una pista.</p><form method="dialog"><button class="action">Al laboratorio</button></form></dialog>
+<script>
+const ctx=art.getContext('2d');
+function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h)}
+for(let j=0;j<60;j++){let x=j*73%230,y=j*29%89;rect(x,y,1,1,'#956da8');if(j%9===0){rect(x-2,y,5,1,'#c49ad8');rect(x,y-2,1,5,'#c49ad8')}}
+function flask(x,y,s,liquid,light){['    XXXXX    ','    X...X    ','     X.X     ','     X.X     ','    X...X    ','   X.....X   ','  X..~~~..X  ',' X.~~~~~~~.X ',' X~*~~~~*~~X ','X~~~*~~~~~~~X','X~~~~~~~~~~~X',' XXXXXXXXXXX '].forEach((line,row)=>[...line].forEach((p,col)=>{let c={X:'#d6afef','.':'#634574','~':liquid,'*':light}[p];if(c)rect(x+col*s,y+row*s,s,s,c)}))}
+rect(50,84,180,3,'#a37cb7');rect(59,87,171,7,'#392344');flask(116,24,5,'#a5df68','#e3ffad');flask(69,48,3,'#a675df','#e4bcff');flask(192,60,2,'#e990ae','#ffd8d9');[[141,14,4],[149,6,3],[136,2,2],[85,40,2]].forEach(([x,y,s])=>rect(x,y,s,s,'#c8f481'));
+const base=['Código','Idea','Comunidad','IA'];
+const recipes=`Código|Idea|Proyecto
+Código|Código|Git
+Idea|Idea|Prompt
+Comunidad|Comunidad|Zona Malandriner
+IA|IA|Modelo
+Idea|Comunidad|Podcast
+Código|Comunidad|Código abierto
+IA|Código|Copilot
+IA|Idea|Prompt
+IA|Comunidad|Programa con IA
+Podcast|Comunidad|Web Reactiva
+Podcast|Idea|En pantuflas
+Comunidad|Proyecto|Masterclass
+Web Reactiva|Idea|Newsletter
+Newsletter|Zona Malandriner|Atlas Malandriner
+Modelo|Prompt|ChatGPT
+Proyecto|Prompt|Spec
+Spec|Código|SDD
+SDD|Proyecto|OpenSpec
+Modelo|Código|Agente
+Agente|Proyecto|Claude Code
+Agente|Código|MCP
+Agente|Idea|Skill
+Agente|Agente|Orquestación
+MCP|Atlas Malandriner|Atlas MCP
+Modelo|Atlas Malandriner|RAG
+Agente|Git|Codex
+Copilot|Git|Commit asistido
+Modelo|Modelo|Comparador de modelos
+Web Reactiva|Proyecto|Roadmap
+Masterclass|Agente|Automatización
+Automatización|Proyecto|n8n`.split('\n').map(line=>line.split('|'));
+const all=[...new Set([...base,...recipes.map(r=>r[2])])],key='alquimia-reactiva-v1',known=new Set(base);let slots=[null,null];
+try{for(const t of JSON.parse(localStorage.getItem(key)||'[]'))if(all.includes(t))known.add(t)}catch{}
+const colors=[['#49345f','#d3a3ff'],['#51442d','#ffcf72'],['#2b4745','#83dcc9'],['#483149','#f6a2d4']],icons=['</>','✧','♧','✳','▣','⑂','›_','♜','◇','♫'];
+function icon(t){let n=all.indexOf(t),v=document.createElement('span');v.className='icon';[v.style.background,v.style.color]=colors[n%4];v.textContent=icons[n%icons.length];return v}
+function board(){document.querySelectorAll('.slot').forEach((b,i)=>{let t=slots[i],v=document.createElement('strong');v.textContent='+';b.replaceChildren(t?icon(t):v,document.createTextNode(t||'Elemento '+(i+1)));b.setAttribute('aria-label',t?'Quitar '+t:'Casilla '+(i+1))});mix.disabled=!slots.every(Boolean)}
+function add(t,i){slots[i]=t;board();message.textContent=slots.every(Boolean)?'Mezcla preparada.':'Elige otro elemento.'}
+function collection(){count.textContent=known.size+' / '+all.length;cards.replaceChildren();for(const t of known){if(!t.toLowerCase().includes(search.value.trim().toLowerCase()))continue;let b=document.createElement('button'),label=document.createElement('span'),type=document.createElement('small');b.className='card';b.draggable=true;label.textContent=t;type.textContent=base.includes(t)?'BASE':'DESCUBIERTO';label.append(type);b.append(icon(t),label);b.onclick=()=>add(t,slots[0]?1:0);b.ondragstart=e=>e.dataTransfer.setData('text/plain',t);cards.append(b)}if(!cards.children.length)cards.textContent='Ningún elemento coincide.'}
+document.querySelectorAll('.slot').forEach((b,i)=>{b.onclick=()=>{slots[i]=null;board();message.textContent='Elige un elemento de tu colección.'};b.ondragover=e=>e.preventDefault();b.ondrop=e=>{e.preventDefault();let t=e.dataTransfer.getData('text/plain');if(known.has(t))add(t,i)}});
+mix.onclick=()=>{let [x,y]=slots,r=recipes.find(([a,b])=>(a===x&&b===y)||(a===y&&b===x));if(!r){message.textContent='Sin reacción. Cambia uno de los elementos.';return}let t=r[2],fresh=!known.has(t);known.add(t);try{localStorage.setItem(key,JSON.stringify([...known]))}catch{}slots=[t,null];board();collection();message.textContent=(fresh?'¡Descubrimiento! ':'Receta conocida. ')+x+' + '+y+' → '+t};
+hint.onclick=()=>{let options=recipes.filter(([a,b,c])=>known.has(a)&&known.has(b)&&!known.has(c));let r=options[Math.floor(Math.random()*options.length)];message.textContent=r?'Prueba a combinar '+r[0]+' con '+r[1]+'.':'¡Has completado la colección!'};search.oninput=collection;help.onclick=()=>guide.showModal();board();collection();
+</script></html>

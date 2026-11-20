@@ -1,0 +1,36 @@
+{
+  "codigo": "CCA",
+  "modelo": "gpt-6.2-astra",
+  "agente": "Codex CLI",
+  "esfuerzo": "medium",
+  "fecha": "2026-11-20T10:01:27Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 13923,
+    "output": 6100,
+    "reasoning": 116,
+    "cache_read": 157696,
+    "cache_write": 0,
+    "total": 177835
+  },
+  "peticiones": 8,
+  "error": null,
+  "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+  "esfuerzo_real": "medium",
+  "herramientas": {
+    "exec": 7
+  },
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+  ],
+  "veces_decide_tu": 0,
+  "ficheros": [
+    "app.js",
+    "assets/product0.webp",
+    "assets/product1.webp",
+    "assets/product2.webp",
+    "cart.js",
+    "index.html",
+    "style.css"
+  ]
+}

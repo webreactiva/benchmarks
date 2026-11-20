@@ -1,0 +1,39 @@
+{
+  "codigo": "A3D",
+  "modelo": "ollama/glm-5.3-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T00:36:03Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 77646,
+    "output": 63764,
+    "reasoning": 0,
+    "cache_read": 1681472,
+    "cache_write": 0,
+    "total": 1822882
+  },
+  "peticiones": 29,
+  "error": null,
+  "mensajes_usuario": [
+    "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "bash": 16,
+    "write": 5,
+    "read": 3,
+    "grep": 1,
+    "edit": 3
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e099e3aa6ffeRp4W9LspPuPMFr",
+  "ficheros": [
+    "alhambra-3d.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

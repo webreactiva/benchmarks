@@ -1,0 +1,11 @@
+{
+  "name": "shopping-cart",
+  "version": "1.0.0",
+  "description": "Scalable shopping cart",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/http/server.js",
+    "test": "node --test"
+  }
+}

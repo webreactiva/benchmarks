@@ -1,0 +1,65 @@
+{
+  "html": [],
+  "mermaid": [
+    {
+      "fichero": "wikipedia-arquitectura.md",
+      "bloque": 0,
+      "lineas": 132,
+      "ok": true,
+      "captura": "capturas/wikipedia-arquitectura.md-0.png"
+    },
+    {
+      "fichero": "wikipedia-arquitectura.md",
+      "bloque": 1,
+      "lineas": 57,
+      "ok": true,
+      "captura": "capturas/wikipedia-arquitectura.md-1.png"
+    },
+    {
+      "fichero": "wikipedia-arquitectura.md",
+      "bloque": 2,
+      "lineas": 43,
+      "ok": true,
+      "captura": "capturas/wikipedia-arquitectura.md-2.png"
+    },
+    {
+      "fichero": "wikipedia-arquitectura.md",
+      "bloque": 3,
+      "lineas": 32,
+      "ok": true,
+      "captura": "capturas/wikipedia-arquitectura.md-3.png"
+    },
+    {
+      "fichero": "wikipedia-arquitectura.mmd",
+      "bloque": 0,
+      "lineas": 132,
+      "ok": true,
+      "captura": "capturas/wikipedia-arquitectura.mmd-0.png"
+    },
+    {
+      "fichero": "wikipedia-datacenters.mmd",
+      "bloque": 0,
+      "lineas": 57,
+      "ok": true,
+      "captura": "capturas/wikipedia-datacenters.mmd-0.png"
+    },
+    {
+      "fichero": "wikipedia-flujo-escritura.mmd",
+      "bloque": 0,
+      "lineas": 32,
+      "ok": true,
+      "captura": "capturas/wikipedia-flujo-escritura.mmd-0.png"
+    },
+    {
+      "fichero": "wikipedia-flujo-lectura.mmd",
+      "bloque": 0,
+      "lineas": 43,
+      "ok": true,
+      "captura": "capturas/wikipedia-flujo-lectura.mmd-0.png"
+    }
+  ],
+  "extra": [
+    "✔ 4 diagramas y 4 bloques del .md compilan",
+    "~ con mermaid 11.4 los títulos «1. Clientes» salen como «Unsupported markdown: list»; en su PNG (otra versión) salen bien"
+  ]
+}

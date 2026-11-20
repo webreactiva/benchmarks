@@ -1,0 +1,16 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ build y 21/21 tests",
+    "✔ 50 altas a la vez: 50 guardadas",
+    "✔ precio del catálogo, céntimos, CAS por versión, TTL",
+    "~ solo repositorios en memoria: varias instancias no comparten carrito"
+  ],
+  "comprobacion": "Copia en /tmp sin node_modules ni dist, npm ci, build, vitest y juez/juez.mjs contra el servidor (del juez)",
+  "juez_salida": [
+    "50 altas a la vez: 200 × 50 → unidades guardadas 50",
+    "precio desde el cliente → se ignora (total con priceCents del catálogo)",
+    "carrito inexistente → 404 CART_NOT_FOUND"
+  ]
+}

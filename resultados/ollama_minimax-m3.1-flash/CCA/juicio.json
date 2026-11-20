@@ -1,0 +1,20 @@
+{
+  "nota": 10,
+  "veredicto": "el carrito más completo",
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 2,
+    "escala horizontal": 2,
+    "explica el escalado": 1
+  },
+  "resumen": "API Fastify sin estado con todo el carrito en Redis y cada mutación atómica en un script Lua, más concurrencia optimista por versión, idempotencia, outbox con worker y grupo de consumidores, rate limiting distribuido, JWT, métricas, Docker Compose para escalar réplicas y una prueba de carga con k6. Compila, pasa 42 tests y, con dos instancias, 40 altas a la vez entran todas sin un conflicto.",
+  "rarezas": [
+    "154 peticiones y 14,6 millones de tokens: el mayor gasto de todo el benchmark en una sola prueba.",
+    "Encontró y corrigió dos fallos reales de ioredis con streams, y los dejó documentados con tests.",
+    "Dejó dist/ y node_modules/ en la entrega."
+  ]
+}

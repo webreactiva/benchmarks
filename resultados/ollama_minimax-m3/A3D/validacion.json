@@ -1,0 +1,25 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra-3d.html",
+      "errores": [],
+      "titulo": "La Alhambra · Ruta 3D — Granada",
+      "canvas": 2,
+      "texto": "Torre de la Vela\nPalacio de Carlos V\nPuerta de la Justicia\nPatio de los Arrayanes\nPartal\nGeneralife\nPuente de los Espinoles\n1Plaza de los Alhambra\n2Puerta de la Justicia\n3Alcazaba · Torre de la Vela\n4Palacio de Carlos V\n5Patio de los Arrayanes\n6Sala de los Abencerrajes\n7Patio de los Leones\n8Mirador de Lindaraja\n9Torre de Comares\n10Mexuar\n11Partal · Torre de las Damas\n12Generalife · Patio de la Ace",
+      "scripts": [],
+      "captura": "capturas/alhambra-3d.html.png",
+      "capturas_extra": [
+        "capturas/inicio.png",
+        "capturas/tour-12s.png",
+        "capturas/leones.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores; 15 paradas, 4 vistas, hora del día, voz, minimapa",
+    "✖ el recorrido apenas avanza (1-3 % en 25 s)",
+    "✖ saltar a una parada cambia la ficha pero no mueve la cámara",
+    "✖ el minimapa tapa las paradas 11-15 de la lista"
+  ]
+}

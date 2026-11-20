@@ -1,0 +1,9 @@
+{
+  "nota": 0,
+  "veredicto": "no entregó nada",
+  "resumen": "Una sola petición: razonó 2 min 44 s, llegó a los 32 000 tokens de salida y OpenCode cortó la respuesta (finish: length) antes de que llamara a ninguna herramienta. No hay fichero.",
+  "rarezas": [
+    "Gastó los 32 000 tokens de salida en el razonamiento. 32 000 es el tope que OpenCode pone por defecto a un proveedor personalizado sin «limit»; nemotron corrió con el mismo tope y no lo tocó.",
+    "Al cortarse, OpenCode no avisa de error ni sigue: la sesión queda libre como si hubiera terminado."
+  ]
+}

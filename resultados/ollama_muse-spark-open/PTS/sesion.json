@@ -1,0 +1,404 @@
+{
+  "info": {
+    "id": "ses_e0900b72affep2LE2BleWM8J97",
+    "slug": "curious-harbor",
+    "projectID": "global",
+    "directory": "/var/tmp/bench/ws-2SVCukVf",
+    "path": "var/tmp/bench/ws-2SVCukVf",
+    "title": "Por qué tests fallidos son peores que no tenerlos",
+    "agent": "build",
+    "model": {
+      "id": "muse-spark-open",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 6333,
+      "output": 1193,
+      "reasoning": 0,
+      "cache": {
+        "read": 18816,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795145287894,
+      "updated": 1795145295755
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795145287913
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "muse-spark-open"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f6ff48e9001GNCjcVoY7eRP5x",
+        "sessionID": "ses_e0900b72affep2LE2BleWM8J97"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f6ff48ed001WgHLRegvEIB07N",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff48e9001GNCjcVoY7eRP5x"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6ff48e9001GNCjcVoY7eRP5x",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-2SVCukVf",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8057,
+          "input": 5894,
+          "output": 243,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 1920
+          }
+        },
+        "modelID": "muse-spark-open",
+        "providerID": "ol",
+        "time": {
+          "created": 1795145287935,
+          "completed": 1795145290987
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6ff48ff001ne8jfpqOOzVdq7",
+        "sessionID": "ses_e0900b72affep2LE2BleWM8J97"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6ff50ec001EDcKUbhsqUL2Px",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff48ff001ne8jfpqOOzVdq7"
+        },
+        {
+          "type": "reasoning",
+          "text": "User wants Spanish blog post about why failing tests sometimes worse than no tests. Need to save in current folder.\n\nWe need to check working directory, save file. Should be concise style instruction says short concise etc but user explicitly wants blog post generation. Must follow tone? System says responses should be short and concise. But blog post content itself will be longer. That's okay. Output text should be short/concise? But blog post is content. We'll generate file and give short summary.\n\nWe need to know current directory: /var/tmp/bench/ws-2SVCukVf from env. Let's check.",
+          "time": {
+            "start": 1795145289967,
+            "end": 1795145290550
+          },
+          "id": "prt_1f6ff50ef001KMd38bOMdBNQMA",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff48ff001ne8jfpqOOzVdq7"
+        },
+        {
+          "type": "text",
+          "text": "Generando tu post sobre tests fallidos — lo guardo en la carpeta actual.",
+          "time": {
+            "start": 1795145290553,
+            "end": 1795145290975
+          },
+          "id": "prt_1f6ff5339001fRfIh9gs6iXQHj",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff48ff001ne8jfpqOOzVdq7"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_pyq5lbc6",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/"
+            },
+            "output": "<path>/</path>\n<type>directory</type>\n<entries>\nbin.usr-is-merged/\nbin/\nboot/\ncontainer_info.json\ndev/\netc/\nhome/\nlib.usr-is-merged/\nlib/\nlib64/\nlost+found/\nmedia/\nmnt/\nnix/\nold_root/\nopt/\nproc/\nroot/\nrun/\nsbin/\nsrv/\nsys/\ntmp/\nusr/\nvar/\n\n(25 entries)\n</entries>",
+            "metadata": {
+              "preview": "bin.usr-is-merged/\nbin/\nboot/\ncontainer_info.json\ndev/\netc/\nhome/\nlib.usr-is-merged/\nlib/\nlib64/\nlost+found/\nmedia/\nmnt/\nnix/\nold_root/\nopt/\nproc/\nroot/\nrun/\nsbin/",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "directory",
+                "path": "/",
+                "entries": [
+                  "bin.usr-is-merged/",
+                  "bin/",
+                  "boot/",
+                  "container_info.json",
+                  "dev/",
+                  "etc/",
+                  "home/",
+                  "lib.usr-is-merged/",
+                  "lib/",
+                  "lib64/",
+                  "lost+found/",
+                  "media/",
+                  "mnt/",
+                  "nix/",
+                  "old_root/",
+                  "opt/",
+                  "proc/",
+                  "root/",
+                  "run/",
+                  "sbin/",
+                  "srv/",
+                  "sys/",
+                  "tmp/",
+                  "usr/",
+                  "var/"
+                ],
+                "offset": 1,
+                "totalEntries": 25,
+                "truncated": false
+              }
+            },
+            "title": "",
+            "time": {
+              "start": 1795145290762,
+              "end": 1795145290770
+            }
+          },
+          "id": "prt_1f6ff5402001tAo38ROK44Sxpa",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff48ff001ne8jfpqOOzVdq7"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_e4tk0k8y",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "pwd && ls -la"
+            },
+            "output": "/var/tmp/bench/ws-2SVCukVf\ntotal 4\ndrwx------ 2 root root 4096 Nov 20 03:28 .\ndrwxrwxrwt 3 root root   60 Nov 20 03:28 ..\n",
+            "metadata": {
+              "output": "/var/tmp/bench/ws-2SVCukVf\ntotal 4\ndrwx------ 2 root root 4096 Nov 20 03:28 .\ndrwxrwxrwt 3 root root   60 Nov 20 03:28 ..\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "pwd && ls -la",
+            "time": {
+              "start": 1795145290893,
+              "end": 1795145290943
+            }
+          },
+          "id": "prt_1f6ff5484001agkS7i7zTlNTap",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff48ff001ne8jfpqOOzVdq7"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8057,
+            "input": 5894,
+            "output": 243,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 1920
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6ff54e4001PsRK4Ns25h8LaM",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff48ff001ne8jfpqOOzVdq7"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6ff48e9001GNCjcVoY7eRP5x",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-2SVCukVf",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 9077,
+          "input": 299,
+          "output": 842,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7936
+          }
+        },
+        "modelID": "muse-spark-open",
+        "providerID": "ol",
+        "time": {
+          "created": 1795145290990,
+          "completed": 1795145294943
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6ff54ee001eaXpmT5WE3akgb",
+        "sessionID": "ses_e0900b72affep2LE2BleWM8J97"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6ff56590012zEK983PHuHJ9o",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff54ee001eaXpmT5WE3akgb"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need to write blog post file. Save in current folder. Use Spanish. Topic: por qué los tests que fallan a veces son peores que no tener tests.\n\nCreate file like blog-post.md or post.md\n\nWe should create comprehensive post.\n\nAlso need to follow instructions: short and concise responses. But blog content itself can be long. Provide file path.\n\nWe should not overdo praise.\n\nWrite file to /var/tmp/bench/ws-2SVCukVf/blog-tests-que-fallan.md",
+          "time": {
+            "start": 1795145291358,
+            "end": 1795145294850
+          },
+          "id": "prt_1f6ff565e001zZlRTl2AYnbLvn",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff54ee001eaXpmT5WE3akgb"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_430hbqh0",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-2SVCukVf/blog-tests-que-fallan.md",
+              "content": "# Por qué los tests que fallan a veces son peores que no tener tests\n\nTener tests que fallan constantemente y nadie arregla genera una falsa sensación de seguridad peor que no tener tests. Si no tienes tests, sabes que estás desprotegido. Si tienes tests rojos que ignoras, crees que estás cubierto cuando no lo estás.\n\n## 1. Normalizan el fallo\n\nCuando `npm test` siempre muestra 3 tests en rojo, el equipo aprende a ignorar la salida. El día que falla un test crítico de verdad, nadie lo nota porque el rojo ya es \"normal\".\n\nEs el efecto de la alarma del coche que suena toda la noche: al final nadie mira por la ventana.\n\n```bash\n# Esto deja de significar algo:\nTests: 3 failed, 47 passed\n# ¿Son los 3 de siempre o hay uno nuevo?\n```\n\n## 2. Ralentizan el desarrollo\n\nUn test flaky o roto obliga a:\n\n* Re-ejecutar la suite varias veces \"a ver si pasa\"\n* Añadir `skip` o `.todo` para poder mergear\n* Perder 20 minutos debugeando un fallo que no es tu culpa\n\nEse tiempo es más caro que no tener el test. Al menos sin test haces deploy rápido (y asumes el riesgo).\n\n## 3. Destruyen la confianza en la suite\n\nLa utilidad de los tests es la confianza para refactorizar. Si no confías en ellos, no refactorizas. Si no refactorizas, el código se pudre.\n\nUn test suite en el que no confías es deuda técnica con esteroides: pagas el coste de mantenerlo sin obtener el beneficio.\n\n## 4. Esconden bugs reales\n\nEl peor caso: un test falla por una mala aserción, lo marcas como `skip`, y dos meses después ese módulo introduce un bug crítico en producción. El test lo habría atrapado si hubiera estado verde y activo.\n\nSilenciar un test es como quitar la pila al detector de humo porque pita cuando cocinas.\n\n## ¿Qué hacer entonces?\n\n1.  **Tolerancia cero al rojo en main.** Si falla, se arregla o se borra antes de mergear. `main` siempre verde.\n2.  **Borrar es mejor que silenciar.** Un test borrado es honesto: sabes que falta cobertura. Un test en `skip` es mentiroso.\n3.  **Tests deterministas o nada.** Si depende de `sleep(100)`, de una API externa o del orden de ejecución, arréglalo o elimínalo.\n4.  **Cuarentena con fecha de caducidad.** Si un test es flaky, muévelo a cuarentena y crea un ticket con dueño y fecha. Si no se arregla en una semana, se borra.\n\n## Conclusión\n\nNo tener tests es un riesgo visible. Tener tests rojos que todos ignoran es un riesgo invisible.\n\nY en ingeniería, el riesgo invisible siempre es más caro.\n\n100 tests verdes y confiables valen más que 500 de los cuales 20 fallan \"a veces\".\n"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-2SVCukVf/blog-tests-que-fallan.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-2SVCukVf/blog-tests-que-fallan.md",
+            "time": {
+              "start": 1795145294857,
+              "end": 1795145294865
+            }
+          },
+          "id": "prt_1f6ff64040017YkdY4t6x3RcLl",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff54ee001eaXpmT5WE3akgb"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 9077,
+            "input": 299,
+            "output": 842,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7936
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6ff645c001Omrt84HXoBYWaQ",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff54ee001eaXpmT5WE3akgb"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6ff48e9001GNCjcVoY7eRP5x",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-2SVCukVf",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 9208,
+          "input": 140,
+          "output": 108,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8960
+          }
+        },
+        "modelID": "muse-spark-open",
+        "providerID": "ol",
+        "time": {
+          "created": 1795145294946,
+          "completed": 1795145295750
+        },
+        "finish": "stop",
+        "id": "msg_1f6ff6462001CFttC17pAJFgsK",
+        "sessionID": "ses_e0900b72affep2LE2BleWM8J97"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6ff65c8001ZI3VujAlLY7eox",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff6462001CFttC17pAJFgsK"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need to confirm.",
+          "time": {
+            "start": 1795145295306,
+            "end": 1795145295363
+          },
+          "id": "prt_1f6ff65ca001E1EenW4teXW7Tf",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff6462001CFttC17pAJFgsK"
+        },
+        {
+          "type": "text",
+          "text": "Archivo guardado en `/var/tmp/bench/ws-2SVCukVf/blog-tests-que-fallan.md` (`read:4`, `bash:6`).\n\nContenido: por qué los tests fallidos normalizan el fallo, ralentizan el desarrollo, destruyen la confianza y esconden bugs reales. Incluye 4 reglas prácticas: tolerancia cero en main, borrar antes que silenciar, tests deterministas y cuarentena con caducidad.",
+          "time": {
+            "start": 1795145295365,
+            "end": 1795145295745
+          },
+          "id": "prt_1f6ff6605001ggZC0ORNMCp9W8",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff6462001CFttC17pAJFgsK"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 9208,
+            "input": 140,
+            "output": 108,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8960
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6ff6783001sz1Stx7rSWZOBj",
+          "sessionID": "ses_e0900b72affep2LE2BleWM8J97",
+          "messageID": "msg_1f6ff6462001CFttC17pAJFgsK"
+        }
+      ]
+    }
+  ]
+}

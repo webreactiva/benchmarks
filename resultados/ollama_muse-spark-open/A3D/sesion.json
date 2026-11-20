@@ -1,0 +1,545 @@
+{
+  "info": {
+    "id": "ses_e090c65c1ffegKr7SGIAjilAMM",
+    "slug": "gentle-star",
+    "projectID": "global",
+    "directory": "/var/tmp/bench/ws-LaRo386L",
+    "path": "var/tmp/bench/ws-LaRo386L",
+    "title": "Ruta 3D Alhambra Granada en fichero HTML único",
+    "agent": "build",
+    "model": {
+      "id": "muse-spark-open",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 8331,
+      "output": 16206,
+      "reasoning": 0,
+      "cache": {
+        "read": 63488,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795144522302,
+      "updated": 1795144568447
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795144522316
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "muse-spark-open"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f6f39a4c001B2UAzUYDKKIXYj",
+        "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f6f39a4e0019rFge1S6ohp0PH",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f39a4c001B2UAzUYDKKIXYj"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f39a4c001B2UAzUYDKKIXYj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-LaRo386L",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8013,
+          "input": 7805,
+          "output": 208,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "muse-spark-open",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144522332,
+          "completed": 1795144524764
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f39a5c001W47VSJDyF3eMnl",
+        "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f3a0cf001tJavFQif25mLAu",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f39a5c001W47VSJDyF3eMnl"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need to create a single HTML file with 3D route of Alhambra. Use Three.js. Probably use CDN. Provide interactive 3D path.\n\nWe need to decide what to generate: immersive 3D tour of Alhambra. Could use Three.js, create simple low-poly models representing key areas: Puerta de la Justicia, Patio de los Leones, Patio de Arrayanes, Generalife, Alcazaba, Palacio de Carlos V etc. Provide route / path, camera movement along spline.\n\nRequirements: single html file, save in current folder. Need to know current folder.\n\nCheck workspace.",
+          "time": {
+            "start": 1795144523986,
+            "end": 1795144524454
+          },
+          "id": "prt_1f6f3a0d2001kOfbPt1BRUr0Qw",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f39a5c001W47VSJDyF3eMnl"
+        },
+        {
+          "type": "text",
+          "text": "Creando tu ruta 3D interactiva por la Alhambra — un solo archivo HTML con recorrido aéreo.",
+          "time": {
+            "start": 1795144524457,
+            "end": 1795144524754
+          },
+          "id": "prt_1f6f3a2a8001RnF3Z17oMTB3F0",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f39a5c001W47VSJDyF3eMnl"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_1g4qplvi",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/"
+            },
+            "output": "<path>/</path>\n<type>directory</type>\n<entries>\nbin.usr-is-merged/\nbin/\nboot/\ncontainer_info.json\ndev/\netc/\nhome/\nlib.usr-is-merged/\nlib/\nlib64/\nlost+found/\nmedia/\nmnt/\nnix/\nold_root/\nopt/\nproc/\nroot/\nrun/\nsbin/\nsrv/\nsys/\ntmp/\nusr/\nvar/\n\n(25 entries)\n</entries>",
+            "metadata": {
+              "preview": "bin.usr-is-merged/\nbin/\nboot/\ncontainer_info.json\ndev/\netc/\nhome/\nlib.usr-is-merged/\nlib/\nlib64/\nlost+found/\nmedia/\nmnt/\nnix/\nold_root/\nopt/\nproc/\nroot/\nrun/\nsbin/",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "directory",
+                "path": "/",
+                "entries": [
+                  "bin.usr-is-merged/",
+                  "bin/",
+                  "boot/",
+                  "container_info.json",
+                  "dev/",
+                  "etc/",
+                  "home/",
+                  "lib.usr-is-merged/",
+                  "lib/",
+                  "lib64/",
+                  "lost+found/",
+                  "media/",
+                  "mnt/",
+                  "nix/",
+                  "old_root/",
+                  "opt/",
+                  "proc/",
+                  "root/",
+                  "run/",
+                  "sbin/",
+                  "srv/",
+                  "sys/",
+                  "tmp/",
+                  "usr/",
+                  "var/"
+                ],
+                "offset": 1,
+                "totalEntries": 25,
+                "truncated": false
+              }
+            },
+            "title": "",
+            "time": {
+              "start": 1795144524609,
+              "end": 1795144524614
+            }
+          },
+          "id": "prt_1f6f3a33a001fPdZoKP2mSvHKb",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f39a5c001W47VSJDyF3eMnl"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8013,
+            "input": 7805,
+            "output": 208,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f3a3d70016khcvw53h768IQ",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f39a5c001W47VSJDyF3eMnl"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f39a4c001B2UAzUYDKKIXYj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-LaRo386L",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8166,
+          "input": 184,
+          "output": 46,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7936
+          }
+        },
+        "modelID": "muse-spark-open",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144524767,
+          "completed": 1795144525403
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f3a3df001BDbeYoOHof1UOz",
+        "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f3a611001XZSrZpcpgPP0YP",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f3a3df001BDbeYoOHof1UOz"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_zy0s6ad3",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "pwd && ls -la"
+            },
+            "output": "/var/tmp/bench/ws-LaRo386L\ntotal 4\ndrwx------ 2 root root 4096 Nov 20 03:15 .\ndrwxrwxrwt 3 root root   60 Nov 20 03:15 ..\n",
+            "metadata": {
+              "output": "/var/tmp/bench/ws-LaRo386L\ntotal 4\ndrwx------ 2 root root 4096 Nov 20 03:15 .\ndrwxrwxrwt 3 root root   60 Nov 20 03:15 ..\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "pwd && ls -la",
+            "time": {
+              "start": 1795144525337,
+              "end": 1795144525398
+            }
+          },
+          "id": "prt_1f6f3a614001GXOt5PrLUayJtP",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f3a3df001BDbeYoOHof1UOz"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8166,
+            "input": 184,
+            "output": 46,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7936
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f3a658001MBMIMw6ETOtHUP",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f3a3df001BDbeYoOHof1UOz"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f39a4c001B2UAzUYDKKIXYj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-LaRo386L",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 23729,
+          "input": 173,
+          "output": 15492,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8064
+          }
+        },
+        "modelID": "muse-spark-open",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144525406,
+          "completed": 1795144565646
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f3a65e001BZZsNstmWPGolM",
+        "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f3a835001D0htNSn2MXaNcv",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f3a65e001BZZsNstmWPGolM"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need to create HTML file in current folder: /var/tmp/bench/ws-LaRo386L\n\nCreate an impressive 3D route experience.\n\nFeatures to include:\n\n- Three.js via importmap (CDN)\n- Terrain with hills (Sierra Nevada backdrop, Alhambra hill)\n- Stylized low-poly buildings: Alcazaba, Palacio Nazaries, Patio Leones, Patio Arrayanes, Generalife, Carlos V, Torres, murallas\n- Route path (CatmullRomCurve3) visualized, with glowing line\n- Camera animation along route + free explore mode\n- Markers/paradas with info panels\n- Controls: OrbitControls for free, and cinematic Tour mode\n- Skybox, fog, trees, lighting, shadows\n- UI in Spanish, elegant design inspired by Alhambra tiles\n- Day/night toggle, audio ambient?\n- Minimap? Progress.\n- Info cards for each stop.\n\nMake it one file, self-contained, CSS+JS inline.\n\nLet's design stops:\n\n1. Puerta de la Justicia - entrada\n2. Alcazaba - fortaleza militar\n3. Palacio de Carlos V - renacentista circular\n4. Patio de los Arrayanes / Comares\n5. Patio de los Leones\n6. Partal y Palacio del Generalife (jardines)\n(7. Mirador final - vista Granada/Albaicín)\n\nPath will be a spline through these points.\n\nVisual style: realistic lighting, warm stone colors, vegetation mediterránea (cipreses).\n\nInclude procedural buildings with simple geometries but recognizable silhouettes. For Carlos V: circular shape. Alcazaba: towers with crenellations. Nazaries: introverted palaces with tiled roofs, fountains.\n\nAdd extra details: walls, cypress trees, water planes for albercas, lion fountain stylized.\n\nInteractivity:\n- Buttons: Iniciar Ruta, Pausa, Siguiente Parada, Modo Libre, Vista Aérea\n- Progress bar\n- Side panel with description, history, datos\n- Click on markers to jump\n- Keyboard: SPACE pause/play, arrows next/prev\n\nPolish: responsive, beautiful UI with arabesque pattern, serif fonts (Cinzel, Cormorant).\n\nLet's build html.\n\nUse Three.js latest stable importmap:\nthree@0.160.0\nOrbitControls from three/addons/\n\nAdd GSAP-like tween via manual lerp or use Three math.\n\nImplement camera following curve.\n\nLet's craft 800+ lines HTML for quality.\n\nNeed to ensure shadows, fog.\n\nAdd terrain: PlaneGeometry with vertex displacement.\n\nAdd trees: instanced cones + cylinders.\n\nAdd performance considerations.\n\nWrite file.",
+          "time": {
+            "start": 1795144525879,
+            "end": 1795144565602
+          },
+          "id": "prt_1f6f3a837001Z7foOhcqkLWwDV",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f3a65e001BZZsNstmWPGolM"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_5zzkl2u7",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/var/tmp/bench/ws-LaRo386L/alhambra-ruta-3d.html",
+              "content": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Ruta 3D — La Alhambra de Granada</title>\n<link href=\"https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;600&display=swap\" rel=\"stylesheet\">\n<script type=\"importmap\">\n{\n  \"imports\": {\n    \"three\": \"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js\",\n    \"three/addons/\": \"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/\"\n  }\n}\n</script>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\n:root{--gold:#c9a86a;--gold2:#e8d5a8;--red:#7a1c1c;--dark:#1a1208;--cream:#fdf6e3;--teal:#0e3a3a;--stone:#d4c4a8}\nbody{font-family:'Inter',sans-serif;background:#0b0e14;overflow:hidden;color:var(--cream)}\n#canvas-container{position:fixed;inset:0}\ncanvas{display:block}\n/* HEADER */\n#header{position:fixed;top:0;left:0;right:0;z-index:10;background:linear-gradient(to bottom,rgba(10,8,5,0.95) 0%,rgba(10,8,5,0.75) 60%,transparent 100%);padding:14px 18px 28px;pointer-events:none}\n.header-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}\n.brand{display:flex;align-items:center;gap:14px}\n.logo{width:44px;height:44px;border:1.5px solid var(--gold);display:grid;place-items:center;background:rgba(201,168,106,0.12);transform:rotate(45deg);flex-shrink:0}\n.logo span{transform:rotate(-45deg);font-family:'Cinzel',serif;font-weight:800;color:var(--gold);font-size:18px}\n.brand h1{font-family:'Cinzel',serif;font-size:20px;letter-spacing:0.14em;color:var(--gold2);line-height:1}\n.brand p{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(253,246,227,0.75);font-size:13px;letter-spacing:0.06em;margin-top:2px}\n.header-actions{display:flex;gap:8px;pointer-events:auto;flex-wrap:wrap;justify-content:flex-end}\n.pill{border:1px solid rgba(201,168,106,0.5);background:rgba(20,15,8,0.7);backdrop-filter:blur(8px);color:var(--gold2);padding:7px 14px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all .2s}\n.pill:hover{background:var(--gold);color:#1a1208;border-color:var(--gold)}\n.pill.active{background:var(--gold);color:#1a1208}\n/* LEFT PANEL */\n#left-panel{position:fixed;left:18px;top:86px;bottom:18px;width:360px;z-index:10;display:flex;flex-direction:column;gap:12px;pointer-events:none}\n@media(max-width:900px){#left-panel{width:auto;right:18px;bottom:auto;top:auto;top:76px}}\n.glass{background:rgba(18,14,10,0.88);backdrop-filter:blur(16px);border:1px solid rgba(201,168,106,0.22);box-shadow:0 12px 40px rgba(0,0,0,0.5)}\n#info-card{padding:20px 20px 16px;pointer-events:auto}\n.kicker{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:700;display:flex;align-items:center;gap:8px}\n.kicker::before{content:'';width:22px;height:1px;background:var(--gold)}\n#stop-title{font-family:'Cinzel',serif;font-size:22px;color:var(--cream);margin:10px 0 4px;line-height:1.15}\n#stop-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold2);font-size:14px;margin-bottom:10px}\n#stop-desc{font-size:13px;line-height:1.65;color:rgba(253,246,227,0.82)}\n#stop-meta{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}\n.meta{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(201,168,106,0.12);border:1px solid rgba(201,168,106,0.25);padding:6px 10px;color:var(--gold2)}\n#progress-card{padding:14px 16px;display:flex;flex-direction:column;gap:10px;pointer-events:auto}\n.progress-top{display:flex;justify-content:space-between;align-items:center}\n.progress-top span{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(253,246,227,0.6)}\n#progress-pct{color:var(--gold)!important;font-weight:700}\n#progress-track{height:3px;background:rgba(253,246,227,0.12);position:relative;overflow:hidden;border-radius:999px}\n#progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .4s ease;box-shadow:0 0 10px rgba(201,168,106,0.6)}\n#stops-dots{display:flex;gap:6px}\n.dot{flex:1;height:3px;background:rgba(253,246,227,0.15);border-radius:999px;cursor:pointer;transition:all .3s;position:relative}\n.dot.active{background:var(--gold)}\n.dot.passed{background:rgba(201,168,106,0.5)}\n/* CONTROLS */\n#controls{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:10px;background:rgba(18,14,10,0.92);backdrop-filter:blur(16px);border:1px solid rgba(201,168,106,0.25);padding:8px 10px;box-shadow:0 12px 32px rgba(0,0,0,0.5)}\n@media(max-width:640px){#controls{left:18px;right:18px;transform:none;justify-content:space-between;padding:8px;gap:6px}}\n.btn{appearance:none;border:1px solid rgba(201,168,106,0.35);background:rgba(253,246,227,0.06);color:var(--cream);padding:9px 12px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s;white-space:nowrap}\n.btn:hover{background:rgba(201,168,106,0.15);border-color:var(--gold)}\n.btn.primary{background:var(--gold);color:#1a1208;border-color:var(--gold)}\n.btn.primary:hover{background:var(--gold2)}\n.btn:disabled{opacity:0.35;pointer-events:none}\n.btn svg{width:14px;height:14px}\n#play-btn{min-width:148px;justify-content:center}\n@media(max-width:640px){#play-btn{min-width:auto;flex:1} .hide-m{ display:none}}\n.speed{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(253,246,227,0.7)}\n.speed input{accent-color:var(--gold)}\n/* RIGHT LEGEND */\n#legend{position:fixed;right:18px;top:86px;z-index:10;padding:12px 14px;min-width:180px;pointer-events:auto}\n@media(max-width:900px){#legend{display:none}}\n#legend h4{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}\n.legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(253,246,227,0.78);margin:6px 0}\n.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}\n.legend-line{width:18px;height:3px;border-radius:999px}\n/* LOADING */\n#loading{position:fixed;inset:0;z-index:20;background:radial-gradient(900px 600px at 50% 20%, #2a1e12 0%, #0b0e14 60%, #06080c 100%);display:grid;place-items:center;transition:opacity .6s}\n#loading.hidden{opacity:0;pointer-events:none}\n.load-box{text-align:center;padding:24px}\n.load-ring{width:54px;height:54px;border:2px solid rgba(201,168,106,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}\n@keyframes spin{to{transform:rotate(360deg)}}\n.load-box h2{font-family:'Cinzel',serif;letter-spacing:0.18em;color:var(--gold2);font-size:16px}\n.load-box p{font-size:12px;color:rgba(253,246,227,0.6);margin-top:6px;letter-spacing:0.08em}\n/* TOOLTIP */\n#tooltip{position:fixed;z-index:15;pointer-events:none;background:rgba(10,8,5,0.92);border:1px solid rgba(201,168,106,0.3);color:var(--cream);padding:8px 10px;font-size:12px;transform:translate(-50%,-110%);opacity:0;transition:opacity .15s;backdrop-filter:blur(8px);white-space:nowrap}\n#tooltip.show{opacity:1}\n/* MINI MAP */\n#minimap{position:fixed;right:18px;bottom:18px;z-index:10;width:160px;height:160px;border:1px solid rgba(201,168,106,0.25);background:rgba(18,14,10,0.85);backdrop-filter:blur(10px);overflow:hidden;display:grid;place-items:center;padding:6px}\n@media(max-width:900px){#minimap{display:none}}\n#minimap canvas{width:148px;height:148px}\n#minimap-label{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);background:rgba(0,0,0,0.6);padding:2px 6px}\n/* ARABESQUE pattern */\n.arabesque{height:6px;background:repeating-linear-gradient(90deg, transparent 0 8px, rgba(201,168,106,0.25) 8px 9px), linear-gradient(90deg, rgba(201,168,106,0) 0%, rgba(201,168,106,0.15) 50%, rgba(201,168,106,0) 100%);margin:12px 0 0}\n.hint{font-size:11px;color:rgba(253,246,227,0.55);margin-top:10px;line-height:1.5}\n</style>\n</head>\n<body>\n<div id=\"canvas-container\"></div>\n\n<div id=\"loading\">\n  <div class=\"load-box\">\n    <div class=\"load-ring\"></div>\n    <h2>LA ALHAMBRA</h2>\n    <p>CARGANDO RUTA 3D · GRANADA</p>\n  </div>\n</div>\n\n<header id=\"header\">\n  <div class=\"header-inner\">\n    <div class=\"brand\">\n      <div class=\"logo\"><span>٭</span></div>\n      <div>\n        <h1>ALHAMBRA · RUTA 3D</h1>\n        <p>Ciudad palatina nazarí — Granada, s. XIII-XIV</p>\n      </div>\n    </div>\n    <div class=\"header-actions\">\n      <button class=\"pill active\" id=\"btn-tour\">Ruta guiada</button>\n      <button class=\"pill\" id=\"btn-free\">Modo libre</button>\n      <button class=\"pill\" id=\"btn-aerial\">Vista aérea</button>\n      <button class=\"pill\" id=\"btn-daynight\">☾ Noche</button>\n    </div>\n  </div>\n</header>\n\n<div id=\"left-panel\">\n  <div id=\"info-card\" class=\"glass\">\n    <div class=\"kicker\" id=\"stop-kicker\">PARADA 1 · 7</div>\n    <div id=\"stop-title\">Puerta de la Justicia</div>\n    <div id=\"stop-subtitle\">Bab al-Sharia — Entrada monumental</div>\n    <div id=\"stop-desc\">La puerta principal de la Alhambra, del siglo XIV. Su arco de herradura y bóveda recuerdan que aquí se impartía justicia. Desde este punto se domina el Albaicín y comienza la muralla roja que da nombre a la fortaleza: <em>al-Ḥamrā’</em>.</div>\n    <div id=\"stop-meta\">\n      <span class=\"meta\">⏱ 3 min</span>\n      <span class=\"meta\">📍 37.176°N 3.588°W</span>\n      <span class=\"meta\">s. XIV</span>\n    </div>\n    <div class=\"arabesque\"></div>\n    <div class=\"hint\">Consejo: usa <b>ESPACIO</b> para pausar, <b>← →</b> para saltar de parada y el ratón para explorar en modo libre.</div>\n  </div>\n  <div id=\"progress-card\" class=\"glass\">\n    <div class=\"progress-top\"><span>Progreso de la ruta</span><span id=\"progress-pct\">14%</span></div>\n    <div id=\"progress-track\"><div id=\"progress-fill\"></div></div>\n    <div id=\"stops-dots\"></div>\n  </div>\n</div>\n\n<div id=\"legend\" class=\"glass\">\n  <h4>Leyenda</h4>\n  <div class=\"legend-item\"><span class=\"legend-dot\" style=\"background:#c9a86a;box-shadow:0 0 8px #c9a86a\"></span> Parada seleccionada</div>\n  <div class=\"legend-item\"><span class=\"legend-dot\" style=\"background:rgba(253,246,227,0.9)\"></span> Parada por visitar</div>\n  <div class=\"legend-item\"><span class=\"legend-line\" style=\"background:linear-gradient(90deg,#c9a86a,#e8d5a8)\"></span> Ruta palaciega</div>\n  <div class=\"legend-item\"><span class=\"legend-dot\" style=\"background:#2a9d8f\"></span> Agua · albercas</div>\n  <div class=\"legend-item\"><span class=\"legend-dot\" style=\"background:#1a5a3a\"></span> Jardines · Generalife</div>\n  <div style=\"margin-top:10px;font-size:11px;line-height:1.5;color:rgba(253,246,227,0.6)\">700 m de recorrido · 7 paradas · 15 min aprox. Murallas de 1.400 m originales.</div>\n</div>\n\n<div id=\"minimap\" class=\"glass\"><canvas id=\"mini-canvas\" width=\"148\" height=\"148\"></canvas><div id=\"minimap-label\">Planta Alhambra</div></div>\n<div id=\"tooltip\"></div>\n\n<div id=\"controls\">\n  <button class=\"btn\" id=\"prev-btn\" title=\"Anterior (←)\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M15 18 L9 12 L15 6\"/></svg><span class=\"hide-m\">Anterior</span></button>\n  <button class=\"btn primary\" id=\"play-btn\"><svg id=\"play-icon\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M8 5.14v14l11-7z\"/></svg><span id=\"play-label\">Iniciar ruta</span></button>\n  <button class=\"btn\" id=\"next-btn\"><span class=\"hide-m\">Siguiente</span><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M9 6 L15 12 L9 18\"/></svg></button>\n  <div style=\"width:1px;height:22px;background:rgba(201,168,106,0.25)\"></div>\n  <div class=\"speed\"><span>Vel.</span><input id=\"speed\" type=\"range\" min=\"0.3\" max=\"2.2\" step=\"0.1\" value=\"1\"><span id=\"speed-val\">1×</span></div>\n</div>\n\n<script type=\"module\">\nimport * as THREE from 'three';\nimport { OrbitControls } from 'three/addons/controls/OrbitControls.js';\n\nconst container = document.getElementById('canvas-container');\nconst tooltip = document.getElementById('tooltip');\n\n// Scene\nconst scene = new THREE.Scene();\nscene.fog = new THREE.FogExp2(0x1e293b, 0.006);\nconst camera = new THREE.PerspectiveCamera(58, innerWidth/innerHeight, 0.1, 600);\ncamera.position.set(42, 34, 58);\nconst renderer = new THREE.WebGLRenderer({antialias:true, powerPreference:'high-performance'});\nrenderer.setPixelRatio(Math.min(devicePixelRatio, 1.9));\nrenderer.setSize(innerWidth, innerHeight);\nrenderer.shadowMap.enabled = true;\nrenderer.shadowMap.type = THREE.PCFSoftShadowMap;\nrenderer.toneMapping = THREE.ACESFilmicToneMapping;\nrenderer.toneMappingExposure = 1.15;\ncontainer.appendChild(renderer.domElement);\n\nconst controls = new OrbitControls(camera, renderer.domElement);\ncontrols.enableDamping = true;\ncontrols.dampingFactor = 0.06;\ncontrols.minDistance = 6;\ncontrols.maxDistance = 140;\ncontrols.maxPolarAngle = Math.PI/2 - 0.04;\ncontrols.target.set(0, 4, -2);\ncontrols.update();\n\n// Lights\nlet isNight = false;\nconst ambient = new THREE.AmbientLight(0xfff1d6, 0.55);\nscene.add(ambient);\nconst sun = new THREE.DirectionalLight(0xfff3d0, 2.2);\nsun.position.set(60, 55, 30);\nsun.castShadow = true;\nsun.shadow.mapSize.set(2048,2048);\nsun.shadow.camera.near = 1; sun.shadow.camera.far = 180;\nsun.shadow.camera.left = -70; sun.shadow.camera.right = 70; sun.shadow.camera.top = 70; sun.shadow.camera.bottom = -70;\nsun.shadow.bias = -0.0003;\nscene.add(sun);\nconst hemi = new THREE.HemisphereLight(0x8fbcd4, 0x3a2a18, 0.6);\nscene.add(hemi);\nconst fill = new THREE.DirectionalLight(0xc9a86a, 0.5);\nfill.position.set(-30, 20, -40);\nscene.add(fill);\n\n// Sky gradient via scene background canvas texture\nfunction makeSkyTexture(night=false){\n  const c = document.createElement('canvas'); c.width=1024; c.height=1024;\n  const g=c.getContext('2d');\n  const grad=g.createLinearGradient(0,0,0,1024);\n  if(night){\n    grad.addColorStop(0,'#060a14'); grad.addColorStop(0.4,'#0b1a2e'); grad.addColorStop(0.75,'#162a4a'); grad.addColorStop(1,'#2a3d5a');\n  } else {\n    grad.addColorStop(0,'#4a6fa5'); grad.addColorStop(0.3,'#7aa0c8'); grad.addColorStop(0.6,'#b8d0ea'); grad.addColorStop(0.85,'#dbe8f5'); grad.addColorStop(1,'#eaf2fb');\n  }\n  g.fillStyle=grad; g.fillRect(0,0,1024,1024);\n  // subtle clouds\n  g.fillStyle = night ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.22)';\n  for(let i=0;i<12;i++){\n    const x=Math.random()*1024, y=80+Math.random()*420, r=40+Math.random()*110;\n    g.beginPath(); g.ellipse(x,y,r, r*0.55,0,0,Math.PI*2); g.fill();\n  }\n  const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace; return tex;\n}\nscene.background = makeSkyTexture(false);\n\n// Terrain - hill\nconst groundGeo = new THREE.PlaneGeometry(220,220,120,120);\ngroundGeo.rotateX(-Math.PI/2);\nconst posAttr = groundGeo.attributes.position;\n// height function: Alhambra hill elongated NW-SE, Sierra Nevada backdrop\nfor(let i=0;i<posAttr.count;i++){\n  const x=posAttr.getX(i), z=posAttr.getY(i); // after rotate, Y is Z\n  // hill ridge\n  const along = x*0.55 + z*0.25; // ridge axis\n  const across = -x*0.25 + z*0.65;\n  let h = 10*Math.exp(-(across*across)/700) * Math.exp(-(along*along)/1600);\n  h += 6*Math.exp(-((x-10)*(x-10)+(z+8)*(z+8))/420); // central prominence\n  h += Math.max(0, -z*0.06 + 3) * Math.exp(-(x*x)/900); // slope to Darro valley (south)\n  // Sierra Nevada in background south-east\n  h += Math.max(0, (z*0.12 + x*0.04 + 8)) * 0.6;\n  // small noise\n  h += Math.sin(x*0.18)*0.25 + Math.cos(z*0.15)*0.25;\n  // valle Darro drop\n  if(z > 22) h -= (z-22)*0.35;\n  if(z < -45) h += (-45 - z)*0.08; // rise to Sierra\n  posAttr.setZ(i, h);\n}\ngroundGeo.computeVertexNormals();\nconst groundMat = new THREE.MeshStandardMaterial({color:0xc2b49a, roughness:0.95, metalness:0.02});\nconst ground = new THREE.Mesh(groundGeo, groundMat);\nground.receiveShadow = true;\nground.position.y = -4;\nscene.add(ground);\n\n// far mountains backdrop (simple plane)\nconst hillMat = new THREE.MeshStandardMaterial({color:0x8ca0b8, roughness:1});\nconst mtnGeo = new THREE.PlaneGeometry(400, 90, 40, 10);\nmtnGeo.rotateX(-Math.PI/2);\nfor(let i=0;i<mtnGeo.attributes.position.count;i++){\n  const x=mtnGeo.attributes.position.getX(i), z=mtnGeo.attributes.position.getY(i);\n  let h = 14*Math.sin(x*0.02+0.4)*Math.exp(-(z+80)*(z+80)/900) + 6*Math.cos(x*0.05);\n  mtnGeo.attributes.position.setZ(i,h);\n}\nmtnGeo.computeVertexNormals();\nconst mtnMesh = new THREE.Mesh(mtnGeo, hillMat);\nmtnMesh.position.set(20,-4,-110);\nscene.add(mtnMesh);\n\n// Materials palette\nconst stoneMat = new THREE.MeshStandardMaterial({color:0xd8c7a8, roughness:0.85});\nconst stoneDark = new THREE.MeshStandardMaterial({color:0xb8a48a, roughness:0.9});\nconst wallMat = new THREE.MeshStandardMaterial({color:0xc9b49a, roughness:0.88});\nconst wallRed = new THREE.MeshStandardMaterial({color:0xa65a3a, roughness:0.92});\nconst roofMat = new THREE.MeshStandardMaterial({color:0x8a7a5a, roughness:0.8});\nconst tileTeal = new THREE.MeshStandardMaterial({color:0x2a7a6a, roughness:0.6});\nconst goldMat = new THREE.MeshStandardMaterial({color:0xc9a86a, roughness:0.4, metalness:0.25});\nconst waterMat = new THREE.MeshStandardMaterial({color:0x2fb3a8, roughness:0.15, metalness:0.1, transparent:true, opacity:0.82, emissive:0x0e4a4a, emissiveIntensity:0.15});\nconst cypressMat = new THREE.MeshStandardMaterial({color:0x0f3a22, roughness:0.9});\nconst foliageMat = new THREE.MeshStandardMaterial({color:0x2f6a3a, roughness:0.9});\n\n// Helpers to build architecture\nfunction box(w,h,d, mat, pos, rotY=0){\n  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat);\n  m.position.copy(pos); m.rotation.y=rotY; m.castShadow=true; m.receiveShadow=true; return m;\n}\nfunction cylinder(r,h, mat, pos){\n  const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,16), mat);\n  m.position.copy(pos); m.castShadow=true; m.receiveShadow=true; return m;\n}\nfunction addCrenellations(parent, w, d, h, thick=0.5){\n  const merlonW=0.9, gap=0.9;\n  const count = Math.floor(w/(merlonW+gap));\n  for(let i=0;i<count;i++){\n    const x = -w/2 + merlonW/2 + i*(merlonW+gap);\n    const m=new THREE.Mesh(new THREE.BoxGeometry(merlonW,0.9,thick), wallMat);\n    m.position.set(x, h/2+0.45, d/2); parent.add(m);\n    const m2=m.clone(); m2.position.z=-d/2; parent.add(m2);\n  }\n  const countD=Math.floor(d/(merlonW+gap));\n  for(let i=0;i<countD;i++){\n    const z=-d/2+merlonW/2+i*(merlonW+gap);\n    const m=new THREE.Mesh(new THREE.BoxGeometry(thick,0.9,merlonW), wallMat);\n    m.position.set(w/2,h/2+0.45,z); parent.add(m);\n    const m2=m.clone(); m2.position.x=-w/2; parent.add(m2);\n  }\n}\n\n// Group for all buildings\nconst city = new THREE.Group();\nscene.add(city);\n\n// --- ALHAMBRA BUILDINGS (simplified but recognizable) ---\n// 1 Puerta de la Justicia\n(function(){\n  const g=new THREE.Group(); g.position.set(-32,0,20);\n  const base=box(10,7,6, wallRed, new THREE.Vector3(0,1.2,0));\n  g.add(base);\n  // arch\n  const archShape=new THREE.Shape();\n  archShape.moveTo(-1.6,-1.2); archShape.lineTo(-1.6,0.6); archShape.bezierCurveTo(-1.6,1.6,-0.9,2.2,0,2.2); archShape.bezierCurveTo(0.9,2.2,1.6,1.6,1.6,0.6); archShape.lineTo(1.6,-1.2);\n  const archGeo=new THREE.ExtrudeGeometry(archShape,{depth:0.6, bevelEnabled:false});\n  const archMat=new THREE.MeshStandardMaterial({color:0x1a1208});\n  const arch=new THREE.Mesh(archGeo, archMat); arch.position.set(0,0.2,3.05); arch.rotation.y=Math.PI; g.add(arch);\n  // towers flanking\n  g.add(cylinder(1.3,8, wallRed, new THREE.Vector3(-4.5,1.5,0)));\n  g.add(cylinder(1.3,8, wallRed, new THREE.Vector3(4.5,1.5,0)));\n  // key symbol\n  const key=new THREE.Mesh(new THREE.TorusGeometry(0.45,0.07,8,16), goldMat); key.position.set(0,3.2,3.2); key.scale.z=0.6; g.add(key);\n  // adjust to terrain height approx\n  g.position.y = terrainHeight(g.position.x,g.position.z)-1.5;\n  city.add(g);\n})();\n\n// utility to get terrain height\nfunction terrainHeight(x,z){\n  // approximate inverse of earlier function for placement\n  const along = x*0.55 + z*0.25;\n  const across = -x*0.25 + z*0.65;\n  let h = 10*Math.exp(-(across*across)/700) * Math.exp(-(along*along)/1600);\n  h += 6*Math.exp(-((x-10)*(x-10)+(z+8)*(z+8))/420);\n  h += Math.max(0, -z*0.06 + 3) * Math.exp(-(x*x)/900);\n  h += Math.max(0, (z*0.12 + x*0.04 + 8)) * 0.6;\n  h += Math.sin(x*0.18)*0.25 + Math.cos(z*0.15)*0.25;\n  if(z > 22) h -= (z-22)*0.35;\n  if(z < -45) h += (-45 - z)*0.08;\n  return h -4;\n}\n\n// 2 Alcazaba (west tip)\n(function(){\n  const g=new THREE.Group(); g.position.set(-22,0,14);\n  g.position.y = terrainHeight(-22,14)-1;\n  // outer walls\n  const w1=box(18,5,2, wallRed, new THREE.Vector3(0,1.5, -4)); g.add(w1);\n  const w2=box(2,5,14, wallRed, new THREE.Vector3(-8,1.5,2)); g.add(w2);\n  const w3=box(2,5,14, wallRed, new THREE.Vector3(8,1.5,2)); g.add(w3);\n  const w4=box(18,4,1.5, wallRed, new THREE.Vector3(0,1,9.5)); g.add(w4);\n  // Torre del Homenaje (keep)\n  const keep=box(4.5,10,4.5, wallMat, new THREE.Vector3(-5,3.5,-1)); g.add(keep); addCrenellations(keep,4.5,4.5,10);\n  const tVela=box(3.8,12,3.8, stoneMat, new THREE.Vector3(4,4.2,6)); g.add(tVela); addCrenellations(tVela,3.8,3.8,12);\n  // interior\n  g.add(box(6,1.5,6, stoneDark, new THREE.Vector3(0,0.2,3)));\n  city.add(g);\n})();\n\n// 3 Palacio de Carlos V (circular Renaissance)\n(function(){\n  const g=new THREE.Group(); g.position.set(-6,0,10);\n  g.position.y = terrainHeight(-6,10)-1;\n  // square outer\n  const outer= new THREE.Mesh(new THREE.BoxGeometry(14,6,14), stoneMat); outer.position.y=1.2; outer.castShadow=true; outer.receiveShadow=true; g.add(outer);\n  // inner circular patio (negative: torus + cylinder)\n  const patioWall = new THREE.Mesh(new THREE.CylinderGeometry(5.2,5.2,5,32,1,true), stoneDark);\n  patioWall.position.y=1.2; patioWall.material.side=THREE.DoubleSide; g.add(patioWall);\n  const colGeo=new THREE.CylinderGeometry(0.18,0.18,4.5,10);\n  for(let i=0;i<16;i++){\n    const a=i/16*Math.PI*2; const c=new THREE.Mesh(colGeo, stoneMat);\n    c.position.set(Math.cos(a)*5.2,1.2, Math.sin(a)*5.2); g.add(c);\n  }\n  const roof=new THREE.Mesh(new THREE.RingGeometry(5.2,7,32), roofMat); roof.rotation.x=-Math.PI/2; roof.position.y=4.3; g.add(roof);\n  // detail: facade\n  g.add(box(0.4,4,6, stoneDark, new THREE.Vector3(-7,1.2,0)));\n  city.add(g);\n})();\n\n// 4 Patio Arrayanes / Comares (Palacios Nazaríes)\n(function(){\n  const g=new THREE.Group(); g.position.set(5,0,6);\n  g.position.y = terrainHeight(5,6)-1;\n  // U-shaped palace\n  const base=box(18,5,16, wallMat, new THREE.Vector3(0,1.4,0)); g.add(base);\n  // central alberca (pool)\n  const pool=new THREE.Mesh(new THREE.BoxGeometry(12,0.2,4), waterMat); pool.position.set(0,2.7,0); g.add(pool);\n  pool.receiveShadow=false;\n  const poolEdge=new THREE.Mesh(new THREE.BoxGeometry(13,0.3,5), stoneDark); poolEdge.position.set(0,2.55,0); g.add(poolEdge);\n  // porticos\n  const arcadeN=box(14,3.5,0.6, stoneMat, new THREE.Vector3(0,1.6,5.5)); g.add(arcadeN);\n  const arcadeS=box(14,3.5,0.6, stoneMat, new THREE.Vector3(0,1.6,-5.5)); g.add(arcadeS);\n  for(let i=-6;i<=6;i+=1.2){\n    const colS=cylinder(0.12,3.2, stoneMat, new THREE.Vector3(i,1.6,5.5)); g.add(colS);\n    const colN=cylinder(0.12,3.2, stoneMat, new THREE.Vector3(i,1.6,-5.5)); g.add(colN);\n  }\n  // Torre de Comares behind\n  const torre=box(6,11,6, wallRed, new THREE.Vector3(0,4.5,9)); g.add(torre); addCrenellations(torre,6,6,11);\n  // Torre de Comares detail windows\n  const winMat=new THREE.MeshStandardMaterial({color:0x0f1a1a});\n  g.add(box(0.5,1,0.3, winMat, new THREE.Vector3(0,5,12.1)));\n  city.add(g);\n})();\n\n// 5 Patio de los Leones\n(function(){\n  const g=new THREE.Group(); g.position.set(12,0,2);\n  g.position.y = terrainHeight(12,2)-1;\n  const base=box(16,2,14, wallMat, new THREE.Vector3(0,0.6,0)); g.add(base);\n  // gallery columns around\n  const colGeo=new THREE.CylinderGeometry(0.13,0.13,2.8,10);\n  const perim=[[-7,-6,7,-6],[-7,6,-7,-6],[7,-6,7,6],[-7,6,7,6]];\n  // top/bottom galleries\n  for(let x=-7;x<=7;x+=1.1){ g.add(new THREE.Mesh(colGeo, stoneMat).translateX(x).translateZ(6).translateY(1.2)); g.add(new THREE.Mesh(colGeo, stoneMat).translateX(x).translateZ(-6).translateY(1.2)); }\n  for(let z=-5;z<=5;z+=1.1){ g.add(new THREE.Mesh(colGeo, stoneMat).translateX(-7).translateZ(z).translateY(1.2)); g.add(new THREE.Mesh(colGeo, stoneMat).translateX(7).translateZ(z).translateY(1.2)); }\n  // roof\n  const roofN=box(16,0.5,2, tileTeal, new THREE.Vector3(0,2.9,6)); g.add(roofN);\n  const roofS=box(16,0.5,2, tileTeal, new THREE.Vector3(0,2.9,-6)); g.add(roofS);\n  const roofW=box(2,0.5,12, tileTeal, new THREE.Vector3(-7,2.9,0)); g.add(roofW);\n  const roofE=box(2,0.5,12, tileTeal, new THREE.Vector3(7,2.9,0)); g.add(roofE);\n  // central fountain of lions\n  const fountainBase=cylinder(1.6,0.6, stoneMat, new THREE.Vector3(0,0.9,0)); g.add(fountainBase);\n  // lions (12 little boxes)\n  for(let i=0;i<12;i++){ const a=i/12*Math.PI*2; const lion=box(0.32,0.32,0.5, stoneDark, new THREE.Vector3(Math.cos(a)*1.85,0.75, Math.sin(a)*1.85)); lion.lookAt(0,0.75,0); g.add(lion); }\n  // Sala de Dos Hermanas cupula\n  const sala=box(5,4,5, wallMat, new THREE.Vector3(0,1.6,8.5)); g.add(sala);\n  const cup=cylinder(2.2,1.2, goldMat, new THREE.Vector3(0,4.2,8.5)); g.add(cup);\n  city.add(g);\n})();\n\n// 6 El Partal y Generalife approach\n(function(){\n  const g=new THREE.Group(); g.position.set(20,0,-4);\n  g.position.y = terrainHeight(20,-4)-1;\n  const portico=box(10,3,1.2, stoneMat, new THREE.Vector3(0,1.2,2)); g.add(portico);\n  for(let i=-4;i<=4;i+=1.2) g.add(cylinder(0.14,3, stoneMat, new THREE.Vector3(i,1.2,2)));\n  const pond=new THREE.Mesh(new THREE.BoxGeometry(8,0.18,12), waterMat); pond.position.set(0,1.65, -3); g.add(pond);\n  g.add(box(2,2.5,2, wallMat, new THREE.Vector3(-5,1, -2)));\n  g.add(box(2,2.5,2, wallMat, new THREE.Vector3(5,1,-2)));\n  city.add(g);\n})();\n\n// 7 Generalife (high gardens)\n(function(){\n  const g=new THREE.Group(); g.position.set(28,0,-14);\n  g.position.y = terrainHeight(28,-14)-0.8;\n  const terrace=box(18,2,16, stoneDark, new THREE.Vector3(0,0.6,0)); g.add(terrace);\n  const palace=box(10,4,8, wallMat, new THREE.Vector3(0,2.4,2)); g.add(palace);\n  const channel=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.2,12), waterMat); channel.position.set(0,1.75,-2); g.add(channel);\n  // cypress alleys already via trees\n  const pergola=box(12,2.2,0.4, stoneMat, new THREE.Vector3(0,1.5,-6)); g.add(pergola);\n  city.add(g);\n})();\n\n// Walls connecting all\n(function(){\n  const wallPoints=[[-32,20],[-22,14],[-10,12],[-2,8],[6,4],[14,0],[22,-6],[28,-14]];\n  for(let i=0;i<wallPoints.length-1;i++){\n    const a=new THREE.Vector2(...wallPoints[i]), b=new THREE.Vector2(...wallPoints[i+1]);\n    const center=a.clone().add(b).multiplyScalar(0.5);\n    const dist=a.distanceTo(b); const angle=Math.atan2(b.y-a.y, b.x-a.x);\n    const hAvg=(terrainHeight(a.x,a.y)+terrainHeight(b.x,b.y))/2;\n    const wall=box(dist,2.4,0.9, wallRed, new THREE.Vector3(center.x, hAvg+0.2, center.y), -angle);\n    wall.position.y+=1; // offset handled\n    wall.position.y = hAvg+0.5;\n    city.add(wall);\n  }\n})();\n\n// Trees & gardens\nfunction addTree(x,z, scale=1){\n  const y=terrainHeight(x,z);\n  const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.08*scale,0.12*scale,1.2*scale,6), new THREE.MeshStandardMaterial({color:0x3d2817}));\n  trunk.position.set(x, y+0.6*scale, z); trunk.castShadow=true; city.add(trunk);\n  let crown;\n  if(Math.random()<0.4){ // cypress\n    crown=new THREE.Mesh(new THREE.ConeGeometry(0.55*scale,3.2*scale,8), cypressMat);\n    crown.position.set(x, y+1.8*scale, z);\n  } else {\n    crown=new THREE.Mesh(new THREE.SphereGeometry(0.85*scale,8,8), foliageMat);\n    crown.position.set(x, y+1.4*scale, z); crown.scale.y=0.9;\n  }\n  crown.castShadow=true; city.add(crown);\n}\nfor(let i=0;i<90;i++){\n  const x= (Math.random()-0.5)*80 -2;\n  const z= (Math.random()-0.5)*70;\n  // avoid inside buildings\n  const dAlc=Math.hypot(x+22, z-14), dCar=Math.hypot(x+6, z-10), dLeones=Math.hypot(x-12, z-2);\n  if(dAlc<8 || dCar<7 || dLeones<7) continue;\n  addTree(x,z, 0.7+Math.random()*0.7);\n}\n// Generalife dense cypress alley\nfor(let i=0;i<14;i++){\n  const t= i/13;\n  const x=20 + t*10; const z= -4 + t*-10;\n  addTree(x+1.6,z,1.1); addTree(x-1.6,z,1.1);\n}\n\n// Water - Darro valley shimmer\nconst riverGeo=new THREE.PlaneGeometry(260, 40, 40,6); riverGeo.rotateX(-Math.PI/2);\nfor(let i=0;i<riverGeo.attributes.position.count;i++){\n  riverGeo.attributes.position.setY(i, riverGeo.attributes.position.getY(i)+ (Math.random()-0.5)*0.4);\n}\nriverGeo.computeVertexNormals();\nconst river=new THREE.Mesh(riverGeo, new THREE.MeshStandardMaterial({color:0x3a6a6a, roughness:0.5, metalness:0.1, transparent:true, opacity:0.35}));\nriver.position.set(0, terrainHeight(0,35)-2.5, 45);\nscene.add(river);\n\n// Route Spline\nconst stops = [\n  { id:1, title:\"Puerta de la Justicia\", sub:\"Bab al-Sharia — Entrada monumental\", desc:\"La puerta principal de la Alhambra, del siglo XIV. Su arco de herradura y bóveda recuerdan que aquí se impartía justicia. Desde este punto se domina el Albaicín y comienza la muralla roja que da nombre a la fortaleza: <em>al-Ḥamrā’</em>.\", meta:[\"⏱ 3 min\",\"📍 37.176°N 3.588°W\",\"s. XIV\"], pos:new THREE.Vector3(-32,0,20) },\n  { id:2, title:\"Alcazaba\", sub:\"La fortaleza militar — siglos XIII-XIV\", desc:\"El recinto más antiguo. Torres vigía y murallas almenadas protegían la ciudad palatina. Desde la Torre de la Vela se tocaba campana para regar la Vega y avisar de peligro. Vistas de 360° a Sierra Nevada y Granada.\", meta:[\"🏰 Fortaleza\",\"⚔️ Defensa\",\"Vistas 360°\"], pos:new THREE.Vector3(-22,0,14) },\n  { id:3, title:\"Palacio de Carlos V\", sub:\"Renacimiento en la Alhambra — 1527\", desc:\"Imponente palacio circular mandado construir por el emperador. Contrasta con la arquitectura nazarí: piedra sobria, patio perfectamente redondo y fachadas platerescas. Hoy alberga el Museo de la Alhambra y de Bellas Artes.\", meta:[\"1527\",\"Renacimiento\",\"Museo\"], pos:new THREE.Vector3(-6,0,10) },\n  { id:4, title:\"Patio de los Arrayanes\", sub:\"Patio de Comares — espejo de agua\", desc:\"Corazón de la vida oficial nazarí. La gran alberca refleja la Torre de Comares y los arrayanes recortados. Aquí el sultán recibía embajadores. La luz cambia el agua de esmeralda a oro según la hora.\", meta:[\"Alberca 34×7 m\",\"Arrayanes\",\"Salón del Trono\"], pos:new THREE.Vector3(5,0,6) },\n  { id:5, title:\"Patio de los Leones\", sub:\"Obra cumbre del arte nazarí — s. XIV\", desc:\"124 columnas de mármol sostienen galerías caladas. En el centro, la fuente de 12 leones —símbolo del poder y reloj hidráulico— reparte agua por cuatro acequias al Paraíso. Filigrana en estuco, mocárabes y poemas tallados.\", meta:[\"12 leones\",\"124 columnas\",\"UNESCO 1984\"], pos:new THREE.Vector3(12,0,2) },\n  { id:6, title:\"El Partal y los Jardines\", sub:\"Pórtico sobre el estanque — paz y agua\", desc:\"La zona más antigua conservada del palacio. Un pórtico de cinco arcos se refleja en un estanque. Bugambilias, cipreses y acequias crean el sonido constante del agua, principio del jardín islámico como representación del paraíso.\", meta:[\"Jardín islámico\",\"Estanque\",\"Partal\"], pos:new THREE.Vector3(20,0,-4) },\n  { id:7, title:\"Generalife\", sub:\"Jannat al-‘Arīf — Jardín del Paraíso\", desc:\"Villa de recreo de los sultanes fuera de las murallas. Huertas en terrazas, Patio de la Acequia con surtidores cruzados y Mirador romántico. Desde aquí la Alhambra se ve completa al atardecer, roja contra Sierra Nevada.\", meta:[\"Villa veraniega\",\"Acequias\",\"Mirador\"], pos:new THREE.Vector3(28,0,-14) },\n];\nconst curvePoints = stops.map(s=>{\n  const p=s.pos.clone(); p.y=terrainHeight(p.x,p.z)+4.5; return p;\n});\n// add intermediate smooth points for nice flight\nconst smoothPts=[];\nfor(let i=0;i<curvePoints.length-1;i++){\n  smoothPts.push(curvePoints[i]);\n  const mid=curvePoints[i].clone().lerp(curvePoints[i+1],0.5);\n  mid.y+=2.2; smoothPts.push(mid);\n}\nsmoothPts.push(curvePoints[curvePoints.length-1]);\nconst curve = new THREE.CatmullRomCurve3(smoothPts, false, 'catmullrom', 0.6);\n\n// Route line\nconst routeGeo=new THREE.TubeGeometry(curve, 220, 0.22, 8, false);\nconst routeMat=new THREE.MeshStandardMaterial({color:0xc9a86a, emissive:0xc9a86a, emissiveIntensity:0.55, transparent:true, opacity:0.95});\nconst routeMesh=new THREE.Mesh(routeGeo, routeMat); scene.add(routeMesh);\nconst routeLine2=new THREE.Line(\n  new THREE.BufferGeometry().setFromPoints(curve.getPoints(260)),\n  new THREE.LineBasicMaterial({color:0xfff3c0, transparent:true, opacity:0.35})\n);\nscene.add(routeLine2);\n// glow particles along route\nconst partGeo=new THREE.BufferGeometry();\nconst partCount=80;\nconst partPos=new Float32Array(partCount*3);\nfor(let i=0;i<partCount;i++){ const pt=curve.getPoint(i/partCount); partPos[i*3]=pt.x; partPos[i*3+1]=pt.y-0.1; partPos[i*3+2]=pt.z; }\npartGeo.setAttribute('position', new THREE.BufferAttribute(partPos,3));\nconst partMat=new THREE.PointsMaterial({color:0xe8d5a8, size:0.45, transparent:true, opacity:0.9, sizeAttenuation:true});\nconst particles=new THREE.Points(partGeo, partMat); scene.add(particles);\n\n// Markers\nconst markers=[];\nconst markerGroup=new THREE.Group(); scene.add(markerGroup);\nstops.forEach((s,idx)=>{\n  const pos=s.pos.clone(); pos.y=terrainHeight(pos.x,pos.z)+0.6;\n  const g=new THREE.Group(); g.position.copy(pos);\n  const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,4.2,8), new THREE.MeshStandardMaterial({color:0x1a1208}));\n  pole.position.y=2.1; g.add(pole);\n  const head=new THREE.Mesh(new THREE.SphereGeometry(0.9,16,16), new THREE.MeshStandardMaterial({color:0xc9a86a, emissive:0xc9a86a, emissiveIntensity:0.35}));\n  head.position.y=4.4; g.add(head);\n  const ring=new THREE.Mesh(new THREE.RingGeometry(0.95,1.18,24), new THREE.MeshBasicMaterial({color:0xe8d5a8, side:THREE.DoubleSide, transparent:true, opacity:0.9}));\n  ring.rotation.x=Math.PI/2; ring.position.y=4.4; g.add(ring);\n  const labelCanvas=document.createElement('canvas'); labelCanvas.width=256; labelCanvas.height=64;\n  const ctx=labelCanvas.getContext('2d');\n  ctx.fillStyle='rgba(18,14,10,0.92)'; ctx.fillRect(0,0,256,64);\n  ctx.strokeStyle='#c9a86a'; ctx.lineWidth=2; ctx.strokeRect(1,1,254,62);\n  ctx.fillStyle='#e8d5a8'; ctx.font='700 13px Cinzel, serif'; ctx.textAlign='center'; ctx.fillText(`${idx+1}. ${s.title}`,128,22);\n  ctx.fillStyle='rgba(253,246,227,0.9)'; ctx.font='11px Inter, sans-serif'; ctx.fillText(s.sub.slice(0,38),128,40);\n  const tex=new THREE.CanvasTexture(labelCanvas); tex.colorSpace=THREE.SRGBColorSpace;\n  const spr=new THREE.Sprite(new THREE.SpriteMaterial({map:tex, transparent:true}));\n  spr.scale.set(7,1.75,1); spr.position.y=6.2; g.add(spr);\n  // pulse light\n  const light=new THREE.PointLight(0xc9a86a, 2, 14); light.position.y=4.4; g.add(light);\n  g.userData={idx, head, ring, light, spr, baseY:pos.y};\n  markerGroup.add(g); markers.push(g);\n  // ground decal\n  const dec=new THREE.Mesh(new THREE.RingGeometry(1.2,2.1,32), new THREE.MeshBasicMaterial({color:0xc9a86a, transparent:true, opacity:0.22, side:THREE.DoubleSide}));\n  dec.rotation.x=-Math.PI/2; dec.position.set(pos.x, pos.y+0.08, pos.z); scene.add(dec);\n  g.userData.decal=dec;\n});\n\nlet activeIdx=0;\nfunction setActive(i){\n  activeIdx=i;\n  markers.forEach((m,mi)=>{\n    const isActive=mi===i;\n    m.userData.head.material.color.set(isActive?0xfff2c0:0xc9a86a);\n    m.userData.head.material.emissiveIntensity=isActive?0.9:0.25;\n    m.userData.head.scale.setScalar(isActive?1.25:1);\n    m.userData.light.intensity=isActive?3.5:1.2;\n    m.userData.decal.material.opacity=isActive?0.32:0.12;\n    m.userData.spr.material.opacity=isActive?1:0.78;\n  });\n  const s=stops[i];\n  document.getElementById('stop-kicker').textContent=`PARADA ${i+1} · ${stops.length}`;\n  document.getElementById('stop-title').textContent=s.title;\n  document.getElementById('stop-subtitle').textContent=s.sub;\n  document.getElementById('stop-desc').innerHTML=s.desc;\n  const meta=document.getElementById('stop-meta'); meta.innerHTML='';\n  s.meta.forEach(t=>{ const el=document.createElement('span'); el.className='meta'; el.textContent=t; meta.appendChild(el); });\n  document.getElementById('progress-fill').style.width=((i+1)/stops.length*100)+'%';\n  document.getElementById('progress-pct').textContent=Math.round((i+1)/stops.length*100)+'%';\n  document.querySelectorAll('.dot').forEach((d,di)=>{\n    d.className='dot'+(di===i?' active':di<i?' passed':'');\n  });\n}\nconst dotsContainer=document.getElementById('stops-dots');\nstops.forEach((_,i)=>{\n  const d=document.createElement('div'); d.className='dot'+(i===0?' active':''); d.title=`Ir a parada ${i+1}`;\n  d.onclick=()=>{ jumpTo(i); };\n  dotsContainer.appendChild(d);\n});\nsetActive(0);\n\n// Camera tour state\nlet mode='tour'; // tour | free | aerial\nlet playing=false;\nlet t=0; // 0..1 along curve\nlet speed=1;\nlet targetTForIdx=0;\nlet autoAdvance=true;\n\nfunction idxToT(idx){\n  // map idx to curve parameter (approx via arc-length)\n  return idx/(stops.length-1);\n}\nfunction tToIdx(tt){\n  const f=tt*(stops.length-1); return Math.min(stops.length-1, Math.max(0, Math.round(f)));\n}\n\nfunction jumpTo(idx, animate=true){\n  const newT=idxToT(idx);\n  if(!animate){ t=newT; setActive(idx); return; }\n  targetTForIdx=newT;\n  // if not playing, animate smoothly to target\n  if(!playing){\n    gsTween(t,newT,900, (v)=>{ t=v; updateCamera(true); const cur=tToIdx(t); if(cur!==activeIdx) setActive(cur); });\n  } else {\n    t=newT;\n  }\n  setActive(idx);\n}\nfunction gsTween(from,to,dur, onUpdate){\n  const start=performance.now();\n  function tick(now){\n    const p=Math.min(1,(now-start)/dur);\n    const e=1 - Math.pow(1-p,3);\n    onUpdate(from+(to-from)*e);\n    if(p<1) requestAnimationFrame(tick);\n  }\n  requestAnimationFrame(tick);\n}\n\nfunction updateCamera(followCurve=false){\n  if(mode==='free') return;\n  if(mode==='aerial'){\n    camera.position.lerp(new THREE.Vector3(6,48, -2),0.06);\n    controls.target.lerp(new THREE.Vector3(4,0,2),0.06);\n    return;\n  }\n  // tour: follow curve\n  const pt=curve.getPoint(t);\n  const tangent=curve.getTangent(t);\n  const lookPt=curve.getPoint(Math.min(1, t+0.02));\n  const offset=new THREE.Vector3(tangent.z* -3, 2.2, -tangent.x*3); // slight side offset cinematic\n  const camPos=pt.clone().add(offset);\n  camPos.y+=3.2;\n  // keep above terrain\n  const th=terrainHeight(camPos.x,camPos.z);\n  if(camPos.y < th+4) camPos.y=th+4;\n  camera.position.lerp(camPos, 0.08);\n  controls.target.lerp(lookPt, 0.07);\n}\n\n// Controls UI\nconst playBtn=document.getElementById('play-btn'), playLabel=document.getElementById('play-label'), playIcon=document.getElementById('play-icon');\nfunction setPlaying(p){\n  playing=p;\n  playLabel.textContent=p?'Pausar':'Iniciar ruta';\n  playIcon.innerHTML=p?'<rect x=\"7\" y=\"5\" width=\"3.5\" height=\"14\" rx=\"1\"/><rect x=\"13.5\" y=\"5\" width=\"3.5\" height=\"14\" rx=\"1\"/>':'<path d=\"M8 5.14v14l11-7z\"/>';\n  if(p && mode!=='tour'){ setMode('tour'); }\n}\nplayBtn.onclick=()=> setPlaying(!playing);\ndocument.getElementById('prev-btn').onclick=()=>{\n  const n=Math.max(0, activeIdx-1); jumpTo(n); t=idxToT(n);\n};\ndocument.getElementById('next-btn').onclick=()=>{\n  const n=Math.min(stops.length-1, activeIdx+1); jumpTo(n); t=idxToT(n);\n};\ndocument.getElementById('speed').oninput=(e)=>{\n  speed=parseFloat(e.target.value); document.getElementById('speed-val').textContent=speed.toFixed(1)+'×';\n};\nfunction setMode(m){\n  mode=m;\n  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));\n  if(m==='tour') document.getElementById('btn-tour').classList.add('active');\n  if(m==='free') document.getElementById('btn-free').classList.add('active');\n  if(m==='aerial') document.getElementById('btn-aerial').classList.add('active');\n  controls.enabled = m==='free' || m==='tour';\n  if(m==='free') setPlaying(false);\n  if(m==='aerial'){ setPlaying(false); }\n}\ndocument.getElementById('btn-tour').onclick=()=>{ setMode('tour'); setPlaying(true); };\ndocument.getElementById('btn-free').onclick=()=> setMode('free');\ndocument.getElementById('btn-aerial').onclick=()=> setMode('aerial');\ndocument.getElementById('btn-daynight').onclick=(e)=>{\n  isNight=!isNight;\n  e.target.textContent=isNight?'☀ Día':'☾ Noche';\n  e.target.classList.toggle('active');\n  scene.background=makeSkyTexture(isNight);\n  scene.fog=new THREE.FogExp2(isNight?0x0a1020:0x1e293b, isNight?0.007:0.006);\n  ambient.intensity=isNight?0.35:0.55;\n  sun.intensity=isNight?0.25:2.2;\n  sun.color.set(isNight?0x99aaff:0xfff3d0);\n  hemi.intensity=isNight?0.25:0.6;\n  renderer.toneMappingExposure=isNight?0.85:1.15;\n  // night lights for buildings\n  city.traverse(o=>{\n    if(o.isPointLight) o.intensity = isNight? o.intensity*2.2 : o.intensity/2.2;\n  });\n};\n\n// Raycast for markers click & tooltip\nconst raycaster=new THREE.Raycaster(), mouse=new THREE.Vector2();\nlet hoverIdx=-1;\nrenderer.domElement.addEventListener('mousemove',(e)=>{\n  mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1;\n  raycaster.setFromCamera(mouse,camera);\n  const hits=raycaster.intersectObjects(markers.map(m=>m.userData.head), false);\n  if(hits.length){\n    const g=hits[0].object.parent; const idx=g.userData.idx;\n    hoverIdx=idx;\n    tooltip.textContent=`${idx+1}. ${stops[idx].title} — clic para ir`;\n    tooltip.style.left=e.clientX+'px'; tooltip.style.top=e.clientY+'px'; tooltip.classList.add('show');\n    renderer.domElement.style.cursor='pointer';\n  } else {\n    tooltip.classList.remove('show'); renderer.domElement.style.cursor='grab';\n  }\n});\nrenderer.domElement.addEventListener('click',()=>{\n  if(hoverIdx>=0){ jumpTo(hoverIdx); t=idxToT(hoverIdx); }\n});\nrenderer.domElement.addEventListener('mousedown',()=> renderer.domElement.style.cursor='grabbing');\nrenderer.domElement.addEventListener('mouseup',()=> renderer.domElement.style.cursor='grab');\n\n// Keyboard\naddEventListener('keydown',(e)=>{\n  if(e.code==='Space'){ e.preventDefault(); setPlaying(!playing); }\n  if(e.code==='ArrowRight'){ const n=Math.min(stops.length-1, activeIdx+1); jumpTo(n); t=idxToT(n); }\n  if(e.code==='ArrowLeft'){ const n=Math.max(0, activeIdx-1); jumpTo(n); t=idxToT(n); }\n  if(e.code==='KeyF') setMode('free');\n  if(e.code==='KeyA') setMode('aerial');\n  if(e.code==='KeyT') { setMode('tour'); setPlaying(true); }\n});\n\n// Minimap 2D\nconst miniCanvas=document.getElementById('mini-canvas'), mctx=miniCanvas.getContext('2d');\nfunction drawMinimap(){\n  const w=148,h=148; mctx.clearRect(0,0,w,h);\n  mctx.fillStyle='#0f1518'; mctx.fillRect(0,0,w,h);\n  // route\n  mctx.strokeStyle='#c9a86a'; mctx.lineWidth=2; mctx.beginPath();\n  for(let i=0;i<=100;i++){\n    const pt=curve.getPoint(i/100);\n    const x= (pt.x+36)/72 * w; const y= (1 - (pt.z+28)/68) * h;\n    if(i===0) mctx.moveTo(x,y); else mctx.lineTo(x,y);\n  }\n  mctx.stroke();\n  // stops\n  stops.forEach((s,i)=>{\n    const x=(s.pos.x+36)/72*w, y=(1-(s.pos.z+28)/68)*h;\n    mctx.beginPath(); mctx.arc(x,y, i===activeIdx?5:3.2,0,Math.PI*2);\n    mctx.fillStyle=i===activeIdx?'#fff2c0': (i<activeIdx?'#c9a86a':'#9aa0a6'); mctx.fill();\n    mctx.strokeStyle='rgba(0,0,0,0.6)'; mctx.lineWidth=1; mctx.stroke();\n    mctx.fillStyle='rgba(253,246,227,0.85)'; mctx.font='600 7px Inter'; mctx.textAlign='center'; mctx.fillText(String(i+1), x, y-7);\n  });\n  // camera\n  const cx=(camera.position.x+36)/72*w, cy=(1-(camera.position.z+28)/68)*h;\n  mctx.beginPath(); mctx.arc(cx,cy,3,0,Math.PI*2); mctx.fillStyle='#2fb3a8'; mctx.fill();\n  mctx.strokeStyle='#fff'; mctx.lineWidth=1; mctx.stroke();\n}\n\n// Resize\naddEventListener('resize',()=>{\n  camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();\n  renderer.setSize(innerWidth,innerHeight);\n});\n\n// Animate\nlet last=performance.now();\nlet pulse=0;\nfunction animate(now){\n  requestAnimationFrame(animate);\n  const dt=Math.min(0.05, (now-last)/1000); last=now;\n  pulse+=dt;\n\n  // tour advance\n  if(playing && mode==='tour'){\n    t += dt*0.018*speed;\n    if(t>1){ t=1; setPlaying(false); }\n    const curIdx=tToIdx(t);\n    if(curIdx!==activeIdx) setActive(curIdx);\n  }\n  updateCamera();\n\n  // marker pulse\n  markers.forEach((m,i)=>{\n    const ph=pulse*1.2 + i*0.6;\n    m.userData.ring.scale.setScalar(1+Math.sin(ph)*0.08);\n    m.userData.ring.material.opacity=0.75+Math.sin(ph)*0.2;\n    m.position.y=m.userData.baseY + Math.sin(ph*0.8)*0.12;\n  });\n  // particles flow\n  partMat.opacity=0.7+Math.sin(pulse*1.5)*0.15;\n\n  controls.update();\n  drawMinimap();\n  renderer.render(scene,camera);\n}\nanimate(performance.now());\n\n// initial camera path set\nt=idxToT(0);\nupdateCamera();\n\n// Hide loading\nsetTimeout(()=>document.getElementById('loading').classList.add('hidden'), 800);\n\n// Double click fullscreen hint\nrenderer.domElement.addEventListener('dblclick',()=>{\n  if(!document.fullscreenElement) document.documentElement.requestFullscreen?.();\n  else document.exitFullscreen?.();\n});\n</script>\n</body>\n</html>\n"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-LaRo386L/alhambra-ruta-3d.html",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-LaRo386L/alhambra-ruta-3d.html",
+            "time": {
+              "start": 1795144565609,
+              "end": 1795144565621
+            }
+          },
+          "id": "prt_1f6f4436400151Ah1Sbm1x2yG9",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f3a65e001BZZsNstmWPGolM"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 23729,
+            "input": 173,
+            "output": 15492,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8064
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f4438a001VkFuXYXHN4ur64",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f3a65e001BZZsNstmWPGolM"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f39a4c001B2UAzUYDKKIXYj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-LaRo386L",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 23830,
+          "input": 72,
+          "output": 78,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 23680
+          }
+        },
+        "modelID": "muse-spark-open",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144565648,
+          "completed": 1795144566353
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6f44390001Xm2DlaHWMCxXFS",
+        "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f445f2001XCxINQozBuG0i0",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f44390001Xm2DlaHWMCxXFS"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_2ata6xa9",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "ls -lh /var/tmp/bench/ws-LaRo386L && wc -l /var/tmp/bench/ws-LaRo386L/alhambra-ruta-3d.html"
+            },
+            "output": "total 44K\n-rw-r--r-- 1 root root 44K Nov 20 03:16 alhambra-ruta-3d.html\n853 /var/tmp/bench/ws-LaRo386L/alhambra-ruta-3d.html\n",
+            "metadata": {
+              "output": "total 44K\n-rw-r--r-- 1 root root 44K Nov 20 03:16 alhambra-ruta-3d.html\n853 /var/tmp/bench/ws-LaRo386L/alhambra-ruta-3d.html\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "ls -lh /var/tmp/bench/ws-LaRo386L && wc -l /var/tmp/bench/ws-LaRo386L/alhambra-ruta-3d.html",
+            "time": {
+              "start": 1795144566264,
+              "end": 1795144566275
+            }
+          },
+          "id": "prt_1f6f445f3001J9FEZullStTLNu",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f44390001Xm2DlaHWMCxXFS"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 23830,
+            "input": 72,
+            "output": 78,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 23680
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f4464c001bcOli16iXATlzP",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f44390001Xm2DlaHWMCxXFS"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6f39a4c001B2UAzUYDKKIXYj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-LaRo386L",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 24287,
+          "input": 97,
+          "output": 382,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 23808
+          }
+        },
+        "modelID": "muse-spark-open",
+        "providerID": "ol",
+        "time": {
+          "created": 1795144566356,
+          "completed": 1795144568442
+        },
+        "finish": "stop",
+        "id": "msg_1f6f44654001Z6Ab5QSlQ6iUmw",
+        "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6f4483f001Nza2nD4hyN7eZW",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f44654001Z6Ab5QSlQ6iUmw"
+        },
+        {
+          "type": "reasoning",
+          "text": "Verify file is correct single HTML.\n\n",
+          "time": {
+            "start": 1795144566848,
+            "end": 1795144566899
+          },
+          "id": "prt_1f6f44840001U73OvvTtq4ojvk",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f44654001Z6Ab5QSlQ6iUmw"
+        },
+        {
+          "type": "text",
+          "text": "Generado **alhambra-ruta-3d.html** (853 líneas, 44KB) en la carpeta actual `/var/tmp/bench/ws-LaRo386L` — un solo fichero sin dependencias externas salvo CDN de Three.js.\n\n**Contenido:**\n- **Escena 3D completa** con terreno modelado de la colina de la Sabika, Sierra Nevada al fondo, valle del Darro y 7 edificios estilizados: Puerta de la Justicia, Alcazaba (Torre de la Vela y Homenaje), Palacio de Carlos V (patio circular), Patio de los Arrayanes con alberca reflectante, Patio de los Leones (124 columnas + 12 leones), Partal y Generalife.\n- **Ruta guiada** con `CatmullRomCurve3` + `TubeGeometry` iluminada, partículas flotantes y marcadores interactivos. Cámara cinematográfica sigue la ruta con offset lateral.\n- **7 paradas** con paneles informativos (historia, datos, cronología) y progreso sincronizado.\n- **Controles:** `Iniciar/Pausar` (ESPACIO), Anterior/Siguiente (←→), velocidad regulable, minimapa 2D, leyenda y puntos clicables.\n- **Modos:** `Ruta guiada` (tour automático), `Modo libre` (OrbitControls), `Vista aérea` cenital y `Día/Noche` con cambio de niebla, cielo procedural y luces puntuales.\n- Diseño con tipografía Cinzel/Cormorant, paleta alhambreña (dorado, rojo nazarí, piedra) y estética arabesca.\n\nAbre el archivo directamente en el navegador (doble clic) — no necesita servidor.",
+          "time": {
+            "start": 1795144566901,
+            "end": 1795144568437
+          },
+          "id": "prt_1f6f44875001Xzkq9wWkaXiX36",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f44654001Z6Ab5QSlQ6iUmw"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 24287,
+            "input": 97,
+            "output": 382,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 23808
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6f44e77001Q36D2rxPCOEY9u",
+          "sessionID": "ses_e090c65c1ffegKr7SGIAjilAMM",
+          "messageID": "msg_1f6f44654001Z6Ab5QSlQ6iUmw"
+        }
+      ]
+    }
+  ]
+}

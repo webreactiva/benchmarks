@@ -1,0 +1,27 @@
+{
+  "codigo": "PTS",
+  "modelo": "gpt-6.2-sol",
+  "agente": "Codex CLI",
+  "esfuerzo": "medium",
+  "fecha": "2026-11-20T08:59:59Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 4195,
+    "output": 1330,
+    "reasoning": 58,
+    "cache_read": 47232,
+    "cache_write": 0,
+    "total": 52815
+  },
+  "peticiones": 3,
+  "error": null,
+  "aislamiento": "macOS sin encierro.sh: sandbox de Codex (workspace-write, red abierta)",
+  "herramientas": {
+    "exec": 2
+  },
+  "mensajes_usuario": [],
+  "veces_decide_tu": 0,
+  "ficheros": [
+    "tests-intermitentes.md"
+  ]
+}

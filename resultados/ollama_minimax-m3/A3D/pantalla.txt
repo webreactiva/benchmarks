@@ -1,0 +1,36 @@
+  ┃
+  ┃  Click to expand
+  ┃
+
+     Listo. He creado alhambra-3d.html (70 KB, un solo fichero) en la carpeta actual.
+
+     Qué contiene
+
+     - Modelo 3D procedural del conjunto (Three.js desde CDN vía importmap): Alcazaba con la Torre de la Vela, Puerta
+       de la Justicia, Palacio de Carlos V con su patio circular de 32 columnas, Palacios Nazaríes (Patio de los
+       Arrayanes, Torre de Comares, Mexuar, Sala de los Abencerrajes, Patio de los Leones, Mirador de Lindaraja),
+       Partal, Generalife con la Acequia, puente sobre el Darro y la Alameda. Todo con arcos de herradura extruidos,
+       mocárabes, azulejos y tejas generados por código.
+     - Recorrido de 1,7 km con 15 paradas narradas (texto histórico + consejo de visita), trazado luminoso animado y
+       viajero que recorre la ruta.
+     - Controles: reproduce/pausa, velocidad (0,5×–4×), 4 cámaras (Guía, Cinemática, Peatón, Libre), deslizador de
+       hora del día (cielo, sol, sombras y farolas cambian), etiquetas 3D, narración por voz y minimapa en vivo con
+       el plano.
+     - Interfaz responsive en español, con carga animada.
+
+     Verificación realizada (Chrome headless): sin errores de consola, los 15 elementos de la lista y todos los
+     controles responden, el salto entre paradas funciona y — mediante trazado de rayos sobre la geometría — confirmé
+     que el itinerario no atraviesa muros ni superficies, salvo los arcos que atraviesa intencionadamente (puerta de
+     la Justicia, pórtico de Carlos V, galerías).
+
+     Ábrelo con doble clic (necesita conexión a Internet para cargar Three.js desde el CDN).
+
+     ▣  Build · minimax-m3 · 31m 29s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · minimax-m3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/ollama_minimax-m3/A3D                                                         237.5K  ctrl+p commands
+

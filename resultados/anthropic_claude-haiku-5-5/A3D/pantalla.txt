@@ -1,0 +1,36 @@
+      454 -  new THREE.TubeGeometry(curve, 400, 0.45, 8, false),
+      454 +  new THREE.TubeGeometry(curve, 400, 0.25, 8, false),
+      455    new THREE.MeshBasicMaterial({ color: 0xffc857, transparent: true, opacity: 0.85 })
+      456  ));
+      457  // Marcadores de paradas
+
+  Read 2 files, ran 2 shell commands
+
+● He creado la ruta en 3D en un único archivo HTML: /tmp/bench-ws/claude-haiku/A3D/alhambra-ruta-3d.html
+
+  La cámara vuela por una curva que une 10 paradas: Puerta de la Justicia, Patio de Armas, Palacio de Carlos V, Patio de
+  los Arrayanes, Torre de Comares, Patio de los Leones, Sala de los Abencerrajes, Torre de las Damas, Generalife y un
+  mirador final sobre Granada. Cada parada tiene un texto explicativo en español.
+
+  Controles:
+  - Reproducir / pausa (barra espaciadora) y anterior / siguiente (flechas del teclado).
+  - Barra de progreso y velocidad de 0.5× a 3×.
+  - Modo libre para girar la cámara con el ratón.
+  - Las paradas se pueden seleccionar desde la lista lateral o desde las etiquetas flotantes sobre la maqueta.
+
+  Detalles técnicos:
+  - Three.js 0.160.0 desde jsDelivr, con escena construida por código (muralla con torres, patios con columnas,
+    estanques, la fuente de los doce leones, cúpulas, cipreses y la Sierra Nevada de fondo).
+  - Sin imágenes ni archivos externos; solo necesita conexión para cargar Three.js.
+
+  Verificación: el script compila sin errores de sintaxis y la página carga y renderiza en Chrome headless sin errores
+  de JavaScript. No pude revisar visualmente cada parada, así que las posiciones y proporciones deberías comprobarlas tú
+  en un navegador. Es una maqueta esquemática: la geografía y las alturas son aproximadas y simplificadas, y lo indica
+  la propia página.
+
+✻ Brewed for 4m 29s · done 9:11 PM
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ ábrelo en el navegador
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)

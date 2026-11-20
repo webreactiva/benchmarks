@@ -1,0 +1,9 @@
+{
+  "nota": 0,
+  "veredicto": "preguntó en vez de hacer",
+  "resumen": "Vio la carpeta vacía y, en vez de decidir, abrió la herramienta de preguntas para que le eligieran stack y alcance (Node + Fastify + Postgres, React, Python + FastAPI). En el benchmark no se responde a preguntas: no hay entregable.",
+  "rarezas": [
+    "El único caso del benchmark en que un modelo pregunta. Razonó: «the instruction says implement… but the stack is unknown… asking one question is reasonable but might stall».",
+    "Su opción recomendada era la más seria de todas: Node + TypeScript + Fastify + Postgres con Docker Compose."
+  ]
+}

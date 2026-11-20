@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14201b">
+<title>Alquimia Reactiva — El laboratorio de Web Reactiva</title>
+<meta name="description" content="Un juego de alquimia inspirado en Infinite Craft con el universo de Web Reactiva: IA, agentes, skills, MCPs, café y muchas mezclas.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2314201b'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='54' font-weight='bold' text-anchor='middle' fill='%23fed757'%3EWR%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --ink: #14201b;
+    --ink-2: #24342c;
+    --ink-3: #3f5248;
+    --paper: #f4eee2;
+    --paper-2: #fbf7ef;
+    --paper-3: #fffdf8;
+    --coral: #e56a54;
+    --coral-dark: #c34e3a;
+    --yellow: #fed757;
+    --lavender: #9678d3;
+    --magenta: #b7428e;
+    --mint: #9ef4a4;
+    --muted: #6f796f;
+    --line: #14201b;
+    --radius: 16px;
+    --shadow: 4px 4px 0 var(--ink);
+    --shadow-sm: 3px 3px 0 var(--ink);
+    --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  button, input { font: inherit; }
+  button { color: inherit; }
+  a { color: inherit; }
+
+  [hidden] { display: none !important; }
+
+  #app {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    isolation: isolate;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: relative;
+    z-index: 40;
+    flex: 0 0 auto;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 12px 20px;
+    color: #fff9ec;
+    background:
+      radial-gradient(circle at 78% -40%, rgba(254, 215, 87, .13), transparent 38%),
+      linear-gradient(125deg, #101a16 0%, #17261f 60%, #1b2c23 100%);
+    border-bottom: 2px solid #0b120f;
+  }
+  .topbar::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(254,215,87,.5), rgba(229,106,84,.5), transparent);
+    opacity: .55;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .logo {
+    position: relative;
+    flex: 0 0 auto;
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #fff9ec;
+    border-radius: 13px;
+    background: linear-gradient(145deg, var(--coral), #d9533e);
+    box-shadow: 3px 3px 0 #060b08;
+    color: #fff9ec;
+    font-family: var(--mono);
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    transform: rotate(-3deg);
+    transition: transform .25s ease;
+  }
+  .logo::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    right: -4px;
+    top: -4px;
+    border-radius: 50%;
+    background: var(--yellow);
+    border: 1.5px solid var(--ink);
+  }
+  .brand:hover .logo { transform: rotate(3deg) scale(1.04); }
+  .brand-copy { min-width: 0; }
+  .brand-copy h1 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.05;
+    letter-spacing: -.55px;
+    white-space: nowrap;
+  }
+  .brand-copy h1 span { color: var(--yellow); }
+  .brand-copy p {
+    margin: 4px 0 0;
+    color: #a7b7ae;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 1.35px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex: 0 0 auto;
+  }
+
+  .progress-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 7px 12px;
+    border: 1px solid #43574c;
+    border-radius: 999px;
+    background: #21332a;
+    color: #d9e4dd;
+    font-family: var(--mono);
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  .progress-pill strong { color: var(--yellow); font-size: 14px; }
+  .progress-pill .p-total { color: #85968c; }
+  .p-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--coral);
+    box-shadow: 0 0 0 3px rgba(229,106,84,.16);
+    transition: background .25s;
+  }
+  .progress-pill.is-done .p-dot { background: var(--mint); box-shadow: 0 0 0 3px rgba(158,244,164,.15); }
+
+  .btn {
+    appearance: none;
+    border: 2px solid #070c09;
+    cursor: pointer;
+    border-radius: 12px;
+    font-weight: 800;
+    line-height: 1;
+    transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
+  }
+  .btn:active { transform: translate(2px, 2px); box-shadow: none !important; }
+  .btn-hint {
+    min-height: 39px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--yellow);
+    color: #241b00;
+    box-shadow: 3px 3px 0 #060b08;
+    font-size: 13px;
+  }
+  .btn-hint:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #060b08; background: #ffe27a; }
+  .btn-hint .lamp { font-size: 15px; line-height: 1; }
+
+  .icon-btn {
+    appearance: none;
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #4a5f53;
+    border-radius: 12px;
+    background: #23352b;
+    color: #f6f0e4;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    transition: background .15s ease, transform .15s ease, border-color .15s ease;
+  }
+  .icon-btn:hover { background: #30483a; border-color: #6c8577; transform: translateY(-1px); }
+  .icon-btn:active { transform: translateY(1px); }
+  .mobile-only { display: none !important; }
+
+  /* ---------- Layout ---------- */
+  .main {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    position: relative;
+  }
+
+  .board-wrap {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .board {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    touch-action: none;
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(rgba(20,32,27,.16) 1.05px, transparent 1.05px),
+      radial-gradient(circle at 12% 9%, rgba(254,215,87,.32), transparent 26%),
+      radial-gradient(circle at 91% 88%, rgba(150,120,211,.14), transparent 33%),
+      linear-gradient(135deg, rgba(255,255,255,.28), transparent 42%);
+    background-size: 21px 21px, auto, auto, auto;
+  }
+  .board::before {
+    content: "⚗";
+    position: absolute;
+    right: 5%;
+    bottom: 3%;
+    font-size: clamp(150px, 24vw, 310px);
+    line-height: 1;
+    color: var(--ink);
+    opacity: .035;
+    transform: rotate(-12deg);
+    pointer-events: none;
+    user-select: none;
+  }
+  .board::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 80px rgba(20,32,27,.07);
+  }
+  #cards { position: absolute; inset: 0; z-index: 3; }
+
+  .mission-chip {
+    position: absolute;
+    z-index: 8;
+    top: 16px;
+    left: 18px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    max-width: calc(100% - 36px);
+    padding: 8px 11px 8px 8px;
+    border: 1.5px solid rgba(20,32,27,.7);
+    border-radius: 13px;
+    background: rgba(255,253,248,.82);
+    box-shadow: 2px 2px 0 rgba(20,32,27,.7);
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    user-select: none;
+    transition: transform .15s ease, background .15s ease;
+  }
+  .mission-chip:hover { transform: translateY(-1px); background: rgba(255,253,248,.96); }
+  .mission-emoji {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: #fff0c2;
+    font-size: 17px;
+    border: 1px solid rgba(20,32,27,.18);
+  }
+  .mission-copy { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .mission-copy small {
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 1.4px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .mission-copy b {
+    font-size: 11.5px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mission-check {
+    width: 21px;
+    height: 21px;
+    display: grid;
+    place-items: center;
+    border: 1.5px solid rgba(20,32,27,.45);
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 900;
+    color: var(--muted);
+    margin-left: 2px;
+  }
+  .mission-chip.done { background: #e4ffe8; border-color: #28784b; }
+  .mission-chip.done .mission-emoji { background: var(--mint); }
+  .mission-chip.done .mission-check { background: #28784b; border-color: #28784b; color: #fff; }
+
+  .board-footer {
+    position: absolute;
+    z-index: 8;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 13px;
+    border: 1.5px solid rgba(20,32,27,.55);
+    border-radius: 999px;
+    background: rgba(255,253,248,.82);
+    color: #45534b;
+    box-shadow: 2px 2px 0 rgba(20,32,27,.35);
+    backdrop-filter: blur(6px);
+    font-size: 11.5px;
+    font-weight: 650;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .board-footer .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--coral); }
+  .board-footer kbd {
+    display: inline-block;
+    padding: 2px 5px;
+    border: 1px solid rgba(20,32,27,.35);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: #fffdf8;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink);
+  }
+
+  /* ---------- Cards ---------- */
+  .card {
+    --accent: #64756b;
+    --tint: #edf1ee;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: min(230px, 62vw);
+    padding: 7px 13px 7px 7px;
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    background: var(--paper-3);
+    box-shadow: var(--shadow-sm);
+    color: var(--ink);
+    font-size: 13.5px;
+    font-weight: 800;
+    line-height: 1.15;
+    white-space: nowrap;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    transform: translate(-50%, -50%) rotate(var(--tilt, 0deg));
+    transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
+    will-change: left, top, transform;
+  }
+  .card:hover {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1.045);
+    box-shadow: 5px 5px 0 var(--ink);
+    background: #fffefa;
+  }
+  .card:focus-visible {
+    outline: 3px solid var(--coral);
+    outline-offset: 3px;
+  }
+  .card .emoji {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 31px;
+    height: 31px;
+    border-radius: 9px;
+    background: var(--tint);
+    border: 1px solid rgba(20,32,27,.16);
+    font-size: 17px;
+    line-height: 1;
+  }
+  .card .name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 1px;
+  }
+  .card.cat-dev { --accent: #2e7d57; --tint: #dff1e5; }
+  .card.cat-ai { --accent: #6c4fbe; --tint: #eae2fc; }
+  .card.cat-wr { --accent: #c6513d; --tint: #ffe3dc; }
+  .card.cat-fun { --accent: #9a6800; --tint: #fff0b9; }
+  .card.cat-tool { --accent: #1a7b88; --tint: #d9f0f3; }
+
+  .card.dragging {
+    transition: none;
+    cursor: grabbing;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1.08);
+    box-shadow: 8px 8px 0 rgba(20,32,27,.95);
+    background: #fffefa;
+    opacity: .98;
+  }
+  .card.selected {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1.055);
+    box-shadow: 0 0 0 4px var(--yellow), 5px 5px 0 var(--ink);
+  }
+  .card.drop-target {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1.09);
+    box-shadow: 0 0 0 5px var(--coral), 6px 6px 0 var(--ink);
+    background: #fff7f4;
+  }
+  .card.returning { transition: left .24s cubic-bezier(.2,.8,.3,1), top .24s cubic-bezier(.2,.8,.3,1); }
+  .card.leaving { pointer-events: none; animation: cardLeave .15s ease forwards; }
+  .card.spawn { animation: cardPop .26s cubic-bezier(.2,.9,.3,1.25); }
+  .card.is-new { animation: cardNew .85s ease; }
+  .card.shake { animation: cardShake .34s ease; }
+  .card.hint-pulse { animation: hintPulse .9s ease 2; }
+
+  @keyframes cardPop {
+    0% { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(.55); }
+    65% { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1.08); }
+    100% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--tilt, 0deg)) scale(1); }
+  }
+  @keyframes cardNew {
+    0% { box-shadow: 0 0 0 0 rgba(254,215,87,.95), var(--shadow-sm); }
+    45% { box-shadow: 0 0 0 13px rgba(254,215,87,0), 7px 7px 0 var(--ink); }
+    100% { box-shadow: var(--shadow-sm); }
+  }
+  @keyframes cardLeave {
+    to { opacity: 0; transform: translate(-50%, -50%) rotate(8deg) scale(.45); }
+  }
+  @keyframes cardShake {
+    0%,100% { transform: translate(-50%, -50%) rotate(0deg); }
+    20% { transform: translate(calc(-50% - 6px), -50%) rotate(-2deg); }
+    40% { transform: translate(calc(-50% + 6px), -50%) rotate(2deg); }
+    60% { transform: translate(calc(-50% - 4px), -50%) rotate(-1deg); }
+    80% { transform: translate(calc(-50% + 4px), -50%) rotate(1deg); }
+  }
+  @keyframes hintPulse {
+    0%,100% { box-shadow: var(--shadow-sm); }
+    50% { box-shadow: 0 0 0 6px rgba(254,215,87,.95), 5px 5px 0 var(--ink); }
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    position: relative;
+    z-index: 30;
+    flex: 0 0 322px;
+    width: 322px;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: #faf5ea;
+    border-left: 2px solid var(--ink);
+    box-shadow: -8px 0 24px rgba(20,32,27,.06);
+  }
+  .sidebar-head {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 17px 10px;
+  }
+  .sidebar-head .eyebrow {
+    margin: 0 0 4px;
+    color: var(--coral-dark);
+    font-family: var(--mono);
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+  }
+  .sidebar-head h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -.4px;
+  }
+  .side-count {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 2px 7px;
+    border: 1px solid rgba(20,32,27,.28);
+    border-radius: 999px;
+    color: #546157;
+    background: #fffdf8;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 700;
+  }
+  .side-close {
+    appearance: none;
+    display: none;
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--ink);
+    border-radius: 9px;
+    background: #fffdf8;
+    box-shadow: 2px 2px 0 var(--ink);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 0 0 auto;
+    padding: 4px 17px 12px;
+  }
+  .search-wrap .search-icon {
+    position: absolute;
+    left: 29px;
+    top: 50%;
+    transform: translateY(-52%);
+    font-size: 14px;
+    color: #7a857c;
+    pointer-events: none;
+  }
+  .search-wrap input {
+    width: 100%;
+    height: 39px;
+    padding: 0 12px 0 33px;
+    border: 1.5px solid var(--ink);
+    border-radius: 11px;
+    background: #fffdf8;
+    color: var(--ink);
+    box-shadow: 2px 2px 0 rgba(20,32,27,.8);
+    font-size: 12.5px;
+    outline: none;
+    transition: box-shadow .15s, border-color .15s;
+  }
+  .search-wrap input::placeholder { color: #9aa39b; }
+  .search-wrap input:focus { border-color: var(--coral-dark); box-shadow: 2px 2px 0 var(--coral); }
+
+  .discoveries {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    gap: 7px;
+    padding: 2px 16px 14px;
+    scrollbar-width: thin;
+    scrollbar-color: #b6ad9e transparent;
+  }
+  .discoveries::-webkit-scrollbar { width: 7px; }
+  .discoveries::-webkit-scrollbar-thumb { background: #c7beb0; border-radius: 99px; }
+
+  .mini {
+    appearance: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+    width: 100%;
+    padding: 7px 7px 7px 6px;
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    background: #fffdf8;
+    box-shadow: 2px 2px 0 rgba(20,32,27,.78);
+    text-align: left;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .mini:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink);
+    background: #fffefa;
+  }
+  .mini:active { transform: translate(1px, 1px); box-shadow: none; }
+  .mini:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+  .mini .emoji {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 25px;
+    height: 25px;
+    border-radius: 7px;
+    background: var(--tint);
+    border: 1px solid rgba(20,32,27,.14);
+    font-size: 14px;
+  }
+  .mini .name {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10.5px;
+    font-weight: 800;
+  }
+  .mini .plus {
+    flex: 0 0 auto;
+    color: var(--coral-dark);
+    font-size: 14px;
+    font-weight: 900;
+    opacity: .28;
+    transform: translateY(-1px);
+    transition: opacity .12s, transform .12s;
+  }
+  .mini:hover .plus { opacity: 1; transform: translateY(-1px) scale(1.08); }
+  .mini.cat-dev { --tint: #dff1e5; }
+  .mini.cat-ai { --tint: #eae2fc; }
+  .mini.cat-wr { --tint: #ffe3dc; }
+  .mini.cat-fun { --tint: #fff0b9; }
+  .mini.cat-tool { --tint: #d9f0f3; }
+  .mini.is-recent { animation: miniNew 1.4s ease; }
+  .mini.hint-pulse { animation: hintPulseMini .9s ease 2; }
+  @keyframes miniNew {
+    0% { background: #fff6c9; transform: scale(1.04); }
+    100% { background: #fffdf8; transform: scale(1); }
+  }
+  @keyframes hintPulseMini {
+    0%,100% { box-shadow: 2px 2px 0 rgba(20,32,27,.78); }
+    50% { box-shadow: 0 0 0 3px var(--yellow), 3px 3px 0 var(--ink); background: #fff6c9; }
+  }
+
+  .empty-store {
+    grid-column: 1 / -1;
+    display: grid;
+    place-items: center;
+    gap: 8px;
+    padding: 32px 10px;
+    color: #748077;
+    text-align: center;
+    font-size: 12px;
+  }
+  .empty-store .big { font-size: 26px; }
+
+  .sidebar-foot {
+    flex: 0 0 auto;
+    padding: 11px 16px 13px;
+    border-top: 1px solid rgba(20,32,27,.14);
+    background: #f6f0e4;
+  }
+  .mission-mini {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    font-size: 10px;
+    color: #58665c;
+  }
+  .mission-mini .bar {
+    flex: 1 1 auto;
+    height: 5px;
+    border-radius: 99px;
+    background: #ded7c9;
+    overflow: hidden;
+    border: 1px solid rgba(20,32,27,.08);
+  }
+  .mission-mini .bar i {
+    display: block;
+    height: 100%;
+    width: 5%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--coral), var(--yellow));
+    transition: width .35s ease;
+  }
+  .side-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .side-action {
+    appearance: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 30px;
+    padding: 0 7px;
+    border: 1.5px solid rgba(20,32,27,.65);
+    border-radius: 8px;
+    background: #fffdf8;
+    cursor: pointer;
+    color: #435149;
+    font-size: 9.5px;
+    font-weight: 750;
+    white-space: nowrap;
+    transition: background .12s, transform .12s;
+  }
+  .side-action:hover { background: #fff4d0; }
+  .side-action:active { transform: translateY(1px); }
+  .credits {
+    margin: 9px 0 0;
+    color: #929b93;
+    font-size: 8.5px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .credits a { text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ---------- Toast & discovery banner ---------- */
+  .toast {
+    position: fixed;
+    z-index: 90;
+    left: 50%;
+    bottom: 68px;
+    transform: translate(-50%, 16px);
+    max-width: min(540px, calc(100vw - 30px));
+    padding: 10px 15px;
+    border: 1.5px solid #050a07;
+    border-radius: 11px;
+    background: #17271f;
+    color: #f7f2e6;
+    box-shadow: 4px 4px 0 rgba(0,0,0,.55);
+    font-size: 12.5px;
+    font-weight: 650;
+    line-height: 1.35;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast.warn { background: #3a211b; color: #ffe8df; }
+  .toast.hint { background: var(--yellow); color: #241b00; border-color: var(--ink); }
+  .toast.ok { background: #1d4a31; color: #e7ffeb; }
+  .toast b { color: #fff; }
+  .toast.hint b { color: #241b00; }
+
+  .discovery-banner {
+    position: fixed;
+    z-index: 80;
+    top: 86px;
+    left: 50%;
+    width: min(440px, calc(100vw - 28px));
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px 11px 11px;
+    border: 2px solid var(--ink);
+    border-radius: 17px;
+    background: #fffdf8;
+    box-shadow: 6px 6px 0 var(--ink);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -16px) scale(.97);
+    transition: opacity .22s ease, transform .22s cubic-bezier(.2,.9,.3,1.2);
+  }
+  .discovery-banner.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  .discovery-banner .b-emoji {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid var(--ink);
+    border-radius: 13px;
+    background: #fff0b9;
+    font-size: 25px;
+  }
+  .discovery-banner .b-copy { min-width: 0; }
+  .discovery-banner small {
+    display: block;
+    margin-bottom: 1px;
+    color: var(--coral-dark);
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .discovery-banner strong {
+    display: block;
+    font-size: 17px;
+    line-height: 1.1;
+    letter-spacing: -.3px;
+  }
+  .discovery-banner p {
+    margin: 3px 0 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: #667168;
+    font-size: 10.5px;
+    line-height: 1.3;
+  }
+  .discovery-banner .b-star {
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--ink);
+    font-size: 11px;
+    transform: rotate(10deg);
+  }
+
+  /* ---------- Modals ---------- */
+  .overlay {
+    position: fixed;
+    z-index: 120;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    background: rgba(8,14,11,.58);
+    backdrop-filter: blur(4px);
+    animation: overlayIn .18s ease;
+  }
+  @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+  .dialog {
+    position: relative;
+    width: min(540px, 100%);
+    max-height: min(86dvh, 720px);
+    overflow-y: auto;
+    padding: 25px 25px 21px;
+    border: 2px solid var(--ink);
+    border-radius: 22px;
+    background: var(--paper-2);
+    box-shadow: 8px 8px 0 var(--ink);
+    animation: dialogIn .22s cubic-bezier(.2,.9,.3,1.15);
+  }
+  @keyframes dialogIn { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+  .dialog-close {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    appearance: none;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 1.5px solid var(--ink);
+    border-radius: 9px;
+    background: #fffdf8;
+    box-shadow: 2px 2px 0 var(--ink);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .dialog-close:hover { background: #ffe9e2; }
+  .dialog .kicker {
+    margin: 0 0 7px;
+    color: var(--coral-dark);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+  }
+  .dialog h2 {
+    margin: 0 0 7px;
+    padding-right: 35px;
+    font-size: 27px;
+    line-height: 1.03;
+    letter-spacing: -.9px;
+  }
+  .dialog .lead {
+    margin: 0 0 20px;
+    color: #5f6b62;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .steps {
+    display: grid;
+    gap: 9px;
+    margin-bottom: 18px;
+  }
+  .step {
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    padding: 11px;
+    border: 1.5px solid rgba(20,32,27,.22);
+    border-radius: 12px;
+    background: #fffdf8;
+  }
+  .step-num {
+    flex: 0 0 auto;
+    width: 27px;
+    height: 27px;
+    display: grid;
+    place-items: center;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    background: var(--yellow);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 900;
+  }
+  .step:nth-child(2) .step-num { background: #eae2fc; }
+  .step:nth-child(3) .step-num { background: #ffe3dc; }
+  .step:nth-child(4) .step-num { background: #d9f0f3; }
+  .step b { display: block; margin-bottom: 2px; font-size: 12.5px; }
+  .step p { margin: 0; color: #667069; font-size: 11px; line-height: 1.45; }
+  .shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0 0 19px;
+    padding: 10px;
+    border-radius: 11px;
+    background: #efe8dc;
+    color: #5c675e;
+    font-size: 10.5px;
+  }
+  .shortcuts span { display: inline-flex; align-items: center; gap: 4px; }
+  .shortcuts kbd {
+    display: inline-block;
+    padding: 2px 5px;
+    border: 1px solid rgba(20,32,27,.35);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: #fffdf8;
+    font-family: var(--mono);
+    font-size: 9px;
+  }
+  .dialog-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .dialog-btn {
+    appearance: none;
+    min-height: 39px;
+    padding: 0 16px;
+    border: 2px solid var(--ink);
+    border-radius: 11px;
+    background: #fffdf8;
+    box-shadow: 3px 3px 0 var(--ink);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 800;
+    transition: transform .13s ease, box-shadow .13s ease;
+  }
+  .dialog-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+  .dialog-btn:active { transform: translate(2px, 2px); box-shadow: none; }
+  .dialog-btn.primary { background: var(--coral); color: #fff; }
+  .dialog-btn.danger { background: #3d1e18; color: #ffe8df; }
+  .dialog-btn.ghost { background: #f3ecdf; }
+  .reset-visual {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 14px;
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    background: #ffe3dc;
+    box-shadow: 4px 4px 0 var(--ink);
+    font-size: 31px;
+  }
+
+  /* Victory */
+  #victoryModal .dialog {
+    width: min(590px, 100%);
+    text-align: center;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(254,215,87,.5), transparent 28%),
+      radial-gradient(circle at 90% 100%, rgba(150,120,211,.24), transparent 35%),
+      var(--paper-2);
+  }
+  .victory-emoji {
+    width: 90px;
+    height: 90px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 13px;
+    border: 2px solid var(--ink);
+    border-radius: 26px;
+    background: #fff0b9;
+    box-shadow: 5px 5px 0 var(--ink);
+    font-size: 46px;
+    transform: rotate(-4deg);
+  }
+  .victory-title {
+    margin: 0;
+    font-size: clamp(29px, 8vw, 43px);
+    line-height: .96;
+    letter-spacing: -1.8px;
+  }
+  .victory-title span { color: var(--coral); }
+  .victory-lead {
+    margin: 12px auto 18px;
+    max-width: 400px;
+    color: #5e6a61;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .victory-stats {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 19px;
+    flex-wrap: wrap;
+  }
+  .v-stat {
+    padding: 7px 11px;
+    border: 1.5px solid rgba(20,32,27,.35);
+    border-radius: 999px;
+    background: #fffdf8;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .v-stat b { color: var(--coral-dark); }
+
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    z-index: 200;
+    pointer-events: none;
+    animation: confettiFly 1.15s cubic-bezier(.12,.72,.3,1) forwards;
+  }
+  @keyframes confettiFly {
+    0% { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--rot)) scale(.45); }
+  }
+
+  /* Mobile sidebar overlay */
+  .sidebar-backdrop {
+    position: fixed;
+    z-index: 29;
+    inset: 70px 0 0;
+    display: none;
+    background: rgba(8,14,11,.45);
+    backdrop-filter: blur(2px);
+  }
+
+  @media (max-width: 900px) {
+    .sidebar {
+      position: fixed;
+      z-index: 35;
+      top: 70px;
+      right: 0;
+      bottom: 0;
+      width: min(340px, calc(100vw - 32px));
+      transform: translateX(calc(100% + 8px));
+      transition: transform .24s cubic-bezier(.2,.8,.3,1);
+      box-shadow: -12px 0 30px rgba(8,14,11,.25);
+    }
+    body.sidebar-open .sidebar { transform: none; }
+    body.sidebar-open .sidebar-backdrop { display: block; }
+    .side-close { display: grid; place-items: center; }
+    .mobile-only { display: grid !important; }
+  }
+
+  @media (max-width: 620px) {
+    .topbar { min-height: 62px; padding: 10px 12px; gap: 8px; }
+    .logo { width: 35px; height: 35px; border-radius: 10px; font-size: 14px; }
+    .brand { gap: 8px; }
+    .brand-copy h1 { font-size: 15px; letter-spacing: -.35px; }
+    .brand-copy p { display: none; }
+    .top-actions { gap: 6px; }
+    .progress-pill { min-height: 34px; padding: 5px 9px; font-size: 10.5px; gap: 5px; }
+    .progress-pill strong { font-size: 12px; }
+    .progress-pill .p-total { font-size: 10px; }
+    .btn-hint { min-height: 35px; width: 35px; padding: 0; justify-content: center; }
+    .btn-hint .label { display: none; }
+    .icon-btn { width: 35px; height: 35px; border-radius: 10px; }
+    #helpBtn { display: none; }
+    .sidebar { top: 62px; }
+    .sidebar-backdrop { inset: 62px 0 0; }
+    .mission-chip { top: 11px; left: 11px; padding: 6px 8px 6px 6px; gap: 7px; }
+    .mission-emoji { width: 26px; height: 26px; font-size: 14px; }
+    .mission-copy b { font-size: 10.5px; }
+    .mission-check { display: none; }
+    .board-footer { bottom: 9px; padding: 6px 10px; font-size: 10px; gap: 6px; max-width: calc(100% - 18px); }
+    .board-footer .long-tip { display: none; }
+    .toast { bottom: 50px; font-size: 11.5px; }
+    .discovery-banner { top: 73px; }
+    .dialog { padding: 21px 18px 17px; border-radius: 18px; }
+    .dialog h2 { font-size: 23px; }
+    .card { font-size: 12.5px; padding: 6px 11px 6px 6px; gap: 7px; }
+    .card .emoji { width: 28px; height: 28px; font-size: 15px; }
+    .discoveries { gap: 6px; padding: 2px 13px 12px; }
+    .search-wrap { padding-left: 13px; padding-right: 13px; }
+    .search-wrap .search-icon { left: 25px; }
+    .sidebar-head { padding-left: 13px; padding-right: 13px; }
+    .sidebar-foot { padding-left: 13px; padding-right: 13px; }
+  }
+
+  @media (max-width: 390px) {
+    .brand-copy h1 { font-size: 13.5px; }
+    .progress-pill { padding: 5px 7px; }
+    .progress-pill .p-total { display: none; }
+    .progress-pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+    .p-dot { display: none; }
+    .progress-pill strong::after { content: " piezas"; font-size: 8px; color: #85968c; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand" aria-label="Alquimia Reactiva">
+      <div class="logo" aria-hidden="true">WR</div>
+      <div class="brand-copy">
+        <h1>Alquimia <span>Reactiva</span></h1>
+        <p>El laboratorio de Web Reactiva</p>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <div class="progress-pill" id="progressPill" title="Descubrimientos">
+        <span class="p-dot" aria-hidden="true"></span>
+        <strong id="discoveredCount">4</strong>
+        <span class="p-total">/ <span id="totalCount">78</span></span>
+      </div>
+      <button class="btn btn-hint" id="hintBtn" type="button" title="Pedir una pista">
+        <span class="lamp" aria-hidden="true">💡</span><span class="label">Pista</span>
+      </button>
+      <button class="icon-btn" id="helpBtn" type="button" aria-label="Cómo se juega" title="Cómo se juega">?</button>
+      <button class="icon-btn mobile-only" id="panelBtn" type="button" aria-label="Abrir descubrimientos" title="Descubrimientos">☰</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="board-wrap" aria-label="Laboratorio de alquimia">
+      <div class="board" id="board">
+        <button class="mission-chip" id="missionChip" type="button" title="Ver la misión y cómo jugar">
+          <span class="mission-emoji" aria-hidden="true">🗺️</span>
+          <span class="mission-copy">
+            <small>Misión</small>
+            <b id="missionText">Descubre el Atlas Malandriner</b>
+          </span>
+          <span class="mission-check" id="missionCheck" aria-hidden="true">○</span>
+        </button>
+        <div id="cards"></div>
+        <div class="board-footer" aria-hidden="true">
+          <span>Arrastra una pieza sobre otra</span>
+          <span class="dot"></span>
+          <span class="long-tip">Clic para seleccionar</span>
+          <span class="dot long-tip"></span>
+          <span class="long-tip">Doble clic para duplicar</span>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar" id="sidebar" aria-label="Descubrimientos">
+      <div class="sidebar-head">
+        <div>
+          <p class="eyebrow">Almacén</p>
+          <h2>Descubrimientos</h2>
+          <span class="side-count" id="sideCount">4 de 78</span>
+        </div>
+        <button class="side-close" id="closeSidebar" type="button" aria-label="Cerrar descubrimientos">×</button>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="search" type="search" placeholder="Buscar en el almacén…" autocomplete="off" aria-label="Buscar descubrimientos">
+      </div>
+      <div class="discoveries" id="discoveries" aria-live="polite"></div>
+      <div class="sidebar-foot">
+        <div class="mission-mini">
+          <span>Progreso</span>
+          <span class="bar"><i id="missionBar"></i></span>
+          <span id="missionPercent">5%</span>
+        </div>
+        <div class="side-actions">
+          <button class="side-action" id="sideHelp" type="button">Cómo jugar</button>
+          <button class="side-action" id="soundToggle" type="button" aria-pressed="true">🔊 Sonido</button>
+          <button class="side-action" id="resetBtn" type="button">↺ Reiniciar</button>
+        </div>
+        <p class="credits">Un tributo a <a href="https://www.webreactiva.com" target="_blank" rel="noopener noreferrer">webreactiva.com</a><br>Inspirado en Infinite Craft</p>
+      </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="discovery-banner" id="discoveryBanner" role="status" aria-live="polite">
+  <span class="b-star" aria-hidden="true">★</span>
+  <span class="b-emoji" id="bannerEmoji">✨</span>
+  <span class="b-copy">
+    <small>Nuevo descubrimiento</small>
+    <strong id="bannerName">Algo nuevo</strong>
+    <p id="bannerBlurb"></p>
+  </span>
+</div>
+
+<div class="overlay" id="helpModal" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <button class="dialog-close" type="button" data-close aria-label="Cerrar">×</button>
+    <p class="kicker">Manual del alquimista</p>
+    <h2 id="helpTitle">Mezcla, descubre, repite.</h2>
+    <p class="lead">Empiezas con cuatro piezas. Todo lo demás se cocina mezclando dos ingredientes. No hay una sola receta: hay muchas combinaciones esperando.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div><b>Arrastra una pieza sobre otra</b><p>Si la mezcla funciona, las dos piezas se convierten en una nueva. Si no, se quedan donde estaban.</p></div>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div><b>O haz clic para seleccionar</b><p>Pulsa una pieza y luego otra. Es la forma más cómoda de mezclar desde el teclado o en el móvil.</p></div>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div><b>Repite piezas desde el almacén</b><p>Haz clic en cualquier descubrimiento del panel derecho para añadir otra copia al tablero. También puedes duplicar con doble clic.</p></div>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <div><b>Busca el Atlas Malandriner</b><p>La misión del laboratorio es conectar todo Web Reactiva con tu agente. El botón «Pista» te acerca un ingrediente cada vez.</p></div>
+      </div>
+    </div>
+
+    <div class="shortcuts">
+      <span><kbd>/</kbd> buscar</span>
+      <span><kbd>Esc</kbd> cerrar</span>
+      <span><kbd>Enter</kbd> combinar la pieza enfocada</span>
+      <span>El progreso se guarda solo</span>
+    </div>
+
+    <div class="dialog-actions">
+      <button class="dialog-btn ghost" type="button" data-close>Volver al laboratorio</button>
+      <button class="dialog-btn primary" type="button" id="helpHintBtn">Dame una pista</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="resetModal" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="resetTitle">
+    <button class="dialog-close" type="button" data-close aria-label="Cerrar">×</button>
+    <div class="reset-visual" aria-hidden="true">⚗️</div>
+    <p class="kicker">Empezar de cero</p>
+    <h2 id="resetTitle">¿Vaciar el laboratorio?</h2>
+    <p class="lead" id="resetText">Se borrarán todos tus descubrimientos y el tablero volverá a las cuatro piezas iniciales. Esta acción no se puede deshacer.</p>
+    <div class="dialog-actions">
+      <button class="dialog-btn ghost" type="button" data-close>Mejor no</button>
+      <button class="dialog-btn danger" type="button" id="confirmReset">Sí, reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="victoryModal" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="victoryTitle">
+    <button class="dialog-close" type="button" data-close aria-label="Cerrar">×</button>
+    <div class="victory-emoji" aria-hidden="true">🗺️</div>
+    <p class="kicker">Misión cumplida</p>
+    <h2 class="victory-title" id="victoryTitle">Has montado el <span>Atlas Malandriner</span></h2>
+    <p class="victory-lead">Toda la biblioteca de Web Reactiva, conectada a tu agente. Ya no te queda nada por descubrir… salvo todas las mezclas que se te ocurran.</p>
+    <div class="victory-stats">
+      <span class="v-stat"><b id="vDisc">78</b> piezas</span>
+      <span class="v-stat"><b>1</b> MCP legendario</span>
+      <span class="v-stat"><b>∞</b> calambrazos</span>
+    </div>
+    <div class="dialog-actions" style="justify-content:center">
+      <button class="dialog-btn ghost" type="button" id="victoryStore">Ver el almacén</button>
+      <button class="dialog-btn primary" type="button" data-close>Seguir mezclando</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const BASE = ['developer', 'ia', 'cafe', 'prompt'];
+
+  const ELEMENTS = {
+    developer: { name: 'Developer', emoji: '🧑‍💻', cat: 'dev', blurb: 'El ingrediente base de toda receta. Toca código y no le tiene miedo a la IA.' },
+    ia: { name: 'IA', emoji: '🤖', cat: 'ai', blurb: 'Un modelo con mucha seguridad y, a veces, poca memoria.' },
+    cafe: { name: 'Café', emoji: '☕', cat: 'fun', blurb: 'Combustible oficial del developer. Sin él no arranca el día.' },
+    prompt: { name: 'Prompt', emoji: '💬', cat: 'ai', blurb: 'La primera chispa. Bien escrito, obra milagros.' },
+    copiloto: { name: 'Copiloto', emoji: '🤝', cat: 'ai', blurb: 'La IA te acompaña al teclado. Tú sigues al mando.' },
+    codigo: { name: 'Código', emoji: '💾', cat: 'dev', blurb: 'Materia prima del laboratorio. Con intención, claro.' },
+    spec: { name: 'Spec', emoji: '📋', cat: 'dev', blurb: 'Si lo escribes antes, la IA no improvisa.' },
+    alucinacion: { name: 'Alucinación', emoji: '🌀', cat: 'ai', blurb: 'Respuesta con seguridad de premio Nobel y cero fundamento.' },
+    modelo: { name: 'Modelo', emoji: '🧠', cat: 'ai', blurb: 'El cerebro. Cuanto más grande, más caro el ticket.' },
+    idea: { name: 'Idea', emoji: '💡', cat: 'fun', blurb: 'Una chispa que puede acabar en proyecto o en otra pestaña abierta.' },
+    equipo: { name: 'Equipo', emoji: '👥', cat: 'wr', blurb: 'Dos developers, un objetivo y demasiados canales abiertos.' },
+    hype: { name: 'Hype', emoji: '📈', cat: 'fun', blurb: 'Todo el mundo habla de lo mismo. Mañana, de otra cosa.' },
+    espresso: { name: 'Espresso', emoji: '⚡', cat: 'fun', blurb: 'Café concentrado para sesiones intensas.' },
+    prompt_engineering: { name: 'Prompt Engineering', emoji: '🪄', cat: 'ai', blurb: 'El arte de pedir las cosas con contexto, formato y límites.' },
+    agente: { name: 'Agente', emoji: '🕵️', cat: 'ai', blurb: 'Ya no solo contesta: lee, ejecuta y se equivoca con estilo.' },
+    claude_code: { name: 'Claude Code', emoji: '⌨️', cat: 'tool', blurb: 'El agente de terminal que vive en tu repo.' },
+    codex: { name: 'Codex', emoji: '🧩', cat: 'tool', blurb: 'Otro agente de terminal. La competencia siempre viene bien.' },
+    opencode: { name: 'OpenCode', emoji: '🦙', cat: 'tool', blurb: 'Agente abierto, muchas ganas y cero miedo al terminal.' },
+    bug: { name: 'Bug', emoji: '🐛', cat: 'dev', blurb: 'No es un fallo, es una funcionalidad no documentada.' },
+    proyecto: { name: 'Proyecto', emoji: '🚀', cat: 'dev', blurb: 'Código con una intención. Y con fecha de entrega.' },
+    commit: { name: 'Commit', emoji: '✅', cat: 'dev', blurb: 'El guardado que siempre se te olvida hacer pequeño.' },
+    deploy: { name: 'Deploy', emoji: '🚢', cat: 'dev', blurb: 'El momento de cruzar los dedos y mirar los logs.' },
+    repo: { name: 'Repo', emoji: '📦', cat: 'dev', blurb: 'Donde vive el código y se acumulan las issues.' },
+    issue: { name: 'Issue', emoji: '🐞', cat: 'dev', blurb: 'Alguien lo ha visto. Ahora hay que reproducirlo.' },
+    debug: { name: 'Debug', emoji: '🩺', cat: 'dev', blurb: 'La caza del bug con la lupa del agente.' },
+    test: { name: 'Test', emoji: '🧪', cat: 'dev', blurb: 'La red de seguridad que te salva en el próximo refactor.' },
+    eval: { name: 'Eval', emoji: '⚖️', cat: 'ai', blurb: 'Medir la IA en vez de fiarte de la vibra.' },
+    plan: { name: 'Plan', emoji: '📝', cat: 'dev', blurb: 'El mapa antes de salir a programar.' },
+    plan_mode: { name: 'Plan Mode', emoji: '🗺️', cat: 'dev', blurb: 'Pensar antes de promptear. Qué concepto tan revolucionario.' },
+    sdd: { name: 'SDD', emoji: '🧭', cat: 'dev', blurb: 'Spec Driven Development: escribir el qué antes del cómo.' },
+    open_spec: { name: 'OpenSpec', emoji: '📐', cat: 'tool', blurb: 'SDD con OpenSpec, el flujo que ordena el caos.' },
+    spec_kit: { name: 'Spec Kit', emoji: '🧰', cat: 'tool', blurb: 'Spec Kit: el kit de GitHub para no improvisar.' },
+    ai_slop: { name: 'AI Slop', emoji: '🗑️', cat: 'fun', blurb: 'Mucho texto, mucho código y ninguna sustancia.' },
+    token: { name: 'Token', emoji: '🪙', cat: 'ai', blurb: 'Cada pieza de texto cuesta. Y tú pagas la cuenta.' },
+    respuesta: { name: 'Respuesta', emoji: '📨', cat: 'ai', blurb: 'Puede ser brillante o una alucinación con formato impecable.' },
+    charla: { name: 'Charla', emoji: '🗣️', cat: 'fun', blurb: 'Una conversación de las que se alargan hasta las dos de la mañana.' },
+    comunidad: { name: 'Comunidad', emoji: '💬', cat: 'wr', blurb: 'El grupo donde preguntar no te hace sentir tonto.' },
+    cultura: { name: 'Cultura', emoji: '🧑‍🤝‍🧑', cat: 'wr', blurb: 'La forma de trabajar que se contagia sin escribirla.' },
+    webreactiva: { name: 'Web Reactiva', emoji: '🌐', cat: 'wr', blurb: 'Programa con IA sin alucinar, rodeado de developers inquietos.' },
+    telegram: { name: 'Telegram', emoji: '📱', cat: 'wr', blurb: 'El grupo privado donde pasan las cosas.' },
+    zona: { name: 'Zona Malandriner', emoji: '🟣', cat: 'wr', blurb: 'La Zona Malandriner. Si sabes, sabes.' },
+    reunion: { name: 'Reunión', emoji: '📅', cat: 'dev', blurb: 'Otra reunión que podía haber sido un mensaje.' },
+    sprint: { name: 'Sprint', emoji: '🏃', cat: 'dev', blurb: 'Dos semanas para hacerlo todo. O casi.' },
+    skill: { name: 'Skill', emoji: '🧠', cat: 'ai', blurb: 'Instrucciones empaquetadas para que tu agente no empiece de cero.' },
+    skill_md: { name: 'SKILL.md', emoji: '🧾', cat: 'dev', blurb: 'El archivo que convierte una buena idea en una skill reutilizable.' },
+    rag: { name: 'RAG', emoji: '📚', cat: 'ai', blurb: 'Recuperar información antes de responder. Menos inventar.' },
+    contexto: { name: 'Contexto', emoji: '🧩', cat: 'ai', blurb: 'La diferencia entre una respuesta genial y una genérica.' },
+    agents_md: { name: 'AGENTS.md', emoji: '📄', cat: 'dev', blurb: 'Las reglas de la casa para que el agente no haga lo que quiera.' },
+    api: { name: 'API', emoji: '🔗', cat: 'dev', blurb: 'La puerta por la que se conecta todo con todo.' },
+    mcp: { name: 'MCP', emoji: '🔌', cat: 'tool', blurb: 'El conector que lleva tu agente a tu stack real.' },
+    herramienta: { name: 'Herramienta', emoji: '🧰', cat: 'tool', blurb: 'Todo lo que el agente puede usar sin pedirte permiso.' },
+    multiagente: { name: 'Multiagente', emoji: '🕸️', cat: 'ai', blurb: 'Varios agentes, una misión y un montón de logs.' },
+    harness: { name: 'Harness', emoji: '🎛️', cat: 'ai', blurb: 'El arnés que convierte un modelo suelto en un agente útil.' },
+    loop: { name: 'Loop infinito', emoji: '🔁', cat: 'ai', blurb: 'La IA programando sola en bucle. ¿Cuánto costará esta vez?' },
+    memoria: { name: 'Memoria', emoji: '🗄️', cat: 'ai', blurb: 'Lo que el agente recuerda entre sesiones para no repetirse.' },
+    headroom: { name: 'Headroom', emoji: '🗜️', cat: 'tool', blurb: 'Comprimir lo que lee el agente para ahorrar tokens de verdad.' },
+    newsletter: { name: 'Newsletter', emoji: '📬', cat: 'wr', blurb: 'Cada domingo, lo mejor de Web Reactiva en tu correo.' },
+    podcast: { name: 'Podcast', emoji: '🎙️', cat: 'wr', blurb: 'Más de 700 episodios de programación en español.' },
+    masterclass: { name: 'Masterclass', emoji: '🎓', cat: 'wr', blurb: 'Un directo, un caso real y una grabación para repasar.' },
+    atlas: { name: 'Atlas Malandriner', emoji: '🗺️', cat: 'wr', blurb: 'Todo Web Reactiva conectado a tu agente. El santo grial.' },
+    curso: { name: 'Curso', emoji: '📚', cat: 'wr', blurb: 'De cero a algo que funciona. Sin saltar de tutorial en tutorial.' },
+    premium: { name: 'Premium', emoji: '⭐', cat: 'wr', blurb: 'La comunidad, las guías y los directos de Web Reactiva.' },
+    guia: { name: 'Guía', emoji: '📖', cat: 'wr', blurb: 'El paso a paso que te ahorra tres horas de pestañas.' },
+    roadmap: { name: 'Roadmap', emoji: '🛤️', cat: 'wr', blurb: 'Qué tocar, en qué orden y cuándo pasar al siguiente nivel.' },
+    criterio: { name: 'Criterio', emoji: '🧐', cat: 'wr', blurb: 'El bien más escaso en la era del hype. Y lo más valioso.' },
+    calambrazo: { name: 'Calambrazo', emoji: '⚡', cat: 'fun', blurb: 'La reacción oficial de la comunidad. Te ha gustado, se nota.' },
+    pantuflas: { name: 'En pantuflas', emoji: '🩴', cat: 'fun', blurb: 'Modo cómodo: aprender sin prisa y sin ruido.' },
+    yak: { name: 'Yak', emoji: '🐂', cat: 'fun', blurb: 'El regalo de los 400 envíos. No preguntes.' },
+    poke: { name: 'Poke', emoji: '🥗', cat: 'fun', blurb: 'El otro regalo de los 400 envíos. Sí, es un poke.' },
+    selector: { name: 'Selector de modelos', emoji: '🎚️', cat: 'tool', blurb: 'Pregúntale a tu agente qué modelo usar con lo que ya pagas.' },
+    revisor: { name: 'Revisor de AGENTS.md', emoji: '🔍', cat: 'tool', blurb: 'Revisa tu AGENTS.md antes de que lo haga el agente a su manera.' },
+    llm_wiki: { name: 'LLM Wiki', emoji: '🗂️', cat: 'tool', blurb: 'Tus enlaces convertidos en una wiki que el agente mantiene.' },
+    gbrain: { name: 'GBrain', emoji: '🧲', cat: 'tool', blurb: 'Memoria y contexto para tu agente, sin perder el hilo.' },
+    wikipoke: { name: 'Wikipoke', emoji: '📓', cat: 'tool', blurb: 'La wiki de tu código escrita por tu agente.' },
+    orbit: { name: 'Orbit', emoji: '🛰️', cat: 'tool', blurb: 'Tareas, docs y chat en tu servidor con MCP.' },
+    rea: { name: 'REA', emoji: '🔬', cat: 'tool', blurb: 'Ingeniería inversa asistida por IA. Abre la caja negra.' },
+    goal_oriented: { name: 'Goal-oriented AI', emoji: '🎯', cat: 'ai', blurb: 'Dile el objetivo, no el paso a paso. Y deja que curre.' },
+    odd: { name: 'ODD', emoji: '🌱', cat: 'dev', blurb: 'Organic Driven Development: menos especificar, más dejar fluir.' }
+  };
+
+  const RECIPES = [
+    ['developer', 'ia', 'copiloto'],
+    ['developer', 'cafe', 'codigo'],
+    ['developer', 'prompt', 'spec'],
+    ['ia', 'cafe', 'alucinacion'],
+    ['ia', 'prompt', 'modelo'],
+    ['cafe', 'prompt', 'idea'],
+    ['developer', 'developer', 'equipo'],
+    ['developer', 'codigo', 'equipo'],
+    ['ia', 'ia', 'hype'],
+    ['cafe', 'cafe', 'espresso'],
+    ['prompt', 'prompt', 'prompt_engineering'],
+    ['idea', 'prompt', 'prompt_engineering'],
+    ['copiloto', 'prompt', 'agente'],
+    ['copiloto', 'codigo', 'claude_code'],
+    ['agente', 'codigo', 'claude_code'],
+    ['copiloto', 'modelo', 'codex'],
+    ['claude_code', 'codigo', 'opencode'],
+    ['copiloto', 'alucinacion', 'bug'],
+    ['codigo', 'alucinacion', 'bug'],
+    ['codigo', 'idea', 'proyecto'],
+    ['codigo', 'cafe', 'commit'],
+    ['proyecto', 'commit', 'deploy'],
+    ['proyecto', 'codigo', 'repo'],
+    ['codigo', 'commit', 'repo'],
+    ['proyecto', 'bug', 'issue'],
+    ['codigo', 'bug', 'debug'],
+    ['debug', 'bug', 'test'],
+    ['test', 'modelo', 'eval'],
+    ['spec', 'idea', 'plan'],
+    ['spec', 'prompt', 'plan_mode'],
+    ['codigo', 'plan', 'plan_mode'],
+    ['spec', 'ia', 'sdd'],
+    ['spec', 'agente', 'sdd'],
+    ['sdd', 'codigo', 'open_spec'],
+    ['sdd', 'equipo', 'spec_kit'],
+    ['alucinacion', 'idea', 'ai_slop'],
+    ['modelo', 'cafe', 'token'],
+    ['modelo', 'prompt', 'respuesta'],
+    ['idea', 'cafe', 'charla'],
+    ['equipo', 'cafe', 'comunidad'],
+    ['equipo', 'ia', 'cultura'],
+    ['comunidad', 'ia', 'webreactiva'],
+    ['comunidad', 'codigo', 'telegram'],
+    ['webreactiva', 'telegram', 'zona'],
+    ['webreactiva', 'comunidad', 'zona'],
+    ['equipo', 'prompt', 'reunion'],
+    ['espresso', 'codigo', 'sprint'],
+    ['equipo', 'proyecto', 'sprint'],
+    ['prompt_engineering', 'codigo', 'skill'],
+    ['prompt_engineering', 'agente', 'skill'],
+    ['skill', 'prompt', 'skill_md'],
+    ['prompt_engineering', 'modelo', 'rag'],
+    ['rag', 'prompt', 'contexto'],
+    ['prompt_engineering', 'spec', 'agents_md'],
+    ['codigo', 'modelo', 'api'],
+    ['agente', 'api', 'mcp'],
+    ['mcp', 'api', 'herramienta'],
+    ['codigo', 'api', 'herramienta'],
+    ['agente', 'agente', 'multiagente'],
+    ['agente', 'modelo', 'harness'],
+    ['agente', 'cafe', 'loop'],
+    ['agente', 'contexto', 'memoria'],
+    ['token', 'codigo', 'headroom'],
+    ['token', 'modelo', 'contexto'],
+    ['contexto', 'modelo', 'rag'],
+    ['webreactiva', 'cafe', 'newsletter'],
+    ['webreactiva', 'charla', 'podcast'],
+    ['webreactiva', 'proyecto', 'masterclass'],
+    ['webreactiva', 'mcp', 'atlas'],
+    ['webreactiva', 'skill', 'curso'],
+    ['webreactiva', 'equipo', 'premium'],
+    ['webreactiva', 'podcast', 'premium'],
+    ['webreactiva', 'prompt', 'guia'],
+    ['webreactiva', 'plan', 'roadmap'],
+    ['webreactiva', 'ai_slop', 'criterio'],
+    ['hype', 'webreactiva', 'criterio'],
+    ['comunidad', 'hype', 'calambrazo'],
+    ['podcast', 'comunidad', 'calambrazo'],
+    ['comunidad', 'cafe', 'pantuflas'],
+    ['podcast', 'cafe', 'yak'],
+    ['newsletter', 'idea', 'poke'],
+    ['webreactiva', 'modelo', 'selector'],
+    ['webreactiva', 'agents_md', 'revisor'],
+    ['memoria', 'repo', 'llm_wiki'],
+    ['memoria', 'mcp', 'gbrain'],
+    ['repo', 'agente', 'wikipoke'],
+    ['mcp', 'proyecto', 'orbit'],
+    ['mcp', 'bug', 'rea'],
+    ['plan', 'agente', 'goal_oriented'],
+    ['plan', 'cafe', 'odd']
+  ];
+
+  const FAIL_LINES = [
+    'Nada. Ni un calambrazo.',
+    'Esa mezcla no reacciona. Prueba otra cosa.',
+    'La IA dice que no con mucha seguridad.',
+    'Silencio en el laboratorio…',
+    'Eso no era una skill.',
+    'Mezcla descartada, malandriner.',
+    'Ni con café. Y mira que lo has intentado.',
+    'El agente se ha quedado mirando al infinito.'
+  ];
+
+  const TOTAL = Object.keys(ELEMENTS).length;
+  const STORAGE_KEY = 'alquimia-reactiva-v1';
+  const pairKey = (a, b) => a < b ? a + '|' + b : b + '|' + a;
+  const RECIPE_MAP = new Map(RECIPES.map(([a, b, result]) => [pairKey(a, b), result]));
+
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  const els = {
+    app: $('#app'),
+    board: $('#board'),
+    cards: $('#cards'),
+    discoveredCount: $('#discoveredCount'),
+    totalCount: $('#totalCount'),
+    progressPill: $('#progressPill'),
+    missionChip: $('#missionChip'),
+    missionText: $('#missionText'),
+    missionCheck: $('#missionCheck'),
+    missionBar: $('#missionBar'),
+    missionPercent: $('#missionPercent'),
+    sideCount: $('#sideCount'),
+    discoveries: $('#discoveries'),
+    search: $('#search'),
+    toast: $('#toast'),
+    banner: $('#discoveryBanner'),
+    bannerEmoji: $('#bannerEmoji'),
+    bannerName: $('#bannerName'),
+    bannerBlurb: $('#bannerBlurb'),
+    hintBtn: $('#hintBtn'),
+    helpBtn: $('#helpBtn'),
+    panelBtn: $('#panelBtn'),
+    closeSidebar: $('#closeSidebar'),
+    sidebarBackdrop: $('#sidebarBackdrop'),
+    sideHelp: $('#sideHelp'),
+    soundToggle: $('#soundToggle'),
+    resetBtn: $('#resetBtn'),
+    helpModal: $('#helpModal'),
+    resetModal: $('#resetModal'),
+    victoryModal: $('#victoryModal'),
+    resetText: $('#resetText'),
+    confirmReset: $('#confirmReset'),
+    victoryStore: $('#victoryStore'),
+    vDisc: $('#vDisc')
+  };
+
+  let state;
+  let cidSeq = 0;
+  let zTop = 20;
+  let selectedCid = null;
+  let drag = null;
+  let toastTimer = null;
+  let bannerTimer = null;
+  let recentId = null;
+  let recentTimer = null;
+  let audioCtx = null;
+  let lastFocus = null;
+
+  const cardEls = new Map();
+
+  function normalize(text) {
+    return String(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function element(id) {
+    return ELEMENTS[id];
+  }
+
+  function isDiscovered(id) {
+    return state.discovered.includes(id);
+  }
+
+  function getCard(cid) {
+    return state.board.find(card => card.cid === cid) || null;
+  }
+
+  function getCardFromEl(el) {
+    return getCard(Number(el.dataset.cid));
+  }
+
+  function tiltFor(id) {
+    let h = 0;
+    for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+    return ((h % 5) - 2) * 0.55;
+  }
+
+  function loadState() {
+    let raw = null;
+    try {
+      raw = localStorage.getItem(STORAGE_KEY);
+    } catch (err) {
+      raw = null;
+    }
+    let saved = null;
+    if (raw) {
+      try { saved = JSON.parse(raw); } catch (err) { saved = null; }
+    }
+
+    if (saved && Array.isArray(saved.discovered)) {
+      const discovered = [];
+      for (const id of BASE) discovered.push(id);
+      for (const id of saved.discovered) {
+        if (ELEMENTS[id] && !discovered.includes(id)) discovered.push(id);
+      }
+
+      const order = [];
+      for (const id of BASE) order.push(id);
+      const savedOrder = Array.isArray(saved.discoveryOrder) ? saved.discoveryOrder : saved.discovered;
+      for (const id of savedOrder) {
+        if (ELEMENTS[id] && !order.includes(id)) order.push(id);
+      }
+      for (const id of discovered) {
+        if (!order.includes(id)) order.push(id);
+      }
+
+      const board = [];
+      if (Array.isArray(saved.board)) {
+        for (const item of saved.board) {
+          if (!item || !ELEMENTS[item.elementId]) continue;
+          const x = Number(item.x);
+          const y = Number(item.y);
+          if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+          board.push({ cid: ++cidSeq, elementId: item.elementId, x, y });
+        }
+      }
+
+      state = {
+        discovered,
+        discoveryOrder: order,
+        board,
+        sound: saved.sound !== false,
+        goalSeen: !!saved.goalSeen,
+        hasSaved: true
+      };
+    } else {
+      state = {
+        discovered: [...BASE],
+        discoveryOrder: [...BASE],
+        board: [],
+        sound: true,
+        goalSeen: false,
+        hasSaved: false
+      };
+    }
+  }
+
+  function save() {
+    try {
+      const data = {
+        v: 1,
+        discovered: state.discovered,
+        discoveryOrder: state.discoveryOrder,
+        board: state.board.map(card => ({
+          elementId: card.elementId,
+          x: Number(card.x.toFixed(5)),
+          y: Number(card.y.toFixed(5))
+        })),
+        sound: state.sound,
+        goalSeen: state.goalSeen
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (err) {
+      // El juego sigue funcionando sin persistencia.
+    }
+  }
+
+  function clampPosition(x, y, el) {
+    const bw = els.board.clientWidth;
+    const bh = els.board.clientHeight;
+    if (!bw || !bh) return { x: 0.5, y: 0.5 };
+    const w = el ? el.offsetWidth : 130;
+    const h = el ? el.offsetHeight : 46;
+    const padX = (w / 2 + 12) / bw;
+    const padY = (h / 2 + 12) / bh;
+    return {
+      x: padX > 0.48 ? 0.5 : Math.min(1 - padX, Math.max(padX, x)),
+      y: padY > 0.48 ? 0.5 : Math.min(1 - padY, Math.max(padY, y))
+    };
+  }
+
+  function positionCard(card) {
+    if (!card.el) return;
+    card.el.style.left = (card.x * 100) + '%';
+    card.el.style.top = (card.y * 100) + '%';
+  }
+
+  function createCard(card) {
+    const data = element(card.elementId);
+    const el = document.createElement('div');
+    el.className = 'card cat-' + data.cat;
+    el.dataset.cid = String(card.cid);
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', data.name + '. Arrastra o pulsa para mezclar.');
+    el.title = data.name + ' — ' + data.blurb;
+    el.style.setProperty('--tilt', tiltFor(card.elementId) + 'deg');
+
+    const emoji = document.createElement('span');
+    emoji.className = 'emoji';
+    emoji.textContent = data.emoji;
+    emoji.setAttribute('aria-hidden', 'true');
+
+    const name = document.createElement('span');
+    name.className = 'name';
+    name.textContent = data.name;
+
+    el.appendChild(emoji);
+    el.appendChild(name);
+    els.cards.appendChild(el);
+    card.el = el;
+    cardEls.set(card.cid, el);
+
+    const p = clampPosition(card.x, card.y, el);
+    card.x = p.x;
+    card.y = p.y;
+    positionCard(card);
+
+    el.addEventListener('pointerdown', onCardPointerDown);
+    el.addEventListener('dblclick', onCardDoubleClick);
+    el.addEventListener('keydown', onCardKeyDown);
+
+    return el;
+  }
+
+  function addCard(elementId, x, y, options = {}) {
+    if (!ELEMENTS[elementId]) return null;
+    const card = { cid: ++cidSeq, elementId, x, y, el: null };
+    createCard(card);
+    state.board.push(card);
+    if (options.animate !== false) {
+      card.el.classList.add('spawn');
+      setTimeout(() => card.el && card.el.classList.remove('spawn'), 320);
+    }
+    if (options.select) {
+      selectCard(card);
+    }
+    if (!options.noSave) save();
+    return card;
+  }
+
+  function removeCard(cid, animate = true) {
+    const index = state.board.findIndex(card => card.cid === cid);
+    if (index === -1) return;
+    const card = state.board[index];
+    state.board.splice(index, 1);
+    const el = cardEls.get(cid);
+    if (el) {
+      cardEls.delete(cid);
+      el.style.pointerEvents = 'none';
+      if (animate) {
+        el.classList.add('leaving');
+        setTimeout(() => el.remove(), 160);
+      } else {
+        el.remove();
+      }
+    }
+    if (selectedCid === cid) {
+      selectedCid = null;
+    }
+  }
+
+  function seedBoard() {
+    if (state.board.length) return;
+    const compact = els.board.clientWidth < 680;
+    const dx = compact ? 0.21 : 0.15;
+    const dy = compact ? 0.13 : 0.105;
+    const positions = [
+      [-dx, -dy],
+      [dx, -dy],
+      [-dx, dy],
+      [dx, dy]
+    ];
+    BASE.forEach((id, index) => {
+      addCard(id, 0.5 + positions[index][0], 0.5 + positions[index][1], { animate: false, noSave: true });
+    });
+    save();
+  }
+
+  function clearSelection() {
+    if (selectedCid !== null) {
+      const el = cardEls.get(selectedCid);
+      if (el) el.classList.remove('selected');
+      selectedCid = null;
+    }
+  }
+
+  function selectCard(card) {
+    clearSelection();
+    selectedCid = card.cid;
+    if (card.el) card.el.classList.add('selected');
+  }
+
+  function handleCardActivate(card) {
+    if (!card) return;
+    if (selectedCid !== null && selectedCid !== card.cid) {
+      const source = getCard(selectedCid);
+      if (source) {
+        attemptCombine(source, card);
+        return;
+      }
+      clearSelection();
+    }
+    if (selectedCid === card.cid) {
+      clearSelection();
+    } else {
+      selectCard(card);
+    }
+  }
+
+  function onCardKeyDown(event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    const card = getCardFromEl(event.currentTarget);
+    handleCardActivate(card);
+  }
+
+  function onCardDoubleClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const card = getCardFromEl(event.currentTarget);
+    if (!card) return;
+    const offset = 0.055;
+    let nx = card.x + offset;
+    let ny = card.y + offset;
+    if (nx > 0.86) nx = card.x - offset;
+    if (ny > 0.84) ny = card.y - offset;
+    addCard(card.elementId, nx, ny, { select: false });
+    showToast('Copia añadida al tablero.', 'info', 1200);
+    beep(660, 0.04, 0, 'sine', 0.018);
+  }
+
+  function onCardPointerDown(event) {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    const el = event.currentTarget;
+    const card = getCardFromEl(el);
+    if (!card) return;
+
+    event.preventDefault();
+    clearDropTargets();
+
+    const boardRect = els.board.getBoundingClientRect();
+    const cardRect = el.getBoundingClientRect();
+    drag = {
+      card,
+      el,
+      pointerId: event.pointerId,
+      startClientX: event.clientX,
+      startClientY: event.clientY,
+      grabDX: (event.clientX - (cardRect.left + cardRect.width / 2)) / boardRect.width,
+      grabDY: (event.clientY - (cardRect.top + cardRect.height / 2)) / boardRect.height,
+      origX: card.x,
+      origY: card.y,
+      moved: false,
+      targetCid: null
+    };
+
+    el.classList.add('dragging');
+    el.style.zIndex = String(++zTop);
+    try { el.setPointerCapture(event.pointerId); } catch (err) { /* noop */ }
+
+    window.addEventListener('pointermove', onPointerMove, { passive: false });
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+  }
+
+  function onPointerMove(event) {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    const dx = event.clientX - drag.startClientX;
+    const dy = event.clientY - drag.startClientY;
+
+    if (!drag.moved && Math.hypot(dx, dy) > 5) {
+      drag.moved = true;
+      clearSelection();
+    }
+    if (!drag.moved) return;
+
+    event.preventDefault();
+    const boardRect = els.board.getBoundingClientRect();
+    let x = (event.clientX - boardRect.left) / boardRect.width - drag.grabDX;
+    let y = (event.clientY - boardRect.top) / boardRect.height - drag.grabDY;
+    const p = clampPosition(x, y, drag.el);
+    drag.card.x = p.x;
+    drag.card.y = p.y;
+    positionCard(drag.card);
+
+    const targetCid = findDropTarget(drag.el);
+    if (targetCid !== drag.targetCid) {
+      clearDropTargets();
+      drag.targetCid = targetCid;
+      if (targetCid !== null) {
+        const targetEl = cardEls.get(targetCid);
+        if (targetEl) targetEl.classList.add('drop-target');
+      }
+    }
+  }
+
+  function onPointerUp(event) {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    const current = drag;
+    drag = null;
+
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    window.removeEventListener('pointercancel', onPointerUp);
+
+    const el = current.el;
+    el.classList.remove('dragging');
+    try { el.releasePointerCapture(event.pointerId); } catch (err) { /* noop */ }
+
+    const targetCid = findDropTarget(el);
+    clearDropTargets();
+
+    if (current.moved) {
+      if (targetCid !== null) {
+        const target = getCard(targetCid);
+        if (target) {
+          attemptCombine(current.card, target, { returnTo: { x: current.origX, y: current.origY } });
+          return;
+        }
+      }
+      save();
+    } else {
+      handleCardActivate(current.card);
+    }
+  }
+
+  function findDropTarget(dragEl) {
+    if (!dragEl) return null;
+    const dragRect = dragEl.getBoundingClientRect();
+    let bestCid = null;
+    let bestArea = 0;
+
+    for (const card of state.board) {
+      if (card.cid === Number(dragEl.dataset.cid)) continue;
+      const el = cardEls.get(card.cid);
+      if (!el || el.classList.contains('leaving')) continue;
+      const rect = el.getBoundingClientRect();
+      const overlapX = Math.max(0, Math.min(dragRect.right, rect.right) - Math.max(dragRect.left, rect.left));
+      const overlapY = Math.max(0, Math.min(dragRect.bottom, rect.bottom) - Math.max(dragRect.top, rect.top));
+      const area = overlapX * overlapY;
+      if (area > bestArea) {
+        bestArea = area;
+        bestCid = card.cid;
+      }
+    }
+    return bestCid;
+  }
+
+  function clearDropTargets() {
+    $$('.card.drop-target', els.cards).forEach(el => el.classList.remove('drop-target'));
+  }
+
+  function attemptCombine(a, b, options = {}) {
+    if (!a || !b || a.cid === b.cid) return;
+    clearSelection();
+    clearDropTargets();
+
+    const resultId = RECIPE_MAP.get(pairKey(a.elementId, b.elementId));
+    if (!resultId) {
+      invalidCombine(a, b, options);
+      return;
+    }
+
+    const x = (a.x + b.x) / 2;
+    const y = (a.y + b.y) / 2;
+    const wasNew = !isDiscovered(resultId);
+
+    removeCard(a.cid);
+    removeCard(b.cid);
+    if (wasNew) discoverElement(resultId);
+
+    const card = addCard(resultId, x, y, { animate: true });
+    if (!card) return;
+
+    if (wasNew) {
+      announceDiscovery(resultId, card);
+    } else {
+      showToast('Has creado <b>' + element(resultId).name + '</b>.', 'info', 1900);
+      playCombine();
+      setTimeout(() => {
+        if (!card.el) return;
+        const rect = card.el.getBoundingClientRect();
+        burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 10, 0.65);
+      }, 20);
+    }
+
+    if (isDiscovered('atlas') && !state.goalSeen) {
+      state.goalSeen = true;
+      save();
+      setTimeout(showVictory, 620);
+    } else {
+      save();
+    }
+  }
+
+  function invalidCombine(a, b, options) {
+    clearSelection();
+    if (options && options.returnTo && a.el) {
+      a.el.classList.add('returning');
+      a.x = options.returnTo.x;
+      a.y = options.returnTo.y;
+      const p = clampPosition(a.x, a.y, a.el);
+      a.x = p.x;
+      a.y = p.y;
+      positionCard(a);
+      setTimeout(() => {
+        if (a.el) a.el.classList.remove('returning');
+        save();
+      }, 270);
+    } else {
+      save();
+    }
+    shake(a.el);
+    shake(b.el);
+    showToast(FAIL_LINES[Math.floor(Math.random() * FAIL_LINES.length)], 'warn', 2200);
+    playInvalid();
+  }
+
+  function shake(el) {
+    if (!el) return;
+    el.classList.remove('shake');
+    void el.offsetWidth;
+    el.classList.add('shake');
+    setTimeout(() => el.classList.remove('shake'), 420);
+  }
+
+  function discoverElement(id) {
+    if (!ELEMENTS[id] || isDiscovered(id)) return false;
+    state.discovered.push(id);
+    if (!state.discoveryOrder.includes(id)) state.discoveryOrder.push(id);
+    recentId = id;
+    if (recentTimer) clearTimeout(recentTimer);
+    recentTimer = setTimeout(() => {
+      recentId = null;
+      const mini = $('.mini[data-element="' + id + '"]', els.discoveries);
+      if (mini) mini.classList.remove('is-recent');
+    }, 2600);
+    renderSidebar();
+    updateProgress();
+    updateMission();
+    save();
+    return true;
+  }
+
+  function announceDiscovery(id, card) {
+    const data = element(id);
+    els.bannerEmoji.textContent = data.emoji;
+    els.bannerName.textContent = data.name;
+    els.bannerBlurb.textContent = data.blurb;
+    els.banner.classList.add('show');
+    if (bannerTimer) clearTimeout(bannerTimer);
+    bannerTimer = setTimeout(() => els.banner.classList.remove('show'), 4200);
+
+    if (card && card.el) {
+      card.el.classList.add('is-new');
+      setTimeout(() => {
+        if (card.el) card.el.classList.remove('is-new');
+      }, 900);
+      setTimeout(() => {
+        if (!card.el) return;
+        const rect = card.el.getBoundingClientRect();
+        burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 26, 1);
+      }, 20);
+    }
+    playDiscovery();
+  }
+
+  function renderSidebar() {
+    if (!els.discoveries) return;
+    const query = normalize(els.search.value.trim());
+    const all = state.discoveryOrder
+      .filter(id => isDiscovered(id))
+      .slice()
+      .reverse();
+
+    const filtered = query
+      ? all.filter(id => normalize(element(id).name).includes(query) || normalize(element(id).blurb).includes(query))
+      : all;
+
+    if (!filtered.length) {
+      const empty = document.createElement('div');
+      empty.className = 'empty-store';
+      empty.innerHTML = '<span class="big" aria-hidden="true">🧪</span><span>No hay nada con ese nombre.<br>Prueba otra búsqueda.</span>';
+      els.discoveries.replaceChildren(empty);
+    } else {
+      const fragment = document.createDocumentFragment();
+      for (const id of filtered) {
+        const data = element(id);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'mini cat-' + data.cat;
+        button.dataset.element = id;
+        button.title = data.name + ' — ' + data.blurb;
+        button.setAttribute('aria-label', 'Añadir ' + data.name + ' al tablero');
+        if (id === recentId) button.classList.add('is-recent');
+
+        const emoji = document.createElement('span');
+        emoji.className = 'emoji';
+        emoji.textContent = data.emoji;
+        emoji.setAttribute('aria-hidden', 'true');
+
+        const name = document.createElement('span');
+        name.className = 'name';
+        name.textContent = data.name;
+
+        const plus = document.createElement('span');
+        plus.className = 'plus';
+        plus.textContent = '+';
+        plus.setAttribute('aria-hidden', 'true');
+
+        button.appendChild(emoji);
+        button.appendChild(name);
+        button.appendChild(plus);
+        fragment.appendChild(button);
+      }
+      els.discoveries.replaceChildren(fragment);
+    }
+
+    const countText = state.discovered.length + ' de ' + TOTAL;
+    els.sideCount.textContent = countText;
+    els.totalCount.textContent = String(TOTAL);
+  }
+
+  function updateProgress() {
+    const count = state.discovered.length;
+    const pct = Math.round((count / TOTAL) * 100);
+    els.discoveredCount.textContent = String(count);
+    els.totalCount.textContent = String(TOTAL);
+    els.sideCount.textContent = count + ' de ' + TOTAL;
+    els.progressPill.classList.toggle('is-done', count === TOTAL);
+    els.missionBar.style.width = Math.max(4, pct) + '%';
+    els.missionPercent.textContent = pct + '%';
+  }
+
+  function updateMission() {
+    const done = isDiscovered('atlas');
+    els.missionChip.classList.toggle('done', done);
+    els.missionText.textContent = done ? 'Atlas Malandriner desbloqueado' : 'Descubre el Atlas Malandriner';
+    els.missionCheck.textContent = done ? '✓' : '○';
+  }
+
+  function showToast(html, type = 'info', duration = 2600) {
+    els.toast.className = 'toast show ' + type;
+    els.toast.innerHTML = html;
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => els.toast.classList.remove('show'), duration);
+  }
+
+  function giveHint() {
+    const available = RECIPES.filter(([a, b, result]) => isDiscovered(a) && isDiscovered(b) && !isDiscovered(result));
+    if (!available.length) {
+      if (state.discovered.length >= TOTAL) {
+        showToast('¡Laboratorio completo! Has descubierto las ' + TOTAL + ' piezas. 🏆', 'ok', 4800);
+        burst(window.innerWidth / 2, window.innerHeight / 2, 40, 1.35);
+        playWin();
+      } else {
+        showToast('No hay pistas nuevas con lo que tienes. Sigue mezclando.', 'warn', 3200);
+      }
+      return;
+    }
+
+    const onBoard = (id) => state.board.some(card => card.elementId === id);
+    const differentPairs = available.filter(([a, b]) => a !== b);
+    const readyPairs = differentPairs.filter(([a, b]) => onBoard(a) && onBoard(b));
+    let pool = readyPairs.length ? readyPairs : differentPairs;
+
+    if (!pool.length) {
+      pool = available.filter(([a, b]) => a === b && state.board.filter(card => card.elementId === a).length >= 2);
+    }
+
+    if (!pool.length) {
+      const [a] = available[0];
+      showToast('💡 Añade otra copia de <b>' + element(a).name + '</b> desde el almacén y mézclala consigo misma.', 'hint', 5600);
+      pulseElements([a]);
+      beep(740, 0.05, 0, 'sine', 0.02);
+      beep(980, 0.06, 0.06, 'sine', 0.02);
+      if (els.search.value.trim()) {
+        els.search.value = '';
+        renderSidebar();
+      }
+      if (window.innerWidth <= 900) openSidebar();
+      return;
+    }
+
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    const [a, b, result] = pick;
+    showToast('💡 Prueba <b>' + element(a).name + '</b> + <b>' + element(b).name + '</b>', 'hint', 5200);
+    pulseElements([a, b]);
+    beep(740, 0.05, 0, 'sine', 0.02);
+    beep(980, 0.06, 0.06, 'sine', 0.02);
+    if (els.search.value.trim()) {
+      els.search.value = '';
+      renderSidebar();
+    }
+    if (window.innerWidth <= 900) closeSidebar();
+    // La pista debe seguir siendo útil aunque el resultado sea nuevo.
+    void result;
+  }
+
+  function pulseElements(ids) {
+    for (const id of ids) {
+      for (const card of state.board) {
+        if (card.elementId !== id || !card.el) continue;
+        card.el.classList.remove('hint-pulse');
+        void card.el.offsetWidth;
+        card.el.classList.add('hint-pulse');
+        setTimeout(() => {
+          if (card.el) card.el.classList.remove('hint-pulse');
+        }, 1900);
+      }
+      const mini = $('.mini[data-element="' + id + '"]', els.discoveries);
+      if (mini) {
+        mini.classList.remove('hint-pulse');
+        void mini.offsetWidth;
+        mini.classList.add('hint-pulse');
+        setTimeout(() => mini.classList.remove('hint-pulse'), 1900);
+      }
+    }
+  }
+
+  function spawnFromStore(id) {
+    if (!ELEMENTS[id]) return;
+    const n = state.board.length;
+    const angle = n * 2.399963229728653;
+    const radius = Math.min(0.17, 0.05 + n * 0.008);
+    const x = 0.5 + Math.cos(angle) * radius;
+    const y = 0.5 + Math.sin(angle) * radius;
+    addCard(id, x, y, { animate: true });
+    beep(520, 0.035, 0, 'sine', 0.014);
+    if (window.innerWidth <= 900) closeSidebar();
+  }
+
+  function openSidebar() {
+    document.body.classList.add('sidebar-open');
+  }
+
+  function closeSidebar() {
+    document.body.classList.remove('sidebar-open');
+  }
+
+  function toggleSidebar() {
+    if (document.body.classList.contains('sidebar-open')) closeSidebar();
+    else openSidebar();
+  }
+
+  function openModal(modal) {
+    lastFocus = document.activeElement;
+    closeSidebar();
+    modal.hidden = false;
+    const close = $('[data-close]', modal);
+    setTimeout(() => {
+      if (close) close.focus();
+    }, 20);
+  }
+
+  function closeModal(modal) {
+    modal.hidden = true;
+    if (lastFocus && typeof lastFocus.focus === 'function') {
+      try { lastFocus.focus(); } catch (err) { /* noop */ }
+    }
+  }
+
+  function closeAllModals() {
+    for (const modal of [els.helpModal, els.resetModal, els.victoryModal]) {
+      if (!modal.hidden) modal.hidden = true;
+    }
+  }
+
+  function openHelp() {
+    openModal(els.helpModal);
+  }
+
+  function openReset() {
+    const count = state.discovered.length;
+    els.resetText.textContent = count > BASE.length
+      ? 'Se borrarán tus ' + count + ' descubrimientos y el tablero volverá a las cuatro piezas iniciales. Esta acción no se puede deshacer.'
+      : 'El tablero volverá a las cuatro piezas iniciales. Esta acción no se puede deshacer.';
+    openModal(els.resetModal);
+  }
+
+  function showVictory() {
+    els.vDisc.textContent = String(state.discovered.length);
+    openModal(els.victoryModal);
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight * 0.36;
+    burst(centerX, centerY, 44, 1.4);
+    setTimeout(() => burst(window.innerWidth * 0.22, centerY, 24, 1.1), 180);
+    setTimeout(() => burst(window.innerWidth * 0.78, centerY, 24, 1.1), 320);
+    playWin();
+  }
+
+  function resetGame() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (err) { /* noop */ }
+    const sound = state.sound;
+    state = {
+      discovered: [...BASE],
+      discoveryOrder: [...BASE],
+      board: [],
+      sound,
+      goalSeen: false,
+      hasSaved: true
+    };
+    cidSeq = 0;
+    selectedCid = null;
+    drag = null;
+    cardEls.clear();
+    els.cards.replaceChildren();
+    closeAllModals();
+    seedBoard();
+    renderSidebar();
+    updateProgress();
+    updateMission();
+    save();
+    showToast('Laboratorio reiniciado. Otra vez desde cero.', 'ok', 2600);
+    beep(440, 0.06, 0, 'sine', 0.02);
+    beep(620, 0.08, 0.07, 'sine', 0.02);
+  }
+
+  /* ---------- Audio ---------- */
+  function getAudio() {
+    if (!state.sound) return null;
+    const AudioCtor = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtor) return null;
+    try {
+      if (!audioCtx) audioCtx = new AudioCtor();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function beep(freq, duration = 0.07, delay = 0, type = 'sine', volume = 0.028) {
+    const ctx = getAudio();
+    if (!ctx) return;
+    const start = ctx.currentTime + delay;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.linearRampToValueAtTime(volume, start + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(start);
+    osc.stop(start + duration + 0.02);
+  }
+
+  function playCombine() {
+    beep(420, 0.05, 0, 'sine', 0.022);
+    beep(650, 0.07, 0.055, 'sine', 0.022);
+  }
+
+  function playDiscovery() {
+    beep(523.25, 0.09, 0, 'triangle', 0.03);
+    beep(659.25, 0.1, 0.07, 'triangle', 0.03);
+    beep(783.99, 0.12, 0.15, 'triangle', 0.03);
+    beep(1046.5, 0.18, 0.25, 'triangle', 0.025);
+  }
+
+  function playInvalid() {
+    beep(150, 0.1, 0, 'sawtooth', 0.015);
+    beep(112, 0.14, 0.08, 'sawtooth', 0.013);
+  }
+
+  function playWin() {
+    [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((freq, index) => {
+      beep(freq, 0.18, index * 0.11, 'triangle', 0.035);
+    });
+    beep(1567.98, 0.45, 0.6, 'sine', 0.025);
+  }
+
+  function syncSoundButton() {
+    els.soundToggle.textContent = state.sound ? '🔊 Sonido' : '🔇 Sonido';
+    els.soundToggle.setAttribute('aria-pressed', state.sound ? 'true' : 'false');
+    els.soundToggle.title = state.sound ? 'Silenciar el sonido' : 'Activar el sonido';
+  }
+
+  function toggleSound() {
+    state.sound = !state.sound;
+    syncSoundButton();
+    save();
+    if (state.sound) {
+      beep(620, 0.06, 0, 'sine', 0.02);
+      beep(880, 0.08, 0.06, 'sine', 0.02);
+    }
+  }
+
+  /* ---------- Confetti ---------- */
+  function burst(x, y, count = 22, power = 1) {
+    const colors = ['#e56a54', '#fed757', '#9678d3', '#b7428e', '#9ef4a4', '#ffffff', '#f4a261'];
+    for (let i = 0; i < count; i++) {
+      const piece = document.createElement('i');
+      piece.className = 'confetti';
+      const angle = Math.random() * Math.PI * 2;
+      const distance = (38 + Math.random() * 135) * power;
+      const w = 4 + Math.random() * 6;
+      const h = 4 + Math.random() * 9;
+      piece.style.left = x + 'px';
+      piece.style.top = y + 'px';
+      piece.style.width = w + 'px';
+      piece.style.height = h + 'px';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.borderRadius = Math.random() > 0.55 ? '50%' : '2px';
+      piece.style.setProperty('--dx', (Math.cos(angle) * distance).toFixed(1) + 'px');
+      piece.style.setProperty('--dy', (Math.sin(angle) * distance - 70 - Math.random() * 50).toFixed(1) + 'px');
+      piece.style.setProperty('--rot', Math.round(Math.random() * 720 - 360) + 'deg');
+      piece.style.animationDelay = (Math.random() * 0.06).toFixed(2) + 's';
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 1400);
+    }
+  }
+
+  /* ---------- Events ---------- */
+  function bindEvents() {
+    els.hintBtn.addEventListener('click', giveHint);
+    els.helpBtn.addEventListener('click', openHelp);
+    els.sideHelp.addEventListener('click', openHelp);
+    els.panelBtn.addEventListener('click', toggleSidebar);
+    els.closeSidebar.addEventListener('click', closeSidebar);
+    els.sidebarBackdrop.addEventListener('click', closeSidebar);
+    els.soundToggle.addEventListener('click', toggleSound);
+    els.resetBtn.addEventListener('click', openReset);
+    els.confirmReset.addEventListener('click', resetGame);
+    els.missionChip.addEventListener('click', openHelp);
+    els.victoryStore.addEventListener('click', () => {
+      closeModal(els.victoryModal);
+      openSidebar();
+    });
+
+    $('#helpHintBtn').addEventListener('click', () => {
+      closeModal(els.helpModal);
+      setTimeout(giveHint, 180);
+    });
+
+    els.search.addEventListener('input', renderSidebar);
+
+    els.discoveries.addEventListener('click', (event) => {
+      const button = event.target.closest('.mini');
+      if (!button) return;
+      spawnFromStore(button.dataset.element);
+    });
+
+    els.board.addEventListener('pointerdown', (event) => {
+      if (!event.target.closest('.card') && !event.target.closest('.mission-chip')) {
+        clearSelection();
+      }
+    });
+
+    $$('[data-close]').forEach(button => {
+      button.addEventListener('click', () => {
+        const modal = button.closest('.overlay');
+        if (modal) closeModal(modal);
+      });
+    });
+
+    for (const modal of [els.helpModal, els.resetModal, els.victoryModal]) {
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal(modal);
+      });
+    }
+
+    document.addEventListener('keydown', (event) => {
+      const tag = (event.target && event.target.tagName) || '';
+      const typing = tag === 'INPUT' || tag === 'TEXTAREA' || (event.target && event.target.isContentEditable);
+
+      if (event.key === 'Escape') {
+        if (!els.helpModal.hidden || !els.resetModal.hidden || !els.victoryModal.hidden) {
+          for (const modal of [els.helpModal, els.resetModal, els.victoryModal]) {
+            if (!modal.hidden) closeModal(modal);
+          }
+          return;
+        }
+        if (document.body.classList.contains('sidebar-open')) {
+          closeSidebar();
+          return;
+        }
+        if (document.activeElement === els.search) {
+          els.search.blur();
+          return;
+        }
+        clearSelection();
+      }
+
+      if (!typing && event.key === '/') {
+        event.preventDefault();
+        if (window.innerWidth <= 900) openSidebar();
+        els.search.focus();
+      }
+
+      if (!typing && event.key === '?') {
+        event.preventDefault();
+        openHelp();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      clearTimeout(window.__wrResizeTimer);
+      window.__wrResizeTimer = setTimeout(() => {
+        for (const card of state.board) {
+          if (!card.el) continue;
+          const p = clampPosition(card.x, card.y, card.el);
+          card.x = p.x;
+          card.y = p.y;
+          positionCard(card);
+        }
+        if (window.innerWidth > 900) closeSidebar();
+      }, 90);
+    });
+
+    document.addEventListener('pointerdown', () => {
+      if (state.sound && !audioCtx) getAudio();
+    }, { passive: true });
+  }
+
+  function init() {
+    loadState();
+    const saved = state.hasSaved;
+    els.totalCount.textContent = String(TOTAL);
+    els.vDisc.textContent = String(TOTAL);
+    syncSoundButton();
+
+    if (saved) {
+      for (const card of state.board) {
+        createCard(card);
+      }
+    } else {
+      seedBoard();
+    }
+
+    renderSidebar();
+    updateProgress();
+    updateMission();
+    bindEvents();
+
+    if (!saved) {
+      setTimeout(() => {
+        showToast('Arrastra <b>Developer</b> sobre <b>IA</b> para empezar.', 'hint', 4200);
+        pulseElements(['developer', 'ia']);
+      }, 650);
+    }
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

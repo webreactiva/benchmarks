@@ -1,0 +1,36 @@
+  ┃  -rw-r--r-- 1 root root  13690 Nov 19 23:12 wikipedia-arquitectura.md
+  ┃  -rw-r--r-- 1 root root   4258 Nov 19 23:11 wikipedia-arquitectura.mmd
+  ┃  -rw-r--r-- 1 root root 133526 Nov 19 23:12 wikipedia-arquitectura.png
+  ┃  -rw-r--r-- 1 root root 273707 Nov 19 23:12 wikipedia-arquitectura.svg
+  ┃  -rw-r--r-- 1 root root   1765 Nov 19 23:11 wikipedia-datacenters.mmd
+  ┃  -rw-r--r-- 1 root root  70543 Nov 19 23:12 wikipedia-datacenters.png
+  ┃  -rw-r--r-- 1 root root 215776 Nov 19 23:12 wikipedia-datacenters.svg
+  ┃  …
+  ┃
+  ┃  Click to expand
+  ┃
+
+     Listo. En la carpeta actual /var/tmp/bench/ws-p7ErX8Mc:
+
+     - wikipedia-arquitectura.md — documento en español con los 4 diagramas Mermaid embebidos (se renderizan solos en
+       GitHub/VS Code) más la explicación de cada capa.
+     - wikipedia-arquitectura.mmd/.svg/.png — diagrama general por capas: clientes → borde (anycast, Varnish, CDN,
+       API Gateway) → apiserver → MediaWiki Core → servicios auxiliares (Parsoid, Wikidata, CirrusSearch) → cachés (
+       APCu, Memcached WAN, Redis) → datos (MariaDB primaria/réplicas, Elasticsearch, Swift, EventStreams/Kafka, HDFS/
+       Druid) → plataforma (K8s, Puppet, Prometheus).
+     - wikipedia-datacenters.* — reparto geográfico: anycast, eqiad/codfw (app+DB), esams/druid (Swift, data lake,
+       EventStreams), centros *ord/eqsin/uyord de solo lectura.
+     - wikipedia-flujo-lectura.* y wikipedia-flujo-escritura.* — diagramas de secuencia: caché de borde → WAN →
+       réplicas, y escritura → primaria → cola de trabajos → reindexado + eventos.
+
+     Los 4 bloques Mermaid fueron validados renderizándolos con mermaid-cli (sin errores ni solapamiento de nodos).
+
+     ▣  Build · minimax-m3 · 2m 4s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · minimax-m3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-p7ErX8Mc                                                                   24.8K  ctrl+p commands
+

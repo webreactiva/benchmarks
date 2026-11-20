@@ -1,0 +1,24 @@
+{
+  "codigo": "MWP",
+  "modelo": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T20:46:18Z",
+  "prompt_enviado": "Dibuja en Mermaid la arquitectura de Wikipedia. En español. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 12231,
+    "output": 564,
+    "reasoning": 70,
+    "cache_read": 4384,
+    "cache_write": 0,
+    "total": 17249
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "write": 1
+  },
+  "sesion": "ses_e0a709375ffeTFuL5ZiyI2z8OQ",
+  "ficheros": [
+    "wikipedia-architecture.mmd"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "codigo": "A3D",
+  "modelo": "ollama/glm-5.3-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T22:38:55Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 7437,
+    "output": 32000,
+    "reasoning": 0,
+    "cache_read": 0,
+    "cache_write": 0,
+    "total": 39437
+  },
+  "peticiones": 1,
+  "error": null,
+  "herramientas": {},
+  "sesion": "ses_e0a0978ecffeHdnMun1kkI96u7",
+  "ficheros": []
+}

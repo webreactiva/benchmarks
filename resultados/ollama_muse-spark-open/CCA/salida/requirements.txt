@@ -1,0 +1,10 @@
+# Core: solo stdlib, sin dependencias obligatorias
+# Opcionales para API avanzada:
+# fastapi==0.110.0
+# uvicorn[standard]==0.29.0
+# redis==5.0.*
+# pydantic==2.*
+
+# Para tests
+pytest==8.*
+pytest-cov

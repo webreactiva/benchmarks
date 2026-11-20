@@ -1,0 +1,25 @@
+Creando tu juego de alquimia de Web Reactiva — un Infinite Craft en un único HTML.
+
+---
+
+Investigué el universo de Web Reactiva — ya tengo los elementos. Ahora te montó el Infinite Craft completo.
+
+---
+
+Juego creado en **1 único archivo HTML** con la mecánica de Infinite Craft y todo el lore de Web Reactiva.
+
+**Archivo guardado en:** `./index.html` (`/var/tmp/bench/ws-cNF61AmS/index.html`) — 1040 líneas, 102 elementos, 200+ recetas, sin dependencias externas (solo Google Fonts, funciona offline con fallback).
+
+**Cómo jugar:**
+- Empiezas con 4: `💻 Código`, `🤖 IA`, `☕ Café`, `👥 Comunidad`
+- Arrastra 2 elementos del inventario a la **mesa** y júntalos (soltar uno sobre otro a <90px) — o haz *click* en 2 del inventario y pulsa **⚗️ Combinar** / `Doble-click` para mandar a la mesa.
+- Si es receta válida → descubres uno nuevo con animación y se guarda en `localStorage`.
+
+**Contenido Web Reactiva incluido:**
+`Prompt, Token, Modelo, LLM, Alucinación, AI Slop, Agente, Skill, MCP, Harness, Orquestación, Claude Code, OpenCode, Copilot, Cursor, Codex, SDD, Spec, Plan Mode, HTML/CSS/JS/TS/React/Astro/Tailwind/Node/Python, API/BBDD/Git/GitHub/Terminal/VS Code/Deploy/Vercel, Podcast, Newsletter, Blog, Masterclass, Guía, Roadmap, Premium, Telegram, Malandriner, Pantuflas, Dani Primo, En Pantuflas, Side Project/POC/MVP/Startup, Burnout/Flow/Madrugada, Stack Chino/Kimi/DeepSeek, Vibe Coding, Peluca, Tokens Infinitos, Loop Infinito, Dirigible (400€ en tokens), Atlas Malandriner, Yak, Poke` y más con descripciones con humor malandriner.
+
+Recetas clave: `Código+IA=Prompt`, `IA+Café=Alucinación`, `Comunidad+Pantuflas=Malandriner`, `IA+Skill=Vibe Coding`, `Loop Infinito+IA=Dirigible`, `HTML+CSS=Frontend`, `Newsletter+Podcast=Dani Primo`, `Dani+Peluca=Hype`.
+
+Incluye: búsqueda, filtros, barra de progreso, `💡 Pista` (te da receta bloqueada aún no descubierta), `🧹 Limpiar mesa`, `♻️ Reiniciar`, log de descubrimientos con *Primera vez!*, toasts, confetti y modal tutorial.
+
+Abre `index.html` en el navegador — no necesita servidor ni build.

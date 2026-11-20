@@ -1,0 +1,36 @@
+  ┃   29 1. **Bórralos o arréglalos ya**. No hay término medio. Un test flaky es deuda técnica con intereses
+  ┃      compuestos.
+  ┃   30
+  ┃   31 2. **Aísla la causa**: timing, estado compartido, dependencias externas, datos de test sucios.
+  ┃   32
+  ┃   33 3. **Usa timeouts generosos** y reintentos *solo* como medida temporal mientras arreglas la causa raíz.
+  ┃   34
+  ┃   35 4. **Prioriza tests deterministas**: unit tests > integration tests > E2E tests para la suite rápida.
+  ┃   36
+  ┃   37 5. **Monitorea la flakiness**: si un test falla >1% de las veces sin cambios de código, es flaky.
+  ┃   38
+  ┃   39 ## Conclusión
+  ┃   40
+  ┃   41 Una suite de tests pequeña, rápida y 100% confiable vale infinitamente más que una suite grande, lenta y
+  ┃      flaky.
+  ┃   42
+  ┃   43 **Mejor cero tests que tests en los que no confías.**
+  ┃   44
+  ┃   45 ---
+  ┃   46
+  ┃   47 *¿Has lidiado con tests flaky en tu equipo? Cuéntame tu experiencia en los comentarios.*
+  ┃
+
+     + Thought: 142ms
+
+     Listo. Guardado en por-que-tests-flaky-son-peores-que-no-tener-tests.md.
+
+     ▣  Build · nvidia/nemotron-3-ultra-550b-a55b:free · 21.2s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · nvidia/nemotron-3-ultra-550b-a55b:free OpenRouter
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/PTS                                      8.8K  ctrl+p commands
+

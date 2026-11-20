@@ -1,0 +1,36 @@
+  ┃  excerpt: "Un test rojo no es un test roto: es una promesa rota. Y las promesas rotas cuestan más caro que la
+  ┃  ausencia de promesa."
+  ┃  …
+  ┃
+  ┃  Click to expand
+  ┃
+
+     Listo. Post creado en post-tests-que-fallan.md (~3050 palabras, 279 líneas).
+
+     Estructura del argumento:
+
+     1. La tesis desmontada — «prefiero un test que falla a no tener tests» esconde tres supuestos inválidos, y el
+        primero (que el fallo siempre señala un bug real) es el más caro.
+     2. Distinción clave: rojo de CI ≠ rojo documentado ≠ rojo deliberado de TDD. Solo el tercero es información; los
+        otros dos son ruido.
+     3. Cuatro costes — normalización del fallo (alert fatigue), el test como blocker de proceso (PR, pipeline,
+        deploy), el test zombi que "se arregla" invirtiendo la aserción, y la erosión del modelo mental.
+     4. El caso flaky — por qué un canal que a veces miente es peor que un canal ausente, con ejemplos de time.sleep()
+         y de dependencia del reloj frente a frozen_time y wait_until.
+     5. Defensa del rojo útil — el rojo de TDD como antibiótico vs. la infección crónica; tabla comparativa.
+     6. Protocolo práctico — regla del "no me lo llevo a casa", xfail(strict=True) sobre skip, presupuesto de rojo,
+        higiene de suite, suites fast/slow.
+     7. Métrica clave: MTTD (tiempo entre introducción del defecto y detección), en vez de cobertura de líneas.
+     8. Plan de 4 fases para salir de una suite crónicamente roja.
+
+     Incluye front matter YAML, tablas, bloques de código en Python y una conclusión que reformula la frase inicial.
+
+     ▣  Build · minimax-m3.1-flash · 1m 47s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · minimax-m3.1-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-xKW5nQNS                                                              31.0K (3%)  ctrl+p commands
+

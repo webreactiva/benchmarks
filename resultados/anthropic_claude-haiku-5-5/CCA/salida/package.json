@@ -1,0 +1,19 @@
+{
+  "name": "scalable-shopping-cart",
+  "version": "1.0.0",
+  "description": "Carrito de la compra escalable: dominio puro, precios con reglas, persistencia con concurrencia optimista.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "example": "node examples/basic.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "private": true
+}

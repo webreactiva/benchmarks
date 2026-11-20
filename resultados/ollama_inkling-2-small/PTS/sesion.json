@@ -1,0 +1,334 @@
+{
+  "info": {
+    "id": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+    "slug": "quiet-eagle",
+    "projectID": "global",
+    "directory": "/var/tmp/bench/ws-zNGe5Ahh",
+    "path": "var/tmp/bench/ws-zNGe5Ahh",
+    "title": "Post de blog: tests que fallan vs sin tests",
+    "agent": "build",
+    "model": {
+      "id": "inkling-2-small",
+      "providerID": "ol"
+    },
+    "version": "1.19.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 11361,
+      "output": 2165,
+      "reasoning": 0,
+      "cache": {
+        "read": 17152,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1795139276037,
+      "updated": 1795139297855
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1795139276056
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "ol",
+          "modelID": "inkling-2-small"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_1f6a38d18001UfvUfQ2cQfwuE9",
+        "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+          "id": "prt_1f6a38d1a001XLB88W4UsleeaH",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a38d18001UfvUfQ2cQfwuE9"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6a38d18001UfvUfQ2cQfwuE9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-zNGe5Ahh",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8857,
+          "input": 8742,
+          "output": 115,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "inkling-2-small",
+        "providerID": "ol",
+        "time": {
+          "created": 1795139276076,
+          "completed": 1795139278245
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6a38d2c001fTVIgEZfbZMgiC",
+        "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6a393f2001aQMxSgC0iR1LCc",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a38d2c001fTVIgEZfbZMgiC"
+        },
+        {
+          "type": "reasoning",
+          "text": "The user asks in Spanish: \"Write a blog post for a programming blog about why failing tests are sometimes worse than having no tests. Save what you generate in the current folder.\"\n\nThis is a content creation task. I should check the current working directory first to see what's there, then write a blog post (markdown presumably) and save it.\n\nLet me look at the directory first.",
+          "time": {
+            "start": 1795139277814,
+            "end": 1795139278114
+          },
+          "id": "prt_1f6a393f6001dT6ROSNIeLeqJ1",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a38d2c001fTVIgEZfbZMgiC"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_wy631ba2",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "ls -la"
+            },
+            "output": "total 4\ndrwx------ 2 root root 4096 Nov 20 01:47 .\ndrwxrwxrwt 3 root root   60 Nov 20 01:47 ..\n",
+            "metadata": {
+              "output": "total 4\ndrwx------ 2 root root 4096 Nov 20 01:47 .\ndrwxrwxrwt 3 root root   60 Nov 20 01:47 ..\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "ls -la",
+            "time": {
+              "start": 1795139278124,
+              "end": 1795139278177
+            }
+          },
+          "id": "prt_1f6a39525001k05Tb77kEfcMwY",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a38d2c001fTVIgEZfbZMgiC"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8857,
+            "input": 8742,
+            "output": 115,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6a3959d0011ulP2jce0zBreJ",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a38d2c001fTVIgEZfbZMgiC"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6a38d18001UfvUfQ2cQfwuE9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-zNGe5Ahh",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10858,
+          "input": 457,
+          "output": 1953,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8448
+          }
+        },
+        "modelID": "inkling-2-small",
+        "providerID": "ol",
+        "time": {
+          "created": 1795139278249,
+          "completed": 1795139294533
+        },
+        "finish": "tool-calls",
+        "id": "msg_1f6a395a9001SJWSthrcx0pFBz",
+        "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6a39702001CdQK91gC0zIozm",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a395a9001SJWSthrcx0pFBz"
+        },
+        {
+          "type": "reasoning",
+          "text": "Empty directory. I'll write a blog post in Spanish (user wrote in Spanish) as a markdown file. Let me write a good, opinionated blog post about why flaky/failing tests are worse than no tests.",
+          "time": {
+            "start": 1795139278597,
+            "end": 1795139294432
+          },
+          "id": "prt_1f6a39705001L4jchO57Fufjot",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a395a9001SJWSthrcx0pFBz"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_4ctepezu",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "# Por qué los tests que fallan a veces son peores que no tener tests\n\nTodos hemos escuchado el mantra: *sin tests no hay confianza*. Y es cierto... hasta cierto punto. Hay un estado peor que no tener tests, y es tener una suite de tests que falla constantemente, falla sin motivo, o falla por razones que nadie entiende. En ese escenario, los tests no solo dejan de protegerte: se convierten en un impuesto activo sobre cada cambio que haces.\n\nEste post es sobre ese estado: el desgaste que produce una suite en la que nadie confía, y qué hacer al respecto.\n\n## El test que falla y nadie atiende\n\nImagina este flujo, que seguro te resulta familiar:\n\n1. Abres un PR. El CI está rojo.\n2. Miras el log: falló `test_export_csv_with_unicode`.\n3. No tocaste nada de exportación. Reintentas el job.\n4. El CI pasa. Mergeas.\n5. Tres semanas después, ese mismo test falla por un bug real... y nadie lo nota, porque \"siempre falla\".\n\nEse último paso es el coste real. Un test que se ignora no es un test: es ruido con formato de test. Y el ruido tiene un efecto corrosivo: entrena al equipo para ignorar las señales rojas. Cada falso positivo erosiona la confianza en los verdaderos positivos.\n\n## Qué malo es exactamente, y cuándo\n\nConviene distinguir casos, porque \"tests que fallan\" abarca situaciones muy distintas:\n\n### 1. Tests flaky (intermitentes)\n\nFallan y pasan sin cambios en el código. Causas típicas: orden de ejecución, dependencia de tiempo o fecha, red, concurrencia, estado compartido entre tests. Son los más peligrosos porque su fallo *parece* informacional pero no lo es.\n\n### 2. Tests rojos congelados\n\nAlguien rompió algo, el test falló, y en lugar de arreglarlo se marcó como `skip` o se dejó fallar con un `@Ignore` y un ticket que nunca se completó. La suite queda en un limbo donde \"rojo es lo normal\".\n\n### 3. Tests desincronizados con la realidad\n\nEl comportamiento cambió legítimamente pero el test no se actualizó. Falla siempre, y falla *con razón*, pero nadie recuerda qué significa. Es el caso más parecido a no tener test: la información que aporta es cero.\n\n### 4. El contraste: test rojo legítimo\n\nUn test que falla porque encontraste un bug real **es** valioso. El problema nunca es el rojo; el problema es el rojo que no informa de nada o en el que ya no confías.\n\n## Por qué son peores que no tener nada\n\n- **Fatiga de alertas.** Si el 30 % de los fallos son falsos positivos, el equipo aprende a no reaccionar. Cuando el fallo real llegue, se pierde en el ruido.\n- **Coste cognitivo constante.** Cada PR paga un impuesto de investigación: ¿este fallo es mío o es el de siempre? Ese coste se multiplica por cada desarrollador y cada PR.\n- **Falsa sensación de seguridad.** La gente asume que \"hay tests\", así que refactoriza con confianza... pero la suite no protege nada si nadie la ejecuta con actitud de fallo serio.\n- **Erosionan la cultura de calidad.** Si el CI es negociable, la calidad pasa a ser negociable. Los estándares se definen por lo que toleras, no por lo que declaras.\n- **Contaminan la señal del CI.** El rojo deja de significar \"no mergear\", y el CI se convierte en un trámite más que se reintenta hasta que se pone verde.\n\nNo tener tests, al menos, te fuerza a ser consciente de tu fragilidad. Una suite rota te convence de que estás protegido cuando no lo estás.\n\n## Cómo salir del agujero\n\nNo se arregla con fuerza de voluntad. Se arregla con sistema.\n\n### 1. Pon un presupuesto de flakiness\n\nMide la tasa de fallos intermitentes y ponle un límite explícito (por ejemplo, \"cero tests flaky en main; si aparece uno, es prioridad sobre features\"). Lo que no se mide no se gestiona.\n\n### 2. Cuarentena, no silencio\n\nSi un test es flaky y no puedes arreglarlo hoy, sácalo de la suite principal a una cuarentena visible y con dueño, con un plazo. Un `@skip` sin ticket y sin fecha es un agujero negro de deuda técnica.\n\n### 3. Reintentar está prohibido (salvo como diagnóstico)\n\nHacer `retry` hasta que el CI pase es papel, no ingeniería. Si usas reintentos, que sea para *detectar* flakiness (\"este test solo pasa a la segunda: es flaky\"), no para silenciarla.\n\n### 4. Caza la causa raíz, en este orden\n\n1. Estado compartido y orden de ejecución (ejecuta la suite en orden aleatorio).\n2. Tiempo y fechas (inyecta el reloj).\n3. Red y servicios externos (mocks o entornos efímeros).\n4. Concurrencia y carreras.\n\n### 5. Si un test no aporta señal, bórralo\n\nUn test que falla siempre y cuyo valor nadie puede explicar no es un activo; es un pasivo. Bórralo o reescríbelo. Menos tests, más confianza.\n\n### 6. Protege el significado del rojo\n\nLa regla de oro: **un CI rojo bloquea el merge, siempre, o no significa nada**. Si el equipo puede mergear con rojo y \"ya se arreglará\", el CI es decoración.\n\n## Señales de que tu suite está rota\n\n- La gente hace *re-run* antes de leer el nombre del test que falló.\n- Existen tests con `@Ignore`/`skip` de hace más de un trimestre.\n- Nadie sabe decir cuántos fallos en el CI son falsos positivos esta semana.\n- El merge con CI rojo ocurre \"a veces\".\n- Palabras como \"ah, ese test siempre falla\" aparecen en code reviews.\n\nSi reconociste tres o más, no tienes una suite de tests: tienes un generador de ruido caro.\n\n## Reflexión final\n\nUn test es una promesa: \"si esto se rompe, alguien se enterará\". Cuando el equipo deja de creerse la promesa, el test deja de existir como tal, por mucho que siga ejecutándose en CI. La confianza es el verdadero producto de una suite de tests, y se construye con pocas cosas —pero importantes—: que los fallos sean reales, que el rojo bloquee de verdad, y que los tests flaky sean una emergencia, no un hábito.\n\nNo tener tests es admitir que caminas sin red. Tener tests que nadie cree es saltar con una red que no sabes si está atada. Entre las dos, la primera al menos te mantiene alerta.\n\n---\n\n*¿Tu equipo tiene tests flaky que nadie toca? Empieza por el inventario: lista todos los `skip` del repo, mídeles antigüedad y asigna dueño. Es el ejercicio de mayor impacto por hora invertida que conozco.*\n",
+              "filePath": "/var/tmp/bench/ws-zNGe5Ahh/tests-que-fallan-peor-que-no-tener-tests.md"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/var/tmp/bench/ws-zNGe5Ahh/tests-que-fallan-peor-que-no-tener-tests.md",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "var/tmp/bench/ws-zNGe5Ahh/tests-que-fallan-peor-que-no-tener-tests.md",
+            "time": {
+              "start": 1795139294439,
+              "end": 1795139294447
+            }
+          },
+          "id": "prt_1f6a3d4e2001fZjBOEW7MsMTv4",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a395a9001SJWSthrcx0pFBz"
+        },
+        {
+          "reason": "tool-calls",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10858,
+            "input": 457,
+            "output": 1953,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8448
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6a3d53d001H3sizk6T9gb453",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a395a9001SJWSthrcx0pFBz"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_1f6a38d18001UfvUfQ2cQfwuE9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/var/tmp/bench/ws-zNGe5Ahh",
+          "root": "/"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 10963,
+          "input": 2162,
+          "output": 97,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8704
+          }
+        },
+        "modelID": "inkling-2-small",
+        "providerID": "ol",
+        "time": {
+          "created": 1795139294536,
+          "completed": 1795139297849
+        },
+        "finish": "stop",
+        "id": "msg_1f6a3d548001a3dKozj1L2dbTP",
+        "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3"
+      },
+      "parts": [
+        {
+          "type": "step-start",
+          "id": "prt_1f6a3df960015ZnURYuSco3BkL",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a3d548001a3dKozj1L2dbTP"
+        },
+        {
+          "type": "reasoning",
+          "text": "The file is saved. Brief confirmation.",
+          "time": {
+            "start": 1795139297177,
+            "end": 1795139297208
+          },
+          "id": "prt_1f6a3df99001FEVdmIn6tfdT7s",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a3d548001a3dKozj1L2dbTP"
+        },
+        {
+          "type": "text",
+          "text": "Guardado en `tests-que-fallan-peor-que-no-tener-tests.md`. Cubre tipos de fallo (flaky, rojos congelados, desincronizados), por qué erosionan más que ausencia de tests, y cómo salir (presupuesto de flakiness, cuarentena, causa raíz, borrado de tests sin señal).",
+          "time": {
+            "start": 1795139297210,
+            "end": 1795139297842
+          },
+          "id": "prt_1f6a3dfba001wrmIOh47d5Ely5",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a3d548001a3dKozj1L2dbTP"
+        },
+        {
+          "reason": "stop",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10963,
+            "input": 2162,
+            "output": 97,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8704
+            }
+          },
+          "cost": 0,
+          "id": "prt_1f6a3e235001voTm7cTcXUQvDD",
+          "sessionID": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+          "messageID": "msg_1f6a3d548001a3dKozj1L2dbTP"
+        }
+      ]
+    }
+  ]
+}

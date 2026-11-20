@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Alhambra — Ruta Monumental 3D</title>
+<style>
+  :root{
+    --accent:#b5892c; --accent2:#e6c86e; --panel:#1a1712ee; --ink:#f3e9d2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;overflow:hidden;background:#0d0c0a;
+    font-family:Georgia,'Times New Roman',serif;color:var(--ink)}
+  #app{position:fixed;inset:0}
+  canvas{display:block}
+
+  #header{position:fixed;top:0;left:0;right:0;padding:14px 22px;z-index:20;
+    display:flex;align-items:flex-start;justify-content:space-between;pointer-events:none}
+  #title h1{font-size:22px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent2);text-shadow:0 2px 8px #000a}
+  #title p{font-size:12px;letter-spacing:.28em;text-transform:uppercase;opacity:.75;margin-top:3px}
+  #modes{display:flex;gap:8px;pointer-events:auto}
+  .modeBtn{background:var(--panel);border:1px solid var(--accent);color:var(--ink);
+    padding:8px 16px;font-family:inherit;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;cursor:pointer;border-radius:3px;transition:.2s}
+  .modeBtn.active{background:var(--accent);color:#161208;font-weight:bold}
+
+  #controls{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:20;
+    background:var(--panel);border:1px solid #b5892c66;border-radius:8px;
+    padding:10px 16px;display:flex;align-items:center;gap:14px;
+    box-shadow:0 8px 30px #000c;min-width:min(680px,92vw)}
+  #playBtn{width:44px;height:44px;border-radius:50%;background:var(--accent);border:none;
+    cursor:pointer;color:#161208;font-size:17px;display:grid;place-items:center;flex:none}
+  #playBtn:hover{background:var(--accent2)}
+  #progressWrap{flex:1;min-width:120px}
+  #progressBar{height:6px;background:#000a;border-radius:3px;overflow:hidden;cursor:pointer;
+    border:1px solid #ffffff22}
+  #progressFill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  #progressLabels{display:flex;justify-content:space-between;font-size:10px;
+    letter-spacing:.18em;text-transform:uppercase;opacity:.7;margin-top:5px}
+  .ctl{display:flex;flex-direction:column;gap:4px;flex:none}
+  .ctl label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;opacity:.65}
+  input[type=range]{width:110px;accent-color:var(--accent);cursor:pointer}
+  #chkWrap{display:flex;align-items:center;gap:6px;font-size:11px;flex:none;opacity:.9}
+  input[type=checkbox]{accent-color:var(--accent)}
+
+  #infoPanel{position:fixed;top:70px;left:22px;z-index:20;width:min(330px,80vw);
+    background:var(--panel);border-left:3px solid var(--accent);border-radius:4px;
+    padding:16px 18px;box-shadow:0 10px 40px #000c;opacity:0;transform:translateX(-14px);
+    transition:.4s;pointer-events:none}
+  #infoPanel.visible{opacity:1;transform:none;pointer-events:auto}
+  #infoPanel h3{color:var(--accent2);font-size:16px;letter-spacing:.08em;margin-bottom:6px}
+  #infoPanel .num{display:inline-block;background:var(--accent);color:#161208;font-size:11px;
+    font-weight:bold;width:22px;height:22px;border-radius:50%;text-align:center;line-height:22px;
+    margin-right:8px}
+  #infoPanel p{font-size:12.5px;line-height:1.55;opacity:.9}
+  #infoClose{position:absolute;top:6px;right:10px;cursor:pointer;opacity:.6;font-size:15px;user-select:none}
+
+  #help{position:fixed;right:18px;top:70px;z-index:20;background:var(--panel);
+    border:1px solid #b5892c44;border-radius:4px;padding:10px 14px;font-size:11px;
+    line-height:1.7;opacity:.85;max-width:230px}
+  #help b{color:var(--accent2);font-weight:normal}
+  #legend{position:fixed;left:22px;bottom:96px;z-index:19;background:#1a171299;
+    font-size:10px;letter-spacing:.1em;padding:8px 12px;border-radius:4px;
+    text-transform:uppercase;opacity:0;transition:.4s;pointer-events:none}
+  #legend.visible{opacity:.85}
+
+  #loading{position:fixed;inset:0;background:#0d0c0a;z-index:100;display:grid;
+    place-items:center;transition:opacity .8s}
+  #loading .box{text-align:center}
+  #loading h2{font-size:26px;letter-spacing:.3em;color:var(--accent2);text-transform:uppercase}
+  #loading .orn{color:var(--accent);font-size:30px;margin:10px 0;letter-spacing:.4em}
+  #loading p{font-size:11px;letter-spacing:.25em;text-transform:uppercase;opacity:.6;
+    animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:.9}}
+  @media (max-width:700px){
+    #controls{flex-wrap:wrap;justify-content:center}
+    #help{display:none}
+    #title h1{font-size:16px}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<div id="header">
+  <div id="title">
+    <h1>La Alhambra de Granada</h1>
+    <p>Granada · Andalucía · s. XIII–XV</p>
+  </div>
+  <div id="modes">
+    <button class="modeBtn active" id="btnTour">Ruta guiada</button>
+    <button class="modeBtn" id="btnFree">Exploración libre</button>
+  </div>
+</div>
+
+<div id="infoPanel">
+  <div id="infoClose">✕</div>
+  <h3><span class="num" id="infoNum">1</span><span id="infoTitle">—</span></h3>
+  <p id="infoText">—</p>
+</div>
+
+<div id="help">
+  <b>Ruta guiada:</b> pulsa ▶ o la barra espaciadora.<br>
+  <b>Libre:</b> arrastra para girar, rueda para zoom, clic en los ● puntos dorados para leer su historia.
+</div>
+
+<div id="legend"></div>
+
+<div id="controls">
+  <button id="playBtn" title="Reproducir / Pausa">▶</button>
+  <div id="progressWrap">
+    <div id="progressBar"><div id="progressFill"></div></div>
+    <div id="progressLabels"><span>Alhambra baja</span><span>Palacios nazaríes</span><span>Generalife</span></div>
+  </div>
+  <div class="ctl">
+    <label>Velocidad</label>
+    <input type="range" id="speed" min="0.2" max="2.5" step="0.1" value="1">
+  </div>
+  <div id="chkWrap"><input type="checkbox" id="showPOI" checked><label for="showPOI">Puntos</label></div>
+</div>
+
+<div id="loading">
+  <div class="box">
+    <h2>Al·Qal'a al·Ḥamrā'</h2>
+    <div class="orn">✦ ❖ ✦</div>
+    <p>Construyendo la ciudadela…</p>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ============================================================
+   ESCENA BÁSICA
+============================================================ */
+const app = document.getElementById('app');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xb8d4e8);
+scene.fog = new THREE.Fog(0xc4d9ea, 220, 520);
+
+const camera = new THREE.PerspectiveCamera(58, innerWidth/innerHeight, 0.5, 1600);
+camera.position.set(-90, 40, 160);
+
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+app.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.maxPolarAngle = Math.PI/2 - 0.02;
+controls.minDistance = 4;
+controls.maxDistance = 420;
+
+scene.add(new THREE.AmbientLight(0xdfe8f0, 0.55));
+scene.add(new THREE.HemisphereLight(0xcfe4ff, 0x8a7450, 0.5));
+const sun = new THREE.DirectionalLight(0xfff2d8, 2.1);
+sun.position.set(140, 190, 90);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -260; sun.shadow.camera.right = 260;
+sun.shadow.camera.top = 260;  sun.shadow.camera.bottom = -260;
+sun.shadow.camera.far = 700;
+sun.shadow.bias = -0.0006;
+scene.add(sun);
+
+/* ============================================================
+   TEXTURAS PROCEDURALES
+============================================================ */
+function cnv(w, h){ const c = document.createElement('canvas'); c.width=w; c.height=h; return c; }
+function tex(c, repX=1, repY=1){
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(repX, repY);
+  t.anisotropy = 4;
+  return t;
+}
+function stoneTex(rep=4){
+  const c = cnv(256,256), g = c.getContext('2d');
+  g.fillStyle = '#c9b78d'; g.fillRect(0,0,256,256);
+  const rows = 8, bh = 256/rows;
+  for(let r=0;r<rows;r++){
+    const off = (r%2)*24;
+    for(let i=-1;i<7;i++){
+      const x = off + i*46, l = 180 + Math.random()*55;
+      g.fillStyle = `rgb(${l},${l-18},${l-58})`;
+      g.fillRect(x+1.5, r*bh+1.5, 43, bh-3);
+      g.strokeStyle = '#00000022'; g.strokeRect(x+1.5, r*bh+1.5, 43, bh-3);
+    }
+  }
+  for(let i=0;i<900;i++){
+    g.fillStyle = `rgba(70,50,25,${Math.random()*0.07})`;
+    g.fillRect(Math.random()*256, Math.random()*256, 2, 2);
+  }
+  return tex(c, rep, rep);
+}
+function plasterTex(rep=3){
+  const c = cnv(256,256), g = c.getContext('2d');
+  g.fillStyle = '#b0805a'; g.fillRect(0,0,256,256);
+  for(let i=0;i<1400;i++){
+    g.fillStyle = `rgba(${Math.random()<0.5?'160,110,70':'210,170,130'},${Math.random()*0.12})`;
+    g.fillRect(Math.random()*256, Math.random()*256, 3, 3);
+  }
+  return tex(c, rep, rep);
+}
+function tileTex(rep=6){
+  const c = cnv(128,128), g = c.getContext('2d');
+  const cols = ['#1d5e8f','#2f8f6b','#8f2f3f','#c19a3d'];
+  for(let y=0;y<4;y++) for(let x=0;x<4;x++){
+    g.fillStyle = '#e8dcc2'; g.fillRect(x*32,y*32,32,32);
+    g.fillStyle = cols[(x+y)%4];
+    g.beginPath();
+    g.moveTo(x*32+16,y*32+3); g.lineTo(x*32+29,y*32+16);
+    g.lineTo(x*32+16,y*32+29); g.lineTo(x*32+3,y*32+16);
+    g.closePath(); g.fill();
+    g.fillStyle = '#f4ead0';
+    g.fillRect(x*32+14,y*32+14,4,4);
+  }
+  return tex(c, rep, rep);
+}
+function roofTex(rep=8){
+  const c = cnv(128,128), g = c.getContext('2d');
+  for(let y=0;y<128;y+=16){
+    g.fillStyle = (y/16)%2 ? '#a05a3e' : '#7c4030';
+    g.fillRect(0,y,128,15);
+    g.fillStyle = '#00000030'; g.fillRect(0,y+14,128,2);
+  }
+  return tex(c, rep, rep);
+}
+function waterTex(rep=2){
+  const c = cnv(256,128), g = c.getContext('2d');
+  const grad = g.createLinearGradient(0,0,0,128);
+  grad.addColorStop(0,'#2e6f8f'); grad.addColorStop(1,'#174a63');
+  g.fillStyle = grad; g.fillRect(0,0,256,128);
+  g.strokeStyle = 'rgba(220,240,250,0.35)'; g.lineWidth = 1.4;
+  for(let i=0;i<26;i++){
+    const y = Math.random()*128;
+    g.beginPath();
+    for(let x=0;x<=256;x+=8) g.lineTo(x, y + Math.sin(x*0.06+i)*2.5);
+    g.stroke();
+  }
+  return tex(c, rep, rep);
+}
+function vegetTex(rep=3){
+  const c = cnv(128,128), g = c.getContext('2d');
+  g.fillStyle = '#4a6b32'; g.fillRect(0,0,128,128);
+  for(let i=0;i<1600;i++){
+    g.fillStyle = `rgba(${Math.random()<0.5?'90,130,60':'45,80,40'},${Math.random()*0.5})`;
+    g.fillRect(Math.random()*128, Math.random()*128, 2.5, 2.5);
+  }
+  return tex(c, rep, rep);
+}
+function groundTex(rep=24){
+  const c = cnv(256,256), g = c.getContext('2d');
+  g.fillStyle = '#b5a682'; g.fillRect(0,0,256,256);
+  for(let i=0;i<2200;i++){
+    g.fillStyle = `rgba(${Math.random()<0.5?'150,135,100':'190,178,140'},${Math.random()*0.25})`;
+    g.fillRect(Math.random()*256, Math.random()*256, 3, 3);
+  }
+  return tex(c, rep, rep);
+}
+
+const mat = {
+  stone    : new THREE.MeshStandardMaterial({ map:stoneTex(4),  roughness:0.95 }),
+  stoneDark: new THREE.MeshStandardMaterial({ map:stoneTex(2),  color:0x9a8f78, roughness:0.95 }),
+  plaster  : new THREE.MeshStandardMaterial({ map:plasterTex(3),roughness:0.9 }),
+  tile     : new THREE.MeshStandardMaterial({ map:tileTex(6),   roughness:0.35, metalness:0.05 }),
+  roof     : new THREE.MeshStandardMaterial({ map:roofTex(8),   roughness:0.8 }),
+  water    : new THREE.MeshStandardMaterial({ map:waterTex(2),  roughness:0.12, metalness:0.55, transparent:true, opacity:0.92 }),
+  veget    : new THREE.MeshStandardMaterial({ map:vegetTex(3),  roughness:0.95 }),
+  vegetDark: new THREE.MeshStandardMaterial({ color:0x2f4a24,  roughness:0.95 }),
+  floor    : new THREE.MeshStandardMaterial({ color:0xd9cdb0,  roughness:0.9 }),
+  ground   : new THREE.MeshStandardMaterial({ map:groundTex(26),roughness:1 }),
+  white    : new THREE.MeshStandardMaterial({ color:0xe9e2d2,  roughness:0.9 }),
+  gold     : new THREE.MeshStandardMaterial({ color:0xd8b34a,  roughness:0.35, metalness:0.7 })
+};
+
+/* ============================================================
+   UTILIDADES DE CONSTRUCCIÓN
+============================================================ */
+const world = new THREE.Group(); scene.add(world);
+
+function box(w,h,d, matl, x,y,z){
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), matl);
+  m.position.set(x,y,z);
+  m.castShadow = m.receiveShadow = true;
+  world.add(m); return m;
+}
+function cyl(rt,rb,h, matl, x,y,z, seg=20){
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg), matl);
+  m.position.set(x,y,z);
+  m.castShadow = m.receiveShadow = true;
+  world.add(m); return m;
+}
+function cone(r,h, matl, x,y,z, seg=10){
+  const m = new THREE.Mesh(new THREE.ConeGeometry(r,h,seg), matl);
+  m.position.set(x,y,z);
+  m.castShadow = true;
+  world.add(m); return m;
+}
+/* Almenas sobre un rectángulo superior */
+function crenel(cx, cz, w, d, baseY){
+  const step = 2.4, mw = 1.3;
+  for(let s=-w/2+1; s<=w/2-1; s+=step){
+    box(mw, 1.4, 0.8, mat.stoneDark, cx+s, baseY+0.7, cz-d/2);
+    box(mw, 1.4, 0.8, mat.stoneDark, cx+s, baseY+0.7, cz+d/2);
+  }
+  for(let s=-d/2+1; s<=d/2-1; s+=step){
+    box(0.8, 1.4, mw, mat.stoneDark, cx-w/2, baseY+0.7, cz+s);
+    box(0.8, 1.4, mw, mat.stoneDark, cx+w/2, baseY+0.7, cz+s);
+  }
+}
+/* Torre con almenas */
+function tower(w,h,d, x,z, matl=mat.stone){
+  box(w,h,d, matl, x, h/2, z);
+  box(w+1, 1.1, d+1, mat.stoneDark, x, h+0.5, z);
+  crenel(x, z, w+1, d+1, h+1.1);
+}
+/* Muralla entre dos puntos */
+function wall(x1,z1, x2,z2, h=9, th=3.2, matl=mat.stone){
+  const dx = x2-x1, dz = z2-z1;
+  const len = Math.hypot(dx,dz);
+  const m = box(len, h, th, matl, (x1+x2)/2, h/2, (z1+z2)/2);
+  m.rotation.y = -Math.atan2(dz,dx);
+  crenel((x1+x2)/2, (z1+z2)/2, len, th, h);
+  return m;
+}
+/* Puerta con arco de herradura apuntado (hueco real atravesable) */
+function gate(x, z, B=10, H=10, D=9, b=6.4, hb=8.2){
+  const g = new THREE.Shape();
+  g.moveTo(-B/2, 0); g.lineTo(-B/2, H); g.lineTo(B/2, H); g.lineTo(B/2, 0); g.closePath();
+  const hole = new THREE.Path();
+  hole.moveTo(-b/2, 0);
+  hole.lineTo(-b/2, hb*0.5);
+  hole.absarc(0, hb*0.5, b/2, Math.PI, 0, true);
+  hole.lineTo(b/2, 0); hole.closePath();
+  g.holes.push(hole);
+  const geo = new THREE.ExtrudeGeometry(g, { depth: D, bevelEnabled:false });
+  geo.translate(0, 0, -D/2);
+  const m = new THREE.Mesh(geo, mat.stone);
+  m.position.set(x, 0, z);
+  m.castShadow = m.receiveShadow = true;
+  world.add(m);
+  box(B, 1.2, D, mat.stoneDark, x, H+0.5, z);
+  crenel(x, z, B, D, H+1.1);
+}
+/* Árboles */
+function cypress(x,z, s=1){
+  cyl(0.28*s, 0.4*s, 1.4*s, mat.vegetDark, x, 0.7*s, z, 7);
+  cone(1.15*s, 6.5*s, mat.vegetDark, x, 1.4*s + 3.2*s, z, 9);
+}
+function roundTree(x,z, s=1){
+  cyl(0.3*s, 0.45*s, 2*s, mat.vegetDark, x, s, z, 7);
+  const c = new THREE.Mesh(new THREE.SphereGeometry(1.7*s, 10, 8), mat.veget);
+  c.position.set(x, 2.4*s, z); c.castShadow = true; world.add(c);
+}
+
+/* ============================================================
+   TERRENO Y ENTORNO
+============================================================ */
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(700,700), mat.ground);
+ground.rotation.x = -Math.PI/2;
+ground.receiveShadow = true;
+scene.add(ground);
+
+/* Colina del Generalife (x 98..194, cima y=12.9) */
+const GY = 12.9;
+box(96, 14, 128, mat.ground, 146, 5.9, 30).receiveShadow = true;
+/* Calzada elevada de acceso a la colina (cima y=9.35, x 60..100) */
+box(40, 9.5, 14, mat.ground, 80, 4.6, 30);
+box(40, 4, 1.2, mat.stoneDark, 80, 11.3, 37.6);
+box(40, 4, 1.2, mat.stoneDark, 80, 11.3, 22.4);
+/* Escalinata desde la calzada a la cima */
+for(let i=0;i<6;i++){
+  const top = 9.1 + i*0.66;
+  box(2.2, top, 14, mat.floor, 100.5 + i*2, top/2, 30);
+}
+
+/* Sierra Nevada al fondo */
+for(let i=0;i<14;i++){
+  const a = Math.PI*(0.55 + i*0.028) + (i%2)*0.2;
+  const r = 430 + Math.random()*40;
+  const h = 90 + Math.random()*60;
+  cone(60+Math.random()*50, h,
+    new THREE.MeshStandardMaterial({ color: i%3? 0x9db8c9 : 0xe8eef2, roughness:1 }),
+    Math.cos(a)*r, h*0.3, Math.sin(a)*r, 8);
+}
+/* Caserío de Granada al sur (Albaicín) */
+for(let i=0;i<50;i++){
+  const x = -170 + Math.random()*330;
+  const z = 150 + Math.random()*110;
+  const w = 6+Math.random()*6, d = 5+Math.random()*5, h = 3+Math.random()*4;
+  box(w, h, d, mat.white, x, h/2, z);
+  box(w*0.9, 1.2, d*0.9, mat.roof, x, h+0.6, z);
+}
+/* Río Darro insinuado */
+const darro = new THREE.Mesh(new THREE.PlaneGeometry(430, 8), mat.water);
+darro.rotation.x = -Math.PI/2;
+darro.position.set(-40, 0.06, 118);
+darro.receiveShadow = true;
+scene.add(darro);
+
+/* ============================================================
+   RECINTO MURALLADO (x -120..90 · z -60..60)
+============================================================ */
+wall(-120,-60,   90,-60, 10, 3.5);
+wall(-65, 60,   90, 60, 10, 3.5);
+wall(-120, 60,  -65, 60, 10, 3.5);
+wall(-120,-60, -120, 60, 10, 3.5);
+wall(  90,-60,   90, 60, 10, 3.5);
+tower(8, 13, 8, -30, -60); tower(8, 13, 8, 35, -60);
+tower(8, 13, 8,  40, 60);  tower(8, 13, 8, -100, 60);
+tower(6, 14, 6, -120, 30);
+
+/* ============================================================
+   1· ALCÁZABA (oeste)
+============================================================ */
+tower(17, 26, 15, -100, -38);          /* Torre de la Vela */
+cyl(0.7, 1.0, 1.4, mat.gold, -100, 22, -30.8, 10);   /* campana */
+tower(11, 18, 11, -112, -18);
+tower(10, 16, 10,  -92, -18);
+tower(12, 20, 12,  -78, -45);
+wall(-120,-32, -70,-32, 8, 2.8);       /* muro intra-muros */
+box(26, 0.4, 24, mat.floor, -95, 0.3, -8);  /* plaza de armas */
+
+/* ============================================================
+   2· PUERTAS
+============================================================ */
+/* Puerta de la Justicia: rompe la muralla sur en el hueco -65..-55 */
+gate(-60, 60.4, 10, 10, 9, 6.4, 8.2);
+box(20, 0.35, 24, mat.floor, -60, 0.25, 42);   /* plaza entre puertas */
+/* Puerta del Vino, aislada, entre Alcazaba y medina */
+gate(-58, 8, 8, 8, 6, 4.8, 6.8);
+box(14, 0.35, 16, mat.floor, -58, 0.24, -4);
+
+/* ============================================================
+   3· MEDINA — caserío interior
+============================================================ */
+let seed = 7;
+function rnd(){ seed = (seed*9301+49297)%233280; return seed/233280; }
+for(let i=0;i<26;i++){
+  const x = -105 + rnd()*55, z = 12 + rnd()*40;
+  if (Math.hypot(x+58, z-8) < 10) continue;
+  const w = 5+rnd()*4, d = 4.5+rnd()*4, h = 3.2+rnd()*2.4;
+  box(w, h, d, mat.white, x, h/2, z);
+  box(w+0.6, 1, d+0.6, mat.roof, x, h+0.5, z);
+}
+box(16, 7, 12, mat.plaster, -36, 3.5, -14);   /* Mexuar */
+box(18, 1, 14, mat.roof, -36, 7.5, -14);
+
+/* ============================================================
+   4· PALACIOS NAZARÍES
+============================================================ */
+/* ---- Patio de los Arrayanes (x -5..25 · z -14..10) ---- */
+/* Muros con vanos: oeste/este gap z -4..0, norte gap x 7..19 */
+box(12, 6, 2, mat.plaster, 1, 3, -14);
+box( 6, 6, 2, mat.plaster, 22, 3, -14);
+box(30, 6, 2, mat.plaster, 10, 3, 10);
+box(2, 6, 10, mat.plaster, -4, 3, -9);
+box(2, 6, 10, mat.plaster, -4, 3, 5);
+box(2, 6, 10, mat.plaster, 24, 3, -9);
+box(2, 6, 10, mat.plaster, 24, 3, 5);
+for(const z of [-11, -6.5, 2.5, 7]){
+  cyl(0.45,0.5,5.4, mat.tile, -2.5, 2.7, z, 10);
+  cyl(0.45,0.5,5.4, mat.tile, 22.5, 2.7, z, 10);
+}
+box(28, 0.3, 24, mat.floor, 10, 0.2, -2);       /* suelo */
+box(3.6, 1.2, 20, mat.water, 10, 0.9, -2);      /* estanque de los Arrayanes */
+box(4.6, 0.5, 1.8, mat.stoneDark, 10, 1.6, 8.2);
+box(4.6, 0.5, 1.8, mat.stoneDark, 10, 1.6,-12.2);
+for(const zz of [-11,-6,6,11]){
+  box(3, 2.6, 2.6, mat.veget, 5.4, 1.6, zz);
+  box(3, 2.6, 2.6, mat.veget, 14.6, 1.6, zz);
+}
+/* ---- Torre de Comares ---- */
+tower(16, 45, 20, 10, -30, mat.plaster);
+box(18, 1.2, 22, mat.stoneDark, 10, 46, -30);
+crenel(10, -30, 18, 22, 47.2);
+
+/* ---- Patio de los Leones (centro -14,14 · radio 12) ---- */
+const LX = -14, LZ = 14;
+cyl(13, 13, 0.3, mat.floor, LX, 0.2, LZ, 28);
+for(let i=0;i<28;i++){
+  const a = i/28*Math.PI*2 + Math.PI/28;   /* columnas desplazadas: vanos al eje */
+  cyl(0.4, 0.45, 4.6, mat.tile, LX+Math.cos(a)*12, 2.3, LZ+Math.sin(a)*12, 8);
+  cyl(0.75, 0.75, 0.5, mat.plaster, LX+Math.cos(a)*12, 4.8, LZ+Math.sin(a)*12, 8);
+}
+const ring = new THREE.Mesh(new THREE.TorusGeometry(12, 1.15, 8, 34), mat.plaster);
+ring.rotation.x = Math.PI/2; ring.position.set(LX, 5.2, LZ);
+ring.castShadow = ring.receiveShadow = true; world.add(ring);
+box(7, 3.2, 12, mat.roof, LX+14, 6.4, LZ);
+box(7, 3.2, 12, mat.roof, LX-14, 6.4, LZ);
+box(2.4, 3.4, 2.4, mat.roof, LX+14, 8.6, LZ);
+box(2.4, 3.4, 2.4, mat.roof, LX-14, 8.6, LZ);
+/* Fuente de los Leones */
+box(5.4, 0.9, 5.4, mat.stoneDark, LX, 0.75, LZ);
+box(4.6, 0.7, 4.6, mat.water,  LX, 1.55, LZ);
+cyl(1.9, 2.1, 0.7, mat.stoneDark, LX, 2.2, LZ, 14);
+cyl(1.2, 1.35, 0.9, mat.water,  LX, 3.0, LZ, 14);
+for(let i=0;i<8;i++){
+  const a = i/8*Math.PI*2 + Math.PI/8;
+  const lx = LX+Math.cos(a)*2.5, lz = LZ+Math.sin(a)*2.5;
+  box(0.7, 0.55, 1.3, mat.stoneDark, lx, 0.55, lz);
+  cyl(0.32, 0.36, 0.5, mat.stoneDark, lx, 1.02, lz, 8);
+}
+/* Cuatro arroyos */
+box(7, 0.25, 0.9, mat.water, LX-6.2, 0.35, LZ);
+box(7, 0.25, 0.9, mat.water, LX+6.2, 0.35, LZ);
+box(0.9, 0.25, 7, mat.water, LX, 0.35, LZ-6.2);
+box(0.9, 0.25, 7, mat.water, LX, 0.35, LZ+6.2);
+box(10, 7, 4, mat.plaster, LX, 3.5, LZ+15);
+box(10, 7, 4, mat.plaster, LX, 3.5, LZ-15);
+
+/* ============================================================
+   5· PALACIO DE CARLOS V (planta cuadrada, patio circular)
+============================================================ */
+const CVX = 62, CVZ = 12, CVS = 17, CVR = 9.5, CVH = 15;
+{
+  const s = CVS, r = CVR, h = CVH;
+  const shape = new THREE.Shape();
+  shape.moveTo(-s,-s); shape.lineTo(s,-s); shape.lineTo(s,s); shape.lineTo(-s,s); shape.closePath();
+  const hole = new THREE.Path();
+  hole.absarc(0, 0, r, 0, Math.PI*2, true);
+  shape.holes.push(hole);
+  const geo = new THREE.ExtrudeGeometry(shape, { depth:h, bevelEnabled:false });
+  geo.rotateX(-Math.PI/2);
+  geo.translate(s, 0, s);
+  const b = new THREE.Mesh(geo, mat.plaster);
+  b.position.set(CVX-s, 0, CVZ-s);
+  b.castShadow = b.receiveShadow = true;
+  world.add(b);
+  for(const [dx,dz,w,d] of [[0,-s,2*s+1.6,1.6],[0,s,2*s+1.6,1.6],[-s,0,1.6,2*s+1.6],[s,0,1.6,2*s+1.6]]){
+    box(w, 1, d, mat.stoneDark, CVX+dx, h+0.5, CVZ+dz);
+  }
+  for(let i=0;i<24;i++){
+    const a = i/24*Math.PI*2;
+    const cx = CVX+Math.cos(a)*(r-1.2), cz = CVZ+Math.sin(a)*(r-1.2);
+    cyl(0.4,0.45,9, mat.tile, cx, 4.5, cz, 10);
+    cyl(0.8,0.8,0.6, mat.stoneDark, cx, 9.3, cz, 10);
+  }
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(r-1.5, 0.9, 8, 30), mat.stoneDark);
+  ring2.rotation.x = Math.PI/2; ring2.position.set(CVX, 9.8, CVZ);
+  ring2.castShadow = true; world.add(ring2);
+  cyl(2.2, 2.5, 0.7, mat.stoneDark, CVX, 0.35, CVZ, 16);
+  cyl(1.6, 1.7, 0.2, mat.water, CVX, 0.78, CVZ, 16);
+  cyl(r-0.05, r-0.05, 0.28, mat.floor, CVX, 0.2, CVZ, 30);
+  /* Techumbre anular */
+  const rp = new THREE.Shape();
+  rp.moveTo(-s,-s); rp.lineTo(s,-s); rp.lineTo(s,s); rp.lineTo(-s,s); rp.closePath();
+  const rh = new THREE.Path(); rh.absarc(0,0,r+0.2,0,Math.PI*2,true); rp.holes.push(rh);
+  const rg = new THREE.ExtrudeGeometry(rp, { depth:1.2, bevelEnabled:false });
+  rg.rotateX(-Math.PI/2); rg.translate(s, 0, s);
+  const rk = new THREE.Mesh(rg, mat.roof);
+  rk.position.set(CVX-s, h+1, CVZ-s);
+  rk.castShadow = true; world.add(rk);
+  /* Portadas clásicas al sur y norte */
+  box(6, 8, 1.2, mat.stone, CVX, 4, CVZ+s+0.2);
+  box(6, 8, 1.2, mat.stone, CVX, 4, CVZ-s-0.2);
+}
+
+/* ============================================================
+   6· GENERALIFE (cima GY = 12.9)
+============================================================ */
+box(10, 5, 3, mat.stone, 108, GY+2.5, 8);        /* puerta de acceso */
+box(72, 0.3, 26, mat.floor, 128, GY+0.2, 24);    /* empedrado del patio */
+box(6, 1.1, 62, mat.water, 128, GY+0.8, 24);     /* Patio de la Acequia */
+for(const z of [10, 38]){
+  const jet = cyl(0.14, 0.05, 2.6, mat.water, 128, GY+2.2, z, 8);
+  jet.rotation.z = Math.PI/2.3;
+}
+for(let z=8; z<=40; z+=4){
+  box(2.6, 1.6, 2.6, mat.veget, 124.4, GY+1.1, z);
+  box(2.6, 1.6, 2.6, mat.veget, 131.6, GY+1.1, z);
+}
+for(let z=6; z<=44; z+=6){ cypress(120.5, z, 1.15); cypress(135.5, z, 1.15); }
+box(10, 7.5, 9, mat.plaster, 128, GY+3.75, 9.5);  /* Torre de las Damas */
+box(11.5, 1, 10.5, mat.roof, 128, GY+7.7, 9.5);
+box(9, 7, 7, mat.plaster, 128, GY+3.5, 40);
+box(10.5, 1, 8.5, mat.roof, 128, GY+7.5, 40);
+for(let i=0;i<10;i++){
+  box(3, 1.6, 3, mat.veget, 118+i*3.4, GY+0.9, 48);
+  if(i%2) cypress(119.7+i*3.4, 52.5, 1.2);
+}
+roundTree(112, 60, 1.6); roundTree(146, 58, 1.7);
+box(8, 4, 6, mat.plaster, 145, GY+2, 14);        /* mirador */
+box(9.5, 1, 7.5, mat.roof, 145, GY+4.5, 14);
+
+/* ============================================================
+   JARDINES INFERIORES
+============================================================ */
+function gardenPath(x1,z1,x2,z2){
+  const len = Math.hypot(x2-x1, z2-z1);
+  const p = new THREE.Mesh(new THREE.PlaneGeometry(len, 6), mat.floor);
+  p.rotation.x = -Math.PI/2;
+  p.position.set((x1+x2)/2, 0.12, (z1+z2)/2);
+  p.rotation.z = -Math.atan2(z2-z1, x2-x1);
+  p.receiveShadow = true; world.add(p);
+}
+gardenPath(-40, 30, 20, 30);
+gardenPath(-40, 30, -55, 44);
+for(let i=0;i<7;i++){ cypress(-30+i*9, 38, 1); cypress(-30+i*9, 22, 1); }
+for(let i=0;i<5;i++) roundTree(-38-i*4, 44, 1.3);
+box(9, 1, 9, mat.water, -20, 0.6, 44);
+box(1.2, 2.4, 1.2, mat.stoneDark, -20, 1, 44);
+
+/* ============================================================
+   PUNTOS DE INTERÉS
+============================================================ */
+const POIS = [
+  { n:1, t:'Puerta de la Justicia', x:-60, y:5, z:60,
+    d:'Portada principal (1348), con arco de herradura apuntado, tallado con una mano de Fátima y una llave. Por ella entraban jueces y sultanes; su cubo almenado domina el acceso sur.' },
+  { n:2, t:'Puerta del Vino', x:-58, y:4, z:8,
+    d:'Una de las más antiguas (s. XIII). Servía de aduana para el vino de pago de la colina. Une la Alcazaba con la medina alta.' },
+  { n:3, t:'Alcazaba — Torre de la Vela', x:-100, y:29, z:-38,
+    d:'El baluarte militar más antiguo, del siglo XIII. Desde su campana —repicada en las fiestas de Granada— se dominan el Albaicín, la Vega y Sierra Nevada.' },
+  { n:4, t:'Palacio de Carlos V', x:64, y:17, z:34,
+    d:'Pedro Machuca lo erige en 1527: planta cuadrada con un insólito patio circular de dos galerías, el mayor del Renacimiento español. Hoy acoge el Museo de Bellas Artes.' },
+  { n:5, t:'Patio de los Leones', x:-14, y:7.5, z:14,
+    d:'Joya de Muhammad V (2ª mitad del s. XIV): 124 columnas de mármol, muqarnas y la fuente de los doce leones, símbolo del paraíso y del poder del sultán.' },
+  { n:6, t:'Arrayanes y Torre de Comares', x:10, y:8, z:-4,
+    d:'Crucero de agua ante la Torre de Comares, de 45 m de altura. Dentro espera el Salón de Embajadores, la estancia más suntuosa de La Alhambra.' },
+  { n:7, t:'Generalife — Patio de la Acequia', x:128, y:17, z:24,
+    d:'La alquería de los sultanes: huerta y recreo. Su acequia surcada de chorros riega huertos y alamedas desde el siglo XIV.' },
+  { n:8, t:'Mirador del Generalife', x:143, y:19, z:10,
+    d:'Desde las galerías altas la vista abraza La Alhambra entera: la Alcazaba, los palacios y, al fondo, el Albaicín y la Vega.' }
+];
+
+/* Marcadores */
+const markerGroup = new THREE.Group(); scene.add(markerGroup);
+function labelSprite(p){
+  const c = cnv(320,84), g = c.getContext('2d');
+  if (!g.roundRect){ g.rect(4,8,312,58); }
+  else { g.beginPath(); g.roundRect(4,8,312,58,10); }
+  g.fillStyle = '#1a1712d9'; g.fill();
+  g.strokeStyle = '#d8b34a'; g.lineWidth = 2.5; g.stroke();
+  g.fillStyle = '#e6c86e'; g.font = 'bold 21px Georgia'; g.textAlign='center';
+  g.fillText(p.n + ' · ' + p.t.toUpperCase(), 160, 36);
+  g.fillStyle = '#f3e9d2'; g.font = '15px Georgia'; g.fillText('clic para leer', 160, 56);
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map:new THREE.CanvasTexture(c), transparent:true, depthTest:false }));
+  s.scale.set(17, 4.5, 1);
+  s.position.set(p.x, p.y + 6.5, p.z);
+  s.userData.poi = p;
+  markerGroup.add(s);
+}
+const dotGeo = new THREE.SphereGeometry(0.75, 14, 12);
+for(const p of POIS){
+  const dot = new THREE.Mesh(dotGeo, mat.gold);
+  dot.position.set(p.x, p.y, p.z);
+  dot.userData.poi = p;
+  dot.castShadow = true;
+  markerGroup.add(dot);
+  labelSprite(p);
+}
+
+/* ============================================================
+   RUTA GUIADA — curva Catmull-Rom cerrada
+============================================================ */
+const curve = new THREE.CatmullRomCurve3([
+  new THREE.Vector3(-60, 3,  88),
+  new THREE.Vector3(-60, 3,  60),   // bajo la Puerta de la Justicia
+  new THREE.Vector3(-60, 3,  42),
+  new THREE.Vector3(-58, 3,  16),
+  new THREE.Vector3(-58, 3,  -2),   // atraviesa la Puerta del Vino
+  new THREE.Vector3(-50, 3,  -6),
+  new THREE.Vector3(-44, 3,  -2),
+  new THREE.Vector3(-30, 3,   8),
+  new THREE.Vector3( -4, 3,  14),
+  new THREE.Vector3( 16, 3,  26),
+  new THREE.Vector3( 34, 3,  32),
+  new THREE.Vector3( 46, 3.2, 36),  // rodea el Palacio de Carlos V
+  new THREE.Vector3( 58, 3.2, 36),
+  new THREE.Vector3( 74, 3.4, 36),
+  new THREE.Vector3( 86, 3.4, 20),
+  new THREE.Vector3( 87, 3.6, -4),
+  new THREE.Vector3( 70, 3,  -12),
+  new THREE.Vector3( 52, 3,  -10),
+  new THREE.Vector3( 38, 3,    6),
+  new THREE.Vector3( 26, 3,   12),
+  new THREE.Vector3( 20, 3,   14),
+  new THREE.Vector3(  2, 3,   14),  // entra al Patio de los Leones
+  new THREE.Vector3(-14, 3,   20),
+  new THREE.Vector3(-17, 3,   13),
+  new THREE.Vector3(-14, 3,    8),
+  new THREE.Vector3(-10, 3,    0),
+  new THREE.Vector3( -6, 3,   -2),  // paso al Patio de los Arrayanes
+  new THREE.Vector3(  2, 3,   -2),
+  new THREE.Vector3( 12, 3,   -2),
+  new THREE.Vector3( 16, 3,  -12),
+  new THREE.Vector3( 11, 3.6,-18),  // frente a Comares
+  new THREE.Vector3( -3, 3,  -17),
+  new THREE.Vector3(-24, 3,  -10),
+  new THREE.Vector3(-58, 3,   -6),
+  new THREE.Vector3(-80, 3,  -12),
+  new THREE.Vector3(-94, 3,  -26),
+  new THREE.Vector3(-100, 4, -21),
+  new THREE.Vector3(-101, 9, -26),  // asciende la Torre de la Vela
+  new THREE.Vector3(-102,17, -27),
+  new THREE.Vector3(-101,26, -28),
+  new THREE.Vector3( -95,30, -34),
+  new THREE.Vector3( -92,30, -40),
+  new THREE.Vector3( -88,28, -46),
+  new THREE.Vector3( -86,18, -30),
+  new THREE.Vector3( -88,10,  -6),
+  new THREE.Vector3( -78, 6,   8),
+  new THREE.Vector3( -58, 5,  16),
+  new THREE.Vector3( -30, 6,  24),
+  new THREE.Vector3(  -2, 7,  38),
+  new THREE.Vector3(  30, 6.5,34),
+  new THREE.Vector3(  48, 6.5,36),
+  new THREE.Vector3(  64,10.2,30),  // calzada al Generalife
+  new THREE.Vector3(  78,10.4,30),
+  new THREE.Vector3(  90,10.4,30),
+  new THREE.Vector3( 102,15,  28),  // cima de la colina
+  new THREE.Vector3( 114,15,  24),
+  new THREE.Vector3( 120,15,  14),
+  new THREE.Vector3( 127.5,15,30),  // surca la Acequia
+  new THREE.Vector3( 128,15,  44),
+  new THREE.Vector3( 140,15,  26),
+  new THREE.Vector3( 150,16.5,18),  // mirador
+  new THREE.Vector3( 154,16,   4),
+  new THREE.Vector3( 146,19, -16),
+  new THREE.Vector3( 108,23, -40)   // vista aérea final
+], true, 'centripetal', 0.5);
+
+/* ---------- Estado del recorrido ---------- */
+let tourT = 0, playing = false, speed = 1;
+const baseRate = 0.014;
+let freeMode = false;
+const camPos = new THREE.Vector3();
+const lookPos = new THREE.Vector3();
+
+function placeOnPath(t){
+  curve.getPointAt(t, camPos);
+  curve.getPointAt(Math.min(t + 0.008, 0.9999), lookPos);
+  camera.position.copy(camPos);
+  camera.lookAt(lookPos.x, lookPos.y + 1.2, lookPos.z);
+}
+
+/* ---------- UI ---------- */
+const playBtn = document.getElementById('playBtn');
+const fill = document.getElementById('progressFill');
+const speedEl = document.getElementById('speed');
+const btnTour = document.getElementById('btnTour');
+const btnFree = document.getElementById('btnFree');
+const showPOI = document.getElementById('showPOI');
+const panel = document.getElementById('infoPanel');
+const infoNum = document.getElementById('infoNum');
+const infoTitle = document.getElementById('infoTitle');
+const infoText = document.getElementById('infoText');
+const legend = document.getElementById('legend');
+
+function setPlaying(v){
+  playing = v;
+  playBtn.textContent = v ? '❚❚' : '▶';
+}
+playBtn.addEventListener('click', () => {
+  if (Math.abs(tourT - 1) < 0.001 && !playing){ tourT = 0; }
+  if (freeMode) setMode(false);
+  else setPlaying(!playing);
+});
+addEventListener('keydown', e => {
+  if (e.code === 'Space'){ e.preventDefault(); playBtn.click(); }
+});
+speedEl.addEventListener('input', () => speed = parseFloat(speedEl.value));
+
+document.getElementById('progressBar').addEventListener('click', e => {
+  const r = e.currentTarget.getBoundingClientRect();
+  tourT = (e.clientX - r.left) / r.width;
+  if (freeMode) setMode(false);
+  placeOnPath(tourT);
+});
+
+function setMode(free){
+  freeMode = free;
+  btnTour.classList.toggle('active', !free);
+  btnFree.classList.toggle('active', free);
+  controls.enabled = free;
+  if (free){
+    legend.textContent = 'Arrastra para girar · rueda para acercarte · clic en los puntos dorados';
+    legend.classList.add('visible');
+    setPlaying(false);
+    camera.position.set(-95, 55, 165);
+    controls.target.set(-15, 10, 4);
+    controls.update();
+  } else {
+    legend.classList.remove('visible');
+    setPlaying(true);
+  }
+}
+btnTour.addEventListener('click', () => setMode(false));
+btnFree.addEventListener('click', () => setMode(true));
+showPOI.addEventListener('change', () => markerGroup.visible = showPOI.checked);
+
+function showPanel(p){
+  if (!p){ panel.classList.remove('visible'); return; }
+  infoNum.textContent = p.n;
+  infoTitle.textContent = p.t;
+  infoText.textContent = p.d;
+  panel.classList.add('visible');
+}
+document.getElementById('infoClose').addEventListener('click', () => showPanel(null));
+
+/* Detección de POI cercano durante la ruta */
+let currentPOI = null;
+function poiProximity(){
+  let best = null, bestD = 1e9;
+  for(const p of POIS){
+    const d = (p.x-camera.position.x)**2 + (p.y-camera.position.y)**2 + (p.z-camera.position.z)**2;
+    if (d < bestD){ bestD = d; best = p; }
+  }
+  const near = bestD < 169 ? best : null;
+  if (near !== currentPOI){ currentPOI = near; showPanel(near); }
+}
+
+/* Clic sobre marcadores (modo libre) */
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+let downXY = null;
+renderer.domElement.addEventListener('pointerdown', e => downXY = [e.clientX, e.clientY]);
+renderer.domElement.addEventListener('pointerup', e => {
+  if (!downXY) return;
+  const moved = Math.hypot(e.clientX-downXY[0], e.clientY-downXY[1]);
+  downXY = null;
+  if (moved > 6) return;
+  pointer.x = (e.clientX/innerWidth)*2 - 1;
+  pointer.y = -(e.clientY/innerHeight)*2 + 1;
+  raycaster.setFromCamera(pointer, camera);
+  const hits = raycaster.intersectObjects(markerGroup.children, false);
+  if (hits.length) showPanel(hits[0].object.userData.poi);
+});
+
+/* ============================================================
+   ANIMACIÓN
+============================================================ */
+const clock = new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), 0.05);
+
+  if (!freeMode){
+    if (playing){
+      tourT += dt * baseRate * speed;
+      if (tourT >= 1) tourT -= 1;
+    }
+    placeOnPath(tourT);
+    poiProximity();
+  } else {
+    controls.update();
+  }
+
+  fill.style.width = (tourT*100).toFixed(2) + '%';
+  mat.water.map.offset.x += dt * 0.045;
+  mat.water.map.offset.y += dt * 0.012;
+
+  renderer.render(scene, camera);
+}
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+/* Arranque */
+markerGroup.visible = showPOI.checked;
+setMode(false);
+tourT = 0;
+placeOnPath(0);
+animate();
+const load = document.getElementById('loading');
+load.style.opacity = '0';
+setTimeout(() => load.remove(), 900);
+
+window.__alhambra = { setT: v => { tourT = Math.min(Math.max(v,0),0.999); }, get tourT(){ return tourT; } };
+</script>
+</body>
+</html>

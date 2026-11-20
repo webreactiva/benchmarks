@@ -1,0 +1,19 @@
+{
+  "nota": 9,
+  "veredicto": "bien y comprobado",
+  "resumen": "Compila, todo en español y ordenado de arriba abajo: clientes, DNS, Varnish, LVS, MediaWiki y, debajo, Memcached, MariaDB, Elasticsearch y Swift, con Parsoid, RESTBase, CirrusSearch, CentralAuth y una capa asíncrona (Kafka, JobQueue, ChangeProp, escaladores de miniaturas). Fallos menores: MediaWiki leyendo de WDQS, Swift y «almacén de medios» duplicados, y nada vuelve al usuario.",
+  "rarezas": [
+    "El único que comprobó que su Mermaid compila: instaló mermaid-cli con npx, arregló el sandbox de Chrome con un pptr.json, sacó PNG y SVG y miró el PNG.",
+    "Escribió ese pptr.json en /tmp/opencode, fuera de su carpeta.",
+    "10 peticiones para un diagrama: cinco veces más que los demás en este prompt."
+  ],
+  "nota_previa": 8,
+  "rubrica": {
+    "compila": 2,
+    "en español": 1,
+    "camino conectado": 2,
+    "piezas clave": 2,
+    "sin errores ni inventos": 1,
+    "se puede leer": 1
+  }
+}

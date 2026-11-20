@@ -1,0 +1,1 @@
+Guardado en `arquitectura_wikipedia.mmd`: diagrama Mermaid con la arquitectura de Wikipedia (GeoDNS, CDN, balanceadores, servidores MediaWiki, Memcached, MariaDB maestro/réplicas, Swift, Elasticsearch y Kafka), con etiquetas en español.

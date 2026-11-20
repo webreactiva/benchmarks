@@ -1,0 +1,3 @@
+{"html": [{"fichero": "index.html", "errores": [], "captura": "capturas/tienda.png"}], "mermaid": [],
+ "extra": ["✔ npm test: 23/23", "✔ npm start sirve la tienda y añadir al carrito funciona", "~ el carrito vive en localStorage: no hay backend que escalar"],
+ "comprobacion": "Copia en /tmp, npm test, npm start y Playwright añadiendo productos"}

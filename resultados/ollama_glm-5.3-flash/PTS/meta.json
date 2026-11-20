@@ -1,0 +1,25 @@
+{
+  "codigo": "PTS",
+  "modelo": "ollama/glm-5.3-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T22:48:31Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 10115,
+    "output": 2551,
+    "reasoning": 0,
+    "cache_read": 16960,
+    "cache_write": 0,
+    "total": 29626
+  },
+  "peticiones": 3,
+  "error": null,
+  "herramientas": {
+    "write": 1,
+    "edit": 2
+  },
+  "sesion": "ses_e0a00ae97ffebRDgH6L7bphgF4",
+  "ficheros": [
+    "tests-flaky-son-peores-que-no-tener-tests.md"
+  ]
+}

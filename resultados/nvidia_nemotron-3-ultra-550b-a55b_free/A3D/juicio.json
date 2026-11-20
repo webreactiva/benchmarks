@@ -1,0 +1,19 @@
+{
+  "nota": 6,
+  "veredicto": "funciona, poco Alhambra",
+  "resumen": "Un HTML con three.js que carga, enseña 14 paradas con nombre y un tour animado con cámara que sigue una curva, lista de paradas y teclas. Las paradas y el orden son los de una visita real, pero los edificios son cajas y cilindros sin nada nazarí, la cámara atraviesa los volúmenes y salen dos errores al empezar.",
+  "rarezas": [
+    "28 KB de HTML en 3 peticiones y 10 k tokens de salida: lo escribió de una vez, sin abrirlo ni comprobarlo.",
+    "La respuesta dice «14 paradas» y enumera 12; el fichero tiene 14.",
+    "Las «partículas atmosféricas» son cuadrados grises que flotan por toda la escena, también delante de la cámara."
+  ],
+  "nota_previa": 6,
+  "rubrica": {
+    "abre sin errores": 0,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 0,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  }
+}

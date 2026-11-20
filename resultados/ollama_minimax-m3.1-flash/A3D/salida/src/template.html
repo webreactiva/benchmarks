@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alhambra de Granada · Ruta 3D</title>
+<meta name="description" content="Recorrido tridimensional interactivo por la Alhambra de Granada: Alcazaba, Palacios Nazaríes, Palacio de Carlos V y Generalife.">
+<meta name="author" content="Ruta 3D · La Alhambra">
+<meta name="theme-color" content="#0b0a09">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0a09'/%3E%3Cpath d='M6 24V13l10-6 10 6v11z' fill='none' stroke='%23d9b26a' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+<div id="vignette"></div>
+<div id="labels"></div>
+
+<!-- ------------------------------------------------ cabecera -->
+<div class="hud panel" id="title">
+  <h1>Alhambra <span>de Granada</span></h1>
+  <div class="sub">Ruta 3D · Patrimonio de la humanidad</div>
+  <div class="rule"></div>
+  <div class="meta">
+    Un recorrido por la <b>Alcazaba</b>, los <b>Palacios Nazaríes</b>, el
+    <b>palacio de Carlos V</b> y los jardines del <b>Generalife</b>.<br>
+    <b>16 paradas</b> · espacio para iniciar · L para vista libre
+  </div>
+</div>
+
+<!-- ------------------------------------------------ lista de paradas -->
+<div class="hud panel" id="stops">
+  <div class="hd"><span>Paradas del recorrido</span><button id="stopsToggle" title="Ocultar la lista">–</button></div>
+  <ol id="stopList"></ol>
+</div>
+
+<!-- ------------------------------------------------ ficha de la parada -->
+<div class="hud panel" id="card">
+  <div class="top">
+    <div class="kicker" id="cardKicker">Parada 01 / 16</div>
+    <h2 id="cardTitle">Puerta de la Justicia</h2>
+    <div class="place" id="cardPlace">Muralla sur · acceso al recinto</div>
+  </div>
+  <div class="body" id="cardBody"></div>
+  <div class="facts" id="cardFacts"></div>
+  <div class="nav">
+    <button id="prevBtn">← Anterior</button>
+    <button id="nextBtn">Siguiente →</button>
+  </div>
+</div>
+
+<!-- ------------------------------------------------ transporte -->
+<div class="hud panel" id="transport">
+  <div class="row">
+    <button class="tbtn" id="prevB" title="Parada anterior (←)">⏮</button>
+    <button class="tbtn play" id="playB" title="Reproducir / pausar (espacio)">▶</button>
+    <button class="tbtn" id="nextB" title="Parada siguiente (→)">⏭</button>
+    <div class="now" id="nowTitle">Puerta de la Justicia</div>
+    <div class="speeds" id="speeds"></div>
+  </div>
+  <div id="track">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="ticks" id="ticks"></div>
+    <div class="head" id="head"></div>
+  </div>
+  <div class="presets" id="presets"></div>
+</div>
+
+<!-- ------------------------------------------------ minimapa -->
+<div class="hud panel" id="map">
+  <div class="hd"><span>Planta del recinto</span><span id="mapCoord">—</span></div>
+  <canvas id="mapCanvas" width="284" height="158"></canvas>
+  <div class="legend">
+    <span><i style="background:#d9b26a"></i>recorrido</span>
+    <span><i style="background:#fff"></i>cámara</span>
+    <span><i style="background:rgba(214,190,148,.6)"></i>edificios</span>
+  </div>
+</div>
+
+<!-- ------------------------------------------------ ayuda -->
+<div class="hud panel" id="help">
+  <span class="close">×</span>
+  <h3>Cómo moverse</h3>
+  <table>
+    <tr><td>Espacio</td><td>Reproducir o pausar el recorrido</td></tr>
+    <tr><td>← →</td><td>Parada anterior / siguiente</td></tr>
+    <tr><td>L</td><td>Vista libre (arrastrar y rueda)</td></tr>
+    <tr><td>Botones</td><td>Velocidad, hora del día, pantalla completa</td></tr>
+    <tr><td>Minimapa</td><td>Clic sobre una parada para ir a ella</td></tr>
+  </table>
+</div>
+
+<!-- ------------------------------------------------ carga -->
+<div id="loading">
+  <div class="in">
+    <div class="mark">Alhambra</div>
+    <div class="arc"></div>
+    <div class="t">Construyendo el recinto…</div>
+  </div>
+</div>
+
+<script>
+/*__THREE__*/
+</script>
+<script>
+(function () {
+/*__APP__*/
+})();
+</script>
+</body>
+</html>

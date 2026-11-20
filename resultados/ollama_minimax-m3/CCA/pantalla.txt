@@ -1,0 +1,36 @@
+     └───────────────┴───────────────────────────────────────────────────────────────────────────────────────────────┘
+
+     Decisiones de escalabilidad
+
+     - Sin estado en la API: el carrito vive en Redis → N réplicas detrás del balanceador.
+     - Concurrencia sin bloqueos: CAS por version con script Lua; la mutación es una función pura, así que ante
+       conflicto se relee y se reaplica (nunca se pierde una línea).
+     - Atomicidad en Lua: alta por lotes, reserva de stock (todo o nada) y reclamo de la clave de idempotencia.
+     - Idempotencia con Idempotency-Key (replay de la respuesta original, 409 si cambia el payload).
+     - Claves con hash tags {cartId} → compatibles con Redis Cluster.
+     - Caché read-through del catálogo con negative caching y petición por lotes.
+     - Outbox + pub/sub para que los efectos colaterales no bloqueen la escritura.
+     - Extras: rate limiting, SSE, /health/live|ready, /metrics, logs con requestId.
+
+     Verificación (todo en verde)
+
+     npm run build      ✓ npm run typecheck  ✓   npm run lint  ✓
+     npm test           → 69 tests (dominio + API + integración con Redis real)
+     npm run smoke      → end-to-end contra el binario compilado
+
+     Probé además el modo dev (tsx + vite con proxy) y el stream SSE con Redis real recibiendo los eventos de cart.
+     item_added.
+
+     Dos notas: la identidad de cliente usa la cabecera x-customer-id como stand-in de un JWT (el punto de extensión
+     es http/plugins/context.ts), y los cupones/promociones salen de un proveedor en memoria detrás del puerto
+     PricingRulesProvider — el README documenta ambas limitaciones y los siguientes pasos.
+
+     ▣  Build · minimax-m3
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · minimax-m3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-sh5GoSeO                                                            138.3K (27%)  ctrl+p commands
+

@@ -1,0 +1,36 @@
+  ┃  ← Edit README.md
+  ┃
+  ┃     1   # Arquitectura de Wikipedia en Mermaid
+  ┃     2
+  ┃     3   Diagrama de alto nivel de la arquitectura de Wikipedia/Wikimedia, escrito en español.
+  ┃     4
+  ┃     5 - ## Archivo
+  ┃     5 + ## Archivos
+  ┃     6
+  ┃     7   - `arquitectura-wikipedia.mmd`: código Mermaid del diagrama.
+  ┃     8 + - `arquitectura-wikipedia.svg`: versión renderizada (vectorial).
+  ┃     9 + - `arquitectura-wikipedia.png`: versión renderizada (imagen).
+  ┃    10
+  ┃    11   ## Cómo renderizarlo
+  ┃    12
+  ┃    13   Con la CLI oficial de Mermaid:
+  ┃
+
+     Listo. Generé en la carpeta actual:
+
+     - arquitectura-wikipedia.mmd — diagrama Mermaid en español.
+     - arquitectura-wikipedia.svg y .png — renderizados y validados.
+     - README.md — capas y flujo de una petición.
+
+     Incluye clientes, DNS/CDN (Varnish), balanceo (LVS), MediaWiki (PHP), Parsoid/RESTBase/CirrusSearch, Memcached,
+     MariaDB, Elasticsearch, Swift y Kafka/JobQueue.
+
+     ▣  Build · deepseek-v4.1-flash · 52.3s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · deepseek-v4.1-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/ollama_deepseek-v4.1-flash/MWP                                                 13.0K  ctrl+p commands
+

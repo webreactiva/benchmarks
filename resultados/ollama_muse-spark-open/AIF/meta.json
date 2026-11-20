@@ -1,0 +1,38 @@
+{
+  "codigo": "AIF",
+  "modelo": "ollama/muse-spark-open",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T03:16:29Z",
+  "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 126699,
+    "output": 24242,
+    "reasoning": 0,
+    "cache_read": 240672,
+    "cache_write": 0,
+    "total": 391613
+  },
+  "peticiones": 9,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 2,
+    "bash": 4,
+    "webfetch": 4,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e090b5bd7ffeIldQWK8wWirkvJ",
+  "ficheros": [
+    "index.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

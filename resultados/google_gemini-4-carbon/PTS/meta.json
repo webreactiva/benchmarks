@@ -1,0 +1,38 @@
+{
+  "codigo": "PTS",
+  "modelo": "google/gemini-4-carbon",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T10:23:00Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 10297,
+    "output": 2166,
+    "reasoning": 734,
+    "cache_read": 9288,
+    "cache_write": 0,
+    "total": 22485
+  },
+  "peticiones": 3,
+  "error": null,
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 1,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e0784db71ffeLnGuJTu7xDxyNA",
+  "coste_usd": 0.0532,
+  "ficheros": [
+    "tests-que-fallan-a-veces.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models"
+  },
+  "veces_decide_tu": 0,
+  "aislamiento": "macOS: sandbox-exec (sin leer /Users salvo su configuración y node; escribe solo en su carpeta), OpenCode 2.3.0 --standalone"
+}

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruta 3D - Alhambra de Granada</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { overflow: hidden; font-family: 'Segoe UI', sans-serif; background: #0a0f1a; }
+    canvas { display: block; }
+    #ui {
+      position: fixed; top: 20px; left: 20px; z-index: 100;
+      color: #e8d5b7; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+    #ui h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 0.5rem; }
+    #ui p { font-size: 0.9rem; opacity: 0.7; line-height: 1.6; max-width: 300px; }
+    #controls {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100;
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    }
+    .btn {
+      background: linear-gradient(135deg, #2a1f15, #3d2a1a);
+      border: 1px solid #5a4430; color: #e8d5b7;
+      padding: 12px 24px; border-radius: 30px; cursor: pointer;
+      font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;
+      transition: all 0.3s ease; backdrop-filter: blur(10px);
+    }
+    .btn:hover { background: linear-gradient(135deg, #3d2a1a, #5a4430); border-color: #c9a86c; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,108,0.3); }
+    .btn.active { background: linear-gradient(135deg, #c9a86c, #a68a4a); border-color: #c9a86c; color: #1a1208; }
+    #info-panel {
+      position: fixed; right: 20px; top: 20px; z-index: 100;
+      width: 280px; max-height: 70vh; overflow-y: auto;
+      background: rgba(15,10,5,0.9); border: 1px solid #3d2a1a;
+      border-radius: 12px; padding: 20px; color: #e8d5b7;
+      backdrop-filter: blur(15px); display: none;
+    }
+    #info-panel.open { display: block; animation: slideIn 0.4s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+    #info-panel h3 { font-size: 1.1rem; margin-bottom: 12px; color: #c9a86c; border-bottom: 1px solid #3d2a1a; padding-bottom: 8px; }
+    .stop { padding: 10px 0; border-bottom: 1px solid #2a1f15; cursor: pointer; transition: 0.2s; }
+    .stop:hover { color: #c9a86c; padding-left: 8px; }
+    .stop:last-child { border-bottom: none; }
+    .stop-num { display: inline-block; width: 24px; height: 24px; background: #3d2a1a; border-radius: 50%; text-align: center; line-height: 24px; font-size: 0.75rem; margin-right: 10px; color: #c9a86c; }
+    .stop.active .stop-num { background: #c9a86c; color: #1a1208; }
+    .progress-bar { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); width: 60%; max-width: 500px; height: 4px; background: #2a1f15; border-radius: 2px; overflow: hidden; z-index: 100; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #c9a86c, #e8d5b7); width: 0%; transition: width 1s cubic-bezier(0.4,0,0.2,1); border-radius: 2px; }
+    #legend { position: fixed; bottom: 20px; right: 20px; z-index: 100; color: #e8d5b7; font-size: 0.75rem; opacity: 0.7; text-align: right; line-height: 1.8; }
+    .loading { position: fixed; inset: 0; background: #0a0f1a; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200; color: #c9a86c; gap: 20px; }
+    .loading-bar { width: 200px; height: 3px; background: #2a1f15; border-radius: 3px; overflow: hidden; }
+    .loading-fill { height: 100%; background: linear-gradient(90deg, #c9a86c, #e8d5b7); width: 0%; animation: load 3s ease forwards; }
+    @keyframes load { to { width: 100%; } }
+  </style>
+</head>
+<body>
+  <div class="loading" id="loading">
+    <div style="font-size: 1.5rem; letter-spacing: 4px; font-weight: 300;">ALHAMBRA</div>
+    <div class="loading-bar"><div class="loading-fill"></div></div>
+    <div style="font-size: 0.8rem; opacity: 0.6;">Cargando ruta histórica...</div>
+  </div>
+
+  <div id="ui">
+    <h1>RUTA 3D ALHAMBRA</h1>
+    <p>Recorrido virtual por el conjunto monumental nazarí</p>
+  </div>
+
+  <div id="controls">
+    <button class="btn" id="btnPlay" onclick="togglePlay()">▶ Iniciar Tour</button>
+    <button class="btn" id="btnPause" onclick="togglePause()" style="display:none">⏸ Pausar</button>
+    <button class="btn" onclick="resetTour()">⟲ Reiniciar</button>
+    <button class="btn" id="btnInfo" onclick="toggleInfo()">ℹ Paradas</button>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+  <div id="info-panel">
+    <h3>PARADAS DEL RECORRIDO</h3>
+    <div id="stopsList"></div>
+  </div>
+
+  <div id="legend">
+    🖱 Arrastrar = Rotar vista<br>
+    🖱 Scroll = Zoom<br>
+    ⌨ Espacio = Play/Pausa
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+    // ── Configuración ──
+    const STOPS = [
+      { name: "Puerta de la Justicia", pos: [-45, 2, -20], desc: "Entrada principal fortificada (1348)", info: "Arco de herradura apuntado con inscripción coránica y mano de Fátima" },
+      { name: "Plaza de los Aljibes", pos: [-20, 2, -15], desc: "Espacio abierto con aljibes medievales", info: "Depósitos de agua que abastecían la fortaleza" },
+      { name: "Alcazaba - Torre de la Vela", pos: [5, 18, -25], desc: "Torre vigía más alta (27m)", info: "Campana que marcaba el ritmo de vida y alertas de la ciudad" },
+      { name: "Palacio de Carlos V", pos: [-10, 3, 10], desc: "Palacio renacentista circular (1527)", info: "Patio circular único en España, 30m de diámetro" },
+      { name: "Patio de los Arrayanes", pos: [-35, 2, 25], desc: "Corazón del Palacio de Comares", info: "Estanque central refleja la fachada norte; arrayanes (mirtos) en setos" },
+      { name: "Salón de los Embajadores", pos: [-35, 8, 35], desc: "Sala del trono nazarí", info: "Cúpula de 8000 piezas de madera; techo representa los 7 cielos" },
+      { name: "Patio de los Leones", pos: [-15, 2, 30], desc: "Icono del arte nazarí (s.XIV)", info: "12 leones sostienen la taza; símbolo del paraíso coránico" },
+      { name: "Sala de los Abencerrajes", pos: [-5, 6, 35], desc: "Leyenda de los caballeros degollados", info: "Cúpula de mocárabes en forma de estrella de 8 puntas" },
+      { name: "Sala de los Reyes", pos: [5, 6, 30], desc: "Pinturas de 10 reyes nazaríes", info: "Único techo figurativo conservado; escenas cortesanas" },
+      { name: "Mirador de Daraxa", pos: [15, 4, 25], desc: "Vistas al Albaicín y Sierra Nevada", info: "Ventanas ajimezadas con celosías de yeso" },
+      { name: "Baños Reales", pos: [25, 1, 15], desc: "Hammam nazarí mejor conservado", info: "Sala fría, templada y caliente; bóvedas con lucernarios estrellados" },
+      { name: "Generalife - Patio de la Acequia", pos: [55, 3, 0], desc: "Villa de recreo de los sultanes", info: "Canal central con surtidores; jardines en terrazas" },
+      { name: "Escalera del Agua", pos: [65, 10, -5], desc: "Escalinata con canaletas de agua", info: "El agua fluye por barandillas huecas; ingeniería hidráulica única" },
+      { name: "Teatro del Generalife", pos: [70, 5, 10], desc: "Escenario al aire libre (1952)", info: "Festival de Música y Danza; aforo 1000 personas" },
+    ];
+
+    // ── Three.js Setup ──
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0a0f1a, 0.0035);
+
+    const camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.1, 500);
+    camera.position.set(-60, 35, -40);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+    document.body.appendChild(renderer.domElement);
+
+    const labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(innerWidth, innerHeight);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0';
+    labelRenderer.domElement.style.pointerEvents = 'none';
+    document.body.appendChild(labelRenderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.minDistance = 15;
+    controls.maxDistance = 180;
+    controls.maxPolarAngle = Math.PI / 2 - 0.05;
+    controls.target.set(-10, 3, 10);
+
+    // ── Luces ──
+    const hemi = new THREE.HemisphereLight(0xffeedd, 0x1a1008, 0.8);
+    scene.add(hemi);
+
+    const sun = new THREE.DirectionalLight(0xfff5e0, 2.5);
+    sun.position.set(80, 120, 50);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(2048, 2048);
+    sun.shadow.camera.near = 1;
+    sun.shadow.camera.far = 300;
+    sun.shadow.camera.left = -100;
+    sun.shadow.camera.right = 100;
+    sun.shadow.camera.top = 100;
+    sun.shadow.camera.bottom = -100;
+    sun.shadow.bias = -0.0005;
+    scene.add(sun);
+
+    const fillLight = new THREE.DirectionalLight(0xffedd0, 0.6);
+    fillLight.position.set(-50, 40, -30);
+    scene.add(fillLight);
+
+    // ── Suelo / Terreno ──
+    const groundGeo = new THREE.PlaneGeometry(300, 300, 120, 120);
+    const pos = groundGeo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i), z = pos.getZ(i);
+      const d = Math.sqrt(x*x + z*z);
+      pos.setY(i, Math.sin(x*0.08)*0.6 + Math.cos(z*0.07)*0.5 + Math.sin(d*0.05)*0.4);
+      if (d < 80) pos.setY(i, pos.getY(i) + Math.sin(x*0.15)*0.3);
+    }
+    groundGeo.computeVertexNormals();
+
+    const groundMat = new THREE.MeshStandardMaterial({
+      color: 0x2d2218, roughness: 0.9, metalness: 0.05,
+      vertexColors: false
+    });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI/2;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // ── Materiales reutilizables ──
+    const wallMat = new THREE.MeshStandardMaterial({ color: 0xd4b88a, roughness: 0.7, metalness: 0.1 });
+    const roofMat = new THREE.MeshStandardMaterial({ color: 0x8b3a2a, roughness: 0.6, metalness: 0.1 });
+    const trimMat = new THREE.MeshStandardMaterial({ color: 0xc9a86c, roughness: 0.4, metalness: 0.3 });
+    const waterMat = new THREE.MeshStandardMaterial({ color: 0x1a3a4a, roughness: 0.1, metalness: 0.9, transparent: true, opacity: 0.85 });
+    const woodMat = new THREE.MeshStandardMaterial({ color: 0x5d3a1a, roughness: 0.8, metalness: 0.05 });
+    const tileMat = new THREE.MeshStandardMaterial({ color: 0x1a4a3a, roughness: 0.5, metalness: 0.1 });
+    const marbleMat = new THREE.MeshStandardMaterial({ color: 0xf5f0e0, roughness: 0.3, metalness: 0.1 });
+    const stuccoMat = new THREE.MeshStandardMaterial({ color: 0xe8dcc8, roughness: 0.85, metalness: 0.02 });
+
+    // ── Funciones de construcción ──
+    function createBox(w, h, d, mat, pos, rot = [0,0,0]) {
+      const g = new THREE.BoxGeometry(w, h, d);
+      const m = new THREE.Mesh(g, mat);
+      m.position.set(...pos);
+      m.rotation.set(...rot);
+      m.castShadow = true; m.receiveShadow = true;
+      return m;
+    }
+
+    function createCylinder(r, h, mat, pos) {
+      const g = new THREE.CylinderGeometry(r, r, h, 16);
+      const m = new THREE.Mesh(g, mat);
+      m.position.set(...pos);
+      m.castShadow = true; m.receiveShadow = true;
+      return m;
+    }
+
+    function createArch(width, height, depth, mat, pos, rot = [0,0,0]) {
+      const group = new THREE.Group();
+      const pillarW = 1.2;
+      group.add(createBox(pillarW, height, depth, mat, [-width/2 + pillarW/2, height/2, 0]));
+      group.add(createBox(pillarW, height, depth, mat, [width/2 - pillarW/2, height/2, 0]));
+      group.add(createBox(width, 1.5, depth, mat, [0, height + 0.75, 0]));
+      group.position.set(...pos);
+      group.rotation.set(...rot);
+      return group;
+    }
+
+    function addMocarabes(parent, x, y, z, scale = 1) {
+      const count = 5;
+      for (let i = 0; i < count; i++) {
+        const s = 0.3 * scale * (1 - i * 0.15);
+        const g = new THREE.ConeGeometry(s, s*2, 8);
+        const m = new THREE.Mesh(g, stuccoMat);
+        m.position.set(x, y - i * s * 1.5, z);
+        m.rotation.x = Math.PI;
+        m.castShadow = true;
+        parent.add(m);
+      }
+    }
+
+    // ── Construir Alhambra ──
+    const alhambra = new THREE.Group();
+    scene.add(alhambra);
+
+    // Alcazaba (zona oeste)
+    const alcazaba = new THREE.Group();
+    alcazaba.add(createBox(50, 12, 40, wallMat, [30, 6, -25]));
+    alcazaba.add(createBox(12, 27, 12, wallMat, [52, 19.5, -37])); // Torre de la Vela
+    alcazaba.add(createCylinder(6, 8, roofMat, [52, 31, -37]));
+    for (let x = 15; x <= 45; x += 10) {
+      alcazaba.add(createBox(3, 14, 44, wallMat, [x, 7, -25]));
+    }
+    alhambra.add(alcazaba);
+
+    // Palacio de Carlos V
+    const carlosV = new THREE.Group();
+    const outerR = 30, innerR = 15, h = 17;
+    const ringGeo = new THREE.CylinderGeometry(outerR, outerR, h, 32, 1, true);
+    const ringMat = wallMat.clone(); ringMat.color.set(0xc8a87a);
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.position.set(-10, h/2 + 1, 10);
+    ring.castShadow = true; ring.receiveShadow = true;
+    carlosV.add(ring);
+    // Patio interior columnas
+    for (let i = 0; i < 32; i++) {
+      const a = (i/32)*Math.PI*2;
+      carlosV.add(createCylinder(0.45, 15, marbleMat, [-10 + Math.cos(a)*innerR, 8.5, 10 + Math.sin(a)*innerR]));
+    }
+    carlosV.add(createCylinder(innerR, 0.5, tileMat, [-10, 17.5, 10])); // cornisa
+    alhambra.add(carlosV);
+
+    // Palacios Nazaríes (Comares + Leones)
+    const nazaries = new THREE.Group();
+
+    // Palacio de Comares - Torre
+    nazaries.add(createBox(28, 22, 28, wallMat, [-35, 11, 25]));
+    nazaries.add(createCylinder(14, 6, roofMat, [-35, 25, 25]));
+    // Fachada norte - Patio Arrayanes
+    nazaries.add(createArch(10, 8, 2, wallMat, [-35, 4, 12], [0,0,0]));
+    nazaries.add(createBox(20, 1, 0.5, marbleMat, [-35, 0.5, 11.5])); // estanque base
+    nazaries.add(createBox(18.5, 0.3, 18.5, waterMat, [-35, 1.15, 11.5])); // agua
+    // Arrayanes (setos)
+    for (let x = -44; x <= -26; x += 2) {
+      nazaries.add(createBox(1.5, 1.2, 18, new THREE.MeshStandardMaterial({color:0x1a4a2a}), [x, 0.6, 11.5]));
+    }
+
+    // Salón Embajadores (interior)
+    nazaries.add(createBox(14, 14, 14, stuccoMat, [-35, 7, 35]));
+    nazaries.add(createCylinder(7, 4, stuccoMat, [-35, 18, 35]));
+    for (let i=0;i<8;i++) addMocarabes(nazaries, -35 + Math.cos(i*Math.PI/4)*5, 20, 35 + Math.sin(i*Math.PI/4)*5);
+
+    // Palacio de los Leones
+    nazaries.add(createBox(32, 10, 32, wallMat, [-15, 5, 30]));
+    nazaries.add(createCylinder(16, 3, roofMat, [-15, 11.5, 30]));
+    // Patio Leones
+    nazaries.add(createBox(20, 0.5, 20, marbleMat, [-15, 0.25, 30]));
+    // Fuente Leones
+    const fountain = new THREE.Group();
+    fountain.add(createCylinder(2.5, 1.2, marbleMat, [0, 0.6, 0]));
+    for (let i=0;i<12;i++) {
+      const a = (i/12)*Math.PI*2;
+      const lion = createCylinder(0.35, 1.2, marbleMat, [Math.cos(a)*2.2, 1.2, Math.sin(a)*2.2]);
+      lion.rotation.z = -a + Math.PI/2;
+      fountain.add(lion);
+    }
+    fountain.add(createCylinder(1.5, 2, marbleMat, [0, 2.2, 0]));
+    fountain.position.set(-15, 0, 30);
+    nazaries.add(fountain);
+    // Columnas perimetrales
+    for (let i=0;i<32;i++) {
+      const a = (i/32)*Math.PI*2;
+      nazaries.add(createCylinder(0.4, 6, marbleMat, [-15+Math.cos(a)*11, 3, 30+Math.sin(a)*11]));
+    }
+
+    // Sala Abencerrajes
+    nazaries.add(createBox(12, 10, 12, stuccoMat, [-5, 5, 35]));
+    nazaries.add(createCylinder(6, 5, stuccoMat, [-5, 12.5, 35]));
+    for (let i=0;i<8;i++) addMocarabes(nazaries, -5+Math.cos(i*Math.PI/4)*4, 15, 35+Math.sin(i*Math.PI/4)*4, 0.8);
+
+    // Sala Reyes
+    nazaries.add(createBox(14, 10, 10, stuccoMat, [5, 5, 30]));
+    nazaries.add(createCylinder(7, 4, stuccoMat, [5, 12, 30]));
+
+    // Mirador Daraxa
+    nazaries.add(createBox(10, 8, 6, wallMat, [15, 4, 25]));
+    nazaries.add(createCylinder(5, 3, roofMat, [15, 10, 25]));
+    for (let i=0;i<3;i++) {
+      nazaries.add(createBox(1.5, 3, 0.2, trimMat, [15+2.5, 3+i*2, 28]));
+      nazaries.add(createBox(1.5, 3, 0.2, trimMat, [15-2.5, 3+i*2, 28]));
+    }
+
+    // Baños Reales
+    nazaries.add(createBox(18, 6, 14, wallMat, [25, 3, 15]));
+    nazaries.add(createCylinder(9, 2, roofMat, [25, 7, 15]));
+    for (let i=0;i<6;i++) {
+      const a = (i/6)*Math.PI*2;
+      nazaries.add(createBox(0.5, 0.5, 0.5, stuccoMat, [25+Math.cos(a)*6, 7.5, 15+Math.sin(a)*6]));
+    }
+
+    alhambra.add(nazaries);
+
+    // Generalife
+    const generalife = new THREE.Group();
+    // Palacio bajo
+    generalife.add(createBox(30, 7, 20, wallMat, [55, 3.5, 0]));
+    generalife.add(createCylinder(15, 2, roofMat, [55, 8, 0]));
+    // Patio Acequia
+    generalife.add(createBox(24, 0.4, 6, waterMat, [55, 0.5, 0]));
+    for (let i=0;i<5;i++) {
+      generalife.add(createCylinder(0.3, 0.8, waterMat, [55-10+i*5, 0.9, 0]));
+    }
+    // Jardines en terrazas
+    for (let t=0; t<3; t++) {
+      for (let x=-12; x<=12; x+=4) {
+        for (let z=-7; z<=7; z+=4) {
+          generalife.add(createCylinder(1.2, 0.8, new THREE.MeshStandardMaterial({color:0x2a5a2a}), [55+x, 1.5+t*2, z]));
+        }
+      }
+    }
+    // Escalera del Agua
+    const escalera = new THREE.Group();
+    for (let i=0; i<18; i++) {
+      escalera.add(createBox(4, 0.3, 0.8, marbleMat, [0, 0.5+i*0.55, -1.5+i*1.1]));
+      escalera.add(createBox(0.15, 0.4, 0.8, waterMat, [2.1, 0.7+i*0.55, -1.5+i*1.1]));
+      escalera.add(createBox(0.15, 0.4, 0.8, waterMat, [-2.1, 0.7+i*0.55, -1.5+i*1.1]));
+    }
+    escalera.position.set(65, 1, -5);
+    generalife.add(escalera);
+    // Teatro
+    generalife.add(createBox(20, 6, 15, wallMat, [70, 3, 10]));
+    generalife.add(createCylinder(10, 2, roofMat, [70, 8, 10]));
+
+    alhambra.add(generalife);
+
+    // Vegetación dispersa
+    const trees = new THREE.Group();
+    const treePositions = [
+      [-50, -30], [-30, -40], [-10, -35], [10, -25], [40, -30],
+      [-60, 10], [-45, 35], [-20, 40], [20, 45], [50, 20],
+      [65, 15], [75, 5], [60, -10], [40, 30]
+    ];
+    treePositions.forEach(([x,z]) => {
+      const trunk = createCylinder(0.6, 4, woodMat, [x, 2, z]);
+      const crown = new THREE.Mesh(
+        new THREE.ConeGeometry(2.5, 5, 8),
+        new THREE.MeshStandardMaterial({color:0x1a4a1a, roughness:0.9})
+      );
+      crown.position.set(x, 6.5, z);
+      crown.castShadow = true;
+      trees.add(trunk, crown);
+    });
+    scene.add(trees);
+
+    // Partículas de polvo/luz
+    const particlesGeo = new THREE.BufferGeometry();
+    const pCount = 1500;
+    const pPos = new Float32Array(pCount * 3);
+    const pSize = new Float32Array(pCount);
+    for (let i=0;i<pCount;i++) {
+      pPos[i*3] = (Math.random()-0.5)*200;
+      pPos[i*3+1] = Math.random()*50 + 1;
+      pPos[i*3+2] = (Math.random()-0.5)*200;
+      pSize[i] = Math.random()*2 + 0.5;
+    }
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    particlesGeo.setAttribute('size', new THREE.BufferAttribute(pSize, 1));
+    const particlesMat = new THREE.PointsMaterial({
+      color: 0xfff0d0, size: 1, transparent: true, opacity: 0.4,
+      sizeAttenuation: true, depthWrite: false
+    });
+    const particles = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particles);
+
+    // ── Etiquetas CSS2D ──
+    const labels = [];
+    STOPS.forEach((stop, i) => {
+      const div = document.createElement('div');
+      div.className = 'stop-label';
+      div.style.cssText = `
+        background: linear-gradient(135deg, rgba(20,15,8,0.95), rgba(40,30,20,0.9));
+        border: 1px solid #5a4430; border-radius: 8px; padding: 8px 12px;
+        color: #e8d5b7; font-size: 0.75rem; white-space: nowrap;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.5); pointer-events: none;
+        font-weight: 500; letter-spacing: 0.5px;
+      `;
+      div.innerHTML = `<span style="color:#c9a86c">${i+1}.</span> ${stop.name}`;
+      const label = new CSS2DObject(div);
+      label.position.set(...stop.pos);
+      label.position.y += 5;
+      scene.add(label);
+      labels.push(label);
+    });
+
+    // ── Ruta curva (CatmullRom) ──
+    const curvePoints = STOPS.map(s => new THREE.Vector3(...s.pos).add(new THREE.Vector3(0, 4, 0)));
+    const curve = new THREE.CatmullRomCurve3(curvePoints, false, 'centripetal', 0.3);
+    const pathPoints = curve.getPoints(400);
+
+    // Línea de ruta visible
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(pathPoints);
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0xc9a86c, transparent: true, opacity: 0.6, linewidth: 2
+    });
+    const pathLine = new THREE.Line(lineGeo, lineMat);
+    scene.add(pathLine);
+
+    // Marcador animado
+    const markerGeo = new THREE.SphereGeometry(0.6, 16, 16);
+    const markerMat = new THREE.MeshBasicMaterial({ color: 0xfff0c0, transparent: true, opacity: 1 });
+    const marker = new THREE.Mesh(markerGeo, markerMat);
+    scene.add(marker);
+
+    // Estela de partículas detrás del marcador
+    const trailGeo = new THREE.BufferGeometry();
+    const trailCount = 30;
+    const trailPos = new Float32Array(trailCount * 3);
+    const trailAlpha = new Float32Array(trailCount);
+    trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
+    trailGeo.setAttribute('alpha', new THREE.BufferAttribute(trailAlpha, 1));
+    const trailMat = new THREE.PointsMaterial({
+      color: 0xc9a86c, size: 0.8, transparent: true, opacity: 1,
+      sizeAttenuation: true, depthWrite: false, vertexColors: false
+    });
+    const trail = new THREE.Points(trailGeo, trailMat);
+    scene.add(trail);
+
+    // ── UI: lista de paradas ──
+    const stopsList = document.getElementById('stopsList');
+    STOPS.forEach((stop, i) => {
+      const el = document.createElement('div');
+      el.className = 'stop' + (i===0?' active':'');
+      el.innerHTML = `<span class="stop-num">${i+1}</span>${stop.name}`;
+      el.onclick = () => jumpToStop(i);
+      stopsList.appendChild(el);
+    });
+
+    // ── Estado del tour ──
+    let playing = false;
+    let progress = 0; // 0-1
+    const duration = 120; // segundos
+    let currentStopIndex = 0;
+    let lastTime = 0;
+
+    function updateProgressUI() {
+      document.getElementById('progressFill').style.width = (progress*100)+'%';
+      const stops = document.querySelectorAll('.stop');
+      stops.forEach((el, i) => el.classList.toggle('active', i === currentStopIndex));
+    }
+
+    function togglePlay() {
+      playing = true;
+      document.getElementById('btnPlay').style.display = 'none';
+      document.getElementById('btnPause').style.display = 'inline-flex';
+      lastTime = performance.now();
+    }
+    function togglePause() {
+      playing = false;
+      document.getElementById('btnPlay').style.display = 'inline-flex';
+      document.getElementById('btnPause').style.display = 'none';
+    }
+    function resetTour() {
+      progress = 0;
+      currentStopIndex = 0;
+      playing = false;
+      document.getElementById('btnPlay').style.display = 'inline-flex';
+      document.getElementById('btnPause').style.display = 'none';
+      updateProgressUI();
+      updateCamera(0);
+    }
+    function toggleInfo() {
+      document.getElementById('info-panel').classList.toggle('open');
+    }
+    function jumpToStop(i) {
+      const stopProgress = i / (STOPS.length - 1);
+      progress = stopProgress;
+      currentStopIndex = i;
+      updateProgressUI();
+      updateCamera(progress);
+    }
+
+    window.togglePlay = togglePlay;
+    window.togglePause = togglePause;
+    window.resetTour = resetTour;
+    window.toggleInfo = toggleInfo;
+    window.jumpToStop = jumpToStop;
+
+    // ── Teclas ──
+    window.addEventListener('keydown', e => {
+      if (e.code === 'Space') { e.preventDefault(); playing ? togglePause() : togglePlay(); }
+      if (e.code === 'KeyR') resetTour();
+      if (e.code === 'KeyI') toggleInfo();
+    });
+
+    // ── Actualizar cámara siguiendo la curva ──
+    function updateCamera(t) {
+      const point = curve.getPoint(t);
+      const tangent = curve.getTangent(t).normalize();
+      const normal = new THREE.Vector3(0,1,0).cross(tangent).normalize();
+      const binormal = tangent.clone().cross(normal);
+
+      // Posición de cámara: detrás y arriba del punto
+      const camOffset = new THREE.Vector3()
+        .subVectors(
+          tangent.clone().multiplyScalar(-18),
+          new THREE.Vector3(0, -12, 0)
+        )
+        .add(binormal.clone().multiplyScalar(Math.sin(t*Math.PI*4)*2));
+      camera.position.lerp(point.clone().add(camOffset), 0.08);
+
+      // Mirar ligeramente adelante
+      const lookAhead = curve.getPoint(Math.min(1, t + 0.02));
+      controls.target.lerp(lookAhead.clone().add(new THREE.Vector3(0, 2, 0)), 0.08);
+
+      // Actualizar marcador
+      marker.position.lerp(point, 0.15);
+      marker.scale.setScalar(0.8 + Math.sin(performance.now()*0.005)*0.2);
+
+      // Estela
+      const trailPositions = trailGeo.attributes.position.array;
+      const trailAlphas = trailGeo.attributes.alpha.array;
+      for (let i = trailCount - 1; i > 0; i--) {
+        trailPositions[i*3] = trailPositions[(i-1)*3];
+        trailPositions[i*3+1] = trailPositions[(i-1)*3+1];
+        trailPositions[i*3+2] = trailPositions[(i-1)*3+2];
+        trailAlphas[i] = trailAlphas[i-1] * 0.92;
+      }
+      trailPositions[0] = point.x;
+      trailPositions[1] = point.y;
+      trailPositions[2] = point.z;
+      trailAlphas[0] = 1;
+      trailGeo.attributes.position.needsUpdate = true;
+      trailGeo.attributes.alpha.needsUpdate = true;
+
+      // Detectar parada actual
+      const newStopIndex = Math.floor(t * (STOPS.length - 1) + 0.5);
+      if (newStopIndex !== currentStopIndex && newStopIndex >= 0 && newStopIndex < STOPS.length) {
+        currentStopIndex = newStopIndex;
+        updateProgressUI();
+      }
+    }
+
+    // ── Animación ──
+    function animate(time) {
+      requestAnimationFrame(animate);
+
+      const dt = (time - lastTime) / 1000;
+      lastTime = time;
+
+      if (playing) {
+        progress += dt / duration;
+        if (progress >= 1) {
+          progress = 1;
+          playing = false;
+          document.getElementById('btnPlay').style.display = 'inline-flex';
+          document.getElementById('btnPause').style.display = 'none';
+        }
+        updateProgressUI();
+      }
+
+      updateCamera(progress);
+
+      // Rotar partículas sutiles
+      particles.rotation.y += 0.00003;
+
+      // Animar etiquetas - ocultar las lejanas
+      labels.forEach((label, i) => {
+        const dist = camera.position.distanceTo(label.position);
+        label.element.style.opacity = dist < 80 ? 1 : Math.max(0, 1 - (dist-80)/40);
+        label.element.style.transform = `scale(${Math.max(0.7, 1 - dist/200)})`;
+      });
+
+      controls.update();
+      renderer.render(scene, camera);
+      labelRenderer.render(scene, camera);
+    }
+
+    // ── Resize ──
+    window.addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+      labelRenderer.setSize(innerWidth, innerHeight);
+    });
+
+    // ── Ocultar loading ──
+    setTimeout(() => {
+      document.getElementById('loading').style.opacity = '0';
+      document.getElementById('loading').style.transition = 'opacity 0.8s';
+      setTimeout(() => document.getElementById('loading').remove(), 800);
+      animate(performance.now());
+    }, 2800);
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra-ruta-3d.html",
+      "errores": [],
+      "titulo": "Ruta 3D — La Alhambra de Granada",
+      "canvas": 2,
+      "texto": "LA ALHAMBRA\n\nCARGANDO RUTA 3D · GRANADA\n\n٭\nALHAMBRA · RUTA 3D\n\nCiudad palatina nazarí — Granada, s. XIII-XIV\n\nRUTA GUIADA\nMODO LIBRE\nVISTA AÉREA\n☾ NOCHE\nPARADA 1 · 7\nPuerta de la Justicia\nBab al-Sharia — Entrada monumental\nLa puerta principal de la Alhambra, del siglo XIV. Su arco de herradura y bóveda recuerdan que aquí se impartía justicia. Desde este punto se domina el Albaicín y comienza la mu",
+      "scripts": [],
+      "captura": "capturas/alhambra-ruta-3d.html.png",
+      "capturas_extra": [
+        "capturas/inicio.png",
+        "capturas/siguiente-x4.png",
+        "capturas/aerea.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores; 45 KB",
+    "✔ el recorrido automático avanza",
+    "✖ ~150 errores al saltar de parada",
+    "✖ la cámara va pegada a la geometría, también en vista aérea"
+  ]
+}

@@ -1,0 +1,36 @@
+❯ Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener
+  tests. Guarda lo que generes en la carpeta actual.
+
+● Write(tests-que-fallan-peor-que-no-tenerlos.md)
+  ⎿  Wrote 55 lines to tests-que-fallan-peor-que-no-tenerlos.md
+      1 # Tests que fallan: a veces son peores que no tener tests
+      2
+      3 Todos hemos escuchado que los tests son una red de seguridad. Que cada test que escribimos es una promesa
+         de que el código hace lo que debe hacer, y que una suite verde nos deja dormir tranquilos. Pero hay una
+        cara menos comentada de la moneda: un test que falla de forma intermitente, o que lleva semanas en rojo s
+        in que nadie lo mire, puede hacernos más daño que no tener ningún test.
+      4
+      5 Parece contraintuitivo. Si un test falla, algo está mal, ¿no? Justo por eso importa entender por qué.
+      6
+      7 ## Un test no es solo código: es una señal
+     … +48 lines
+
+● He escrito el post en español y lo he guardado en
+  /tmp/bench-ws/claude-haiku/PTS/tests-que-fallan-peor-que-no-tenerlos.md.
+
+  El argumento central es que un test que falla no es malo en sí: lo dañino es un test que falla sin que nadie
+  reaccione. Eso enseña al equipo a ignorar los rojos, esconde los fallos reales entre los intermitentes y crea una
+  falsa sensación de seguridad, peor que la incertidumbre honesta de no tener tests. El post recorre el coste en tiempo
+  y contexto, los skip que se acumulan, los tests que acaban justificando errores, y cierra con prácticas concretas:
+  tratar el rojo como parada, poner en cuarentena los tests inestables con dueño y plazo, medir la inestabilidad y
+  revisar los tests en code review.
+
+  Ten en cuenta que la frase "como decía alguien en una charla que no recuerdo bien" es una cita atribuida que no he
+  verificado; conviene quitarla o sustituirla por una fuente real antes de publicar.
+
+✻ Brewed for 18s · done 9:04 PM
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ quita la frase de la charla
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)

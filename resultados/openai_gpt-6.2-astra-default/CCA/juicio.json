@@ -1,0 +1,20 @@
+{
+  "rubrica": {
+    "se instala y ejecuta": 1,
+    "tests": 0,
+    "dominio": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 0,
+    "escala horizontal": 0,
+    "explica el escalado": 0
+  },
+  "nota": 4,
+  "veredicto": "maqueta de carrito, sin escalar",
+  "resumen": "Una página de carrito bien acabada con cuatro láminas, envío gratis desde 75 € y persistencia en localStorage que valida lo que lee. No hay tests, ni servidor, ni README: «escalable» se queda en que el catálogo es una lista que se puede ampliar.",
+  "rarezas": [
+    "Descarga cuatro fotos de Unsplash con curl (y una quinta que luego borra)",
+    "Solo comprueba la sintaxis con node --check",
+    "Escribe los ficheros con una función propia que guarda en su memoria entre llamadas (store/load)"
+  ]
+}

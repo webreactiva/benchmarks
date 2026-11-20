@@ -1,0 +1,38 @@
+{
+  "codigo": "MWP",
+  "modelo": "ollama/minimax-m3",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T23:11:06Z",
+  "prompt_enviado": "Dibuja en Mermaid la arquitectura de Wikipedia. En español. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 23227,
+    "output": 15058,
+    "reasoning": 0,
+    "cache_read": 321152,
+    "cache_write": 0,
+    "total": 359437
+  },
+  "peticiones": 21,
+  "error": null,
+  "herramientas": {
+    "bash": 16,
+    "write": 5,
+    "read": 1
+  },
+  "sesion": "ses_e09ec0201ffelCEp6hkFYezEhU",
+  "ficheros": [
+    "wikipedia-arquitectura.md",
+    "wikipedia-arquitectura.mmd",
+    "wikipedia-arquitectura.png",
+    "wikipedia-arquitectura.svg",
+    "wikipedia-datacenters.mmd",
+    "wikipedia-datacenters.png",
+    "wikipedia-datacenters.svg",
+    "wikipedia-flujo-escritura.mmd",
+    "wikipedia-flujo-escritura.png",
+    "wikipedia-flujo-escritura.svg",
+    "wikipedia-flujo-lectura.mmd",
+    "wikipedia-flujo-lectura.png",
+    "wikipedia-flujo-lectura.svg"
+  ]
+}

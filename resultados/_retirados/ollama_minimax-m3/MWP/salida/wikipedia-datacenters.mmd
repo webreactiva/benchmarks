@@ -1,0 +1,56 @@
+---
+title: Reparto geografico de los centros de datos de Wikimedia
+---
+flowchart LR
+  USER["Usuarios de todo el mundo"]
+
+  subgraph ANYCAST["DNS e IP anycast (gestionado por RIPE NCC)"]
+    POPS["Puntos de presencia anycast<br/>se enruta al centro de datos mas cercano"]
+  end
+
+  subgraph PRIM["Centros de datos primarios: aplicacion y base de datos"]
+    EQIAD["eqiad<br/>Ashburn, EE. UU.<br/>MediaWiki, MariaDB, busqueda"]
+    CODFW["codfw<br/>Carrollton (Dallas), EE. UU.<br/>MediaWiki, MariaDB, busqueda"]
+  end
+
+  subgraph STOR["Centros de datos de almacenamiento y datos masivos"]
+    ESAMS["esams<br/>Amsterdam, Paises Bajos<br/>Swift, data lake, Druid, EventStreams"]
+    DRUID["druid<br/>Chicago, EE. UU.<br/>Swift, data lake, Druid, EventStreams"]
+  end
+
+  subgraph SEC["Centros secundarios o de solo lectura"]
+    EQSIN["eqsin<br/>Singapur"]
+    UYORD["uyord<br/>Montevideo, Uruguay"]
+    ORD["Centros *ord (Ashburn, Dallas)<br/>replicas y servicios de lectura"]
+  end
+
+  subgraph NET["Red y transporte"]
+    IX["Interconexión entre centros<br/>y con proveedores de nube"]
+    TRS["Transito y peering<br/>caching en redes externas"]
+  end
+
+  USER --> ANYCAST
+  ANYCAST --> POPS
+  POPS --> PRIM
+  POPS --> STOR
+  POPS --> SEC
+  PRIM <--> STOR
+  PRIM <--> SEC
+  STOR <--> SEC
+  PRIM <--> NET
+  STOR <--> NET
+  SEC <--> NET
+  NET --> TRS
+  TRS --> USER
+
+  classDef usr fill:#eef2f7,stroke:#4a6fa5,color:#12233b
+  classDef prim fill:#fdecea,stroke:#c0392b,color:#4a1310
+  classDef stor fill:#fff9db,stroke:#a98b00,color:#443600
+  classDef sec fill:#e7f4ea,stroke:#2e7d32,color:#123d18
+  classDef net fill:#f3e8fd,stroke:#7d3c98,color:#33184a
+
+  class USER usr
+  class EQIAD,CODFW prim
+  class ESAMS,DRUID stor
+  class EQSIN,UYORD,ORD sec
+  class IX,TRS net

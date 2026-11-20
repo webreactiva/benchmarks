@@ -1,0 +1,117 @@
+Reading additional input from stdin...
+OpenAI Codex v0.171.0
+--------
+workdir: /private/var/tmp/bench/ws-8tjwCZq2
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: workspace-write [workdir] (network access enabled)
+reasoning effort: none
+reasoning summaries: none
+session id: 01a1f855-15c8-7fc3-b0df-2b4e8970f70a
+--------
+user
+Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.
+codex
+Voy a crear un HTML que se pueda abrir sin conexión, con una maqueta 3D y paradas que permitan recorrer la Alhambra.
+exec
+/bin/zsh -lc 'pwd && ls -a' in /private/var/tmp/bench/ws-8tjwCZq2
+ succeeded in 0ms:
+/private/var/tmp/bench/ws-8tjwCZq2
+.
+..
+
+exec
+/bin/zsh -lc "cat > alhambra.html <<'EOF'
+<"'!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alhambra · Ruta en 3D</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f7f4eb;color:#223e32;font:15px Arial,sans-serif}header,footer,.bar,.actions{display:flex;align-items:center;justify-content:space-between}header{padding:20px 5vw;border-bottom:1px solid #cfcfc0}.brand{font:bold 23px Georgia}.brand i{display:inline-grid;place-items:center;background:#254e3d;color:#fff4d9;width:36px;height:36px;border-radius:18px 18px 3px 3px;margin-right:10px;font:22px Georgia}.small,label,footer{font:10px monospace;letter-spacing:1.7px;text-transform:uppercase}main{padding:38px 5vw 20px}.small{color:#956342}h1,h2{font-family:Georgia,serif;font-weight:normal}h1{font-size:clamp(42px,5vw,78px);margin:10px 0 22px;letter-spacing:-.06em}.layout{display:grid;grid-template-columns:minmax(0,2.4fr) minmax(260px,1fr);border:1px solid #bec2ae;border-radius:14px;overflow:hidden}.map{position:relative;background:#e5e8d8;min-height:470px;overflow:hidden}canvas{width:100%;height:100%;position:absolute;touch-action:none;cursor:grab}.badge,.controls{position:absolute;z-index:1;left:17px}.badge{top:18px;background:#faf8eddf;border:1px solid #bfc6b4;border-radius:30px;padding:8px 13px;font:11px monospace}.controls{bottom:16px;display:flex;gap:5px}button{cursor:pointer;color:inherit;background:#faf8ef;border:1px solid #bdc3b5;border-radius:7px;padding:9px 12px}button:hover{background:#e4e9da}aside{padding:26px;background:#fcfaf3;display:flex;flex-direction:column}h2{font-size:36px;letter-spacing:-.05em;margin:10px 0}p{line-height:1.55;color:#536055;margin:0 0 15px}.stops{margin:auto 0 16px}.stops button{display:block;text-align:left;width:100%;border:0;border-bottom:1px solid #dadbcf;border-radius:0;background:transparent;padding:11px 6px}.stops button[aria-current=true]{color:#854b30;background:#f1e8d9;font-weight:bold}.num{font:11px monospace;margin-right:12px}.next{background:#254e3d;color:white}.next:hover{background:#37654e}footer{margin-top:18px;color:#657464;gap:15px;line-height:1.6}button:disabled{opacity:.35;cursor:default}@media(max-width:750px){.layout{grid-template-columns:1fr}.map{min-height:350px}main{padding-top:24px}aside{padding:20px}header{padding:14px 5vw}.brand{font-size:19px}}
+</style><header><div class="brand"><i>♜</i> Atlas de Granada</div><label>Andalucía / España</label></header><main><div class="small">Patrimonio · Recorrido interactivo</div><h1>La Alhambra en 3D</h1><div class="layout"><section class="map"><canvas aria-label="Maqueta tridimensional de la Alhambra. Arrastra para girar."></canvas><div class="badge">● &nbsp; Maqueta interactiva</div><div class="controls"><button id="rot" aria-label="Girar vista">↻</button><button id="minus" aria-label="Alejar">−</button><button id="plus" aria-label="Acercar">+</button></div></section><aside><div class="small" id="count"></div><div aria-live="polite"><h2 id="title"></h2><p id="desc"></p></div><nav class="stops" aria-label="Paradas"></nav><div class="actions"><button id="prev" aria-label="Parada anterior">←</button><button class="next" id="next"></button></div></aside></div><footer><span>Granada · Colina de la Sabika</span><span>Representación esquemática</span></footer></main><script>
+const stops=[['"'Alcazaba','La ruta comienza en la fortaleza. Sus torres dominan el extremo occidental de la colina.',-7,0],['Palacio de Carlos V','Un patio circular se abre en el centro de este palacio renacentista de planta cuadrada.',-2,1],['Palacios Nazaríes','Patios, albercas y salas se encadenan en la antigua residencia de los sultanes nazaríes.',1,-2],['El Partal','La torre y el pórtico se reflejan en la alberca, entre jardines escalonados.',4,-1],['Generalife','El recorrido termina entre las huertas y jardines de la residencia de descanso de los sultanes.',8,-5]];
+const "'$=s=>document.querySelector(s),cv=$('"'canvas'),ctx=cv.getContext('2d');let a=.36,zoom=1,sel=0,pins=[],drag;const faces=[];
+function poly(p,c){faces.push({p,c})}
+function box(x,y,w,d,z,h,colors){let b=[[x,y,z],[x+w,y,z],[x+w,y+d,z],[x,y+d,z]],t=b.map(([X,Y])=>[X,Y,z+h]);for(let i=0;i<4;i++){let j=(i+1)%4;poly([b[i],b[j],t[j],t[i]],colors[i%2])}poly(t,colors[2])}
+const stone=['#bd8c65','#d4aa82','#e8c69e'],grass=['#a39d75','#b9ad82','#aab78a'],roof=['#9e5d43','#b87452','#ca8a64'];
+function tower(x,y,h=1.7){box(x,y,.72,.72,.1,h,stone);for(let i of [0,.28,.57])for(let j of [0,.57])box(x+i,y+j,.15,.15,.1+h,.18,stone)}
+function house(x,y,w,d){box(x,y,w,d,.12,.78,stone);box(x-.06,y-.06,w+.12,d+.12,.9,.17,roof)}
+function tree(x,y,h){let r=.19;box(x-.045,y-.045,.09,.09,.08,.3,stone);for(let k=0;k<6;k++){let t=k*Math.PI/3,u=t+Math.PI/3;poly([[x+r*Math.cos(t),y+r*Math.sin(t),.32],[x+r*Math.cos(u),y+r*Math.sin(u),.32],[x,y,h]],['#537152','#3d634b','#749065'][k%3])}}
+let seed=19;function rand(){seed=seed*16807%2147483647;return seed/2147483647}
+for(let x=-10;x<11;x++){let depth=3.8+Math.sin((x+9)*.32)*.9;box(x,-depth,1,depth+2.9,-.85,.93,grass);for(let k=0;k<6;k++)tree(x+rand(),2.1+rand()*.65,.8+rand()*.8)}
+box(6,-7,4,4,-.85,.94,grass);
+for(let x=-8;x<6;x++){box(x,1.8,1,.24,.1,.68,stone);if(x%2===0)tower(x,1.65,1)}
+box(-8,-1.4,3.2,.3,.1,1,stone);box(-8,-1.4,.28,3.2,.1,1,stone);box(-5,-1.4,.25,3.2,.1,1,stone);tower(-8,-1.5,2);tower(-8,1,2.3);tower(-5,-1.5);
+for(let i=0;i<32;i++){let t=i*Math.PI/16,u=(i+1)*Math.PI/16;function pt(v,inner,z){let r=inner?.62:1.08/Math.max(Math.abs(Math.cos(v)),Math.abs(Math.sin(v)));return [-2+r*Math.cos(v),.35+r*Math.sin(v),z]}poly([pt(t,false,.1),pt(u,false,.1),pt(u,false,1.1),pt(t,false,1.1)],stone[i%2]);poly([pt(t,true,.1),pt(u,true,.1),pt(u,true,1.1),pt(t,true,1.1)],stone[0]);poly([pt(t,true,1.1),pt(u,true,1.1),pt(u,false,1.1),pt(t,false,1.1)],stone[2])}
+for(let [x,y] of [[-1,-3.4],[1,-3.4],[3.4,-2.4],[7,-6]]){house(x,y,1.8,.56);house(x,y+.56,.45,1.3);box(x+.65,y+.85,.95,.65,.1,.04,['','','#77a9a0'])}tower(.8,-3.7,1.6);house(8.7,-6,.55,2.6);
+for(let i=0;i<82;i++){let x=5.6+rand()*4.2,y=-3+rand()*4.4;tree(x,y,.65+rand()*.9)}for(let i=0;i<18;i++)tree(6.3+i%2*.65,-6.7+Math.floor(i/2)*.42,1);
+function draw(){let W=cv.clientWidth,H=cv.clientHeight,dpr=devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;ctx.scale(dpr,dpr);let s=Math.min(W/24,H/15)*zoom,C=Math.cos(a),S=Math.sin(a);function project([x,y,z]){y+=1.3;return [W*.5+(x*C-y*S)*s,H*.55+((x*S+y*C)*.57-z*.82)*s]}ctx.strokeStyle='#cbd2bc';ctx.lineWidth=.65;for(let i=-40;i<=40;i++){for(let p of [[[i,-40,0],[i,40,0]],[[-40,i,0],[40,i,0]]]){ctx.beginPath();ctx.moveTo(...project(p[0]));ctx.lineTo(...project(p[1]));ctx.stroke()}}
+let depth=f=>f.p.reduce((v,[x,y,z])=>v+x*S+y*C+z*.69,0)/f.p.length;for(let f of faces.slice().sort((l,r)=>depth(l)-depth(r))){ctx.beginPath();f.p.map(project).forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fillStyle=f.c;ctx.fill()}
+pins=stops.map(q=>project([q[2],q[3],2.5]));ctx.beginPath();pins.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.setLineDash([3,5]);ctx.lineWidth=2;ctx.strokeStyle='#94634d';ctx.stroke();ctx.setLineDash([]);pins.forEach(([x,y],i)=>{ctx.beginPath();ctx.arc(x,y,i===sel?15:12,0,7);ctx.fillStyle=i===sel?'#985b39':'#304f40';ctx.fill();ctx.strokeStyle='#fff5db';ctx.stroke();ctx.fillStyle='white';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.fillText(i+1,x,y+4)})}
+function select(i){sel=i;"'$('"'#count').textContent='Parada 0'+(i+1)+' / 05';"'$('"'#title').textContent=stops[i][0];"'$('"'#desc').textContent=stops[i][1];"'$('"'#prev').disabled="'!i;$('"'#next').textContent=i===4?'Volver al inicio ↺':'Siguiente parada →';document.querySelectorAll('nav button').forEach((b,k)=>b.setAttribute('aria-current',k===i));draw()}
+stops.forEach((q,i)=>{let b=document.createElement('button');b.innerHTML='<span class=\"num\">0'+(i+1)+'</span>'+q[0];b.onclick=()=>select(i);"'$('"'nav').append(b)});"'$('"'#next').onclick=()=>select((sel+1)%5);"'$('"'#prev').onclick=()=>select(sel-1);"'$('"'#rot').onclick=()=>{a+=.4;draw()};for(let [id,n] of [['#plus',.15],['#minus',-.15]])"'$(id).onclick=()=>{zoom=Math.min(1.8,Math.max(.65,zoom+n));draw()};cv.onpointerdown=e=>{drag=[e.clientX,a];cv.setPointerCapture(e.pointerId)};cv.onpointermove=e=>{if(drag){a=drag[1]+(e.clientX-drag[0])*.008;draw()}};cv.onpointerup=e=>{if(drag&&Math.abs(e.clientX-drag[0])<5){let r=cv.getBoundingClientRect(),i=pins.findIndex(([x,y])=>Math.hypot(e.clientX-r.left-x,e.clientY-r.top-y)<18);if(i>=0)select(i)}drag=null};cv.onpointercancel=()=>drag=null;new ResizeObserver(draw).observe(cv);select(0);
+</script></html>
+EOF
+node -e "new Function(require('"'fs').readFileSync('alhambra.html','utf8').split('<script>')[1].split('</script>')[0])\"" in /private/var/tmp/bench/ws-8tjwCZq2
+ exited 1 in 185ms:
+zsh:1: can't create temp file for here document: operation not permitted
+[eval]:1
+new Function(require('fs').readFileSync('alhambra.html','utf8').split('<script>')[1].split('</script>')[0])
+                                                                                    ^
+
+TypeError: Cannot read properties of undefined (reading 'split')
+    at [eval]:1:85
+    at Script.runInThisContext (node:vm:122:12)
+    at Object.runInThisContext (node:vm:298:38)
+    at node:internal/process/execution:83:21
+    at [eval]-wrapper:6:24
+    at runScript (node:internal/process/execution:82:62)
+    at evalScript (node:internal/process/execution:104:10)
+    at node:internal/main/eval_string:50:3
+
+Node.js v20.5.1
+
+apply patch
+patch: completed
+/private/var/tmp/bench/ws-8tjwCZq2/alhambra.html
+diff --git a/alhambra.html b/alhambra.html
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..25cb8296ecde5d1df4fdcf5ec6806de354a836ea
+--- a/alhambra.html
++++ b/alhambra.html
+@@ -0,0 +1,26 @@
++<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>La Alhambra en 3D</title><style>
++*{box-sizing:border-box}body{margin:0;background:#f7f4eb;color:#263f33;font:15px Arial,sans-serif}header,footer,.actions{display:flex;justify-content:space-between;align-items:center}header{padding:18px 5vw;border-bottom:1px solid #cecfc1}.brand{font:bold 23px Georgia}.brand b{background:#254b39;color:#f7edd2;padding:5px 8px;border-radius:16px 16px 3px 3px}small,footer,label{font:10px monospace;text-transform:uppercase;letter-spacing:1.8px}main{padding:35px 5vw}small{color:#945c39}h1,h2{font-family:Georgia;font-weight:400;letter-spacing:-.05em}h1{font-size:clamp(42px,5vw,80px);margin:8px 0 24px}h2{font-size:36px;margin:10px 0}.layout{display:grid;grid-template-columns:minmax(0,2.35fr) minmax(270px,1fr);border:1px solid #bdc4ae;border-radius:14px;overflow:hidden}.map{position:relative;min-height:470px;background:#e4e7d6}canvas{position:absolute;width:100%;height:100%;touch-action:none;cursor:grab}.badge,.controls{position:absolute;left:18px}.badge{top:18px;border-radius:20px;background:#fcfaee;padding:9px 14px;font:11px monospace}.controls{bottom:17px}button{cursor:pointer;color:inherit;border:1px solid #c3c6b8;border-radius:7px;background:#faf8ee;padding:9px 13px}button:hover{background:#e4e9dc}aside{background:#fcfaf3;padding:26px;display:flex;flex-direction:column}p{color:#59665c;line-height:1.5;margin:0 0 20px}nav{margin:auto 0 18px}nav button{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid #d6d8cb;border-radius:0;background:none;padding:11px 8px}nav button[aria-current=true]{background:#f0e6d7;color:#864e30}nav span{font:11px monospace;margin-right:12px}#next{background:#294e3c;color:white}footer{margin-top:18px;color:#667263;gap:16px}button:disabled{opacity:.35}@media(max-width:750px){.layout{grid-template-columns:1fr}.map{min-height:345px}header{padding:15px 5vw}.brand{font-size:18px}}
++</style><header><div class="brand"><b>♜</b> Atlas de Granada</div><label>Andalucía / España</label></header><main><small>Patrimonio · Recorrido interactivo</small><h1>La Alhambra en 3D</h1><div class="layout"><section class="map"><canvas aria-label="Maqueta de la Alhambra. Arrastra para girar"></canvas><div class="badge">● &nbsp; Maqueta interactiva</div><div class="controls"><button id="rot" aria-label="Girar">↻</button> <button id="minus" aria-label="Alejar">−</button> <button id="plus" aria-label="Acercar">+</button></div></section><aside><small id="count"></small><div aria-live="polite"><h2></h2><p></p></div><nav aria-label="Paradas"></nav><div class="actions"><button id="prev" aria-label="Anterior">←</button><button id="next"></button></div></aside></div><footer><span>Granada · Colina de la Sabika</span><span>Representación esquemática</span></footer></main><script>
++const stops=[['Alcazaba','La ruta comienza entre las torres que dominan el extremo occidental de la colina.',-7,0],['Palacio de Carlos V','Un patio circular ocupa el centro de este palacio renacentista de planta cuadrada.',-2,1],['Palacios Nazaríes','Albercas y patios articulan las salas de la antigua residencia de los sultanes nazaríes.',0,-2.5],['El Partal','El pórtico y la Torre de las Damas se reflejan en el agua de la alberca.',4,-1],['Generalife','El recorrido termina en los jardines y huertas de la residencia de descanso de los sultanes.',8,-5]];
++const $=s=>document.querySelector(s),cv=$('canvas'),g=cv.getContext('2d'),faces=[];let a=.32,zoom=1,sel=0,pins=[],drag;
++function face(p,c){faces.push({p,c})}
++const stone=['#bc8963','#d1a47c','#e9caa5'],land=['#aaa07c','#bbad87','#abb889'],tile=['#9b6148','#af7554','#c68b64'];
++function box(x,y,w,d,z,h,col=stone){let b=[[x,y,z],[x+w,y,z],[x+w,y+d,z],[x,y+d,z]],t=b.map(([X,Y])=>[X,Y,z+h]);for(let i=0;i<4;i++){let j=(i+1)%4;face([b[i],b[j],t[j],t[i]],col[i%2])}face(t,col[2])}
++function tower(x,y,h){box(x,y,.8,.8,.1,h);for(let i of [0,.32,.64])for(let j of [0,.64])box(x+i,y+j,.16,.16,h+.1,.17)}
++function house(x,y,w,d){box(x,y,w,d,.1,.85);box(x-.05,y-.05,w+.1,d+.1,.95,.17,tile)}
++function tree(x,y,h){for(let i=0;i<6;i++){let t=i*Math.PI/3,u=t+Math.PI/3;face([[x+.2*Math.cos(t),y+.2*Math.sin(t),.1],[x+.2*Math.cos(u),y+.2*Math.sin(u),.1],[x,y,h]],['#53734e','#436348','#68825c'][i%3])}}
++let seed=42;function rand(){seed=seed*16807%2147483647;return seed/2147483647}
++for(let x=-9;x<10;x++){let d=3.8+Math.sin(x*.4)*.6;box(x,-d,1,d+3,-.75,.85,land);for(let i=0;i<5;i++)tree(x+rand(),2.1+rand()*.85,.8+rand()*.7)}
++box(6,-7,4,4,-.75,.85,land);for(let x=-8;x<6;x++){box(x,1.7,1,.24,.1,.72);if(x%2===0)tower(x,1.55,1.15)}
++box(-8,-1.7,3,.35,.1,1);box(-8,-1.7,.32,3.4,.1,1);box(-5,-1.7,.32,3.4,.1,1);tower(-8,-1.7,2.2);tower(-8,1.2,2.4);tower(-5,-1.7,1.65);
++for(let i=0;i<32;i++){let t=i*Math.PI/16,u=t+Math.PI/16;function pt(v,inner,z){let r=inner?.65:1.13/Math.max(Math.abs(Math.cos(v)),Math.abs(Math.sin(v)));return [-2+r*Math.cos(v),.15+r*Math.sin(v),z]}for(let inner of [true,false])face([pt(t,inner,.1),pt(u,inner,.1),pt(u,inner,1.15),pt(t,inner,1.15)],stone[inner?0:1]);face([pt(t,false,1.15),pt(u,false,1.15),pt(u,true,1.15),pt(t,true,1.15)],stone[2])}
++for(let [x,y] of [[-2,-3.4],[.2,-3],[3,-2.4],[7,-6.4]]){house(x,y,1.95,.55);house(x,y+.55,.45,1.35);box(x+.6,y+.8,1.15,.66,.1,.03,['#789b8f','#789b8f','#80ada3'])}tower(.3,-3.35,1.85);tower(4.55,-2.4,1.55);house(8.8,-6,.55,2.65);
++for(let i=0;i<85;i++)tree(5.5+rand()*4.2,-3.3+rand()*5,.7+rand()*.8);for(let i=0;i<18;i++)tree(6.15+(i%2)*.55,-6.6+Math.floor(i/2)*.4,1.1);
++function draw(){let W=cv.clientWidth,H=cv.clientHeight,D=devicePixelRatio||1;cv.width=W*D;cv.height=H*D;g.scale(D,D);let c=Math.cos(a),s=Math.sin(a),k=Math.min(W/23,H/14)*zoom;function project([x,y,z]){y+=1.35;return [W/2+(x*c-y*s)*k,H*.55+((x*s+y*c)*.57-z*.82)*k]}function path(p){g.beginPath();p.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y))}
++g.strokeStyle='#cbd1bd';g.lineWidth=.65;for(let i=-35;i<35;i++)for(let p of [[[i,-35,0],[i,35,0]],[[-35,i,0],[35,i,0]]]){path(p.map(project));g.stroke()}
++function depth(f){return f.p.reduce((v,[x,y,z])=>v+x*s+y*c+z*.69,0)/f.p.length}
++for(let f of faces.slice().sort((l,r)=>depth(l)-depth(r))){path(f.p.map(project));g.closePath();g.fillStyle=f.c;g.fill()}
++pins=stops.map(q=>project([q[2],q[3],2.6]));path(pins);g.strokeStyle='#986748';g.lineWidth=2;g.setLineDash([3,5]);g.stroke();g.setLineDash([]);pins.forEach(([x,y],i)=>{g.beginPath();g.arc(x,y,sel===i?15:12,0,7);g.fillStyle=sel===i?'#975c3a':'#345440';g.fill();g.strokeStyle='#fff6dc';g.stroke();g.fillStyle='white';g.font='bold 12px monospace';g.textAlign='center';g.fillText(i+1,x,y+4)})}
++function select(i){sel=i;$('#count').textContent='Parada 0'+(i+1)+' / 05';$('h2').textContent=stops[i][0];$('p').textContent=stops[i][1];$('#prev').disabled=!i;$('#next').textContent=i===4?'Volver al inicio ↺':'Siguiente parada →';document.querySelectorAll('nav button').forEach((b,k)=>b.setAttribute('aria-current',k===i));draw()}
++stops.forEach((q,i)=>{let b=document.createElement('button');b.innerHTML='<span>0'+(i+1)+'</span>'+q[0];b.onclick=()=>select(i);$('nav').append(b)});$('#next').onclick=()=>select((sel+1)%5);$('#prev').onclick=()=>select(sel-1);$('#rot').onclick=()=>{a+=.4;draw()};for(let [id,n] of [['#plus',.15],['#minus',-.15]])$(id).onclick=()=>{zoom=Math.min(1.8,Math.max(.65,zoom+n));draw()};cv.onpointerdown=e=>{drag=[e.clientX,a];cv.setPointerCapture(e.pointerId)};cv.onpointermove=e=>{if(drag){a=drag[1]+(e.clientX-drag[0])*.008;draw()}};cv.onpointerup=e=>{if(drag&&Math.abs(e.clientX-drag[0])<5){let r=cv.getBoundingClientRect(),i=pins.findIndex(([x,y])=>Math.hypot(e.clientX-r.left-x,e.clientY-r.top-y)<17);if(i>=0)select(i)}drag=null};cv.onpointercancel=()=>drag=null;new ResizeObserver(draw).observe(cv);select(0);
++</script></html>
+
+exec
+/bin/zsh -lc "node -e \"new Function(require('fs').readFileSync('alhambra.html','utf8').split('<script>')[1].split('</script>')[0])\"" in /private/var/tmp/bench/ws-8tjwCZq2
+ succeeded in 180ms:
+codex
+[Abre la ruta 3D de la Alhambra](./alhambra.html). Está guardada en la carpeta actual como un único archivo HTML y funciona sin conexión.
+
+La maqueta incluye cinco paradas, desde la Alcazaba hasta el Generalife. Puedes arrastrar para girar la vista, usar **+** y **−** para ajustar el zoom y seleccionar cada marcador para leer sobre el lugar.
+tokens used
+24.795
+[Abre la ruta 3D de la Alhambra](./alhambra.html). Está guardada en la carpeta actual como un único archivo HTML y funciona sin conexión.
+
+La maqueta incluye cinco paradas, desde la Alcazaba hasta el Generalife. Puedes arrastrar para girar la vista, usar **+** y **−** para ajustar el zoom y seleccionar cada marcador para leer sobre el lugar.

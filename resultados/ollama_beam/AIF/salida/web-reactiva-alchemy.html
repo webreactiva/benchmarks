@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Web Reactiva Alchemy</title>
+<style>
+  :root { --bg: #0f1115; --panel: #1a1d24; --panel-2: #232731; --accent: #ff6b35; --accent-2: #35c7ff; --text: #e9ecef; --muted: #9aa0a6; --border: #2e3340; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: radial-gradient(1200px 600px at 50% -10%, #1e2230, var(--bg)); color: var(--text); min-height: 100vh; }
+  header { padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,.3); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 10; }
+  header h1 { font-size: 20px; margin: 0; letter-spacing: .5px; }
+  header .sub { color: var(--muted); font-size: 13px; }
+  .badge { background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .layout { display: grid; grid-template-columns: 280px 1fr 300px; gap: 16px; padding: 16px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } .sidebar, .log { max-height: 260px; } }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px; overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
+  .panel h2 { font-size: 15px; margin: 0; color: var(--accent-2); }
+  .search { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-size: 14px; }
+  .search:focus { outline: none; border-color: var(--accent-2); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; overflow-y: auto; flex: 1; align-content: flex-start; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 999px; cursor: grab; user-select: none; font-size: 13px; transition: transform .1s, background .15s, border-color .15s; }
+  .chip:hover { border-color: var(--accent-2); transform: translateY(-1px); }
+  .chip:active { cursor: grabbing; transform: scale(.97); }
+  .chip .emoji { font-size: 15px; }
+  .craft { display: flex; flex-direction: column; align-items: center; gap: 16px; justify-content: center; padding: 20px; }
+  .slots { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .slot { width: 150px; height: 150px; border: 2px dashed var(--border); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: var(--panel-2); transition: border-color .15s, background .15s; text-align: center; }
+  .slot.dragover { border-color: var(--accent-2); background: #1f2a3a; }
+  .slot .emoji { font-size: 42px; }
+  .slot .name { font-size: 14px; font-weight: 600; }
+  .slot.empty .hint { color: var(--muted); font-size: 12px; }
+  .plus { font-size: 32px; color: var(--muted); }
+  .btn { padding: 12px 28px; background: linear-gradient(135deg, var(--accent), #ff3d6e); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: filter .15s, transform .1s; }
+  .btn:hover { filter: brightness(1.1); }
+  .btn:active { transform: scale(.98); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .result { min-height: 40px; font-size: 14px; text-align: center; color: var(--muted); }
+  .result.found { color: var(--accent-2); font-weight: 700; font-size: 18px; animation: pop .35s ease; }
+  .result.dupe { color: var(--muted); }
+  .result.none { color: #ff8a8a; }
+  @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity:1; } }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; overflow-y: auto; }
+  .card { background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 6px; text-align: center; cursor: pointer; transition: transform .1s, border-color .15s; user-select: none; }
+  .card:hover { border-color: var(--accent-2); transform: translateY(-2px); }
+  .card .emoji { font-size: 26px; display: block; }
+  .card .name { font-size: 11px; margin-top: 4px; color: var(--text); }
+  .card.new { animation: glow .8s ease; }
+  @keyframes glow { 0% { box-shadow: 0 0 0 0 rgba(53,199,255,.7);} 100% { box-shadow: 0 0 0 14px rgba(53,199,255,0); } }
+  .log { font-size: 13px; color: var(--muted); overflow-y: auto; flex: 1; }
+  .log div { padding: 4px 0; border-bottom: 1px solid #2a2f3a; }
+  .log b { color: var(--text); }
+  .footer-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 8px 20px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+  .footer-bar button { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+  .footer-bar button:hover { border-color: var(--accent-2); }
+  .stats { display: flex; gap: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <span class="badge">WR</span>
+  <div>
+    <h1>Web Reactiva Alchemy</h1>
+    <div class="sub">Combina elementos del universo dev y descubre nuevos. Inspirado en Infinite Craft.</div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="panel sidebar">
+    <h2>Elementos</h2>
+    <input class="search" id="search" placeholder="Buscar..." />
+    <div class="chips" id="chips"></div>
+  </aside>
+
+  <main class="panel">
+    <h2>Mesa de alquimia</h2>
+    <div class="craft">
+      <div class="slots">
+        <div class="slot empty" id="slotA" data-slot="a">
+          <div class="emoji" id="emojiA"></div>
+          <div class="name" id="nameA"></div>
+          <div class="hint" id="hintA">Arrastra o clic</div>
+        </div>
+        <div class="plus">+</div>
+        <div class="slot empty" id="slotB" data-slot="b">
+          <div class="emoji" id="emojiB"></div>
+          <div class="name" id="nameB"></div>
+          <div class="hint" id="hintB">Arrastra o clic</div>
+        </div>
+      </div>
+      <button class="btn" id="combine">Combinar</button>
+      <div class="result" id="result">Elige dos elementos para combinar.</div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <aside class="panel">
+    <h2>Descubrimientos</h2>
+    <div class="log" id="log"></div>
+  </aside>
+</div>
+
+<div class="footer-bar">
+  <div class="stats">
+    <span id="statDisc">0 descubiertos</span>
+    <span id="statTotal">0 total</span>
+  </div>
+  <div>
+    <button id="reset">Reiniciar progreso</button>
+    <button id="copy">Copiar progreso</button>
+  </div>
+</div>
+
+<script>
+const E = [
+ {id:'html',name:'HTML',emoji:'🧱'},
+ {id:'css',name:'CSS',emoji:'🎨'},
+ {id:'js',name:'JavaScript',emoji:'⚡'},
+ {id:'browser',name:'Navegador',emoji:'🌐'},
+ {id:'server',name:'Servidor',emoji:'🖥️'},
+ {id:'terminal',name:'Terminal',emoji:'⌨️'},
+ {id:'git',name:'Git',emoji:'🌿'},
+ {id:'react',name:'React',emoji:'⚛️'},
+ {id:'astro',name:'Astro',emoji:'🚀'},
+ {id:'vue',name:'Vue',emoji:'💚'},
+ {id:'svelte',name:'Svelte',emoji:'🔥'},
+ {id:'tailwind',name:'Tailwind',emoji:'🌊'},
+ {id:'ts',name:'TypeScript',emoji:'🔷'},
+ {id:'node',name:'Node.js',emoji:'🟢'},
+ {id:'vite',name:'Vite',emoji:'⚡'},
+ {id:'next',name:'Next.js',emoji:'▲'},
+ {id:'api',name:'API',emoji:'🔗'},
+ {id:'db',name:'Base de datos',emoji:'🗄️'},
+ {id:'sql',name:'SQL',emoji:'🧾'},
+ {id:'json',name:'JSON',emoji:'📦'},
+ {id:'seo',name:'SEO',emoji:'🔍'},
+ {id:'a11y',name:'Accesibilidad',emoji:'♿'},
+ {id:'perf',name:'Performance',emoji:'⏱️'},
+ {id:'test',name:'Tests',emoji:'🧪'},
+ {id:'ci',name:'CI/CD',emoji:'🛠️'},
+ {id:'docker',name:'Docker',emoji:'🐳'},
+ {id:'deploy',name:'Deploy',emoji:'🚀'},
+ {id:'domain',name:'Dominio',emoji:'🌍'},
+ {id:'cdn',name:'CDN',emoji:'📡'},
+ {id:'cache',name:'Cache',emoji:'🧊'},
+ {id:'bug',name:'Bug',emoji:'🐛'},
+ {id:'mv',name:'Modelo-Vista',emoji:'🏗️'},
+ {id:'state',name:'Estado',emoji:'🔄'},
+ {id:'router',name:'Router',emoji:'🧭'},
+ {id:'props',name:'Props',emoji:'📥'},
+ {id:'hooks',name:'Hooks',emoji:'🪝'},
+ {id:'signals',name:'Signals',emoji:'📶'},
+ {id:'ssr',name:'SSR',emoji:'🧩'},
+ {id:'islands',name:'Islas',emoji:'🏝️'},
+ {id:'components',name:'Componentes',emoji:'🧱'},
+ {id:'styles',name:'Estilos',emoji:'💅'},
+ {id:'responsive',name:'Responsive',emoji:'📱'},
+ {id:'form',name:'Formulario',emoji:'📝'},
+ {id:'auth',name:'Autenticación',emoji:'🔐'},
+ {id:'jwt',name:'JWT',emoji:'🎟️'},
+ {id:'oauth',name:'OAuth',emoji:'🤝'},
+ {id:'cors',name:'CORS',emoji:'🚫'},
+ {id:'fetch',name:'Fetch',emoji:'🌐'},
+ {id:'promise',name:'Promesas',emoji:'🤝'},
+ {id:'async',name:'Async/Await',emoji:'⏳'},
+ {id:'eventloop',name:'Event Loop',emoji:'♻️'},
+ {id:'npm',name:'npm',emoji:'📦'},
+ {id:'pnpm',name:'pnpm',emoji:'🧶'},
+ {id:'vitepress',name:'VitePress',emoji:'📖'},
+ {id:'markdown',name:'Markdown',emoji:'✍️'},
+ {id:'regex',name:'Regex',emoji:'🧬'},
+ {id:'linter',name:'Linter',emoji:'🧹'},
+ {id:'prettier',name:'Prettier',emoji:'✨'},
+ {id:'lighthouse',name:'Lighthouse',emoji:'🏠'},
+ {id:'vitals',name:'Web Vitals',emoji:'💓'},
+ {id:'sw',name:'Service Worker',emoji:'⚙️'},
+ {id:'pwa',name:'PWA',emoji:'📲'},
+ {id:'wasm',name:'WebAssembly',emoji:'📦'},
+ {id:'canvas',name:'Canvas',emoji:'🖌️'},
+ {id:'svg',name:'SVG',emoji:'📐'},
+ {id:'audio',name:'Web Audio',emoji:'🔊'},
+ {id:'ws',name:'WebSockets',emoji:'🔌'},
+ {id:'sse',name:'SSE',emoji:'📡'},
+ {id:'worker',name:'Web Worker',emoji:'👷'},
+ {id:'webrtc',name:'WebRTC',emoji:'📞'},
+ {id:'push',name:'Push Notifications',emoji:'🔔'},
+ {id:'geo',name:'Geolocation',emoji:'📍'},
+ {id:'storage',name:'LocalStorage',emoji:'💾'},
+ {id:'indexeddb',name:'IndexedDB',emoji:'🗃️'},
+ {id:'webreactiva',name:'Web Reactiva',emoji:'📻'},
+ {id:'newsletter',name:'Newsletter',emoji:'📰'},
+ {id:'podcast',name:'Podcast',emoji:'🎧'},
+ {id:'guillermo',name:'Guillermo Rodas',emoji:'🧑‍💻'},
+ {id:'comunidad',name:'Comunidad',emoji:'👥'},
+ {id:'guia',name:'Guía',emoji:'📚'},
+ {id:'hydration',name:'Hydration',emoji:'💧'},
+ {id:'streaming',name:'Streaming',emoji:'🎞️'},
+ {id:'edge',name:'Edge Runtime',emoji:'🌍'},
+ {id:'serverless',name:'Serverless',emoji:'☁️'},
+ {id:'env',name:'Variables de entorno',emoji:'🔒'},
+];
+const byId = Object.fromEntries(E.map(e=>[e.id,e]));
+const BASE = ['html','css','js','browser','server','terminal','git'];
+
+const R = {
+ 'HTML|CSS':'Página web',
+ 'HTML|JavaScript':'DOM',
+ 'CSS|JavaScript':'Interactividad',
+ 'Página web|JavaScript':'App web',
+ 'App web|React':'SPA',
+ 'React|JavaScript':'Componente',
+ 'React|Props':'Props',
+ 'React|Estado':'Estado',
+ 'React|Hooks':'Hooks',
+ 'React|Router':'Router',
+ 'React|SSR':'Next.js',
+ 'React|TypeScript':'TSX',
+ 'TypeScript|JavaScript':'TypeScript',
+ 'Vite|JavaScript':'Dev server',
+ 'Vite|React':'Vite + React',
+ 'Astro|HTML':'Islas',
+ 'Astro|React':'Islas de React',
+ 'Astro|JavaScript':'Astro component',
+ 'Next.js|React':'SSR',
+ 'Next.js|JavaScript':'App Router',
+ 'Tailwind|CSS':'Utility classes',
+ 'Tailwind|React':'Clases en JSX',
+ 'Node.js|JavaScript':'Backend',
+ 'Node.js|Servidor':'Runtime',
+ 'API|Servidor':'Endpoint',
+ 'Base de datos|Servidor':'Persistencia',
+ 'SQL|Base de datos':'Consultas',
+ 'JSON|API':'Respuesta JSON',
+ 'JSON|Fetch':'Parseo',
+ 'Fetch|JavaScript':'Cliente HTTP',
+ 'Fetch|API':'Request',
+ 'Async/Await|Fetch':'Await fetch',
+ 'Promesas|JavaScript':'Promesas',
+ 'Async/Await|JavaScript':'Async/Await',
+ 'Event Loop|JavaScript':'Event Loop',
+ 'Git|Terminal':'Commit',
+ 'Git|Deploy':'Release',
+ 'Deploy|Servidor':'Producción',
+ 'Dominio|Deploy':'Sitio en vivo',
+ 'CDN|Deploy':'Distribución global',
+ 'CDN|Cache':'Cache en edge',
+ 'Cache|Performance':'TTFB bajo',
+ 'SEO|Página web':'Indexable',
+ 'Accesibilidad|HTML':'Semántico',
+ 'Accesibilidad|React':'ARIA en JSX',
+ 'Performance|React':'Memoización',
+ 'Tests|React':'Testing Library',
+ 'Tests|JavaScript':'Jest',
+ 'CI/CD|Git':'Pipeline',
+ 'CI/CD|Deploy':'CD auto',
+ 'Docker|Servidor':'Contenedor',
+ 'Docker|Base de datos':'DB dockerizada',
+ 'Terminal|npm':'Instalación',
+ 'npm|pnpm':'Monorepo',
+ 'Navegador|LocalStorage':'Persistencia local',
+ 'LocalStorage|JavaScript':'localStorage API',
+ 'IndexedDB|JavaScript':'IndexedDB API',
+ 'Service Worker|Navegador':'Offline',
+ 'Service Worker|PWA':'PWA',
+ 'PWA|Navegador':'App instalable',
+ 'Canvas|JavaScript':'Dibujo web',
+ 'SVG|CSS':'Iconos vectoriales',
+ 'Web Audio|JavaScript':'Sonido web',
+ 'WebSockets|Servidor':'Tiempo real',
+ 'WebSockets|Navegador':'Socket cliente',
+ 'SSE|Servidor':'Eventos unidireccionales',
+ 'Web Worker|JavaScript':'Hilo secundario',
+ 'WebAssembly|JavaScript':'Módulo WASM',
+ 'WebRTC|Navegador':'Videollamada',
+ 'Push Notifications|Navegador':'Notificaciones push',
+ 'Geolocation|Navegador':'Ubicación',
+ 'Autenticación|Servidor':'Sesión',
+ 'JWT|Autenticación':'Token JWT',
+ 'OAuth|Autenticación':'Login social',
+ 'CORS|API':'Bloqueo CORS',
+ 'Formulario|React':'Form controlado',
+ 'Responsive|CSS':'Media queries',
+ 'Estilos|React':'CSS Modules',
+ 'Componentes|React':'Composición',
+ 'Modelo-Vista|React':'Arquitectura',
+ 'Signals|React':'Reactividad fina',
+ 'Hydration|SSR':'Hydration',
+ 'Streaming|SSR':'Streaming SSR',
+ 'Edge Runtime|Serverless':'Edge deploy',
+ 'Serverless|Deploy':'Funciones en nube',
+ 'Variables de entorno|Servidor':'Secretos',
+ 'Variables de entorno|Deploy':'Config por entorno',
+ 'Markdown|Guía':'Artículo',
+ 'Guía|Web Reactiva':'Tutorial',
+ 'Web Reactiva|Newsletter':'Suscripción',
+ 'Web Reactiva|Podcast':'Episodio',
+ 'Web Reactiva|Guillermo Rodas':'Comunidad',
+ 'Guillermo Rodas|Comunidad':'Web Reactiva',
+ 'Comunidad|Newsletter':'Lectores',
+ 'Comunidad|Podcast':'Oyentes',
+ 'Regex|JavaScript':'Regex',
+ 'Linter|JavaScript':'Lint',
+ 'Prettier|Linter':'Formato',
+ 'Lighthouse|Performance':'Auditoría',
+ 'Web Vitals|Performance':'Métricas',
+};
+function findIdByName(name){
+  const e = E.find(x=>x.name.toLowerCase()===name.toLowerCase());
+  return e?e.id:null;
+}
+function ensureElement(name){
+  let id = findIdByName(name);
+  if(id) return id;
+  id = name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'el-'+Math.random().toString(36).slice(2,7);
+  if(byId[id]){ id += '-'+Math.random().toString(36).slice(2,5); }
+  const el = {id,name,emoji:'✨'};
+  E.push(el); byId[id]=el;
+  return id;
+}
+const RECIPES = {};
+for(const k in R){
+  const [aName,bName] = k.split('|');
+  const aid = findIdByName(aName.trim()) || ensureElement(aName.trim());
+  const bid = findIdByName(bName.trim()) || ensureElement(bName.trim());
+  const rid = ensureElement(R[k]);
+  const key = [aid,bid].sort().join('|');
+  RECIPES[key]=rid;
+}
+const STORAGE='webreactiva-alchemy-v1';
+let discovered = new Set(BASE);
+let craftedLog = [];
+try {
+  const raw = localStorage.getItem(STORAGE);
+  if(raw){
+    const data = JSON.parse(raw);
+    if(Array.isArray(data.discovered)) discovered = new Set(data.discovered);
+    if(Array.isArray(data.log)) craftedLog = data.log;
+    if(Array.isArray(data.elements)){ data.elements.forEach(e=>{ if(!byId[e.id]){ E.push(e); byId[e.id]=e; } }); }
+  }
+}catch(e){}
+function save(){
+  localStorage.setItem(STORAGE, JSON.stringify({discovered:[...discovered],log:craftedLog.slice(0,200),elements:E.map(e=>({id:e.id,name:e.name,emoji:e.emoji}))}));
+}
+const chipsEl = document.getElementById('chips');
+const gridEl = document.getElementById('grid');
+const logEl = document.getElementById('log');
+const slotA = document.getElementById('slotA');
+const slotB = document.getElementById('slotB');
+const resultEl = document.getElementById('result');
+const searchEl = document.getElementById('search');
+let slotVals = {a:null,b:null};
+function chipHTML(e){
+  const d = document.createElement('div');
+  d.className = 'chip'; d.draggable = true; d.dataset.id = e.id;
+  d.innerHTML = `<span class="emoji">${e.emoji}</span><span>${e.name}</span>`;
+  d.addEventListener('dragstart', ev=>{ ev.dataTransfer.setData('text/plain', e.id); });
+  d.addEventListener('click', ()=>fillSlot(e.id));
+  return d;
+}
+function renderChips(){
+  const q = searchEl.value.trim().toLowerCase();
+  chipsEl.innerHTML='';
+  E.filter(e=>discovered.has(e.id)).filter(e=>!q || e.name.toLowerCase().includes(q)).forEach(e=> chipsEl.appendChild(chipHTML(e)));
+}
+function renderGrid(){
+  gridEl.innerHTML='';
+  [...discovered].map(id=>byId[id]).filter(Boolean).forEach(e=>{
+    const c = document.createElement('div');
+    c.className='card';
+    c.innerHTML = `<span class="emoji">${e.emoji}</span><span class="name">${e.name}</span>`;
+    c.addEventListener('click', ()=>fillSlot(e.id));
+    gridEl.appendChild(c);
+  });
+  document.getElementById('statDisc').textContent = discovered.size + ' descubiertos';
+  document.getElementById('statTotal').textContent = E.length + ' total';
+}
+function renderLog(){
+  logEl.innerHTML='';
+  craftedLog.slice(0,60).forEach(item=>{
+    const d = document.createElement('div');
+    d.innerHTML = `<b>${byId[item.result]?.emoji||'✨'} ${byId[item.result]?.name||item.result}</b> = ${item.a} + ${item.b}`;
+    logEl.appendChild(d);
+  });
+}
+function fillSlot(id){
+  if(slotVals.a===null){ slotVals.a=id; updateSlots(); return; }
+  if(slotVals.b===null){ slotVals.b=id; updateSlots(); return; }
+  slotVals.b=id; updateSlots();
+}
+function updateSlots(){
+  const renderOne = (slotId, valId, emojiId, nameId, hintId) => {
+    const el = document.getElementById(slotId);
+    if(valId===null){
+      el.classList.add('empty');
+      document.getElementById(emojiId).textContent='';
+      document.getElementById(nameId).textContent='';
+      document.getElementById(hintId).style.display='block';
+    } else {
+      el.classList.remove('empty');
+      const e = byId[valId];
+      document.getElementById(emojiId).textContent = e.emoji;
+      document.getElementById(nameId).textContent = e.name;
+      document.getElementById(hintId).style.display='none';
+    }
+  };
+  renderOne('slotA', slotVals.a, 'emojiA', 'nameA', 'hintA');
+  renderOne('slotB', slotVals.b, 'emojiB', 'nameB', 'hintB');
+}
+[slotA, slotB].forEach(slot=>{
+  slot.addEventListener('dragover', e=>{ e.preventDefault(); slot.classList.add('dragover'); });
+  slot.addEventListener('dragleave', ()=> slot.classList.remove('dragover'));
+  slot.addEventListener('drop', e=>{ e.preventDefault(); slot.classList.remove('dragover'); const id=e.dataTransfer.getData('text/plain'); if(slot===slotA) slotVals.a=id; else slotVals.b=id; updateSlots(); });
+  slot.addEventListener('click', ()=>{ if(slot===slotA) slotVals.a=null; else slotVals.b=null; updateSlots(); });
+});
+document.getElementById('combine').addEventListener('click', ()=>{
+  if(!slotVals.a || !slotVals.b){ resultEl.textContent='Faltan elementos.'; resultEl.className='result none'; return; }
+  if(slotVals.a===slotVals.b){ resultEl.textContent='Usa dos elementos distintos.'; resultEl.className='result none'; return; }
+  const key = [slotVals.a, slotVals.b].sort().join('|');
+  const rid = RECIPES[key];
+  if(!rid){ resultEl.textContent='Sin reacción. Prueba otra combinación.'; resultEl.className='result none'; return; }
+  const e = byId[rid];
+  const isNew = !discovered.has(rid);
+  discovered.add(rid);
+  craftedLog.unshift({result:rid, a:byId[slotVals.a].name, b:byId[slotVals.b].name});
+  if(craftedLog.length>200) craftedLog.pop();
+  save();
+  renderChips(); renderGrid(); renderLog();
+  if(isNew){ const cards = gridEl.querySelectorAll('.card'); cards.forEach(c=>{ if(c.textContent.includes(e.name)) c.classList.add('new'); }); }
+  resultEl.textContent = (isNew?'¡Nuevo! ':'') + e.emoji + ' ' + e.name;
+  resultEl.className = isNew ? 'result found' : 'result dupe';
+  slotVals = {a:null,b:null};
+  updateSlots();
+});
+document.getElementById('reset').addEventListener('click', ()=>{
+  if(!confirm('¿Reiniciar todo el progreso?')) return;
+  localStorage.removeItem(STORAGE);
+  location.reload();
+});
+document.getElementById('copy').addEventListener('click', ()=>{
+  const txt = discovered.size + '/' + E.length + ' descubiertos\n' + [...discovered].map(id=>byId[id].name).join(', ');
+  navigator.clipboard.writeText(txt).then(()=>{ resultEl.textContent='Progreso copiado al portapapeles.'; resultEl.className='result'; });
+});
+searchEl.addEventListener('input', renderChips);
+renderChips(); renderGrid(); renderLog();
+updateSlots();
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "codigo": "AIF",
+  "modelo": "ollama/deepseek-v4.1-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T23:50:31Z",
+  "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 136494,
+    "output": 92149,
+    "reasoning": 0,
+    "cache_read": 2417408,
+    "cache_write": 0,
+    "total": 2646051
+  },
+  "peticiones": 32,
+  "error": null,
+  "herramientas": {
+    "bash": 32,
+    "webfetch": 2,
+    "todowrite": 2,
+    "write": 1,
+    "read": 1
+  },
+  "sesion": "ses_e09c7eb0effezuHvsfGcdEW8J0",
+  "ficheros": [
+    "index.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 393216,
+    "fuente": "ollama /api/show + error de max_tokens"
+  }
+}

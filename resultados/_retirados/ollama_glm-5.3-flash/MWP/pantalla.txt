@@ -1,0 +1,36 @@
+  ┃   76     APP2 --> ES
+  ┃   77     APP3 --> ES
+  ┃   78
+  ┃   79     APP1 --> KC
+  ┃   80     PARS --> KC
+  ┃   81
+  ┃   82     %% ===== Estilos =====
+  ┃   83     classDef clientes fill:#e1f5fe,stroke:#0288d1,color:#000
+  ┃   84     classDef borde fill:#fff3e0,stroke:#f57c00,color:#000
+  ┃   85     classDef aplicacion fill:#e8f5e9,stroke:#388e3c,color:#000
+  ┃   86     classDef cache fill:#f3e5f5,stroke:#7b1fa2,color:#000
+  ┃   87     classDef datos fill:#fce4ec,stroke:#c2185b,color:#000
+  ┃   88
+  ┃   89     class U1,U2,U3 clientes
+  ┃   90     class GDNS,CDN,LB borde
+  ┃   91     class GW,APP1,APP2,APP3,PARS aplicacion
+  ┃   92     class MC cache
+  ┃   93     class DBM,DBR1,DBR2,SW,ES,KC datos
+  ┃   94
+  ┃
+
+     + Thought: 49ms
+
+     Guardado en arquitectura_wikipedia.mmd: diagrama Mermaid con la arquitectura de Wikipedia (GeoDNS, CDN,
+     balanceadores, servidores MediaWiki, Memcached, MariaDB maestro/réplicas, Swift, Elasticsearch y Kafka), con
+     etiquetas en español.
+
+     ▣  Build · glm-5.3-flash · 8.7s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/ollama_glm-5.3-flash/MWP                                                        8.6K  ctrl+p commands
+

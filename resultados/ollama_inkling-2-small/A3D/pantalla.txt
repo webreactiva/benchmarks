@@ -1,0 +1,36 @@
+  ┃  colores: 13150
+  ┃  total 48
+  ┃  drwx------ 2 root root  4096 Nov 20 01:38 .
+  ┃  drwxrwxrwt 3 root root    60 Nov 20 01:35 ..
+  ┃  -rw-r--r-- 1 root root 42956 Nov 20 01:40 alhambra-3d.html
+  ┃
+
+     + Thought: 3.7s
+
+     Listo. He creado alhambra-3d.html (fichero único, ~43 KB) con el recorrido 3D completo. Requiere conexión a
+     Internet solo para cargar Three.js desde CDN; si no hay WebGL, muestra un aviso.
+
+     Qué incluye
+
+     - Recorrido guiado en 9 paradas: Panorámica → Puerta de la Justicia → la Alcazaba (Torre de la Vela e Homenaje)
+       → El Mexuar → Patio de los Arrayanes → Patio de los Leones (con los 12 leones y surtidor) → El Partal → El
+       Generalife → Mirador del Albaicín. Con botones ‹ ›, recorrido automático con pausa, puntos de progreso, índice
+       lateral, flechas de teclado y parámetro ?p=N para enlazar a una parada concreta.
+     - Escena 3D completa: muralla con torres, cerro de la Sabika, Vega, río Darro y puente, caserío del Albaicín/
+       Granada, Sierra Nevada con cumbres nevadas, cielo con sol y nubes a la deriva, cipreses, naranjos y acequias
+       con chorros animados.
+     - Vista libre: botón «Vista libre» para orbitar con arrastre y zoom con rueda/pellizco; brújula en vivo y
+       etiquetas clicables sobre cada monumento.
+
+     Verificado con Chrome headless: renderiza sin errores JS en varias paradas. Para abrirlo: google-chrome alhambra-
+     3d.html o simplemente doble clic en el fichero.
+
+     ▣  Build · inkling-2-small · 5m 35s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · inkling-2-small Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-OhAvS57J                                                              59.2K (6%)  ctrl+p commands
+

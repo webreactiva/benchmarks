@@ -1,0 +1,17 @@
+{
+  "nota": 7,
+  "veredicto": "funciona, pero son cajas",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 0,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  },
+  "resumen": "El A3D más pequeño (8 KB, 209 líneas, 5 peticiones): seis paradas reales, botones para cada una y un tour automático que mueve la cámara de la Alcazaba al Generalife. Pero la Alhambra son cajas de colores rodeadas de un anillo de pilares, la cámara se pega a los volúmenes y el panel no muestra el texto de la parada durante el tour.",
+  "rarezas": [
+    "El más rápido de todos: 5 peticiones y 64 k tokens, sin abrirlo ni probarlo.",
+    "Contesta en una línea en inglés: «Creado … (single-file 3D Alhambra route)»."
+  ]
+}

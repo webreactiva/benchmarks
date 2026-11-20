@@ -1,0 +1,36 @@
+   Post sobre tests intermitente +
+
+  ┃
+  ┃  Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener
+  ┃  tests. Guarda lo que generes en la carpeta actual.
+  ┃
+
+     + 1 edit, 1 thought, 1 read
+
+     He escrito y guardado el artículo en tests-que-fallan-a-veces.md dentro de la carpeta actual.
+
+     Qué incluye el post:
+
+     - Gancho inicial: El clásico escenario de viernes por la tarde pulsando "Re-run jobs" en CI hasta que el pipeline
+       se pone en verde.
+     - Tesis central: Por qué la incertidumbre honesta (no tener tests y extremar la precaución) es menos peligrosa
+       que una señal mentirosa que da falsa sensación de seguridad.
+     - El efecto «Pedro y el lobo»: Cómo los flaky tests entrenan al equipo para ignorar fallos reales de concurrencia
+       o regresiones intermitentes.
+     - Costes ocultos: Cambios de contexto, bloqueos en merge queues y la teoría de las ventanas rotas (retry, test.
+       skip).
+     - Ejemplo práctico en código: Comparativa entre un test frágil acoplado al reloj real (setTimeout) y su versión
+       determinista inyectando el tiempo, junto con las causas más habituales de intermitencia.
+     - Plan de acción: Reparar la causa raíz, aislar en cuarentena con fecha de caducidad o borrar sin miedo a la
+       falacia del coste hundido.
+
+     Build · google/gemini-4-carbon · 1m 12s · 58.5 tok/s · 5.4s ttft
+
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · google/gemini-4-carbon OpenRouter
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /private/var/tmp/bench/ws-yZcbKKPu                                                8.6K (1%) · $0.05  ctrl+p commands
+

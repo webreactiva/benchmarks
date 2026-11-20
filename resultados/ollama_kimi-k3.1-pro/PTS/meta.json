@@ -1,0 +1,37 @@
+{
+  "codigo": "PTS",
+  "modelo": "ollama/kimi-k3.1-pro",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T02:10:14Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 9470,
+    "output": 3504,
+    "reasoning": 0,
+    "cache_read": 29361,
+    "cache_write": 0,
+    "total": 42335
+  },
+  "peticiones": 4,
+  "error": null,
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 2,
+    "glob": 1,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e0948044cffe5zu5tZsldM5i5k",
+  "ficheros": [
+    "tests-intermitentes-peores-que-no-tener-tests.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

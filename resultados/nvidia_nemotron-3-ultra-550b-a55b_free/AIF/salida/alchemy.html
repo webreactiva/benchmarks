@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alquimia Web Reactiva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --bg-elevated: #111827;
+      --card: #1a1f2e;
+      --card-hover: #22283a;
+      --border: #2d3748;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #00d4aa;
+      --accent-dim: rgba(0, 212, 170, 0.15);
+      --accent-glow: rgba(0, 212, 170, 0.4);
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #a855f7;
+      --blue: #3b82f6;
+      --orange: #f97316;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .bg-pattern {
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.08), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(168, 85, 247, 0.06), transparent),
+        linear-gradient(180deg, var(--bg) 0%, #0d111b 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,170,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,170,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      grid-template-rows: auto 1fr auto;
+      height: 100vh;
+      gap: 0;
+    }
+
+    header {
+      grid-column: 1 / -1;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    .logo-icon svg { width: 24px; height: 24px; }
+
+    .stats {
+      display: flex;
+      gap: 24px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .stat { display: flex; align-items: center; gap: 6px; }
+
+    .stat-value { color: var(--accent); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+
+    .sidebar {
+      border-right: 1px solid var(--border);
+      background: rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .search-box {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: inherit;
+      backdrop-filter: inherit;
+      z-index: 10;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .search-input::placeholder { color: var(--text-muted); }
+
+    .elements-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .category {
+      margin-bottom: 20px;
+    }
+
+    .category-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 8px 4px;
+      font-weight: 600;
+    }
+
+    .element-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: grab;
+      transition: background 0.15s, transform 0.1s;
+      user-select: none;
+      border: 1px solid transparent;
+    }
+
+    .element-item:hover { background: var(--card-hover); border-color: var(--border); }
+    .element-item:active { cursor: grabbing; transform: scale(0.98); }
+    .element-item.dragging { opacity: 0.5; background: var(--accent-dim); border-color: var(--accent); }
+
+    .element-emoji { font-size: 1.5rem; line-height: 1; }
+    .element-name { font-size: 0.9375rem; font-weight: 500; }
+    .element-count { margin-left: auto; font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .canvas-area {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, rgba(0,212,170,0.03) 0%, transparent 70%);
+    }
+
+    .canvas {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      touch-action: none;
+    }
+
+    .drop-zone {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      pointer-events: none;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .drop-zone.active { pointer-events: auto; }
+
+    .drop-icon {
+      width: 80px;
+      height: 80px;
+      border: 2px dashed var(--border);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      transition: all 0.2s;
+    }
+
+    .drop-zone.active .drop-icon {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      box-shadow: 0 0 40px var(--accent-glow);
+    }
+
+    .drop-text { color: var(--text-muted); font-size: 1rem; max-width: 300px; line-height: 1.6; }
+    .drop-hint { color: var(--accent); font-size: 0.875rem; font-weight: 500; }
+
+    .element-node {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 10;
+    }
+
+    .element-node:hover { z-index: 20; }
+    .element-node.dragging { cursor: grabbing; z-index: 100; transition: none; }
+    .element-node.new { animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .node-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      min-width: 100px;
+      max-width: 160px;
+      text-align: center;
+      box-shadow:
+        0 4px 20px rgba(0,0,0,0.3),
+        0 0 0 1px rgba(255,255,255,0.02) inset;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .node-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .element-node:hover .node-card::before { opacity: 1; }
+    .element-node:hover .node-card {
+      border-color: var(--accent);
+      box-shadow:
+        0 8px 30px rgba(0,0,0,0.4),
+        0 0 0 1px var(--accent),
+        0 0 20px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .node-emoji { font-size: 2.5rem; line-height: 1; margin-bottom: 4px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); }
+    .node-name { font-size: 0.875rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .node-category { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .combine-zone {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .combine-slots {
+      display: flex;
+      gap: 16px;
+    }
+
+    .slot {
+      width: 80px;
+      height: 80px;
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      background: var(--card);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .slot.filled { border-color: var(--accent); background: var(--accent-dim); border-style: solid; }
+    .slot.pulse { animation: pulse 0.5s ease-out; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); box-shadow: 0 0 30px var(--accent-glow); }
+      100% { transform: scale(1); }
+    }
+
+    .slot-label { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+
+    .combine-btn {
+      background: linear-gradient(135deg, var(--accent), #00b896);
+      border: none;
+      border-radius: 12px;
+      padding: 14px 32px;
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      transition: all 0.2s;
+      opacity: 0.5;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
+
+    .combine-btn.ready {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .combine-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+    .combine-btn:active:not(:disabled) { transform: translateY(0); }
+    .combine-btn:disabled { cursor: not-allowed; }
+
+    .combine-btn svg { width: 20px; height: 20px; }
+
+    .result-toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--card);
+      border: 1px solid var(--accent);
+      border-radius: 16px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px var(--accent-glow);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .result-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+    .toast-emoji { font-size: 3rem; }
+    .toast-info { display: flex; flex-direction: column; gap: 2px; }
+    .toast-title { font-weight: 600; font-size: 1rem; }
+    .toast-subtitle { font-size: 0.8rem; color: var(--text-muted); }
+    .toast-badge { background: var(--accent-dim); color: var(--accent); padding: 2px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; align-self: flex-start; }
+
+    footer {
+      grid-column: 1 / -1;
+      padding: 12px 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links { display: flex; gap: 24px; font-size: 0.8rem; color: var(--text-muted); }
+    .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn:active { transform: scale(0.97); }
+    .btn svg { width: 16px; height: 16px; }
+
+    .btn-danger:hover { border-color: var(--danger); color: var(--danger); }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.show { opacity: 1; pointer-events: auto; }
+
+    .modal {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 480px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+    }
+
+    .modal-overlay.show .modal { transform: scale(1) translateY(0); }
+
+    .modal-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+    .modal-text { color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+
+    .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+
+    .notification {
+      position: fixed;
+      top: 100px;
+      right: 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      z-index: 1500;
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .notification.show { transform: translateX(0); }
+    .notification.success { border-color: var(--accent); }
+    .notification.error { border-color: var(--danger); }
+    .notification.warning { border-color: var(--warning); }
+
+    .notification-icon { width: 20px; height: 20px; flex-shrink: 0; }
+    .notification.success .notification-icon { color: var(--accent); }
+    .notification.error .notification-icon { color: var(--danger); }
+    .notification.warning .notification-icon { color: var(--warning); }
+
+    .scrollbar::-webkit-scrollbar { width: 6px; }
+    .scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .scrollbar::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    @media (max-width: 1024px) {
+      .app { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 300px; }
+      .elements-list { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px; }
+      .category { margin-bottom: 0; flex: 1; min-width: 200px; }
+      .element-item { padding: 8px 12px; }
+      .node-card { min-width: 80px; max-width: 120px; padding: 10px 12px; }
+      .node-emoji { font-size: 2rem; }
+    }
+
+    @media (max-width: 640px) {
+      header, footer { padding: 12px 16px; }
+      .stats { display: none; }
+      .slot { width: 64px; height: 64px; font-size: 1.5rem; }
+      .combine-btn { padding: 12px 24px; font-size: 0.9rem; }
+      .modal { padding: 24px; margin: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="app">
+    <header>
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <span>Alquimia Web Reactiva</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="stat-value" id="discovered-count">4</span> / <span id="total-count">0</span> descubiertos</div>
+        <div class="stat"><span class="stat-value" id="combinations-count">0</span> combinaciones</div>
+      </div>
+    </header>
+
+    <aside class="sidebar scrollbar">
+      <div class="search-box">
+        <input type="text" class="search-input" id="search-input" placeholder="Buscar elementos..." autocomplete="off">
+      </div>
+      <div class="elements-list" id="elements-list"></div>
+    </aside>
+
+    <main class="main">
+      <div class="canvas-area">
+        <div class="canvas" id="canvas">
+          <div class="drop-zone" id="drop-zone">
+            <div class="drop-icon">⚗️</div>
+            <p class="drop-text">Arrastra elementos aquí para empezar a combinar</p>
+            <p class="drop-hint">Suelta 2 elementos en las ranuras de abajo →</p>
+          </div>
+          <div class="combine-zone">
+            <div class="combine-slots">
+              <div class="slot" id="slot-1" data-slot="1"><span class="slot-label">Elemento 1</span></div>
+              <div class="slot" id="slot-2" data-slot="2"><span class="slot-label">Elemento 2</span></div>
+            </div>
+            <button class="combine-btn" id="combine-btn" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              <span>Combinar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-links">
+        <a href="#" id="help-btn">Ayuda</a>
+        <a href="#" id="reset-btn">Reiniciar</a>
+        <a href="#" id="export-btn">Exportar</a>
+        <a href="#" id="import-btn">Importar</a>
+      </div>
+      <button class="btn btn-danger" id="clear-canvas-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        Limpiar lienzo
+      </button>
+    </footer>
+  </div>
+
+  <div class="result-toast" id="result-toast" role="alert" aria-live="polite">
+    <span class="toast-emoji" id="toast-emoji">✨</span>
+    <div class="toast-info">
+      <span class="toast-badge" id="toast-badge">Nuevo descubrimiento</span>
+      <span class="toast-title" id="toast-title">Elemento creado</span>
+      <span class="toast-subtitle" id="toast-subtitle">Combina más elementos</span>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2 class="modal-title" id="modal-title">Ayuda</h2>
+      <p class="modal-text" id="modal-text"></p>
+      <div class="modal-actions">
+        <button class="btn" id="modal-close">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="notification" id="notification" role="alert" aria-live="polite">
+    <svg class="notification-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+    <span id="notification-text"></span>
+  </div>
+
+  <script>
+const BASE_ELEMENTS = [
+  { id: 'html', name: 'HTML', emoji: '📄', category: 'Fundamentos', description: 'El esqueleto de la web' },
+  { id: 'css', name: 'CSS', emoji: '🎨', category: 'Fundamentos', description: 'Estilos y belleza visual' },
+  { id: 'js', name: 'JavaScript', emoji: '⚡', category: 'Fundamentos', description: 'Interactividad y lógica' },
+  { id: 'http', name: 'HTTP', emoji: '🌐', category: 'Fundamentos', description: 'Protocolo de transferencia' },
+];
+
+const RECIPES = {
+  'html+css': { id: 'static-site', name: 'Sitio Estático', emoji: '🏗️', category: 'Sitios Web', description: 'Solo estructura y estilo' },
+  'html+js': { id: 'dynamic-html', name: 'HTML Dinámico', emoji: '🎭', category: 'Sitios Web', description: 'Manipulación del DOM' },
+  'css+js': { id: 'styled-components', name: 'CSS-in-JS', emoji: '💅', category: 'Técnicas', description: 'Estilos en JavaScript' },
+  'html+http': { id: 'server-render', name: 'Server Rendering', emoji: '🖥️', category: 'Arquitectura', description: 'HTML desde el servidor' },
+  'js+http': { id: 'ajax', name: 'AJAX/Fetch', emoji: '📡', category: 'Técnicas', description: 'Peticiones asíncronas' },
+  'css+http': { id: 'cdn', name: 'CDN Styles', emoji: '☁️', category: 'Infraestructura', description: 'Estilos distribuidos' },
+
+  'static-site+js': { id: 'spa', name: 'SPA', emoji: '🔄', category: 'Arquitectura', description: 'Single Page Application' },
+  'dynamic-html+css': { id: 'dhtml', name: 'DHTML', emoji: '🕺', category: 'Técnicas', description: 'HTML dinámico clásico' },
+  'server-render+js': { id: 'ssr', name: 'SSR', emoji: '⚙️', category: 'Arquitectura', description: 'Server-Side Rendering' },
+  'ajax+css': { id: 'dynamic-styles', name: 'Estilos Dinámicos', emoji: '🌈', category: 'Técnicas', description: 'CSS cargado bajo demanda' },
+
+  'spa+http': { id: 'api-client', name: 'Cliente API', emoji: '🔌', category: 'Patrones', description: 'Consumo de APIs REST/GraphQL' },
+  'ssr+css': { id: 'nextjs', name: 'Next.js', emoji: '▲', category: 'Frameworks', description: 'Framework React full-stack' },
+  'styled-components+js': { id: 'emotion', name: 'Emotion', emoji: '😊', category: 'Librerías', description: 'CSS-in-JS performante' },
+  'dynamic-styles+http': { id: 'css-modules', name: 'CSS Modules', emoji: '📦', category: 'Técnicas', description: 'CSS con scope local' },
+
+  'api-client+spa': { id: 'redux', name: 'Redux', emoji: '🔄', category: 'Estado', description: 'Estado global predecible' },
+  'nextjs+api-client': { id: 'trpc', name: 'tRPC', emoji: '🛡️', category: 'Herramientas', description: 'APIs type-safe end-to-end' },
+  'emotion+styled-components': { id: 'stitches', name: 'Stitches', emoji: '🧵', category: 'Librerías', description: 'CSS-in-JS zero-runtime' },
+
+  'redux+js': { id: 'zustand', name: 'Zustand', emoji: '🐻', category: 'Estado', description: 'Estado simple y ligero' },
+  'trpc+nextjs': { id: 'create-t3', name: 'create-t3-app', emoji: '🚀', category: 'Stacks', description: 'Stack type-safe completo' },
+
+  'html+static-site': { id: 'semantic-html', name: 'HTML Semántico', emoji: '🏷️', category: 'Buenas Prácticas', description: 'Estructura significativa' },
+  'css+semantic-html': { id: 'accessibility', name: 'Accesibilidad', emoji: '♿', category: 'Buenas Prácticas', description: 'Web para todos' },
+  'js+accessibility': { id: 'aria', name: 'ARIA', emoji: '🏷️', category: 'Buenas Prácticas', description: 'Accesibilidad rica' },
+
+  'http+api-client': { id: 'graphql', name: 'GraphQL', emoji: '🔮', category: 'APIs', description: 'Query language para APIs' },
+  'graphql+nextjs': { id: 'apollo', name: 'Apollo Client', emoji: '🚀', category: 'Librerías', description: 'Cliente GraphQL completo' },
+
+  'spa+accessibility': { id: 'react-aria', name: 'React Aria', emoji: '🦋', category: 'Librerías', description: 'Hooks de accesibilidad' },
+  'zustand+react-aria': { id: 'radix', name: 'Radix UI', emoji: '🔧', category: 'Librerías', description: 'Componentes accesibles' },
+
+  'semantic-html+seo': { id: 'seo', name: 'SEO', emoji: '🔍', category: 'Marketing', description: 'Optimización buscadores' },
+  'ssr+seo': { id: 'meta-frameworks', name: 'Meta Frameworks', emoji: '🖼️', category: 'Frameworks', description: 'Next, Astro, Remix...' },
+
+  'html+ws': { id: 'websockets', name: 'WebSockets', emoji: '🔌', category: 'Tiempo Real', description: 'Comunicación bidireccional' },
+  'websockets+spa': { id: 'socketio', name: 'Socket.io', emoji: '📡', category: 'Librerías', description: 'WebSockets fáciles' },
+  'websockets+nextjs': { id: 'realtime-next', name: 'Next.js Realtime', emoji: '⚡', category: 'Frameworks', description: 'Tiempo real en Next' },
+
+  'css+animation': { id: 'framer-motion', name: 'Framer Motion', emoji: '✨', category: 'Animación', description: 'Animaciones declarativas' },
+  'framer-motion+react-aria': { id: 'motion-one', name: 'Motion One', emoji: '🎬', category: 'Animación', description: 'Animación web nativa' },
+
+  'typescript+js': { id: 'typescript', name: 'TypeScript', emoji: '📘', category: 'Lenguajes', description: 'JavaScript tipado' },
+  'typescript+nextjs': { id: 'type-safe-next', name: 'Next.js Type-Safe', emoji: '🛡️', category: 'Frameworks', description: 'Full type safety' },
+  'typescript+redux': { id: 'rtk', name: 'Redux Toolkit', emoji: '🔧', category: 'Estado', description: 'Redux moderno' },
+
+  'vite+js': { id: 'vite', name: 'Vite', emoji: '⚡', category: 'Herramientas', description: 'Build tool ultrarrápido' },
+  'vite+typescript': { id: 'vitest', name: 'Vitest', emoji: '🧪', category: 'Testing', description: 'Testing nativo Vite' },
+  'vitest+testing-library': { id: 'testing-stack', name: 'Testing Stack', emoji: '✅', category: 'Testing', description: 'Tests robustos' },
+
+  'pwa+spa': { id: 'pwa', name: 'PWA', emoji: '📱', category: 'Arquitectura', description: 'Progressive Web App' },
+  'pwa+websockets': { id: 'offline-first', name: 'Offline First', emoji: '📴', category: 'Arquitectura', description: 'Funciona sin conexión' },
+
+  'seo+meta-frameworks': { id: 'astro', name: 'Astro', emoji: '🚀', category: 'Frameworks', description: 'Islands architecture' },
+  'astro+typescript': { id: 'astro-ts', name: 'Astro + TS', emoji: '🛸', category: 'Frameworks', description: 'Type-safe islands' },
+
+  'graphql+apollo': { id: 'graphql-codegen', name: 'GraphQL Codegen', emoji: '🤖', category: 'Herramientas', description: 'Types desde schema' },
+
+  'rtk+zustand': { id: 'jotai', name: 'Jotai', emoji: '⚛️', category: 'Estado', description: 'Estado atómico' },
+  'jotai+radix': { id: 'shadcn', name: 'shadcn/ui', emoji: '🎯', category: 'UI', description: 'Componentes copiables' },
+
+  'shadcn+tailwind': { id: 'design-system', name: 'Design System', emoji: '🎨', category: 'UI', description: 'Sistema de diseño propio' },
+  'tailwind+css': { id: 'tailwind', name: 'Tailwind CSS', emoji: '🌊', category: 'CSS', description: 'Utility-first CSS' },
+  'tailwind+design-system': { id: 'ui-kit', name: 'UI Kit', emoji: '📚', category: 'UI', description: 'Biblioteca de componentes' },
+
+  'testing-stack+ci': { id: 'ci-cd', name: 'CI/CD', emoji: '🔄', category: 'DevOps', description: 'Integración continua' },
+  'ci-cd+docker': { id: 'docker', name: 'Docker', emoji: '🐳', category: 'DevOps', description: 'Contenedores' },
+  'docker+kubernetes': { id: 'k8s', name: 'Kubernetes', emoji: '☸️', category: 'DevOps', description: 'Orquestación' },
+
+  'websocket+server-render': { id: 'htmx', name: 'htmx', emoji: '🔧', category: 'Librerías', description: 'Hipermedia-driven' },
+  'htmx+go': { id: 'go-backend', name: 'Go Backend', emoji: '🐹', category: 'Backend', description: 'Backend en Go' },
+
+  'rust+wasm': { id: 'wasm', name: 'WebAssembly', emoji: '⚡', category: 'Tecnologías', description: 'Código nativo en navegador' },
+  'wasm+react': { id: 'yew', name: 'Yew', emoji: '🌿', category: 'Frameworks', description: 'Rust como React' },
+
+  'deno+typescript': { id: 'deno', name: 'Deno', emoji: '🦕', category: 'Runtime', description: 'Runtime seguro TS/JS' },
+  'deno+fresh': { id: 'fresh', name: 'Fresh', emoji: '🌿', category: 'Frameworks', description: 'Framework edge de Deno' },
+
+  'bun+js': { id: 'bun', name: 'Bun', emoji: '🍞', category: 'Runtime', description: 'Runtime JS rápido' },
+  'bun+typescript': { id: 'elysia', name: 'Elysia', emoji: '🌸', category: 'Frameworks', description: 'Framework tipo-safe Bun' },
+
+  'pnpm+monorepo': { id: 'turborepo', name: 'Turborepo', emoji: '🚀', category: 'Herramientas', description: 'Build system monorepo' },
+  'turborepo+nextjs': { id: 'monorepo-stack', name: 'Monorepo Stack', emoji: '🏗️', category: 'Arquitectura', description: 'Stack escalable' },
+};
+
+const CATEGORY_ORDER = [
+  'Fundamentos', 'Sitios Web', 'Técnicas', 'Arquitectura', 'Infraestructura',
+  'Patrones', 'Frameworks', 'Librerías', 'Estado', 'Herramientas',
+  'Buenas Prácticas', 'APIs', 'Tiempo Real', 'Animación', 'Lenguajes',
+  'Testing', 'DevOps', 'Backend', 'Runtime', 'UI', 'CSS', 'Marketing', 'Stacks', 'Tecnologías'
+];
+
+const CATEGORY_COLORS = {
+  'Fundamentos': '#3b82f6', 'Sitios Web': '#06b6d4', 'Técnicas': '#8b5cf6',
+  'Arquitectura': '#ec4899', 'Infraestructura': '#f97316', 'Patrones': '#14b8a6',
+  'Frameworks': '#a855f7', 'Librerías': '#22c55e', 'Estado': '#eab308',
+  'Herramientas': '#6366f1', 'Buenas Prácticas': '#0ea5e9', 'APIs': '#f43f5e',
+  'Tiempo Real': '#84cc16', 'Animación': '#d946ef', 'Lenguajes': '#fb923c',
+  'Testing': '#10b981', 'DevOps': '#ef4444', 'Backend': '#64748b',
+  'Runtime': '#f97316', 'UI': '#ec4899', 'CSS': '#06b6d4', 'Marketing': '#8b5cf6',
+  'Stacks': '#14b8a6', 'Tecnologías': '#6366f1'
+};
+
+let elements = new Map();
+let discovered = new Set();
+let combinations = 0;
+let nodes = new Map();
+let nodeCounter = 0;
+let slot1 = null, slot2 = null;
+let draggedNode = null;
+let canvasRect = null;
+
+const canvas = document.getElementById('canvas');
+const dropZone = document.getElementById('drop-zone');
+const slot1El = document.getElementById('slot-1');
+const slot2El = document.getElementById('slot-2');
+const combineBtn = document.getElementById('combine-btn');
+const searchInput = document.getElementById('search-input');
+const elementsList = document.getElementById('elements-list');
+const discoveredCount = document.getElementById('discovered-count');
+const totalCount = document.getElementById('total-count');
+const combinationsCount = document.getElementById('combinations-count');
+const resultToast = document.getElementById('result-toast');
+const modalOverlay = document.getElementById('modal-overlay');
+const modalTitle = document.getElementById('modal-title');
+const modalText = document.getElementById('modal-text');
+const notification = document.getElementById('notification');
+const notificationText = document.getElementById('notification-text');
+
+function init() {
+  loadState();
+  registerBaseElements();
+  registerRecipes();
+  renderElementsList();
+  updateStats();
+  setupEventListeners();
+  restoreCanvas();
+}
+
+function registerBaseElements() {
+  BASE_ELEMENTS.forEach(el => {
+    elements.set(el.id, { ...el, base: true });
+    discovered.add(el.id);
+  });
+}
+
+function registerRecipes() {
+  Object.values(RECIPES).forEach(recipe => {
+    elements.set(recipe.id, { ...recipe, base: false });
+  });
+  totalCount.textContent = elements.size;
+}
+
+function getKey(a, b) {
+  return [a, b].sort().join('+');
+}
+
+function tryCombine(id1, id2) {
+  const key = getKey(id1, id2);
+  const recipe = RECIPES[key];
+  if (!recipe) return null;
+
+  const isNew = !discovered.has(recipe.id);
+  discovered.add(recipe.id);
+  combinations++;
+  updateStats();
+  saveState();
+
+  if (isNew) {
+    showToast(recipe);
+    renderElementsList();
+  }
+  return recipe;
+}
+
+function showToast(recipe) {
+  document.getElementById('toast-emoji').textContent = recipe.emoji;
+  document.getElementById('toast-title').textContent = recipe.name;
+  document.getElementById('toast-subtitle').textContent = recipe.description;
+  document.getElementById('toast-badge').textContent = recipe.base ? 'Base' : 'Nuevo descubrimiento';
+  resultToast.classList.add('show');
+  setTimeout(() => resultToast.classList.remove('show'), 4000);
+}
+
+function notify(message, type = 'success') {
+  notificationText.textContent = message;
+  notification.className = 'notification show ' + type;
+  setTimeout(() => notification.classList.remove('show'), 3000);
+}
+
+function showModal(title, text) {
+  modalTitle.textContent = title;
+  modalText.innerHTML = text;
+  modalOverlay.classList.add('show');
+}
+
+function updateStats() {
+  discoveredCount.textContent = discovered.size;
+  combinationsCount.textContent = combinations;
+}
+
+function saveState() {
+  const state = {
+    discovered: Array.from(discovered),
+    combinations,
+    nodes: Array.from(nodes.entries()).map(([id, node]) => ({
+      id, elementId: node.elementId, x: node.x, y: node.y
+    })),
+    version: 1
+  };
+  localStorage.setItem('alchemy-state', JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = localStorage.getItem('alchemy-state');
+  if (saved) {
+    try {
+      const state = JSON.parse(saved);
+      if (state.discovered) discovered = new Set(state.discovered);
+      if (state.combinations) combinations = state.combinations;
+    } catch (e) { console.warn('Error loading state:', e); }
+  }
+}
+
+function restoreCanvas() {
+  const saved = localStorage.getItem('alchemy-state');
+  if (saved) {
+    try {
+      const state = JSON.parse(saved);
+      if (state.nodes) {
+        state.nodes.forEach(nodeData => {
+          createNode(nodeData.elementId, nodeData.x, nodeData.y, nodeData.id);
+        });
+      }
+    } catch (e) { console.warn('Error restoring canvas:', e); }
+  }
+}
+
+function createNode(elementId, x, y, customId = null) {
+  const element = elements.get(elementId);
+  if (!element) return null;
+
+  const id = customId || `node-${++nodeCounter}`;
+  const nodeEl = document.createElement('div');
+  nodeEl.className = 'element-node new';
+  nodeEl.dataset.id = id;
+  nodeEl.dataset.elementId = elementId;
+  nodeEl.style.left = `${x}px`;
+  nodeEl.style.top = `${y}px`;
+
+  nodeEl.innerHTML = `
+    <div class="node-card" style="border-left: 3px solid ${CATEGORY_COLORS[element.category] || '#888'}">
+      <div class="node-emoji">${element.emoji}</div>
+      <div class="node-name" title="${element.name}">${element.name}</div>
+      <div class="node-category">${element.category}</div>
+    </div>
+  `;
+
+  const card = nodeEl.querySelector('.node-card');
+  card.addEventListener('mousedown', e => startDrag(e, nodeEl, id));
+  card.addEventListener('touchstart', e => startDrag(e, nodeEl, id), { passive: false });
+  card.addEventListener('dblclick', () => removeNode(id));
+  card.addEventListener('contextmenu', e => { e.preventDefault(); showElementInfo(element); });
+
+  canvas.appendChild(nodeEl);
+  nodes.set(id, { elementId, x, y, el: nodeEl });
+  saveState();
+  return nodeEl;
+}
+
+function startDrag(e, nodeEl, nodeId) {
+  if (e.button === 2) return;
+  e.preventDefault();
+  e.stopPropagation();
+
+  draggedNode = nodeId;
+  const node = nodes.get(nodeId);
+  if (!node) return;
+
+  nodeEl.classList.add('dragging');
+  document.body.style.cursor = 'grabbing';
+
+  const rect = nodeEl.getBoundingClientRect();
+  const canvasRect = canvas.getBoundingClientRect();
+  const offsetX = e.clientX - rect.left;
+  const offsetY = e.clientY - rect.top;
+
+  function onMove(e) {
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    let x = clientX - canvasRect.left - offsetX;
+    let y = clientY - canvasRect.top - offsetY;
+
+    x = Math.max(0, Math.min(x, canvasRect.width - rect.width));
+    y = Math.max(0, Math.min(y, canvasRect.height - rect.height));
+
+    nodeEl.style.left = `${x}px`;
+    nodeEl.style.top = `${y}px`;
+    node.x = x;
+    node.y = y;
+  }
+
+  function onEnd() {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onEnd);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onEnd);
+    nodeEl.classList.remove('dragging');
+    document.body.style.cursor = '';
+    saveState();
+    draggedNode = null;
+  }
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onEnd);
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('touchend', onEnd);
+}
+
+function removeNode(id) {
+  const node = nodes.get(id);
+  if (node) {
+    node.el.remove();
+    nodes.delete(id);
+    saveState();
+  }
+}
+
+function showElementInfo(element) {
+  showModal(element.name, `
+    <p>${element.description}</p>
+    <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted);">
+      Categoría: <strong>${element.category}</strong><br>
+      ${element.base ? 'Elemento base' : 'Descubierto por combinación'}
+    </p>
+  `);
+}
+
+function renderElementsList(filter = '') {
+  elementsList.innerHTML = '';
+  const categories = new Map();
+
+  elements.forEach((element, id) => {
+    if (!discovered.has(id)) return;
+    if (filter && !element.name.toLowerCase().includes(filter.toLowerCase()) &&
+        !element.category.toLowerCase().includes(filter.toLowerCase())) return;
+
+    if (!categories.has(element.category)) categories.set(element.category, []);
+    categories.get(element.category).push({ id, ...element });
+  });
+
+  CATEGORY_ORDER.forEach(cat => {
+    if (!categories.has(cat)) return;
+    const items = categories.get(cat);
+    const catDiv = document.createElement('div');
+    catDiv.className = 'category';
+    catDiv.innerHTML = `<div class="category-title">${cat}</div>`;
+    items.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'element-item';
+      el.draggable = true;
+      el.dataset.id = item.id;
+      el.innerHTML = `
+        <span class="element-emoji">${item.emoji}</span>
+        <span class="element-name">${item.name}</span>
+        <span class="element-count">${countCombinations(item.id)}</span>
+      `;
+      el.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', item.id);
+        e.dataTransfer.effectAllowed = 'copy';
+        el.classList.add('dragging');
+      });
+      el.addEventListener('dragend', () => el.classList.remove('dragging'));
+      el.addEventListener('click', () => addToNextSlot(item.id));
+      catDiv.appendChild(el);
+    });
+    elementsList.appendChild(catDiv);
+  });
+}
+
+function countCombinations(elementId) {
+  let count = 0;
+  Object.keys(RECIPES).forEach(key => {
+    const [a, b] = key.split('+');
+    if (a === elementId || b === elementId) count++;
+  });
+  return count;
+}
+
+function addToNextSlot(elementId) {
+  if (!slot1) {
+    fillSlot(1, elementId);
+  } else if (!slot2 && slot1 !== elementId) {
+    fillSlot(2, elementId);
+  } else if (slot1 === elementId) {
+    notify('Ya está en la ranura 1', 'warning');
+  } else {
+    notify('Ambas ranuras ocupadas', 'warning');
+  }
+}
+
+function fillSlot(slotNum, elementId) {
+  const element = elements.get(elementId);
+  if (!element) return;
+
+  const slot = slotNum === 1 ? slot1El : slot2El;
+  slot.textContent = element.emoji;
+  slot.classList.add('filled', 'pulse');
+  slot.dataset.elementId = elementId;
+
+  if (slotNum === 1) slot1 = elementId;
+  else slot2 = elementId;
+
+  setTimeout(() => slot.classList.remove('pulse'), 500);
+  updateCombineButton();
+  dropZone.classList.remove('active');
+}
+
+function clearSlot(slotNum) {
+  const slot = slotNum === 1 ? slot1El : slot2El;
+  slot.textContent = '';
+  slot.classList.remove('filled');
+  delete slot.dataset.elementId;
+  if (slotNum === 1) slot1 = null;
+  else slot2 = null;
+  updateCombineButton();
+}
+
+function updateCombineButton() {
+  if (slot1 && slot2 && slot1 !== slot2) {
+    combineBtn.classList.add('ready');
+    combineBtn.disabled = false;
+  } else {
+    combineBtn.classList.remove('ready');
+    combineBtn.disabled = true;
+  }
+}
+
+function combine() {
+  if (!slot1 || !slot2 || slot1 === slot2) return;
+
+  const result = tryCombine(slot1, slot2);
+  const slot1El = document.getElementById('slot-1');
+  const slot2El = document.getElementById('slot-2');
+
+  slot1El.classList.add('pulse');
+  slot2El.classList.add('pulse');
+
+  setTimeout(() => {
+    slot1El.classList.remove('pulse');
+    slot2El.classList.remove('pulse');
+
+    if (result) {
+      createNode(result.id, canvas.clientWidth / 2 - 60, canvas.clientHeight / 2 - 60);
+      notify(`¡Creaste ${result.name}!`, 'success');
+    } else {
+      notify('No hay combinación válida', 'error');
+      slot1El.classList.add('shake');
+      slot2El.classList.add('shake');
+      setTimeout(() => {
+        slot1El.classList.remove('shake');
+        slot2El.classList.remove('shake');
+      }, 400);
+    }
+    clearSlot(1);
+    clearSlot(2);
+  }, 300);
+}
+
+function setupEventListeners() {
+  searchInput.addEventListener('input', e => renderElementsList(e.target.value));
+
+  combineBtn.addEventListener('click', combine);
+
+  canvas.addEventListener('dragover', e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    dropZone.classList.add('active');
+  });
+
+  canvas.addEventListener('dragleave', e => {
+    if (!canvas.contains(e.relatedTarget)) dropZone.classList.remove('active');
+  });
+
+  canvas.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('active');
+    const elementId = e.dataTransfer.getData('text/plain');
+    if (elementId && elements.has(elementId)) {
+      const rect = canvas.getBoundingClientRect();
+      createNode(elementId, e.clientX - rect.left - 50, e.clientY - rect.top - 50);
+    }
+  });
+
+  [slot1El, slot2El].forEach((slot, i) => {
+    slot.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      slot.classList.add('drag-over');
+    });
+    slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
+    slot.addEventListener('drop', e => {
+      e.preventDefault();
+      slot.classList.remove('drag-over');
+      const elementId = e.dataTransfer.getData('text/plain');
+      if (elementId && elements.has(elementId)) {
+        const otherSlot = i === 0 ? slot2 : slot1;
+        if (otherSlot !== elementId) fillSlot(i + 1, elementId);
+      }
+    });
+    slot.addEventListener('click', () => {
+      if (slot.classList.contains('filled')) clearSlot(i + 1);
+    });
+  });
+
+  document.getElementById('clear-canvas-btn').addEventListener('click', () => {
+    if (nodes.size === 0) return;
+    if (confirm('¿Limpiar todo el lienzo?')) {
+      nodes.forEach(node => node.el.remove());
+      nodes.clear();
+      nodeCounter = 0;
+      saveState();
+      notify('Lienzo limpiado', 'success');
+    }
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', e => {
+    e.preventDefault();
+    if (confirm('¿Reiniciar todo el progreso? Se perderán todos los descubrimientos.')) {
+      localStorage.removeItem('alchemy-state');
+      location.reload();
+    }
+  });
+
+  document.getElementById('export-btn').addEventListener('click', e => {
+    e.preventDefault();
+    const state = {
+      discovered: Array.from(discovered),
+      combinations,
+      nodes: Array.from(nodes.entries()).map(([id, node]) => ({
+        id, elementId: node.elementId, x: node.x, y: node.y
+      })),
+      version: 1,
+      exportedAt: new Date().toISOString()
+    };
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alchemy-web-reactiva-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    notify('Progreso exportado', 'success');
+  });
+
+  document.getElementById('import-btn').addEventListener('click', e => {
+    e.preventDefault();
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const state = JSON.parse(e.target.result);
+          if (state.discovered) discovered = new Set(state.discovered);
+          if (state.combinations) combinations = state.combinations;
+          nodes.forEach(node => node.el.remove());
+          nodes.clear();
+          nodeCounter = 0;
+          if (state.nodes) {
+            state.nodes.forEach(nodeData => createNode(nodeData.elementId, nodeData.x, nodeData.y, nodeData.id));
+          }
+          saveState();
+          renderElementsList();
+          updateStats();
+          notify('Progreso importado', 'success');
+        } catch (err) {
+          notify('Archivo inválido', 'error');
+        }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  });
+
+  document.getElementById('help-btn').addEventListener('click', e => {
+    e.preventDefault();
+    showModal('Cómo jugar', `
+      <ul style="line-height: 2; padding-left: 20px;">
+        <li>Arrastra elementos de la barra lateral al lienzo</li>
+        <li>Suelta 2 elementos en las ranuras de combinación (abajo)</li>
+        <li>Pulsa <strong>Combinar</strong> para descubrir algo nuevo</li>
+        <li>Los nuevos elementos aparecen en el lienzo y en la lista</li>
+        <li>Doble clic en un elemento del lienzo para eliminarlo</li>
+        <li>Clic derecho para ver información</li>
+        <li>Tu progreso se guarda automáticamente</li>
+      </ul>
+      <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+        Inspirado en <a href="https://neal.fun/infinite-craft/" target="_blank" style="color: var(--accent);">Infinite Craft</a> de Neal Agarwal
+      </p>
+    `);
+  });
+
+  document.getElementById('modal-close').addEventListener('click', () => modalOverlay.classList.remove('show'));
+  modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('show'); });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      modalOverlay.classList.remove('show');
+      if (slot1) clearSlot(1);
+      if (slot2) clearSlot(2);
+    }
+    if (e.key === 'Enter' && !combineBtn.disabled && document.activeElement !== searchInput) combine();
+  });
+
+  window.addEventListener('resize', () => {
+    nodes.forEach(node => {
+      const rect = node.el.getBoundingClientRect();
+      const canvasRect = canvas.getBoundingClientRect();
+      node.x = Math.max(0, Math.min(node.x, canvasRect.width - rect.width));
+      node.y = Math.max(0, Math.min(node.y, canvasRect.height - rect.height));
+      node.el.style.left = `${node.x}px`;
+      node.el.style.top = `${node.y}px`;
+    });
+    saveState();
+  });
+}
+
+init();
+  </script>
+</body>
+</html>

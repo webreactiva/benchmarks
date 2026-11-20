@@ -1,0 +1,24 @@
+{
+  "codigo": "PTS",
+  "modelo": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T20:46:54Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 8080,
+    "output": 682,
+    "reasoning": 71,
+    "cache_read": 8768,
+    "cache_write": 0,
+    "total": 17601
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "write": 1
+  },
+  "sesion": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
+  "ficheros": [
+    "por-que-tests-flaky-son-peores-que-no-tener-tests.md"
+  ]
+}

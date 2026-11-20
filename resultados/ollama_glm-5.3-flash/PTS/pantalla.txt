@@ -1,0 +1,36 @@
+  ┃
+
+  ┃
+  ┃  ← Edit tests-flaky-son-peores-que-no-tener-tests.md
+  ┃
+  ┃    71   5. **Prevenir.** Prioriza tests deterministas: controla el tiempo con clock inyectable, usa fixtures por
+  ┃         test, simula la red en vez de usarla, y haz explícito cualquier paralelismo.
+  ┃    72
+  ┃    73   ## La regla de bolsillo
+  ┃    74
+  ┃    75 - Un test debe tener una propiedad no negociable: **que haga lo que dice, siempre**. Un test verde es una
+  ┃         promesa y un test rojo es una alerta; un test a veces verde y a veces rojo no es ni una cosa ni otra, es
+  ┃         ruido calibrado para destrenzar la señal.
+  ┃    75 + Un test debe tener una propiedad no negociable: **que haga lo que dice, siempre**. Un test verde es una
+  ┃         promesa y un test rojo es una alerta; un test a veces verde y a veces rojo no es ni una cosa ni otra, es
+  ┃         ruido calibrado para ahogar la señal.
+  ┃    76
+  ┃    77   Si tuvieras que elegir entre una suite con un 3% de tests flaky y una suite vacía, no es una pregunta
+  ┃         tonta: con la suite vacía, al menos todos saben dónde están. Con la suite mentirosa, nadie sabe que están
+  ┃         perdidos.
+  ┃    78
+  ┃    79   Dedica el mismo rigor a tus tests que a tu código de producción. Porque tus tests lo son.
+  ┃
+
+     Guardado en tests-flaky-son-peores-que-no-tener-tests.md, con estructura de blog: el efecto del lobo cibernético,
+      costes ocultos, un ejemplo de código en Go, y consejos accionables (cuarentena, reparar o eliminar).
+
+     ▣  Build · glm-5.3-flash · 12.4s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-cJ1neecZ                                                                   10.0K  ctrl+p commands
+

@@ -1,0 +1,19 @@
+{
+  "nota": 6,
+  "veredicto": "correcto, pero no escala",
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 1,
+    "escala horizontal": 0,
+    "explica el escalado": 0
+  },
+  "resumen": "Una clase Carrito en Python, limpia y bien validada (Decimal, una moneda por carrito, precio y stock del catálogo, 17 tests), pero sin servicio, sin persistencia y sin nada que responda a «escalable»: el carrito vive en un objeto en memoria y no hay README que lo explique.",
+  "rarezas": [
+    "El más corto de todos los CCA: 11 peticiones y 175 k tokens. Entiende «escalable» como catálogo inyectable.",
+    "Dejó __pycache__ en la entrega."
+  ]
+}

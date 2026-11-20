@@ -1,0 +1,12 @@
+{
+  "nota": 9,
+  "veredicto": "se recorre y se reconoce",
+  "rubrica": {"abre sin errores": 1, "ruta con paradas reales": 2, "la ruta se recorre": 3, "se reconoce la Alhambra": 2, "vista limpia": 0, "textos sin errores": 1},
+  "resumen": "Ruta guiada a pie de calle que arranca sola y avanza por 8 puntos (Justicia, Vino, Alcazaba, Carlos V, Leones, Arrayanes y Comares, Generalife) más un modo libre con una de las mejores maquetas del benchmark: la Torre de Comares, Carlos V con su patio circular, el anillo de columnas de los Leones, la Alcazaba almenada y el Darro. Pero empieza dentro de un muro y en el recorrido la cámara roza las paredes.",
+  "rarezas": [
+    "Tercera tirada de GLM en este prompt: la primera se cortó en el tope de 32 000 tokens y la segunda compactaba sin parar por nuestra configuración (las dos en _descartados). Esta, limpia: 0 compactaciones, 1 mensaje.",
+    "Es un HTML distinto al de la tirada anterior (aquella era más pequeña, con 8 paradas y botones anterior/siguiente): la misma petición da obras distintas.",
+    "Lo comprobó en Chrome headless capturando 9 tramos del recorrido.",
+    "29 peticiones y 1,8 millones de tokens."
+  ]
+}

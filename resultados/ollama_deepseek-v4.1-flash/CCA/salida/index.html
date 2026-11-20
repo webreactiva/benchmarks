@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Nébula Store: demo de un carrito de la compra escalable con arquitectura por capas."
+    />
+    <title>Nébula Store · Carrito escalable</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="site-header">
+        <a class="brand" href="#" aria-label="Nébula Store">
+          <span class="brand-mark" aria-hidden="true">◈</span>
+          <span class="brand-name">Nébula<span>Store</span></span>
+        </a>
+
+        <div class="search">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input
+            id="search-input"
+            type="search"
+            placeholder="Buscar productos…"
+            aria-label="Buscar productos"
+            autocomplete="off"
+          />
+        </div>
+
+        <button
+          id="cart-toggle"
+          class="cart-button"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="cart-panel"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true">🛒</span>
+          <span class="cart-button-label">Carrito</span>
+          <span id="cart-badge" class="cart-badge" hidden>0</span>
+        </button>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-content">
+            <p class="eyebrow">Colección 2026</p>
+            <h1>Objetos que hacen<br /><span>mejor tu día.</span></h1>
+            <p class="hero-copy">
+              Tecnología, hogar y bienestar seleccionados con obsesión por el detalle.
+              Envío gratis a partir de 50 €.
+            </p>
+            <button class="hero-cta" id="hero-cta" type="button">Explorar colección</button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orb orb-a"></div>
+            <div class="orb orb-b"></div>
+            <div class="hero-card">
+              <span class="hero-card-emoji">🎧</span>
+              <div>
+                <strong>Auriculares Aurora</strong>
+                <span>Sonido que te envuelve</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="catalog" aria-labelledby="catalog-title">
+          <div class="toolbar">
+            <div
+              id="category-filters"
+              class="filters"
+              role="group"
+              aria-label="Filtrar por categoría"
+            ></div>
+            <label class="sort">
+              <span>Ordenar</span>
+              <select id="sort-select">
+                <option value="featured">Destacados</option>
+                <option value="price-asc">Precio: menor a mayor</option>
+                <option value="price-desc">Precio: mayor a menor</option>
+                <option value="rating">Mejor valorados</option>
+              </select>
+            </label>
+          </div>
+          <h2 id="catalog-title" class="sr-only">Catálogo de productos</h2>
+          <div id="product-grid" class="product-grid" aria-live="polite"></div>
+          <p id="empty-catalog" class="empty-catalog" hidden>
+            No encontramos productos con esos filtros.
+          </p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Nébula Store · Demo de carrito escalable con arquitectura por capas.</p>
+      </footer>
+    </div>
+
+    <div id="cart-overlay" class="overlay" hidden></div>
+
+    <aside
+      id="cart-panel"
+      class="cart-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cart-title"
+      hidden
+    >
+      <header class="cart-header">
+        <div>
+          <h2 id="cart-title">Tu carrito</h2>
+          <p id="cart-subtitle" class="muted">0 artículos</p>
+        </div>
+        <button id="cart-close" class="icon-button" type="button" aria-label="Cerrar carrito">
+          ✕
+        </button>
+      </header>
+
+      <div id="cart-content" class="cart-content">
+        <div id="cart-empty" class="cart-empty">
+          <span class="cart-empty-icon" aria-hidden="true">🛍️</span>
+          <p>Tu carrito está vacío</p>
+          <button class="ghost-button" type="button" data-close-cart>
+            Añadir productos
+          </button>
+        </div>
+        <ul id="cart-items" class="cart-items"></ul>
+      </div>
+
+      <div id="cart-footer" class="cart-footer" hidden>
+        <div id="shipping-progress" class="shipping-progress">
+          <div class="shipping-text"><span id="shipping-message"></span></div>
+          <div class="progress-track">
+            <div id="shipping-bar" class="progress-bar"></div>
+          </div>
+        </div>
+
+        <form id="coupon-form" class="coupon-form">
+          <input
+            id="coupon-input"
+            type="text"
+            placeholder="Código de descuento"
+            aria-label="Código de descuento"
+            autocomplete="off"
+          />
+          <button type="submit" class="ghost-button">Aplicar</button>
+        </form>
+        <p id="coupon-feedback" class="coupon-feedback" role="status" hidden></p>
+        <div id="applied-coupon" class="applied-coupon" hidden></div>
+
+        <dl id="totals" class="totals"></dl>
+
+        <button id="checkout-button" class="checkout-button" type="button">
+          Finalizar compra
+        </button>
+        <p class="secure-note">🔒 Pago seguro simulado · Demo</p>
+      </div>
+    </aside>
+
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <dialog id="order-dialog" class="order-dialog">
+      <div class="order-icon" aria-hidden="true">✓</div>
+      <h2>¡Pedido confirmado!</h2>
+      <p id="order-summary"></p>
+      <p class="muted">Gracias por probar Nébula Store.</p>
+      <button id="order-close" class="checkout-button" type="button">Seguir comprando</button>
+    </dialog>
+
+    <script type="module" src="./src/ui/app.js"></script>
+  </body>
+</html>

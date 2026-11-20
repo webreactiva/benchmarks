@@ -1,0 +1,24 @@
+{
+  "codigo": "CCA",
+  "modelo": "ollama/minimax-m3",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T23:43:28Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 5933,
+    "output": 826,
+    "reasoning": 0,
+    "cache_read": 9600,
+    "cache_write": 0,
+    "total": 16359
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "bash": 1,
+    "glob": 1,
+    "question": 1
+  },
+  "sesion": "ses_e09ce5edcffeDo9y2ts5Yfzd8f",
+  "ficheros": []
+}

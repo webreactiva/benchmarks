@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Web Reactiva Craft 🔴</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔴</text></svg>">
+<style>
+:root{
+  --accent:#e5232e;
+  --bg:#0b0b10;
+  --panel:#121219;
+  --chip:#1d1d26;
+  --line:#2b2b36;
+  --text:#f2f2f6;
+  --muted:#8b8b98;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;user-select:none;-webkit-user-select:none}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1100px 700px at 75% 15%, rgba(229,35,46,.09), transparent 60%),
+    radial-gradient(900px 650px at 20% 90%, rgba(229,35,46,.06), transparent 55%),
+    var(--bg);
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+header{
+  position:fixed;top:0;left:0;right:0;height:54px;z-index:40;
+  display:flex;align-items:center;gap:14px;padding:0 14px;
+  background:rgba(11,11,16,.88);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.dot{width:13px;height:13px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px rgba(229,35,46,.9);flex:none;animation:breathe 3s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:0 0 4px rgba(229,35,46,.4)}}
+.brand{font-weight:800;letter-spacing:.3px;white-space:nowrap}
+#stats{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:auto}
+.hbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#191922;display:grid;place-items:center;font-size:15px;flex:none}
+.hbtn:hover{border-color:var(--accent)}
+#btnPanel{display:none}
+
+#panel{
+  position:fixed;top:54px;left:0;bottom:0;width:272px;z-index:30;
+  background:var(--panel);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;
+}
+.panel-head{padding:14px 14px 8px;font-weight:700;font-size:14px}
+.panel-head span{color:var(--muted);font-weight:600}
+#search{
+  margin:0 12px 10px;padding:8px 12px;border-radius:10px;
+  background:#191922;border:1px solid var(--line);color:var(--text);
+  font:inherit;font-size:13px;outline:none;
+}
+#search:focus{border-color:var(--accent)}
+#discList{flex:1;overflow-y:auto;padding:4px 8px 12px;scrollbar-width:thin}
+.disc{
+  display:flex;align-items:center;gap:8px;width:100%;text-align:left;
+  padding:7px 10px;margin:4px 0;border-radius:10px;
+  background:#17171f;border:1px solid var(--line);font-size:13.5px;font-weight:600;
+}
+.disc:hover{border-color:var(--accent);transform:translateX(2px)}
+.disc .em{font-size:16px;flex:none}
+.disc .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.disc .badge{margin-left:auto;font-size:11px;flex:none}
+.disc.pulse{animation:sidepulse 1.4s ease-out}
+@keyframes sidepulse{0%{background:rgba(229,35,46,.45)}100%{background:#17171f}}
+.panel-foot{padding:8px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.5}
+.panel-foot a{color:var(--muted)}
+
+#viewport{
+  position:fixed;inset:54px 0 0 272px;overflow:hidden;touch-action:none;cursor:grab;
+}
+#viewport.dragging{cursor:grabbing}
+#world{position:absolute;left:0;top:0;width:0;height:0;transform-origin:0 0}
+.chip{
+  position:absolute;display:flex;align-items:center;gap:8px;
+  padding:9px 15px;border-radius:999px;white-space:nowrap;
+  background:var(--chip);border:1px solid var(--line);
+  font-size:15px;font-weight:600;cursor:grab;touch-action:none;
+  box-shadow:0 4px 14px rgba(0,0,0,.45);will-change:transform;
+}
+.chip .em{font-size:18px;line-height:1}
+.chip:hover{border-color:var(--accent)}
+.chip.drag{scale:1.07;z-index:10;box-shadow:0 14px 34px rgba(0,0,0,.6)}
+.chip.mark{box-shadow:0 0 0 3px var(--accent),0 4px 14px rgba(0,0,0,.5)}
+.chip.pop{animation:pop .34s cubic-bezier(.2,.9,.3,1.35)}
+@keyframes pop{0%{scale:.2}65%{scale:1.14}100%{scale:1}}
+.chip.glow{animation:pop .34s cubic-bezier(.2,.9,.3,1.35),glow 1.6s ease-out}
+@keyframes glow{0%{box-shadow:0 0 0 5px rgba(229,35,46,.8)}100%{box-shadow:0 0 0 14px rgba(229,35,46,0)}}
+.chip.absorb{animation:vanish .2s ease-in forwards;pointer-events:none}
+@keyframes vanish{to{scale:0;opacity:0}}
+
+#hint{
+  position:absolute;left:50%;top:12%;transform:translateX(-50%);
+  color:var(--muted);font-size:14px;pointer-events:none;text-align:center;
+  transition:opacity .6s;
+}
+#hint.hide{opacity:0}
+.zoomctl{
+  position:absolute;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;
+}
+.zoomctl button{
+  width:40px;height:40px;border-radius:12px;border:1px solid var(--line);
+  background:rgba(25,25,34,.92);font-size:17px;
+}
+.zoomctl button:hover{border-color:var(--accent)}
+
+#toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);
+  background:#191922;border:1px solid var(--accent);border-radius:12px;
+  padding:10px 18px;font-size:14px;font-weight:600;z-index:60;
+  opacity:0;pointer-events:none;transition:.25s;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+#modal{
+  position:fixed;inset:0;z-index:70;display:grid;place-items:center;
+  background:rgba(5,5,8,.66);backdrop-filter:blur(5px);padding:20px;
+}
+#modal.hidden{display:none}
+.card{
+  max-width:440px;width:100%;background:var(--panel);border:1px solid var(--line);
+  border-radius:18px;padding:24px 26px;box-shadow:0 24px 80px rgba(0,0,0,.6);
+}
+.card h2{margin:0 0 12px;font-size:21px}
+.card ul{margin:0 0 14px;padding-left:20px;line-height:1.9;color:#cfcfd8}
+.card .goal{
+  background:#17171f;border:1px solid var(--line);border-radius:12px;
+  padding:10px 14px;font-size:14px;margin-bottom:16px;line-height:1.6;
+}
+.card .primary{
+  width:100%;padding:12px;border-radius:12px;background:var(--accent);
+  font-weight:800;font-size:15px;
+}
+.card .primary:hover{filter:brightness(1.12)}
+.card .foot{margin:14px 0 0;color:var(--muted);font-size:11px;line-height:1.6;text-align:center}
+
+@media (max-width:880px){
+  #btnPanel{display:grid}
+  #viewport{inset:54px 0 0 0}
+  #panel{transform:translateX(-105%);transition:transform .25s;border-top:1px solid var(--line)}
+  body.panel-open #panel{transform:none}
+  #stats{font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button id="btnPanel" class="hbtn" title="Descubrimientos">☰</button>
+  <span class="dot"></span>
+  <span class="brand">Web Reactiva Craft</span>
+  <span id="stats"></span>
+  <button id="btnSound" class="hbtn" title="Sonido">🔊</button>
+  <button id="btnHelp" class="hbtn" title="Ayuda">?</button>
+  <button id="btnReset" class="hbtn" title="Reiniciar">♻️</button>
+</header>
+
+<aside id="panel">
+  <div class="panel-head">Descubrimientos <span id="discCount"></span></div>
+  <input id="search" type="search" placeholder="Buscar…" autocomplete="off">
+  <div id="discList"></div>
+  <div class="panel-foot">
+    Juego fan inspirado en <a href="https://neal.fun/infinite-craft/" target="_blank" rel="noopener">Infinite Craft (neal.fun)</a>.
+    Tributo sin afiliación a Web Reactiva. Todo se guarda solo en tu navegador.
+  </div>
+</aside>
+
+<main id="viewport">
+  <div id="world"></div>
+  <div id="hint">Arrastra una ficha y suéltala sobre otra para combinarlas</div>
+  <div class="zoomctl">
+    <button id="zIn" title="Acercar">+</button>
+    <button id="zOut" title="Alejar">−</button>
+    <button id="zReset" title="Centrar vista">⌖</button>
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<div id="modal">
+  <div class="card">
+    <h2>🔴 Web Reactiva Craft</h2>
+    <ul>
+      <li>Arrastra las fichas por la mesa.</li>
+      <li>Suelta una ficha sobre otra para fusionarlas.</li>
+      <li>Cada fusión puede destapar un descubrimiento nuevo (o una invención rara 🎲).</li>
+      <li>Todo se guarda en tu navegador, sin servidores.</li>
+    </ul>
+    <div class="goal">Misión: mezcla 🎙️ con 🔗 y encuentra el corazón de la Red…</div>
+    <button id="btnClose" class="primary">¡A construir!</button>
+    <p class="foot">Juego fan inspirado en Infinite Craft (neal.fun). No oficial, 100% offline.</p>
+  </div>
+</div>
+
+<script>
+const BASE=[["Internet","🌐"],["Radio","📻"],["Cine","🎬"],["Juego","🎮"]];
+const R=[
+["Podcast","🎙️","Internet","Radio"],
+["Deep Web","🕳️","Internet","Internet"],
+["Meme","🐸","Internet","Cine"],
+["Pixel","🟪","Internet","Juego"],
+["Interferencia","⚡","Radio","Radio"],
+["Tráiler","🎞️","Radio","Cine"],
+["Música","🎵","Radio","Juego"],
+["Secuela","2️⃣","Cine","Cine"],
+["Friki","🤓","Cine","Juego"],
+["Speedrun","⏱️","Juego","Juego"],
+["Emisora","🎚️","Radio","Música"],
+["Ruido","📢","Interferencia","Emisora"],
+["Streaming","📡","Podcast","Radio"],
+["Videopodcast","📺","Podcast","Cine"],
+["Podcast de Gaming","🎲","Podcast","Juego"],
+["Velocidad 1.5x","⏩","Podcast","Podcast"],
+["Velocidad 2x","⏭️","Velocidad 1.5x","Friki"],
+["Onda Media","📻","Podcast","Retro"],
+["Podcast Veterano","🗿","Podcast","Nostalgia"],
+["Buffering","⏳","Streaming","Streaming"],
+["Lag","🐢","Buffering","Friki"],
+["Desconexión","🔌","Lag","Lag"],
+["Spotify","🟢","Streaming","Música"],
+["YouTube","▶️","Streaming","Meme"],
+["Playlist","🎶","Música","Música"],
+["Enlace","🔗","Internet","Friki"],
+["Web Reactiva","🔴","Podcast","Enlace"],
+["Nacho Ojea","🎧","Web Reactiva","Friki"],
+["La Red","🕸️","Web Reactiva","Internet"],
+["Web Reactiva en Directo","🎦","Web Reactiva","Twitch"],
+["Estreno de Temporada","📅","Web Reactiva","Podcast"],
+["Jingle","🎺","Web Reactiva","Música"],
+["Rediseño","🎨","Web Reactiva","Pixel"],
+["Leyenda de la Red","🏅","Web Reactiva","Fandom"],
+["Reactivista","😎","La Red","Friki"],
+["Oyente","👂","La Red","Podcast"],
+["Alcalde de la Red","👑","La Red","Nacho Ojea"],
+["Comunidad","🤝","La Red","Fandom"],
+["Quedada de la Red","🍻","Reactivista","Reactivista"],
+["Trece Tigres","🐯","Nacho Ojea","Juego"],
+["Trabalenguas","👅","Trece Tigres","Trece Tigres"],
+["Rugido","🦁","Trece Tigres","Ruido"],
+["Newsletter","📰","Trece Tigres","Enlace"],
+["Suscriptores","✉️","Newsletter","Fandom"],
+["La Voz","🎤","Nacho Ojea","Podcast"],
+["Club de Fans","🫶","Nacho Ojea","Fandom"],
+["Nachos","🧀","Nacho Ojea","Nacho Ojea"],
+["Nacho Clon","🧬","Nacho Ojea","IA"],
+["Ejército de Nachos","💪","Nacho Clon","Fandom"],
+["Fandom","👥","Friki","Friki"],
+["Superfan","🤩","Friki","Fandom"],
+["Radioafición","📻","Friki","Radio"],
+["Frikomeme","🤪","Friki","Meme"],
+["Maratón","🍿","Friki","Streaming"],
+["Chat","💬","Fandom","Radio"],
+["Foro","🗣️","Fandom","Internet"],
+["Wiki","📖","Fandom","Enlace"],
+["Convención","🎪","Fandom","Fandom"],
+["Twitch","💜","Streaming","Chat"],
+["Raid","🎉","Twitch","Twitch"],
+["Subs","💸","Twitch","Fandom"],
+["Hype","⚡","Raid","Fandom"],
+["Directo","🎥","Twitch","Friki"],
+["Fallo Técnico","⚠️","Directo","Glitch"],
+["Clip Viral","📹","Fallo Técnico","Fandom"],
+["Micrófono Abierto","🎤","Directo","Ruido"],
+["Flamewar","🔥","Foro","Foro"],
+["Hilo Épico","🧵","Foro","Fandom"],
+["Necropost","🧟","Hilo Épico","Friki"],
+["Moderación","🚦","Flamewar","Fandom"],
+["Blog","📝","Podcast","Friki"],
+["Blogosfera","🌍","Blog","Blog"],
+["Webring","⭕","Blog","Enlace"],
+["Enlaces","📎","Enlace","Enlace"],
+["Favoritos","📌","Enlaces","Friki"],
+["Navegador","🧭","Enlace","Internet"],
+["Modo Incógnito","🕶️","Navegador","Internet"],
+["Pestañas","🗂️","Navegador","Enlace"],
+["50 Pestañas","🤯","Pestañas","Pestañas"],
+["Pop-up","💢","Navegador","Ruido"],
+["AdBlocker","🛡️","Pop-up","Friki"],
+["Cookie","🍪","Pop-up","Meme"],
+["Aceptar Todas","😋","Cookie","Cookie"],
+["Código Fuente","👁️","Navegador","Friki"],
+["Programación","💻","Código Fuente","Friki"],
+["Proyecto Personal","📁","Programación","Programación"],
+["Open Source","🐧","Programación","Friki"],
+["GitHub","🐙","Open Source","Enlace"],
+["Chatbot","🤖","Programación","Chat"],
+["IA","🧠","Chatbot","Chatbot"],
+["Skynet","🛰️","IA","IA"],
+["Terminator","🦾","IA","Cine"],
+["Deepfake","🫥","IA","Meme"],
+["La Nube","☁️","IA","Internet"],
+["Singularidad","🌀","IA","Futuro"],
+["Glitch","🐞","Speedrun","Pixel"],
+["Hackeo","🧑‍💻","Glitch","Internet"],
+["Anónimo","🎭","Hackeo","Fandom"],
+["Troll","👹","Anónimo","Chat"],
+["Ban","🔨","Troll","Friki"],
+["Retro","👾","Pixel","Friki"],
+["8 Bits","🧩","Pixel","Juego"],
+["Arcade","🕹️","Retro","Juego"],
+["Insert Coin","🪙","Arcade","Arcade"],
+["Marcador Más Alto","🏆","Arcade","Friki"],
+["Chiptune","🎛️","Retro","Música"],
+["Cinta de Casete","📼","Retro","Radio"],
+["Lapicero","✏️","Cinta de Casete","Friki"],
+["Walkman","🎧","Cinta de Casete","Música"],
+["Rebobinar","⏪","Cinta de Casete","Cinta de Casete"],
+["Nostalgia","🕰️","Rebobinar","Fandom"],
+["Disquete","💾","Retro","Internet"],
+["ZX Spectrum","🌈","Retro","Disquete"],
+["1,44 MB","📀","Disquete","Disquete"],
+["IRC","🖥️","Retro","Fandom"],
+["Messenger","📟","Retro","Chat"],
+["GeoCities","🏙️","Retro","Enlace"],
+["Contador de Visitas","🔢","GeoCities","Friki"],
+["Steampunk","⚙️","Futuro","Retro"],
+["Synthwave","🌆","Ciencia Ficción","Retro"],
+["Figura de Colección","🧸","Retro","Star Wars"],
+["Ovni","🛸","Interferencia","Friki"],
+["Área 51","🏜️","Ovni","Friki"],
+["Asalto al Área 51","🏃","Área 51","Fandom"],
+["Ciencia Ficción","🚀","Ovni","Cine"],
+["Futuro","🔮","Ciencia Ficción","Internet"],
+["Star Wars","⭐","Ciencia Ficción","Friki"],
+["Cosplay","🦸","Star Wars","Friki"],
+["Precuela Polémica","🍿","Star Wars","Secuela"],
+["Palomitas","🧈","Tráiler","Tráiler"],
+["Trilogía","🎬","Secuela","Secuela"],
+["Viral","📈","Meme","Meme"],
+["GIF","📸","Meme","Pixel"],
+["Pixel Art","🖼️","Pixel","Pixel"],
+["Bucle Infinito","🔄","GIF","GIF"],
+["Directo Infinito","♾️","Bucle Infinito","Directo"],
+["Cadena de Correos","📧","Viral","Enlace"],
+["Canción del Verano","🌴","Viral","Música"],
+["Phishing","🎣","Cadena de Correos","Friki"],
+["Príncipe Nigeriano","💰","Phishing","Fandom"],
+["Enlace Roto","💀","Deep Web","Enlace"],
+["404","☠️","Enlace Roto","Internet"],
+["Wayback Machine","🏛️","Enlace Roto","Nostalgia"],
+["Arqueología Digital","🏺","Wayback Machine","Friki"],
+["Silencio","🤫","Ruido","Ruido"]
+];
+const WILD=[
+["Dato Curioso","🔎"],
+["Easter Egg","🥚"],
+["Pixel Muerto","⚫"],
+["Pantalla Azul","🟦"],
+["Error 500","🧱"],
+["Enigma de la Red","❔"],
+["Zumbido Extraño","📳"],
+["Caché Infinita","📦"],
+["Espíritu Digital","👻"],
+["Burbuja de Chat","💭"],
+["Madriguera del Conejo","🐇"],
+["Glitch Cósmico","🌌"],
+["Teoría Salvaje","🤔"],
+["Botón Perdido","🔘"],
+["Contraseña Olvidada","🔑"],
+["Cable Enredado","🧶"],
+["Wi-Fi Fantasma","📶"],
+["Dato Cuántico","⚛️"],
+["Fragmento de Código","📄"],
+["Archivo sin Nombre","🗃️"],
+["Leído y Sin Responder","🙈"],
+["Modo Avión","✈️"],
+["Ficha Abisal","🫧"],
+["Eco Perdido","🔊"],
+["Sopa de Letras","🥣"]
+];
+
+const SKEY="wrcraft_v1";
+const key=(a,b)=>a<b?a+"|"+b:b+"|"+a;
+const RECIPES=new Map();
+for(const[r,e,a,b]of R)RECIPES.set(key(a,b),[r,e]);
+
+const vp=document.getElementById("viewport");
+const world=document.getElementById("world");
+const listEl=document.getElementById("discList");
+const statsEl=document.getElementById("stats");
+const discCountEl=document.getElementById("discCount");
+const searchEl=document.getElementById("search");
+const toastEl=document.getElementById("toast");
+const hintEl=document.getElementById("hint");
+const modal=document.getElementById("modal");
+
+let els=[];
+let found=new Map();
+let uid=0,order=0,tt=0,saveT=0;
+let muted=false,mergedOnce=false,curTarget=null,drag=null;
+let cam={x:0,y:0,z:1};
+let AC=null;
+
+function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=(h*33+s.charCodeAt(i))>>>0;return h}
+function findResult(a,b){
+  const db=RECIPES.get(key(a,b));
+  if(db)return{n:db[0],e:db[1],t:"db"};
+  const k=key(a,b),i=hash(k)%WILD.length;
+  for(let n=0;n<WILD.length;n++){const w=WILD[(i+n)%WILD.length];if(!found.has(w[0]))return{n:w[0],e:w[1],t:"wild"}}
+  return{n:WILD[i][0],e:WILD[i][1],t:"wild"};
+}
+function chipEmoji(name){
+  const f=found.get(name);if(f)return f.e;
+  for(const[r,e]of R)if(r===name)return e;
+  const b=BASE.find(x=>x[0]===name);if(b)return b[1];
+  return"❓";
+}
+function place(rec){rec.el.style.transform=`translate3d(${rec.x}px,${rec.y}px,0) translate(-50%,-50%)`}
+function addChip(name,x,y,opts){
+  const e=chipEmoji(name);
+  const el=document.createElement("div");
+  el.className="chip";
+  const em=document.createElement("span");em.className="em";em.textContent=e;
+  const nm=document.createElement("span");nm.className="nm";nm.textContent=name;
+  el.append(em,nm);
+  world.append(el);
+  const rec={id:++uid,n:name,e,x,y,el};
+  rec.w=el.offsetWidth;rec.h=el.offsetHeight;
+  place(rec);els.push(rec);
+  if(opts&&opts.pop){el.classList.add("pop");if(opts.glow)el.classList.add("glow")}
+  updateStats();
+  return rec;
+}
+function removeChip(rec,absorb){
+  els=els.filter(r=>r!==rec);
+  if(absorb){rec.el.classList.remove("mark");rec.el.classList.add("absorb");setTimeout(()=>rec.el.remove(),240)}
+  else rec.el.remove();
+  updateStats();
+}
+function toWorld(sx,sy){
+  const r=vp.getBoundingClientRect();
+  return{x:(sx-r.left-cam.x)/cam.z,y:(sy-r.top-cam.y)/cam.z};
+}
+function applyCam(){world.style.transform=`translate3d(${cam.x}px,${cam.y}px,0) scale(${cam.z})`}
+function zoomAt(cx,cy,k){
+  const r=vp.getBoundingClientRect(),px=cx-r.left,py=cy-r.top;
+  const nz=Math.min(2,Math.max(.3,cam.z*k));
+  cam.x=px-(px-cam.x)*(nz/cam.z);
+  cam.y=py-(py-cam.y)*(nz/cam.z);
+  cam.z=nz;applyCam();
+}
+function pickTarget(c){
+  let areaBest=null,areaA=0,distBest=null,distD=1e9;
+  for(const o of els){
+    if(o===c)continue;
+    const ox=Math.min(c.x+c.w/2,o.x+o.w/2)-Math.max(c.x-c.w/2,o.x-o.w/2);
+    const oy=Math.min(c.y+c.h/2,o.y+o.h/2)-Math.max(c.y-c.h/2,o.y-o.h/2);
+    if(ox>0&&oy>0){const a=ox*oy;if(a>areaA){areaA=a;areaBest=o}}
+    const d=Math.hypot(c.x-o.x,c.y-o.y);
+    if(d<distD){distD=d;distBest=o}
+  }
+  if(areaBest)return areaBest;
+  return distD<50?distBest:null;
+}
+function discover(name,e,t){
+  if(!found.has(name)){found.set(name,{e,t,f:true,o:++order,c:1});renderList(searchEl.value);return true}
+  found.get(name).c++;return false;
+}
+function merge(a,b){
+  const res=findResult(a.n,b.n);
+  const nx=(a.x+b.x)/2,ny=(a.y+b.y)/2;
+  removeChip(a,true);removeChip(b,true);
+  if(curTarget)curTarget.el.classList.remove("mark");
+  curTarget=null;
+  const isNew=discover(res.n,res.e,res.t);
+  addChip(res.n,nx,ny,{pop:true,glow:isNew});
+  if(isNew){
+    toast(res.t==="wild"?`🎲 Invención rara: ${res.e} ${res.n}`:`✨ Nuevo descubrimiento: ${res.e} ${res.n}`);
+    snd(res.t==="wild"?"rare":"discover");
+    const it=listEl.querySelector(`[data-n="${CSS.escape(res.n)}"]`);
+    if(it){it.classList.add("pulse");it.scrollIntoView({block:"nearest",behavior:"smooth"})}
+  }else snd("merge");
+  mergedOnce=true;hintEl.classList.add("hide");
+  save();
+}
+function renderList(filter){
+  const q=(filter||"").trim().toLowerCase();
+  listEl.innerHTML="";
+  const arr=[...found.entries()].sort((x,y)=>x[1].o-y[1].o);
+  for(const[n,v]of arr){
+    if(q&&!n.toLowerCase().includes(q))continue;
+    const b=document.createElement("button");
+    b.className="disc";b.dataset.n=n;
+    const em=document.createElement("span");em.className="em";em.textContent=v.e;
+    const nm=document.createElement("span");nm.className="nm";nm.textContent=n;
+    b.append(em,nm);
+    if(v.f){const bd=document.createElement("span");bd.className="badge";bd.textContent=v.t==="wild"?"🎲":"✨";b.append(bd)}
+    b.title=v.t==="base"?"Elemento inicial":v.t==="wild"?"Invención aleatoria de la mesa":"Único resultado de receta";
+    b.onclick=()=>placeFromList(n);
+    listEl.append(b);
+  }
+  discCountEl.textContent=`(${found.size})`;
+}
+function updateStats(){statsEl.textContent=`${found.size} descubrimientos · ${els.length} fichas en mesa`}
+function placeFromList(name){
+  if(innerWidth<=880)document.body.classList.remove("panel-open");
+  const r=vp.getBoundingClientRect();
+  const p=toWorld(r.left+r.width/2+(Math.random()*180-90),r.top+r.height/2+(Math.random()*180-90));
+  addChip(name,p.x,p.y,{pop:true});
+  save();
+}
+function toast(msg){toastEl.textContent=msg;toastEl.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove("show"),2200)}
+function snd(kind){
+  if(muted)return;
+  try{
+    AC=AC||new(window.AudioContext||window.webkitAudioContext)();
+    const t=AC.currentTime;
+    const seq=kind==="merge"?[[523,0,.09],[659,.07,.13]]
+      :kind==="discover"?[[523,0,.1],[659,.08,.1],[784,.17,.14],[1047,.26,.22]]
+      :[[392,0,.1],[466,.09,.1],[587,.19,.18]];
+    for(const[f,st,d]of seq){
+      const o=AC.createOscillator(),g=AC.createGain();
+      o.type="sine";o.frequency.value=f;
+      g.gain.setValueAtTime(0,t+st);
+      g.gain.linearRampToValueAtTime(.05,t+st+.015);
+      g.gain.exponentialRampToValueAtTime(.0001,t+st+d);
+      o.connect(g);g.connect(AC.destination);
+      o.start(t+st);o.stop(t+st+d+.02);
+    }
+  }catch(e){}
+}
+function save(){
+  clearTimeout(saveT);
+  try{
+    localStorage.setItem(SKEY,JSON.stringify({
+      cam,muted,h:mergedOnce,
+      f:[...found].map(([n,v])=>[n,v.e,v.t,v.f?1:0,v.o,v.c]),
+      p:els.map(r=>[r.n,r.x,r.y])
+    }));
+  }catch(e){}
+}
+function saveSoon(){clearTimeout(saveT);saveT=setTimeout(save,300)}
+function load(){
+  try{
+    const d=JSON.parse(localStorage.getItem(SKEY));
+    if(!d)return false;
+    if(d.cam&&isFinite(d.cam.x))cam=d.cam;
+    muted=!!d.muted;mergedOnce=!!d.h;
+    if(d.f)for(const[n,e,t,f,o,c]of d.f)found.set(n,{e,t,f:!!f,o,c});
+    if(d.p)for(const[n,x,y]of d.p)addChip(n,x,y);
+    return found.size>0;
+  }catch(e){return false}
+}
+function openModal(){modal.classList.remove("hidden")}
+function closeModal(){modal.classList.add("hidden")}
+
+vp.addEventListener("pointerdown",e=>{
+  if(e.target.closest("button,input,a"))return;
+  if(drag)return;
+  const chipEl=e.target.closest(".chip");
+  if(chipEl){
+    const rec=els.find(r=>r.el===chipEl);
+    if(!rec)return;
+    const wp=toWorld(e.clientX,e.clientY);
+    drag={chip:rec,dx:wp.x-rec.x,dy:wp.y-rec.y};
+    chipEl.classList.add("drag");
+  }else{
+    drag={pan:true,sx:e.clientX,sy:e.clientY,cx:cam.x,cy:cam.y};
+    vp.classList.add("dragging");
+  }
+  try{vp.setPointerCapture(e.pointerId)}catch(err){}
+});
+vp.addEventListener("pointermove",e=>{
+  if(!drag)return;
+  if(drag.pan){
+    cam.x=drag.cx+(e.clientX-drag.sx);
+    cam.y=drag.cy+(e.clientY-drag.sy);
+    applyCam();
+  }else{
+    const wp=toWorld(e.clientX,e.clientY);
+    drag.chip.x=wp.x-drag.dx;drag.chip.y=wp.y-drag.dy;
+    place(drag.chip);
+    const t=pickTarget(drag.chip);
+    if(t!==curTarget){
+      if(curTarget)curTarget.el.classList.remove("mark");
+      if(t)t.el.classList.add("mark");
+      curTarget=t;
+    }
+  }
+});
+function endDrag(e){
+  if(!drag)return;
+  if(drag.pan){
+    drag=null;vp.classList.remove("dragging");saveSoon();return;
+  }
+  const c=drag.chip;
+  c.el.classList.remove("drag");
+  drag=null;
+  if(curTarget&&curTarget!==c)merge(c,curTarget);
+  else{if(curTarget)curTarget.el.classList.remove("mark");curTarget=null;saveSoon()}
+}
+vp.addEventListener("pointerup",endDrag);
+vp.addEventListener("pointercancel",endDrag);
+vp.addEventListener("wheel",e=>{
+  e.preventDefault();
+  zoomAt(e.clientX,e.clientY,Math.exp(-e.deltaY*0.0012));
+  saveSoon();
+},{passive:false});
+
+document.getElementById("zIn").onclick=()=>{const r=vp.getBoundingClientRect();zoomAt(r.left+r.width/2,r.top+r.height/2,1.25);saveSoon()};
+document.getElementById("zOut").onclick=()=>{const r=vp.getBoundingClientRect();zoomAt(r.left+r.width/2,r.top+r.height/2,.8);saveSoon()};
+document.getElementById("zReset").onclick=()=>{const r=vp.getBoundingClientRect();cam={x:r.width/2,y:r.height/2,z:1};applyCam();saveSoon()};
+document.getElementById("btnHelp").onclick=openModal;
+document.getElementById("btnClose").onclick=closeModal;
+modal.addEventListener("pointerdown",e=>{if(e.target===modal)closeModal()});
+document.getElementById("btnReset").onclick=()=>{
+  if(confirm("¿Empezar de cero? Se borrarán todos tus descubrimientos.")){
+    localStorage.removeItem(SKEY);location.reload();
+  }
+};
+document.getElementById("btnSound").onclick=e=>{
+  muted=!muted;e.currentTarget.textContent=muted?"🔇":"🔊";save();
+  if(!muted)snd("merge");
+};
+document.getElementById("btnPanel").onclick=()=>document.body.classList.toggle("panel-open");
+searchEl.addEventListener("input",()=>renderList(searchEl.value));
+addEventListener("keydown",e=>{
+  if(e.key==="Escape"){closeModal();document.body.classList.remove("panel-open")}
+});
+
+const restored=load();
+if(!restored){
+  for(const[n,e]of BASE)found.set(n,{e,t:"base",f:false,o:++order,c:1});
+  const r=vp.getBoundingClientRect();
+  cam={x:r.width/2,y:r.height/2,z:1};
+  addChip("Internet",-190,-110);
+  addChip("Radio",190,-110);
+  addChip("Cine",-190,110);
+  addChip("Juego",190,110);
+  openModal();
+}else{
+  const sb=document.getElementById("btnSound");
+  sb.textContent=muted?"🔇":"🔊";
+}
+if(mergedOnce)hintEl.classList.add("hide");
+applyCam();
+renderList();
+updateStats();
+</script>
+</body>
+</html>

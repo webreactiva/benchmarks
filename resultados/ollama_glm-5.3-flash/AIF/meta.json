@@ -1,0 +1,36 @@
+{
+  "codigo": "AIF",
+  "modelo": "ollama/glm-5.3-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T00:42:31Z",
+  "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 65290,
+    "output": 57751,
+    "reasoning": 0,
+    "cache_read": 127616,
+    "cache_write": 0,
+    "total": 250657
+  },
+  "peticiones": 4,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "bash": 2,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e09985137ffe5jK5WdjKdtHT7e",
+  "ficheros": [
+    "web-reactiva-craft.html"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

@@ -1,0 +1,36 @@
+  ┃    98 - **Si el test falla por un bug**: arréglalo. Ese es el trabajo.
+  ┃    99 - **Si el test es frágil**: hazlo determinista o elimínalo. Un test frágil no vale el tiempo que consume.
+  ┃   100 - **Si el test ya no representa un requisito**: bórralo sin culpa. Los requisitos cambian.
+  ┃   101 - **Si necesitas desactivarlo temporalmente**: ponle fecha de caducidad y un ticket. Un `skip` sin dueño
+  ┃       es un `skip` para siempre.
+  ┃   102
+  ┃   103 Y una recomendación cultural: **trata el pipeline en rojo como una emergencia**, no como el clima. Si el
+  ┃       rojo es normal, la calidad se vuelve opcional.
+  ┃   104
+  ┃   105 ## Conclusión
+  ┃   106
+  ┃   107 Tener tests es mejor que no tenerlos, pero solo cuando esos tests son confiables. Un conjunto de pruebas
+  ┃       que falla constantemente, que miente o que nadie mira no es una red de seguridad: es una ilusión costosa.
+  ┃       Consume tiempo, erosiona la confianza y, sobre todo, **entrena al equipo para ignorar las señales de
+  ┃       peligro**.
+  ┃   108
+  ┃   109 No tener tests te deja vulnerable, pero al menos te deja honesto. Un test que falla y se ignora te deja
+  ┃       vulnerable *y* convencido de que estás protegido. Y esa combinación es, casi siempre, peor.
+  ┃   110
+  ┃   111 La próxima vez que veas un rojo que lleva días ahí, no lo mires como "el test que siempre falla". Míralo
+  ┃       como una decisión pendiente que el equipo lleva demasiado tiempo evitando. Arréglalo o bórralo, pero no lo
+  ┃       dejes ahí fingiendo que hace su trabajo.
+  ┃   112
+  ┃
+
+     Listo. Guardé el post en tests-que-fallan-peores-que-no-tener-tests.md, en la carpeta actual.
+
+     ▣  Build · deepseek-v4.1-flash · 12.5s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · deepseek-v4.1-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-11XjhmTN                                                                   10.7K  ctrl+p commands
+

@@ -1,0 +1,11 @@
+{
+  "nota": 8,
+  "veredicto": "buen juego, Web Reactiva inventado",
+  "rubrica": {"abre sin errores": 1, "mecánica de Infinite Craft": 2, "las combinaciones funcionan": 2, "progresión": 1, "«infinito»": 1, "contenido de Web Reactiva": 0, "acabado": 1},
+  "resumen": "Mecánica muy fiel a Infinite Craft (mesa infinita con zoom, soltar una ficha sobre otra, panel de descubrimientos con buscador, sonidos), 145 recetas todas alcanzables y un generador de «invenciones raras» para las mezclas sin receta. Pero el contenido de Web Reactiva es inventado: «Nacho Ojea», «Trece Tigres», «La Red», ZX Spectrum y GeoCities; parte de Internet, Radio, Cine y Juego.",
+  "rarezas": [
+    "Tercera tirada de GLM en AIF (las dos anteriores, cortada a 32 000 tokens y con compactación constante, en _descartados). Esta: 4 peticiones, 1 write de 48 k tokens, 0 compactaciones.",
+    "No consultó la web y se inventó un Web Reactiva de radio y frikismo, con presentadores que no existen («Nacho Ojea»).",
+    "La bienvenida se abre al cargar y bloquea la mesa hasta pulsar «¡A construir!»; en un navegador sin GPU el fondo desenfocado no se pinta y parece que el juego no responde."
+  ]
+}

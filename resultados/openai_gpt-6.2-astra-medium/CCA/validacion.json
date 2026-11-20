@@ -1,0 +1,15 @@
+{
+  "extra": [
+    "✔ se abre index.html sin instalar nada",
+    "✖ sin tests",
+    "✔ suma, resta, quita y recalcula; envío gratis desde 60 €; guarda al recargar",
+    "✔ precios en céntimos, una sola moneda",
+    "✔ localStorage manipulado: negativos, decimales e ids falsos fuera; 1e9 se queda en 99",
+    "✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala",
+    "✖ sin README",
+    "~ no hay botón de vaciar"
+  ],
+  "capturas_extra": [
+    "capturas/carrito.png"
+  ]
+}

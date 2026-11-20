@@ -1,0 +1,36 @@
+  ┃
+  ┃  # Todos
+  ┃
+  ┃  [✓] Crear capas dominio y aplicación (modelos, excepciones, eventos, puertos, servicio)
+  ┃  [✓] Crear infraestructura: repositorios en memoria y Redis, publicador de eventos
+  ┃  [✓] Crear API HTTP stateless + entrypoint
+  ┃  [✓] Escribir tests (dominio, servicio, repositorio, API)
+  ┃  [✓] README, pyproject y smoke test del servidor
+  ┃
+
+     Listo. Carrito escalable en CCA/, con 24/24 tests pasando y servidor verificado con curl.
+
+     Qué incluye:
+
+     - cart/domain/ — modelos puros (Product, CartItem, Cart), reglas de negocio, límites y Decimal para dinero
+     - cart/application/ — CartService (casos de uso) y puertos (CartRepository, ProductRepository, EventPublisher)
+     - cart/infrastructure/ — repositorios en memoria thread-safe (lock por carrito) y adaptador Redis con locking
+       optimista (WATCH) para escalar a múltiples instancias
+     - cart/api/http.py — API REST sin estado (POST /carts, POST /carts/{id}/items, PATCH/DELETE líneas, POST .../
+       checkout), ThreadingHTTPServer
+     - tests/ — dominio, servicio, concurrencia (500 escrituras serializadas, checkout con 8 hilos donde solo uno
+       gana) y API
+     - README.md / pyproject.toml — cómo correr (python -m cart --port 8000), endpoints y notas de escalado
+
+     Escala porque: API stateless detrás de balanceador + repositorio intercambiable (memoria→Redis), eventos de
+     dominio para consumidores asíncronos, versión optimista por carrito y errores con códigos HTTP/JSON consistentes.
+
+     ▣  Build · glm-5.3-flash · 2m 45s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/ollama_glm-5.3-flash/CCA                                                       43.3K  ctrl+p commands
+

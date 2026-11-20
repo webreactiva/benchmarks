@@ -1,0 +1,31 @@
+---
+title: Flujo de una edicion (escritura, indexado y eventos)
+---
+sequenceDiagram
+    autonumber
+    actor U as Usuario
+    participant A as Apiserver MediaWiki
+    participant M as MediaWiki Core
+    participant P as Base de datos primaria
+    participant R as Replicas MariaDB
+    participant Q as Cola de trabajos (Redis)
+    participant K as EventStreams (Kafka)
+    participant E as Elasticsearch
+    participant S as Almacen de medios (Swift)
+    participant D as Consumidores (Druid, dumps, REST API)
+
+    U->>A: POST /w/index.php?action=edit
+    A->>M: edicion de wikitext
+    M->>P: UPDATE en la base primaria
+    P-->>M: confirmacion (revision id)
+    P->>R: replicacion asincrona
+    M->>M: purga de la cache WAN y local
+    M->>Q: encola trabajo de reindexado
+    Q->>E: actualiza el indice de CirrusSearch
+    M->>K: publica PageContentChange
+    K->>D: Analiticas, Pageviews, REST API, dumps
+    K->>R: actualizacion de paginas y categorias
+    U->>A: SUBIR una imagen
+    A->>Q: encola trabajo de miniatura
+    Q->>S: guarda el original y genera miniaturas
+    S-->>U: la imagen se sirve desde la CDN

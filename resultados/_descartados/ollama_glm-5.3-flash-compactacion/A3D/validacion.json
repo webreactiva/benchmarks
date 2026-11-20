@@ -1,0 +1,24 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra-ruta-3d.html",
+      "errores": [],
+      "titulo": "La Alhambra — Ruta en 3D",
+      "canvas": 1,
+      "texto": "LA ALHAMBRA\n\nGRANADA · ITINERARIO EN 3D\n\n1 · Puerta de la Justicia\n2 · Alcazaba\n3 · Palacio de Carlos V\n4 · Mexuar\n5 · Patio de los Arrayanes\n6 · Patio de los Leones\n7 · Partal\n8 · Generalife\nLlegando a Puerta de la Justicia\nPARADA 1 DE 8\nPuerta de la Justicia\n\nErigida en 1348 bajo Yusuf I, es la entrada emblemática del recinto. Su arco de herradura se corona con la mano y la llave talladas en pie",
+      "scripts": [],
+      "captura": "capturas/alhambra-ruta-3d.html.png",
+      "capturas_extra": [
+        "capturas/inicio.png",
+        "capturas/parada-6.png",
+        "capturas/auto-15s.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores; 24 KB",
+    "✔ anterior/siguiente y Auto mueven la cámara por las 8 paradas",
+    "✔ edificios reconocibles: Justicia, Carlos V, Leones, Partal, Generalife"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "codigo": "PTS",
+  "modelo": "ollama/minimax-m3",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T23:44:09Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 15243,
+    "output": 10953,
+    "reasoning": 0,
+    "cache_read": 77696,
+    "cache_write": 0,
+    "total": 103892
+  },
+  "peticiones": 6,
+  "error": null,
+  "herramientas": {
+    "bash": 3,
+    "write": 2,
+    "read": 1
+  },
+  "sesion": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
+  "ficheros": [
+    "tests-que-fallan.md"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "nota": 3,
+  "veredicto": "se ve bien, no se puede jugar",
+  "resumen": "Interfaz muy cuidada (barra lateral con búsqueda, lienzo, ranuras, avisos, exportar), pero el juego está roto: getKey ordena los ids y 35 de las 62 recetas tienen la clave al revés, así que HTML + CSS no da nada y solo se pueden descubrir 4 elementos. 11 recetas usan ingredientes que no existen. De Web Reactiva solo tiene el título: el contenido son tecnologías web genéricas.",
+  "rarezas": [
+    "En el chat dice «80+ recetas»: hay 62, y se pueden alcanzar 4.",
+    "4 peticiones y 47 KB de HTML sin abrirlo ni probar una sola combinación.",
+    "El contador dice «/ 66 descubiertos», objetivo imposible de alcanzar."
+  ],
+  "nota_previa": 3,
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 1,
+    "las combinaciones funcionan": 0,
+    "progresión": 0,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 0,
+    "acabado": 1
+  }
+}

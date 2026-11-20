@@ -1,0 +1,36 @@
+  ┃   42         U[Prometheus / Grafana]
+  ┃   43         V[Logstash / Elasticsearch Logs]
+  ┃   44         W[Gerrit / CI/CD]
+  ┃   45     end
+  ┃   46
+  ┃   47     G -.-> T
+  ┃   48     T -.-> U
+  ┃   49     T -.-> V
+  ┃   50     W --> G
+  ┃   51
+  ┃   52     style A fill:#e1f5fe
+  ┃   53     style D fill:#fff3e0
+  ┃   54     style G fill:#e8f5e9
+  ┃   55     style J fill:#fce4ec
+  ┃   56     style O fill:#f3e5f5
+  ┃
+
+     + Thought: 285ms
+
+     Archivo creado: wikipedia-architecture.mmd
+
+     Para visualizarlo:
+
+     - VS Code: Instala "Mermaid Preview" y abre el archivo
+     - Online: Pega el contenido en mermaid.live (https://mermaid.live)
+     - CLI: npx -p @mermaid-js/mermaid-cli mmdc -i wikipedia-architecture.mmd -o wikipedia-architecture.png
+
+     ▣  Build · nvidia/nemotron-3-ultra-550b-a55b:free · 15.8s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · nvidia/nemotron-3-ultra-550b-a55b:free OpenRouter
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/nvidia_nemotron-3-ultra-550b-a55b_free/MWP                                      8.7K  ctrl+p commands
+

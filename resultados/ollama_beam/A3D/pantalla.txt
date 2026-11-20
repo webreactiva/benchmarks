@@ -1,0 +1,36 @@
+  ┃   190     walker.position.copy(p);
+  ┃   191     camera.position.lerp(new THREE.Vector3(p.x+25,p.y+30,p.z+25),0.05);
+  ┃   192     controls.target.lerp(new THREE.Vector3(p.x,0,p.z),0.1);
+  ┃   193   }else{
+  ┃   194     const t=now*0.001;
+  ┃   195     walker.position.copy(curve.getPointAt((Math.sin(t*0.1)*0.5+0.5)));
+  ┃   196   }
+  ┃   197   controls.update();
+  ┃   198   renderer.render(scene,camera);
+  ┃   199   labelRenderer.render(scene,camera);
+  ┃   200 }
+  ┃   201 animate();
+  ┃   202
+  ┃   203 window.addEventListener('resize',()=>{
+  ┃   204   camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  ┃   205   renderer.setSize(innerWidth,innerHeight);labelRenderer.setSize(innerWidth,innerHeight);
+  ┃   206 });
+  ┃   207 </script>
+  ┃   208 </body>
+  ┃   209 </html>
+  ┃   210
+  ┃
+
+     + Thought: 76ms
+
+     Creado /var/tmp/bench/ws-bw9i07Tq/alhambra.html (single-file 3D Alhambra route).
+
+     ▣  Build · beam · 40.3s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · beam Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-bw9i07Tq                                                              16.7K (2%)  ctrl+p commands
+

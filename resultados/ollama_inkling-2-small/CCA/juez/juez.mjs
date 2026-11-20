@@ -1,0 +1,12 @@
+const U = 'http://localhost:3301/api/v1', H = { 'content-type': 'application/json' };
+const prods = await (await fetch(U + '/products')).json(); const lista = prods.data;
+const c = await (await fetch(U + '/carts', { method: 'POST', headers: H, body: '{}' })).json(); const id = c.data.id;
+console.log('productos', lista.length, '· carrito', id);
+const rs = await Promise.all(Array.from({ length: 50 }, (_, i) => fetch(`${U}/carts/${id}/items`, { method: 'POST', headers: H, body: JSON.stringify({ productId: lista[i % lista.length].id, quantity: 1 }) }).then(r => r.status)));
+const st = {}; rs.forEach(s => st[s] = (st[s] || 0) + 1);
+const v = await (await fetch(`${U}/carts/${id}`)).json(); const lines = v.data.items;
+console.log('50 altas a la vez:', st, '→ unidades guardadas', lines.reduce((s, l) => s + l.quantity, 0));
+const r = await fetch(`${U}/carts/${id}/items`, { method: 'POST', headers: H, body: JSON.stringify({ productId: lista[0].id, quantity: 1, unitPrice: 1, price: 1 }) });
+console.log('precio desde el cliente →', r.status);
+const r2 = await fetch(`${U}/carts/../etc/items`, { method: 'GET' }); console.log('id con ../ →', r2.status);
+console.log('totales', JSON.stringify(v.data.totals).slice(0, 220));

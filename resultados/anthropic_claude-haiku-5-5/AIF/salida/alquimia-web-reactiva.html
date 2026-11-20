@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alquimia Web Reactiva</title>
+<meta name="description" content="Juego de alquimia tipo Infinite Craft con conceptos de programación con IA: agentes, SDD, MCP, skills y más.">
+<style>
+:root{
+  --bg:#f6f4ef; --fg:#1d1b19; --muted:#6b665f; --panel:#ffffff; --line:#e2ddd3;
+  --accent:#c2410c; --accent2:#0f766e; --card:#ffffff; --shadow:0 2px 8px rgba(0,0,0,.08);
+  --grid:rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15161a; --fg:#ecebe8; --muted:#9a978f; --panel:#1d1f25; --line:#2f323b;
+    --accent:#fb923c; --accent2:#2dd4bf; --card:#252830; --shadow:0 2px 8px rgba(0,0,0,.4);
+    --grid:rgba(255,255,255,.05);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15161a; --fg:#ecebe8; --muted:#9a978f; --panel:#1d1f25; --line:#2f323b;
+  --accent:#fb923c; --accent2:#2dd4bf; --card:#252830; --shadow:0 2px 8px rgba(0,0,0,.4);
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+header h1{font-size:18px;margin:0 8px 0 0;white-space:nowrap}
+header h1 span{color:var(--accent)}
+.progress{color:var(--muted);font-size:13px;white-space:nowrap}
+.progress b{color:var(--accent2)}
+.actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;font-size:13px;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.danger:hover{border-color:#dc2626;color:#dc2626}
+
+main{flex:1;display:flex;min-height:0}
+aside{width:280px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--line);background:var(--panel);min-height:0}
+#search{margin:12px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:inherit;font-size:14px}
+#search:focus{outline:2px solid var(--accent2);outline-offset:-1px}
+#list{flex:1;overflow-y:auto;padding:0 12px 12px;display:flex;flex-direction:column;gap:6px;align-content:flex-start}
+.chip{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:10px;background:var(--card);border:1px solid var(--line);cursor:grab;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.chip:hover{border-color:var(--accent2)}
+.chip:focus-visible{outline:2px solid var(--accent2)}
+.chip .em{font-size:18px;width:24px;text-align:center}
+.chip.fresh{animation:fresh 1.6s ease-out}
+.chip.hint{outline:2px dashed var(--accent);outline-offset:2px}
+
+#board{flex:1;position:relative;overflow:hidden;min-width:0;
+  background-image:radial-gradient(var(--grid) 1px, transparent 1px);background-size:22px 22px}
+.empty-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:24px;pointer-events:none;font-size:15px}
+.empty-msg p{max-width:420px;margin:0}
+.item{position:absolute;left:0;top:0;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;white-space:nowrap;will-change:transform}
+.item .em{font-size:20px}
+.item .nm{font-weight:600}
+.item.drag{cursor:grabbing;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.item.sel{outline:3px solid var(--accent2);outline-offset:2px}
+.item.pop{animation:pop .35s ease-out}
+.item.shake{animation:shake .4s}
+
+#toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:90vw;text-align:center;z-index:10}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@keyframes pop{0%{scale:.5;opacity:0}70%{scale:1.08;opacity:1}100%{scale:1}}
+@keyframes shake{0%,100%{translate:0 0}20%{translate:-6px 0}40%{translate:6px 0}60%{translate:-4px 0}80%{translate:4px 0}}
+@keyframes fresh{0%{background:var(--accent);color:#fff}100%{background:var(--card)}}
+
+@media (max-width:760px){
+  body{overflow:auto}
+  main{flex-direction:column}
+  aside{width:auto;height:42vh;border-right:0;border-bottom:1px solid var(--line)}
+  #board{min-height:55vh}
+  header{padding:10px 12px}
+  .actions{margin-left:0}
+  .item{padding:8px 11px}
+}
+footer{font-size:12px;color:var(--muted);padding:6px 16px;border-top:1px solid var(--line);background:var(--panel)}
+@media (max-width:760px){footer{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Alquimia <span>Web Reactiva</span></h1>
+  <div class="progress">Descubiertos: <b id="count">0 / 0</b></div>
+  <div class="actions">
+    <button id="btn-hint" title="Sugiere una combinación que aún no probaste">💡 Pista</button>
+    <button id="btn-clear" title="Quita todo de la mesa">🧹 Limpiar mesa</button>
+    <button id="btn-reset" class="danger" title="Borra tu progreso">↺ Reiniciar</button>
+  </div>
+</header>
+
+<main>
+  <aside>
+    <input id="search" type="search" placeholder="Buscar elemento…" autocomplete="off">
+    <div id="list" aria-label="Elementos descubiertos"></div>
+  </aside>
+  <div id="board" aria-label="Mesa de alquimia">
+    <div class="empty-msg" id="empty"><p>Arrastra elementos de la izquierda a la mesa y junta dos encima de otro para crear algo nuevo. En móvil: toca un elemento y luego otro.</p></div>
+  </div>
+</main>
+
+<footer>Fan project inspirado en Infinite Craft. No está afiliado a webreactiva.com. Las combinaciones están curadas a mano sobre temas de Web Reactiva (IA, agentes, SDD, MCP…).</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ---------- Datos ---------- */
+  const KEY = 'alquimia-webreactiva-v1';
+  const BASE = ['codigo', 'humano', 'idea', 'cafe'];
+
+  // id: [nombre, emoji]
+  const ELEMENTS = {
+    codigo:['Código','💻'], humano:['Humano','🧑'], idea:['Idea','💡'], cafe:['Café','☕'],
+    programador:['Programador','👨‍💻'], proyecto:['Proyecto','📁'], prompt:['Prompt','✍️'],
+    trasnochar:['Trasnochar','🌙'], insomnio:['Insomnio','😵'], bug:['Bug','🐛'],
+    error500:['Error 500','❌'], libreria:['Librería','📦'], tokens:['Tokens','🪙'],
+    asistente:['Asistente','🤖'], modelo:['Modelo de lenguaje','🧠'], chat:['Chat','💬'],
+    conversacion:['Conversación','🗨️'], api:['API','🔌'], suscripcion:['Suscripción','💳'],
+    contexto:['Contexto','🧩'], agente:['Agente','🕵️'], skill:['Skill','🛠️'], mcp:['MCP','🔗'],
+    especificacion:['Especificación','📜'], sdd:['SDD','📐'], plan:['Plan mode','🗺️'],
+    rag:['RAG','📚'], evals:['Evals','✅'], commit:['Commit','📝'], pr:['Pull Request','🔀'],
+    review:['Review','🔍'], calidad:['Calidad','🏅'], merge:['Merge','🌿'], slop:['AI slop','🥫'],
+    deuda:['Deuda técnica','🧱'], spaghetti:['Código espagueti','🍝'], refactor:['Refactor','🔧'],
+    n8n:['n8n','🔁'], automatizacion:['Automatización','⚙️'], multiagente:['Multiagente','🤝'],
+    orquestacion:['Orquestación','🎼'], copilot:['Copilot','🪁'], terminal:['Terminal','🖥️'],
+    claude:['Claude Code','🟠'], cursor:['Cursor','🖱️'], openspec:['OpenSpec','🧾'],
+    podcast:['Podcast','🎙️'], curso:['Curso gratis','🎓'], panico:['Pánico e IA','😱'],
+    canibal:['Canibalización','💀'], vibe:['Vibe coding','🎶'], iadev:['Dev con IA','🧑‍🔬'],
+    empleo:['Empleabilidad','💼'], despliegue:['Despliegue','🚀']
+  };
+
+  // [ingrediente A, ingrediente B, resultado]
+  const RECIPES = [
+    ['codigo','humano','programador'],
+    ['codigo','idea','proyecto'],
+    ['humano','idea','prompt'],
+    ['humano','cafe','trasnochar'],
+    ['codigo','trasnochar','bug'],
+    ['cafe','trasnochar','insomnio'],
+    ['bug','bug','error500'],
+    ['codigo','codigo','libreria'],
+    ['prompt','prompt','tokens'],
+    ['prompt','codigo','asistente'],
+    ['asistente','idea','modelo'],
+    ['modelo','prompt','chat'],
+    ['humano','chat','conversacion'],
+    ['modelo','codigo','api'],
+    ['humano','api','suscripcion'],
+    ['tokens','chat','contexto'],
+    ['asistente','contexto','agente'],
+    ['agente','codigo','skill'],
+    ['api','skill','mcp'],
+    ['proyecto','prompt','especificacion'],
+    ['especificacion','agente','sdd'],
+    ['sdd','prompt','plan'],
+    ['contexto','api','rag'],
+    ['bug','modelo','evals'],
+    ['proyecto','codigo','commit'],
+    ['commit','humano','pr'],
+    ['pr','modelo','review'],
+    ['review','evals','calidad'],
+    ['pr','calidad','merge'],
+    ['chat','bug','slop'],
+    ['slop','proyecto','deuda'],
+    ['vibe','deuda','spaghetti'],
+    ['spaghetti','review','refactor'],
+    ['api','proyecto','n8n'],
+    ['n8n','agente','automatizacion'],
+    ['agente','agente','multiagente'],
+    ['multiagente','plan','orquestacion'],
+    ['asistente','api','copilot'],
+    ['copilot','humano','cursor'],
+    ['cafe','codigo','terminal'],
+    ['asistente','terminal','claude'],
+    ['programador','claude','iadev'],
+    ['sdd','codigo','openspec'],
+    ['chat','cafe','podcast'],
+    ['podcast','prompt','curso'],
+    ['programador','slop','panico'],
+    ['slop','panico','canibal'],
+    ['programador','chat','vibe'],
+    ['curso','programador','empleo'],
+    ['merge','api','despliegue']
+  ];
+
+  const key = (a, b) => (a < b ? a + '|' + b : b + '|' + a);
+  const RECIPE = new Map(RECIPES.map(([a, b, r]) => [key(a, b), r]));
+  const TOTAL = Object.keys(ELEMENTS).length;
+
+  /* ---------- Estado ---------- */
+  let found = load();
+  let freshId = null, freshTimer = null;
+  let hintIds = [], hintTimer = null;
+  let selected = null;
+  let uid = 0, z = 1;
+  const items = [];
+
+  function load() {
+    try {
+      const v = JSON.parse(localStorage.getItem(KEY));
+      if (Array.isArray(v)) {
+        const ok = v.filter(id => ELEMENTS[id]);
+        return [...new Set([...BASE, ...ok])];
+      }
+    } catch (e) { /* almacenamiento no disponible */ }
+    return [...BASE];
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(found)); } catch (e) { /* ignorar */ }
+  }
+
+  /* ---------- Referencias DOM ---------- */
+  const $ = s => document.querySelector(s);
+  const board = $('#board'), list = $('#list'), search = $('#search');
+  const toastEl = $('#toast'), countEl = $('#count'), emptyEl = $('#empty');
+
+  let toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
+  }
+
+  /* ---------- Lista lateral ---------- */
+  function renderList() {
+    const q = search.value.trim().toLowerCase();
+    list.textContent = '';
+    found.forEach(id => {
+      const [name, emoji] = ELEMENTS[id];
+      if (q && !name.toLowerCase().includes(q)) return;
+      const d = document.createElement('div');
+      d.className = 'chip' + (id === freshId ? ' fresh' : '') + (hintIds.includes(id) ? ' hint' : '');
+      d.dataset.id = id;
+      d.tabIndex = 0;
+      d.title = name;
+      const e = document.createElement('span'); e.className = 'em'; e.textContent = emoji;
+      const t = document.createElement('span'); t.textContent = name;
+      d.append(e, t);
+      d.addEventListener('pointerdown', onChipDown);
+      d.addEventListener('keydown', ev => { if (ev.key === 'Enter') addToBoard(id); });
+      list.appendChild(d);
+    });
+    countEl.textContent = `${found.length} / ${TOTAL}`;
+  }
+
+  function onChipDown(e) {
+    const id = e.currentTarget.dataset.id;
+    e.preventDefault();
+    if (e.pointerType !== 'mouse') {
+      // Táctil: un toque añade el elemento a la mesa
+      const el = e.currentTarget;
+      const up = ev => {
+        el.removeEventListener('pointerup', up);
+        el.removeEventListener('pointercancel', up);
+        if (ev.type === 'pointerup') addToBoard(id);
+      };
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointercancel', up);
+      return;
+    }
+    // Ratón: arrastrar desde la lista a la mesa
+    const br = board.getBoundingClientRect();
+    const it = spawn(id, e.clientX - br.left - 60, e.clientY - br.top - 22);
+    startDrag(e, it, true);
+  }
+
+  /* ---------- Mesa ---------- */
+  function syncEmpty() { emptyEl.style.display = items.length ? 'none' : 'flex'; }
+
+  function spawn(id, x, y) {
+    const el = document.createElement('div');
+    el.className = 'item';
+    const [name, emoji] = ELEMENTS[id];
+    const e = document.createElement('span'); e.className = 'em'; e.textContent = emoji;
+    const n = document.createElement('span'); n.className = 'nm'; n.textContent = name;
+    el.append(e, n);
+    board.appendChild(el);
+    const it = { uid: ++uid, id, el, x, y };
+    el.addEventListener('pointerdown', ev => { if (ev.button === 0 || ev.pointerType !== 'mouse') startDrag(ev, it, false); });
+    items.push(it);
+    clampPos(it);
+    place(it);
+    syncEmpty();
+    return it;
+  }
+
+  function place(it) { it.el.style.transform = `translate(${it.x}px, ${it.y}px)`; }
+
+  function clampPos(it) {
+    const maxX = Math.max(0, board.clientWidth - it.el.offsetWidth);
+    const maxY = Math.max(0, board.clientHeight - it.el.offsetHeight);
+    it.x = Math.max(0, Math.min(maxX, it.x));
+    it.y = Math.max(0, Math.min(maxY, it.y));
+  }
+
+  function removeItem(it) {
+    it.el.remove();
+    const i = items.indexOf(it);
+    if (i >= 0) items.splice(i, 1);
+    if (selected === it) { selected.el.classList.remove('sel'); selected = null; }
+    syncEmpty();
+  }
+
+  function addToBoard(id) {
+    const w = board.clientWidth, h = board.clientHeight;
+    const it = spawn(id, 20 + Math.random() * Math.max(0, w - 200), 20 + Math.random() * Math.max(0, h - 120));
+    it.el.classList.add('pop');
+  }
+
+  function insideBoard(ev) {
+    const b = board.getBoundingClientRect();
+    return ev.clientX >= b.left && ev.clientX <= b.right && ev.clientY >= b.top && ev.clientY <= b.bottom;
+  }
+
+  function startDrag(e, it, fromList) {
+    const br = board.getBoundingClientRect();
+    const offX = e.clientX - br.left - it.x;
+    const offY = e.clientY - br.top - it.y;
+    const sx = e.clientX, sy = e.clientY;
+    let moved = false;
+    it.el.style.zIndex = ++z;
+    try { it.el.setPointerCapture(e.pointerId); } catch (err) { /* ignorar */ }
+
+    const move = ev => {
+      if (!moved && Math.hypot(ev.clientX - sx, ev.clientY - sy) < 5) return;
+      moved = true;
+      it.el.classList.add('drag');
+      const b = board.getBoundingClientRect();
+      it.x = ev.clientX - b.left - offX;
+      it.y = ev.clientY - b.top - offY;
+      clampPos(it);
+      place(it);
+    };
+    const up = ev => {
+      it.el.removeEventListener('pointermove', move);
+      it.el.removeEventListener('pointerup', up);
+      it.el.removeEventListener('pointercancel', up);
+      it.el.classList.remove('drag');
+      if (ev.type === 'pointercancel') return;
+
+      if (fromList) {
+        if (!moved) { removeItem(it); addToBoard(it.id); return; }
+        if (!insideBoard(ev)) { removeItem(it); return; }
+        collide(it);
+        return;
+      }
+      if (!moved) { onBoardClick(it); return; }
+      collide(it);
+    };
+    it.el.addEventListener('pointermove', move);
+    it.el.addEventListener('pointerup', up);
+    it.el.addEventListener('pointercancel', up);
+  }
+
+  // Toque sobre un elemento de la mesa: seleccionar, y el segundo toque combina
+  function onBoardClick(it) {
+    if (selected && selected !== it) {
+      const a = selected;
+      selected.el.classList.remove('sel');
+      selected = null;
+      combine(a, it);
+      return;
+    }
+    if (selected === it) { it.el.classList.remove('sel'); selected = null; return; }
+    selected = it;
+    it.el.classList.add('sel');
+  }
+
+  function collide(it) {
+    const w = it.el.offsetWidth, h = it.el.offsetHeight;
+    const other = items.find(o => o !== it &&
+      Math.abs((o.x + o.el.offsetWidth / 2) - (it.x + w / 2)) < w * 0.6 &&
+      Math.abs((o.y + o.el.offsetHeight / 2) - (it.y + h / 2)) < h * 0.6);
+    if (other) combine(it, other);
+  }
+
+  function combine(a, b) {
+    const r = RECIPE.get(key(a.id, b.id));
+    if (!r) {
+      [a, b].forEach(it => {
+        it.el.classList.remove('shake'); void it.el.offsetWidth; it.el.classList.add('shake');
+        it.el.addEventListener('animationend', () => it.el.classList.remove('shake'), { once: true });
+      });
+      toast('Esa mezcla no da nada… prueba otra 🤔');
+      return;
+    }
+    const x = (a.x + b.x) / 2, y = (a.y + b.y) / 2;
+    removeItem(a);
+    removeItem(b);
+    const n = spawn(r, x, y);
+    n.el.classList.add('pop');
+
+    const [name, emoji] = ELEMENTS[r];
+    if (!found.includes(r)) {
+      found.push(r);
+      save();
+      freshId = r;
+      clearTimeout(freshTimer);
+      freshTimer = setTimeout(() => { freshId = null; renderList(); }, 2000);
+      toast(`✨ ¡Nuevo descubrimiento: ${emoji} ${name}!`);
+    } else {
+      toast(`${emoji} ${name} (ya lo tenías)`);
+    }
+    renderList();
+  }
+
+  /* ---------- Botones ---------- */
+  function hint() {
+    const opts = RECIPES.filter(([a, b, r]) => found.includes(a) && found.includes(b) && !found.includes(r));
+    if (!opts.length) {
+      toast(found.length >= TOTAL ? '¡Lo tienes todo! 🏆' : 'No hay pistas ahora: explora combinaciones nuevas 🔍');
+      return;
+    }
+    const [a, b] = opts[Math.floor(Math.random() * opts.length)];
+    hintIds = [a, b];
+    renderList();
+    toast(`💡 Prueba: ${ELEMENTS[a][1]} ${ELEMENTS[a][0]} + ${ELEMENTS[b][1]} ${ELEMENTS[b][0]}`);
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => { hintIds = []; renderList(); }, 4000);
+  }
+
+  function clearBoard() {
+    items.slice().forEach(removeItem);
+  }
+
+  function reset() {
+    if (!confirm('¿Reiniciar el progreso? Se borrarán los elementos descubiertos.')) return;
+    try { localStorage.removeItem(KEY); } catch (e) { /* ignorar */ }
+    found = [...BASE];
+    clearBoard();
+    freshId = null; hintIds = [];
+    renderList();
+    toast('Progreso reiniciado');
+  }
+
+  $('#btn-hint').addEventListener('click', hint);
+  $('#btn-clear').addEventListener('click', clearBoard);
+  $('#btn-reset').addEventListener('click', reset);
+  search.addEventListener('input', renderList);
+
+  // Clic en el fondo de la mesa deselecciona
+  board.addEventListener('pointerdown', ev => {
+    if (ev.target === board || ev.target === emptyEl || ev.target.closest('.empty-msg')) {
+      if (selected) { selected.el.classList.remove('sel'); selected = null; }
+    }
+  });
+
+  window.addEventListener('resize', () => items.forEach(it => { clampPos(it); place(it); }));
+
+  renderList();
+  syncEmpty();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+  ┃    86 - Palabras como "ah, ese test siempre falla" aparecen en code reviews.
+  ┃    87
+  ┃    88 Si reconociste tres o más, no tienes una suite de tests: tienes un generador de ruido caro.
+  ┃    89
+  ┃    90 ## Reflexión final
+  ┃    91
+  ┃    92 Un test es una promesa: "si esto se rompe, alguien se enterará". Cuando el equipo deja de creerse la
+  ┃       promesa, el test deja de existir como tal, por mucho que siga ejecutándose en CI. La confianza es el
+  ┃       verdadero producto de una suite de tests, y se construye con pocas cosas —pero importantes—: que los
+  ┃       fallos sean reales, que el rojo bloquee de verdad, y que los tests flaky sean una emergencia, no un hábito.
+  ┃    93
+  ┃    94 No tener tests es admitir que caminas sin red. Tener tests que nadie cree es saltar con una red que no
+  ┃       sabes si está atada. Entre las dos, la primera al menos te mantiene alerta.
+  ┃    95
+  ┃    96 ---
+  ┃    97
+  ┃    98 *¿Tu equipo tiene tests flaky que nadie toca? Empieza por el inventario: lista todos los `skip` del repo,
+  ┃       mídeles antigüedad y asigna dueño. Es el ejercicio de mayor impacto por hora invertida que conozco.*
+  ┃    99
+  ┃
+
+     + Thought: 31ms
+
+     Guardado en tests-que-fallan-peor-que-no-tener-tests.md. Cubre tipos de fallo (flaky, rojos congelados,
+     desincronizados), por qué erosionan más que ausencia de tests, y cómo salir (presupuesto de flakiness,
+     cuarentena, causa raíz, borrado de tests sin señal).
+
+     ▣  Build · inkling-2-small · 21.8s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · inkling-2-small Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-zNGe5Ahh                                                              11.0K (1%)  ctrl+p commands
+

@@ -1,0 +1,36 @@
+  ┃   41 1.  **Tolerancia cero al rojo en main.** Si falla, se arregla o se borra antes de mergear. `main` siempre
+  ┃      verde.
+  ┃   42 2.  **Borrar es mejor que silenciar.** Un test borrado es honesto: sabes que falta cobertura. Un test en
+  ┃      `skip` es mentiroso.
+  ┃   43 3.  **Tests deterministas o nada.** Si depende de `sleep(100)`, de una API externa o del orden de ejecución,
+  ┃       arréglalo o elimínalo.
+  ┃   44 4.  **Cuarentena con fecha de caducidad.** Si un test es flaky, muévelo a cuarentena y crea un ticket con
+  ┃      dueño y fecha. Si no se arregla en una semana, se borra.
+  ┃   45
+  ┃   46 ## Conclusión
+  ┃   47
+  ┃   48 No tener tests es un riesgo visible. Tener tests rojos que todos ignoran es un riesgo invisible.
+  ┃   49
+  ┃   50 Y en ingeniería, el riesgo invisible siempre es más caro.
+  ┃   51
+  ┃   52 100 tests verdes y confiables valen más que 500 de los cuales 20 fallan "a veces".
+  ┃   53
+  ┃
+
+     + Thought: 57ms
+
+     Archivo guardado en /var/tmp/bench/ws-2SVCukVf/blog-tests-que-fallan.md (read:4, bash:6).
+
+     Contenido: por qué los tests fallidos normalizan el fallo, ralentizan el desarrollo, destruyen la confianza y
+     esconden bugs reales. Incluye 4 reglas prácticas: tolerancia cero en main, borrar antes que silenciar, tests
+     deterministas y cuarentena con caducidad.
+
+     ▣  Build · muse-spark-open · 7.8s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · muse-spark-open Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-2SVCukVf                                                               9.2K (1%)  ctrl+p commands
+

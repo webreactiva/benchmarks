@@ -1,0 +1,18 @@
+{
+  "nota": 10,
+  "veredicto": "el mejor A3D, sin librerías",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 1,
+    "textos sin errores": 1
+  },
+  "resumen": "Una maqueta 3D con motor propio, sin three.js ni nada externo, que se reconoce (murallas almenadas, Alcazaba, Carlos V con su patio circular, los patios nazaríes con su fuente, el Generalife entre cipreses) y un recorrido de 6 paradas que lleva la cámara de una a otra sin atravesar nada. Diseño de guía turística: itinerario con tiempos, fichas, plano, atardecer, historia y consejos.",
+  "rarezas": [
+    "El único A3D sin librerías: ni three.js ni CDN, funciona sin conexión.",
+    "Organizó el trabajo con una lista de tareas (todowrite) y lo probó en varias resoluciones.",
+    "23 peticiones y 1 millón de tokens."
+  ]
+}

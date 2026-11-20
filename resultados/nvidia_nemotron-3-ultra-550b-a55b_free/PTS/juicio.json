@@ -1,0 +1,19 @@
+{
+  "nota": 4,
+  "veredicto": "cumple el mínimo",
+  "resumen": "Post de 359 palabras con estructura de listado: cinco razones y cinco consejos sin un solo ejemplo, dato o caso. Tesis clara y limpio de muletillas, pero cierre de chatbot, «costo», anglicismos y nada que no esté en el primer resultado de Google.",
+  "rarezas": [
+    "Con la skill de Web Reactiva cargada por error (tanda descartada) escribió 1621 palabras, FAQ «optimizada para GEO», 12 rayas y 10 emojis en 6 peticiones; sin skill, 359 palabras en 2 peticiones. El modelo copia la forma de lo que tenga en contexto.",
+    "Titula «tests flaky» cuando el prompt dice «tests que fallan a veces»: mete el anglicismo en el título."
+  ],
+  "nota_previa": 4,
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 1,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 0,
+    "sin errores ni inventos": 1,
+    "slop": 0,
+    "extensión": 0
+  }
+}

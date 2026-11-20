@@ -1,0 +1,25 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra.html",
+      "errores": [],
+      "titulo": "La Alhambra en 3D",
+      "canvas": 1,
+      "texto": "♜ Atlas de Granada\nANDALUCÍA / ESPAÑA\nPATRIMONIO · RECORRIDO INTERACTIVO\nLa Alhambra en 3D\n●   Maqueta interactiva\n↻ − +\nPARADA 01 / 05\nAlcazaba\n\nLa ruta comienza entre las torres que dominan el extremo occidental de la colina.\n\n01Alcazaba\n02Palacio de Carlos V\n03Palacios Nazaríes\n04El Partal\n05Generalife\n←\nSiguiente parada →\nGRANADA · COLINA DE LA SABIKA\nREPRESENTACIÓN ESQUEMÁTICA",
+      "scripts": [],
+      "captura": "capturas/alhambra.html.png"
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ abre sin errores de consola",
+    "✔ 3D propio en canvas 2D (sin librerías, 7,9 KB): se gira arrastrando y tiene zoom",
+    "✖ «Siguiente parada» solo cambia el texto y resalta la chincheta: la cámara no se mueve",
+    "✔ ruta de 5 paradas reales en orden de visita",
+    "~ se reconocen las torres de la Alcazaba y el patio circular de Carlos V; las albercas apenas se ven",
+    "✔ textos de las paradas correctos"
+  ],
+  "capturas_extra": [
+    "capturas/siguiente-x4.png"
+  ]
+}

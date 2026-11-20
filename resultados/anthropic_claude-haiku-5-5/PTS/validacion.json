@@ -1,0 +1,69 @@
+{
+  "html": [],
+  "mermaid": [],
+  "slop": {
+    "palabras": 953,
+    "titulos": 7,
+    "lineas_lista": 10,
+    "bloques_codigo": 0,
+    "frase_media": 16.2,
+    "marcas": {
+      "5-atribución-vaga": {
+        "que": "atribuciones vagas",
+        "n": 1,
+        "ejemplos": [
+          "Como decía alguien"
+        ]
+      },
+      "9-no-solo-sino": {
+        "que": "«no solo X, sino Y»",
+        "n": 1,
+        "ejemplos": [
+          "es "
+        ]
+      },
+      "15-negritas": {
+        "que": "negritas",
+        "n": 12,
+        "ejemplos": [
+          "**normalización del fallo**",
+          "**Tiempo de investigación.**",
+          "**Cambio de contexto.**",
+          "**Tests que se comentan o se marcan como `skip`.**",
+          "**Tests que codifican el comportamiento equivocado.**",
+          "**Desconfianza hacia la herramienta.**"
+        ]
+      },
+      "16-lista-con-titulo": {
+        "que": "listas con etiqueta en negrita y dos puntos",
+        "n": 5,
+        "ejemplos": [
+          "\n- **Tiempo de investigación.**",
+          "- **Cambio de contexto.**",
+          "- **Tests que se comentan o se marcan como `skip`.**",
+          "- **Tests que codifican el comportamiento equivocado.**",
+          "- **Desconfianza hacia la herramienta.**"
+        ]
+      },
+      "25-cierre-genérico": {
+        "que": "cierres genéricos",
+        "n": 1,
+        "ejemplos": [
+          "la próxima vez que"
+        ]
+      },
+      "titulo-conclusión": {
+        "que": "sección «Conclusión»",
+        "n": 1,
+        "ejemplos": [
+          "Conclusión"
+        ]
+      }
+    },
+    "puntos": 14.0,
+    "densidad_100": 1.47
+  },
+  "extra": [
+    "953 palabras · slop 14.0 (1.47/100 pal.)"
+  ]
+}

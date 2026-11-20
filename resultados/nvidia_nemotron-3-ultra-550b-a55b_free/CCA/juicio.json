@@ -1,0 +1,23 @@
+{
+  "nota": 4,
+  "veredicto": "funciona, pero no escala",
+  "resumen": "Librería TypeScript ordenada (servicio, adaptadores de almacenamiento, bus de eventos) que compila y pasa sus 24 tests. Lo que pedía el prompt, «escalable», no aguanta: 50 peticiones concurrentes al mismo carrito dejan 1 línea, sin TTL, sin control de versiones y dinero en coma flotante.",
+  "rarezas": [
+    "Es la sesión más larga con diferencia: 25 peticiones y 460 k tokens (82 % lectura de caché) frente a 2 de los otros prompts. Se gastó la mitad del cupo diario gratuito en esta prueba.",
+    "Su primer npm test no compilaba (Product tenía id y el test usaba productId). Lo arregló en el tipo, bien; pero el test de eventos que fallaba lo cambió para que esperase item.quantityChanged en vez de item.updated: ajustó el test al código.",
+    "Intentó un edit con oldString y newString idénticos (error de OpenCode «No changes to apply»).",
+    "Dejó dist/, node_modules/ y un data/carts/persistent-cart-789.json de ejecutar los ejemplos en la carpeta.",
+    "Todo el código, los comentarios y la respuesta están en inglés, aunque el prompt va en español."
+  ],
+  "nota_previa": 5,
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 0,
+    "precio del catálogo y validación": 0,
+    "concurrencia": 0,
+    "escala horizontal": 1,
+    "explica el escalado": 0
+  }
+}

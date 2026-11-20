@@ -1,0 +1,36 @@
+
+  ┃
+  ┃  $ ls -la
+  ┃
+  ┃  total 4
+  ┃  drwx------ 2 root root 4096 Nov 19 23:43 .
+  ┃  drwxrwxrwt 3 root root   60 Nov 19 23:43 ..
+  ┃
+
+     ✱ Glob "**/*"
+
+     + Thought: 781ms
+
+     Directorio vacío. Voy a definir el stack antes de implementar.
+
+     → Asked 2 questions
+
+     ▣  Build · minimax-m3
+
+  ┃
+  ┃   Stack   Alcance   Confirm
+  ┃
+  ┃  ¿Qué stack quieres para el carrito de compra escalable?
+  ┃
+  ┃  1. Backend Node/TS + Fastify + Postgres (Recommended)
+  ┃     Node + TypeScript + Fastify + Prisma/Postgres. Npm install, tests con Vitest. Runnable en local y con
+  ┃     Docker Compose.
+  ┃  2. Frontend React + TS (SPA)
+  ┃     Una sola app con Vite + React + TypeScript, estado en localStorage. Sin servidor ni base de datos.
+  ┃  3. Backend Python + FastAPI
+  ┃     Servicio REST completo en Python con FastAPI + SQLAlchemy + SQLite. Tests con pytest.
+  ┃  4. Type your own answer
+  ┃
+  ┃  ⇆ tab  ↑↓ select  enter confirm  esc dismiss
+  ┃
+

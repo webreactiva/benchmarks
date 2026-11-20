@@ -1,0 +1,19 @@
+{
+  "rubrica": {
+    "un html sin errores": 1,
+    "ruta real": 2,
+    "se recorre": 3,
+    "se reconoce": 2,
+    "vista limpia": 1,
+    "textos": 1
+  },
+  "nota": 10,
+  "veredicto": "maqueta clara y se recorre",
+  "resumen": "Una maqueta 3D en low-poly con las torres de la Alcazaba, el patio circular de Carlos V y la acequia del Generalife, y una ruta de cinco paradas en orden de visita que la cámara recorre con «Siguiente». La vista no se tapa, las etiquetas se leen y los textos son correctos; el botón «Iniciar ruta» solo encuadra la primera parada.",
+  "rarezas": [
+    "Para probar su trabajo usa el Playwright de otra instalación (dev-browser global) y el Firefox del sistema, y deja una veintena de ficheros en /tmp (excepción macOS: el sandbox le deja escribir ahí)",
+    "Lista /tmp y /Applications buscando navegadores",
+    "Descarga three.js y dos fuentes y los mete dentro del HTML: 790 KB",
+    "Mira sus propias capturas tres veces con view_image"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "codigo": "PTS",
+  "modelo": "ollama/muse-spark-open",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T03:28:06Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 6333,
+    "output": 1193,
+    "reasoning": 0,
+    "cache_read": 18816,
+    "cache_write": 0,
+    "total": 26342
+  },
+  "peticiones": 3,
+  "error": null,
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 1,
+    "bash": 1,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e0900b72affep2LE2BleWM8J97",
+  "ficheros": [
+    "blog-tests-que-fallan.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@cart/core",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Domain model, pricing engine and application services for the shopping cart. Zero runtime dependencies.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc -b tsconfig.json --pretty",
+    "test": "vitest run"
+  }
+}

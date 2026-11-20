@@ -1,0 +1,22 @@
+{
+  "nota": 8,
+  "veredicto": "un ensayo, no un post",
+  "resumen": "2800 palabras con lo que no tiene ningún otro: la cuenta de por qué la suite casi nunca sale verde (0,95^1000), tablas de coste, código TypeScript con el antes y el después, niveles de suite y caducidad de la cuarentena. Pero es tres veces más largo que un post, tiene errores dentro de sus propios ejemplos y 43 negritas, 8 rayas y emojis.",
+  "rarezas": [
+    "Volvió a buscar en su texto palabras en inglés («the», «would», «phenomenon», «shapedando») para limpiarlas, como en A3D.",
+    "Añadió frontmatter YAML de blog (title, date, tags, excerpt) sin que nadie se lo pidiera.",
+    "El primer ejemplo de «test que depende del reloj real» es justo el arreglo: usa clock.setSystemTime.",
+    "Define «flake rate» como ejecuciones en rojo entre ejecuciones totales, que es la tasa de fallo, no la de intermitencia.",
+    "6 peticiones y 11 k tokens de salida."
+  ],
+  "nota_previa": 7,
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 0,
+    "slop": 2,
+    "extensión": 0
+  }
+}

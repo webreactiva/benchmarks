@@ -1,0 +1,42 @@
+---
+title: Flujo de una peticion de lectura (cacheado)
+---
+sequenceDiagram
+    autonumber
+    actor U as Usuario
+    participant DNS as DNS anycast
+    participant V as Varnish (borde)
+    participant A as Apiserver MediaWiki
+    participant M as MediaWiki Core
+    participant C as Cache WAN (Memcached)
+    participant R as Replica MariaDB
+    participant E as Elasticsearch
+
+    U->>DNS: GET /wiki/Italia
+    DNS-->>U: IP anycast mas cercana
+    U->>V: GET /wiki/Italia (HTTPS)
+    alt La pagina esta en la cache de borde
+        V-->>U: HTML servido desde Varnish
+    else Fallo de cache
+        V->>A: GET /wiki/Italia
+        A->>M: MediaWiki::getPage()
+        M->>C: lookup de la pagina en cache WAN
+        alt La pagina esta en la cache WAN
+            C-->>M: contenido + metadatos
+        else Fallo de cache
+            M->>R: SELECT en la replica
+            alt El titulo se resuelve por busqueda
+                M->>E: consulta a CirrusSearch
+                E-->>M: id del articulo
+            end
+            R-->>M: fila del articulo
+            M->>C: se guarda en cache WAN
+        end
+        M-->>A: HTML renderizado
+        A-->>V: respuesta 200
+        V-->>U: HTML con cabeceras de cache
+    end
+    U->>V: GET /wiki/Especial:Archivo/Foto.jpg
+    V->>V: no esta en el borde
+    V-->>U: 302 hacia upload.wikimedia.org
+    U->>U: descarga desde la CDN de estaticos

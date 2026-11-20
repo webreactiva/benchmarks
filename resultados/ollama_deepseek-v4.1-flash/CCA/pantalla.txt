@@ -1,0 +1,36 @@
+  ┃  $ cd /tmp/bench-ws/ollama_deepseek-v4.1-flash/CCA && npm test 2>&1 | tail -8 && find . -type f | sort
+  ┃
+  ┃  # tests 23
+  ┃  # suites 0
+  ┃  # pass 23
+  ┃  # fail 0
+  ┃  # cancelled 0
+  ┃  # skipped 0
+  ┃  # todo 0
+  ┃  # duration_ms 469.251252
+  ┃  ./README.md
+  ┃  ./index.html
+  ┃  …
+  ┃
+  ┃  Click to expand
+  ┃
+
+     + Thought: 240ms
+
+     Implementado el carrito escalable en CCA/: dominio desacoplado (Cart), motor de precios por reglas, cupones,
+     envío/IVA, persistencia intercambiable, checkout, UI responsive y servidor estático sin dependencias.
+
+     - npm start → http://localhost:4173
+     - npm test → 23 tests, todos en verde
+
+     Arquitectura, cupones de prueba y guía de extensión en README.md.
+
+     ▣  Build · deepseek-v4.1-flash · 2m 27s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · deepseek-v4.1-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /tmp/bench-ws/ollama_deepseek-v4.1-flash/CCA                                                 61.7K  ctrl+p commands
+

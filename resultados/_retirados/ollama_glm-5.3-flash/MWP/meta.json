@@ -1,0 +1,24 @@
+{
+  "codigo": "MWP",
+  "modelo": "ollama/glm-5.3-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T22:42:02Z",
+  "prompt_enviado": "Dibuja en Mermaid la arquitectura de Wikipedia. En español. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 8565,
+    "output": 1128,
+    "reasoning": 0,
+    "cache_read": 7360,
+    "cache_write": 0,
+    "total": 17053
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "write": 1
+  },
+  "sesion": "ses_e0a069fb6ffesUMWDRO6nlCHU4",
+  "ficheros": [
+    "arquitectura_wikipedia.mmd"
+  ]
+}

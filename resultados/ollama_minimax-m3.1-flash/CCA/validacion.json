@@ -1,0 +1,15 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ build, typecheck, lint y 42/42 tests (arrancan su Redis)",
+    "✔ dos instancias sobre el mismo Redis: 40 altas a la vez, 40 aceptadas, 40 guardadas",
+    "✔ JWT (401 sin token), precio del servidor, céntimos"
+  ],
+  "comprobacion": "Copia en /tmp sin node_modules ni dist, Redis local, dos servidores en 3401 y 3402, token con su scripts/create-token.ts, juez/juez.mjs (del juez)",
+  "juez_salida": [
+    "40 altas (dos instancias): 200 × 40 → 40 unidades en 2 líneas",
+    "precio desde el cliente → ignorado",
+    "sin token → 401"
+  ]
+}

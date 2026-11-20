@@ -1,0 +1,27 @@
+{
+  "html": [
+    {
+      "fichero": "alhambra-3d.html",
+      "errores": [],
+      "titulo": "La Alhambra · Recorrido 3D",
+      "canvas": 1,
+      "texto": "2 · P. de la Justicia\n3 · Alcazaba\n4 · Mexuar\n5 · Arrayanes\n6 · Leones\n7 · Partal\n8 · Generalife\nLA ALHAMBRA\n\nRecorrido 3D · Palacios Nazaríes · Alcazaba · Generalife\n\n1\nPanorámica\n2\nP. de la Justicia\n3\nAlcazaba\n4\nMexuar\n5\nArrayanes\n6\nLeones\n7\nPartal\n8\nGeneralife\n9\nAlbaicín\n1 / 9\nLa Alhambra desde la Vega\n\nLa ciudad palatina nazarí se alza sobre el cerro de la Sabika, entre la Vega de Granada y Si",
+      "scripts": [
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      ],
+      "captura": "capturas/alhambra-3d.html.png",
+      "capturas_extra": [
+        "capturas/inicio.png",
+        "capturas/siguiente-x4.png",
+        "capturas/auto-10s.png",
+        "capturas/auto-30s.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores; 43 KB",
+    "✔ el recorrido automático viaja de parada en parada",
+    "✖ en los patios la cámara se mete en los muros"
+  ]
+}

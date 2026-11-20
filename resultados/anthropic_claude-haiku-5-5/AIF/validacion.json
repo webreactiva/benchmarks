@@ -1,0 +1,23 @@
+{
+  "html": [
+    {
+      "fichero": "alquimia-web-reactiva.html",
+      "errores": [],
+      "titulo": "Alquimia Web Reactiva",
+      "canvas": 0,
+      "texto": "Alquimia Web Reactiva\nDescubiertos: 4 / 54\n💡 Pista\n🧹 Limpiar mesa\n↺ Reiniciar\n💻\nCódigo\n🧑\nHumano\n💡\nIdea\n☕\nCafé\n\nArrastra elementos de la izquierda a la mesa y junta dos encima de otro para crear algo nuevo. En móvil: toca un elemento y luego otro.\n\nFan project inspirado en Infinite Craft. No está afiliado a webreactiva.com. Las combinaciones están curadas a mano sobre temas de Web Reactiva (IA",
+      "scripts": [],
+      "captura": "capturas/alquimia-web-reactiva.html.png",
+      "capturas_extra": [
+        "capturas/codigo-humano.png",
+        "capturas/prompt-codigo.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores, sin dependencias",
+    "✔ arrastrar: Código + Humano → Programador, Humano + Idea → Prompt",
+    "✔ 54 de 54 elementos alcanzables (juez/alcanzables.js)"
+  ]
+}

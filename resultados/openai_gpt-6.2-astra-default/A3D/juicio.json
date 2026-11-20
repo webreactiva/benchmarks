@@ -1,0 +1,17 @@
+{
+  "rubrica": {
+    "un html sin errores": 1,
+    "ruta real": 2,
+    "se recorre": 0,
+    "se reconoce": 1,
+    "vista limpia": 1,
+    "textos": 1
+  },
+  "nota": 6,
+  "veredicto": "maqueta limpia, la cámara no viaja",
+  "resumen": "Una maqueta en 3D hecha a mano en canvas, sin librerías y en 8 KB, con torres almenadas y el patio circular de Carlos V, y una ruta de cinco paradas reales con textos correctos. Pero «Siguiente parada» solo cambia el texto: la cámara se queda quieta, así que la ruta no se recorre.",
+  "rarezas": [
+    "Lo escribe todo en cinco peticiones y cuatro llamadas, sin abrirlo en un navegador",
+    "Programa su propio motor 3D (caras, orden de pintado y proyección) en lugar de usar three.js"
+  ]
+}

@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f5f0">
+  <meta name="description" content="Alquimia Reactiva: mezcla código, IA, personas y pantuflas para descubrir el universo de Web Reactiva.">
+  <title>Alquimia Reactiva — El juego de Web Reactiva</title>
+  <style>
+    :root {
+      --paper: #f7f5f0;
+      --surface: #fffefb;
+      --surface-strong: #ffffff;
+      --ink: #252422;
+      --muted: #77736d;
+      --line: #e7e2da;
+      --line-strong: #d9d2c8;
+      --coral: #e86f5c;
+      --coral-dark: #c95343;
+      --coral-soft: #fff0eb;
+      --purple: #9174c9;
+      --purple-soft: #f1ecfb;
+      --green: #4f8c72;
+      --green-soft: #eaf5ef;
+      --yellow: #e9ad45;
+      --shadow-sm: 0 2px 4px rgba(48, 39, 30, .04), 0 7px 18px rgba(48, 39, 30, .05);
+      --shadow-md: 0 14px 45px rgba(48, 39, 30, .12), 0 3px 10px rgba(48, 39, 30, .06);
+      --radius: 18px;
+      --font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    button, [role="button"] { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, input:focus-visible, [tabindex]:focus-visible, a:focus-visible {
+      outline: 3px solid rgba(145, 116, 201, .35);
+      outline-offset: 3px;
+    }
+    a { color: inherit; }
+    [hidden] { display: none !important; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
+    .app { height: 100dvh; min-height: 650px; display: flex; flex-direction: column; }
+    .topbar {
+      height: 76px; flex: 0 0 76px; display: flex; align-items: center; gap: 24px;
+      padding: 0 28px; background: rgba(255, 254, 251, .92); border-bottom: 1px solid var(--line);
+      position: relative; z-index: 20;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; min-width: max-content; }
+    .brand-mark { width: 42px; height: 42px; flex: 0 0 auto; filter: drop-shadow(0 4px 6px rgba(232, 111, 92, .18)); }
+    .brand-name { font-size: 18px; line-height: 1.05; font-weight: 820; letter-spacing: -.65px; }
+    .brand-name span { color: var(--coral); }
+    .brand-kicker { margin-top: 5px; color: var(--muted); font-size: 9px; font-weight: 750; letter-spacing: 1.5px; text-transform: uppercase; }
+    .topbar-note {
+      display: flex; align-items: center; gap: 8px; margin-left: 18px; padding-left: 25px;
+      border-left: 1px solid var(--line); color: var(--muted); font-size: 12px;
+    }
+    .topbar-note .wr-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--purple); box-shadow: 0 0 0 4px var(--purple-soft); }
+    .topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .save-state { display: flex; align-items: center; gap: 6px; margin-right: 8px; color: var(--muted); font-size: 11px; }
+    .save-state svg { color: var(--green); }
+    .icon-button {
+      width: 38px; height: 38px; display: inline-grid; place-items: center; padding: 0;
+      border: 1px solid var(--line); border-radius: 11px; background: var(--surface); cursor: pointer;
+      transition: border-color .18s, background .18s, transform .18s;
+    }
+    .icon-button:hover { background: var(--coral-soft); border-color: #f2c8bc; transform: translateY(-1px); }
+    .icon-button svg { width: 18px; height: 18px; }
+    .icon-button.muted { color: var(--muted); }
+    .wr-link {
+      display: flex; align-items: center; gap: 7px; margin-left: 5px; padding: 10px 13px;
+      border: 1px solid var(--line); border-radius: 11px; text-decoration: none; font-size: 12px; font-weight: 700;
+      background: var(--surface); transition: .18s;
+    }
+    .wr-link:hover { border-color: var(--purple); background: var(--purple-soft); }
+    .wr-link svg { width: 14px; height: 14px; }
+
+    .game-shell {
+      flex: 1; min-height: 0; width: 100%; max-width: 1680px; margin: 0 auto;
+      display: grid; grid-template-columns: minmax(0, 1fr) 366px; gap: 18px; padding: 18px;
+    }
+    .lab-panel, .collection-panel {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow-sm); min-height: 0; overflow: hidden;
+    }
+    .lab-panel { display: flex; flex-direction: column; position: relative; }
+    .lab-heading {
+      flex: 0 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
+      padding: 22px 25px 16px;
+    }
+    .eyebrow { margin: 0 0 7px; color: var(--coral-dark); font-size: 10px; font-weight: 800; letter-spacing: 1.7px; text-transform: uppercase; }
+    .eyebrow .live-dot { display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 0; border-radius: 50%; background: var(--coral); }
+    h1 { margin: 0; font-size: clamp(24px, 2.25vw, 35px); line-height: 1.12; letter-spacing: -1.25px; font-weight: 790; }
+    h1 em { color: var(--coral); font-style: normal; }
+    .lab-subtitle { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .level-badge {
+      display: flex; align-items: center; gap: 10px; flex: 0 0 auto; padding: 9px 12px 9px 9px;
+      background: var(--purple-soft); border: 1px solid #e3d9f5; border-radius: 13px;
+    }
+    .level-icon { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 9px; background: #fff; font-size: 17px; }
+    .level-overline { color: #81758f; font-size: 8px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+    .level-name { margin-top: 2px; color: #594675; font-size: 11px; font-weight: 750; white-space: nowrap; }
+
+    .mission-bar {
+      flex: 0 0 auto; display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: 14px;
+      margin: 0 25px 15px; padding: 10px 13px; background: #faf8f4; border: 1px solid var(--line); border-radius: 12px;
+    }
+    .mission-copy { min-width: 0; }
+    .mission-label { color: var(--muted); font-size: 8px; font-weight: 800; letter-spacing: 1.1px; text-transform: uppercase; }
+    .mission-target { margin-top: 3px; font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .progress-track { height: 6px; border-radius: 99px; background: #e9e4dc; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--coral), #f09869); transition: width .45s cubic-bezier(.2,.8,.2,1); }
+    .progress-count { color: var(--muted); font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .progress-count strong { color: var(--ink); font-size: 13px; }
+
+    .board {
+      flex: 1; min-height: 280px; margin: 0 12px; position: relative; overflow: hidden;
+      border: 1px dashed #ded7cc; border-radius: 15px; background-color: #fcfbf8;
+      background-image: radial-gradient(#dcd6cc 1px, transparent 1px); background-size: 22px 22px;
+      isolation: isolate;
+    }
+    .board.drag-over { border-color: var(--coral); background-color: #fff9f5; box-shadow: inset 0 0 0 3px rgba(232,111,92,.08); }
+    .board::before, .board::after { content: ""; position: absolute; pointer-events: none; z-index: -1; border-radius: 50%; filter: blur(1px); }
+    .board::before { width: 270px; height: 270px; left: -120px; bottom: -160px; background: rgba(232,111,92,.04); }
+    .board::after { width: 300px; height: 300px; right: -190px; top: -180px; background: rgba(145,116,201,.05); }
+    .board-nodes { position: absolute; inset: 0; }
+    .empty-lab {
+      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 25px; text-align: center; pointer-events: none;
+    }
+    .empty-orbit { width: 72px; height: 72px; position: relative; display: grid; place-items: center; margin-bottom: 13px; }
+    .empty-orbit::before, .empty-orbit::after { content: ""; position: absolute; inset: 10px 0; border: 1.5px solid #d8cceb; border-radius: 50%; transform: rotate(35deg); }
+    .empty-orbit::after { transform: rotate(-35deg); }
+    .empty-orbit span { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: var(--coral-soft); font-size: 23px; transform: rotate(-7deg); }
+    .empty-lab h2 { margin: 0; font-size: 17px; letter-spacing: -.35px; }
+    .empty-lab p { max-width: 340px; margin: 7px 0 16px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .starter-mix {
+      display: flex; align-items: center; gap: 9px; padding: 7px 10px 7px 7px; pointer-events: auto;
+      border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.92); box-shadow: var(--shadow-sm); cursor: pointer;
+      transition: transform .18s, border-color .18s;
+    }
+    .starter-mix:hover { transform: translateY(-2px); border-color: #edb4a7; }
+    .starter-element { display: flex; align-items: center; gap: 5px; padding: 5px 8px; background: #f8f5ef; border-radius: 8px; font-size: 11px; font-weight: 700; }
+    .starter-plus { color: #aaa39a; font-size: 15px; }
+    .starter-go { padding: 6px 8px; border-radius: 8px; background: var(--coral-soft); color: var(--coral-dark); font-size: 10px; font-weight: 800; }
+
+    .element-node {
+      position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 8px;
+      min-width: 116px; max-width: 190px; min-height: 43px; padding: 8px 28px 8px 10px;
+      border: 1px solid #ddd6cc; border-radius: 12px; background: rgba(255,255,255,.97); box-shadow: 0 5px 15px rgba(52,43,34,.09);
+      cursor: grab; user-select: none; touch-action: none; z-index: 2; transition: box-shadow .15s, border-color .15s, scale .15s;
+    }
+    .element-node:hover { border-color: #c8bbae; box-shadow: 0 8px 20px rgba(52,43,34,.13); z-index: 5; }
+    .element-node.dragging { cursor: grabbing; z-index: 50; scale: 1.05; box-shadow: 0 15px 30px rgba(52,43,34,.18); transition: none; }
+    .element-node.selected { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(145,116,201,.18), 0 8px 20px rgba(52,43,34,.12); z-index: 6; }
+    .element-node.combine-target { border-color: var(--coral); box-shadow: 0 0 0 4px rgba(232,111,92,.18), 0 8px 20px rgba(52,43,34,.12); scale: 1.05; z-index: 7; }
+    .node-emoji { flex: 0 0 auto; font-size: 22px; line-height: 1; }
+    .node-name { overflow: hidden; text-overflow: ellipsis; font-size: 12px; font-weight: 720; white-space: nowrap; }
+    .node-remove {
+      position: absolute; right: 5px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;
+      display: grid; place-items: center; padding: 0; border: 0; border-radius: 6px; background: transparent;
+      color: #aaa39a; font-size: 16px; line-height: 1; cursor: pointer; opacity: 0; transition: opacity .15s, background .15s;
+    }
+    .element-node:hover .node-remove, .element-node.selected .node-remove, .node-remove:focus-visible { opacity: 1; }
+    .node-remove:hover { color: var(--coral-dark); background: var(--coral-soft); }
+    .new-ribbon {
+      position: absolute; left: 10px; top: -9px; padding: 2px 6px; border-radius: 5px; background: var(--coral); color: white;
+      font-size: 7px; font-weight: 850; letter-spacing: .7px; text-transform: uppercase; box-shadow: 0 2px 5px rgba(232,111,92,.2);
+    }
+    .spawn-animation { animation: spawn .35s cubic-bezier(.2,1.4,.4,1); }
+    .discovery-animation { animation: discoveryPulse .8s ease-out; }
+    .shake { animation: shake .38s ease; }
+    @keyframes spawn { from { opacity: 0; scale: .45; } to { opacity: 1; scale: 1; } }
+    @keyframes discoveryPulse { 0% { box-shadow: 0 0 0 0 rgba(232,111,92,.65); } 70% { box-shadow: 0 0 0 18px rgba(232,111,92,0); } 100% { box-shadow: 0 5px 15px rgba(52,43,34,.09); } }
+    @keyframes shake { 0%,100% { margin-left: 0; } 25% { margin-left: -8px; } 50% { margin-left: 7px; } 75% { margin-left: -4px; } }
+
+    .lab-footer { flex: 0 0 53px; display: flex; align-items: center; gap: 12px; padding: 9px 22px; }
+    .interaction-tip { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; }
+    .interaction-tip svg { width: 15px; height: 15px; color: #9a9187; }
+    .interaction-tip strong { color: #56514b; font-weight: 700; }
+    .lab-actions { margin-left: auto; display: flex; gap: 7px; }
+    .text-button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 11px;
+      border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: #615c55;
+      font-size: 10px; font-weight: 700; cursor: pointer; transition: .18s;
+    }
+    .text-button:hover { background: #f8f4ee; border-color: var(--line-strong); }
+    .text-button svg { width: 14px; height: 14px; }
+    .text-button.accent { border-color: #f1c8bc; background: var(--coral-soft); color: var(--coral-dark); }
+    .text-button.accent:hover { background: #ffe6dd; }
+
+    .hint-card {
+      position: absolute; z-index: 40; left: 50%; top: 15px; transform: translateX(-50%); width: min(430px, calc(100% - 24px));
+      padding: 12px 38px 12px 13px; border: 1px solid #e0d4f1; border-radius: 13px; background: rgba(255,255,255,.98);
+      box-shadow: var(--shadow-md); animation: hintIn .25s ease-out;
+    }
+    @keyframes hintIn { from { opacity: 0; translate: 0 -8px; } to { opacity: 1; translate: 0 0; } }
+    .hint-title { color: var(--purple); font-size: 8px; font-weight: 850; letter-spacing: 1.1px; text-transform: uppercase; }
+    .hint-formula { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 7px; font-size: 11px; font-weight: 700; }
+    .hint-formula .formula-arrow { color: var(--muted); }
+    .hint-use { margin-left: auto; padding: 5px 8px; border: 0; border-radius: 7px; background: var(--purple-soft); color: #634d85; font-size: 9px; font-weight: 800; cursor: pointer; }
+    .hint-close { position: absolute; top: 7px; right: 8px; width: 25px; height: 25px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+
+    .collection-panel { display: flex; flex-direction: column; }
+    .collection-tabs { flex: 0 0 52px; display: grid; grid-template-columns: 1fr 1fr; padding: 7px; border-bottom: 1px solid var(--line); background: #faf8f4; }
+    .collection-tab {
+      display: flex; align-items: center; justify-content: center; gap: 7px; border: 0; border-radius: 9px;
+      background: transparent; color: var(--muted); font-size: 11px; font-weight: 700; cursor: pointer;
+    }
+    .collection-tab svg { width: 15px; height: 15px; }
+    .collection-tab.active { background: white; color: var(--ink); box-shadow: 0 2px 8px rgba(50,40,30,.07); }
+    .tab-count { min-width: 20px; padding: 2px 5px; border-radius: 6px; background: #ede8e0; color: #777067; font-size: 8px; text-align: center; }
+    .collection-tab.active .tab-count { background: var(--coral-soft); color: var(--coral-dark); }
+    .collection-view { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .collection-heading { flex: 0 0 auto; display: flex; align-items: center; padding: 18px 18px 12px; }
+    .collection-heading h2 { margin: 0; font-size: 17px; letter-spacing: -.35px; }
+    .collection-heading p { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+    .sort-button { margin-left: auto; display: flex; align-items: center; gap: 5px; padding: 6px 8px; border: 0; border-radius: 7px; background: #f5f1eb; color: var(--muted); font-size: 9px; font-weight: 700; cursor: pointer; }
+    .sort-button svg { width: 12px; height: 12px; }
+    .search-wrap { flex: 0 0 auto; position: relative; margin: 0 18px 12px; }
+    .search-wrap > svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: #a19a90; pointer-events: none; }
+    .search-input { width: 100%; height: 38px; padding: 0 33px 0 34px; border: 1px solid var(--line); border-radius: 10px; background: #fcfbf8; color: var(--ink); font-size: 11px; outline: none; transition: .18s; }
+    .search-input:focus { border-color: #cbbce5; background: white; box-shadow: 0 0 0 3px rgba(145,116,201,.09); }
+    .search-input::placeholder { color: #aaa39a; }
+    .search-clear { position: absolute; right: 6px; top: 6px; width: 26px; height: 26px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); cursor: pointer; }
+    .search-clear:hover { background: #f1ede7; }
+    .inventory {
+      flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 12px 14px 18px;
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: min-content; align-content: start; gap: 7px;
+      scrollbar-width: thin; scrollbar-color: #dcd5cb transparent;
+    }
+    .inventory-item {
+      position: relative; min-width: 0; min-height: 46px; display: flex; align-items: center; gap: 8px; padding: 8px;
+      border: 1px solid var(--line); border-radius: 10px; background: white; text-align: left; cursor: grab;
+      transition: transform .16s, border-color .16s, box-shadow .16s;
+    }
+    .inventory-item:hover { transform: translateY(-1px); border-color: #d4c5b8; box-shadow: 0 4px 10px rgba(50,40,30,.06); }
+    .inventory-item:active { cursor: grabbing; }
+    .inventory-item.base { background: #fcfaf6; }
+    .inventory-emoji { flex: 0 0 auto; width: 27px; font-size: 21px; line-height: 1; text-align: center; }
+    .inventory-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 10px; font-weight: 700; line-height: 1.25; }
+    .inventory-item.latest::after { content: ""; position: absolute; right: 6px; top: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--coral); }
+    .empty-search { grid-column: 1 / -1; padding: 35px 15px; text-align: center; color: var(--muted); font-size: 11px; }
+    .empty-search span { display: block; margin-bottom: 8px; font-size: 28px; }
+    .empty-search button { margin-top: 10px; border: 0; background: transparent; color: var(--coral-dark); font-size: 10px; font-weight: 750; cursor: pointer; }
+    .collection-footer { flex: 0 0 auto; padding: 11px 18px; border-top: 1px solid var(--line); background: #faf8f4; color: var(--muted); font-size: 9px; text-align: center; }
+    .collection-footer strong { color: #5e5851; }
+
+    .journal-list { flex: 1; min-height: 0; overflow-y: auto; padding: 0 14px 15px 18px; scrollbar-width: thin; scrollbar-color: #dcd5cb transparent; }
+    .journal-entry { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; padding: 10px 3px; border-bottom: 1px solid #eee9e2; }
+    .journal-result { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; font-size: 11px; font-weight: 750; }
+    .journal-formula { color: var(--muted); font-size: 9px; }
+    .journal-repeat { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; background: white; color: var(--muted); cursor: pointer; }
+    .journal-repeat:hover { color: var(--purple); border-color: #d6c9ea; background: var(--purple-soft); }
+    .journal-repeat svg { width: 13px; height: 13px; }
+    .journal-empty { padding: 45px 25px; text-align: center; }
+    .journal-empty .empty-book { display: block; margin-bottom: 10px; font-size: 35px; }
+    .journal-empty h3 { margin: 0 0 7px; font-size: 14px; }
+    .journal-empty p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+
+    .toast-region { position: fixed; z-index: 100; left: 50%; bottom: 22px; transform: translateX(-50%); width: min(410px, calc(100% - 28px)); pointer-events: none; }
+    .toast {
+      position: relative; display: flex; align-items: center; gap: 12px; padding: 13px 36px 13px 13px; margin-top: 8px;
+      border: 1px solid #e1dad1; border-radius: 14px; background: rgba(255,255,255,.98); box-shadow: var(--shadow-md);
+      pointer-events: auto; animation: toastIn .35s cubic-bezier(.2,1,.3,1);
+    }
+    .toast.leaving { animation: toastOut .25s ease forwards; }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes toastOut { to { opacity: 0; transform: translateY(10px) scale(.97); } }
+    .toast-icon { flex: 0 0 auto; width: 43px; height: 43px; display: grid; place-items: center; border-radius: 11px; background: var(--coral-soft); font-size: 25px; }
+    .toast-copy { min-width: 0; }
+    .toast-kicker { color: var(--coral-dark); font-size: 8px; font-weight: 850; letter-spacing: 1px; text-transform: uppercase; }
+    .toast-title { margin-top: 3px; font-size: 13px; font-weight: 800; }
+    .toast-description { margin-top: 3px; color: var(--muted); font-size: 9px; line-height: 1.45; }
+    .toast-close { position: absolute; right: 8px; top: 8px; border: 0; background: transparent; color: #aaa39a; cursor: pointer; }
+    .toast.error .toast-icon { background: #f2efeb; }
+    .toast.error .toast-kicker { color: var(--muted); }
+
+    dialog { max-width: calc(100% - 28px); padding: 0; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); color: var(--ink); box-shadow: 0 30px 100px rgba(36,29,24,.25); }
+    dialog::backdrop { background: rgba(37,34,31,.35); backdrop-filter: blur(4px); }
+    .dialog-inner { position: relative; width: 480px; max-width: 100%; padding: 28px; }
+    .dialog-close { position: absolute; top: 14px; right: 14px; }
+    .dialog-hero { width: 54px; height: 54px; display: grid; place-items: center; margin-bottom: 16px; border-radius: 15px; background: var(--coral-soft); font-size: 29px; }
+    .dialog-inner h2 { margin: 0; font-size: 23px; letter-spacing: -.7px; }
+    .dialog-intro { margin: 8px 0 20px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .help-steps { display: grid; gap: 10px; }
+    .help-step { display: grid; grid-template-columns: 30px 1fr; gap: 11px; padding: 11px; border: 1px solid var(--line); border-radius: 11px; background: #fcfaf7; }
+    .step-number { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; background: var(--purple-soft); color: #6d558e; font-size: 11px; font-weight: 800; }
+    .help-step h3 { margin: 0 0 3px; font-size: 12px; }
+    .help-step p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .keyboard-notes { display: flex; gap: 12px; margin: 16px 0; color: var(--muted); font-size: 9px; }
+    kbd { padding: 2px 5px; border: 1px solid #dcd5cb; border-bottom-width: 2px; border-radius: 5px; background: white; color: #625c55; font: 9px var(--font); }
+    .primary-button { width: 100%; padding: 12px 16px; border: 0; border-radius: 11px; background: var(--coral); color: white; font-size: 12px; font-weight: 800; cursor: pointer; transition: background .18s, transform .18s; }
+    .primary-button:hover { background: var(--coral-dark); transform: translateY(-1px); }
+    .reset-progress { display: block; margin: 10px auto 0; padding: 3px 8px; border: 0; background: transparent; color: var(--muted); font-size: 9px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+    .reset-progress:hover { color: var(--coral-dark); }
+    .dialog-disclaimer { margin: 12px 0 0; color: #aaa39a; font-size: 8px; text-align: center; line-height: 1.5; }
+    .dialog-disclaimer a { color: #8b7780; }
+    .dialog-small { width: 390px; }
+    .dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 20px; }
+    .secondary-button { padding: 11px 15px; border: 1px solid var(--line); border-radius: 11px; background: white; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .danger-button { padding: 11px 15px; border: 0; border-radius: 11px; background: var(--coral); color: white; font-size: 11px; font-weight: 750; cursor: pointer; }
+
+    .particle { position: fixed; z-index: 90; width: 7px; height: 7px; border-radius: 2px; pointer-events: none; animation: particleFly .7s ease-out forwards; }
+    @keyframes particleFly { to { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(.2); } }
+    .confetti { position: fixed; z-index: 110; top: -15px; width: 8px; height: 13px; border-radius: 2px; pointer-events: none; animation: confettiFall var(--duration) cubic-bezier(.2,.6,.4,1) forwards; }
+    @keyframes confettiFall { to { transform: translate(var(--drift), 105vh) rotate(720deg); opacity: .8; } }
+
+    @media (max-width: 1100px) {
+      .game-shell { grid-template-columns: minmax(0, 1fr) 325px; gap: 12px; padding: 12px; }
+      .topbar { padding: 0 18px; }
+      .topbar-note { display: none; }
+      .inventory { grid-template-columns: 1fr; }
+      .lab-heading { padding: 18px 20px 14px; }
+      .mission-bar { margin-left: 20px; margin-right: 20px; }
+    }
+    @media (min-width: 1101px) and (max-width: 1280px) {
+      .inventory { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .app { height: auto; min-height: 100dvh; }
+      .topbar { height: 65px; flex-basis: 65px; padding: 0 14px; position: sticky; top: 0; }
+      .brand-mark { width: 36px; height: 36px; }
+      .brand-name { font-size: 16px; }
+      .brand-kicker { display: none; }
+      .save-state, .wr-link, #resetButton { display: none; }
+      .topbar-actions { gap: 6px; }
+      .icon-button { width: 35px; height: 35px; }
+      .game-shell { display: flex; flex-direction: column; padding: 10px; gap: 12px; }
+      .lab-panel { height: 650px; min-height: calc(100dvh - 85px); max-height: 760px; }
+      .lab-heading { padding: 18px 16px 13px; }
+      h1 { font-size: 25px; }
+      .lab-subtitle { max-width: 240px; font-size: 10px; }
+      .level-badge { padding: 7px; }
+      .level-icon { width: 29px; height: 29px; }
+      .level-copy { display: none; }
+      .mission-bar { margin: 0 16px 12px; gap: 9px; padding: 9px 10px; }
+      .mission-target { max-width: 150px; }
+      .board { margin: 0 8px; min-height: 300px; }
+      .lab-footer { padding: 8px 13px; }
+      .interaction-tip { max-width: 160px; line-height: 1.4; }
+      .interaction-tip .desktop-tip { display: none; }
+      .text-button { padding: 8px 9px; }
+      .collection-panel { min-height: 540px; max-height: 680px; }
+      .inventory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .collection-heading { padding-top: 16px; }
+      .toast-region { bottom: 14px; }
+      .element-node { min-width: 108px; max-width: 155px; padding-right: 24px; }
+      .node-name { font-size: 11px; }
+      .node-remove { opacity: .65; }
+    }
+    @media (max-width: 390px) {
+      .lab-panel { min-height: 620px; }
+      .mission-label { display: none; }
+      .mission-target { margin: 0; max-width: 120px; }
+      .interaction-tip { display: none; }
+      .lab-actions { width: 100%; }
+      .lab-actions .text-button { flex: 1; }
+      .dialog-inner { padding: 23px 19px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand" aria-label="Alquimia Reactiva">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <rect width="48" height="48" rx="14" fill="#E86F5C"/>
+          <ellipse cx="24" cy="24" rx="15" ry="6.5" stroke="white" stroke-width="2.2" transform="rotate(35 24 24)"/>
+          <ellipse cx="24" cy="24" rx="15" ry="6.5" stroke="white" stroke-width="2.2" transform="rotate(-35 24 24)"/>
+          <circle cx="24" cy="24" r="3.4" fill="white"/>
+          <circle cx="36.5" cy="13.5" r="3.2" fill="#BFA9E7" stroke="white" stroke-width="1.5"/>
+        </svg>
+        <div>
+          <div class="brand-name">alquimia<span>reactiva</span></div>
+          <div class="brand-kicker">El laboratorio malandriner</div>
+        </div>
+      </div>
+      <div class="topbar-note"><span class="wr-dot"></span> Un pequeño homenaje al universo de Web Reactiva</div>
+      <div class="topbar-actions">
+        <div class="save-state" id="saveState" title="Tu progreso se guarda en este navegador">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>Guardado local</span>
+        </div>
+        <button class="icon-button muted" id="soundButton" aria-label="Desactivar sonido" title="Sonido">
+          <svg id="soundOnIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          <svg id="soundOffIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" hidden><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5m0-5-5 5"/></svg>
+        </button>
+        <button class="icon-button muted" id="helpButton" aria-label="Cómo jugar" title="Cómo jugar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 0 1 4.65.8c0 1.7-2.35 2-2.35 3.7"/><path d="M12 17h.01"/></svg>
+        </button>
+        <button class="icon-button muted" id="resetButton" aria-label="Reiniciar partida" title="Reiniciar partida">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
+        <a class="wr-link" href="https://webreactiva.com" target="_blank" rel="noopener noreferrer">webreactiva.com
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <main class="game-shell">
+      <section class="lab-panel" aria-label="Mesa de experimentos">
+        <div class="lab-heading">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span>Tu laboratorio</p>
+            <h1>Mezcla ideas. <em>Crea algo grande.</em></h1>
+            <p class="lab-subtitle">Del primer prompt a toda una comunidad. ¿Qué reacción provocarás hoy?</p>
+          </div>
+          <div class="level-badge" title="Tu nivel evoluciona con cada descubrimiento">
+            <div class="level-icon" id="levelIcon">🩴</div>
+            <div class="level-copy">
+              <div class="level-overline">Tu rango</div>
+              <div class="level-name" id="levelName">Aprendiz en pantuflas</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mission-bar">
+          <div class="mission-copy">
+            <div class="mission-label">Próximo hito</div>
+            <div class="mission-target" id="missionTarget">⚛️ Crea Web Reactiva</div>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Progreso de descubrimientos" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-count"><strong id="discoveredCount">4</strong> / <span id="totalCount">0</span> elementos</div>
+        </div>
+
+        <div class="board" id="board" aria-label="Arrastra elementos aquí y suéltalos unos sobre otros para combinarlos">
+          <div class="empty-lab" id="emptyLab">
+            <div class="empty-orbit" aria-hidden="true"><span>🧪</span></div>
+            <h2>Todo empieza con una mezcla</h2>
+            <p>Arrastra elementos desde tu colección o púlsalos para soltarlos aquí. Junta dos y observa la reacción.</p>
+            <button class="starter-mix" id="starterMix" aria-label="Probar la primera mezcla: Código más Inteligencia Artificial">
+              <span class="starter-element">💻 Código</span><span class="starter-plus">+</span><span class="starter-element">✨ IA</span><span class="starter-go">Probar →</span>
+            </button>
+          </div>
+          <div class="board-nodes" id="boardNodes"></div>
+          <div class="hint-card" id="hintCard" hidden>
+            <div class="hint-title">Una pista, sin alucinaciones</div>
+            <div class="hint-formula" id="hintFormula"></div>
+            <button class="hint-close" id="hintClose" aria-label="Cerrar pista">×</button>
+          </div>
+        </div>
+
+        <footer class="lab-footer">
+          <div class="interaction-tip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 11V7a2 2 0 0 1 4 0v3-5a2 2 0 0 1 4 0v5-2a2 2 0 0 1 4 0v6c0 4-2.5 7-6.5 7H12c-2 0-3.5-.8-4.8-2.4L3.5 14A2 2 0 0 1 6.7 12L8 14"/></svg>
+            <span><strong>Arrastra uno sobre otro</strong> <span class="desktop-tip">o toca dos elementos</span></span>
+          </div>
+          <div class="lab-actions">
+            <button class="text-button" id="clearButton" title="Retirar los elementos de la mesa">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5m4-5v5"/></svg>
+              Limpiar
+            </button>
+            <button class="text-button accent" id="hintButton" title="Recibir una pista (H)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18h6M10 21h4M8.5 14.5a6 6 0 1 1 7 0c-1 .7-1.5 1.4-1.5 2.5h-4c0-1.1-.5-1.8-1.5-2.5Z"/></svg>
+              Pedir pista
+            </button>
+          </div>
+        </footer>
+      </section>
+
+      <aside class="collection-panel" aria-label="Colección y bitácora">
+        <div class="collection-tabs" role="tablist" aria-label="Secciones de la colección">
+          <button class="collection-tab active" id="elementsTab" role="tab" aria-selected="true" aria-controls="elementsView" data-view="elements">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3Z"/></svg>
+            Elementos <span class="tab-count" id="elementsTabCount">4</span>
+          </button>
+          <button class="collection-tab" id="journalTab" role="tab" aria-selected="false" aria-controls="journalView" data-view="journal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 3h12a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2V3Z"/><path d="M5 17a2 2 0 0 1 2-2h12M9 7h6"/></svg>
+            Bitácora <span class="tab-count" id="journalTabCount">0</span>
+          </button>
+        </div>
+
+        <div class="collection-view" id="elementsView" role="tabpanel" aria-labelledby="elementsTab">
+          <div class="collection-heading">
+            <div><h2>Tus elementos</h2><p>Haz clic para soltar · arrastra para mezclar</p></div>
+            <button class="sort-button" id="sortButton" title="Cambiar orden">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h12M8 12h8M8 18h4M4 4v16m0 0-2-2m2 2 2-2"/></svg>
+              <span id="sortLabel">Recientes</span>
+            </button>
+          </div>
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <label class="sr-only" for="searchInput">Buscar elementos</label>
+            <input class="search-input" id="searchInput" type="search" placeholder="Buscar en tus descubrimientos…" autocomplete="off">
+            <button class="search-clear" id="searchClear" aria-label="Borrar búsqueda" hidden>×</button>
+          </div>
+          <div class="inventory" id="inventory" aria-live="polite"></div>
+          <div class="collection-footer" id="collectionFooter">Los <strong>4 elementos esenciales</strong> ya están en tus manos.</div>
+        </div>
+
+        <div class="collection-view" id="journalView" role="tabpanel" aria-labelledby="journalTab" hidden>
+          <div class="collection-heading">
+            <div><h2>Bitácora malandriner</h2><p>Tus reacciones verificadas, sin AI Slop.</p></div>
+          </div>
+          <div class="journal-list" id="journalList"></div>
+          <div class="collection-footer">Pulsa <strong>↻</strong> en una receta para repetirla en la mesa.</div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="false"></div>
+  <div class="sr-only" id="announcer" aria-live="assertive"></div>
+
+  <dialog id="helpDialog" aria-labelledby="helpTitle">
+    <div class="dialog-inner">
+      <button class="icon-button dialog-close" data-close-dialog="helpDialog" aria-label="Cerrar">×</button>
+      <div class="dialog-hero">🧪</div>
+      <h2 id="helpTitle">La alquimia es cosa de developers</h2>
+      <p class="dialog-intro">No hay puntuación que perder ni prisa que correr. Solo curiosidad, combinaciones y algún que otro deploy en viernes.</p>
+      <div class="help-steps">
+        <div class="help-step"><div class="step-number">01</div><div><h3>Suelta tus ingredientes</h3><p>Arrastra un elemento desde la colección hasta la mesa. En el móvil, basta con pulsarlo.</p></div></div>
+        <div class="help-step"><div class="step-number">02</div><div><h3>Provoca una reacción</h3><p>Arrastra un elemento sobre otro. También puedes tocar dos elementos seguidos para combinarlos.</p></div></div>
+        <div class="help-step"><div class="step-number">03</div><div><h3>Descubre el universo reactivo</h3><p>Cada receta revela herramientas, ideas y guiños a Web Reactiva. Si te atascas, pide una pista.</p></div></div>
+      </div>
+      <div class="keyboard-notes"><span><kbd>/</kbd> buscar</span><span><kbd>H</kbd> pista</span><span><kbd>Supr</kbd> retirar seleccionado</span></div>
+      <button class="primary-button" data-close-dialog="helpDialog">Manos al teclado</button>
+      <button class="reset-progress" id="resetFromHelp">Reiniciar partida</button>
+      <p class="dialog-disclaimer">Juego de fans no oficial, inspirado en <a href="https://webreactiva.com" target="_blank" rel="noopener noreferrer">Web Reactiva</a> y en la mecánica de Infinite Craft.<br>Tu partida se guarda únicamente en este navegador.</p>
+    </div>
+  </dialog>
+
+  <dialog id="resetDialog" aria-labelledby="resetTitle">
+    <div class="dialog-inner dialog-small">
+      <div class="dialog-hero">🗑️</div>
+      <h2 id="resetTitle">¿Borrar el experimento?</h2>
+      <p class="dialog-intro">Se eliminarán todos tus descubrimientos y recetas guardadas. Volverás a los cuatro elementos esenciales. Esta acción no se puede deshacer.</p>
+      <div class="dialog-actions">
+        <button class="secondary-button" data-close-dialog="resetDialog">Seguir jugando</button>
+        <button class="danger-button" id="confirmReset">Sí, empezar de cero</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    (() => {
+      'use strict';
+
+      // Todos los contenidos, recetas y estilos viven en este archivo: funciona sin conexión.
+      const ELEMENT_LIST = [
+        ['code', 'Código', '💻', 'dev', 'La materia prima. Todavía se escribe a mano… a veces.'],
+        ['ai', 'IA', '✨', 'ai', 'Parece magia, pero son tokens y un buen contexto.'],
+        ['people', 'Personas', '👥', 'community', 'La tecnología es necesaria; las personas, lo importante.'],
+        ['slippers', 'Pantuflas', '🩴', 'fun', 'El verdadero uniforme oficial del developer.'],
+        ['programming', 'Programación', '⌨️', 'dev', 'Convertir café y problemas en soluciones ejecutables.'],
+        ['opensource', 'Open Source', '🔓', 'dev', 'Código compartido, conocimiento multiplicado.'],
+        ['developer', 'Developer', '🧑‍💻', 'dev', 'Una persona resolviendo problemas delante de una pantalla.'],
+        ['copilot', 'GitHub Copilot', '🤖', 'ai', 'Tu compañero de editor. La última palabra sigue siendo tuya.'],
+        ['llm', 'LLM', '🧠', 'ai', 'Un modelo de lenguaje: mucho contexto y probabilidades.'],
+        ['prompt', 'Prompt', '💬', 'ai', 'La instrucción inicial. Mejor con intención que con hechizos.'],
+        ['calm', 'IA sin miedo', '🧘', 'ai', 'Ni pánico ni hype: criterio para integrar la IA en tu rutina.'],
+        ['community', 'Comunidad', '🫂', 'community', 'Aprender acompañado cambia completamente la reacción.'],
+        ['malandriner', 'Malandriner', '😎', 'community', 'Developer inquieto, generoso y probablemente en pantuflas.'],
+        ['home', 'Casa', '🏠', 'fun', 'La oficina donde los calcetines gordos son código de vestuario.'],
+        ['vibe', 'Vibe Coding', '🎼', 'ai', 'Programar dejándose llevar. La revisión no es opcional.'],
+        ['hallucination', 'Alucinación', '🌀', 'ai', 'Una respuesta muy convincente que necesita verificación.'],
+        ['javascript', 'JavaScript', '🟨', 'dev', 'El lenguaje que está en todas partes, también en Web Reactiva.'],
+        ['php', 'PHP', '🐘', 'dev', 'Backend, web y muchos proyectos que siguen funcionando.'],
+        ['frontend', 'Frontend', '🎨', 'dev', 'Donde el código se convierte en algo que la gente puede usar.'],
+        ['backend', 'Backend', '🗄️', 'dev', 'La lógica, los datos y los problemas que no se ven.'],
+        ['framework', 'Framework', '🧱', 'dev', 'Una estructura para no reinventar la rueda cada lunes.'],
+        ['git', 'Git', '🌿', 'dev', 'Ramifica, registra y viaja en el tiempo sin romper el espacio-tiempo.'],
+        ['conversation', 'Conversación', '🗣️', 'community', 'Las mejores ideas suelen empezar con una buena charla.'],
+        ['newsletter', 'Newsletter', '💌', 'content', 'Recursos y criterio directos a tu bandeja de entrada.'],
+        ['podcast', 'Podcast', '🎙️', 'content', 'Aprender mientras caminas, conduces o cocinas.'],
+        ['webreactiva', 'Web Reactiva', '⚛️', 'content', 'Programación, IA y personas. Más de 710 episodios acompañando a developers.'],
+        ['dani', 'Dani Primo', '🧔', 'community', 'Las manos sobre el teclado y siempre algo nuevo que contar.'],
+        ['enpantuflas', 'En pantuflas', '🏡', 'fun', 'Porque la programación empieza por los pies.'],
+        ['sideproject', 'Side Project', '🌱', 'career', 'Una idea pequeña para aprender algo que puede crecer mucho.'],
+        ['terminal', 'Terminal', '🖥️', 'dev', 'Texto, comandos y superpoderes sin salir del teclado.'],
+        ['agent', 'Agente IA', '🕵️', 'ai', 'Una IA con herramientas, contexto y tareas que ejecutar.'],
+        ['context', 'Contexto', '🧩', 'ai', 'La información justa para que el modelo deje de adivinar.'],
+        ['tokens', 'Tokens', '🪙', 'ai', 'La unidad que se come tu contexto y, a veces, tu presupuesto.'],
+        ['telegram', 'Telegram', '✈️', 'community', 'El canal donde la conversación no se detiene.'],
+        ['audio247', 'Audio 24/7', '🎧', 'content', 'Aprendizaje en porciones, directo a tus orejas.'],
+        ['premium', 'Web Reactiva Premium', '💎', 'community', 'Formación práctica, directos y comunidad para programar con IA.'],
+        ['react', 'React', '⚛️', 'dev', 'Componentes para construir interfaces que reaccionan.'],
+        ['vue', 'Vue', '💚', 'dev', 'Un framework progresivo con una comunidad muy suya.'],
+        ['laravel', 'Laravel', '🔺', 'dev', 'PHP con convenciones, ecosistema y mucho cariño por el DX.'],
+        ['api', 'API', '🔗', 'dev', 'El puente para que dos sistemas se entiendan.'],
+        ['stack', 'Full Stack', '🥞', 'dev', 'Un poco de frontend, un poco de backend y todas las capas.'],
+        ['claudecode', 'Claude Code', '🟣', 'ai', 'El agente de Anthropic que vive en tu terminal.'],
+        ['opencode', 'OpenCode', '🔹', 'ai', 'Agente en terminal con libertad para elegir tus modelos.'],
+        ['codex', 'Codex', '📟', 'ai', 'Otro agente listo para ensuciarse las manos con tu repositorio.'],
+        ['mcp', 'MCP', '🔌', 'ai', 'El conector entre tus agentes y las herramientas de tu stack.'],
+        ['skill', 'Skill', '🛠️', 'ai', 'Una capacidad concreta que tu agente puede aprender y repetir.'],
+        ['planmode', 'Plan Mode', '🗺️', 'ai', 'Pensar antes del prompt. Planificar antes de ejecutar.'],
+        ['sdd', 'SDD', '📐', 'ai', 'Spec-Driven Development: diseñar primero, generar después.'],
+        ['openspec', 'OpenSpec', '📋', 'ai', 'Una forma práctica de llevar el ciclo SDD a tu proyecto.'],
+        ['agentsmd', 'AGENTS.md', '📄', 'ai', 'Las instrucciones de la casa para que tu agente no vaya a su bola.'],
+        ['orchestration', 'Orquestación', '🎼', 'ai', 'Coordinar agentes para que toquen la misma partitura.'],
+        ['n8n', 'n8n', '⚡', 'ai', 'Automatizaciones, integraciones y agentes fuera del editor.'],
+        ['criteria', 'Criterio', '🧭', 'community', 'La habilidad de saber qué usar, cómo y también cuándo no.'],
+        ['verification', 'Verificación', '✅', 'dev', 'Confiar está bien; comprobar el resultado está mucho mejor.'],
+        ['tests', 'Tests', '🧪', 'dev', 'Pequeñas pruebas para dormir mejor después del merge.'],
+        ['commit', 'Commit', '📦', 'dev', 'Un cambio bien contado es un regalo para tu yo del futuro.'],
+        ['pullrequest', 'Pull Request', '🔀', 'dev', 'Tu cambio, listo para conversar antes del merge.'],
+        ['review', 'Code Review', '🔍', 'dev', 'Otra mirada para mejorar código y compartir conocimiento.'],
+        ['cicd', 'CI/CD', '🔁', 'dev', 'Verificaciones automáticas y despliegues sin sudor. Casi.'],
+        ['deploy', 'Deploy', '🚀', 'dev', 'El momento en el que tu código sale al mundo real.'],
+        ['poc', 'POC', '🧫', 'career', 'Una prueba de concepto pequeña para aprender rápido.'],
+        ['mvp', 'MVP', '🎯', 'career', 'Lo mínimo para poner tu idea delante de personas reales.'],
+        ['saas', 'SaaS', '☁️', 'career', 'Software como servicio, con suscripción y problemas reales.'],
+        ['production', 'Producción', '🏭', 'dev', 'Aquí es donde las pruebas y los logs de verdad importan.'],
+        ['resources12', '12 recursos', '1️⃣2️⃣', 'content', 'La dosis dominical de enlaces para developers inquietos.'],
+        ['masterclass', 'Masterclass', '👩‍🏫', 'content', 'Programar juntos, preguntar en vivo y quedarse con la grabación.'],
+        ['guide', 'Guía práctica', '📖', 'content', 'Pistas, soluciones y código real para avanzar a tu ritmo.'],
+        ['atlas', 'Atlas Malandriner', '📚', 'content', 'Todo el conocimiento de Web Reactiva conectado a tu agente mediante MCP.'],
+        ['zona', 'Zona Malandriner', '💬', 'community', 'El grupo privado donde siempre hay alguien al otro lado.'],
+        ['flow', 'Flow', '🌊', 'ai', 'Ese estado en el que agente y developer trabajan afinados.'],
+        ['multiagent', 'Agentes multiagente', '🐝', 'ai', 'Varios agentes, tareas coordinadas y una buena arquitectura.'],
+        ['rag', 'RAG', '🔎', 'ai', 'Recuperar el contexto adecuado antes de generar una respuesta.'],
+        ['evals', 'Evals', '📏', 'ai', 'Medir respuestas para dejar de evaluar la IA a ojo.'],
+        ['aislop', 'AI Slop', '🗑️', 'ai', 'Contenido generado sin cuidado. Mejor combatirlo con criterio.'],
+        ['humanloop', 'Human in the loop', '🔄', 'ai', 'La persona conserva el control dentro del ciclo de la IA.'],
+        ['tokensaver', 'Ahorro de tokens', '💰', 'ai', 'Contexto justo, conversaciones cortas y el modelo adecuado.'],
+        ['yesyak', 'YesYak', '🐃', 'content', 'Uno de esos proyectos open source nacidos del universo reactivo.'],
+        ['wikipoke', 'Wikipoke', '📚', 'content', 'Conocimiento, IA y un nombre difícil de olvidar.'],
+        ['dirigible', 'Dirigible', '🎈', 'content', 'Un experimento de Claude Code programando en un loop infinito.'],
+        ['aicoding', 'Programación con IA', '🤖', 'ai', 'Integrar agentes en tu flujo sin perder el control del software.'],
+        ['roadmap', 'Roadmap', '🛣️', 'content', 'Una ruta con principio, fin y cada recurso en su sitio.'],
+        ['career', 'Carrera developer', '🧗', 'career', 'Aprender, compartir y abrirse camino con intención.'],
+        ['linkedin', 'LinkedIn', '💼', 'career', 'Tu trabajo bien contado, sin frases tipo ni postureo.'],
+        ['interview', 'Entrevista técnica', '🎤', 'career', 'Una conversación para demostrar cómo piensas y resuelves.'],
+        ['fichometro', 'Fichómetro', '🥊', 'career', 'Entrena entrevistas con la IA como tu saco de boxeo.'],
+        ['impostor', 'Síndrome del impostor', '🎭', 'career', 'Esa voz que duda de ti incluso cuando las pruebas dicen lo contrario.'],
+        ['storytelling', 'Storytelling', '📣', 'career', 'Contar tu trabajo de A a B para que importe a otras personas.'],
+        ['softskills', 'Soft skills', '🤝', 'career', 'Comunicación, escucha y criterio: también son habilidades técnicas.'],
+        ['senior', 'Developer senior', '🧓', 'career', 'Experiencia, responsabilidad y muchas preguntas bien hechas.'],
+        ['techlead', 'Tech Lead', '🧑‍✈️', 'career', 'Decidir, acompañar y seguir cerca del código.'],
+        ['modofuego', 'Modo fuego', '🔥', 'fun', 'Todo urge, algo falla y alguien acaba de mirar los logs.'],
+        ['modopantano', 'Modo pantano', '🌫️', 'fun', 'El proyecto avanza despacio y cada paso levanta un poco más de barro.'],
+        ['cognitivedebt', 'Deuda cognitiva', '🪢', 'ai', 'Cuando aceptas tanto código que tu modelo mental deja de seguirlo.'],
+        ['fomo', 'FOMO digital', '😰', 'fun', 'Cada semana sale un modelo nuevo. No hace falta perseguirlos todos.'],
+        ['rest', 'Descanso', '😴', 'fun', 'También se aprende lejos del teclado. HOMO: hay que desconectar.'],
+        ['fridaydeploy', 'Deploy en viernes', '😱', 'fun', 'Despliega pronto, aunque sea viernes. Con tests, claro.'],
+        ['humor', 'Humor útil', '😂', 'fun', 'Una pizquita de humor para acompañar el aprendizaje.'],
+        ['yakshaving', 'Yak shaving', '✂️', 'fun', 'Arreglar mil cosas periféricas antes de hacer la que tocaba.']
+      ];
+
+      const ELEMENTS = Object.fromEntries(ELEMENT_LIST.map(([id, name, icon, category, description]) => [id, { id, name, icon, category, description }]));
+      const BASE_IDS = ['code', 'ai', 'people', 'slippers'];
+      const RECIPE_LIST = [];
+      const addRecipe = (a, b, result) => RECIPE_LIST.push({ a, b, result, key: [a, b].sort().join('|') });
+      addRecipe('code', 'code', 'programming');
+      addRecipe('code', 'people', 'opensource');
+      addRecipe('code', 'slippers', 'developer');
+      addRecipe('code', 'ai', 'copilot');
+      addRecipe('ai', 'ai', 'llm');
+      addRecipe('ai', 'people', 'prompt');
+      addRecipe('ai', 'slippers', 'calm');
+      addRecipe('people', 'people', 'community');
+      addRecipe('people', 'slippers', 'malandriner');
+      addRecipe('slippers', 'slippers', 'home');
+      addRecipe('code', 'prompt', 'vibe');
+      addRecipe('llm', 'slippers', 'hallucination');
+      addRecipe('programming', 'developer', 'javascript');
+      addRecipe('programming', 'home', 'php');
+      addRecipe('javascript', 'developer', 'frontend');
+      addRecipe('php', 'developer', 'backend');
+      addRecipe('programming', 'community', 'framework');
+      addRecipe('code', 'developer', 'git');
+      addRecipe('prompt', 'people', 'conversation');
+      addRecipe('conversation', 'community', 'newsletter');
+      addRecipe('conversation', 'developer', 'podcast');
+      addRecipe('podcast', 'slippers', 'webreactiva');
+      addRecipe('developer', 'webreactiva', 'dani');
+      addRecipe('developer', 'home', 'enpantuflas');
+      addRecipe('developer', 'calm', 'sideproject');
+      addRecipe('developer', 'git', 'terminal');
+      addRecipe('copilot', 'prompt', 'agent');
+      addRecipe('prompt', 'llm', 'context');
+      addRecipe('llm', 'code', 'tokens');
+      addRecipe('podcast', 'community', 'telegram');
+      addRecipe('podcast', 'ai', 'audio247');
+      addRecipe('community', 'webreactiva', 'premium');
+      addRecipe('frontend', 'framework', 'react');
+      addRecipe('frontend', 'opensource', 'vue');
+      addRecipe('backend', 'framework', 'laravel');
+      addRecipe('backend', 'conversation', 'api');
+      addRecipe('frontend', 'backend', 'stack');
+      addRecipe('terminal', 'copilot', 'claudecode');
+      addRecipe('terminal', 'opensource', 'opencode');
+      addRecipe('terminal', 'llm', 'codex');
+      addRecipe('agent', 'terminal', 'mcp');
+      addRecipe('agent', 'programming', 'skill');
+      addRecipe('agent', 'prompt', 'planmode');
+      addRecipe('planmode', 'programming', 'sdd');
+      addRecipe('sdd', 'opensource', 'openspec');
+      addRecipe('agent', 'git', 'agentsmd');
+      addRecipe('agent', 'community', 'orchestration');
+      addRecipe('agent', 'api', 'n8n');
+      addRecipe('calm', 'community', 'criteria');
+      addRecipe('agent', 'criteria', 'verification');
+      addRecipe('code', 'verification', 'tests');
+      addRecipe('git', 'code', 'commit');
+      addRecipe('git', 'community', 'pullrequest');
+      addRecipe('pullrequest', 'criteria', 'review');
+      addRecipe('tests', 'git', 'cicd');
+      addRecipe('cicd', 'terminal', 'deploy');
+      addRecipe('sideproject', 'prompt', 'poc');
+      addRecipe('poc', 'community', 'mvp');
+      addRecipe('mvp', 'api', 'saas');
+      addRecipe('deploy', 'mvp', 'production');
+      addRecipe('newsletter', 'webreactiva', 'resources12');
+      addRecipe('podcast', 'premium', 'masterclass');
+      addRecipe('prompt', 'premium', 'guide');
+      addRecipe('webreactiva', 'mcp', 'atlas');
+      addRecipe('premium', 'telegram', 'zona');
+      addRecipe('claudecode', 'skill', 'flow');
+      addRecipe('orchestration', 'claudecode', 'multiagent');
+      addRecipe('context', 'mcp', 'rag');
+      addRecipe('verification', 'llm', 'evals');
+      addRecipe('hallucination', 'code', 'aislop');
+      addRecipe('verification', 'people', 'humanloop');
+      addRecipe('tokens', 'planmode', 'tokensaver');
+      addRecipe('opensource', 'llm', 'yesyak');
+      addRecipe('rag', 'sideproject', 'wikipoke');
+      addRecipe('multiagent', 'sideproject', 'dirigible');
+      addRecipe('copilot', 'verification', 'aicoding');
+      addRecipe('guide', 'community', 'roadmap');
+      addRecipe('developer', 'newsletter', 'career');
+      addRecipe('career', 'community', 'linkedin');
+      addRecipe('career', 'prompt', 'interview');
+      addRecipe('interview', 'ai', 'fichometro');
+      addRecipe('developer', 'hallucination', 'impostor');
+      addRecipe('conversation', 'newsletter', 'storytelling');
+      addRecipe('people', 'criteria', 'softskills');
+      addRecipe('developer', 'softskills', 'senior');
+      addRecipe('senior', 'community', 'techlead');
+      addRecipe('deploy', 'hallucination', 'modofuego');
+      addRecipe('sideproject', 'impostor', 'modopantano');
+      addRecipe('aislop', 'tokens', 'cognitivedebt');
+      addRecipe('newsletter', 'llm', 'fomo');
+      addRecipe('home', 'calm', 'rest');
+      addRecipe('deploy', 'slippers', 'fridaydeploy');
+      addRecipe('podcast', 'malandriner', 'humor');
+      addRecipe('sideproject', 'git', 'yakshaving');
+      // Reacciones alternativas: hay más de un camino para algunos descubrimientos.
+      addRecipe('ai', 'developer', 'aicoding');
+      addRecipe('opencode', 'skill', 'flow');
+      addRecipe('webreactiva', 'malandriner', 'zona');
+      addRecipe('community', 'home', 'enpantuflas');
+
+      const RECIPES = Object.fromEntries(RECIPE_LIST.map(recipe => [recipe.key, recipe.result]));
+      const STORAGE_KEY = 'alquimia-reactiva-v1';
+      const LEVELS = [
+        { at: 0, name: 'Aprendiz en pantuflas', icon: '🩴' },
+        { at: 10, name: 'Prompt apprentice', icon: '💬' },
+        { at: 20, name: 'Malandriner', icon: '😎' },
+        { at: 35, name: 'Programa con IA', icon: '🤖' },
+        { at: 55, name: 'Arquitecto de agentes', icon: '🕵️' },
+        { at: 75, name: 'Alquimista reactivo', icon: '⚛️' },
+        { at: 95, name: 'Leyenda malandriner', icon: '🏆' }
+      ];
+      const MILESTONES = [10, 20, 35, 55, 75, 95];
+      const QUESTS = [
+        ['webreactiva', '⚛️ Crea Web Reactiva'],
+        ['skill', '🛠️ Desbloquea una Skill'],
+        ['atlas', '📚 Construye Atlas Malandriner'],
+        ['multiagent', '🐝 Orquesta varios agentes'],
+        ['techlead', '🧑‍✈️ Llega a Tech Lead']
+      ];
+      const FAIL_MESSAGES = [
+        'Esta mezcla no compila. Prueba otra combinación.',
+        'De momento no hay reacción. Quizá falta contexto.',
+        'Ni con un prompt mejor: estos dos no reaccionan.',
+        'No pasa nada. Los experimentos fallidos también enseñan.',
+        'Resultado: undefined. La bitácora sigue esperando.'
+      ];
+      const CATEGORY_NAMES = { dev: 'desarrollo', ai: 'inteligencia artificial', community: 'comunidad', fun: 'vida developer', content: 'contenido', career: 'carrera' };
+
+      const $ = selector => document.querySelector(selector);
+      const board = $('#board');
+      const boardNodes = $('#boardNodes');
+      const inventory = $('#inventory');
+      const toastRegion = $('#toastRegion');
+      const defaultState = () => ({
+        discovered: [...BASE_IDS], instances: [], history: [], totalCombines: 0,
+        sound: true, sort: 'recent', latest: null, celebrated: []
+      });
+      let state = defaultState();
+      let searchQuery = '';
+      let selectedId = null;
+      let dragState = null;
+      let draggedInventoryId = null;
+      let spawnCounter = 0;
+      let instanceCounter = 0;
+      let audioContext = null;
+      let saveTimer = null;
+
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!saved || typeof saved !== 'object') return;
+          state.discovered = [...new Set([...BASE_IDS, ...(Array.isArray(saved.discovered) ? saved.discovered : [])])].filter(id => ELEMENTS[id]);
+          state.instances = (Array.isArray(saved.instances) ? saved.instances : []).filter(item => item && ELEMENTS[item.element] && Number.isFinite(item.x) && Number.isFinite(item.y)).slice(0, 60).map(item => ({
+            id: String(item.id || createInstanceId()), element: item.element, x: clamp(item.x, .05, .95), y: clamp(item.y, .07, .93)
+          }));
+          state.history = (Array.isArray(saved.history) ? saved.history : []).filter(key => RECIPES[key]);
+          state.totalCombines = Math.max(0, Number(saved.totalCombines) || 0);
+          state.sound = saved.sound !== false;
+          state.sort = saved.sort === 'alpha' ? 'alpha' : 'recent';
+          state.latest = ELEMENTS[saved.latest] ? saved.latest : null;
+          state.celebrated = Array.isArray(saved.celebrated) ? saved.celebrated.filter(Number.isFinite) : [];
+        } catch (error) {
+          console.warn('No se pudo recuperar la partida:', error);
+        }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          const saveLabel = $('#saveState span');
+          if (saveLabel) {
+            saveLabel.textContent = 'Guardado';
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => { saveLabel.textContent = 'Guardado local'; }, 1400);
+          }
+        } catch (error) {
+          console.warn('No se pudo guardar la partida:', error);
+        }
+      }
+
+      function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
+      function createInstanceId() { return `n${Date.now().toString(36)}${(instanceCounter++).toString(36)}`; }
+      function normalizeText(text) { return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+      function getRecipe(a, b) { return RECIPES[[a, b].sort().join('|')]; }
+      function getInstance(id) { return state.instances.find(item => item.id === id); }
+      function getNode(id) { return boardNodes.querySelector(`[data-instance="${CSS.escape(id)}"]`); }
+
+      function playSound(type) {
+        if (!state.sound) return;
+        try {
+          audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+          if (audioContext.state === 'suspended') audioContext.resume();
+          const now = audioContext.currentTime;
+          const notes = type === 'discovery' ? [523.25, 659.25, 783.99] : type === 'fail' ? [180, 145] : type === 'combine' ? [330, 494] : [420];
+          notes.forEach((frequency, index) => {
+            const oscillator = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            oscillator.type = type === 'fail' ? 'sawtooth' : 'sine';
+            oscillator.frequency.setValueAtTime(frequency, now + index * .075);
+            gain.gain.setValueAtTime(0, now + index * .075);
+            gain.gain.linearRampToValueAtTime(type === 'fail' ? .025 : .04, now + index * .075 + .012);
+            gain.gain.exponentialRampToValueAtTime(.001, now + index * .075 + .18);
+            oscillator.connect(gain).connect(audioContext.destination);
+            oscillator.start(now + index * .075);
+            oscillator.stop(now + index * .075 + .2);
+          });
+        } catch (_) { /* El audio es opcional. */ }
+      }
+
+      function updateSoundButton() {
+        $('#soundOnIcon').hidden = !state.sound;
+        $('#soundOffIcon').hidden = state.sound;
+        $('#soundButton').setAttribute('aria-label', state.sound ? 'Desactivar sonido' : 'Activar sonido');
+        $('#soundButton').setAttribute('aria-pressed', String(state.sound));
+      }
+
+      function createNode(instance, animate = false, isNew = false) {
+        const element = ELEMENTS[instance.element];
+        const node = document.createElement('div');
+        node.className = `element-node${animate ? ' spawn-animation' : ''}${isNew ? ' discovery-animation' : ''}`;
+        node.dataset.instance = instance.id;
+        node.dataset.element = instance.element;
+        node.setAttribute('role', 'button');
+        node.setAttribute('tabindex', '0');
+        node.setAttribute('aria-label', `${element.name}. Pulsa para seleccionar o arrastra sobre otro elemento.`);
+        node.title = element.description;
+        node.style.left = `${instance.x * 100}%`;
+        node.style.top = `${instance.y * 100}%`;
+        node.innerHTML = `${isNew ? '<span class="new-ribbon">Nuevo</span>' : ''}<span class="node-emoji" aria-hidden="true">${element.icon}</span><span class="node-name">${element.name}</span><button class="node-remove" tabindex="-1" aria-label="Retirar ${element.name}">×</button>`;
+        node.querySelector('.node-remove').addEventListener('click', event => {
+          event.stopPropagation();
+          removeInstance(instance.id);
+          playSound('pop');
+        });
+        node.addEventListener('pointerdown', event => startNodePointer(event, instance.id));
+        node.addEventListener('pointermove', moveNodePointer);
+        node.addEventListener('pointerup', endNodePointer);
+        node.addEventListener('pointercancel', cancelNodePointer);
+        node.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            event.stopPropagation();
+            handleNodeClick(instance.id);
+          } else if (event.key === 'Delete' || event.key === 'Backspace') {
+            event.preventDefault();
+            event.stopPropagation();
+            removeInstance(instance.id);
+          }
+        });
+        boardNodes.appendChild(node);
+        return node;
+      }
+
+      function spawnElement(elementId, x, y, options = {}) {
+        if (!ELEMENTS[elementId]) return null;
+        if (state.instances.length >= 60) {
+          showToast('La mesa está a tope', 'Limpia un poco antes de seguir añadiendo elementos.', 'error', '🧹');
+          return null;
+        }
+        if (!Number.isFinite(x) || !Number.isFinite(y)) {
+          const slots = [[.28,.32],[.56,.31],[.41,.55],[.69,.58],[.23,.70],[.65,.78],[.78,.34],[.38,.79],[.52,.45]];
+          const slot = slots[spawnCounter++ % slots.length];
+          x = slot[0] + (Math.random() - .5) * .05;
+          y = slot[1] + (Math.random() - .5) * .05;
+        }
+        const instance = { id: createInstanceId(), element: elementId, x: clamp(x, .09, .91), y: clamp(y, .10, .90) };
+        state.instances.push(instance);
+        const node = createNode(instance, options.animate !== false, options.isNew);
+        renderEmptyState();
+        if (options.persist !== false) saveState();
+        return { instance, node };
+      }
+
+      function removeInstance(id, persist = true) {
+        const index = state.instances.findIndex(item => item.id === id);
+        if (index === -1) return;
+        state.instances.splice(index, 1);
+        getNode(id)?.remove();
+        if (selectedId === id) selectedId = null;
+        renderEmptyState();
+        if (persist) saveState();
+      }
+
+      function renderEmptyState() {
+        $('#emptyLab').hidden = state.instances.length > 0;
+      }
+
+      function startNodePointer(event, id) {
+        if (event.button !== 0 || event.target.closest('.node-remove')) return;
+        const instance = getInstance(id);
+        const node = getNode(id);
+        if (!instance || !node) return;
+        event.preventDefault();
+        node.setPointerCapture(event.pointerId);
+        dragState = {
+          id, pointerId: event.pointerId, startClientX: event.clientX, startClientY: event.clientY,
+          originalX: instance.x, originalY: instance.y, moved: false, targetId: null
+        };
+      }
+
+      function moveNodePointer(event) {
+        if (!dragState || dragState.pointerId !== event.pointerId) return;
+        const distance = Math.hypot(event.clientX - dragState.startClientX, event.clientY - dragState.startClientY);
+        if (!dragState.moved && distance < 5) return;
+        dragState.moved = true;
+        const instance = getInstance(dragState.id);
+        const node = getNode(dragState.id);
+        if (!instance || !node) return;
+        const rect = board.getBoundingClientRect();
+        instance.x = clamp(dragState.originalX + (event.clientX - dragState.startClientX) / rect.width, .07, .93);
+        instance.y = clamp(dragState.originalY + (event.clientY - dragState.startClientY) / rect.height, .08, .92);
+        node.style.left = `${instance.x * 100}%`;
+        node.style.top = `${instance.y * 100}%`;
+        node.classList.add('dragging');
+        node.classList.remove('selected');
+        clearCombineTargets();
+        dragState.targetId = findCombineTarget(dragState.id);
+        if (dragState.targetId) getNode(dragState.targetId)?.classList.add('combine-target');
+      }
+
+      function endNodePointer(event) {
+        if (!dragState || dragState.pointerId !== event.pointerId) return;
+        const currentDrag = dragState;
+        dragState = null;
+        const node = getNode(currentDrag.id);
+        node?.classList.remove('dragging');
+        clearCombineTargets();
+        if (currentDrag.moved) {
+          if (currentDrag.targetId && getInstance(currentDrag.targetId)) {
+            combineInstances(currentDrag.id, currentDrag.targetId, { x: currentDrag.originalX, y: currentDrag.originalY });
+          } else {
+            if (selectedId === currentDrag.id) node?.classList.add('selected');
+            saveState();
+          }
+        } else {
+          handleNodeClick(currentDrag.id);
+        }
+      }
+
+      function cancelNodePointer() {
+        if (!dragState) return;
+        const instance = getInstance(dragState.id);
+        const node = getNode(dragState.id);
+        if (instance && node) {
+          instance.x = dragState.originalX;
+          instance.y = dragState.originalY;
+          node.style.left = `${instance.x * 100}%`;
+          node.style.top = `${instance.y * 100}%`;
+          node.classList.remove('dragging');
+        }
+        dragState = null;
+        clearCombineTargets();
+      }
+
+      function clearCombineTargets() { boardNodes.querySelectorAll('.combine-target').forEach(node => node.classList.remove('combine-target')); }
+
+      function findCombineTarget(sourceId) {
+        const sourceNode = getNode(sourceId);
+        if (!sourceNode) return null;
+        const sourceRect = sourceNode.getBoundingClientRect();
+        const sourceX = sourceRect.left + sourceRect.width / 2;
+        const sourceY = sourceRect.top + sourceRect.height / 2;
+        let nearest = null;
+        let nearestDistance = Infinity;
+        state.instances.forEach(instance => {
+          if (instance.id === sourceId) return;
+          const node = getNode(instance.id);
+          if (!node) return;
+          const rect = node.getBoundingClientRect();
+          const distance = Math.hypot(sourceX - (rect.left + rect.width / 2), sourceY - (rect.top + rect.height / 2));
+          const threshold = Math.min(118, (sourceRect.width + rect.width) * .40);
+          if (distance < threshold && distance < nearestDistance) {
+            nearest = instance.id;
+            nearestDistance = distance;
+          }
+        });
+        return nearest;
+      }
+
+      function handleNodeClick(id) {
+        if (!getInstance(id)) return;
+        if (!selectedId) {
+          selectedId = id;
+          boardNodes.querySelectorAll('.selected').forEach(node => node.classList.remove('selected'));
+          getNode(id)?.classList.add('selected');
+          playSound('pop');
+          return;
+        }
+        if (selectedId === id) {
+          selectedId = null;
+          getNode(id)?.classList.remove('selected');
+          return;
+        }
+        const firstId = selectedId;
+        selectedId = null;
+        getNode(firstId)?.classList.remove('selected');
+        combineInstances(firstId, id);
+      }
+
+      function combineInstances(firstId, secondId, dragOrigin = null) {
+        const first = getInstance(firstId);
+        const second = getInstance(secondId);
+        if (!first || !second || first.id === second.id) return;
+        const resultId = getRecipe(first.element, second.element);
+        const firstNode = getNode(firstId);
+        const secondNode = getNode(secondId);
+        if (!resultId) {
+          [firstNode, secondNode].forEach(node => {
+            node?.classList.remove('shake');
+            requestAnimationFrame(() => node?.classList.add('shake'));
+            setTimeout(() => node?.classList.remove('shake'), 450);
+          });
+          if (dragOrigin && firstNode) {
+            first.x = dragOrigin.x;
+            first.y = dragOrigin.y;
+            firstNode.style.left = `${first.x * 100}%`;
+            firstNode.style.top = `${first.y * 100}%`;
+          }
+          playSound('fail');
+          showToast('Sin reacción', FAIL_MESSAGES[state.totalCombines % FAIL_MESSAGES.length], 'error', '🧪');
+          $('#announcer').textContent = 'Estos elementos no se pueden combinar.';
+          return;
+        }
+
+        const x = (first.x + second.x) / 2;
+        const y = (first.y + second.y) / 2;
+        const ingredients = [ELEMENTS[first.element], ELEMENTS[second.element]];
+        const recipeKey = [first.element, second.element].sort().join('|');
+        removeInstance(firstId, false);
+        removeInstance(secondId, false);
+        const isNew = !state.discovered.includes(resultId);
+        state.totalCombines++;
+        if (!state.history.includes(recipeKey)) state.history.push(recipeKey);
+        if (isNew) {
+          state.discovered.push(resultId);
+          state.latest = resultId;
+        }
+        const spawned = spawnElement(resultId, x, y, { isNew, persist: false });
+        saveState();
+        renderAllPanels();
+        playSound(isNew ? 'discovery' : 'combine');
+        if (spawned) {
+          burstAtNode(spawned.node, isNew ? 16 : 9);
+          spawned.node.focus({ preventScroll: true });
+        }
+
+        const result = ELEMENTS[resultId];
+        if (isNew) {
+          showToast('Nuevo descubrimiento', result.name, 'discovery', result.icon, `${ingredients[0].icon} ${ingredients[0].name} + ${ingredients[1].icon} ${ingredients[1].name}`, result.description);
+          $('#announcer').textContent = `Nuevo descubrimiento: ${result.name}. ${result.description}`;
+          checkMilestone();
+        } else {
+          $('#announcer').textContent = `Has creado ${result.name}.`;
+        }
+      }
+
+      function burstAtNode(node, count) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const rect = node.getBoundingClientRect();
+        const colors = ['#e86f5c', '#9174c9', '#e9ad45', '#4f8c72'];
+        for (let i = 0; i < count; i++) {
+          const particle = document.createElement('span');
+          const angle = (Math.PI * 2 * i / count) + Math.random() * .3;
+          const distance = 40 + Math.random() * 55;
+          particle.className = 'particle';
+          particle.style.left = `${rect.left + rect.width / 2}px`;
+          particle.style.top = `${rect.top + rect.height / 2}px`;
+          particle.style.background = colors[i % colors.length];
+          particle.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+          particle.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
+          particle.style.setProperty('--rot', `${Math.random() * 300}deg`);
+          document.body.appendChild(particle);
+          setTimeout(() => particle.remove(), 750);
+        }
+      }
+
+      function celebrate() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const colors = ['#e86f5c', '#9174c9', '#e9ad45', '#4f8c72', '#f5c7b9'];
+        for (let i = 0; i < 55; i++) {
+          const piece = document.createElement('span');
+          piece.className = 'confetti';
+          piece.style.left = `${Math.random() * 100}vw`;
+          piece.style.background = colors[i % colors.length];
+          piece.style.setProperty('--drift', `${(Math.random() - .5) * 260}px`);
+          piece.style.setProperty('--duration', `${1.8 + Math.random() * 1.8}s`);
+          piece.style.animationDelay = `${Math.random() * .35}s`;
+          document.body.appendChild(piece);
+          setTimeout(() => piece.remove(), 4000);
+        }
+      }
+
+      function checkMilestone() {
+        const count = state.discovered.length;
+        const reached = MILESTONES.filter(milestone => count >= milestone && !state.celebrated.includes(milestone));
+        if (!reached.length) return;
+        state.celebrated.push(...reached);
+        saveState();
+        celebrate();
+        const level = getLevel();
+        setTimeout(() => showToast('¡Nuevo rango!', level.name, 'discovery', level.icon, `${count} elementos descubiertos`, 'Tu laboratorio malandriner sube de nivel.'), 650);
+      }
+
+      function getLevel() {
+        return [...LEVELS].reverse().find(level => state.discovered.length >= level.at) || LEVELS[0];
+      }
+
+      function showToast(kicker, title, type = 'info', icon = '🧪', formula = '', description = '') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type === 'error' ? 'error' : ''}`;
+        toast.innerHTML = `<div class="toast-icon" aria-hidden="true">${icon}</div><div class="toast-copy"><div class="toast-kicker">${kicker}</div><div class="toast-title">${title}</div>${formula ? `<div class="toast-description">${formula}</div>` : ''}${description ? `<div class="toast-description">${description}</div>` : ''}</div><button class="toast-close" aria-label="Cerrar notificación">×</button>`;
+        const remove = () => {
+          if (!toast.isConnected || toast.classList.contains('leaving')) return;
+          toast.classList.add('leaving');
+          setTimeout(() => toast.remove(), 260);
+        };
+        toast.querySelector('.toast-close').addEventListener('click', remove);
+        toastRegion.replaceChildren(toast);
+        setTimeout(remove, type === 'error' ? 3200 : 4800);
+      }
+
+      function renderAllPanels() {
+        renderInventory();
+        renderJournal();
+        renderProgress();
+      }
+
+      function renderInventory() {
+        let ids = state.discovered.filter(id => {
+          const element = ELEMENTS[id];
+          const haystack = normalizeText(`${element.name} ${CATEGORY_NAMES[element.category] || ''}`);
+          return haystack.includes(normalizeText(searchQuery));
+        });
+        if (state.sort === 'alpha') ids.sort((a, b) => ELEMENTS[a].name.localeCompare(ELEMENTS[b].name, 'es'));
+        else ids = [...ids].reverse();
+        inventory.innerHTML = '';
+        if (!ids.length) {
+          inventory.innerHTML = `<div class="empty-search"><span>🔎</span>No encontramos ese elemento.<br>Quizá todavía esté por descubrir.<button id="resetSearch">Borrar búsqueda</button></div>`;
+          $('#resetSearch').addEventListener('click', clearSearch);
+        } else {
+          ids.forEach(id => {
+            const element = ELEMENTS[id];
+            const button = document.createElement('button');
+            button.className = `inventory-item${BASE_IDS.includes(id) ? ' base' : ''}${state.latest === id ? ' latest' : ''}`;
+            button.draggable = true;
+            button.dataset.element = id;
+            button.title = `${element.description}\nCategoría: ${CATEGORY_NAMES[element.category]}`;
+            button.setAttribute('aria-label', `${element.name}. Añadir a la mesa.`);
+            button.innerHTML = `<span class="inventory-emoji" aria-hidden="true">${element.icon}</span><span class="inventory-name">${element.name}</span>`;
+            button.addEventListener('click', () => {
+              if (draggedInventoryId) return;
+              spawnElement(id);
+              playSound('pop');
+            });
+            button.addEventListener('dragstart', event => {
+              draggedInventoryId = id;
+              event.dataTransfer.setData('text/plain', id);
+              event.dataTransfer.effectAllowed = 'copy';
+            });
+            button.addEventListener('dragend', () => {
+              setTimeout(() => { draggedInventoryId = null; }, 0);
+              board.classList.remove('drag-over');
+            });
+            inventory.appendChild(button);
+          });
+        }
+        $('#elementsTabCount').textContent = state.discovered.length;
+        $('#sortLabel').textContent = state.sort === 'alpha' ? 'A–Z' : 'Recientes';
+        $('#searchClear').hidden = !searchQuery;
+        const remaining = Object.keys(ELEMENTS).length - state.discovered.length;
+        $('#collectionFooter').innerHTML = remaining
+          ? `<strong>${remaining} elementos</strong> esperan una reacción. Sigue experimentando.`
+          : '<strong>¡Colección completada!</strong> Eres una leyenda malandriner 🏆';
+      }
+
+      function renderJournal() {
+        const list = $('#journalList');
+        $('#journalTabCount').textContent = state.history.length;
+        if (!state.history.length) {
+          list.innerHTML = '<div class="journal-empty"><span class="empty-book">📓</span><h3>Aún no hay reacciones</h3><p>Tu primera receta aparecerá aquí.<br>Prueba con 💻 Código + ✨ IA.</p></div>';
+          return;
+        }
+        list.innerHTML = '';
+        [...state.history].reverse().forEach(key => {
+          const [aId, bId] = key.split('|');
+          const resultId = RECIPES[key];
+          if (!ELEMENTS[aId] || !ELEMENTS[bId] || !ELEMENTS[resultId]) return;
+          const a = ELEMENTS[aId];
+          const b = ELEMENTS[bId];
+          const result = ELEMENTS[resultId];
+          const entry = document.createElement('div');
+          entry.className = 'journal-entry';
+          entry.innerHTML = `<div><div class="journal-result"><span>${result.icon}</span>${result.name}</div><div class="journal-formula">${a.icon} ${a.name} + ${b.icon} ${b.name}</div></div><button class="journal-repeat" aria-label="Repetir receta de ${result.name}" title="Soltar ingredientes en la mesa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2 5.3M20 4v7h-7"/></svg></button>`;
+          entry.querySelector('button').addEventListener('click', () => {
+            spawnElement(aId);
+            spawnElement(bId);
+            playSound('pop');
+          });
+          list.appendChild(entry);
+        });
+      }
+
+      function renderProgress() {
+        const count = state.discovered.length;
+        const total = Object.keys(ELEMENTS).length;
+        const percent = count / total * 100;
+        $('#discoveredCount').textContent = count;
+        $('#totalCount').textContent = total;
+        $('#progressFill').style.width = `${percent}%`;
+        $('#progressTrack').setAttribute('aria-valuenow', String(Math.round(percent)));
+        const level = getLevel();
+        $('#levelIcon').textContent = level.icon;
+        $('#levelName').textContent = level.name;
+        const quest = QUESTS.find(([id]) => !state.discovered.includes(id));
+        $('#missionTarget').textContent = quest ? quest[1] : (count === total ? '🏆 Universo completado' : '✨ Explora tu propio camino');
+      }
+
+      function showHint() {
+        const available = RECIPE_LIST.filter(recipe => !state.discovered.includes(recipe.result) && state.discovered.includes(recipe.a) && state.discovered.includes(recipe.b));
+        const hintCard = $('#hintCard');
+        if (!available.length) {
+          const remaining = Object.keys(ELEMENTS).length - state.discovered.length;
+          showToast(remaining ? 'Pistas agotadas' : '¡Lo has descubierto todo!', remaining ? 'Prueba a combinar tus descubrimientos más recientes.' : 'No queda ningún elemento por encontrar. Enhorabuena, malandriner.', 'discovery', remaining ? '🧭' : '🏆');
+          return;
+        }
+        const recipe = available[0];
+        const a = ELEMENTS[recipe.a];
+        const b = ELEMENTS[recipe.b];
+        $('#hintFormula').innerHTML = `<span>${a.icon} ${a.name}</span><span>+</span><span>${b.icon} ${b.name}</span><span class="formula-arrow">→</span><span>❔</span><button class="hint-use" id="useHint">Soltar en la mesa</button>`;
+        $('#useHint').addEventListener('click', () => {
+          spawnElement(recipe.a);
+          spawnElement(recipe.b);
+          hintCard.hidden = true;
+          playSound('pop');
+        });
+        hintCard.hidden = false;
+        playSound('pop');
+      }
+
+      function clearSearch() {
+        searchQuery = '';
+        $('#searchInput').value = '';
+        renderInventory();
+        $('#searchInput').focus();
+      }
+
+      function switchView(view) {
+        const elementsActive = view === 'elements';
+        $('#elementsView').hidden = !elementsActive;
+        $('#journalView').hidden = elementsActive;
+        $('#elementsTab').classList.toggle('active', elementsActive);
+        $('#journalTab').classList.toggle('active', !elementsActive);
+        $('#elementsTab').setAttribute('aria-selected', String(elementsActive));
+        $('#journalTab').setAttribute('aria-selected', String(!elementsActive));
+      }
+
+      function resetGame() {
+        state = defaultState();
+        selectedId = null;
+        searchQuery = '';
+        spawnCounter = 0;
+        boardNodes.innerHTML = '';
+        $('#searchInput').value = '';
+        $('#hintCard').hidden = true;
+        saveState();
+        renderEmptyState();
+        renderAllPanels();
+        updateSoundButton();
+        switchView('elements');
+        $('#resetDialog').close();
+        showToast('Laboratorio reiniciado', 'Cuatro elementos. Infinitas posibilidades.', 'discovery', '🩴');
+      }
+
+      board.addEventListener('dragover', event => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'copy';
+        board.classList.add('drag-over');
+      });
+      board.addEventListener('dragleave', event => {
+        if (!board.contains(event.relatedTarget)) board.classList.remove('drag-over');
+      });
+      board.addEventListener('drop', event => {
+        event.preventDefault();
+        board.classList.remove('drag-over');
+        const id = event.dataTransfer.getData('text/plain') || draggedInventoryId;
+        if (!ELEMENTS[id] || !state.discovered.includes(id)) return;
+        const rect = board.getBoundingClientRect();
+        spawnElement(id, (event.clientX - rect.left) / rect.width, (event.clientY - rect.top) / rect.height);
+        draggedInventoryId = null;
+        playSound('pop');
+      });
+      board.addEventListener('pointerdown', event => {
+        if (event.target === board || event.target === boardNodes) {
+          selectedId = null;
+          boardNodes.querySelectorAll('.selected').forEach(node => node.classList.remove('selected'));
+        }
+      });
+
+      $('#starterMix').addEventListener('click', () => {
+        const first = spawnElement('code', .35, .50);
+        const second = spawnElement('ai', .58, .50);
+        playSound('pop');
+        if (first && second) setTimeout(() => combineInstances(first.instance.id, second.instance.id), 420);
+      });
+      $('#clearButton').addEventListener('click', () => {
+        if (!state.instances.length) {
+          showToast('La mesa ya está despejada', 'Todo listo para tu próximo experimento.', 'error', '🧹');
+          return;
+        }
+        state.instances = [];
+        selectedId = null;
+        boardNodes.innerHTML = '';
+        renderEmptyState();
+        saveState();
+        playSound('pop');
+      });
+      $('#hintButton').addEventListener('click', showHint);
+      $('#hintClose').addEventListener('click', () => { $('#hintCard').hidden = true; });
+      $('#searchInput').addEventListener('input', event => { searchQuery = event.target.value; renderInventory(); });
+      $('#searchClear').addEventListener('click', clearSearch);
+      $('#sortButton').addEventListener('click', () => {
+        state.sort = state.sort === 'recent' ? 'alpha' : 'recent';
+        saveState();
+        renderInventory();
+      });
+      document.querySelectorAll('.collection-tab').forEach(tab => tab.addEventListener('click', () => switchView(tab.dataset.view)));
+      $('#soundButton').addEventListener('click', () => {
+        state.sound = !state.sound;
+        updateSoundButton();
+        saveState();
+        if (state.sound) playSound('discovery');
+      });
+      $('#helpButton').addEventListener('click', () => $('#helpDialog').showModal());
+      $('#resetButton').addEventListener('click', () => $('#resetDialog').showModal());
+      $('#resetFromHelp').addEventListener('click', () => {
+        $('#helpDialog').close();
+        $('#resetDialog').showModal();
+      });
+      $('#confirmReset').addEventListener('click', resetGame);
+      document.querySelectorAll('[data-close-dialog]').forEach(button => button.addEventListener('click', () => $(`#${button.dataset.closeDialog}`).close()));
+      document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('click', event => {
+        if (event.target === dialog) {
+          const rect = dialog.getBoundingClientRect();
+          if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+        }
+      }));
+      document.addEventListener('keydown', event => {
+        const typing = ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName);
+        if (event.key === '/' && !typing) {
+          event.preventDefault();
+          switchView('elements');
+          $('#searchInput').focus();
+        } else if (event.key.toLowerCase() === 'h' && !typing && !document.querySelector('dialog[open]')) {
+          event.preventDefault();
+          showHint();
+        } else if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {
+          selectedId = null;
+          boardNodes.querySelectorAll('.selected').forEach(node => node.classList.remove('selected'));
+          $('#hintCard').hidden = true;
+        } else if ((event.key === 'Delete' || event.key === 'Backspace') && selectedId && !typing) {
+          event.preventDefault();
+          removeInstance(selectedId);
+        }
+      });
+      window.addEventListener('resize', () => { selectedId = null; boardNodes.querySelectorAll('.selected').forEach(node => node.classList.remove('selected')); });
+
+      loadState();
+      state.instances.forEach(instance => createNode(instance));
+      renderEmptyState();
+      renderAllPanels();
+      updateSoundButton();
+      // API mínima para verificar la lógica sin alterar la experiencia de juego.
+      window.AlquimiaReactiva = Object.freeze({
+        getStats: () => ({ elements: Object.keys(ELEMENTS).length, recipes: RECIPE_LIST.length, discovered: state.discovered.length, instances: state.instances.length }),
+        validate: () => {
+          const duplicateKeys = RECIPE_LIST.length - new Set(RECIPE_LIST.map(recipe => recipe.key)).size;
+          const missing = RECIPE_LIST.flatMap(recipe => [recipe.a, recipe.b, recipe.result]).filter(id => !ELEMENTS[id]);
+          const reachable = new Set(BASE_IDS);
+          let changed = true;
+          while (changed) {
+            changed = false;
+            RECIPE_LIST.forEach(recipe => {
+              if (reachable.has(recipe.a) && reachable.has(recipe.b) && !reachable.has(recipe.result)) { reachable.add(recipe.result); changed = true; }
+            });
+          }
+          return { duplicateKeys, missing, unreachable: Object.keys(ELEMENTS).filter(id => !reachable.has(id)) };
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

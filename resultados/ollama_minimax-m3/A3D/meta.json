@@ -1,0 +1,27 @@
+{
+  "codigo": "A3D",
+  "modelo": "ollama/minimax-m3",
+  "agente": "OpenCode",
+  "fecha": "2026-11-19T22:39:15Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 232788,
+    "output": 199534,
+    "reasoning": 0,
+    "cache_read": 10935936,
+    "cache_write": 0,
+    "total": 11368258
+  },
+  "peticiones": 80,
+  "error": null,
+  "herramientas": {
+    "bash": 56,
+    "write": 12,
+    "edit": 9,
+    "read": 2
+  },
+  "sesion": "ses_e0a092b38ffeXxBnEdUzhK2zC9",
+  "ficheros": [
+    "alhambra-3d.html"
+  ]
+}

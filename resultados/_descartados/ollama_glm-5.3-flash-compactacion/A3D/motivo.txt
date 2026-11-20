@@ -1,0 +1,1 @@
+Corrió con salida máxima = contexto (1 048 576). OpenCode reserva la salida del contexto, creyó que no le quedaba sitio y compactó después de cada respuesta, metiendo «Continue if you have next steps…». Fallo de nuestra configuración: se repite con la salida limitada a la mitad del contexto.

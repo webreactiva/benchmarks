@@ -1,0 +1,36 @@
+  ┃  const emojiBad=[...BASE,...R,...WILD].filter(x=>!x[1]||x[1].length<1);
+  ┃  if(emojiBad.length){ok=false;console.log('MISSING EMOJI',emojiBad)}
+  ┃  console.log('recipes:',R.length,'| unique pairs:',map.size,'| reachable results:',names.size,'| wildcards:',WILD.
+  ┃  length);
+  ┃  console.log(ok?'CHECK OK':'CHECK FAILED');
+  ┃  const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
+  ┃  fs.writeFileSync('/tmp/opencode/g.js',script);
+  ┃  EOF
+  ┃  node /tmp/opencode/check.js && node --check /tmp/opencode/g.js && echo "SYNTAX OK"
+  ┃
+  ┃  recipes: 145 | unique pairs: 145 | reachable results: 149 | wildcards: 25
+  ┃  CHECK OK
+  ┃  SYNTAX OK
+  ┃
+
+     + Thought: 524ms
+
+     Listo: web-reactiva-craft.html en la carpeta actual.
+
+     - Estilo Infinite Craft: mesa infinita con pan/zoom, fichas arrastrables, fusión al soltar una sobre otra, panel
+       lateral de descubrimientos con buscador, guardado automático en localStorage, sonidos y animaciones.
+     - Contenido: 4 fichas iniciales (Internet, Radio, Cine, Juego) y 145 recetas verificadas (sin colisiones, todo
+       alcanzable) que van de Podcast → 🔴 Web Reactiva, Nacho Ojea, La Red, Trece Tigres, TreceTigres/Newsletter, ZX
+       Spectrum, GeoCities, Twitch, IA, etc. Las combinaciones sin receta generan "invenciones raras" 🎲
+       determinísticas para que no haya callejones.
+     - Verificado con Node: 145 recetas únicas, 149 elementos alcanzables y sintaxis JS correcta.
+
+     ▣  Build · glm-5.3-flash · 5m 57s
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+   /var/tmp/bench/ws-zDJRKwWw                                                              65.3K (6%)  ctrl+p commands
+

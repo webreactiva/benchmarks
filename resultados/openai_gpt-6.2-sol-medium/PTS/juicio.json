@@ -1,0 +1,18 @@
+{
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 1,
+    "sin errores ni inventos": 1,
+    "slop": 2,
+    "extensión": 0
+  },
+  "nota": 8,
+  "veredicto": "limpio, centrado y corto",
+  "resumen": "Defiende la tesis con el mecanismo correcto: un rojo que se relanza enseña a ignorar el rojo, y el día que es una regresión real nadie lo mira. Sin slop ni errores, con un caso bien contado, pero se queda en 607 palabras y sin código.",
+  "rarezas": [
+    "Antes de escribir busca un AGENTS.md en la carpeta vacía",
+    "Escribe el post entero de un tirón con un heredoc: dos llamadas y tres peticiones en total"
+  ]
+}

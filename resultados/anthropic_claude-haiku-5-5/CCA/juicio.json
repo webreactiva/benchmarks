@@ -1,0 +1,22 @@
+{
+  "nota": 9,
+  "veredicto": "escala de verdad",
+  "resumen": "Librería JS sin dependencias que resuelve lo que «escalable» exige: servicio sin estado, concurrencia optimista por versión con reintentos, dinero en céntimos, una moneda por carrito, precios del catálogo y no del cliente, dominio inmutable, reglas de precio e impuestos. 30 tests en verde. Le falta un adaptador real (solo memoria), caducidad de carritos y espera entre reintentos.",
+  "rarezas": [
+    "Ajustó tres tests y en los tres lo explica: dos cuentas mal hechas en sus propias expectativas y el límite de reintentos del test de concurrencia.",
+    "Comprueba el ejemplo a mano en el chat (848 ¢ − 150 − 15 = 683 ¢, IVA 68 ¢, total 751 ¢) y cuadra.",
+    "11 peticiones pero 636 k tokens, el que más ha gastado: el 88 % es lectura de caché del contexto que crece en cada vuelta.",
+    "Todo el texto (comentarios, README, respuesta) en español; los identificadores, en inglés."
+  ],
+  "nota_previa": 8,
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 2,
+    "escala horizontal": 1,
+    "explica el escalado": 1
+  }
+}
