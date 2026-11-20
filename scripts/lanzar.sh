@@ -28,6 +28,9 @@ mkdir -p "$(dirname "$conf")"
 # Sin topes: los límites reales del modelo en su proveedor (scripts/limites.py). OpenCode usa
 # min(limit.output, OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX) y esa variable vale 32 000 si no se da.
 limites=$(python3 "$B/scripts/limites.py" "$modelo")
+# SALIDA_MAX=65536 rebaja el tope de salida. Con PROVEEDOR_OR=google-ai-studio, un tope mayor de 65 536 lleva la
+# petición al nivel «flex» de AI Studio, más lento: gemini-4-neon pasaba de ~6 min y se cortaba («Network connection lost»).
+[ -n "${SALIDA_MAX:-}" ] && limites=$(echo "$limites" | python3 -c 'import json,sys; l=json.load(sys.stdin); l["output"]=min(l["output"], int(sys.argv[1])); l["fuente"]+=" · SALIDA_MAX"; print(json.dumps(l))' "$SALIDA_MAX")
 salida_max=$(echo "$limites" | python3 -c 'import json,sys; print(json.load(sys.stdin)["output"])')
 python3 - "$conf" "$modelo" "$limites" <<'PY'
 import json, sys, os
