@@ -48,8 +48,9 @@ for prov in c["provider"].values():
 # PROVEEDOR_OR=google-ai-studio fija el proveedor de OpenRouter (sin respaldo). Solo por fallo técnico de la ruta por
 # defecto (gemini-4-carbon por Vertex corta con «502 Network connection lost» a los ~5 min de razonar).
 po = os.environ.get("PROVEEDOR_OR")
-if po: c["provider"]["or"]["options"]["provider"] = {"only": [po], "allow_fallbacks": False}
-else: c["provider"]["or"]["options"].pop("provider", None)
+o = c["provider"]["or"]["options"]; o.pop("provider", None)  # OpenCode 2.x solo manda al cuerpo lo que va en extraBody
+if po: o["extraBody"] = {"provider": {"only": [po], "allow_fallbacks": False}}
+else: o.pop("extraBody", None)
 c["model"] = p + "/" + id
 json.dump(c, open(f, "w"), indent=2)
 PY

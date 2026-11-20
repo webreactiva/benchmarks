@@ -4,5 +4,7 @@ en 32 min en el primer intento; en el segundo, igual). El error viene dentro del
   {"error":{"code":502,"message":"Network connection lost.","metadata":{"error_type":"provider_unavailable"}}, "provider":"Google"}
 Reproducido con curl, sin OpenCode: la misma petición con razonamiento en streaming y max_tokens alto por la ruta por
 defecto (Google Vertex) se corta a los 318 s con ese 502; por Google AI Studio acaba bien en 192 s.
-No dejó ficheros ni meta.json. Se repite con PROVEEDOR_OR=google-ai-studio (mismo modelo, otro endpoint de Google).
+No dejó ficheros ni meta.json. Se repitió con PROVEEDOR_OR=google-ai-studio, pero esa versión de lanzar.sh ponía el proveedor
+en options.provider y OpenCode 2.x no lo manda: A3D salió igualmente por la ruta por defecto y esa vez acabó bien.
+Desde CCA va en options.extraBody (comprobado: con un proveedor inexistente OpenRouter rechaza la petición).
 (Primero se sospechó de los topes de tiempo de OpenCode 2.x; lanzar.sh los quita igualmente, pero no era la causa.)
