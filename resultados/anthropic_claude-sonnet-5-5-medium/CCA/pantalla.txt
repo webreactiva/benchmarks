@@ -1,0 +1,36 @@
+
+  Ran 2 shell commands
+
+● He creado un carrito de la compra en la carpeta actual. Los 8 tests pasan. No he probado el adaptador de Redis
+  (necesita redis y un servidor) ni la API HTTP.
+
+  Estructura
+  - cart/domain.py: Cart y CartItem, inmutables y sin I/O. El dinero va en céntimos enteros. Hay límites de 100
+    productos distintos y 999 unidades por producto.
+  - cart/repository.py: puerto CartRepository con dos adaptadores. InMemoryCartRepository sirve para desarrollo y tests.
+    RedisCartRepository es el de producción, con TTL para los carritos abandonados.
+  - cart/service.py: CartService con los casos de uso (añadir, cambiar cantidad, quitar, vaciar). El precio sale siempre
+    del catálogo del servidor, nunca del cliente.
+  - cart/api.py: API JSON con la librería estándar, con las rutas /carts/{id} y /carts/{id}/items.
+  - tests/test_cart.py y README.md.
+
+  Por qué escala
+  - El servicio no guarda estado, así que cualquier réplica puede atender cualquier petición y se puede escalar
+    horizontalmente detrás de un balanceador.
+  - La concurrencia es optimista. Cada carrito lleva un campo version y se guarda con compare-and-swap. En Redis la
+    operación es atómica mediante un script Lua. Si otro escritor se adelanta, el servicio reintenta, así que no hacen
+    falta locks distribuidos y no se pierden altas simultáneas (hay un test de concurrencia).
+  - La persistencia está detrás de un puerto, así que se puede cambiar por Postgres o DynamoDB sin tocar el dominio.
+
+  Para arrancar la API, ejecuta python3 -m cart.api y escucha en el puerto 8000. Tal como está usa el repositorio en
+  memoria, así que solo sirve para pruebas. Para producción hay que pasarle RedisCartRepository y un catálogo real.
+
+  No incluye idempotencia por cabecera Idempotency-Key, fusión del carrito anónimo al iniciar sesión ni reserva de stock
+  en el checkout. El README las deja como siguientes pasos.
+
+✻ Brewed for 48s · done 11:17 AM
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ añade la idempotencia con Idempotency-Key
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)

@@ -1,0 +1,30 @@
+{
+  "codigo": "AIF",
+  "modelo": "claude-opus-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-20T11:12:48Z",
+  "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 8,
+    "output": 31436,
+    "reasoning": 0,
+    "cache_read": 175185,
+    "cache_write": 38012,
+    "total": 244641
+  },
+  "peticiones": 4,
+  "error": null,
+  "herramientas": {
+    "Bash": 2,
+    "Write": 1
+  },
+  "mensajes_usuario": [
+    "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "alquimia-reactiva.html"
+  ],
+  "veces_decide_tu": 0,
+  "esfuerzo": "medium",
+  "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py."
+}

@@ -1,0 +1,39 @@
+{
+  "codigo": "CCA",
+  "modelo": "claude-sonnet-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-20T11:16:43Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 6,
+    "output": 8293,
+    "reasoning": 0,
+    "cache_read": 101187,
+    "cache_write": 14811,
+    "total": 124297
+  },
+  "peticiones": 3,
+  "error": null,
+  "herramientas": {
+    "Bash": 2
+  },
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "README.md",
+    "cart/__init__.py",
+    "cart/__pycache__/__init__.cpython-313.pyc",
+    "cart/__pycache__/domain.cpython-313.pyc",
+    "cart/__pycache__/repository.cpython-313.pyc",
+    "cart/__pycache__/service.cpython-313.pyc",
+    "cart/api.py",
+    "cart/domain.py",
+    "cart/repository.py",
+    "cart/service.py",
+    "tests/test_cart.py"
+  ],
+  "veces_decide_tu": 0,
+  "esfuerzo": "medium",
+  "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py."
+}
