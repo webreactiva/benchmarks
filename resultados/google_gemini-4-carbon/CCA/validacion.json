@@ -1,0 +1,22 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ sin dependencias: npm test (9/9 con node:test) y npm start con Node 22 y TypeScript nativo",
+    "✔ 50 altas a la vez: 50 guardadas en una instancia y en dos instancias con el mismo SQLite",
+    "✔ dinero en céntimos (0,10 × 3 = 0,30), sumar EUR y USD da error, precio del catálogo (se ignora el del cliente)",
+    "✔ valida cantidades (0, negativa, decimal, enorme), sku inexistente, ids con «../», cuerpo vacío",
+    "✖ la caché L1 de cada instancia sirve lecturas viejas cuando escribe la otra (juez/cache-l1.mjs)",
+    "~ stock, idempotencia y eventos viven en la memoria de cada proceso; el almacenamiento compartido es un fichero SQLite (una sola máquina)"
+  ],
+  "comprobacion": "Copia en /tmp, npm test, dos instancias con CART_DB_PATH común y juez/juez.mjs y juez/cache-l1.mjs (del juez)",
+  "juez_salida": [
+    "50 altas a la vez (USB-HUB-7IN1, stock 120): 200 × 50 → 50 guardadas; repartidas entre dos instancias: 200 × 50 → 50",
+    "con el primer SKU (stock 25): 25 × 200 y 25 × 409 INSUFFICIENT_STOCK → 25 guardadas, sin pérdidas",
+    "precio desde el cliente (unitPrice: 1) → 200, se guarda 119,50 € del catálogo",
+    "quantity 0 / -3 / 1,5 → 400; 1e9 → 409 stock insuficiente; sku «../../etc/passwd» → 404; cartId «../» → 404",
+    "Money: 0,10 × 3 = 30 céntimos; EUR + USD → error",
+    "la vista devuelta se puede mutar pero es una copia: al releer no cambia",
+    "caché L1: A escribe, B lee v2; A escribe otra vez (v3), B sigue leyendo v2; B escribe → CAS detecta el conflicto, reintenta y guarda v4 bien; A entonces lee v3"
+  ]
+}

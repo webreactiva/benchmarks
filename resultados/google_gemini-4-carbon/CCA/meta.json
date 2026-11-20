@@ -1,0 +1,65 @@
+{
+  "codigo": "CCA",
+  "modelo": "google/gemini-4-carbon",
+  "agente": "OpenCode",
+  "fecha": "2026-11-20T12:54:22Z",
+  "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 93818,
+    "output": 40800,
+    "reasoning": 6348,
+    "cache_read": 694468,
+    "cache_write": 0,
+    "total": 835434
+  },
+  "peticiones": 25,
+  "error": "Step interrupted",
+  "mensajes_usuario": [
+    "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "Decide tú."
+  ],
+  "herramientas": {
+    "read": 4,
+    "question": 1,
+    "shell": 6,
+    "write": 24,
+    "edit": 2,
+    "glob": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_e06fa4919ffeMPvgrm77MzBZbG",
+  "coste_usd": 0.7236,
+  "ficheros": [
+    ".gitignore",
+    "README.md",
+    "package.json",
+    "src/application/cart-service.ts",
+    "src/application/ports.ts",
+    "src/domain/cart.ts",
+    "src/domain/errors.ts",
+    "src/domain/events.ts",
+    "src/domain/money.ts",
+    "src/domain/pricing.ts",
+    "src/infrastructure/catalog/in-memory-catalog-inventory.ts",
+    "src/infrastructure/events/in-memory-event-bus.ts",
+    "src/infrastructure/idempotency/in-memory-idempotency-store.ts",
+    "src/infrastructure/persistence/in-memory-cart-repository.ts",
+    "src/infrastructure/persistence/sqlite-cart-repository.ts",
+    "src/infrastructure/persistence/tiered-cart-repository.ts",
+    "src/interfaces/http/router.ts",
+    "src/interfaces/http/ui.ts",
+    "src/interfaces/http/validation.ts",
+    "src/server.ts",
+    "tests/domain.test.ts",
+    "tests/http-api.test.ts",
+    "tests/service-concurrency.test.ts",
+    "tsconfig.json"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models"
+  },
+  "veces_decide_tu": 1
+}
