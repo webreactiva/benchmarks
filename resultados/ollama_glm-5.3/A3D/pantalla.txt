@@ -1,0 +1,36 @@
+   Ruta 3D en la Alhambra        +
+
+     Ruta guiada de 9 paradas con vuelos de cámara cinematográficos y narración histórica:
+
+     1. Puerta de la Justicia (1348) → 2. Alcazaba y Torre de la Vela → 3. Plaza de los Aljibes (Washington Irving) →
+        4. Mexuar → 5. Patio de los Arrayanes → 6. Salón de los Embajadores (torre de Comares) → 7. Patio de los
+        Leones con la fuente de los 12 leones → 8. Palacio de Carlos V → 9. Generalife
+
+     Escena 3D estilizada construida con three.js: murallas con almenas, la Alcazaba con su campana, los palacios
+     nazaríes con patios huecos, columnas y arcos de medio punto instanciados, el anillo circular renacentista, el
+     Generalife con su Patio de la Acequia, surtidores de agua animados con shader propio, la Escalera del Agua, la
+     ciudad de Granada y el Albaicín al fondo, la vega y Sierra Nevada nevada con niebla atmosférica y nubes en
+     movimiento.
+
+     Interacción: línea dorada con flechas y caminantes que recorren el itinerario real (subiendo la Cuesta de Gomérez
+     y atravesando las salas-pasaje), marcadores numerados clicables, panel de itinerario, botones de reproducir/
+     pausa/anterior/siguiente, vista aérea, control orbital libre (arrastrar, rueda, clic derecho) y atajos de teclado
+     (← → espacio).
+
+     Verificación realizada
+
+     - ✅ Sintaxis del módulo validada con node --check
+     - ✅ Probado en Chrome real (headless): sin errores de consola, la navegación entre paradas funciona y el render
+       es correcto (cielo azul degradado, piedra terracosa, 0 % de píxeles negros)
+     - ✅ Corregidas en pruebas colisiones de la ruta con muros, taludes que atravesaban la escalinata y encuadres de
+       cámara bloqueados
+
+     Build · glm-5.3 · 14m 52s · 195.6 tok/s · 1.5s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-bC1Yn547                                                             157.5K (15%)  ctrl+p commands
+
