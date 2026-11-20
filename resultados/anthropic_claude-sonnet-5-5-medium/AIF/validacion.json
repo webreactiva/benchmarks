@@ -1,0 +1,28 @@
+{
+  "html": [
+    {
+      "fichero": "alquimia-web-reactiva.html",
+      "errores": [],
+      "titulo": "Alquimia Reactiva",
+      "canvas": 0,
+      "texto": "⚗️ Alquimia Reactiva\n\nCombina conceptos de la web reactiva\n\nArrastra elementos desde la derecha\ny suéltalos unos sobre otros para combinarlos.\n🌓\nVaciar\nReiniciar\n4 / 63 descubiertos\nDoble clic: duplicar · Soltar aquí: borrar\n🧠\nEstado\n⚡\nEvento\n🟦\nPíxel\n🖥️\nPantalla",
+      "scripts": [],
+      "captura": "capturas/alquimia-web-reactiva.html.png",
+      "capturas_extra": [
+        "capturas/estado-evento.png",
+        "capturas/sin-receta.png",
+        "capturas/tras-recargar.png"
+      ]
+    }
+  ],
+  "mermaid": [],
+  "extra": [
+    "✔ carga sin errores; 22 KB, sin dependencias",
+    "✔ arrastrando con el ratón: Estado + Evento → Reactividad, Píxel + Pantalla → Resolución, Estado + Estado → Store",
+    "✔ 63 de 63 elementos alcanzables con 59 recetas (juez/alcanzables.js)",
+    "✖ mezcla sin receta: «no pasa nada…» y las fichas tiemblan",
+    "✔ guarda descubrimientos y mesa al recargar; buscador",
+    "✖ sin pistas",
+    "✖ «Web Reactiva» leído como programación reactiva + responsive: nada de la web, el podcast ni la comunidad"
+  ]
+}

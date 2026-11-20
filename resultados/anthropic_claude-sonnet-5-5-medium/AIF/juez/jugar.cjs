@@ -1,0 +1,30 @@
+// node juez/jugar.cjs <copia del html> <carpeta de capturas>: arrastra con el ratón, como una persona, desde la lista al área y una ficha sobre otra
+const { chromium } = require('playwright');
+(async () => {
+  const [html, caps] = process.argv.slice(2);
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+  const err = []; p.on('pageerror', e => err.push(e.message)); p.on('console', m => m.type() === 'error' && err.push(m.text()));
+  await p.goto('file://' + html); await p.waitForTimeout(800);
+  const centro = async loc => { const r = await loc.boundingBox(); return [r.x + r.width / 2, r.y + r.height / 2]; };
+  const arrastra = async (desde, [x, y]) => { const [sx, sy] = await centro(desde);
+    await p.mouse.move(sx, sy); await p.mouse.down(); await p.mouse.move(sx - 20, sy, { steps: 4 }); await p.mouse.move(x, y, { steps: 15 }); await p.mouse.up(); await p.waitForTimeout(400); };
+  const deLista = n => p.locator(`#list .item[data-id="${n}"]`);
+  const enMesa = n => p.locator(`#canvas .item[data-id="${n}"]:not(.ghost)`).last();
+  const mezcla = async (a, c, pos) => { await arrastra(deLista(a), pos); await arrastra(deLista(c), await centro(enMesa(a)));
+    const t = (await p.textContent('#toast')).trim(); return t + ' | ' + (await p.textContent('#count')); };
+  console.log('Estado + Evento:', await mezcla('Estado', 'Evento', [300, 250]));
+  await p.screenshot({ path: caps + '/estado-evento.png' });
+  console.log('Píxel + Pantalla:', await mezcla('Píxel', 'Pantalla', [550, 450]));
+  console.log('Reactividad + Resolución (mesa):', await (async () => { await arrastra(enMesa('Resolución'), await centro(enMesa('Reactividad'))); return (await p.textContent('#toast')).trim(); })());
+  await p.waitForTimeout(150); await p.screenshot({ path: caps + '/sin-receta.png' });
+  await p.waitForTimeout(3000);
+  console.log('Estado + Estado:', await mezcla('Estado', 'Estado', [300, 550]));
+  await p.fill('#q', 'reac'); await p.waitForTimeout(200);
+  console.log('buscar «reac»:', await p.locator('#list .item').allTextContents());
+  await p.fill('#q', '');
+  console.log('pistas:', await p.locator('text=/pista/i').count());
+  await p.reload(); await p.waitForTimeout(800);
+  console.log('tras recargar:', await p.textContent('#count'), '| fichas en la mesa', await p.locator('#canvas .item').count());
+  await p.screenshot({ path: caps + '/tras-recargar.png' });
+  console.log('errores', err); await b.close();
+})();

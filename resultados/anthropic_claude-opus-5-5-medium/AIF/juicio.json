@@ -1,0 +1,20 @@
+{
+  "nota": 8,
+  "veredicto": "gran juego, Web Reactiva a medias",
+  "resumen": "Mesa libre donde se suelta una ficha sobre otra, 178 elementos y 181 recetas, todos alcanzables desde Código, Café, Idea y Bug, con pistas, buscador, guardado y cinco objetivos con candado. De Web Reactiva tiene la capa de marca de memoria (Podcast, Newsletter, Dani Primo, Malandriner, Premium), unos 20 elementos; el resto es cultura de programador genérica, y las mezclas sin receta solo dan un chiste.",
+  "rarezas": [
+    "Tenía WebSearch y WebFetch y no los usó: Dani Primo, Malandriner y la comunidad salen de memoria, sin un tema actual de la web (agentes, MCP, En pantuflas).",
+    "Mete a Dani Primo como elemento y avisa al final de que quizá convenga «confirmar que le parece bien».",
+    "Comprobó con node que no hay recetas duplicadas, que se llega a los 178 elementos y que el JavaScript compila, y dice que no lo probó en un navegador.",
+    "4 peticiones, 245 k tokens y 0,99 $, el triple que Sonnet en la misma prueba."
+  ],
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 1,
+    "acabado": 1
+  }
+}
