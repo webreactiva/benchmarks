@@ -1,0 +1,22 @@
+Los 21 tests pasan (memoria y Redis real). Ahora compruebo dos réplicas del servidor contra el mismo Redis y añado Docker y el README.
+
+---
+
+He implementado el carrito como un servicio HTTP en Node.js sin estado, con los datos en Redis, de modo que se escala añadiendo réplicas detrás de un balanceador. Como no indicabas tecnología, elegí Node 22 con `ioredis` como única dependencia.
+
+Los tests pasan, tanto con el almacén en memoria como contra un Redis real, incluido uno de 200 sumas concurrentes sobre el mismo carrito. También arranqué dos réplicas contra el mismo Redis y 40 peticiones simultáneas repartidas entre ambas dejaron exactamente 40 unidades. No he probado el `Dockerfile` ni el `docker-compose.yml`.
+
+- **API:** ver el carrito, sumar unidades, fijar cantidad, eliminar una línea y vaciar, más `/healthz`.
+- **Concurrencia:** cada escritura es una operación atómica en Redis, sin bloqueos ni lecturas previas en la aplicación.
+- **Reintentos:** el `POST` de añadir acepta una cabecera `Idempotency-Key` para que un reintento no sume dos veces.
+- **Precios:** el carrito solo guarda SKU y cantidad; nombre y precio se resuelven en el catálogo al leer, en céntimos.
+- **Límites:** hay máximos de líneas y de unidades por producto, y los carritos abandonados caducan a los 30 días; todo es configurable por variables de entorno.
+
+Para probarlo: `npm start` usa memoria (solo desarrollo) y `REDIS_URL=redis://localhost:6379 npm start` usa Redis.
+
+Antes de producción faltan piezas que dependen de tu sistema:
+- **Autenticación:** no hay; quien conoce el id de un carrito puede leerlo y modificarlo.
+- **Catálogo:** es uno de ejemplo con cuatro productos, pensado para sustituirse por tu servicio de productos.
+- **Stock, impuestos, descuentos y checkout:** no están incluidos.
+
+El `README.md` detalla la API, la configuración y el diseño.

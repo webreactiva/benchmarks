@@ -1,0 +1,17 @@
+{
+  "name": "carrito-escalable",
+  "version": "1.0.0",
+  "description": "Servicio de carrito de la compra sin estado, respaldado por Redis",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ioredis": "^6.0.0"
+  }
+}
