@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Alquimia Reactiva</title>
+<style>
+  :root {
+    --bg: #0e1220; --dot: #232a44; --panel: #151a2e; --line: #2a3254;
+    --chip: #1c2340; --chip-line: #39447a; --text: #e9ecf8; --muted: #8f98bd;
+    --accent: #ffd43b; --accent-ink: #1a1500; --good: #5ee6a8; --bad: #ff6b81;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f4ee; --dot: #dcd8cc; --panel: #ffffff; --line: #ddd8c8;
+      --chip: #ffffff; --chip-line: #c9c2ad; --text: #1d2033; --muted: #6c6f83;
+      --accent: #f5b800; --accent-ink: #1a1500; --good: #0f9d63; --bad: #d6304a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; overflow: hidden; }
+  body {
+    font: 15px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--text); background: var(--bg);
+    display: grid; grid-template-columns: 1fr 340px; grid-template-rows: 100%;
+    user-select: none; -webkit-user-select: none;
+  }
+  #board {
+    position: relative; overflow: hidden;
+    background-image: radial-gradient(var(--dot) 1.2px, transparent 1.3px);
+    background-size: 26px 26px;
+  }
+  header { position: absolute; top: 14px; left: 18px; pointer-events: none; }
+  h1 { margin: 0; font-size: 22px; letter-spacing: -.02em; font-weight: 800; }
+  h1 span { color: var(--accent); }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: 12.5px; max-width: 34ch; }
+  #actions { position: absolute; left: 18px; bottom: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  button {
+    font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 7px 12px; cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  #empty {
+    position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
+    color: var(--muted); pointer-events: none; padding: 80px 30px; font-size: 14px;
+  }
+  #panel {
+    background: var(--panel); border-left: 1px solid var(--line);
+    display: flex; flex-direction: column; min-height: 0; z-index: 5;
+  }
+  #panel.drop { box-shadow: inset 0 0 0 2px var(--bad); }
+  #phead { padding: 14px 14px 10px; border-bottom: 1px solid var(--line); }
+  #count { display: flex; justify-content: space-between; align-items: baseline; font-weight: 700; }
+  #count small { color: var(--muted); font-weight: 500; }
+  #bar { height: 6px; border-radius: 6px; background: var(--line); margin: 8px 0 10px; overflow: hidden; }
+  #bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .4s; }
+  #tools { display: flex; gap: 8px; }
+  #search {
+    flex: 1; min-width: 0; font: inherit; color: var(--text); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; outline: none;
+    user-select: text; -webkit-user-select: text;
+  }
+  #search:focus { border-color: var(--accent); }
+  #inv { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-wrap: wrap; gap: 7px; align-content: flex-start; }
+  #foot { padding: 8px 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11.5px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+    background: var(--chip); border: 1px solid var(--chip-line); border-radius: 999px;
+    padding: 6px 12px 6px 9px; font-weight: 600; font-size: 14px; color: var(--text);
+    cursor: grab; touch-action: manipulation;
+  }
+  .chip b { font-weight: 400; font-size: 17px; line-height: 1; }
+  .chip.goal { border-color: var(--accent); }
+  #layer { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+  #layer .chip {
+    position: absolute; pointer-events: auto; touch-action: none;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  }
+  #layer .chip.drag { cursor: grabbing; z-index: 99; transform: scale(1.06); border-color: var(--accent); }
+  #layer .chip.target { border-color: var(--good); box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 35%, transparent); }
+  .pop { animation: pop .35s cubic-bezier(.3,1.6,.5,1); }
+  .new { animation: pop .35s cubic-bezier(.3,1.6,.5,1), glow 1.4s ease-out; }
+  .shake { animation: shake .3s; }
+  @keyframes pop { from { transform: scale(.3); opacity: 0; } }
+  @keyframes glow { from { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent); } }
+  @keyframes shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+  #toast {
+    position: fixed; left: 50%; top: 16px; transform: translate(-50%, -150%);
+    background: var(--accent); color: var(--accent-ink); border-radius: 14px; padding: 10px 16px;
+    max-width: min(440px, 90vw); text-align: center; z-index: 100; transition: transform .3s;
+    box-shadow: 0 8px 30px rgba(0,0,0,.3); pointer-events: none;
+  }
+  #toast.on { transform: translate(-50%, 0); }
+  #toast strong { display: block; font-size: 16px; }
+  #toast span { font-size: 13px; }
+  #toast.plain { background: var(--panel); color: var(--text); border: 1px solid var(--line); }
+  @media (max-width: 720px) {
+    body { grid-template-columns: 1fr; grid-template-rows: 1fr 44%; }
+    #panel { border-left: 0; border-top: 1px solid var(--line); }
+    header p { display: none; }
+    h1 { font-size: 18px; }
+    #actions { top: 12px; right: 12px; left: auto; bottom: auto; }
+    #actions button { padding: 5px 9px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<main id="board">
+  <header>
+    <h1>Alquimia <span>Reactiva</span></h1>
+    <p>Mezcla conceptos del desarrollo web y descubre de qué está hecho un podcast.</p>
+  </header>
+  <div id="empty">Arrastra elementos hasta aquí y suéltalos<br>uno encima de otro para combinarlos.</div>
+  <div id="actions">
+    <button id="hint">💡 Pista</button>
+    <button id="clear">🧹 Limpiar</button>
+    <button id="reset">↺ Reiniciar</button>
+  </div>
+</main>
+<aside id="panel">
+  <div id="phead">
+    <div id="count"><span>Descubiertos</span><small id="num"></small></div>
+    <div id="bar"><i></i></div>
+    <div id="tools">
+      <input id="search" type="search" placeholder="Buscar elemento…" autocomplete="off">
+      <button id="sort" title="Cambiar orden">🕘</button>
+    </div>
+  </div>
+  <div id="inv"></div>
+  <div id="foot">Juego no oficial inspirado en los temas del podcast Web Reactiva. Suelta aquí un elemento para quitarlo del tablero.</div>
+</aside>
+<div id="layer"></div>
+<div id="toast"></div>
+
+<script>
+/*DATA-START*/
+const BASE = ["HTML", "CSS", "JavaScript", "Servidor", "Micrófono", "Café"];
+const GOALS = ["Web Reactiva", "Malandriner", "Daniel Primo", "Newsletter de los domingos"];
+
+// nombre | emoji | descripción
+const ELEMENTS = `
+HTML|📄|El esqueleto de todo. Sin él no hay web.
+CSS|🎨|Lo que hace que la web no parezca de 1995.
+JavaScript|⚡|El lenguaje que se hizo en diez días y lo mueve todo.
+Servidor|🖥️|El ordenador de otro que nunca debería apagarse.
+Micrófono|🎙️|Con esto empieza cualquier podcast.
+Café|☕|Combustible oficial del desarrollo de software.
+Página web|🌐|HTML y CSS cogidos de la mano.
+DOM|🌳|El árbol que JavaScript no para de podar.
+Animación|✨|Movimiento con gusto… o con demasiado gusto.
+PHP|🐘|Lleva veinte años muriéndose y sigue moviendo media web.
+Node.js|🟢|JavaScript se escapó del navegador.
+Flexbox|📐|Alinear cosas dejó de ser un drama.
+Grid|🔲|Maquetar en dos dimensiones sin tablas.
+Formulario|📝|Donde el usuario escribe lo que no esperabas.
+Framework|🧩|Alguien ya tomó las decisiones por ti.
+Nube|☁️|Muchos servidores con buen marketing.
+Entrevista|🗣️|Dos micros y una conversación de la que aprender.
+Programador|🧑‍💻|Convierte café en código.
+Podcast|🎧|Aprender mientras friegas los platos.
+Bug|🐛|No es un error, es una característica no documentada.
+Blog|✍️|Escribir para entender lo que crees que sabes.
+Diseño|🖌️|Que funcione y además apetezca usarlo.
+Audio|🔊|La etiqueta que le dio voz a la web.
+Charla|🎤|Veinte minutos de diapositivas y nervios.
+Tutorial|📺|Paso a paso hasta que te sale a ti solo.
+Streaming|📡|En directo y sin red.
+Terminal|⌨️|Pantalla negra, poderes infinitos.
+React|⚛️|La interfaz es una función del estado.
+Vue|💚|El framework progresivo y amable.
+Laravel|🔺|PHP elegante para artesanos de la web.
+Symfony|🎼|Componentes PHP bien afinados.
+Express|🚂|El servidor mínimo de Node.
+Tailwind|🌬️|Clases de utilidad por todas partes.
+Svelte|🧡|El framework que desaparece al compilar.
+Hosting|🏠|La casa donde vive tu web.
+Sitio web|🕸️|Muchas páginas con un mismo propósito.
+Evento|🖱️|Algo ha pasado y alguien está escuchando.
+Virtual DOM|👻|Una copia del DOM para tocar el de verdad lo justo.
+Componente|🧱|Una pieza pequeña que hace bien una sola cosa.
+Web Components|🧬|Componentes nativos, sin pedir permiso a ningún framework.
+Reactividad|🔁|Cambias el dato y la interfaz se entera sola.
+Signals|🚦|Reactividad fina, de moda en todos los frameworks.
+SPA|🧭|Una sola página que se cree una aplicación.
+SSR|🍽️|El HTML llega servido desde el servidor. Como siempre, vaya.
+Web Reactiva|📻|Podcast, cursos y guías para programadores que quieren dominar la IA.
+Daniel Primo|🧔|La voz al otro lado de Web Reactiva.
+Malandriner|😎|Quien forma parte de la comunidad malandriner de Web Reactiva.
+Invitado|🙋|Alguien que sabe mucho y viene a contarlo.
+Episodio|▶️|Un tema, un rato y ganas de aprender.
+Newsletter|💌|Un correo que sí apetece abrir.
+Newsletter de los domingos|📬|12 recursos seleccionados que llegan cada domingo a tu bandeja de entrada.
+RSS|📶|El estándar discreto que sostiene todos los podcasts.
+Debug|🔬|Ser el detective de un crimen que tú mismo cometiste.
+Legacy|🏚️|Código que da dinero y miedo a partes iguales.
+Error 500|💥|Algo ha explotado en el servidor.
+Deploy en viernes|😱|Valentía o inconsciencia, según cómo salga.
+Equipo|👥|El software es un deporte colectivo.
+Git|🌿|Tu máquina del tiempo para el código.
+GitHub|🐙|Donde vive el código de medio mundo.
+Pull Request|🔀|«¿Le echas un ojo cuando puedas?»
+Code Review|👀|Cuatro ojos ven más que dos.
+Deploy|🚀|El momento de la verdad.
+CI/CD|🔄|Que desplieguen las máquinas, que no se cansan.
+Base de datos|🗄️|Donde los datos duermen… hasta el próximo JOIN.
+MySQL|🐬|La base de datos de toda la vida.
+API|🔌|El contrato entre dos programas.
+Fetch|🐕|Ve a por los datos y tráelos.
+REST|🛋️|Recursos, verbos y códigos de estado.
+GraphQL|🔷|Pide exactamente lo que necesitas.
+JSON|🧾|El idioma común de las APIs.
+TypeScript|🟦|JavaScript con cinturón de seguridad.
+Test|✅|La red que te deja refactorizar sin miedo.
+TDD|🔴|Primero el test en rojo, luego el código.
+Serverless|🌫️|Sí hay servidores, pero no son problema tuyo.
+Docker|🐳|«En mi máquina funciona», pues enviamos tu máquina.
+Kubernetes|☸️|Orquestar contenedores… y complicarse la vida.
+npm|📦|El almacén de paquetes de JavaScript.
+node_modules|🕳️|El objeto más pesado del universo.
+Deno|🦕|Node, pero recolocando las letras.
+Bun|🥟|El runtime con prisa.
+htmx|↔️|Hipermedia: HTML con superpoderes y sin apenas JavaScript.
+Astro|🧑‍🚀|Sitios de contenido rápidos, con el JavaScript justo.
+Islas|🏝️|Interactividad solo donde hace falta.
+Next.js|▲|React con servidor incluido.
+Nuxt|⛰️|Vue con servidor incluido.
+Livewire|🪼|Interfaces reactivas sin salir de Laravel.
+Design System|🎛️|Las mismas piezas para toda la organización.
+Frontend|🖼️|Lo que el usuario ve y toca.
+Backend|⚙️|Lo que nadie ve hasta que falla.
+Full Stack|🥞|De la base de datos al botón.
+WordPress|📰|Un buen trozo de la web corre sobre él.
+Live coding|🎥|Programar con público mirando.
+Meetup|🍕|Charlas, pizza y gente del gremio.
+Conferencia|🏟️|El meetup en versión grande.
+Ponente|🧑‍🏫|Quien se atreve a subir al escenario.
+Tutorial hell|🌀|Ver otro tutorial en vez de hacer el proyecto.
+Síndrome del impostor|🎭|Creer que todos saben más que tú. Spoiler: no.
+Productividad|⏱️|Hacer lo importante, no hacer más cosas.
+jQuery|💲|El dólar que domó a los navegadores.
+Refactor|🧹|Mejorar el código sin cambiar lo que hace.
+Código limpio|🧼|Código que da gusto leer.
+Deuda técnica|💸|Los atajos de ayer con intereses de hoy.
+Big data|📊|Demasiados datos para una hoja de cálculo.
+IA|🤖|El nuevo compañero de equipo que nunca duerme.
+Copiloto|🧑‍✈️|Autocompletado con mucha confianza en sí mismo.
+Agente|🕵️|Una IA con acceso a tu terminal. ¿Qué puede salir mal?
+Alucinación|🍄|Cuando la IA se inventa una función que no existe.
+Prompt|💬|Pedir bien las cosas también es programar.
+Vibe coding|🎸|Programar dejándose llevar por la IA.
+Rendimiento|🏎️|Cada milisegundo cuenta.
+Caché|🧊|Guardar la respuesta para no volver a calcularla.
+CDN|🌍|Tu web, cerca de cada usuario.
+Core Web Vitals|📈|Las notas que Google le pone a tu página.
+Accesibilidad|♿|Una web que puede usar todo el mundo.
+HTML semántico|🏷️|Usar cada etiqueta para lo que es.
+SEO|🔎|Que te encuentren cuando te buscan.
+XSS|☠️|Cuando el formulario te devuelve un script.
+SQL injection|💉|Bobby Tables manda saludos.
+Seguridad|🛡️|Nunca confíes en lo que llega del usuario.
+HTTPS|🔒|El candado que ya nadie debería saltarse.
+Login|🔑|Usuario, contraseña y un «¿la has olvidado?».
+JWT|🎟️|Una entrada firmada para tu API.
+!important|‼️|Gritar más fuerte para ganar la especificidad.
+Responsive|📱|Una misma web para todas las pantallas.
+PWA|📲|Una web que se instala como una app.
+Centrar un div|🎯|El rito de iniciación del frontend.
+Sass|💅|CSS con variables antes de que CSS tuviera variables.
+Modo oscuro|🌑|Por el bien de tus ojos a las tres de la mañana.
+Vim|🚪|Entrar es fácil. Salir, ya tal.
+VS Code|🆚|El editor que acabó usando casi todo el mundo.
+Vite|🌩️|El servidor de desarrollo que arranca al instante.
+Stack Overflow|📚|Donde copiábamos el código antes de la IA.
+Documentación|📖|Lo que hay que leer antes de preguntar.
+Open source|💝|Código compartido para que lo mejore cualquiera.
+Burnout|🫠|Cuando ni el café arregla el cansancio.
+Freelance|💼|Tu propio jefe… y tu propio comercial.
+Cliente|🤝|«Solo es un cambio pequeñito».
+Urgente|🔥|Para ayer, como todo.
+En mi máquina funciona|🤷|La excusa más antigua del oficio.
+Junior|🐣|Todos empezamos por aquí.
+Senior|🦉|Sabe que la respuesta casi siempre es «depende».
+`;
+
+// A + B = Resultado (el orden de los ingredientes no importa)
+const RECIPES = `
+HTML + CSS = Página web
+HTML + JavaScript = DOM
+CSS + JavaScript = Animación
+HTML + Servidor = PHP
+JavaScript + Servidor = Node.js
+CSS + CSS = Flexbox
+Flexbox + CSS = Grid
+Flexbox + Flexbox = Grid
+HTML + HTML = Formulario
+JavaScript + JavaScript = Framework
+Servidor + Servidor = Nube
+Micrófono + Micrófono = Entrevista
+Café + Café = Programador
+Micrófono + Café = Podcast
+Café + JavaScript = Bug
+Café + HTML = Blog
+Café + CSS = Diseño
+Café + Servidor = Terminal
+Micrófono + HTML = Audio
+Micrófono + CSS = Charla
+Micrófono + JavaScript = Tutorial
+Micrófono + Servidor = Streaming
+Framework + DOM = React
+Framework + Página web = Vue
+Framework + PHP = Laravel
+PHP + Componente = Symfony
+Laravel + Componente = Symfony
+Framework + Node.js = Express
+Framework + CSS = Tailwind
+Framework + Animación = Svelte
+Página web + Servidor = Hosting
+Página web + Página web = Sitio web
+DOM + JavaScript = Evento
+DOM + DOM = Virtual DOM
+DOM + HTML = Componente
+Componente + Componente = Web Components
+Evento + Evento = Reactividad
+Evento + Framework = Reactividad
+Reactividad + JavaScript = Signals
+Reactividad + Página web = SPA
+SPA + Servidor = SSR
+Reactividad + Podcast = Web Reactiva
+Podcast + Página web = Web Reactiva
+Web Reactiva + Programador = Daniel Primo
+Web Reactiva + Micrófono = Daniel Primo
+Web Reactiva + Equipo = Malandriner
+Web Reactiva + Café = Malandriner
+Web Reactiva + Entrevista = Invitado
+Podcast + Entrevista = Invitado
+Podcast + Tutorial = Episodio
+Podcast + Podcast = Episodio
+Blog + Café = Newsletter
+Blog + Blog = Newsletter
+Newsletter + Web Reactiva = Newsletter de los domingos
+Newsletter + Daniel Primo = Newsletter de los domingos
+Podcast + Audio = RSS
+Blog + Servidor = WordPress
+Blog + PHP = WordPress
+Blog + Tutorial = Documentación
+Bug + Programador = Debug
+Bug + Bug = Legacy
+Bug + Servidor = Error 500
+Bug + Deploy = Deploy en viernes
+Bug + JavaScript = TypeScript
+Bug + CSS = !important
+Bug + Formulario = XSS
+Bug + Base de datos = SQL injection
+Bug + Sitio web = Stack Overflow
+Bug + Hosting = En mi máquina funciona
+Bug + Página web = Stack Overflow
+Programador + Programador = Equipo
+Programador + Terminal = Git
+Programador + Servidor = Deploy
+Programador + Café = Productividad
+Programador + CSS = Centrar un div
+Programador + Sitio web = Freelance
+Programador + Tutorial = Junior
+Programador + Diseño = Frontend
+Programador + Base de datos = Backend
+Frontend + Backend = Full Stack
+Git + Nube = GitHub
+Git + Equipo = Pull Request
+Pull Request + Bug = Code Review
+Pull Request + Equipo = Code Review
+Deploy + Git = CI/CD
+Servidor + Formulario = Base de datos
+Base de datos + PHP = MySQL
+Base de datos + Node.js = API
+Base de datos + Servidor = API
+API + JavaScript = Fetch
+API + API = REST
+REST + React = GraphQL
+API + Formulario = JSON
+API + HTML = htmx
+Debug + Programador = Test
+Debug + Debug = Test
+Test + Test = TDD
+Nube + Servidor = Serverless
+Nube + Terminal = Docker
+En mi máquina funciona + Servidor = Docker
+Docker + Docker = Kubernetes
+Node.js + Terminal = npm
+npm + npm = node_modules
+Node.js + Node.js = Deno
+Deno + Café = Bun
+Sitio web + Componente = Astro
+Astro + JavaScript = Islas
+React + Servidor = Next.js
+Vue + Servidor = Nuxt
+Laravel + Reactividad = Livewire
+Diseño + Componente = Design System
+Diseño + Terminal = Modo oscuro
+Diseño + HTML = Accesibilidad
+Diseño + CSS = Responsive
+Responsive + JavaScript = PWA
+CSS + Terminal = Sass
+Terminal + Terminal = Vim
+Vim + Diseño = VS Code
+Streaming + Programador = Live coding
+Charla + Equipo = Meetup
+Charla + Café = Meetup
+Meetup + Meetup = Conferencia
+Tutorial + Tutorial = Tutorial hell
+Tutorial hell + Programador = Síndrome del impostor
+Legacy + JavaScript = jQuery
+Legacy + Programador = Refactor
+Refactor + Test = Código limpio
+Legacy + Deploy = Deuda técnica
+Legacy + Legacy = Deuda técnica
+Junior + Legacy = Senior
+Junior + Café = Senior
+Senior + Charla = Ponente
+Base de datos + Nube = Big data
+Big data + Programador = IA
+Big data + JavaScript = IA
+IA + Programador = Copiloto
+IA + Terminal = Agente
+IA + Bug = Alucinación
+IA + Formulario = Prompt
+Agente + Deploy = Vibe coding
+Prompt + Programador = Vibe coding
+Página web + Café = Rendimiento
+Rendimiento + Servidor = Caché
+Caché + Nube = CDN
+Rendimiento + Página web = Core Web Vitals
+npm + Rendimiento = Vite
+HTML + Página web = HTML semántico
+HTML semántico + Sitio web = SEO
+XSS + Programador = Seguridad
+SQL injection + Programador = Seguridad
+Seguridad + Hosting = HTTPS
+Formulario + Base de datos = Login
+Login + JSON = JWT
+GitHub + Equipo = Open source
+Open source + Café = Burnout
+Freelance + Café = Cliente
+Cliente + Bug = Urgente
+`;
+/*DATA-END*/
+
+const els = new Map();   // nombre -> {emoji, desc}
+ELEMENTS.trim().split("\n").forEach(l => { const [n, e, d] = l.split("|"); els.set(n, { emoji: e, desc: d }); });
+const recipes = new Map();
+const recipeList = RECIPES.trim().split("\n").map(l => {
+  const [lhs, out] = l.split(" = "); const [a, b] = lhs.split(" + ");
+  recipes.set(key(a, b), out); return { a, b, out };
+});
+function key(a, b) { return a < b ? a + "\u0001" + b : b + "\u0001" + a; }
+
+/* ---------- estado ---------- */
+const STORE = "alquimia-reactiva-v1";
+let found = [...BASE];
+let sortAZ = false;
+try {
+  const s = JSON.parse(localStorage.getItem(STORE));
+  if (s && Array.isArray(s.found)) {
+    s.found.forEach(n => { if (els.has(n) && !found.includes(n)) found.push(n); });
+    sortAZ = !!s.sortAZ;
+  }
+} catch (e) {}
+function save() { try { localStorage.setItem(STORE, JSON.stringify({ found, sortAZ })); } catch (e) {} }
+
+const $ = id => document.getElementById(id);
+const layer = $("layer"), inv = $("inv"), board = $("board"), panel = $("panel"), toast = $("toast");
+
+/* ---------- inventario ---------- */
+function chipHTML(n) { return "<b>" + els.get(n).emoji + "</b>" + n.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+function renderInv(justAdded) {
+  const q = $("search").value.trim().toLowerCase();
+  let list = found.filter(n => n.toLowerCase().includes(q));
+  if (sortAZ) list = list.slice().sort((a, b) => a.localeCompare(b, "es"));
+  inv.textContent = "";
+  list.forEach(n => {
+    const c = document.createElement("button");
+    c.className = "chip" + (GOALS.includes(n) ? " goal" : "") + (n === justAdded ? " new" : "");
+    c.innerHTML = chipHTML(n); c.title = els.get(n).desc; c.dataset.name = n;
+    inv.appendChild(c);
+  });
+  if (!list.length) inv.innerHTML = '<span style="color:var(--muted)">Nada por aquí con ese nombre.</span>';
+  $("num").textContent = found.length + " / " + els.size;
+  document.querySelector("#bar i").style.width = (100 * found.length / els.size) + "%";
+  $("sort").textContent = sortAZ ? "🔤" : "🕘";
+  $("sort").title = sortAZ ? "Orden: alfabético" : "Orden: descubrimiento";
+}
+
+/* ---------- tablero ---------- */
+function updateEmpty() { $("empty").style.display = layer.children.length ? "none" : ""; }
+
+function spawn(name, x, y, cls) {
+  const c = document.createElement("div");
+  c.className = "chip " + (cls || "pop") + (GOALS.includes(name) ? " goal" : "");
+  c.innerHTML = chipHTML(name); c.dataset.name = name; c.title = els.get(name).desc;
+  layer.appendChild(c);
+  place(c, x - c.offsetWidth / 2, y - c.offsetHeight / 2);
+  updateEmpty();
+  return c;
+}
+function place(c, x, y) {
+  x = Math.max(4, Math.min(innerWidth - c.offsetWidth - 4, x));
+  y = Math.max(4, Math.min(innerHeight - c.offsetHeight - 4, y));
+  c.style.left = x + "px"; c.style.top = y + "px";
+}
+function randomSpot() {
+  const r = board.getBoundingClientRect();
+  return [r.left + r.width * (.2 + Math.random() * .6), r.top + r.height * (.25 + Math.random() * .5)];
+}
+function overPanel(x, y) {
+  const r = panel.getBoundingClientRect();
+  return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+}
+function overlapTarget(c) {
+  const a = c.getBoundingClientRect(); let best = null, bd = Infinity;
+  for (const o of layer.children) {
+    if (o === c) continue;
+    const b = o.getBoundingClientRect();
+    if (a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top) {
+      const d = Math.hypot(a.left + a.width / 2 - b.left - b.width / 2, a.top + a.height / 2 - b.top - b.height / 2);
+      if (d < bd) { bd = d; best = o; }
+    }
+  }
+  return best;
+}
+
+let drag = null;
+function startDrag(c, e, fromInv) {
+  const r = c.getBoundingClientRect();
+  drag = { c, dx: e.clientX - r.left, dy: e.clientY - r.top, sx: e.clientX, sy: e.clientY, fromInv, moved: false, target: null };
+  c.classList.remove("pop", "new", "shake"); c.classList.add("drag");
+  try { c.setPointerCapture(e.pointerId); } catch (err) {}
+}
+layer.addEventListener("pointerdown", e => {
+  const c = e.target.closest(".chip"); if (!c || e.button > 0) return;
+  e.preventDefault(); startDrag(c, e, false);
+});
+layer.addEventListener("pointermove", e => {
+  if (!drag) return;
+  if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 4) drag.moved = true;
+  place(drag.c, e.clientX - drag.dx, e.clientY - drag.dy);
+  const t = overlapTarget(drag.c);
+  if (t !== drag.target) { drag.target && drag.target.classList.remove("target"); t && t.classList.add("target"); drag.target = t; }
+  panel.classList.toggle("drop", overPanel(e.clientX, e.clientY) && !(drag.fromInv && !drag.moved));
+});
+function endDrag(e) {
+  if (!drag) return;
+  const d = drag; drag = null;
+  d.c.classList.remove("drag"); panel.classList.remove("drop");
+  d.target && d.target.classList.remove("target");
+  if (d.fromInv && !d.moved) { const [x, y] = randomSpot(); place(d.c, x - d.c.offsetWidth / 2, y - d.c.offsetHeight / 2); d.c.classList.add("pop"); return; }
+  if (overPanel(e.clientX, e.clientY)) { d.c.remove(); updateEmpty(); return; }
+  const t = overlapTarget(d.c);
+  if (t) combine(d.c, t);
+}
+layer.addEventListener("pointerup", endDrag);
+layer.addEventListener("pointercancel", endDrag);
+layer.addEventListener("dblclick", e => {
+  const c = e.target.closest(".chip"); if (!c) return;
+  const r = c.getBoundingClientRect();
+  spawn(c.dataset.name, r.left + r.width / 2 + 24, r.top + r.height / 2 + 24);
+});
+
+/* arrastrar (ratón) o tocar (táctil) desde el inventario */
+let mouseHandled = false;
+inv.addEventListener("pointerdown", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  if (e.pointerType !== "mouse" || e.button !== 0) return;
+  e.preventDefault(); mouseHandled = true;
+  const c = spawn(b.dataset.name, e.clientX, e.clientY, "x");
+  startDrag(c, e, true);
+});
+inv.addEventListener("click", e => {
+  if (mouseHandled) { mouseHandled = false; return; }
+  const b = e.target.closest(".chip"); if (!b) return;
+  const [x, y] = randomSpot(); spawn(b.dataset.name, x, y);
+});
+
+/* ---------- combinar ---------- */
+function combine(a, b) {
+  const out = recipes.get(key(a.dataset.name, b.dataset.name));
+  if (!out) {
+    [a, b].forEach(c => { c.classList.remove("shake", "pop", "new"); void c.offsetWidth; c.classList.add("shake"); });
+    say("", "Aquí no reacciona nada… prueba otra mezcla.", true, 1400);
+    return;
+  }
+  const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+  const x = (ra.left + ra.width / 2 + rb.left + rb.width / 2) / 2, y = (ra.top + ra.height / 2 + rb.top + rb.height / 2) / 2;
+  a.remove(); b.remove();
+  const isNew = !found.includes(out);
+  spawn(out, x, y, isNew ? "new" : "pop");
+  if (isNew) {
+    found.push(out); save(); renderInv(out);
+    const el = inv.querySelector(".new"); el && el.scrollIntoView({ block: "nearest" });
+    if (found.length === els.size) say("🏆 ¡Lo has descubierto todo!", "Ya eres malandriner de honor. Último hallazgo: " + els.get(out).emoji + " " + out, false, 7000);
+    else say(els.get(out).emoji + " " + out, els.get(out).desc, false, GOALS.includes(out) ? 5000 : 3200);
+  }
+}
+
+/* ---------- avisos ---------- */
+let toastT;
+function say(title, text, plain, ms) {
+  toast.textContent = "";
+  if (title) { const s = document.createElement("strong"); s.textContent = title; toast.appendChild(s); }
+  const t = document.createElement("span"); t.textContent = text; toast.appendChild(t);
+  toast.className = "on" + (plain ? " plain" : "");
+  clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove("on"), ms || 3000);
+}
+
+/* ---------- botones ---------- */
+$("search").addEventListener("input", () => renderInv());
+$("sort").addEventListener("click", () => { sortAZ = !sortAZ; save(); renderInv(); });
+$("clear").addEventListener("click", () => { layer.textContent = ""; updateEmpty(); });
+$("reset").addEventListener("click", () => {
+  if (!confirm("¿Borrar todo tu progreso y empezar de cero?")) return;
+  found = [...BASE]; save(); layer.textContent = ""; updateEmpty(); renderInv();
+});
+$("hint").addEventListener("click", () => {
+  const open = recipeList.filter(r => found.includes(r.a) && found.includes(r.b) && !found.includes(r.out));
+  if (!open.length) { say("", found.length === els.size ? "No quedan pistas: lo tienes todo." : "No hay pistas ahora mismo.", true); return; }
+  const r = open[Math.floor(Math.random() * open.length)];
+  const shown = Math.random() < .5 ? r.a : r.b;
+  say("💡 Pista", els.get(shown).emoji + " " + shown + "  +  ❓  =  " + els.get(r.out).emoji, true, 5000);
+});
+addEventListener("resize", () => { for (const c of layer.children) place(c, parseFloat(c.style.left), parseFloat(c.style.top)); });
+
+renderInv(); updateEmpty();
+</script>
+</body>
+</html>
