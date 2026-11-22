@@ -1,0 +1,10 @@
+{
+  "slop": "933 palabras · 7 títulos · 5 líneas de lista · frase media 16.3 · slop 7.5 (0.8/100 palabras)\n  15-negritas             10  negritas: **Tiempo:**, **Orden:**, **Concurrencia:**, **Exterior:**, **Azar:**, **Poner el test en cuarentena de inmediato.**\n  16-lista-con-titulo      5  listas con etiqueta en negrita y dos puntos: \n- **Tiempo:**, - **Orden:**, - **Concurrencia:**, - **Exterior:**, - **Azar:**",
+  "extra": [
+    "✔ un post en Markdown, en español, de 933 palabras",
+    "✔ 0,8 marcas de slop por cada 100 palabras: 10 negritas y una lista de causas con etiqueta; sin rayas, sin «En resumen»",
+    "✔ código antes y después: test con sleep(1) frente a reloj inyectado (RelojFalso)",
+    "✔ cifras correctas: 0,999^200 ≈ 82 % de suites limpias; con 1000 tests falla el 63 %",
+    "✔ mecanismo: sin tests sabes que no hay información; con tests intermitentes hay ruido que parece información y el equipo aprende a reintentar, también ante una condición de carrera real"
+  ]
+}

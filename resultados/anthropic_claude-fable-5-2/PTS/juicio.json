@@ -1,0 +1,18 @@
+{
+  "rubrica": {
+    "hay post": 1,
+    "tesis con mecanismo": 2,
+    "se ciñe al tema": 1,
+    "ejemplos concretos": 2,
+    "sin errores ni inventos": 1,
+    "slop": 2,
+    "extensión": 1
+  },
+  "nota": 10,
+  "veredicto": "completo y limpio",
+  "resumen": "Defiende la tesis con un mecanismo claro (ruido que parece información y la fatiga de alarmas que deja pasar una condición de carrera real), con cuentas correctas y un ejemplo de código antes y después. Se queda por debajo de una marca de slop por cada 100 palabras.",
+  "rarezas": [
+    "Una sola petición con herramienta: escribe el post con un Write y no lo relee ni lo revisa.",
+    "En la respuesta da la ruta absoluta de la carpeta de trabajo y ofrece adaptar el front matter o el lenguaje del ejemplo."
+  ]
+}
