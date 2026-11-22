@@ -28,7 +28,7 @@ s=c-$cod-$(echo "$alias$sufijo" | tr -cd "a-z0-9-") tp="=$s:"
 tmux kill-session -t "=$s" 2>/dev/null || true
 # SIN_ENCIERRO=1: sin encierro.sh, como en cursos-y-guias. En la nube Claude Code entra con la credencial de la sesión
 # que lo dirige (/home/claude/.claude/remote), y el encierro la oculta con /home vacío. Se apunta en meta.json → aislamiento.
-enc="$B/scripts/encierro.sh $ws $base"; [ -n "${SIN_ENCIERRO:-}" ] && enc=""
+enc="TOKEN_CLAUDE=1 $B/scripts/encierro.sh $ws $base"; [ -n "${SIN_ENCIERRO:-}" ] && enc=""
 tmux new-session -d -s "$s" -x 120 -y 36 -c "$ws" \
   "$enc env HOME=$casa CLAUDE_LOOP_CONFIG=$conf $base/claude-aislado.sh --permission-mode auto --model $alias $efarg"
 tmux set-option -t "$tp" @agente claude

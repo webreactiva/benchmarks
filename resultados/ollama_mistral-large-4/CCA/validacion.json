@@ -1,0 +1,21 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ sin dependencias: 24/24 tests (unittest) y la demo, en memoria y con SQLite",
+    "✔ 50 altas a la vez (hilos) con un servicio: 50 guardadas",
+    "✖ dos servicios sobre el mismo SQLite: 50 aceptadas y 47 guardadas; se pierden 3 sin aviso",
+    "✔ dinero en céntimos (0,10 × 3 = 0,30), EUR + USD da error, el precio sale del catálogo (la API no admite precio)",
+    "✔ valida cantidad 0, negativa, decimal, en texto y por encima de 999; SKU y carrito con «../»",
+    "~ librería sin servidor; el cerrojo que la protege vive en el proceso"
+  ],
+  "comprobacion": "Copia en /tmp sin __pycache__, unittest, demo_cli.py en memoria y con SQLite, y juez/juez.py (del juez)",
+  "juez_salida": [
+    "50 add_item en hilos, un servicio en memoria: 50 ok → 50 guardadas",
+    "50 add_item repartidos entre dos CartService con SqliteCartRepository sobre el mismo fichero: 50 ok → 47 guardadas",
+    "add_item(price=0.01) → TypeError: la API no acepta precio",
+    "cantidad 0 / -3 / 1,5 / «2» → ValueError; 10⁹ → InvalidQuantity (máx. 999)",
+    "SKU y carrito con «../» → no encontrado; 0,10 × 3 = 0.30 EUR; EUR + USD → ValueError",
+    "mutar las líneas del carrito devuelto → AttributeError (inmutables)"
+  ]
+}

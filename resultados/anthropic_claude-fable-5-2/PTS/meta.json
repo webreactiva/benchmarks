@@ -1,0 +1,27 @@
+{
+  "codigo": "PTS",
+  "modelo": "claude-fable-5-2",
+  "agente": "Claude Code",
+  "fecha": "2026-11-22T09:04:39Z",
+  "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 4,
+    "output": 3027,
+    "reasoning": 0,
+    "cache_read": 61924,
+    "cache_write": 11650,
+    "total": 76605
+  },
+  "peticiones": 2,
+  "error": null,
+  "herramientas": {
+    "Write": 1
+  },
+  "mensajes_usuario": [
+    "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "tests-intermitentes.md"
+  ],
+  "veces_decide_tu": 0
+}

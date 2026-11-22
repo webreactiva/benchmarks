@@ -1,0 +1,29 @@
+{
+ "html": [
+  {
+   "fichero": "alhambra-ruta-3d.html",
+   "errores": [],
+   "titulo": "La Alhambra de Granada — Ruta 3D",
+   "canvas": 1,
+   "texto": "✦ LA ALHAMBRA DE GRANADA ✦\n\nRuta tridimensional por el conjunto palaciego nazarí\n\nPUNTOS DE LA RUTA\n1.Puerta de la Justicia\n2.Alcazaba y torres\n3.Patio de los Arrayanes\n4.Palacio de Comares\n5.Patio de los Leones\n6.Sala de las Dos Hermanas\n7.Sala de los Abencerrajes\n8.Generalife y jardines\n✕\n\n▶ Iniciar ruta\n⏸ Pausa\n⟲ Reiniciar\n🧭 Vuelo libre\nVelocidad: 1×\nArrastra para mirar · rueda para acercar · ",
+   "scripts": [],
+   "captura": "capturas/alhambra-ruta-3d.html.png",
+   "capturas_extra": [
+    "capturas/inicio.png",
+    "capturas/auto-60s.png",
+    "capturas/auto-180s.png",
+    "capturas/parada-3.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; 32 KB con three.js 0.160 de unpkg",
+  "✔ 8 paradas: Justicia, Alcazaba, Arrayanes, Comares, Leones, Dos Hermanas, Abencerrajes, Generalife",
+  "✔ la ruta guiada recorre todas las paradas y vuelve a empezar (a 4×: Arrayanes a los 30 s, Leones a los 60, Generalife a los 90)",
+  "✖ la cámara acaba dentro o pegada a los muros: en Leones mira una caja de azulejos, en Abencerrajes y el Generalife solo hay pared",
+  "~ se reconocen murallas almenadas y torres; ni la fuente de los Leones, ni Arrayanes, ni Carlos V",
+  "✖ «la gran losa de mármol que da nombre» a la Sala de las Dos Hermanas: son dos losas gemelas",
+  "~ con la ruta en pausa, pulsar un lugar de la lista no cambia la ficha"
+ ]
+}

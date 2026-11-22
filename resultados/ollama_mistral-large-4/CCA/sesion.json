@@ -1,0 +1,1141 @@
+{
+  "info": {
+    "id": "ses_e05eb6950ffeTAH8j3ImfIexQ5",
+    "projectID": "7b761de1d1c127fe2af4818147c198ecd019859a",
+    "agent": "build",
+    "model": {
+      "id": "mistral-large-4",
+      "providerID": "ol",
+      "variant": "default"
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 30077,
+      "output": 40206,
+      "reasoning": 0,
+      "cache": {
+        "read": 121344,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1795197015742,
+      "updated": 1795198028831,
+      "busy": 1795197015825,
+      "idle": 1795198028834,
+      "viewed": 1795198028834
+    },
+    "title": "Carrito de la compra escalable",
+    "location": {
+      "directory": "/var/tmp/bench/ws-YEm7YZf4"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_1fa1496b400150Ee82Rwhf9kg2",
+      "time": {
+        "created": 1795197015840
+      },
+      "text": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1fa149736001G6gwUGRct1eLoh",
+      "time": {
+        "created": 1795197015868,
+        "firstToken": 1795197017891,
+        "streamed": 1795197138964,
+        "completed": 1795197139060
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "El usuario pide implementar un \"carrito de la compra escalable\" (scalable shopping cart) en español y guardar lo generado en la carpeta actual (working directory: /var/tmp/bench/ws-YEm7YZf4).\n\n\"Escalable\" puede significar varias cosas: arquitectura escalable, que se pueda ampliar fácilmente. Voy a implementar un carrito de compras con una arquitectura limpia y extensible: modelo de dominio, repositorio (persistencia), servicio de aplicación con reglas de negocio, y soporte para estrategias de descuento, impuestos, etc. (patrón Strategy), en Python (o JavaScript). Como no hay repo existente, voy a crear un proyecto desde cero en la carpeta actual.\n\nDecidir el stack: Python es una buena opción por claridad. Haré:\n\n- `cart/domain.py` — entidades: Product, CartItem, Cart, Money\n- `cart/pricing.py` — estrategias de descuento (Strategy pattern): NoDiscount, PercentageDiscount, BOGO, etc.\n- `cart/repository.py` — persistencia en memoria y en JSON file\n- `cart/service.py` — CartService: add, remove, update quantity, apply coupon, checkout\n- `cart/events.py` — eventos de dominio para escalabilidad (event bus simple)\n- `main.py` / demo\n- tests con pytest\n- README\n\n\"Escalable\" también puede significar que soporte muchas operaciones concurrentes — podría incluir thread-safety con locks. Haré el servicio thread-safe con RLock y soportar persistencia intercambiable (InMemory, JSON). También soporte para múltiples monedas? Mantener simple pero extensible.\n\nVoy a crear los archivos. Primero listar la carpeta actual para ver qué hay.\n\nVoy a hacerlo en Python con estructura de paquetes:\n\n```\nshopping_cart/\n  __init__.py\n  domain.py        # Money, Product, CartItem, Cart, CartSnapshot\n  events.py        # EventBus + domain events\n  pricing.py       # DiscountStrategy, PercentageOff, BuyXGetY, MinOrderDiscount, composite\n  tax.py           # TaxStrategy\n  repository.py    # CartRepository protocol, InMemoryCartRepository, JsonFileCartRepository\n  service.py       # CartService (thread-safe, orchestration, checkout)\n  exceptions.py\nmain.py            # demo CLI\ntests/test_cart.py\nREADME.md\n```\n\nIncluiré:\n- Reglas de negocio: cantidad positiva, stock check opcional, máximo de items\n- Eventos: ItemAdded, ItemRemoved, CouponApplied, CartCheckedOut — con suscriptores desacoplados (ej. inventario, notificaciones)\n- Precios con Money (Decimal) para evitar errores de float\n- Concurrencia: threading.RLock en el servicio\n- Persistencia: interfaz + implementaciones\n- Checkout: genera Order, limpia el carrito, emite evento\n\nTests con pytest. Luego ejecutar los tests para verificar.\n\nEmpecemos: comprobar el directorio actual, luego escribir archivos. Puedo crear los archivos en paralelo con write. Luego correr pytest.\n\nVoy a escribir el código cuidadosamente.\n\ndomain.py:\n\n```python\nfrom __future__ import annotations\nfrom dataclasses import dataclass, field\nfrom decimal import Decimal\nfrom enum import Enum\nfrom typing import Dict\nimport uuid\nfrom datetime import datetime, timezone\n```\n\nMoney: amount Decimal, currency str. Operaciones add, multiply, quantize a 2 decimales.\n\nProduct: id, name, price (Money), stock optional.\n\nCartItem: product, quantity; subtotal property.\n\nCart: id, items dict product_id -> CartItem, coupon optional; méthodes add_item, remove_item, set_quantity, subtotal, total con descuentos? Mejor: el servicio calcula totales con estrategias; el Cart guarda items y cupón.\n\nVoy a diseñar:\n\n- Cart: holds items, coupon code; methods: add(product, qty), remove(product_id), set_quantity(product_id, qty), is_empty, item_count.\n- CartService: usa repository, pricing strategies registry (por código de cupón), tax strategy, event bus. Métodos: create_cart, get_cart, add_item(cart_id, product_id, qty) — necesita catálogo de productos: ProductCatalog (interfaz) con get(product_id).\n- Totals calculation: build CartSummary (subtotal, discount, tax, total, lines).\n- checkout(cart_id) -> Order; emite evento; guarda y limpia.\n\nExceptions: CartNotFound, ProductNotFound, InsufficientStock, InvalidQuantity, UnknownCoupon, EmptyCart.\n\nEvents: dataclasses ItemAddedToCart(cart_id, product_id, qty), etc. EventBus: subscribe(event_type, handler), publish(event). Async? Mantener síncrono simple, desacoplado.\n\nPricing strategies: Protocol `DiscountStrategy` con `apply(context) -> Money` donde context tiene subtotal y items. Implementations:\n- NoDiscount\n- PercentageDiscount(percent) — cupón \"SAVE10\"\n- FixedAmountDiscount(amount)\n- BuyXGetYFree(product_id, buy, get) — más complejo; lo haré genérico: aplica descuento sobre el item más barato por cada grupo. Para simplificar, haré `BuyXGetY(buy, free)` que descuenta el precio de los \"free\" items basado en cantidad total de un producto específico... Mejor mantenerlo simple: estrategia por carrito completo.\n\nCompositeDiscount: lista de estrategias aplicadas secuencialmente sobre el subtotal restante.\n\nTax: TaxStrategy protocol: `rate` y calculate(amount). FlatTaxStrategy(rate). NoTax.\n\nRepositories: \n```python\nclass CartRepository(Protocol):\n    def save(self, cart: Cart) -> None\n    def get(self, cart_id: str) -> Cart | None\n    def delete(self, cart_id: str) -> None\n    def exists...\n```\nInMemory con dict + lock. JsonFileRepository: guarda en un dir, un archivo JSON por carrito; thread-safe con lock; serialización.\n\nProductCatalog: protocol get(product_id) -> Product; InMemoryProductCatalog con dict y add.\n\nService thread-safe con RLock; checkout crea Order (id, cart_id, lines, totals, created_at) y la persiste en un OrderRepository (in-memory + json?) Mantener OrderRepository simple: in-memory list + json file opcional. Para escalabilidad, definir协议 y dos implementaciones.\n\nmain.py: demo que crea catálogo, carritos, aplica cupones, imprime resumen, checkout, y muestra eventos (ej. logger subscriber).\n\ntests: pytest cubriendo: add/remove/update, descuentos porcentaje, BOGO?, impuestos, totales con Decimal, persistencia JSON (tmp_path), concurrencia básico (threads añadiendo items), eventos発行, checkout limpia carrito, errores.\n\nEscribamos el código. Mantendré todo en un paquete `shopping_cart` más `main.py`, `tests/`, `README.md`, `pyproject.toml` opcional (para pytest). No es repo git; no importa.\n\nCuidado con Decimal y JSON: serializar Money como {\"amount\": \"10.00\", \"currency\": \"EUR\"}.\n\nDiseño de serialización en repository JSON: manuelle.\n\nEmpecemos. Primero ver la carpeta.\n\nLuego escribir archivos (varios write en paralelo). Luego correr `python -m pytest -q` en la carpeta. Si pytest no está instalado, usar unittest o instalar? Probar `python3 -m pytest --version`. Si no hay, puedo escribir tests con unittest para no depender. Mejor: usar pytest si disponible; si no, pip install pytest (quizás sin red). Alternativa: tests con unittest estándar — más seguro. Usaré unittest para que corra sin dependencias externas. O escribir tests estilo pytest pero correr con un runner propio... Mejor unittest.\n\nDecisión: tests con `unittest`, corriendo `python3 -m unittest discover -s tests -v`.\n\nEstructura final:\n\n```\n/var/tmp/bench/ws-YEm7YZf4/\n  shopping_cart/\n    __init__.py\n    exceptions.py\n    domain.py\n    events.py\n    pricing.py\n    tax.py\n    catalog.py\n    repository.py\n    service.py\n    serialization.py  (quizás dentro de repository)\n  main.py\n  tests/\n    __init__.py\n    test_cart.py\n    test_pricing.py\n    test_persistence.py\n    test_concurrency.py\n  README.md\n```\n\nVamos a escribir.\n\ndomain.py:\n\n```python\n\"\"\"Domain model for the shopping cart.\"\"\"\nfrom __future__ import annotations\n\nimport uuid\nfrom dataclasses import dataclass, field\nfrom datetime import datetime, timezone\nfrom decimal import Decimal\nfrom typing import Dict, List\n\nfrom .exceptions import InvalidQuantity, ProductNotFound\n\n\ndef _now() -> datetime:\n    return datetime.now(timezone.utc)\n\n\n@dataclass(frozen=True)\nclass Money:\n    amount: Decimal\n    currency: str = \"EUR\"\n\n    def __post_init__(self):\n        if not isinstance(self.amount, Decimal):\n            object.__setattr__(self, \"amount\", Decimal(str(self.amount)))\n        object.__setattr__(self, \"amount\", self.amount.quantize(Decimal(\"0.01\")))\n\n    def __add__(self, other: \"Money\") -> \"Money\":\n        self._check_currency(other)\n        return Money(self.amount + other.amount, self.currency)\n\n    def __sub__(self, other: \"Money\") -> \"Money\":\n        self._check_currency(other)\n        return Money(self.amount - other.amount, self.currency)\n\n    def __mul__(self, factor) -> \"Money\":\n        return Money(self.amount * Decimal(str(factor)), self.currency)\n\n    __rmul__ = __mul__\n\n    def __eq__ / __lt__ ... comparar con check de currency\n\n    def _check_currency(self, other):\n        if self.currency != other.currency:\n            raise ValueError(...)\n\n    def __str__(self):\n        return f\"{self.amount} {self.currency}\"\n```\n\nProduct:\n\n```python\n@dataclass(frozen=True)\nclass Product:\n    id: str\n    name: str\n    price: Money\n    stock: int | None = None  # None = unlimited\n```\n\nCartItem:\n\n```python\n@dataclass\nclass CartItem:\n    product: Product\n    quantity: int\n\n    @property\n    def subtotal(self) -> Money:\n        return self.product.price * self.quantity\n```\n\nCart:\n\n```python\nclass Cart:\n    def __init__(self, cart_id: str | None = None):\n        self.id = cart_id or uuid.uuid4().hex\n        self.items: Dict[str, CartItem] = {}\n        self.coupon: str | None = None\n        self.created_at = _now()\n        self.updated_at = _now()\n\n    def add(self, product: Product, quantity: int = 1) -> None:\n        if quantity <= 0: raise InvalidQuantity(...)\n        if product.stock is not None:\n            current = self.items.get(product.id).quantity if ... \n            if current + quantity > product.stock: raise InsufficientStock\n        if product.id in self.items:\n            self.items[product.id].quantity += quantity\n        else:\n            self.items[product.id] = CartItem(product, quantity)\n        self._touch()\n\n    def set_quantity(self, product_id, quantity):\n        if product_id not in self.items: raise ProductNotFound\n        if quantity <= 0: # remove\n            del self.items[product_id]\n        else:\n            check stock\n            self.items[product_id].quantity = quantity\n        self._touch()\n\n    def remove(self, product_id): ...\n    def clear(self): ...\n    @property subtotal -> Money sum\n    @property item_count -> int sum quantities\n    def is_empty\n```\n\nOrder:\n\n```python\n@dataclass(frozen=True)\nclass OrderLine:\n    product_id: str\n    name: str\n    unit_price: Money\n    quantity: int\n    subtotal: Money\n\n@dataclass(frozen=True)\nclass Order:\n    id: str\n    cart_id: str\n    lines: tuple[OrderLine, ...]\n    subtotal: Money\n    discount: Money\n    tax: Money\n    total: Money\n    created_at: datetime\n```\n\nSummary (CartSummary):\n\n```python\n@dataclass(frozen=True)\nclass CartSummary:\n    cart_id: str\n    lines: tuple[CartLine,...]  # product_id, name, qty, unit_price, subtotal\n    subtotal: Money\n    discount: Money\n    tax: Money\n    total: Money\n    coupon: str | None\n```\n\nexceptions.py:\n\n```python\nclass CartError(Exception): pass\nclass CartNotFound(CartError)\nclass ProductNotFound(CartError)\nclass InsufficientStock(CartError)\nclass InvalidQuantity(CartError)\nclass UnknownCoupon(CartError)\nclass EmptyCart(CartError)\n```\n\nevents.py:\n\n```python\nfrom collections import defaultdict\nfrom dataclasses import dataclass\nfrom typing import Callable, Type\n\n@dataclass(frozen=True)\nclass ItemAdded: cart_id, product_id, quantity\n@dataclass(frozen=True)\nclass ItemRemoved: ...\n@dataclass(frozen=True)\nclass QuantityChanged: ...\n@dataclass(frozen=True)\nclass CouponApplied: cart_id, coupon\n@dataclass(frozen=True)\nclass CartCheckedOut: order (Order)\n\nclass EventBus:\n    def __init__(self): self._handlers = defaultdict(list); self._lock = threading.Lock()\n    def subscribe(self, event_type, handler): ...\n    def publish(self, event): for h in list(...): h(event)\n```\n\npricing.py:\n\n```python\n@dataclass(frozen=True)\nclass PricingContext:\n    subtotal: Money\n    items: tuple[CartItem, ...]\n    coupon: str | None\n\nclass DiscountStrategy(Protocol):\n    code: str | None  # None = always applied?\n    def discount(self, ctx: PricingContext) -> Money: ...\n\nclass NoDiscount: code=None; discount -> Money(0)\nclass PercentageDiscount: code, percent; discount = subtotal * percent/100 (no negatividad)\nclass FixedAmountDiscount: code, amount; min(amount, subtotal)\nclass BuyXGetYFree: code, product_id, buy, free -> calcula: por cada (buy+free) unidades, las `free` más baratas son gratis. Simplificar: total qty del producto; grupos = qty // (buy+free); free_items = grupos * free; descuento = min(free_items, qty) * unit_price? En realidad free_items <= qty siempre. descuento = unit_price * free_items.\nclass CompositeDiscount: strategies list; aplica secuencialmente sobre el restante.\n```\n\nCoupon registry en service: dict code -> DiscountStrategy.\n\ntax.py:\n\n```python\nclass TaxStrategy(Protocol):\n    def tax_on(self, amount: Money) -> Money\nclass FlatRateTax: rate (Decimal 0..1) e.g. Decimal(\"0.21\"); tax_on = amount * rate\nclass NoTax\n```\n\ncatalog.py:\n\n```python\nclass ProductCatalog(Protocol):\n    def get(self, product_id) -> Product: raise ProductNotFound\n    def add(self, product)\nclass InMemoryProductCatalog: dict + lock\n```\n\nrepository.py:\n\n```python\nclass CartRepository(Protocol):\n    def save(self, cart: Cart) -> None\n    def get(self, cart_id: str) -> Cart | None\n    def delete(self, cart_id: str) -> None\n    def list_ids(self) -> list[str]\n\nclass InMemoryCartRepository: dict, lock, copy? Guardar referencia está bien para in-memory.\n\nclass JsonFileCartRepository:\n    def __init__(self, directory): path; mkdir; lock\n    file: <dir>/<cart_id>.json\n    save: serialize cart to dict; write atomically (tmp + replace)\n    get: read json; deserialize\n    delete: unlink missing_ok\n    list_ids: glob *.json\n```\n\nSerialización: funciones cart_to_dict / cart_from_dict en serialization.py que necesitan productos para reconstruir CartItem — el CartItem guarda Product completa, así que serializamos el producto dentro del item. Bien.\n\nOrderRepository similar: in-memory + json.\n\nservice.py:\n\n```python\nclass CartService:\n    def __init__(self, catalog, cart_repo, order_repo=None, event_bus=None, tax_strategy=None, discounts=None):\n        self._lock = threading.RLock()\n        ...\n        self._discounts: dict[str, DiscountStrategy] = {\"\": NoDiscount()}? Mejor registro por código; si no hay cupón -> NoDiscount.\n\n    def create_cart(self) -> Cart: with lock: cart = Cart(); repo.save(cart); return cart\n\n    def get_cart(self, cart_id) -> Cart: cart = repo.get; if None raise CartNotFound\n\n    def add_item(self, cart_id, product_id, quantity=1):\n        with lock:\n            cart = self._get(cart_id)\n            product = self.catalog.get(product_id)\n            cart.add(product, quantity)\n            self.repo.save(cart)\n            self.bus.publish(ItemAdded(cart_id, product_id, quantity))\n            return cart\n\n    remove_item, set_quantity, apply_coupon(cart_id, code) (valida que exista en registro), remove_coupon\n\n    def summary(self, cart_id) -> CartSummary:\n        with lock: cart = get; calcular:\n            subtotal = cart.subtotal\n            discount_strategy = self._discounts.get(cart.coupon, NoDiscount()) if coupon else NoDiscount\n            discount = strategy.discount(PricingContext(subtotal, tuple(cart.items.values()), cart.coupon))\n            ensure discount <= subtotal, >= 0\n            taxable = subtotal - discount\n            tax = self.tax_strategy.tax_on(taxable)\n            total = taxable + tax\n            lines...\n            return CartSummary(...)\n\n    def checkout(self, cart_id) -> Order:\n        with lock:\n            cart = get; if empty raise EmptyCart\n            summary = self.summary(cart_id)  # dentro del mismo lock (RLock ok)\n            order = Order(id=uuid, cart_id, lines from summary lines, subtotal, discount, tax, total, now)\n            self.order_repo.save(order)\n            self.repo.delete(cart_id)  # o cart.clear() + save? Eliminamos el carrito; el cliente puede crear otro. Emite evento con order.\n            self.bus.publish(CartCheckedOut(order))\n            return order\n```\n\nNota: calcular summary dentro de checkout con RLock está bien.\n\nmain.py: demo con prints: crear catálogo (3 productos con stock), servicio con repositorio JSON en ./data, cupones SAVE10 (10%), BUY2GET1 en un producto, IVA 21%; subscriber que imprime eventos; crear carrito, añadir items, resumen, aplicar cupón, resumen, checkout, listar orden, intentar operations sobre carrito eliminado -> CartNotFound.\n\nREADME.md: explica arquitectura, cómo extender (nueva estrategia de descuento, nuevo repositorio, subscriber de eventos, impuestos), cómo correr demo y tests, notas de escalabilidad (thread-safe, persistencia intercambiable, eventos desacoplados, Decimal para dinero).\n\nTests (unittest):\n\ntest_domain.py:\n- Money arithmetic con Decimal, currency mismatch error\n- Cart add/merge/set_quantity/remove/stock enforcement\n\ntest_service.py:\n- add item y summary correcta con IVA\n- cupón porcentaje\n- fixed amount no excede subtotal\n- BOGO\n- unknown coupon error\n- checkout: order totals, carrito eliminado, evento publicado, EmptyCart error\n- eventos 発行 en add/remove/coupon\n\ntest_persistence.py:\n- JsonFileCartRepository save/get/delete/list roundtrip con tmp dir (tempfile.TemporaryDirectory)\n- servicio con repo JSON: add, recargar servicio nuevo, summary igual\n\ntest_concurrency.py:\n- N threads añadiendo 1 unidad cada uno al mismo carrito (producto sin límite o stock alto); item_count == N. Con InMemory repo y lock en service debería ser consistente.\n\nCuidado: Cart.add con stock: al verificar stock, usar current quantity. En concurrencia con lock del service está protegido.\n\nAhora, escribir todo. Usaré write para cada archivo. Son ~10 archivos; los puedo escribir en paralelo (independientes). Luego correr tests.\n\nVerifiquemos primero qué hay en la carpeta y la versión de Python.\n\nVoy a llamar a read del directorio y shell python3 --version en paralelo.",
+          "native": {
+            "reasoningField": "reasoning"
+          },
+          "time": {
+            "created": 1795197017894,
+            "completed": 1795197138938
+          }
+        },
+        {
+          "type": "text",
+          "text": "Voy a implementar un carrito de la compra escalable en la carpeta actual. Primero, miro qué hay en el directorio y la versión de Python disponible."
+        },
+        {
+          "type": "tool",
+          "id": "LzO3yPw9d",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read directory /var/tmp/bench/ws-YEm7YZf4, 0 entries"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197138876,
+            "ran": 1795197138945,
+            "completed": 1795197138972
+          }
+        },
+        {
+          "type": "tool",
+          "id": "btmrdM0bi",
+          "name": "shell",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "python3 --version && which python3"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Python 3.13.18\n/usr/local/bin/python3\n"
+              }
+            ],
+            "metadata": {
+              "status": "completed",
+              "truncated": false,
+              "exit": 0
+            }
+          },
+          "time": {
+            "created": 1795197138880,
+            "ran": 1795197138950,
+            "completed": 1795197139055
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 5663,
+        "output": 4353,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa167889001K3r5APRWJ5M6Y8",
+      "time": {
+        "created": 1795197139088,
+        "firstToken": 1795197139906,
+        "streamed": 1795197841563,
+        "completed": 1795197841600
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "The directory is empty. I'll implement a scalable shopping cart in Python. \"Escalable\" suggests clean architecture, separation of concerns, extensibility (e.g., strategies for pricing/discounts/taxes, repository abstraction for persistence, thread-safety for concurrent use, pagination maybe). Let me design:\n\nProject structure:\n```\ncart/\n  __init__.py\n  domain/\n    __init__.py\n    entities.py      # Product, CartItem, Cart\n    value_objects.py # Money, SKU, Quantity\n    events.py        # domain events\n    exceptions.py\n  application/\n    __init__.py\n    ports.py         # repository interfaces (protocols)\n    services.py      # CartService use cases\n    pricing.py       # pricing/discount strategies (pluggable)\n  infrastructure/\n    __init__.py\n    memory_repository.py\n    sqlite_repository.py  # persistence option\n  app.py or api? Maybe a simple CLI demo + tests\ntests/\n  test_cart.py\nREADME.md\nmain.py (demo)\n```\n\nScalable aspects:\n- Domain-driven design with value objects and entities\n- Ports & adapters (hexagonal architecture): repository protocol, in-memory + SQLite implementations\n- Strategy pattern for discounts/taxes (extensible without modifying cart)\n- Domain events for extensibility (e.g., ItemAdded, CartCheckedOut) with a simple event bus\n- Thread-safe locking for concurrent access (scalability under concurrency)\n- Pagination/limits for large carts (max items per cart)\n- Money as value object with cents to avoid float errors\n- Decimal for prices\n\nLet me write the code. Keep it reasonably concise but complete, in Spanish (user wrote in Spanish). Comments and docstrings in Spanish.\n\nFiles:\n1. `cart/__init__.py` — exports\n2. `cart/domain/value_objects.py` — Money, SKU, Quantity\n3. `cart/domain/entities.py` — Product, CartItem, Cart\n4. `cart/domain/events.py` — DomainEvent, events, EventBus\n5. `cart/domain/exceptions.py`\n6. `cart/application/ports.py` — CartRepository protocol, ProductCatalog protocol\n7. `cart/application/pricing.py` — DiscountStrategy, PercentageDiscount, FixedDiscount, TaxStrategy, CompositePricingEngine\n8. `cart/application/services.py` — CartService (add, remove, update quantity, get cart, checkout, merge carts)\n9. `cart/infrastructure/repositories.py` — InMemoryCartRepository, SqliteCartRepository, InMemoryProductCatalog\n10. `main.py` — demo CLI\n11. `tests/test_cart.py` — pytest tests (or unittest to avoid dependency; check if pytest installed)\n12. `README.md`\n\nCheck pytest availability.\n\nLet me check if pytest is installed first. Then write files. I'll write with the write tool.\n\nDesign details:\n\nMoney: store cents as int, currency str. Operations: add, multiply by quantity (int), percentage. Use Decimal? Cents int is exact and fast — good.\n\nQuantity: int >= 1, max limit.\n\nCart: id (UUID str), items dict[SKU, CartItem], max_items limit (config), lock (threading.RLock) for thread safety, domain events list. Methods: add_item(product, qty), remove_item, update_quantity, clear, subtotal (sum), item_count, is_empty. Raise domain exceptions on invalid ops (CartLimitExceeded, ItemNotInCart...).\n\nPricingEngine: strategies list; compute( cart ) -> Receipt with lines, discounts, taxes, total.\n\nReceipt: dataclass with lines (sku, description, unit price, qty, line total), discount total, tax total, grand total, currency.\n\nCartService: orchestrates use cases, uses repository to load/save cart, publishes events via bus. checkout: validate stock via catalog? Keep catalog optional with stock check. Keep simple: ProductCatalog protocol with get(sku) -> Product | None and optional stock. For scalability, service methods are stateless, repository handles persistence.\n\nRepositories: \n- InMemoryCartRepository: dict + lock.\n- SqliteCartRepository: sqlite3 with json serialization of cart; tables carts(id, data JSON, updated_at). Use a single connection with check_same_thread=False and lock.\n\nEventBus: subscribe(event_type, handler), publish(events). Handlers called synchronously; errors in handlers shouldn't break cart ops — catch and log? Collect errors. Keep simple: try/except and continue.\n\nTests: use unittest (stdlib) so no dependency needed; but pytest may be available. I'll check and write pytest-style tests that also run under unittest? Simpler: write with unittest so `python3 -m unittest` works. Or write plain pytest functions and check pytest availability. Let me check.\n\nMain demo: create catalog, service with in-memory repo, add items, apply discounts, print receipt, demonstrate sqlite persistence and event bus (audit log handler).\n\nLet me check pytest first, then write all files in parallel-ish (write tool calls are independent — can batch them). Actually I can make multiple write calls in one block since independent.\n\nLet me now write the code carefully.\n\nvalue_objects.py:\n\n```python\n\"\"\"Value objects del dominio del carrito.\n\nSon inmutables y se comparan por valor, no por identidad.\n\"\"\"\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\n\n\n@dataclass(frozen=True)\nclass Money:\n    \"\"\"Cantidad monetaria exacta almacenada en céntimos (evita errores de coma flotante).\"\"\"\n\n    cents: int\n    currency: str = \"EUR\"\n\n    def __post_init__(self) -> None:\n        if not isinstance(self.cents, int):\n            raise TypeError(\"cents debe ser un entero\")\n        if not self.currency or len(self.currency) != 3:\n            raise ValueError(\"currency debe ser un código ISO de 3 letras\")\n\n    @classmethod\n    def from_amount(cls, amount: float | int, currency: str = \"EUR\") -> \"Money\":\n        \"\"\"Crea Money a partir de un importe decimal (ej. 12.99).\"\"\"\n        from decimal import Decimal, ROUND_HALF_UP\n        cents = int((Decimal(str(amount)) * 100).quantize(Decimal(\"1\"), rounding=ROUND_HALF_UP))\n        return cls(cents, currency)\n\n    @property\n    def amount(self) -> float:\n        return self.centimos / 100 ... \n```\n\nHmm, property amount returns cents/100 float for display only. Provide `__str__` formatted: f\"{self.cents/100:.2f} {self.currency}\" — use Decimal for formatting to avoid float artifacts: f\"{Decimal(self.cents)/100:.2f}\". Fine.\n\nOperations: `__add__`, `__sub__`, `__mul__(int)`, `percentage(pct: Decimal) -> Money` rounding half up, `is_zero`, comparisons via dataclass? frozen dataclass gives eq; add order=True for comparisons. But currency must match for add — check and raise.\n\n```python\n@dataclass(frozen=True, order=True)\nclass Money:\n    cents: int\n    currency: str = \"EUR\"\n    ...\n    def _check_currency(self, other):\n        if self.currency != other.currency: raise ValueError(...)\n    def __add__(self, other): ...\n    def __sub__ ...\n    def __mul__(self, n: int) ...\n    __rmul__ = __mul__\n```\n\norder=True with fields (cents, currency) fine.\n\nSKU: frozen dataclass with str value, validated non-empty.\n\nQuantity: frozen dataclass, value int >= 1; methods increase/decrease? Keep min validation, plus `plus(n)`.\n\nexceptions.py:\n```python\nclass CartError(Exception): base\nclass ProductNotFound(CartError)\nclass InsufficientStock(CartError)\nclass CartLimitExceeded(CartError)\nclass ItemNotInCart(CartError)\nclass InvalidQuantity(CartError)\nclass EmptyCart(CartError)\n```\n\nevents.py:\n```python\n@dataclass(frozen=True)\nclass DomainEvent:\n    occurred_at: datetime (default_factory utcnow)\n\nclass ItemAdded(DomainEvent): cart_id, sku, quantity\n... etc. Simpler: dataclass with fields and a name attr? Use classes.\n\nclass EventBus:\n    def __init__(self): self._handlers: dict[type, list[Callable]] = defaultdict(list); self._lock = Lock()\n    def subscribe(self, event_type, handler)\n    def publish(self, events: Iterable[DomainEvent]) -> None: for each, for handler in handlers[type(e)]: try handler(e) except Exception: log\n    def publish_many alias.\n```\n\nentities.py:\n\n```python\n@dataclass(frozen=True)\nclass Product:\n    sku: SKU\n    name: str\n    price: Money\n    stock: int = 0  # 0 could mean unlimited? Use Optional[int] = None -> unlimited\n```\n\nUse `stock: int | None = None` (None = sin límite).\n\n```python\nclass CartItem:\n    def __init__(self, product: Product, quantity: Quantity):\n        ...\n    properties: sku, product, quantity\n    def increase(self, qty: Quantity) -> None\n    def set_quantity(...)\n    @property line_total -> product.price * quantity.value\n    def to_dict / from_dict for persistence\n```\n\nCart:\n```python\nclass Cart:\n    def __init__(self, cart_id=None, max_items=MAX_ITEMS_DEFAULT):\n        self.id = cart_id or uuid4 hex\n        self._items: dict[SKU, CartItem] = {}\n        self._lock = threading.RLock()\n        self.events: list[DomainEvent] = []\n        self.max_items = max_items\n        self.created_at / updated_at\n    def add_item(self, product, quantity=1):\n        with self._lock:\n            if product.sku in self._items:\n                new_qty = existing.quantity.value + qty\n                check max per product? maybe MAX_QUANTITY_PER_ITEM\n            else:\n                if len(self._items) >= self.max_items: raise CartLimitExceeded\n            stock check: if product.stock is not None and new_qty > product.stock: raise InsufficientStock\n            append event ItemAdded / ItemQuantityChanged\n    def remove_item(self, sku): raise ItemNotInCart if missing; event ItemRemoved\n    def update_quantity(self, sku, quantity): 0 -> remove? Define: quantity must be >=1; to remove use remove_item. Or allow 0 = remove. I'll allow Quantity >= 1 only, provide remove.\n    def clear(self)\n    @property items -> tuple/list copy\n    @property subtotal -> sum line totals (start Money(0, currency)) — currency from first item; if empty, Money(0,\"EUR\")... need currency. Cart holds currency? Money default EUR; if empty cart, subtotal = Money(0) with default currency. OK.\n    item_count (total units), distinct_items\n    is_empty\n    def drain_events(self) -> list: return events and clear (so service publishes once)\n    to_dict / from_dict (needs products to rebuild; from_dict takes catalog lookup function) — repository handles.\n```\n\nFor deserialization, repository needs catalog to reconstruct CartItems with Product. Provide `Cart.from_dict(data, product_resolver: Callable[[SKU], Product])`.\n\nports.py:\n```python\nclass CartRepository(Protocol):\n    def get(self, cart_id: str) -> Cart | None\n    def save(self, cart: Cart) -> None\n    def delete(self, cart_id: str) -> None\n    def list_ids(self) -> list[str]\n\nclass ProductCatalog(Protocol):\n    def get(self, sku: SKU) -> Product | None\n    def list(self) -> Iterable[Product]\n```\n\npricing.py:\n```python\n@dataclass(frozen=True)\nclass PricingLine: sku, name, unit_price: Money, quantity: int, line_total: Money\n@dataclass(frozen=True)\nclass Receipt: cart_id, lines: tuple, subtotal, discount, tax, total, currency\n\nclass DiscountStrategy(Protocol): name; def apply(self, cart) -> Money  # returns discount amount (>=0)\nclass PercentageDiscount: percent Decimal; apply: min(subtotal * pct/100, subtotal)\nclass FixedAmountDiscount: amount Money; apply: min(amount, subtotal)\nclass BuyXGetY? keep two + NoDiscount.\nclass CompositeDiscounts: applies sequentially? or sum capped at subtotal. Sequential on remaining amount is typical. I'll apply sequentially to remaining subtotal.\n\nclass TaxStrategy(Protocol): rate Decimal; name; apply(after_discount_amount) -> Money\nclass IvaTax(rate=Decimal(\"0.21\"))...\n\nclass PricingEngine:\n    def __init__(self, discounts: Sequence[DiscountStrategy]=(), taxes: Sequence[TaxStrategy]=())\n    def price(self, cart) -> Receipt\n```\n\nservices.py CartService:\n```python\nclass CartService:\n    def __init__(self, repository, catalog, event_bus=None, pricing_engine=None, max_items=...)\n    def create_cart(self) -> Cart (saved)\n    def get_cart(self, cart_id) -> Cart (raise CartNotFound?) — add CartNotFound exception. get or raise.\n    def add_item(cart_id, sku, quantity=1) -> Cart\n    def remove_item, update_quantity, clear_cart\n    def get_receipt(cart_id) -> Receipt\n    def checkout(cart_id) -> Receipt: validate not empty, compute receipt, publish CartCheckedOut, optionally decrement stock in catalog (catalog protocol with reserve_stock?) — keep: publish event; delete cart? Keep cart but mark checked out? Simplest: publish event and clear cart? For demo: checkout returns receipt, publishes event, and clears cart (or deletes). I'll publish CartCheckedOut and then delete cart from repository? Hmm, typical: order created. I'll keep cart and emit event; provide `empty_after_checkout` flag default True -> clear cart after checkout. Simpler: checkout computes receipt, publishes CartCheckedOut, clears the cart items, saves. Return receipt.\n    def merge_carts(source_id, target_id) -> Cart: adds items respecting limits/stock, deletes source.\n    private _load/_save_and_publish(cart): repo.save(cart); bus.publish(cart.drain_events())\n```\n\nrepositories.py:\n```python\nclass InMemoryProductCatalog: dict[SKU, Product]; add_product; get; list; thread-safe with lock.\n\nclass InMemoryCartRepository: dict + lock; get returns the cart object (shared) — fine for demo; could return deep copy. For safety return copy? The service mutates then saves; with shared refs save is trivial. Keep shared but document.\n\nclass SqliteCartRepository:\n    def __init__(self, path=\":memory:\"): conn = sqlite3.connect(path, check_same_thread=False); create table carts(id TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TEXT); lock\n    Need product resolver to rebuild Cart from JSON: constructor takes product_resolver callable[[SKU], Product].\n    get: SELECT data -> json -> Cart.from_dict(data, resolver)\n    save: INSERT OR REPLACE with serialized dict\n    delete, list_ids.\n```\n\nCart serialization: to_dict: {\"id\":..., \"max_items\":..., \"created_at\": iso, \"updated_at\": iso, \"items\":[{\"sku\":..., \"quantity\":...}]}. from_dict(data, resolver): create Cart, for each item resolver(SKU(sku)) -> product (raise ProductNotFound if None), set item directly (bypass stock checks: use internal method `_load_item(product, qty)`).\n\nmain.py demo: builds catalog with products, service with SqliteCartRepository (file cart.db in cwd? use :memory: plus show file option — use \"cart demo uses temporal\" maybe file \"demo_cart.db\"; better :memory: to avoid clutter, but README shows sqlite file usage. In demo use sqlite file `demo.db`? It'd leave a file in the folder. Use \":memory:\" and mention. Actually demonstrating persistence is nice; but leaving demo.db artifact... I'll use a temp file via tempfile, or :memory:. I'll use :memory: and comment.\n\nDemo flow: print catalog, create cart, add items, update quantity, apply receipt with 10% discount + IVA 21%, subscribe audit handler printing events, checkout, show receipt nicely formatted.\n\ntests/test_cart.py with unittest: test money ops, add/remove/update, limit, stock, pricing discounts/tax, repository roundtrip sqlite, events emitted, merge, thread-safety smoke test (concurrent adds) maybe.\n\nREADME.md in Spanish describing architecture, how to run tests and demo, scalability notes.\n\nCheck pytest availability to decide test runner; unittest works regardless — I'll write tests compatible with both (plain unittest.TestCase) so `python3 -m unittest discover -s tests -v` works and pytest can also run them.\n\nLet me write files now. I'll batch multiple write calls.\n\nCareful details:\n\nMoney.percentage: \n```python\ndef percentage(self, percent: Decimal) -> \"Money\":\n    from decimal import Decimal, ROUND_HALF_UP\n    pct = Decimal(percent)\n    cents = (Decimal(self.cents) * pct / 100).quantize(Decimal(\"1\"), rounding=ROUND_HALF_UP)\n    return Money(int(cents), self.currency)\n```\n\nMoney __mul__ with int only; if float raise TypeError.\n\nMoney comparisons: dataclass(order=True) generates comparisons based on (cents, currency) — currency str comparison ok.\n\nCart.subtotal: \n```python\ntotal = None\nfor item in items: total = item.line_total if total is None else total + item.line_total\nreturn total or Money(0, \"EUR\")\n```\nHmm default currency — Cart could accept currency param default \"EUR\". Add `currency: str = \"EUR\"` to Cart, used when empty. Products should share currency; add check in add_item that product.price.currency == self.currency else raise CartError(\"divisas distintas\"). Good for correctness.\n\nQuantity: \n```python\n@dataclass(frozen=True)\nclass Quantity:\n    value: int\n    def __post_init__: if not isinstance(int) or <1 raise InvalidQuantity? ValueError. Domain exception in value object — value objects raising ValueError is fine; services translate. I'll raise ValueError in VO, and domain exceptions in entities/services.\n```\nMax quantity per item: MAX_QUANTITY_PER_ITEM = 999 class attr; add_item validates.\n\nEvents dataclasses:\n```python\n@dataclass(frozen=True)\nclass DomainEvent:\n    occurred_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))\n\n@dataclass(frozen=True)\nclass CartCreated(DomainEvent): cart_id: str\n@dataclass(frozen=True)\nclass ItemAdded(DomainEvent): cart_id: str; sku: str; quantity: int; new_quantity: int\n@dataclass(frozen=True)\nclass ItemRemoved(DomainEvent): cart_id: str; sku: str\n@dataclass(frozen=True)\nclass ItemQuantityUpdated(DomainEvent): cart_id; sku; quantity\n@dataclass(frozen=True)\nclass CartCleared(DomainEvent): cart_id\n@dataclass(frozen=True)\nclass CartCheckedOut(DomainEvent): cart_id; total: Money; item_count: int\n@dataclass(frozen=True)\nclass CartMerged(DomainEvent): source_id; target_id; moved_items: int\n```\nfrozen dataclass inheriting from frozen dataclass with default field — subclass fields without defaults after parent default field is a TypeError (\"non-default argument follows default argument\")? In dataclasses, if base has a field with default, all subclass fields must have defaults too. So give subclass fields defaults? That'd be wrong. Solution: make DomainEvent not a dataclass but plain class with occurred_at set in __post_init__? Simpler: don't use inheritance for dataclass; define each event as standalone dataclass with occurred_at default and use a common base via `class DomainEvent:` plain with __init__ setting occurred_at. E.g.:\n\n```python\nclass DomainEvent:\n    occurred_at: datetime\n    def __init__(self) -> None:\n        self.occurred_at = datetime.now(timezone.utc)\n\n@dataclass(frozen=True)\nclass ItemAdded(DomainEvent):\n    cart_id: str\n    sku: str\n    quantity: int\n    def __init__(self, cart_id, sku, quantity):\n        super().__init__()\n        ... \n```\nMessy with frozen. Alternative: use `field(default_factory=...)` in each event and kw_only? Python 3.10+ supports kw_only=True in @dataclass — then base default field with kw_only doesn't force subclass ordering. Actually the rule: fields with defaults cannot be followed by fields without defaults *in the same class ordering across MRO*. With kw_only=True on the base field, it's excluded from that check? The check applies to positional fields; kw_only fields are exempt. Yes — in Python 3.10+, a kw_only field with a default doesn't conflict with subsequent non-default positional fields. Python 3.13 available, so:\n\n```python\n@dataclass(frozen=True)\nclass DomainEvent:\n    occurred_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc), kw_only=True)\n\n@dataclass(frozen=True)\nclass ItemAdded(DomainEvent):\n    cart_id: str\n    sku: str\n    ...\n```\nThat works in 3.10+. \n\nEventBus:\n```python\nclass EventBus:\n    def __init__(self): self._handlers = defaultdict(list); self._lock = threading.Lock()\n    def subscribe(self, event_type: type[DomainEvent], handler: Callable[[DomainEvent], None]) -> None\n    def publish(self, event: DomainEvent) -> None\n    def publish_all(self, events: Iterable[DomainEvent]) -> None\n    handler errors: catch Exception, append to self.errors list (or logging). Use logging module.\n```\n\nUse logging: logger = logging.getLogger(\"cart.events\").\n\nPricing:\n```python\n@dataclass(frozen=True)\nclass ReceiptLine: sku, name, unit_price, quantity, line_total\n@dataclass(frozen=True)\nclass Receipt:\n    cart_id: str\n    lines: tuple[ReceiptLine, ...]\n    subtotal: Money\n    discount: Money\n    tax: Money\n    total: Money\n    def __str__ pretty print\n```\n\nDiscountStrategy protocol with `name` property and `apply(subtotal: Money) -> Money` returning discount amount.\n\nPercentageDiscount(percent: Decimal): discount = subtotal.percentage(percent).\nFixedDiscount(amount: Money): min Money by comparison (order=True) — need same currency; apply checks.\n`NoDiscount` maybe unnecessary; empty list = none.\n\nComposite: engine applies each discount sequentially: remaining = subtotal; for d in discounts: disc = d.apply(remaining); total_discount += disc; remaining -= disc. Cap naturally since strategies return <= remaining (percentage yes; fixed: min). Good.\n\nTax strategies applied to (subtotal - discount): tax = base.percentage(rate).\n\nPricingEngine.price(cart) builds lines sorted by sku; subtotal from cart.subtotal; compute; total = subtotal - discount + tax.\n\nReceipt pretty str:\n```\nCarrito 3f2a...\n- SKU-1 Producto A x2 @ 10.00 EUR = 20.00 EUR\nSubtotal: ...\nDescuento (IVA...): ...\nIVA 21%: ...\nTotal: ...\n```\n\nService:\n```python\nDEFAULT_MAX_ITEMS = 100\n\nclass CartService:\n    def __init__(self, repository, catalog, event_bus=None, pricing_engine=None, max_items=DEFAULT_MAX_ITEMS):\n        ...\n        self._lock = threading.RLock()  # serialize cart mutations for concurrency safety at service level\n    def create_cart(self) -> Cart:\n        cart = Cart(max_items=self.max_items, currency=self.currency?)\n        cart.events.append(CartCreated(cart.id)) — better cart.record_event(...). Add method `record_event`.\n        save+publish; return cart\n    def get_cart(self, cart_id) -> Cart: cart = repo.get; if None raise CartNotFound; return\n    def add_item(self, cart_id, sku, quantity=1):\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            product = self._require_product(sku)\n            cart.add_item(product, Quantity(quantity))\n            self._save(cart)\n            return cart\n    ...\n    def get_receipt(self, cart_id) -> Receipt: return self.pricing_engine.price(self.get_cart(cart_id))\n    def checkout(self, cart_id) -> Receipt:\n        with self._lock:\n            cart = get; if cart.is_empty: raise EmptyCart\n            receipt = pricing.price(cart)\n            cart.record_event(CartCheckedOut(cart.id, receipt.total, cart.item_count))\n            cart.clear(record_event=False?) — clear also records CartCleared; fine to record both. Then save (cart empty), publish. Or delete cart? Keep the emptied cart so id remains valid. I'll clear and save.\n            return receipt\n    def merge_carts(self, source_id, target_id):\n        with lock: source=get(source); target=get(target); if source is empty return target\n        for item in source.items: product = catalog.get(item.sku); target.add_item(product, item.quantity) — may raise CartLimitExceeded/InsufficientStock; then repo.delete(source); save target; record CartMerged on target? event on target cart with source/target ids. publish. Return target.\n    def _save(self, cart): repo.save(cart); bus.publish_all(cart.drain_events())\n```\n\nNote: sqlite repository serializes cart at save; drain_events clears in-memory list — but with sqlite, get() returns fresh object each time, fine. With in-memory repo, get returns same object; events drained on save — ok.\n\nCart.add_item signature: add_item(self, product: Product, quantity: Quantity | int = 1).\n\nCart internals:\n```python\nclass Cart:\n    MAX_QUANTITY_PER_ITEM = 999\n    def __init__(self, cart_id=None, max_items=100, currency=\"EUR\"):\n        self.id = cart_id or uuid4().hex\n        self.max_items = max_items\n        self.currency = currency\n        self._items = {}\n        self._lock = threading.RLock()\n        self._events = []\n        self.created_at = now; self.updated_at = now\n    def record_event(self, event): with lock: self._events.append(event)\n    def drain_events(self): with lock: ev = list; clear; return ev\n    def add_item(self, product, quantity=1):\n        q = quantity if isinstance(quantity, Quantity) else Quantity(quantity)\n        with self._lock:\n            self._check_currency(product.price)\n            existing = self._items.get(product.sku)\n            if existing:\n                new_q = existing.quantity.value + q.value\n                if new_q > MAX: raise InvalidQuantity? Use CartLimitExceeded? Separate: raise InvalidQuantity(f\"...supera el máximo por artículo ({MAX})\")\n                check stock\n                existing.set_quantity(Quantity(new_q)) -> record ItemQuantityUpdated? or ItemAdded with merged. I'll record ItemAdded(cart_id, sku, quantity=q.value, new_quantity=new_q) for both cases to keep simple? Better: if existing, record ItemQuantityUpdated. Fine.\n            else:\n                if len(self._items) >= self.max_items: raise CartLimitExceeded\n                new_q = q.value; stock check\n                self._items[product.sku] = CartItem(product, q)\n                record ItemAdded\n            self.updated_at = now\n    def _check_stock(self, product, qty): if product.stock is not None and qty > product.stock: raise InsufficientStock\n    def remove_item(self, sku): sku = SKU coercion; with lock: if sku not in items: raise ItemNotInCart; del; record ItemRemoved; updated\n    def update_quantity(self, sku, quantity): q; with lock: item = items.get or raise ItemNotInCart; new total = q.value; if > MAX raise; stock check; item.set_quantity(q); record ItemQuantityUpdated\n    def clear(self): with lock: if items: record CartCleared; items.clear(); updated\n    @property items -> list(self._items.values()) copy, sorted by sku\n    @property subtotal\n    def item_count -> sum(qty)\n    def distinct_items -> len\n    def is_empty\n    def to_dict(self): {\"id\",\"max_items\",\"currency\",\"created_at\": isoformat, \"updated_at\": iso, \"items\":[{\"sku\": str, \"quantity\": int}]}\n    @classmethod from_dict(cls, data, resolve_product): cart = cls(cart_id=data[\"id\"], max_items=..., currency=...); set timestamps; for it in data[\"items\"]: product = resolve_product(SKU(it[\"sku\"])); if None raise ProductNotFound; cart._items[SKU] = CartItem(product, Quantity(it[\"quantity\"])) directly (no events, no checks). return cart\n```\n\nSKU coercion helper: `_as_sku(value) -> SKU`.\n\nCartItem:\n```python\nclass CartItem:\n    __slots__ = (\"_product\", \"_quantity\")\n    def __init__(self, product, quantity): ...\n    @property product, quantity, sku\n    def set_quantity(self, q): self._quantity = q\n    @property line_total(self) -> Money: self._product.price * self._quantity.value\n    def to_dict\n```\n\nRepositories:\n\nInMemoryCartRepository:\n```python\nclass InMemoryCartRepository:\n    def __init__(self): self._carts = {}; self._lock = Lock()\n    def get(self, cart_id): with lock: return self._carts.get(cart_id)  # returns live object\n    def save(self, cart): with lock: self._carts[cart.id] = cart\n    def delete(self, cart_id): with lock: self._carts.pop(cart_id, None)\n    def list_ids(self): with lock: return list(self._carts)\n    def __len__\n```\nHmm returning live object means mutations happen even without save — acceptable for in-memory; but Cart has own lock anyway. To be safer, save copies? Keep live; document.\n\nSqliteCartRepository:\n```python\nclass SqliteCartRepository:\n    def __init__(self, path=\":memory:\", product_resolver=None):\n        self._conn = sqlite3.connect(path, check_same_thread=False)\n        self._conn.execute(\"PRAGMA journal_mode=WAL\") if file... skip for :memory:\n        create table if not exists carts (id TEXT PRIMARY KEY, data TEXT NOT NULL, updated_at TEXT NOT NULL)\n        self._lock = Lock(); self._resolver = product_resolver or (lambda sku: (_ for _ in ()).throw(ProductNotFound(...)))\n    def get(self, cart_id):\n        with lock: row = conn.execute(\"select data from carts where id=?\", (cart_id,)).fetchone()\n        if not row: return None\n        return Cart.from_dict(json.loads(row[0]), self._resolver)\n    def save(self, cart):\n        data = json.dumps(cart.to_dict(), ensure_ascii=False)\n        with lock: conn.execute(\"INSERT INTO carts(id,data,updated_at) VALUES(?,?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data, updated_at=excluded.updated_at\", (cart.id, data, datetime.now(timezone.utc).isoformat())); conn.commit()\n    def delete, list_ids\n    def close()\n```\n\nInMemoryProductCatalog:\n```python\nclass InMemoryProductCatalog:\n    def __init__(self, products=()): self._products = {}; lock; for p in products: self.add(p)\n    def add(self, product)\n    def get(self, sku) -> Product | None  (coerce SKU)\n    def list(self) -> list sorted\n    def __len__\n```\n\nmain.py demo as described, with a small `format_receipt` maybe Receipt.__str__ covers it.\n\nTests (tests/test_cart.py), unittest:\n\n- Money: from_amount, add, mul, percentage rounding, currency mismatch raises.\n- Quantity validation.\n- Cart add/update/remove/clear, ItemNotInCart, CartLimitExceeded (max_items=2), InsufficientStock, per-item max.\n- Pricing: percentage discount + fixed, tax, total math; discount capped at subtotal.\n- Service with in-memory repo: create/get/add/receipt/checkout empties cart and publishes events (collect via bus handler), CartNotFound, EmptyCart on checkout empty.\n- Sqlite repo roundtrip: save cart with items, new repo instance same file (tmp file), get returns equal cart (ids, quantities, subtotal).\n- Merge carts.\n- Concurrency: 20 threads adding item to same cart via service (in-memory), final item_count == 20 (distinct sku same product -> quantity 20). Use ThreadPoolExecutor.\n\nAlso test events emitted on add.\n\nREADME.md: overview, structure, design decisions for scalability (hexagonal, strategies, events, thread safety, exact money, pluggable persistence), how to run: `python3 -m unittest discover -s tests -v` and `python3 main.py`, usage snippet.\n\nLet me check pytest presence anyway (not required). Skip; unittest is enough. Actually let me quickly check if pytest exists to mention in README; not necessary.\n\nNow write files. Batch the write calls — they're independent. That's a lot of content in one block; fine.\n\nOne more consideration: `from __future__ import annotations` for 3.13 not needed but harmless; use modern syntax directly (3.13 supports `str | None`).\n\nDirectory: /var/tmp/bench/ws-YEm7YZf4. Create package `cart/`, `tests/`, `main.py`, `README.md`.\n\nLet me write the code carefully to avoid bugs.\n\nentities.py full:\n\n```python\n\"\"\"Entidades del dominio del carrito de la compra.\"\"\"\nfrom __future__ import annotations\n\nimport threading\nfrom dataclasses import dataclass\nfrom datetime import datetime, timezone\nfrom typing import Callable, Iterable\nfrom uuid import uuid4\n\nfrom .events import (\n    CartCleared,\n    CartCreated,\n    DomainEvent,\n    ItemAdded,\n    ItemQuantityUpdated,\n    ItemRemoved,\n)\nfrom .exceptions import (\n    CartLimitExceeded,\n    InsufficientStock,\n    InvalidQuantity,\n    ItemNotInCart,\n)\nfrom .value_objects import Money, Quantity, SKU\n\n\ndef _now() -> datetime:\n    return datetime.now(timezone.utc)\n\n\ndef _as_sku(value: SKU | str) -> SKU:\n    return value if isinstance(value, SKU) else SKU(str(value))\n\n\n@dataclass(frozen=True)\nclass Product:\n    sku: SKU\n    name: str\n    price: Money\n    stock: int | None = None  # None = stock ilimitado\n\n    def __post_init__(self) -> None:\n        if not isinstance(self.sku, SKU):\n            object.__setattr__(self, \"sku\", SKU(str(self.sku)))\n        if self.stock is not None and self.stock < 0:\n            raise ValueError(\"El stock no puede ser negativo\")\n```\n\nWait: dataclass frozen with __post_init__ using object.__setattr__ fine.\n\nCartItem with __slots__ and properties.\n\nCart as designed. In from_dict, bypass events.\n\nCareful: `Cart.add_item` records events — CartCreated recorded by service via cart.record_event(CartCreated(cart.id)).\n\nto_dict includes items list.\n\nvalue_objects.py:\n\n```python\n\"\"\"Value objects inmutables del dominio.\"\"\"\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\nfrom decimal import ROUND_HALF_UP, Decimal\n\n\n@dataclass(frozen=True, order=True)\nclass Money:\n    \"\"\"Importe exacto en céntimos (sin coma flotante).\"\"\"\n\n    cents: int\n    currency: str = \"EUR\"\n\n    def __post_init__(self) -> None:\n        if isinstance(self.cents, bool) or not isinstance(self.cents, int):\n            raise TypeError(\"cents debe ser un entero\")\n        if len(self.currency) != 3 or not self.currency.isalpha():\n            raise ValueError(\"currency debe ser un código ISO 4217 de 3 letras\")\n\n    @classmethod\n    def from_amount(cls, amount: float | int | str | Decimal, currency: str = \"EUR\") -> Money:\n        cents = (Decimal(str(amount)) * 100).quantize(Decimal(\"1\"), rounding=ROUND_HALF_UP)\n        return cls(int(cents), currency)\n\n    @property\n    def amount(self) -> Decimal:\n        return Decimal(self.cents) / 100\n\n    def __add__(self, other: Money) -> Money:\n        self._check(other)\n        return Money(self.cents + other.cents, self.currency)\n\n    def __sub__(self, other: Money) -> Money:\n        self._check(other)\n        return Money(self.cents - other.cents, self.currency)\n\n    def __mul__(self, factor: int) -> Money:\n        if isinstance(factor, bool) or not isinstance(factor, int):\n            raise TypeError(\"Money solo se puede multiplicar por un entero\")\n        return Money(self.cents * factor, self.currency)\n\n    __rmul__ = __mul__\n\n    def percentage(self, percent: Decimal | int | str) -> Money:\n        pct = Decimal(str(percent))\n        cents = (Decimal(self.cents) * pct / Decimal(100)).quantize(Decimal(\"1\"), rounding=ROUND_HALF_UP)\n        return Money(int(cents), self.currency)\n\n    def _check(self, other: Money) -> None:\n        if not isinstance(other, Money):\n            raise TypeError(\"Solo se pueden operar objetos Money\")\n        if self.currency != other.currency:\n            raise ValueError(f\"Divisas distintas: {self.currency} vs {other.currency}\")\n\n    def __str__(self) -> str:\n        sign = \"-\" if self.cents < 0 else \"\"\n        return f\"{sign}{self.amount:.2f} {self.currency}\"\n```\n\nNote: dataclass(order=True) with __add__ defined — defining __mul__ etc. is fine; dataclass won't overwrite since eq/order only generate comparison methods. But defining __add__ in a frozen dataclass is fine. However `__rmul__ = __mul__` inside class body: at class creation time __mul__ is the function — fine.\n\nWait: with order=True, dataclass generates __lt__ etc. based on tuple (cents, currency). Fine.\n\nHmm: dataclass eq compares class too. Fine.\n\nSKU:\n```python\n@dataclass(frozen=True)\nclass SKU:\n    value: str\n    def __post_init__(self):\n        if not self.value or not self.value.strip():\n            raise ValueError(\"El SKU no puede estar vacío\")\n        object.__setattr__(self, \"value\", self.value.strip())\n    def __str__(self): return self.value\n```\n\nQuantity:\n```python\n@dataclass(frozen=True)\nclass Quantity:\n    value: int\n    def __post_init__(self):\n        if isinstance(self.value, bool) or not isinstance(self.value, int) or self.value < 1:\n            raise ValueError(\"La cantidad debe ser un entero >= 1\")\n    def __int__(self): return self.value\n    def __str__(self): return str(self.value)\n```\n\nevents.py:\n\n```python\n\"\"\"Eventos de dominio y bus de eventos (extensibilidad sin modificar el carrito).\"\"\"\nfrom __future__ import annotations\n\nimport logging\nimport threading\nfrom collections import defaultdict\nfrom dataclasses import dataclass, field\nfrom datetime import datetime, timezone\nfrom typing import Callable, Iterable\n\nfrom .value_objects import Money\n\nlogger = logging.getLogger(\"cart.events\")\n\n\n@dataclass(frozen=True)\nclass DomainEvent:\n    occurred_at: datetime = field(\n        default_factory=lambda: datetime.now(timezone.utc), kw_only=True\n    )\n\n\n@dataclass(frozen=True)\nclass CartCreated(DomainEvent):\n    cart_id: str\n\n\n@dataclass(frozen=True)\nclass ItemAdded(DomainEvent):\n    cart_id: str\n    sku: str\n    quantity: int\n    new_quantity: int\n\n\n@dataclass(frozen=True)\nclass ItemQuantityUpdated(DomainEvent):\n    cart_id: str\n    sku: str\n    quantity: int\n\n\n@dataclass(frozen=True)\nclass ItemRemoved(DomainEvent):\n    cart_id: str\n    sku: str\n\n\n@dataclass(frozen=True)\nclass CartCleared(DomainEvent):\n    cart_id: str\n\n\n@dataclass(frozen=True)\nclass CartCheckedOut(DomainEvent):\n    cart_id: str\n    total: Money\n    item_count: int\n\n\n@dataclass(frozen=True)\nclass CartMerged(DomainEvent):\n    source_id: str\n    target_id: str\n    moved_items: int\n\n\nEventHandler = Callable[[DomainEvent], None]\n\n\nclass EventBus:\n    \"\"\"Bus de eventos en proceso. Los handlers se ejecutan de forma aislada:\n    un handler que falla no rompe las operaciones del carrito.\"\"\"\n\n    def __init__(self) -> None:\n        self._handlers: dict[type[DomainEvent], list[EventHandler]] = defaultdict(list)\n        self._lock = threading.Lock()\n\n    def subscribe(self, event_type: type[DomainEvent], handler: EventHandler) -> None:\n        with self._lock:\n            self._handlers[event_type].append(handler)\n\n    def publish(self, event: DomainEvent) -> None:\n        with self._lock:\n            handlers = list(self._handlers.get(type(event), ()))\n        for handler in handlers:\n            try:\n                handler(event)\n            except Exception:\n                logger.exception(\"Error en el handler de %s\", type(event).__name__)\n\n    def publish_all(self, events: Iterable[DomainEvent]) -> None:\n        for event in events:\n            self.publish(event)\n```\n\nexceptions.py straightforward.\n\nports.py:\n```python\n\"\"\"Puertos (interfaces) de la arquitectura hexagonal.\"\"\"\nfrom __future__ import annotations\n\nfrom typing import Iterable, Protocol\n\nfrom ..domain.entities import Cart, Product\nfrom ..domain.value_objects import SKU\n\n\nclass CartRepository(Protocol):\n    def get(self, cart_id: str) -> Cart | None: ...\n    def save(self, cart: Cart) -> None: ...\n    def delete(self, cart_id: str) -> None: ...\n    def list_ids(self) -> list[str]: ...\n\n\nclass ProductCatalog(Protocol):\n    def get(self, sku: SKU | str) -> Product | None: ...\n    def list(self) -> Iterable[Product]: ...\n```\n\npricing.py:\n\n```python\n\"\"\"Motor de precios: descuentos e impuestos como estrategias intercambiables.\"\"\"\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\nfrom decimal import Decimal\nfrom typing import Protocol, Sequence\n\nfrom ..domain.entities import Cart\nfrom ..domain.value_objects import Money\n\n\n@dataclass(frozen=True)\nclass ReceiptLine:\n    sku: str\n    name: str\n    unit_price: Money\n    quantity: int\n    line_total: Money\n\n\n@dataclass(frozen=True)\nclass Receipt:\n    cart_id: str\n    lines: tuple[ReceiptLine, ...]\n    subtotal: Money\n    discount: Money\n    tax: Money\n    total: Money\n\n    def __str__(self) -> str: ...\n\n\nclass DiscountStrategy(Protocol):\n    @property\n    def name(self) -> str: ...\n    def apply(self, amount: Money) -> Money:\n        \"\"\"Devuelve el importe de descuento sobre `amount` (nunca negativo ni mayor que amount).\"\"\"\n\n\nclass PercentageDiscount:\n    def __init__(self, percent: Decimal | int | str, name: str | None = None):\n        self.percent = Decimal(str(percent))\n        self._name = name or f\"-{self.percent}%\"\n    @property\n    def name(self): return self._name\n    def apply(self, amount): return amount.percentage(self.percent)\n\n\nclass FixedDiscount:\n    def __init__(self, amount: Money, name=None): self.amount = amount; self._name = name or f\"Descuento fijo {amount}\"\n    @property\n    def name(self): ...\n    def apply(self, amount):\n        if self.amount.currency != amount.currency: raise ValueError(...)\n        return self.amount if self.amount < amount else amount\n\n\nclass TaxStrategy(Protocol):\n    @property\n    def name(self) -> str: ...\n    def apply(self, amount: Money) -> Money: ...\n\n\nclass PercentageTax:\n    def __init__(self, rate, name=None): self.rate = Decimal(str(rate)); ...\n    def apply(self, amount): return amount.percentage(self.rate)\n\n\nclass PricingEngine:\n    def __init__(self, discounts: Sequence[DiscountStrategy] = (), taxes: Sequence[TaxStrategy] = ()):\n        self.discounts = tuple(discounts); self.taxes = tuple(taxes)\n\n    def price(self, cart: Cart) -> Receipt:\n        lines = tuple(\n            ReceiptLine(sku=item.sku.value, name=item.product.name, unit_price=item.product.price, quantity=item.quantity.value, line_total=item.line_total)\n            for item in cart.items\n        )\n        subtotal = cart.subtotal\n        discount = Money(0, subtotal.currency)\n        remaining = subtotal\n        for d in self.discounts:\n            disc = d.apply(remaining)\n            discount = discount + disc\n            remaining = remaining - disc\n        tax = Money(0, subtotal.currency)\n        for t in self.taxes:\n            tax = tax + t.apply(remaining)\n        total = subtotal - discount + tax\n        return Receipt(cart.id, lines, subtotal, discount, tax, total)\n```\n\nReceipt.__str__:\n```python\ndef __str__(self):\n    out = [f\"Recibo del carrito {self.cart_id}\"]\n    for l in self.lines:\n        out.append(f\"  {l.sku}  {l.name}  x{l.quantity} @ {l.unit_price} = {l.line_total}\")\n    out.append(f\"  Subtotal : {self.subtotal}\")\n    if self.discount.cents: out.append(f\"  Descuento: -{self.discount}\")\n    if self.tax.cents: out.append(f\"  Impuestos: {self.tax}\")\n    out.append(f\"  TOTAL    : {self.total}\")\n    return \"\\n\".join(out)\n```\n\nservices.py:\n\n```python\n\"\"\"Servicio de aplicación: casos de uso del carrito (orquesta dominio + puertos).\"\"\"\nfrom __future__ import annotations\n\nimport threading\n\nfrom ..domain.entities import Cart\nfrom ..domain.events import CartCheckedOut, CartMerged, EventBus\nfrom ..domain.exceptions import CartNotFound, EmptyCart, ProductNotFound\nfrom ..domain.value_objects import Quantity, SKU\nfrom ..application.ports import CartRepository, ProductCatalog\nfrom ..application.pricing import PricingEngine, Receipt\n```\n\nCareful with relative imports: package layout:\n```\ncart/\n  __init__.py\n  domain/...\n  application/\n    ports.py\n    pricing.py\n    services.py\n  infrastructure/\n    repositories.py\n```\nservices.py in application: `from ..domain.entities import Cart` etc. `from .ports import ...`, `from .pricing import ...`.\n\nCartService:\n```python\nDEFAULT_MAX_ITEMS = 100\n\n\nclass CartService:\n    def __init__(self, repository, catalog, event_bus=None, pricing_engine=None, max_items=DEFAULT_MAX_ITEMS):\n        self.repository = repository\n        self.catalog = catalog\n        self.event_bus = event_bus or EventBus()\n        self.pricing_engine = pricing_engine or PricingEngine()\n        self.max_items = max_items\n        self._lock = threading.RLock()\n\n    def create_cart(self) -> Cart:\n        cart = Cart(max_items=self.max_items)\n        cart.record_event(CartCreated(cart.id))\n        self._save(cart)\n        return cart\n\n    def get_cart(self, cart_id: str) -> Cart:\n        cart = self.repository.get(cart_id)\n        if cart is None:\n            raise CartNotFound(f\"No existe el carrito {cart_id!r}\")\n        return cart\n\n    def list_carts(self) -> list[str]:\n        return self.repository.list_ids()\n\n    def add_item(self, cart_id, sku, quantity=1) -> Cart:\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            product = self._require_product(sku)\n            cart.add_item(product, Quantity(quantity))\n            self._save(cart)\n            return cart\n\n    def update_quantity(self, cart_id, sku, quantity) -> Cart:\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            cart.update_quantity(_as_sku..., Quantity(quantity))\n            self._save(cart); return cart\n\n    def remove_item(self, cart_id, sku) -> Cart: ...\n    def clear_cart(self, cart_id) -> Cart: ...\n    def get_receipt(self, cart_id) -> Receipt:\n        return self.pricing_engine.price(self.get_cart(cart_id))\n\n    def checkout(self, cart_id) -> Receipt:\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            if cart.is_empty:\n                raise EmptyCart(\"No se puede hacer checkout de un carrito vacío\")\n            receipt = self.pricing_engine.price(cart)\n            cart.record_event(CartCheckedOut(cart.id, receipt.total, cart.item_count))\n            cart.clear()\n            self._save(cart)\n            return receipt\n\n    def merge_carts(self, source_id, target_id) -> Cart:\n        if source_id == target_id: raise ValueError\n        with self._lock:\n            source = self.get_cart(source_id); target = self.get_cart(target_id)\n            moved = 0\n            for item in source.items:\n                product = self._require_product(item.sku)\n                target.add_item(product, item.quantity)\n                moved += 1\n            target.record_event(CartMerged(source_id, target_id, moved))\n            self.repository.delete(source_id)\n            self._save(target)\n            return target\n\n    def _require_product(self, sku) -> Product:\n        product = self.catalog.get(sku)\n        if product is None:\n            raise ProductNotFound(f\"Producto no encontrado: {sku}\")\n        return product\n\n    def _save(self, cart: Cart) -> None:\n        self.repository.save(cart)\n        self.event_bus.publish_all(cart.drain_events())\n```\n\nNeed imports of CartCreated. `_as_sku` from domain.entities — it's private; expose `as_sku` public in value_objects or entities. I'll add public helper in domain: in value_objects define SKU coercion inline `sku if isinstance(sku, SKU) else SKU(str(sku))`. In service: `sku = sku if isinstance(sku, SKU) else SKU(str(sku))`. Fine.\n\nNote checkout: cart.clear() records CartCleared too — both events published. OK.\n\nWait — in checkout I record CartCheckedOut then clear() which appends CartCleared; drain publishes both. Fine.\n\nNote: InMemory repo returns live Cart objects; service lock serializes. SQLite repo returns fresh objects each get; fine.\n\nOne subtlety: with sqlite repo, `checkout` saves cart after clear — good. `merge` deletes source.\n\nrepositories.py in infrastructure:\n\n```python\n\"\"\"Adaptadores de infraestructura: catálogo y repositorio de carritos (memoria y SQLite).\"\"\"\nfrom __future__ import annotations\n\nimport json\nimport sqlite3\nimport threading\nfrom datetime import datetime, timezone\nfrom pathlib import Path\nfrom typing import Callable, Iterable\n\nfrom ..domain.entities import Cart, Product\nfrom ..domain.exceptions import ProductNotFound\nfrom ..domain.value_objects import SKU\n\n\nclass InMemoryProductCatalog:\n    def __init__(self, products: Iterable[Product] = ()) -> None:\n        self._products: dict[SKU, Product] = {}\n        self._lock = threading.Lock()\n        for p in products:\n            self.add(p)\n\n    def add(self, product: Product) -> None:\n        with self._lock:\n            self._products[product.sku] = product\n\n    def get(self, sku: SKU | str) -> Product | None:\n        key = sku if isinstance(sku, SKU) else SKU(str(sku))\n        with self._lock:\n            return self._products.get(key)\n\n    def list(self) -> list[Product]:\n        with self._lock:\n            return sorted(self._products.values(), key=lambda p: p.sku.value)\n\n    def __len__(self) -> int:\n        with self._lock:\n            return len(self._products)\n\n\nclass InMemoryCartRepository:\n    \"\"\"Repositorio en memoria (útil para tests y procesos efímeros).\"\"\"\n\n    def __init__(self) -> None:\n        self._carts: dict[str, Cart] = {}\n        self._lock = threading.Lock()\n\n    def get(self, cart_id: str) -> Cart | None:\n        with self._lock:\n            return self._carts.get(cart_id)\n\n    def save(self, cart: Cart) -> None:\n        with self._lock:\n            self._carts[cart.id] = cart\n\n    def delete(self, cart_id: str) -> None:\n        with self._lock:\n            self._carts.pop(cart_id, None)\n\n    def list_ids(self) -> list[str]:\n        with self._lock:\n            return sorted(self._carts)\n\n    def __len__(self) -> int:\n        with self._lock:\n            return len(self._carts)\n\n\nclass SqliteCartRepository:\n    \"\"\"Repositorio persistente en SQLite. Cada operación lee/escribe JSON,\n    por lo que escala horizontalmente con cualquier despliegue que comparta la BD.\"\"\"\n\n    def __init__(self, path: str | Path = \":memory:\", product_resolver: Callable[[SKU], Product] | None = None) -> None:\n        self._conn = sqlite3.connect(str(path), check_same_thread=False)\n        self._conn.execute(\n            \"CREATE TABLE IF NOT EXISTS carts (\"\n            \"  id TEXT PRIMARY KEY,\"\n            \"  data TEXT NOT NULL,\"\n            \"  updated_at TEXT NOT NULL\"\n            \")\"\n        )\n        self._conn.commit()\n        self._lock = threading.Lock()\n        if product_resolver is None:\n            def product_resolver(sku): raise ProductNotFound(f\"Sin resolvedor de productos para {sku}\")\n        self._resolve = product_resolver\n\n    def get(self, cart_id: str) -> Cart | None:\n        with self._lock:\n            row = self._conn.execute(\"SELECT data FROM carts WHERE id = ?\", (cart_id,)).fetchone()\n        if row is None:\n            return None\n        return Cart.from_dict(json.loads(row[0]), self._resolve)\n\n    def save(self, cart: Cart) -> None:\n        payload = json.dumps(cart.to_dict(), ensure_ascii=False)\n        ts = datetime.now(timezone.utc).isoformat()\n        with self._lock:\n            self._conn.execute(\n                \"INSERT INTO carts (id, data, updated_at) VALUES (?, ?, ?) \"\n                \"ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at\",\n                (cart.id, payload, ts),\n            )\n            self._conn.commit()\n\n    def delete(self, cart_id: str) -> None:\n        with self._lock:\n            self._conn.execute(\"DELETE FROM carts WHERE id = ?\", (cart_id,))\n            self._conn.commit()\n\n    def list_ids(self) -> list[str]:\n        with self._lock:\n            rows = self._conn.execute(\"SELECT id FROM carts ORDER BY id\").fetchall()\n        return [r[0] for r in rows]\n\n    def close(self) -> None:\n        with self._lock:\n            self._conn.close()\n```\n\nNote WAL pragma only for file DBs; skip.\n\nentities.Cart.to_dict / from_dict:\n\n```python\n    def to_dict(self) -> dict:\n        with self._lock:\n            return {\n                \"id\": self.id,\n                \"max_items\": self.max_items,\n                \"currency\": self.currency,\n                \"created_at\": self.created_at.isoformat(),\n                \"updated_at\": self.updated_at.isoformat(),\n                \"items\": [\n                    {\"sku\": item.sku.value, \"quantity\": item.quantity.value}\n                    for item in self.items\n                ],\n            }\n\n    @classmethod\n    def from_dict(cls, data: dict, resolve_product: Callable[[SKU], Product]) -> \"Cart\":\n        cart = cls(cart_id=data[\"id\"], max_items=int(data.get(\"max_items\", 100)), currency=data.get(\"currency\", \"EUR\"))\n        cart.created_at = datetime.fromisoformat(data[\"created_at\"])\n        cart.updated_at = datetime.fromisoformat(data[\"updated_at\"])\n        for raw in data.get(\"items\", []):\n            sku = SKU(raw[\"sku\"])\n            product = resolve_product(sku)\n            if product is None:\n                raise ProductNotFound(f\"Producto desconocido al restaurar el carrito: {sku}\")\n            cart._items[sku] = CartItem(product, Quantity(int(raw[\"quantity\"])))\n        return cart\n```\n\nCart class:\n\n```python\nclass Cart:\n    \"\"\"Carrito de la compra. Es seguro entre hilos (RLock interno).\"\"\"\n\n    MAX_QUANTITY_PER_ITEM = 999\n\n    def __init__(self, cart_id: str | None = None, max_items: int = 100, currency: str = \"EUR\") -> None:\n        if max_items < 1:\n            raise ValueError(\"max_items debe ser >= 1\")\n        self.id = cart_id or uuid4().hex\n        self.max_items = max_items\n        self.currency = currency\n        self.created_at = _now()\n        self.updated_at = _now()\n        self._items: dict[SKU, CartItem] = {}\n        self._events: list[DomainEvent] = []\n        self._lock = threading.RLock()\n\n    # --- eventos ---\n    def record_event(self, event: DomainEvent) -> None:\n        with self._lock:\n            self._events.append(event)\n\n    def drain_events(self) -> list[DomainEvent]:\n        with self._lock:\n            events = list(self._events)\n            self._events.clear()\n            return events\n\n    # --- mutaciones ---\n    def add_item(self, product: Product, quantity: Quantity | int = 1) -> None:\n        qty = quantity if isinstance(quantity, Quantity) else Quantity(quantity)\n        with self._lock:\n            self._check_currency(product.price)\n            existing = self._items.get(product.sku)\n            new_total = (existing.quantity.value if existing else 0) + qty.value\n            self._check_item_limit(new_total)\n            self._check_stock(product, new_total)\n            if existing:\n                existing.set_quantity(Quantity(new_total))\n                self.record_event(ItemQuantityUpdated(self.id, product.sku.value, new_total))\n            else:\n                if len(self._items) >= self.max_items:\n                    raise CartLimitExceeded(f\"El carrito admite como máximo {self.max_items} productos distintos\")\n                self._items[product.sku] = CartItem(product, qty)\n                self.record_event(ItemAdded(self.id, product.sku.value, qty.value, new_total))\n            self._touch()\n\n    def update_quantity(self, sku, quantity) -> None:\n        sku = _as_sku(sku); qty = quantity if isinstance(quantity, Quantity) else Quantity(quantity)\n        with self._lock:\n            item = self._items.get(sku)\n            if item is None: raise ItemNotInCart(...)\n            self._check_item_limit(qty.value)\n            self._check_stock(item.product, qty.value)\n            item.set_quantity(qty)\n            self.record_event(ItemQuantityUpdated(self.id, sku.value, qty.value))\n            self._touch()\n\n    def remove_item(self, sku) -> None:\n        sku = _as_sku(sku)\n        with self._lock:\n            if sku not in self._items: raise ItemNotInCart(f\"{sku} no está en el carrito\")\n            del self._items[sku]\n            self.record_event(ItemRemoved(self.id, sku.value))\n            self._touch()\n\n    def clear(self) -> None:\n        with self._lock:\n            if self._items:\n                self._items.clear()\n                self.record_event(CartCleared(self.id))\n                self._touch()\n\n    # --- consultas ---\n    @property\n    def items(self) -> list[CartItem]:\n        with self._lock:\n            return sorted(self._items.values(), key=lambda i: i.sku.value)\n\n    @property\n    def subtotal(self) -> Money:\n        with self._lock:\n            total: Money | None = None\n            for item in self._items.values():\n                total = item.line_total if total is None else total + item.line_total\n            return total if total is not None else Money(0, self.currency)\n\n    @property\n    def item_count(self) -> int:\n        with self._lock:\n            return sum(i.quantity.value for i in self._items.values())\n\n    @property\n    def distinct_items(self) -> int:\n        with self._lock:\n            return len(self._items)\n\n    @property\n    def is_empty(self) -> bool:\n        return self.distinct_items == 0\n\n    def contains(self, sku) -> bool: ...\n\n    # --- helpers ---\n    def _check_currency(self, price: Money) -> None:\n        if price.currency != self.currency:\n            raise CartError(f\"El carrito usa {self.currency} y el producto usa {price.currency}\")\n    def _check_item_limit(self, qty: int) -> None:\n        if qty > self.MAX_QUANTITY_PER_ITEM:\n            raise InvalidQuantity(f\"Máximo {self.MAX_QUANTITY_PER_ITEM} unidades por producto\")\n    def _check_stock(self, product, qty) -> None:\n        if product.stock is not None and qty > product.stock:\n            raise InsufficientStock(f\"Stock insuficiente de {product.sku}: solicitadas {qty}, disponibles {product.stock}\")\n    def _touch(self): self.updated_at = _now()\n```\n\nCartItem:\n```python\nclass CartItem:\n    __slots__ = (\"_product\", \"_quantity\")\n\n    def __init__(self, product: Product, quantity: Quantity | int = 1) -> None:\n        self._product = product\n        self._quantity = quantity if isinstance(quantity, Quantity) else Quantity(quantity)\n\n    @property\n    def product(self) -> Product: return self._product\n    @property\n    def quantity(self) -> Quantity: return self._quantity\n    @property\n    def sku(self) -> SKU: return self._product.sku\n    def set_quantity(self, quantity: Quantity) -> None: self._quantity = quantity\n    @property\n    def line_total(self) -> Money: return self._product.price * self._quantity.value\n    def __repr__(self): return f\"CartItem({self.sku.value!r} x{self._quantity.value})\"\n```\n\nexceptions.py:\n```python\nclass CartError(Exception): \"\"\"Base de errores del dominio del carrito.\"\"\"\nclass CartNotFound(CartError)\nclass ProductNotFound(CartError)\nclass ItemNotInCart(CartError)\nclass CartLimitExceeded(CartError)\nclass InsufficientStock(CartError)\nclass InvalidQuantity(CartError)\nclass EmptyCart(CartError)\n```\n\ncart/__init__.py exports main names:\n```python\n\"\"\"Carrito de la compra escalable (arquitectura hexagonal).\"\"\"\nfrom .application.pricing import (FixedDiscount, PercentageDiscount, PercentageTax, PricingEngine, Receipt, ReceiptLine)\nfrom .application.services import CartService\nfrom .domain.entities import Cart, CartItem, Product\nfrom .domain.events import (CartCheckedOut, CartCleared, CartCreated, CartMerged, DomainEvent, EventBus, ItemAdded, ItemQuantityUpdated, ItemRemoved)\nfrom .domain.exceptions import (CartError, CartLimitExceeded, CartNotFound, EmptyCart, InsufficientStock, InvalidQuantity, ItemNotInCart, ProductNotFound)\nfrom .domain.value_objects import Money, Quantity, SKU\nfrom .infrastructure.repositories import InMemoryCartRepository, InMemoryProductCatalog, SqliteCartRepository\n\n__all__ = [...]\n__version__ = \"1.0.0\"\n```\n\ndomain/__init__.py, application/__init__.py, infrastructure/__init__.py can be empty or re-export; keep small docstrings.\n\nmain.py:\n\n```python\n\"\"\"Demo del carrito de la compra escalable.\n\nEjecuta:  python3 main.py\n\"\"\"\nfrom __future__ import annotations\n\nimport logging\n\nfrom cart import (\n    CartService, EventBus, FixedDiscount, InMemoryCartRepository, InMemoryProductCatalog,\n    Money, PercentageDiscount, PercentageTax, PricingEngine, Product, SKU, SqliteCartRepository,\n)\n\nlogging.basicConfig(level=logging.INFO, format=\"%(levelname)s %(name)s: %(message)s\")\n\n\ndef build_demo() -> CartService:\n    catalog = InMemoryProductCatalog([\n        Product(SKU(\"SKU-1001\"), \"Portátil Pro 14\\\"\", Money.from_amount(\"1299.99\"), stock=5),\n        Product(SKU(\"SKU-2002\"), \"Ratón inalámbrico\", Money.from_amount(\"24.50\"), stock=50),\n        Product(SKU(\"SKU-3003\"), \"Teclado mecánico\", Money.from_amount(\"89.90\"), stock=20),\n        Product(SKU(\"SKU-4004\"), \"Webcam 4K\", Money.from_amount(\"59.00\")),  # stock ilimitado\n    ])\n    bus = EventBus()\n    bus.subscribe(...)  # audit handler: print events\n    pricing = PricingEngine(\n        discounts=[PercentageDiscount(10, name=\"Promo 10%\"), FixedDiscount(Money.from_amount(\"5\"), name=\"Cupón 5 EUR\")],\n        taxes=[PercentageTax(\"0.21\", name=\"IVA 21%\")],\n    )\n    # El repositorio puede ser en memoria o SQLite cambiando una línea:\n    repo = InMemoryCartRepository()\n    # repo = SqliteCartRepository(\"carts.db\", product_resolver=catalog.get)\n    return CartService(repo, catalog, event_bus=bus, pricing_engine=pricing, max_items=50)\n\n\ndef main() -> None:\n    service = build_demo()\n\n    def audit(event) -> None:\n        print(f\"  [evento] {type(event).__name__}\")\n\n    service.event_bus.subscribe(DomainEvent, audit)?? \n```\n\nHmm — subscribing to base DomainEvent won't catch subclass events because lookup is by exact type. Options: make bus walk MRO. Better: in publish, iterate over type(event).__mro__ to find handlers for base classes too. Let me implement that: collect handlers for each class in type(event).__mro__ that is subclass of DomainEvent. That makes subscribing to DomainEvent catch all. Nice extensibility feature; implement:\n\n```python\ndef publish(self, event):\n    with self._lock:\n        handlers = []\n        for cls in type(event).__mro__:\n            handlers.extend(self._handlers.get(cls, ()))\n    ...\n```\n\nGood.\n\nmain demo flow:\n\n```python\ndef main() -> None:\n    service = build_demo()\n    service.event_bus.subscribe(DomainEvent, lambda e: print(f\"  [evento] {type(e).__name__}\"))\n\n    print(\"== Catálogo ==\")\n    for p in service.catalog.list():\n        print(f\"  {p.sku}  {p.name:24s} {p.price}\")\n\n    cart = service.create_cart()\n    print(f\"\\n== Carrito creado: {cart.id} ==\")\n    service.add_item(cart.id, \"SKU-2002\", 2)\n    service.add_item(cart.id, \"SKU-3003\", 1)\n    service.add_item(cart.id, \"SKU-4004\", 3)\n    service.update_quantity(cart.id, \"SKU-2002\", 5)\n\n    print(\"\\n== Recibo (antes de checkout) ==\")\n    print(service.get_receipt(cart.id))\n\n    print(\"\\n== Checkout ==\")\n    receipt = service.checkout(cart.id)\n    print(receipt)\n    print(f\"Carrito tras checkout: vacío = {service.get_cart(cart.id).is_empty}\")\n\n\nif __name__ == \"__main__\":\n    main()\n```\n\ntests/test_cart.py (unittest):\n\n```python\nimport os, tempfile, threading, unittest\nfrom concurrent.futures import ThreadPoolExecutor\nfrom decimal import Decimal\n\nfrom cart import ...\n```\n\nTests as planned. SQLite test uses tempfile.NamedTemporaryFile path; create repo1 with resolver catalog.get, save, close; repo2 open same path, get, assert equal fields.\n\nConcurrency test: service with in-memory repo; cart; 20 threads each add_item(cart.id, \"SKU-1\", 1); assert item_count == 20. Note in-memory repo returns same object; service lock serializes — good.\n\nEvents test: subscribe to ItemAdded collect; add; assert one event with new_quantity.\n\nPricing test: products A 10.00 x2, B 5.00 x1 => subtotal 25.00 = 2500 cents. discount 10% -> 250; fixed 5 EUR = 500 -> remaining 2250 - 500 = 1750; tax 21% of 1750 = 367.5 -> rounds 368 (ROUND_HALF_UP: 367.5 -> 368). total = 2500-750+368 = 2118 cents = 21.18. Let me verify percentage: 1750*0.21 = 367.5 -> quantize HALF_UP -> 368. total 2118. Assert Receipt.total == Money(2118).\n\nAlso discount capped: FixedDiscount(1000 EUR) on subtotal 2500 -> discount = 2500, remaining 0, tax 0, total 0.\n\nMoney tests: from_amount(\"12.99\").cents == 1299; add; mul; percentage(\"10\") on 1999 -> 199.9 -> 200; currency mismatch raises ValueError.\n\nCart limits: Cart(max_items=1); add two different products -> CartLimitExceeded; stock: product stock=2, add 3 -> InsufficientStock; update_quantity missing sku -> ItemNotInCart; remove missing -> ItemNotInCart.\n\nService: CartNotFound on get_cart(\"nope\"); checkout empty -> EmptyCart; checkout returns receipt and cart emptied; merge carts test.\n\nAlso test Cart.from_dict/to_dict roundtrip via sqlite.\n\nREADME.md content in Spanish.\n\nAlso maybe pyproject.toml? Could add minimal pyproject for packaging; nice for \"escalable\" but optional. I'll add a minimal pyproject.toml with project metadata (name shopping-cart, version, requires-python >=3.10). Low cost. And tests import `cart` from repo root — running `python3 -m unittest discover -s tests` from root works since cwd on sys.path. With pyproject, `pip install -e .` also works. I'll include it.\n\nNow, write all files. Let me be careful about circular imports: cart/__init__ imports application.services which imports domain + application.ports/pricing; infrastructure.repositories imports domain. domain.entities imports domain.events, exceptions, value_objects. No cycles.\n\nOne catch: `from ..application.ports import ...` — in services.py I wrote `from ..application.ports` wrong; services is in application, so `from .ports import CartRepository, ProductCatalog` and `from .pricing import ...`, `from ..domain...`. ports.py: `from ..domain.entities import Cart, Product`. pricing: `from ..domain.entities import Cart`. repositories: `from ..domain...`. Good.\n\nIn services.py, need SKU coercion and Quantity, Product imports; CartCreated event import.\n\nEdge: CartService.update_quantity signature (cart_id, sku, quantity) — quantity int. remove_item(cart_id, sku). add_item(cart_id, sku, quantity=1).\n\nIn service.add_item I call cart.add_item(product, Quantity(quantity)) — Cart.add_item accepts Quantity|int.\n\nLet me also double-check dataclass frozen order=True with custom __add__ etc.: dataclass decorator only adds __eq__ and ordering methods if eq/order True; it won't touch __add__. But defining __hash__? frozen=True, eq=True => hash generated from fields. Fine.\n\nPotential issue: `@dataclass(frozen=True, order=True)` on Money with fields (cents, currency) and we define __mul__ — no conflict. But dataclass with order=True generates __lt__ etc. comparing tuples — ok.\n\nAnother: DomainEvent dataclass with kw_only field and subclass dataclass without kw_only — allowed in 3.10+. Confirmed behavior: kw_only fields are excluded from the \"non-default after default\" rule. Yes.\n\nIn events, `Money` import used in CartCheckedOut annotation — with `from __future__ import annotations` not needed but fine; import anyway for runtime? frozen dataclass needs annotations resolved? dataclass uses __annotations__ strings fine without evaluation... Actually dataclass processes annotations as strings fine (it doesn't evaluate them except for ClassVar/InitVar detection which uses string matching). Import Money anyway for safety.\n\nThreading test with sqlite repo would be heavier; skip.\n\nNow `python3 -m unittest discover -s tests -v` — tests dir needs to be importable? discover with -s tests adds tests to sys.path top-level; test module imports `cart` — root dir must be on sys.path. When running from root, sys.path[0] is '' (cwd) for -m? With `python3 -m unittest`, cwd is added to sys.path. Yes, `-m` adds cwd. Good. Alternatively add tests/__init__.py and run `python3 -m unittest discover -v` from root with start dir default '.', pattern test*.py — discovers tests package. I'll add tests/__init__.py (empty) and instruct `python3 -m unittest discover -v` from root. Both work.\n\nLet me write everything now. I'll do multiple write calls in one block.\n\nAlso verify imports in main demo: DomainEvent used for audit subscribe — import from cart.\n\npyproject.toml:\n```toml\n[build-system]\nrequires = [\"setuptools>=68\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"scalable-shopping-cart\"\nversion = \"1.0.0\"\ndescription = \"Carrito de la compra escalable con arquitectura hexagonal (Python)\"\nrequires-python = \">=3.10\"\nreadme = \"README.md\"\n\n[tool.setuptools.packages.find]\ninclude = [\"cart*\"]\n```\n\nREADME in Spanish with structure tree, run instructions, design notes on scalability, extension examples (new discount strategy, new repo, event handler), concurrency notes.\n\nNow write files. Count: cart/__init__.py, cart/domain/__init__.py, cart/domain/value_objects.py, cart/domain/exceptions.py, cart/domain/events.py, cart/domain/entities.py, cart/application/__init__.py, cart/application/ports.py, cart/application/pricing.py, cart/application/services.py, cart/infrastructure/__init__.py, cart/infrastructure/repositories.py, tests/__init__.py, tests/test_cart.py, main.py, README.md, pyproject.toml. 17 files. Batch in groups.\n\nAfter writing, run tests and demo to verify.\n\nLet me draft test file fully:\n\n```python\n\"\"\"Tests del carrito de la compra. Ejecutar: python3 -m unittest discover -v\"\"\"\nfrom __future__ import annotations\n\nimport os\nimport tempfile\nimport unittest\nfrom concurrent.futures import ThreadPoolExecutor\nfrom decimal import Decimal\n\nfrom cart import (\n    Cart, CartLimitExceeded, CartNotFound, CartService, EmptyCart, EventBus,\n    FixedDiscount, InMemoryCartRepository, InMemoryProductCatalog,\n    InsufficientStock, ItemAdded, ItemNotInCart, InvalidQuantity, Money,\n    PercentageDiscount, PercentageTax, PricingEngine, Product, ProductNotFound,\n    Quantity, SKU, SqliteCartRepository,\n)\nfrom cart.domain.events import CartCheckedOut, DomainEvent\n\n\ndef eur(cents: int) -> Money:\n    return Money(cents, \"EUR\")\n\n\nclass MoneyTest(unittest.TestCase):\n    def test_from_amount_exacto(self):\n        self.assertEqual(Money.from_amount(\"12.99\").cents, 1299)\n        self.assertEqual(Money.from_amount(0.1 + 0.2), Money.from_amount(\"0.30\"))\n\n    def test_operaciones(self):\n        a = eur(1000); b = eur(250)\n        self.assertEqual(a + b, eur(1250))\n        self.assertEqual(a - b, eur(750))\n        self.assertEqual(a * 3, eur(3000))\n        self.assertEqual(3 * a, eur(3000))\n\n    def test_percentage_redondeo(self):\n        self.assertEqual(eur(1999).percentage(\"10\"), eur(200))  # 199.9 -> 200\n        self.assertEqual(eur(1750).percentage(Decimal(\"21\")), eur(368))  # 367.5 -> 368\n\n    def test_divisas_distintas(self):\n        with self.assertRaises(ValueError):\n            eur(100) + Money(100, \"USD\")\n\n    def test_str(self):\n        self.assertEqual(str(eur(1299)), \"12.99 EUR\")\n\n\nclass QuantityTest(unittest.TestCase):\n    def test_valida(self):\n        with self.assertRaises(ValueError): Quantity(0)\n        with self.assertRaises(ValueError): Quantity(-3)\n        with self.assertRaises(ValueError): Quantity(1.5)\n        self.assertEqual(Quantity(4).value, 4)\n\n\nclass CartTest(unittest.TestCase):\n    def setUp(self):\n        self.p_a = Product(SKU(\"A\"), \"Producto A\", eur(1000), stock=10)\n        self.p_b = Product(SKU(\"B\"), \"Producto B\", eur(500), stock=2)\n\n    def test_add_update_remove(self):\n        cart = Cart()\n        cart.add_item(self.p_a, 2)\n        self.assertEqual(cart.item_count, 2)\n        self.assertEqual(cart.subtotal, eur(2000))\n        cart.add_item(self.p_a, 1)  # acumula\n        self.assertEqual(cart.item_count, 3)\n        cart.update_quantity(\"A\", 5)\n        self.assertEqual(cart.subtotal, eur(5000))\n        cart.remove_item(\"A\")\n        self.assertTrue(cart.is_empty)\n        with self.assertRaises(ItemNotInCart):\n            cart.remove_item(\"A\")\n\n    def test_limite_productos_distintos(self):\n        cart = Cart(max_items=1)\n        cart.add_item(self.p_a, 1)\n        with self.assertRaises(CartLimitExceeded):\n            cart.add_item(self.p_b, 1)\n\n    def test_limite_por_producto(self):\n        cart = Cart()\n        with self.assertRaises(InvalidQuantity):\n            cart.add_item(self.p_a, Cart.MAX_QUANTITY_PER_ITEM + 1)\n\n    def test_stock(self):\n        cart = Cart()\n        with self.assertRaises(InsufficientStock):\n            cart.add_item(self.p_b, 3)\n        cart.add_item(self.p_b, 2)\n        with self.assertRaises(InsufficientStock):\n            cart.update_quantity(\"B\", 3)\n\n    def test_eventos(self):\n        cart = Cart()\n        cart.add_item(self.p_a, 2)\n        cart.remove_item(\"A\")\n        events = cart.drain_events()\n        self.assertEqual([type(e).__name__ for e in events], [\"ItemAdded\", \"ItemRemoved\"])\n        self.assertEqual(cart.drain_events(), [])  # ya drenados\n\n    def test_divisa_distinta(self):\n        cart = Cart(currency=\"EUR\")\n        with self.assertRaises(Exception):\n            cart.add_item(Product(SKU(\"X\"), \"X\", Money(100, \"USD\")))\n\n\nclass PricingTest(unittest.TestCase):\n    def test_descuentos_e_impuestos(self):\n        cart = Cart()\n        cart.add_item(Product(SKU(\"A\"), \"A\", eur(1000)), 2)  # 2000\n        cart.add_item(Product(SKU(\"B\"), \"B\", eur(500)), 1)    #  500  => subtotal 2500\n        engine = PricingEngine(\n            discounts=[PercentageDiscount(10), FixedDiscount(eur(500))],\n            taxes=[PercentageTax(Decimal(\"0.21\"))],\n        )\n        r = engine.price(cart)\n        self.assertEqual(r.subtotal, eur(2500))\n        self.assertEqual(r.discount, eur(750))   # 250 (10%) + 500 fijo\n        self.assertEqual(r.tax, eur(368))        # 21% de 1750\n        self.assertEqual(r.total, eur(2118))\n        self.assertEqual(len(r.lines), 2)\n\n    def test_descuento_no_supera_subtotal(self):\n        cart = Cart()\n        cart.add_item(Product(SKU(\"A\"), \"A\", eur(100)), 1)\n        engine = PricingEngine(discounts=[FixedDiscount(eur(10000))])\n        r = engine.price(cart)\n        self.assertEqual(r.discount, eur(100))\n        self.assertEqual(r.total, eur(0))\n\n\nclass ServiceTest(unittest.TestCase):\n    def setUp(self):\n        self.catalog = InMemoryProductCatalog([\n            Product(SKU(\"A\"), \"Producto A\", eur(1000), stock=10),\n            Product(SKU(\"B\"), \"Producto B\", eur(500), stock=5),\n        ])\n        self.bus = EventBus()\n        self.service = CartService(\n            InMemoryCartRepository(), self.catalog, event_bus=self.bus,\n            pricing_engine=PricingEngine(taxes=[PercentageTax(\"0.21\")]), max_items=10,\n        )\n        self.seen: list = []\n        self.bus.subscribe(DomainEvent, self.seen.append)\n\n    def test_flujo_completo(self):\n        cart = self.service.create_cart()\n        self.service.add_item(cart.id, \"A\", 2)\n        self.service.add_item(cart.id, \"B\", 1)\n        receipt = self.service.get_receipt(cart.id)\n        self.assertEqual(receipt.subtotal, eur(2500))\n        self.assertEqual(receipt.tax, eur(525))\n        self.assertEqual(receipt.total, eur(3025))\n        out = self.service.checkout(cart.id)\n        self.assertEqual(out.total, eur(3025))\n        self.assertTrue(self.service.get_cart(cart.id).is_empty)\n        names = [type(e).__name__ for e in self.seen]\n        self.assertIn(\"CartCreated\", names)\n        self.assertIn(\"ItemAdded\", names)\n        self.assertIn(\"CartCheckedOut\", names)\n\n    def test_errores(self):\n        with self.assertRaises(CartNotFound):\n            self.service.get_cart(\"no-existe\")\n        cart = self.service.create_cart()\n        with self.assertRaises(EmptyCart):\n            self.service.checkout(cart.id)\n        with self.assertRaises(ProductNotFound):\n            self.service.add_item(cart.id, \"ZZZ\", 1)\n\n    def test_update_remove_clear(self):\n        cart = self.service.create_cart()\n        self.service.add_item(cart.id, \"A\", 1)\n        self.service.update_quantity(cart.id, \"A\", 4)\n        self.assertEqual(self.service.get_cart(cart.id).item_count, 4)\n        self.service.remove_item(cart.id, \"A\")\n        self.assertTrue(self.service.get_cart(cart.id).is_empty)\n        self.service.add_item(cart.id, \"B\", 2)\n        self.service.clear_cart(cart.id)\n        self.assertTrue(self.service.get_cart(cart.id).is_empty)\n\n    def test_merge(self):\n        a = self.service.create_cart(); b = self.service.create_cart()\n        self.service.add_item(a.id, \"A\", 2)\n        self.service.add_item(b.id, \"B\", 1)\n        merged = self.service.merge_carts(a.id, b.id)\n        self.assertEqual(merged.item_count, 3)\n        with self.assertRaises(CartNotFound):\n            self.service.get_cart(a.id)\n```\n\nCartNotFound raised when getting deleted source — yes since repo.delete removed.\n\n```python\nclass SqliteRepositoryTest(unittest.TestCase):\n    def test_roundtrip_persistente(self):\n        catalog = InMemoryProductCatalog([Product(SKU(\"A\"), \"A\", eur(1000), stock=10)])\n        with tempfile.TemporaryDirectory() as tmp:\n            path = os.path.join(tmp, \"carts.db\")\n            repo1 = SqliteCartRepository(path, product_resolver=catalog.get)\n            cart = Cart()\n            cart.add_item(catalog.get(\"A\"), 3)\n            repo1.save(cart)\n            repo1.close()\n\n            repo2 = SqliteCartRepository(path, product_resolver=catalog.get)\n            restored = repo2.get(cart.id)\n            self.assertIsNotNone(restored)\n            self.assertEqual(restored.id, cart.id)\n            self.assertEqual(restored.item_count, 3)\n            self.assertEqual(restored.subtotal, eur(3000))\n            self.assertEqual(repo2.list_ids(), [cart.id])\n            repo2.delete(cart.id)\n            self.assertIsNone(repo2.get(cart.id))\n            repo2.close()\n\n\nclass ConcurrenciaTest(unittest.TestCase):\n    def test_adds_concurrentes(self):\n        catalog = InMemoryProductCatalog([Product(SKU(\"A\"), \"A\", eur(100), stock=None)])\n        service = CartService(InMemoryCartRepository(), catalog)\n        cart = service.create_cart()\n        with ThreadPoolExecutor(max_workers=10) as pool:\n            list(pool.map(lambda _: service.add_item(cart.id, \"A\", 1), range(50)))\n        self.assertEqual(service.get_cart(cart.id).item_count, 50)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n```\n\nCheck tax math in test_flujo_completo: subtotal 2500, tax 21% = 525 exactly, total 3025. Yes.\n\nNote: `test_divisa_distinta` uses assertRaises(Exception) — better CartError. Import CartError.\n\nIn test_stock: product B stock=2; add 3 -> InsufficientStock. update to 3 -> InsufficientStock. Good. But note add_item(self.p_b, 2) then update B to 3 -> raises before setting. Good.\n\nMAX_QUANTITY_PER_ITEM test: add 1000 -> InvalidQuantity. Good.\n\nOne thing: Cart.add_item checks `_check_item_limit` before stock; for the max test with stock=10 and qty 1000, InvalidQuantity raised first — good.\n\nIn ServiceTest.test_flujo_completo: checkout publishes CartCheckedOut and CartCleared. seen includes them.\n\nAlso note: service.checkout on empty cart raises EmptyCart before any events. Good.\n\nInMemory repo: create_cart saves cart object; add_item mutates same object via get; save again — same. drain_events works.\n\nNow the demo main.py. Also print events via audit.\n\nDouble-check PricingEngine import in service default: PricingEngine() with no discounts/taxes.\n\nAlso `CartService.list_carts` uses repo.list_ids.\n\nPotential issue in SqliteCartRepository.get: Cart.from_dict requires resolver return product; catalog.get returns Product. Good.\n\njson serialization of to_dict: all primitives. Good.\n\nEdge: sqlite \":memory:\" with check_same_thread=False and lock — fine.\n\nNow domain/__init__.py etc.: give them docstrings and maybe re-export nothing to avoid heavy imports. Keep minimal:\n\ncart/domain/__init__.py: docstring only.\ncart/application/__init__.py: docstring only.\ncart/infrastructure/__init__.py: docstring only.\n\ncart/__init__.py imports submodules — fine.\n\nWrite now. Then run tests + demo.\n\nFor README, include:\n\n# Carrito de la compra escalable\n- Descripción\n- Estructura\n- Ejecución (demo y tests)\n- Ejemplo de uso (código)\n- Por qué es escalable (puntos: hexagonal/ports-adapters, estrategias de precios intercambiables, eventos, dinero exacto en céntimos, thread-safe, límites configurables, persistencia intercambiable memoria/SQLite, sin dependencias externas)\n- Cómo extender (añadir estrategia de descuento, añadir repositorio, handler de eventos, checkout con pedido)\n\nAlright, write files.",
+          "native": {
+            "reasoningField": "reasoning"
+          },
+          "time": {
+            "created": 1795197139909,
+            "completed": 1795197841410
+          }
+        },
+        {
+          "type": "text",
+          "text": "La carpeta está vacía y tengo Python 3.13. Voy a implementar un carrito de la compra escalable con arquitectura hexagonal (dominio puro + puertos/adaptadores), estrategias de precios enchufables, eventos de dominio, dinero exacto en céntimos y persistencia intercambiable (memoria/SQLite). Creo toda la estructura de golpe:"
+        },
+        {
+          "type": "tool",
+          "id": "uoOIzQrU1",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/domain/value_objects.py",
+              "content": "\"\"\"Value objects inmutables del dominio.\n\nSe comparan por valor, no por identidad, y encapsulan las reglas de\nvalidación (dinero exacto en céntimos, SKU no vacío, cantidades >= 1).\n\"\"\"\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\nfrom decimal import ROUND_HALF_UP, Decimal\n\n\n@dataclass(frozen=True, order=True)\nclass Money:\n    \"\"\"Importe monetario exacto almacenado en céntimos.\n\n    Evita por completo los errores de coma flotante: 0.1 + 0.2 == 0.3.\n    \"\"\"\n\n    cents: int\n    currency: str = \"EUR\"\n\n    def __post_init__(self) -> None:\n        if isinstance(self.cents, bool) or not isinstance(self.cents, int):\n            raise TypeError(\"cents debe ser un entero\")\n        if len(self.currency) != 3 or not self.currency.isalpha():\n            raise ValueError(\"currency debe ser un código ISO 4217 de 3 letras\")\n\n    @classmethod\n    def from_amount(cls, amount: float | int | str | Decimal, currency: str = \"EUR\") -> \"Money\":\n        \"\"\"Crea un Money a partir de un importe decimal (ej. ``12.99``).\"\"\"\n        cents = (Decimal(str(amount)) * 100).quantize(Decimal(\"1\"), rounding=ROUND_HALF_UP)\n        return cls(int(cents), currency)\n\n    @property\n    def amount(self) -> Decimal:\n        \"\"\"Importe como Decimal (solo para mostrar/serializar).\"\"\"\n        return Decimal(self.cents) / 100\n\n    def __add__(self, other: \"Money\") -> \"Money\":\n        self._check_currency(other)\n        return Money(self.cents + other.cents, self.currency)\n\n    def __sub__(self, other: \"Money\") -> \"Money\":\n        self._check_currency(other)\n        return Money(self.cents - other.cents, self.currency)\n\n    def __mul__(self, factor: int) -> \"Money\":\n        if isinstance(factor, bool) or not isinstance(factor, int):\n            raise TypeError(\"Money solo se puede multiplicar por un entero (cantidad)\")\n        return Money(self.cents * factor, self.currency)\n\n    __rmul__ = __mul__\n\n    def percentage(self, percent: Decimal | int | str) -> \"Money\":\n        \"\"\"Devuelve el ``percent``% de este importe, redondeado a céntimo (half-up).\"\"\"\n        pct = Decimal(str(percent))\n        cents = (Decimal(self.cents) * pct / Decimal(100)).quantize(\n            Decimal(\"1\"), rounding=ROUND_HALF_UP\n        )\n        return Money(int(cents), self.currency)\n\n    def _check_currency(self, other: \"Money\") -> None:\n        if not isinstance(other, Money):\n            raise TypeError(\"Solo se pueden operar objetos Money entre sí\")\n        if self.currency != other.currency:\n            raise ValueError(f\"Divisas distintas: {self.currency} vs {other.currency}\")\n\n    def __str__(self) -> str:\n        sign = \"-\" if self.cents < 0 else \"\"\n        return f\"{sign}{self.amount:.2f} {self.currency}\"\n\n\n@dataclass(frozen=True)\nclass SKU:\n    \"\"\"Identificador de producto (stock keeping unit).\"\"\"\n\n    value: str\n\n    def __post_init__(self) -> None:\n        if not self.value or not self.value.strip():\n            raise ValueError(\"El SKU no puede estar vacío\")\n        object.__setattr__(self, \"value\", self.value.strip())\n\n    def __str__(self) -> str:\n        return self.value\n\n\n@dataclass(frozen=True)\nclass Quantity:\n    \"\"\"Cantidad de unidades de un producto (entero >= 1).\"\"\"\n\n    value: int\n\n    def __post_init__(self) -> None:\n        if isinstance(self.value, bool) or not isinstance(self.value, int) or self.value < 1:\n            raise ValueError(\"La cantidad debe ser un entero >= 1\")\n\n    def __int__(self) -> int:\n        return self.value\n\n    def __str__(self) -> str:\n        return str(self.value)\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/domain/value_objects.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841370,
+            "ran": 1795197841419,
+            "completed": 1795197841485
+          }
+        },
+        {
+          "type": "tool",
+          "id": "nRfLnt9Of",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/domain/exceptions.py",
+              "content": "\"\"\"Excepciones de dominio del carrito.\"\"\"\n\n\nclass CartError(Exception):\n    \"\"\"Base de todos los errores del dominio del carrito.\"\"\"\n\n\nclass CartNotFound(CartError):\n    \"\"\"El carrito solicitado no existe en el repositorio.\"\"\"\n\n\nclass ProductNotFound(CartError):\n    \"\"\"El SKU no existe en el catálogo.\"\"\"\n\n\nclass ItemNotInCart(CartError):\n    \"\"\"Se intentó operar con un producto que no está en el carrito.\"\"\"\n\n\nclass CartLimitExceeded(CartError):\n    \"\"\"Se alcanzó el número máximo de productos distintos por carrito.\"\"\"\n\n\nclass InsufficientStock(CartError):\n    \"\"\"La cantidad solicitada supera el stock disponible.\"\"\"\n\n\nclass InvalidQuantity(CartError):\n    \"\"\"La cantidad supera el máximo permitido por producto.\"\"\"\n\n\nclass EmptyCart(CartError):\n    \"\"\"Operación no permitida sobre un carrito vacío (p. ej. checkout).\"\"\"\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/domain/exceptions.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841375,
+            "ran": 1795197841428,
+            "completed": 1795197841494
+          }
+        },
+        {
+          "type": "tool",
+          "id": "2Qdep43sF",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/domain/events.py",
+              "content": "\"\"\"Eventos de dominio y bus de eventos.\n\nPermiten extender el sistema (auditoría, notificaciones, métricas, pedidos...)\nsin modificar la lógica del carrito: basta con suscribir un handler.\n\"\"\"\nfrom __future__ import annotations\n\nimport logging\nimport threading\nfrom collections import defaultdict\nfrom dataclasses import dataclass, field\nfrom datetime import datetime, timezone\nfrom typing import Callable, Iterable\n\nfrom .value_objects import Money\n\nlogger = logging.getLogger(\"cart.events\")\n\n\n@dataclass(frozen=True)\nclass DomainEvent:\n    \"\"\"Evento base; ``occurred_at`` se rellena solo y es solo-keyword.\"\"\"\n\n    occurred_at: datetime = field(\n        default_factory=lambda: datetime.now(timezone.utc), kw_only=True\n    )\n\n\n@dataclass(frozen=True)\nclass CartCreated(DomainEvent):\n    cart_id: str\n\n\n@dataclass(frozen=True)\nclass ItemAdded(DomainEvent):\n    cart_id: str\n    sku: str\n    quantity: int\n    new_quantity: int\n\n\n@dataclass(frozen=True)\nclass ItemQuantityUpdated(DomainEvent):\n    cart_id: str\n    sku: str\n    quantity: int\n\n\n@dataclass(frozen=True)\nclass ItemRemoved(DomainEvent):\n    cart_id: str\n    sku: str\n\n\n@dataclass(frozen=True)\nclass CartCleared(DomainEvent):\n    cart_id: str\n\n\n@dataclass(frozen=True)\nclass CartCheckedOut(DomainEvent):\n    cart_id: str\n    total: Money\n    item_count: int\n\n\n@dataclass(frozen=True)\nclass CartMerged(DomainEvent):\n    source_id: str\n    target_id: str\n    moved_items: int\n\n\nEventHandler = Callable[[DomainEvent], None]\n\n\nclass EventBus:\n    \"\"\"Bus de eventos en proceso, seguro entre hilos.\n\n    Los handlers se ejecutan de forma aislada: si uno falla, se registra el\n    error y no se interrumpe la operación del carrito ni la del resto de handlers.\n    Se puede suscribir a ``DomainEvent`` para recibir todos los eventos, o a un\n    tipo concreto (p. ej. ``ItemAdded``).\n    \"\"\"\n\n    def __init__(self) -> None:\n        self._handlers: dict[type, list[EventHandler]] = defaultdict(list)\n        self._lock = threading.Lock()\n\n    def subscribe(self, event_type: type[DomainEvent], handler: EventHandler) -> None:\n        with self._lock:\n            self._handlers[event_type].append(handler)\n\n    def publish(self, event: DomainEvent) -> None:\n        with self._lock:\n            handlers: list[EventHandler] = []\n            # Recorre el MRO para que suscribirse a DomainEvent capture todo.\n            for cls in type(event).__mro__:\n                handlers.extend(self._handlers.get(cls, ()))\n        for handler in handlers:\n            try:\n                handler(event)\n            except Exception:\n                logger.exception(\"Error en handler de %s\", type(event).__name__)\n\n    def publish_all(self, events: Iterable[DomainEvent]) -> None:\n        for event in events:\n            self.publish(event)\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/domain/events.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841378,
+            "ran": 1795197841439,
+            "completed": 1795197841494
+          }
+        },
+        {
+          "type": "tool",
+          "id": "jz4weQFqr",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/domain/entities.py",
+              "content": "\"\"\"Entidades del dominio: Product, CartItem y Cart.\n\nEl carrito es seguro entre hilos (RLock interno) y registra eventos de\ndominio que el servicio publica tras persistir.\n\"\"\"\nfrom __future__ import annotations\n\nimport threading\nfrom dataclasses import dataclass\nfrom datetime import datetime, timezone\nfrom typing import Callable\nfrom uuid import uuid4\n\nfrom .events import (\n    CartCleared,\n    DomainEvent,\n    ItemAdded,\n    ItemQuantityUpdated,\n    ItemRemoved,\n)\nfrom .exceptions import (\n    CartError,\n    CartLimitExceeded,\n    InsufficientStock,\n    InvalidQuantity,\n    ItemNotInCart,\n    ProductNotFound,\n)\nfrom .value_objects import Money, Quantity, SKU\n\n\ndef _now() -> datetime:\n    return datetime.now(timezone.utc)\n\n\ndef _as_sku(value: SKU | str) -> SKU:\n    return value if isinstance(value, SKU) else SKU(str(value))\n\n\n@dataclass(frozen=True)\nclass Product:\n    \"\"\"Producto del catálogo. ``stock=None`` significa stock ilimitado.\"\"\"\n\n    sku: SKU\n    name: str\n    price: Money\n    stock: int | None = None\n\n    def __post_init__(self) -> None:\n        if not isinstance(self.sku, SKU):\n            object.__setattr__(self, \"sku\", SKU(str(self.sku)))\n        if self.stock is not None and self.stock < 0:\n            raise ValueError(\"El stock no puede ser negativo\")\n\n\nclass CartItem:\n    \"\"\"Línea del carrito: un producto y su cantidad.\"\"\"\n\n    __slots__ = (\"_product\", \"_quantity\")\n\n    def __init__(self, product: Product, quantity: Quantity | int = 1) -> None:\n        self._product = product\n        self._quantity = quantity if isinstance(quantity, Quantity) else Quantity(quantity)\n\n    @property\n    def product(self) -> Product:\n        return self._product\n\n    @property\n    def quantity(self) -> Quantity:\n        return self._quantity\n\n    @property\n    def sku(self) -> SKU:\n        return self._product.sku\n\n    def set_quantity(self, quantity: Quantity) -> None:\n        self._quantity = quantity\n\n    @property\n    def line_total(self) -> Money:\n        return self._product.price * self._quantity.value\n\n    def __repr__(self) -> str:\n        return f\"CartItem({self.sku.value!r} x{self._quantity.value})\"\n\n\nclass Cart:\n    \"\"\"Carrito de la compra, seguro entre hilos.\n\n    - ``max_items``: límite de SKUs distintos (configurable por carrito).\n    - ``MAX_QUANTITY_PER_ITEM``: límite de unidades por SKU.\n    - Registra eventos de dominio que se drenan con ``drain_events()``.\n    \"\"\"\n\n    MAX_QUANTITY_PER_ITEM = 999\n\n    def __init__(self, cart_id: str | None = None, max_items: int = 100, currency: str = \"EUR\") -> None:\n        if max_items < 1:\n            raise ValueError(\"max_items debe ser >= 1\")\n        self.id = cart_id or uuid4().hex\n        self.max_items = max_items\n        self.currency = currency\n        self.created_at = _now()\n        self.updated_at = _now()\n        self._items: dict[SKU, CartItem] = {}\n        self._events: list[DomainEvent] = []\n        self._lock = threading.RLock()\n\n    # ------------------------------------------------------------- eventos\n    def record_event(self, event: DomainEvent) -> None:\n        with self._lock:\n            self._events.append(event)\n\n    def drain_events(self) -> list[DomainEvent]:\n        with self._lock:\n            events = list(self._events)\n            self._events.clear()\n            return events\n\n    # ---------------------------------------------------------- mutaciones\n    def add_item(self, product: Product, quantity: Quantity | int = 1) -> None:\n        qty = quantity if isinstance(quantity, Quantity) else Quantity(quantity)\n        with self._lock:\n            self._check_currency(product.price)\n            existing = self._items.get(product.sku)\n            new_total = (existing.quantity.value if existing else 0) + qty.value\n            self._check_item_limit(new_total)\n            self._check_stock(product, new_total)\n            if existing:\n                existing.set_quantity(Quantity(new_total))\n                self.record_event(ItemQuantityUpdated(self.id, product.sku.value, new_total))\n            else:\n                if len(self._items) >= self.max_items:\n                    raise CartLimitExceeded(\n                        f\"El carrito admite como máximo {self.max_items} productos distintos\"\n                    )\n                self._items[product.sku] = CartItem(product, qty)\n                self.record_event(ItemAdded(self.id, product.sku.value, qty.value, new_total))\n            self._touch()\n\n    def update_quantity(self, sku: SKU | str, quantity: Quantity | int) -> None:\n        sku = _as_sku(sku)\n        qty = quantity if isinstance(quantity, Quantity) else Quantity(quantity)\n        with self._lock:\n            item = self._items.get(sku)\n            if item is None:\n                raise ItemNotInCart(f\"{sku} no está en el carrito\")\n            self._check_item_limit(qty.value)\n            self._check_stock(item.product, qty.value)\n            item.set_quantity(qty)\n            self.record_event(ItemQuantityUpdated(self.id, sku.value, qty.value))\n            self._touch()\n\n    def remove_item(self, sku: SKU | str) -> None:\n        sku = _as_sku(sku)\n        with self._lock:\n            if sku not in self._items:\n                raise ItemNotInCart(f\"{sku} no está en el carrito\")\n            del self._items[sku]\n            self.record_event(ItemRemoved(self.id, sku.value))\n            self._touch()\n\n    def clear(self) -> None:\n        with self._lock:\n            if self._items:\n                self._items.clear()\n                self.record_event(CartCleared(self.id))\n                self._touch()\n\n    # ------------------------------------------------------------ consultas\n    @property\n    def items(self) -> list[CartItem]:\n        with self._lock:\n            return sorted(self._items.values(), key=lambda i: i.sku.value)\n\n    @property\n    def subtotal(self) -> Money:\n        with self._lock:\n            total: Money | None = None\n            for item in self._items.values():\n                total = item.line_total if total is None else total + item.line_total\n            return total if total is not None else Money(0, self.currency)\n\n    @property\n    def item_count(self) -> int:\n        with self._lock:\n            return sum(i.quantity.value for i in self._items.values())\n\n    @property\n    def distinct_items(self) -> int:\n        with self._lock:\n            return len(self._items)\n\n    @property\n    def is_empty(self) -> bool:\n        return self.distinct_items == 0\n\n    def contains(self, sku: SKU | str) -> bool:\n        with self._lock:\n            return _as_sku(sku) in self._items\n\n    # ------------------------------------------------------- serialización\n    def to_dict(self) -> dict:\n        with self._lock:\n            return {\n                \"id\": self.id,\n                \"max_items\": self.max_items,\n                \"currency\": self.currency,\n                \"created_at\": self.created_at.isoformat(),\n                \"updated_at\": self.updated_at.isoformat(),\n                \"items\": [\n                    {\"sku\": item.sku.value, \"quantity\": item.quantity.value}\n                    for item in self.items\n                ],\n            }\n\n    @classmethod\n    def from_dict(cls, data: dict, resolve_product: Callable[[SKU], Product]) -> \"Cart\":\n        \"\"\"Reconstruye un carrito desde su dict; los productos se resuelven\n        con ``resolve_product`` (p. ej. ``catalogo.get``).\"\"\"\n        cart = cls(\n            cart_id=data[\"id\"],\n            max_items=int(data.get(\"max_items\", 100)),\n            currency=data.get(\"currency\", \"EUR\"),\n        )\n        cart.created_at = datetime.fromisoformat(data[\"created_at\"])\n        cart.updated_at = datetime.fromisoformat(data[\"updated_at\"])\n        for raw in data.get(\"items\", []):\n            sku = SKU(raw[\"sku\"])\n            product = resolve_product(sku)\n            if product is None:\n                raise ProductNotFound(f\"Producto desconocido al restaurar el carrito: {sku}\")\n            cart._items[sku] = CartItem(product, Quantity(int(raw[\"quantity\"])))\n        return cart\n\n    # ------------------------------------------------------------- privados\n    def _check_currency(self, price: Money) -> None:\n        if price.currency != self.currency:\n            raise CartError(\n                f\"El carrito usa {self.currency} y el producto usa {price.currency}\"\n            )\n\n    def _check_item_limit(self, qty: int) -> None:\n        if qty > self.MAX_QUANTITY_PER_ITEM:\n            raise InvalidQuantity(\n                f\"Máximo {self.MAX_QUANTITY_PER_ITEM} unidades por producto\"\n            )\n\n    def _check_stock(self, product: Product, qty: int) -> None:\n        if product.stock is not None and qty > product.stock:\n            raise InsufficientStock(\n                f\"Stock insuficiente de {product.sku}: solicitadas {qty}, \"\n                f\"disponibles {product.stock}\"\n            )\n\n    def _touch(self) -> None:\n        self.updated_at = _now()\n\n    def __repr__(self) -> str:\n        return f\"Cart(id={self.id!r}, items={self.distinct_items}, count={self.item_count})\"\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/domain/entities.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841380,
+            "ran": 1795197841445,
+            "completed": 1795197841494
+          }
+        },
+        {
+          "type": "tool",
+          "id": "0o87DI6lG",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/domain/__init__.py",
+              "content": "\"\"\"Capa de dominio: entidades, value objects, eventos y excepciones.\"\"\"\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/domain/__init__.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841383,
+            "ran": 1795197841452,
+            "completed": 1795197841494
+          }
+        },
+        {
+          "type": "tool",
+          "id": "MZTdlVeBg",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/application/ports.py",
+              "content": "\"\"\"Puertos (interfaces) de la arquitectura hexagonal.\n\nEl caso de uso depende de estas abstracciones, no de implementaciones\nconcretas: cualquier repositorio (memoria, SQL, Redis, HTTP...) o catálogo\nque cumpla el protocolo sirve sin tocar la lógica de negocio.\n\"\"\"\nfrom __future__ import annotations\n\nfrom typing import Iterable, Protocol\n\nfrom ..domain.entities import Cart, Product\nfrom ..domain.value_objects import SKU\n\n\nclass CartRepository(Protocol):\n    \"\"\"Persistencia de carritos.\"\"\"\n\n    def get(self, cart_id: str) -> Cart | None: ...\n    def save(self, cart: Cart) -> None: ...\n    def delete(self, cart_id: str) -> None: ...\n    def list_ids(self) -> list[str]: ...\n\n\nclass ProductCatalog(Protocol):\n    \"\"\"Catálogo de productos (solo lectura para el carrito).\"\"\"\n\n    def get(self, sku: SKU | str) -> Product | None: ...\n    def list(self) -> Iterable[Product]: ...\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/application/ports.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841388,
+            "ran": 1795197841465,
+            "completed": 1795197841496
+          }
+        },
+        {
+          "type": "tool",
+          "id": "sqt8tM8Xu",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/application/pricing.py",
+              "content": "\"\"\"Motor de precios: descuentos e impuestos como estrategias intercambiables.\n\nAñadir una nueva promoción o un nuevo impuesto no requiere tocar el carrito:\nbasta con implementar el protocolo y añadir la estrategia al motor.\n\"\"\"\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\nfrom decimal import Decimal\nfrom typing import Protocol, Sequence\n\nfrom ..domain.entities import Cart\nfrom ..domain.value_objects import Money\n\n\n@dataclass(frozen=True)\nclass ReceiptLine:\n    sku: str\n    name: str\n    unit_price: Money\n    quantity: int\n    line_total: Money\n\n\n@dataclass(frozen=True)\nclass Receipt:\n    \"\"\"Recibo/factura resultado de tasar un carrito.\"\"\"\n\n    cart_id: str\n    lines: tuple[ReceiptLine, ...]\n    subtotal: Money\n    discount: Money\n    tax: Money\n    total: Money\n\n    def __str__(self) -> str:\n        out = [f\"Recibo del carrito {self.cart_id}\"]\n        for line in self.lines:\n            out.append(\n                f\"  {line.sku}  {line.name}  x{line.quantity} @ {line.unit_price}\"\n                f\" = {line.line_total}\"\n            )\n        out.append(f\"  Subtotal : {self.subtotal}\")\n        if self.discount.cents:\n            out.append(f\"  Descuento: -{self.discount}\")\n        if self.tax.cents:\n            out.append(f\"  Impuestos: {self.tax}\")\n        out.append(f\"  TOTAL    : {self.total}\")\n        return \"\\n\".join(out)\n\n\nclass DiscountStrategy(Protocol):\n    \"\"\"Estrategia de descuento: devuelve el importe a descontar sobre ``amount``.\"\"\"\n\n    @property\n    def name(self) -> str: ...\n\n    def apply(self, amount: Money) -> Money: ...\n\n\nclass TaxStrategy(Protocol):\n    \"\"\"Estrategia de impuesto: devuelve el importe del impuesto sobre ``amount``.\"\"\"\n\n    @property\n    def name(self) -> str: ...\n\n    def apply(self, amount: Money) -> Money: ...\n\n\nclass PercentageDiscount:\n    \"\"\"Descuento porcentual (p. ej. 10%).\"\"\"\n\n    def __init__(self, percent: Decimal | int | str, name: str | None = None) -> None:\n        self.percent = Decimal(str(percent))\n        if self.percent < 0:\n            raise ValueError(\"El porcentaje de descuento no puede ser negativo\")\n        self._name = name or f\"-{self.percent}%\"\n\n    @property\n    def name(self) -> str:\n        return self._name\n\n    def apply(self, amount: Money) -> Money:\n        return amount.percentage(self.percent)\n\n\nclass FixedDiscount:\n    \"\"\"Descuento de importe fijo; nunca descuenta más que el importe dado.\"\"\"\n\n    def __init__(self, amount: Money, name: str | None = None) -> None:\n        self.amount = amount\n        self._name = name or f\"Cupón {amount}\"\n\n    @property\n    def name(self) -> str:\n        return self._name\n\n    def apply(self, amount: Money) -> Money:\n        if self.amount.currency != amount.currency:\n            raise ValueError(\"Divisa del cupón distinta de la del carrito\")\n        return self.amount if self.amount < amount else amount\n\n\nclass PercentageTax:\n    \"\"\"Impuesto porcentual sobre la base imponible (p. ej. IVA 21%).\"\"\"\n\n    def __init__(self, rate: Decimal | int | str, name: str | None = None) -> None:\n        self.rate = Decimal(str(rate))\n        if self.rate < 0:\n            raise ValueError(\"El tipo de impuesto no puede ser negativo\")\n        self._name = name or f\"Impuesto {self.rate}%\"\n\n    @property\n    def name(self) -> str:\n        return self._name\n\n    def apply(self, amount: Money) -> Money:\n        return amount.percentage(self.rate)\n\n\nclass PricingEngine:\n    \"\"\"Tasa un carrito aplicando descuentos (en cadena, sobre el resto) y\n    luego impuestos sobre la base imponible resultante.\"\"\"\n\n    def __init__(\n        self,\n        discounts: Sequence[DiscountStrategy] = (),\n        taxes: Sequence[TaxStrategy] = (),\n    ) -> None:\n        self.discounts = tuple(discounts)\n        self.taxes = tuple(taxes)\n\n    def price(self, cart: Cart) -> Receipt:\n        lines = tuple(\n            ReceiptLine(\n                sku=item.sku.value,\n                name=item.product.name,\n                unit_price=item.product.price,\n                quantity=item.quantity.value,\n                line_total=item.line_total,\n            )\n            for item in cart.items\n        )\n        subtotal = cart.subtotal\n        discount = Money(0, subtotal.currency)\n        remaining = subtotal\n        for strategy in self.discounts:\n            disc = strategy.apply(remaining)\n            discount = discount + disc\n            remaining = remaining - disc\n        tax = Money(0, subtotal.currency)\n        for strategy in self.taxes:\n            tax = tax + strategy.apply(remaining)\n        total = subtotal - discount + tax\n        return Receipt(\n            cart_id=cart.id,\n            lines=lines,\n            subtotal=subtotal,\n            discount=discount,\n            tax=tax,\n            total=total,\n        )\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/application/pricing.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841390,
+            "ran": 1795197841479,
+            "completed": 1795197841530
+          }
+        },
+        {
+          "type": "tool",
+          "id": "RGLXzFlLi",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/application/services.py",
+              "content": "\"\"\"Servicio de aplicación: casos de uso del carrito.\n\nOrquesta el dominio con los puertos (repositorio, catálogo), publica los\neventos de dominio tras persistir y serializa las mutaciones con un lock\npara que sea seguro bajo concurrencia (varios hilos/pedidos a la vez).\n\"\"\"\nfrom __future__ import annotations\n\nimport threading\n\nfrom ..domain.entities import Cart, Product\nfrom ..domain.events import CartCheckedOut, CartCreated, CartMerged, DomainEvent, EventBus\nfrom ..domain.exceptions import CartNotFound, EmptyCart, ProductNotFound\nfrom ..domain.value_objects import Quantity, SKU\nfrom .ports import CartRepository, ProductCatalog\nfrom .pricing import PricingEngine, Receipt\n\nDEFAULT_MAX_ITEMS = 100\n\n\nclass CartService:\n    \"\"\"Fachada de casos de uso: crear/consultar carritos, añadir, quitar,\n    modificar cantidades, tasar, hacer checkout y fusionar carritos.\"\"\"\n\n    def __init__(\n        self,\n        repository: CartRepository,\n        catalog: ProductCatalog,\n        event_bus: EventBus | None = None,\n        pricing_engine: PricingEngine | None = None,\n        max_items: int = DEFAULT_MAX_ITEMS,\n    ) -> None:\n        self.repository = repository\n        self.catalog = catalog\n        self.event_bus = event_bus or EventBus()\n        self.pricing_engine = pricing_engine or PricingEngine()\n        self.max_items = max_items\n        self._lock = threading.RLock()\n\n    # ------------------------------------------------------------- carritos\n    def create_cart(self) -> Cart:\n        cart = Cart(max_items=self.max_items)\n        cart.record_event(CartCreated(cart.id))\n        self._save(cart)\n        return cart\n\n    def get_cart(self, cart_id: str) -> Cart:\n        cart = self.repository.get(cart_id)\n        if cart is None:\n            raise CartNotFound(f\"No existe el carrito {cart_id!r}\")\n        return cart\n\n    def list_carts(self) -> list[str]:\n        return self.repository.list_ids()\n\n    def delete_cart(self, cart_id: str) -> None:\n        with self._lock:\n            self.get_cart(cart_id)  # valida que existe\n            self.repository.delete(cart_id)\n\n    # ------------------------------------------------------------- artículos\n    def add_item(self, cart_id: str, sku: SKU | str, quantity: int = 1) -> Cart:\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            product = self._require_product(sku)\n            cart.add_item(product, Quantity(quantity))\n            self._save(cart)\n            return cart\n\n    def update_quantity(self, cart_id: str, sku: SKU | str, quantity: int) -> Cart:\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            key = sku if isinstance(sku, SKU) else SKU(str(sku))\n            cart.update_quantity(key, Quantity(quantity))\n            self._save(cart)\n            return cart\n\n    def remove_item(self, cart_id: str, sku: SKU | str) -> Cart:\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            key = sku if isinstance(sku, SKU) else SKU(str(sku))\n            cart.remove_item(key)\n            self._save(cart)\n            return cart\n\n    def clear_cart(self, cart_id: str) -> Cart:\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            cart.clear()\n            self._save(cart)\n            return cart\n\n    # ------------------------------------------------------------- precios\n    def get_receipt(self, cart_id: str) -> Receipt:\n        \"\"\"Tasa el carrito sin modificarlo (vista previa del total).\"\"\"\n        return self.pricing_engine.price(self.get_cart(cart_id))\n\n    def checkout(self, cart_id: str) -> Receipt:\n        \"\"\"Cierra la compra: tasa el carrito, emite ``CartCheckedOut`` y lo vacía.\"\"\"\n        with self._lock:\n            cart = self.get_cart(cart_id)\n            if cart.is_empty:\n                raise EmptyCart(\"No se puede hacer checkout de un carrito vacío\")\n            receipt = self.pricing_engine.price(cart)\n            cart.record_event(CartCheckedOut(cart.id, receipt.total, cart.item_count))\n            cart.clear()\n            self._save(cart)\n            return receipt\n\n    def merge_carts(self, source_id: str, target_id: str) -> Cart:\n        \"\"\"Fusiona el carrito ``source_id`` dentro de ``target_id`` y elimina el origen.\n\n        Respeta los límites del carrito destino y el stock disponible.\n        \"\"\"\n        if source_id == target_id:\n            raise ValueError(\"No se puede fusionar un carrito consigo mismo\")\n        with self._lock:\n            source = self.get_cart(source_id)\n            target = self.get_cart(target_id)\n            moved = 0\n            for item in source.items:\n                product = self._require_product(item.sku)\n                target.add_item(product, item.quantity)\n                moved += 1\n            target.record_event(CartMerged(source_id, target_id, moved))\n            self.repository.delete(source_id)\n            self._save(target)\n            return target\n\n    # ------------------------------------------------------------- privados\n    def _require_product(self, sku: SKU | str) -> Product:\n        product = self.catalog.get(sku)\n        if product is None:\n            raise ProductNotFound(f\"Producto no encontrado: {sku}\")\n        return product\n\n    def _save(self, cart: Cart) -> None:\n        \"\"\"Persiste y luego publica los eventos acumulados (drain).\"\"\"\n        self.repository.save(cart)\n        events: list[DomainEvent] = cart.drain_events()\n        self.event_bus.publish_all(events)\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/application/services.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841393,
+            "ran": 1795197841488,
+            "completed": 1795197841579
+          }
+        },
+        {
+          "type": "tool",
+          "id": "ou6xyjfNJ",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/application/__init__.py",
+              "content": "\"\"\"Capa de aplicación: casos de uso (servicios) y puertos.\"\"\"\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/application/__init__.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841395,
+            "ran": 1795197841535,
+            "completed": 1795197841586
+          }
+        },
+        {
+          "type": "tool",
+          "id": "S2SSdEo5J",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/infrastructure/repositories.py",
+              "content": "\"\"\"Adaptadores de infraestructura: catálogo y repositorios de carritos.\n\n- ``InMemoryProductCatalog`` / ``InMemoryCartRepository``: para tests y\n  procesos efímeros.\n- ``SqliteCartRepository``: persistencia real en SQLite (JSON por carrito),\n  válida para despliegues que compartan la base de datos.\n\nCualquier otro adaptador (Redis, PostgreSQL, API externa...) solo tiene que\ncumplir los protocolos de ``cart.application.ports``.\n\"\"\"\nfrom __future__ import annotations\n\nimport json\nimport sqlite3\nimport threading\nfrom datetime import datetime, timezone\nfrom pathlib import Path\nfrom typing import Callable, Iterable\n\nfrom ..domain.entities import Cart, Product\nfrom ..domain.exceptions import ProductNotFound\nfrom ..domain.value_objects import SKU\n\n\ndef _as_sku(value: SKU | str) -> SKU:\n    return value if isinstance(value, SKU) else SKU(str(value))\n\n\nclass InMemoryProductCatalog:\n    \"\"\"Catálogo en memoria, seguro entre hilos.\"\"\"\n\n    def __init__(self, products: Iterable[Product] = ()) -> None:\n        self._products: dict[SKU, Product] = {}\n        self._lock = threading.Lock()\n        for product in products:\n            self.add(product)\n\n    def add(self, product: Product) -> None:\n        with self._lock:\n            self._products[product.sku] = product\n\n    def get(self, sku: SKU | str) -> Product | None:\n        with self._lock:\n            return self._products.get(_as_sku(sku))\n\n    def list(self) -> list[Product]:\n        with self._lock:\n            return sorted(self._products.values(), key=lambda p: p.sku.value)\n\n    def __len__(self) -> int:\n        with self._lock:\n            return len(self._products)\n\n\nclass InMemoryCartRepository:\n    \"\"\"Repositorio de carritos en memoria, seguro entre hilos.\"\"\"\n\n    def __init__(self) -> None:\n        self._carts: dict[str, Cart] = {}\n        self._lock = threading.Lock()\n\n    def get(self, cart_id: str) -> Cart | None:\n        with self._lock:\n            return self._carts.get(cart_id)\n\n    def save(self, cart: Cart) -> None:\n        with self._lock:\n            self._carts[cart.id] = cart\n\n    def delete(self, cart_id: str) -> None:\n        with self._lock:\n            self._carts.pop(cart_id, None)\n\n    def list_ids(self) -> list[str]:\n        with self._lock:\n            return sorted(self._carts)\n\n    def __len__(self) -> int:\n        with self._lock:\n            return len(self._carts)\n\n\nclass SqliteCartRepository:\n    \"\"\"Repositorio persistente en SQLite.\n\n    Cada carrito se guarda como una fila JSON, así que el esquema no cambia\n    si evoluciona el dominio. ``product_resolver`` reconstruye los productos\n    (p. ej. ``catalogo.get``) al leer.\n    \"\"\"\n\n    def __init__(\n        self,\n        path: str | Path = \":memory:\",\n        product_resolver: Callable[[SKU], Product] | None = None,\n    ) -> None:\n        self._conn = sqlite3.connect(str(path), check_same_thread=False)\n        self._conn.execute(\n            \"CREATE TABLE IF NOT EXISTS carts (\"\n            \"  id TEXT PRIMARY KEY,\"\n            \"  data TEXT NOT NULL,\"\n            \"  updated_at TEXT NOT NULL\"\n            \")\"\n        )\n        self._conn.commit()\n        self._lock = threading.Lock()\n        if product_resolver is None:\n\n            def product_resolver(sku: SKU) -> Product:\n                raise ProductNotFound(f\"Sin resolvedor de productos para {sku}\")\n\n        self._resolve = product_resolver\n\n    def get(self, cart_id: str) -> Cart | None:\n        with self._lock:\n            row = self._conn.execute(\n                \"SELECT data FROM carts WHERE id = ?\", (cart_id,)\n            ).fetchone()\n        if row is None:\n            return None\n        return Cart.from_dict(json.loads(row[0]), self._resolve)\n\n    def save(self, cart: Cart) -> None:\n        payload = json.dumps(cart.to_dict(), ensure_ascii=False)\n        ts = datetime.now(timezone.utc).isoformat()\n        with self._lock:\n            self._conn.execute(\n                \"INSERT INTO carts (id, data, updated_at) VALUES (?, ?, ?) \"\n                \"ON CONFLICT(id) DO UPDATE SET data = excluded.data, \"\n                \"updated_at = excluded.updated_at\",\n                (cart.id, payload, ts),\n            )\n            self._conn.commit()\n\n    def delete(self, cart_id: str) -> None:\n        with self._lock:\n            self._conn.execute(\"DELETE FROM carts WHERE id = ?\", (cart_id,))\n            self._conn.commit()\n\n    def list_ids(self) -> list[str]:\n        with self._lock:\n            rows = self._conn.execute(\"SELECT id FROM carts ORDER BY id\").fetchall()\n        return [row[0] for row in rows]\n\n    def close(self) -> None:\n        with self._lock:\n            self._conn.close()\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/infrastructure/repositories.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841398,
+            "ran": 1795197841543,
+            "completed": 1795197841590
+          }
+        },
+        {
+          "type": "tool",
+          "id": "0v3DLKdRX",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/infrastructure/__init__.py",
+              "content": "\"\"\"Capa de infraestructura: adaptadores concretos de puertos.\"\"\"\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/infrastructure/__init__.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841400,
+            "ran": 1795197841549,
+            "completed": 1795197841593
+          }
+        },
+        {
+          "type": "tool",
+          "id": "ZC3UgB8t5",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/cart/__init__.py",
+              "content": "\"\"\"Carrito de la compra escalable (arquitectura hexagonal, sin dependencias).\n\nCapas:\n- ``cart.domain``: entidades, value objects, eventos y excepciones (puro).\n- ``cart.application``: casos de uso (``CartService``), puertos y motor de\n  precios con estrategias enchufables.\n- ``cart.infrastructure``: adaptadores (memoria / SQLite).\n\"\"\"\nfrom .application.pricing import (\n    DiscountStrategy,\n    FixedDiscount,\n    PercentageDiscount,\n    PercentageTax,\n    PricingEngine,\n    Receipt,\n    ReceiptLine,\n    TaxStrategy,\n)\nfrom .application.services import CartService\nfrom .domain.entities import Cart, CartItem, Product\nfrom .domain.events import (\n    CartCheckedOut,\n    CartCleared,\n    CartCreated,\n    CartMerged,\n    DomainEvent,\n    EventBus,\n    ItemAdded,\n    ItemQuantityUpdated,\n    ItemRemoved,\n)\nfrom .domain.exceptions import (\n    CartError,\n    CartLimitExceeded,\n    CartNotFound,\n    EmptyCart,\n    InsufficientStock,\n    InvalidQuantity,\n    ItemNotInCart,\n    ProductNotFound,\n)\nfrom .domain.value_objects import Money, Quantity, SKU\nfrom .infrastructure.repositories import (\n    InMemoryCartRepository,\n    InMemoryProductCatalog,\n    SqliteCartRepository,\n)\n\n__version__ = \"1.0.0\"\n\n__all__ = [\n    \"Cart\",\n    \"CartItem\",\n    \"CartError\",\n    \"CartLimitExceeded\",\n    \"CartNotFound\",\n    \"CartService\",\n    \"CartCheckedOut\",\n    \"CartCleared\",\n    \"CartCreated\",\n    \"CartMerged\",\n    \"DiscountStrategy\",\n    \"DomainEvent\",\n    \"EmptyCart\",\n    \"EventBus\",\n    \"FixedDiscount\",\n    \"InMemoryCartRepository\",\n    \"InMemoryProductCatalog\",\n    \"InsufficientStock\",\n    \"InvalidQuantity\",\n    \"ItemAdded\",\n    \"ItemNotInCart\",\n    \"ItemQuantityUpdated\",\n    \"ItemRemoved\",\n    \"Money\",\n    \"PercentageDiscount\",\n    \"PercentageTax\",\n    \"PricingEngine\",\n    \"Product\",\n    \"ProductNotFound\",\n    \"Quantity\",\n    \"Receipt\",\n    \"ReceiptLine\",\n    \"SKU\",\n    \"SqliteCartRepository\",\n    \"TaxStrategy\",\n]\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: cart/__init__.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197841403,
+            "ran": 1795197841557,
+            "completed": 1795197841596
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 136,
+        "output": 28148,
+        "reasoning": 0,
+        "cache": {
+          "read": 5632,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa2130d0001SqSjXFJuP4aOu4",
+      "time": {
+        "created": 1795197841624,
+        "firstToken": 1795197844027,
+        "streamed": 1795197967507,
+        "completed": 1795197967525
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Ahora creo los tests, el CLI/demo y el README. Los tests con unittest (stdlib, sin dependencias).",
+          "native": {
+            "reasoningField": "reasoning"
+          },
+          "time": {
+            "created": 1795197844029,
+            "completed": 1795197967478
+          }
+        },
+        {
+          "type": "text",
+          "text": "Estructura creada. Ahora añado la batería de tests (stdlib `unittest`, sin dependencias externas), un CLI de demostración y un README:"
+        },
+        {
+          "type": "tool",
+          "id": "Hb2MxZayQ",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/tests/test_cart.py",
+              "content": "\"\"\"Tests del dominio y de la aplicación del carrito (stdlib unittest).\"\"\"\nfrom __future__ import annotations\n\nimport sys\nimport tempfile\nimport threading\nimport unittest\nfrom pathlib import Path\n\nsys.path.insert(0, str(Path(__file__).resolve().parent.parent))\n\nfrom cart import (  # noqa: E402\n    Cart,\n    CartLimitExceeded,\n    CartNotFound,\n    CartService,\n    EmptyCart,\n    EventBus,\n    FixedDiscount,\n    InMemoryCartRepository,\n    InMemoryProductCatalog,\n    InsufficientStock,\n    ItemAdded,\n    ItemNotInCart,\n    Money,\n    PercentageDiscount,\n    PercentageTax,\n    PricingEngine,\n    Product,\n    ProductNotFound,\n    Quantity,\n    SKU,\n    SqliteCartRepository,\n)\n\n\ndef make_catalog() -> InMemoryProductCatalog:\n    return InMemoryProductCatalog(\n        [\n            Product(SKU(\"LIBRO-1\"), \"Libro de Python\", Money.from_amount(\"19.99\"), stock=10),\n            Product(SKU(\"CAM-1\"), \"Camiseta\", Money.from_amount(\"9.50\"), stock=3),\n            Product(SKU(\"USB-1\"), \"Memoria USB\", Money.from_amount(\"5.00\"), stock=None),\n        ]\n    )\n\n\ndef make_service(**kwargs) -> CartService:\n    return CartService(\n        repository=kwargs.pop(\"repository\", InMemoryCartRepository()),\n        catalog=kwargs.pop(\"catalog\", make_catalog()),\n        **kwargs,\n    )\n\n\nclass TestMoney(unittest.TestCase):\n    def test_sum_exacta_sin_error_de coma_flotante(self):\n        self.assertEqual(Money.from_amount(\"0.1\") + Money.from_amount(\"0.2\"), Money.from_amount(\"0.3\"))\n\n    def test_multiplicacion_por_cantidad(self):\n        self.assertEqual(Money.from_amount(\"9.99\") * 3, Money.from_amount(\"29.97\"))\n\n    def test_porcentaje(self):\n        self.assertEqual(Money.from_amount(\"100.00\").percentage(21), Money.from_amount(\"21.00\"))\n        self.assertEqual(Money.from_amount(\"19.99\").percentage(10), Money.from_amount(\"2.00\"))  # redondeo half-up\n\n    def test_divisas_distintas_no_se_suman(self):\n        with self.assertRaises(ValueError):\n            Money.from_amount(10, \"EUR\") + Money.from_amount(10, \"USD\")\n\n\nclass TestValueObjects(unittest.TestCase):\n    def test_sku_vacio_invalido(self):\n        with self.assertRaises(ValueError):\n            SKU(\"   \")\n\n    def test_cantidad_invalida(self):\n        for bad in (0, -1, 1.5):\n            with self.assertRaises(ValueError):\n                Quantity(bad)\n\n\nclass TestCartDomain(unittest.TestCase):\n    def test_anadir_y_total(self):\n        cart = Cart()\n        libro = Product(SKU(\"L\"), \"Libro\", Money.from_amount(\"10.00\"))\n        cart.add_item(libro, 2)\n        self.assertEqual(cart.item_count, 2)\n        self.assertEqual(cart.subtotal, Money.from_amount(\"20.00\"))\n\n    def test_anadir_acumula_cantidad(self):\n        cart = Cart()\n        p = Product(SKU(\"L\"), \"Libro\", Money.from_amount(\"10.00\"))\n        cart.add_item(p, 1)\n        cart.add_item(p, 2)\n        self.assertEqual(cart.item_count, 3)\n        self.assertEqual(cart.distinct_items, 1)\n\n    def test_stock_insuficiente(self):\n        cart = Cart()\n        p = Product(SKU(\"L\"), \"Libro\", Money.from_amount(\"10.00\"), stock=2)\n        cart.add_item(p, 2)\n        with self.assertRaises(InsufficientStock):\n            cart.add_item(p, 1)\n\n    def test_limite_productos_distintos(self):\n        cart = Cart(max_items=1)\n        a = Product(SKU(\"A\"), \"A\", Money.from_amount(\"1.00\"))\n        b = Product(SKU(\"B\"), \"B\", Money.from_amount(\"1.00\"))\n        cart.add_item(a)\n        with self.assertRaises(CartLimitExceeded):\n            cart.add_item(b)\n\n    def test_quitar_item_que_no_existe(self):\n        cart = Cart()\n        with self.assertRaises(ItemNotInCart):\n            cart.remove_item(\"NOPE\")\n\n    def test_eventos_se_acumulan_y_drenan(self):\n        cart = Cart()\n        p = Product(SKU(\"L\"), \"Libro\", Money.from_amount(\"10.00\"))\n        cart.add_item(p, 2)\n        events = cart.drain_events()\n        self.assertEqual(len(events), 1)\n        self.assertIsInstance(events[0], ItemAdded)\n        self.assertEqual(cart.drain_events(), [])\n\n    def test_thread_safety_basico(self):\n        cart = Cart()\n        p = Product(SKU(\"L\"), \"Libro\", Money.from_amount(\"1.00\"))\n        errors: list[Exception] = []\n\n        def worker() -> None:\n            try:\n                for _ in range(100):\n                    cart.add_item(p, 1)\n            except Exception as exc:  # pragma: no cover\n                errors.append(exc)\n\n        threads = [threading.Thread(target=worker) for _ in range(8)]\n        for t in threads:\n            t.start()\n        for t in threads:\n            t.join()\n        self.assertEqual(errors, [])\n        self.assertEqual(cart.item_count, 800)\n\n\nclass TestCartService(unittest.TestCase):\n    def test_flujo_completo(self):\n        service = make_service(\n            pricing_engine=PricingEngine(\n                discounts=[PercentageDiscount(10)],\n                taxes=[PercentageTax(21)],\n            )\n        )\n        cart = service.create_cart()\n        service.add_item(cart.id, \"LIBRO-1\", 2)   # 39.98\n        service.add_item(cart.id, \"CAM-1\", 1)     #  9.50\n        # subtotal 49.48, -10% = -4.95 => 44.53, +21% = 9.35 => 53.88\n        receipt = service.get_receipt(cart.id)\n        self.assertEqual(receipt.subtotal, Money.from_amount(\"49.48\"))\n        self.assertEqual(receipt.discount, Money.from_amount(\"4.95\"))\n        self.assertEqual(receipt.tax, Money.from_amount(\"9.35\"))\n        self.assertEqual(receipt.total, Money.from_amount(\"53.88\"))\n        # checkout: emite evento, vacía y persiste\n        events: list = []\n        bus: EventBus = service.event_bus\n        bus.subscribe(object, events.append)  # no; suscribimos al tipo base abajo\n        checked = service.checkout(cart.id)\n        self.assertEqual(checked.total, receipt.total)\n        self.assertTrue(service.get_cart(cart.id).is_empty)\n\n    def test_eventos_publicados_tras_persistir(self):\n        service = make_service()\n        received: list = []\n        service.event_bus.subscribe(ItemAdded, received.append)\n        cart = service.create_cart()\n        service.add_item(cart.id, \"USB-1\", 4)\n        self.assertEqual(len(received), 1)\n        event = received[0]\n        self.assertEqual((event.cart_id, event.sku, event.quantity, event.new_quantity),\n                         (cart.id, \"USB-1\", 4, 4))\n\n    def test_producto_desconocido(self):\n        service = make_service()\n        cart = service.create_cart()\n        with self.assertRaises(ProductNotFound):\n            service.add_item(cart.id, \"NO-EXISTE\")\n\n    def test_carrito_inexistente(self):\n        service = make_service()\n        with self.assertRaises(CartNotFound):\n            service.get_cart(\"nope\")\n\n    def test_checkout_vacio(self):\n        service = make_service()\n        cart = service.create_cart()\n        with self.assertRaises(EmptyCart):\n            service.checkout(cart.id)\n\n    def test_update_y_remove(self):\n        service = make_service()\n        cart = service.create_cart()\n        service.add_item(cart.id, \"CAM-1\", 1)\n        service.update_quantity(cart.id, \"CAM-1\", 3)\n        self.assertEqual(service.get_cart(cart.id).item_count, 3)\n        service.remove_item(cart.id, \"CAM-1\")\n        self.assertTrue(service.get_cart(cart.id).is_empty)\n        with self.assertRaises(ItemNotInCart):\n            service.update_quantity(cart.id, \"CAM-1\", 1)\n\n    def test_stock_limita_en_servicio(self):\n        service = make_service()\n        cart = service.create_cart()\n        service.add_item(cart.id, \"CAM-1\", 3)\n        with self.assertRaises(InsufficientStock):\n            service.add_item(cart.id, \"CAM-1\", 1)\n\n    def test_merge_carts(self):\n        service = make_service()\n        a = service.create_cart()\n        b = service.create_cart()\n        service.add_item(a.id, \"LIBRO-1\", 1)\n        service.add_item(b.id, \"USB-1\", 2)\n        merged = service.merge_carts(a.id, b.id)\n        self.assertEqual(merged.distinct_items, 2)\n        self.assertEqual(merged.item_count, 3)\n        with self.assertRaises(CartNotFound):\n            service.get_cart(a.id)  # el origen se eliminó\n\n    def test_descuento_fijo_no_supera_subtotal(self):\n        engine = PricingEngine(discounts=[FixedDiscount(Money.from_amount(\"100.00\"))])\n        service = make_service(pricing_engine=engine)\n        cart = service.create_cart()\n        service.add_item(cart.id, \"USB-1\", 1)  # 5.00\n        receipt = service.get_receipt(cart.id)\n        self.assertEqual(receipt.discount, Money.from_amount(\"5.00\"))\n        self.assertEqual(receipt.total, Money(0, \"EUR\"))\n\n    def test_concurrencia_en_servicio(self):\n        service = make_service()\n        cart = service.create_cart()\n        errors: list[Exception] = []\n\n        def worker() -> None:\n            try:\n                for _ in range(20):\n                    service.add_item(cart.id, \"USB-1\", 1)\n            except Exception as exc:\n                errors.append(exc)\n\n        threads = [threading.Thread(target=worker) for _ in range(5)]\n        for t in threads:\n            t.start()\n        for t in threads:\n            t.join()\n        self.assertEqual(errors, [])\n        self.assertEqual(service.get_cart(cart.id).item_count, 100)\n\n\nclass TestSqliteRepository(unittest.TestCase):\n    def test_persistencia_real(self):\n        catalog = make_catalog()\n        with tempfile.TemporaryDirectory() as tmp:\n            path = Path(tmp) / \"carts.db\"\n            # referencia estable por id en todas las conexiones\n            repo1 = SqliteCartRepository(path, catalog.get)\n            service = CartService(repo1, catalog)\n            cart = service.create_cart()\n            service.add_item(cart.id, \"LIBRO-1\", 2)\n            repo1.close()\n\n            # nueva \"sesión\": los datos siguen ahí\n            repo2 = SqliteCartRepository(path, catalog.get)\n            restored = repo2.get(cart.id)\n            self.assertIsNotNone(restored)\n            assert restored is not None\n            self.assertEqual(restored.item_count, 2)\n            self.assertEqual(restored.subtotal, Money.from_amount(\"39.98\"))\n            self.assertIn(cart.id, repo2.list_ids())\n            repo2.delete(cart.id)\n            self.assertIsNone(repo2.get(cart.id))\n            repo2.close()\n\n\nif __name__ == \"__main__\":\n    unittest.main(verbosity=2)\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: tests/test_cart.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197967433,
+            "ran": 1795197967485,
+            "completed": 1795197967519
+          }
+        },
+        {
+          "type": "tool",
+          "id": "edXydvP7f",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/demo_cli.py",
+              "content": "#!/usr/bin/env python3\n\"\"\"CLI de demostración del carrito de la compra.\n\nUso:\n    python3 demo_cli.py            # demo guiada con datos de ejemplo\n    python3 demo_cli.py <db_path>  # igual, pero persiste en SQLite\n\"\"\"\nfrom __future__ import annotations\n\nimport sys\nfrom pathlib import Path\n\nsys.path.insert(0, str(Path(__file__).resolve().parent))\n\nfrom cart import (  # noqa: E402\n    CartService,\n    InMemoryCartRepository,\n    InMemoryProductCatalog,\n    Money,\n    PercentageDiscount,\n    PercentageTax,\n    PricingEngine,\n    Product,\n    SKU,\n    SqliteCartRepository,\n)\n\n\ndef build_service(db_path: str | None = None) -> CartService:\n    catalog = InMemoryProductCatalog(\n        [\n            Product(SKU(\"LIBRO-PY\"), \"Python a fondo\", Money.from_amount(\"29.99\"), stock=20),\n            Product(SKU(\"CAM-ORG\"), \"Camiseta orgánica\", Money.from_amount(\"14.95\"), stock=8),\n            Product(SKU(\"TAZA-LOG\"), \"Taza con logo\", Money.from_amount(\"7.50\")),\n            Product(SKU(\"USB-64\"), \"USB 64 GB\", Money.from_amount(\"11.20\")),\n        ]\n    )\n    repository = (\n        SqliteCartRepository(db_path, catalog.get) if db_path else InMemoryCartRepository()\n    )\n    engine = PricingEngine(\n        discounts=[PercentageDiscount(10, name=\"-10% campaña\")],\n        taxes=[PercentageTax(21, name=\"IVA 21%\")],\n    )\n    service = CartService(repository, catalog, pricing_engine=engine)\n    service.event_bus.subscribe(object, lambda e: print(f\"    [evento] {type(e).__name__}\"))\n    return service\n\n\ndef main() -> None:\n    db_path = sys.argv[1] if len(sys.argv) > 1 else None\n    service = build_service(db_path)\n\n    print(\"== Crear carrito y añadir productos ==\")\n    cart = service.create_cart()\n    print(f\"Carrito {cart.id}\")\n    service.add_item(cart.id, \"LIBRO-PY\", 1)\n    service.add_item(cart.id, \"CAM-ORG\", 2)\n    service.add_item(cart.id, \"TAZA-LOG\", 1)\n    service.add_item(cart.id, \"LIBRO-PY\", 1)  # acumula: 2 libros\n\n    print(\"\\n== Recibo previo (con descuento del 10% e IVA 21%) ==\")\n    print(service.get_receipt(cart.id))\n\n    print(\"\\n== Actualizar cantidad ==\")\n    service.update_quantity(cart.id, \"TAZA-LOG\", 3)\n    receipt = service.get_receipt(cart.id)\n    print(receipt)\n\n    print(\"\\n== Checkout ==\")\n    final = service.checkout(cart.id)\n    print(final)\n    print(f\"Carrito tras checkout: vacío = {service.get_cart(cart.id).is_empty}\")\n\n    if db_path:\n        print(f\"\\n(Datos persistidos en {db_path})\")\n\n\nif __name__ == \"__main__\":\n    main()\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: demo_cli.py"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197967437,
+            "ran": 1795197967492,
+            "completed": 1795197967517
+          }
+        },
+        {
+          "type": "tool",
+          "id": "b9WlwdviR",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/README.md",
+              "content": "# Carrito de la compra escalable\n\nImplementación en **Python 3.12+ sin dependencias externas** (solo stdlib), con\narquitectura hexagonal (puertos y adaptadores), para que cada pieza pueda crecer\no sustituirse de forma independiente.\n\n```\ncart/\n├── domain/            # lógica de negocio pura, sin dependencias externas\n│   ├── value_objects.py   # Money (céntimos, sin coma flotante), SKU, Quantity\n│   ├── entities.py        # Product, CartItem, Cart (thread-safe, con eventos)\n│   ├── events.py          # eventos de dominio + EventBus seguro entre hilos\n│   └── exceptions.py      # errores de dominio con significado de negocio\n├── application/       # casos de uso\n│   ├── ports.py           # protocolos CartRepository y ProductCatalog\n│   ├── pricing.py         # PricingEngine + estrategias de descuento/impuesto\n│   └── services.py        # CartService: añadir, quitar, checkout, merge…\n└── infrastructure/    # adaptadores concretos\n    └── repositories.py    # catálogo y repositorio en memoria o SQLite\ntests/test_cart.py     # tests con unittest (stdlib)\ndemo_cli.py            # demo ejecutable\n```\n\n## Uso rápido\n\n```python\nfrom cart import (CartService, InMemoryCartRepository, InMemoryProductCatalog,\n                  Product, SKU, Money, PricingEngine, PercentageDiscount, PercentageTax)\n\ncatalog = InMemoryProductCatalog([\n    Product(SKU(\"LIBRO-1\"), \"Libro de Python\", Money.from_amount(\"19.99\"), stock=10),\n])\nservice = CartService(\n    repository=InMemoryCartRepository(),\n    catalog=catalog,\n    pricing_engine=PricingEngine(\n        discounts=[PercentageDiscount(10)],   # -10%\n        taxes=[PercentageTax(21)],            # IVA 21%\n    ),\n)\n\ncart = service.create_cart()\nservice.add_item(cart.id, \"LIBRO-1\", 2)\nprint(service.get_receipt(cart.id))   # vista previa con descuento e IVA\nreceipt = service.checkout(cart.id)   # cierra la compra, vacía el carrito\n```\n\n## Cómo escalar cada parte\n\n| Necesidad | Qué tocar |\n|---|---|\n| Nueva promoción o impuesto | Añadir una clase con los protocolos `DiscountStrategy`/`TaxStrategy` de `cart/application/pricing.py` y enchufarla al `PricingEngine`. El carrito no cambia. |\n| Nueva persistencia (Redis, PostgreSQL, API) | Implementar los protocolos de `cart/application/ports.py` (`CartRepository`, `ProductCatalog`). El servicio no cambia. |\n| Reaccionar a acciones del carrito (emails, métricas, pedidos) | Suscribir handlers al `EventBus` (`ItemAdded`, `CartCheckedOut`, …). Los handlers fallan de forma aislada. |\n| Reglas nuevas de negocio | Ampliar `Cart` en `cart/domain` (límites, stock, monedas) sin tocar infraestructura. |\n\n## Garantías\n\n- **Dinero exacto**: `Money` guarda céntimos enteros (`0.1 + 0.2 == 0.3`), redondeo half-up en porcentajes.\n- **Thread-safe**: el carrito y los repositorios usan locks internos; probado con tests de concurrencia.\n- **Eventos tras persistir**: `CartService._save` guarda primero y publica después, así un handler nunca ve un estado no persistido.\n- **Límites de negocio**: stock por producto, máximo de unidades por línea y máximo de SKUs distintos por carrito.\n\n## Ejecutar\n\n```bash\npython3 -m unittest discover -s tests -v   # tests\npython3 demo_cli.py                          # demo en memoria\npython3 demo_cli.py /tmp/carts.db            # demo con persistencia SQLite\n```\n"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: README.md"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197967440,
+            "ran": 1795197967500,
+            "completed": 1795197967522
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 15227,
+        "output": 4500,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa231cb3001HRw1yauiFjQNos",
+      "time": {
+        "created": 1795197967548,
+        "firstToken": 1795197968929,
+        "streamed": 1795197993959,
+        "completed": 1795197993978
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Now let me run the tests. One thing to check: in test_flujo_completo I wrote `bus.subscribe(object, events.append)` — subscribing to `object` type won't match the MRO lookup since handlers dict is keyed by event class and I iterate `type(event).__mro__` — `object` IS in the MRO of every class, so it would actually match. Wait, `type(event).__mro__` for ItemAdded includes ItemAdded, DomainEvent, object. So subscribing to `object` would catch all events. But in the test I subscribe after... let me check: I create `bus: EventBus = service.event_bus` then `bus.subscribe(object, events.append)` then checkout. That works and would capture CartCheckedOut and CartCleared. But events list isn't asserted, fine. Actually it might be cleaner to subscribe to DomainEvent. `object` works too since it's in MRO. But wait — defaultdict with `object` key... `self._handlers.get(cls, ())` — fine.\n\nActually let me simplify that to DomainEvent to be cleaner. Also in demo_cli: `service.event_bus.subscribe(object, lambda e: ...)` — same, works via MRO. But cleaner to subscribe DomainEvent. Let me fix both to use DomainEvent for clarity.\n\nAlso check `Money.__mul__` with `factor: int` — `item.line_total` uses `self._product.price * self._quantity.value` — value is int, good.\n\n`FixedDiscount.apply`: `self.amount if self.amount < amount else amount` — Money is order=True dataclass, comparison by cents then currency. Same currency checked. Good.\n\nIn `CartService.checkout`: records CartCheckedOut, then `cart.clear()` which records CartCleared (only if items non-empty — it is non-empty). Then `_save` publishes both. Fine.\n\n`merge_carts`: `target.add_item(product, item.quantity)` — item.quantity is Quantity, add_item accepts Quantity. Good.\n\n`Cart.from_dict`: sets `cart.created_at = datetime.fromisoformat(...)` — Cart is not frozen, has _lock; assigning attributes fine.\n\nOne issue: `Cart.to_dict` calls `self.items` which acquires `self._lock` (RLock) — `to_dict` already holds the lock, RLock is reentrant. Good. `subtotal` property acquires lock; in `to_dict` we don't call subtotal. Fine.\n\nIn `entities.py` `Cart.items` property acquires lock and returns sorted list — good.\n\n`Cart.add_item` with existing item: records ItemQuantityUpdated instead of ItemAdded — reasonable.\n\nIn test `test_flujo_completo`, receipt math: LIBRO-1 19.99*2 = 39.98, CAM-1 9.50 → subtotal 49.48. Discount 10% of 49.48 = 4.948 → round half-up → 495 cents? 4.948 → 494.8 cents → quantize to 1 → 495? Wait: percentage(10) = cents * 10/100 = 4948*10/100 = 494.8 → quantize ROUND_HALF_UP → 495 cents = 4.95. Yes. Remaining = 49.48-4.95 = 44.53. Tax 21% of 44.53 = 4453*21/100 = 935.13 → 935 cents = 9.35. Total = 49.48 - 4.95 + 9.35 = 53.88. ✓.\n\nMoney.from_amount(\"19.99\") = 1999 cents. 19.99*2 → 3998. ✓\n\n`Money.percentage`: `Decimal(self.cents) * pct / 100` quantized. For 4948: 4948 * 10 = 49480 /100 = 494.8 → 495. ✓\n\nTest `test_porcentaje`: Money.from_amount(\"19.99\").percentage(10) = 1999*10/100 = 199.9 → 200 cents = 2.00 ✓.\n\n`Money.__add__` requires Money type — in `pricing.py`, `discount = discount + disc` both Money ✓.\n\n`Receipt.total = subtotal - discount + tax` ✓.\n\nIn `Cart.subtotal`, `Money(0, self.currency)` ✓.\n\nSqliteCartRepository test: uses temp file path. `Cart.from_dict` needs `resolve_product` — catalog.get ✓. Product equality: from_dict creates CartItem with resolved product — subtotal 39.98 ✓.\n\nOne concern: `sqlite3.connect(str(path), check_same_thread=False)` with a Path converted — fine.\n\nIn `test_flujo_completo` I have leftover `events: list = []` and subscribe to `object` — let me clean that to DomainEvent. Also demo_cli subscribe(object, ...) → change to DomainEvent.\n\nAlso check: `EventBus.publish` iterates `type(event).__mro__` — for CartCreated MRO: CartCreated, DomainEvent, object. If someone subscribed to DomainEvent they get all. Good.\n\nPotential issue in entities: `Cart.__init__` sets `self._lock = threading.RLock()` after `self._events = []` — `record_event` uses lock; in `__init__` we don't call record_event before lock exists. `create_cart` in service calls `cart.record_event` after construction. Fine.\n\n`Cart.from_dict` — after construction, `_lock` exists. Fine.\n\nAlso `Product.__post_init__` uses `object.__setattr__` on frozen dataclass ✓.\n\nIn services, `update_quantity` uses `Quantity(quantity)` — if quantity is 0 raises ValueError from VO. Fine.\n\nNow fix the two `object` subscriptions, then run tests and demo.",
+          "native": {
+            "reasoningField": "reasoning"
+          },
+          "time": {
+            "created": 1795197968932,
+            "completed": 1795197993942
+          }
+        },
+        {
+          "type": "text",
+          "text": "Ahora corrijo un detalle en los tests y la demo (suscribirse al tipo base `DomainEvent` en lugar de `object`) y ejecuto todo:"
+        },
+        {
+          "type": "tool",
+          "id": "F1Ghq9iQl",
+          "name": "edit",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/tests/test_cart.py",
+              "oldString": "        # checkout: emite evento, vacía y persiste\n        events: list = []\n        bus: EventBus = service.event_bus\n        bus.subscribe(object, events.append)  # no; suscribimos al tipo base abajo\n        checked = service.checkout(cart.id)",
+              "newString": "        # checkout: emite evento, vacía y persiste\n        from cart import CartCheckedOut, DomainEvent\n\n        events: list = []\n        service.event_bus.subscribe(DomainEvent, events.append)\n        checked = service.checkout(cart.id)\n        self.assertTrue(any(isinstance(e, CartCheckedOut) for e in events))"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Edited tests/test_cart.py (1 replacement)"
+              }
+            ],
+            "metadata": {
+              "files": [
+                {
+                  "file": "tests/test_cart.py",
+                  "patch": "Index: tests/test_cart.py\n===================================================================\n--- tests/test_cart.py\n+++ tests/test_cart.py\n@@ -162,12 +162,14 @@\n         self.assertEqual(receipt.discount, Money.from_amount(\"4.95\"))\n         self.assertEqual(receipt.tax, Money.from_amount(\"9.35\"))\n         self.assertEqual(receipt.total, Money.from_amount(\"53.88\"))\n         # checkout: emite evento, vacía y persiste\n+        from cart import CartCheckedOut, DomainEvent\n+\n         events: list = []\n-        bus: EventBus = service.event_bus\n-        bus.subscribe(object, events.append)  # no; suscribimos al tipo base abajo\n+        service.event_bus.subscribe(DomainEvent, events.append)\n         checked = service.checkout(cart.id)\n+        self.assertTrue(any(isinstance(e, CartCheckedOut) for e in events))\n         self.assertEqual(checked.total, receipt.total)\n         self.assertTrue(service.get_cart(cart.id).is_empty)\n \n     def test_eventos_publicados_tras_persistir(self):\n",
+                  "status": "modified",
+                  "additions": 4,
+                  "deletions": 2
+                }
+              ],
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197993847,
+            "ran": 1795197993947,
+            "completed": 1795197993969
+          }
+        },
+        {
+          "type": "tool",
+          "id": "BC8OWcP6Q",
+          "name": "edit",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/demo_cli.py",
+              "oldString": "from cart import (  # noqa: E402\n    CartService,\n    InMemoryCartRepository,",
+              "newString": "from cart import (  # noqa: E402\n    CartService,\n    DomainEvent,\n    InMemoryCartRepository,"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Edited demo_cli.py (1 replacement)"
+              }
+            ],
+            "metadata": {
+              "files": [
+                {
+                  "file": "demo_cli.py",
+                  "patch": "Index: demo_cli.py\n===================================================================\n--- demo_cli.py\n+++ demo_cli.py\n@@ -13,8 +13,9 @@\n sys.path.insert(0, str(Path(__file__).resolve().parent))\n \n from cart import (  # noqa: E402\n     CartService,\n+    DomainEvent,\n     InMemoryCartRepository,\n     InMemoryProductCatalog,\n     Money,\n     PercentageDiscount,\n",
+                  "status": "modified",
+                  "additions": 1,
+                  "deletions": 0
+                }
+              ],
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197993850,
+            "ran": 1795197993950,
+            "completed": 1795197993966
+          }
+        },
+        {
+          "type": "tool",
+          "id": "4JX5ANRTg",
+          "name": "edit",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/demo_cli.py",
+              "oldString": "    service.event_bus.subscribe(object, lambda e: print(f\"    [evento] {type(e).__name__}\"))",
+              "newString": "    service.event_bus.subscribe(\n        DomainEvent, lambda e: print(f\"    [evento] {type(e).__name__}\")\n    )"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Edited demo_cli.py (1 replacement)"
+              }
+            ],
+            "metadata": {
+              "files": [
+                {
+                  "file": "demo_cli.py",
+                  "patch": "Index: demo_cli.py\n===================================================================\n--- demo_cli.py\n+++ demo_cli.py\n@@ -43,9 +43,11 @@\n         discounts=[PercentageDiscount(10, name=\"-10% campaña\")],\n         taxes=[PercentageTax(21, name=\"IVA 21%\")],\n     )\n     service = CartService(repository, catalog, pricing_engine=engine)\n-    service.event_bus.subscribe(object, lambda e: print(f\"    [evento] {type(e).__name__}\"))\n+    service.event_bus.subscribe(\n+        DomainEvent, lambda e: print(f\"    [evento] {type(e).__name__}\")\n+    )\n     return service\n \n \n def main() -> None:\n",
+                  "status": "modified",
+                  "additions": 3,
+                  "deletions": 1
+                }
+              ],
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795197993852,
+            "ran": 1795197993956,
+            "completed": 1795197993976
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 4882,
+        "output": 1634,
+        "reasoning": 0,
+        "cache": {
+          "read": 14848,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa238406001KRL10YbFEtPRg6",
+      "time": {
+        "created": 1795197993996,
+        "firstToken": 1795197996152,
+        "streamed": 1795197996244,
+        "completed": 1795197996347
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "tool",
+          "id": "z2TrSUKAU",
+          "name": "shell",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "cd /var/tmp/bench/ws-YEm7YZf4 && python3 -m unittest discover -s tests -v 2>&1 | tail -30",
+              "timeout": 120000
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "test_cart (unittest.loader._FailedTest.test_cart) ... ERROR\n\n======================================================================\nERROR: test_cart (unittest.loader._FailedTest.test_cart)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_cart\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.13/unittest/loader.py\", line 403, in _find_test_path\n    module = self._get_module_from_name(name)\n  File \"/usr/local/lib/python3.13/unittest/loader.py\", line 346, in _get_module_from_name\n    __import__(name)\n    ~~~~~~~~~~^^^^^^\n  File \"/var/tmp/bench/ws-YEm7YZf4/tests/test_cart.py\", line 56\n    def test_sum_exacta_sin_error_de coma_flotante(self):\n                                     ^^^^^^^^^^^^^\nSyntaxError: expected '('\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (errors=1)\n"
+              }
+            ],
+            "metadata": {
+              "status": "completed",
+              "truncated": false,
+              "exit": 0
+            }
+          },
+          "time": {
+            "created": 1795197996155,
+            "ran": 1795197996241,
+            "completed": 1795197996344
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 683,
+        "output": 50,
+        "reasoning": 0,
+        "cache": {
+          "read": 19456,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa238d49001YwpWgeg3EISj5N",
+      "time": {
+        "created": 1795197996370,
+        "firstToken": 1795197999444,
+        "streamed": 1795198013782,
+        "completed": 1795198013794
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "Los nombres de métodos de test no pueden contener espacios — \"coma flotante\" tiene espacios. Corrijo el nombre del método.",
+          "native": {
+            "reasoningField": "reasoning"
+          },
+          "time": {
+            "created": 1795197999446,
+            "completed": 1795198013771
+          }
+        },
+        {
+          "type": "text",
+          "text": "Un nombre de método con espacios no es válido en Python; lo corrijo:"
+        },
+        {
+          "type": "tool",
+          "id": "NTgeAcCAR",
+          "name": "edit",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-YEm7YZf4/tests/test_cart.py",
+              "oldString": "    def test_sum_exacta_sin_error_de coma_flotante(self):",
+              "newString": "    def test_suma_exacta_sin_error_de_coma_flotante(self):"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Edited tests/test_cart.py (1 replacement)"
+              }
+            ],
+            "metadata": {
+              "files": [
+                {
+                  "file": "tests/test_cart.py",
+                  "patch": "Index: tests/test_cart.py\n===================================================================\n--- tests/test_cart.py\n+++ tests/test_cart.py\n@@ -52,9 +52,9 @@\n     )\n \n \n class TestMoney(unittest.TestCase):\n-    def test_sum_exacta_sin_error_de coma_flotante(self):\n+    def test_suma_exacta_sin_error_de_coma_flotante(self):\n         self.assertEqual(Money.from_amount(\"0.1\") + Money.from_amount(\"0.2\"), Money.from_amount(\"0.3\"))\n \n     def test_multiplicacion_por_cantidad(self):\n         self.assertEqual(Money.from_amount(\"9.99\") * 3, Money.from_amount(\"29.97\"))\n",
+                  "status": "modified",
+                  "additions": 1,
+                  "deletions": 1
+                }
+              ],
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795198013706,
+            "ran": 1795198013776,
+            "completed": 1795198013792
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 426,
+        "output": 117,
+        "reasoning": 0,
+        "cache": {
+          "read": 19968,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa23d16e001Coda5LQmgU6bzB",
+      "time": {
+        "created": 1795198013812,
+        "firstToken": 1795198015752,
+        "streamed": 1795198015837,
+        "completed": 1795198015959
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "tool",
+          "id": "KDrCpBsjW",
+          "name": "shell",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "cd /var/tmp/bench/ws-YEm7YZf4 && python3 -m unittest discover -s tests -v 2>&1 | tail -35",
+              "timeout": 120000
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "test_anadir_acumula_cantidad (test_cart.TestCartDomain.test_anadir_acumula_cantidad) ... ok\ntest_anadir_y_total (test_cart.TestCartDomain.test_anadir_y_total) ... ok\ntest_eventos_se_acumulan_y_drenan (test_cart.TestCartDomain.test_eventos_se_acumulan_y_drenan) ... ok\ntest_limite_productos_distintos (test_cart.TestCartDomain.test_limite_productos_distintos) ... ok\ntest_quitar_item_que_no_existe (test_cart.TestCartDomain.test_quitar_item_que_no_existe) ... ok\ntest_stock_insuficiente (test_cart.TestCartDomain.test_stock_insuficiente) ... ok\ntest_thread_safety_basico (test_cart.TestCartDomain.test_thread_safety_basico) ... ok\ntest_carrito_inexistente (test_cart.TestCartService.test_carrito_inexistente) ... ok\ntest_checkout_vacio (test_cart.TestCartService.test_checkout_vacio) ... ok\ntest_concurrencia_en_servicio (test_cart.TestCartService.test_concurrencia_en_servicio) ... ok\ntest_descuento_fijo_no_supera_subtotal (test_cart.TestCartService.test_descuento_fijo_no_supera_subtotal) ... ok\ntest_eventos_publicados_tras_persistir (test_cart.TestCartService.test_eventos_publicados_tras_persistir) ... ok\ntest_flujo_completo (test_cart.TestCartService.test_flujo_completo) ... ok\ntest_merge_carts (test_cart.TestCartService.test_merge_carts) ... ok\ntest_producto_desconocido (test_cart.TestCartService.test_producto_desconocido) ... ok\ntest_stock_limita_en_servicio (test_cart.TestCartService.test_stock_limita_en_servicio) ... ok\ntest_update_y_remove (test_cart.TestCartService.test_update_y_remove) ... ok\ntest_divisas_distintas_no_se_suman (test_cart.TestMoney.test_divisas_distintas_no_se_suman) ... ok\ntest_multiplicacion_por_cantidad (test_cart.TestMoney.test_multiplicacion_por_cantidad) ... ok\ntest_porcentaje (test_cart.TestMoney.test_porcentaje) ... ok\ntest_suma_exacta_sin_error_de_coma_flotante (test_cart.TestMoney.test_suma_exacta_sin_error_de_coma_flotante) ... ok\ntest_persistencia_real (test_cart.TestSqliteRepository.test_persistencia_real) ... ok\ntest_cantidad_invalida (test_cart.TestValueObjects.test_cantidad_invalida) ... ok\ntest_sku_vacio_invalido (test_cart.TestValueObjects.test_sku_vacio_invalido) ... ok\n\n----------------------------------------------------------------------\nRan 24 tests in 0.011s\n\nOK\n"
+              }
+            ],
+            "metadata": {
+              "status": "completed",
+              "truncated": false,
+              "exit": 0
+            }
+          },
+          "time": {
+            "created": 1795198015753,
+            "ran": 1795198015835,
+            "completed": 1795198015957
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 525,
+        "output": 50,
+        "reasoning": 0,
+        "cache": {
+          "read": 19968,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa23d9e40015wN82MNqhXXalX",
+      "time": {
+        "created": 1795198015978,
+        "firstToken": 1795198017500,
+        "streamed": 1795198019358,
+        "completed": 1795198019460
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "All 24 tests pass. Now run the demo CLI, both in-memory and SQLite modes.",
+          "native": {
+            "reasoningField": "reasoning"
+          },
+          "time": {
+            "created": 1795198017502,
+            "completed": 1795198019345
+          }
+        },
+        {
+          "type": "text",
+          "text": "Los 24 tests pasan. Ahora pruebo la demo en memoria y con persistencia SQLite:"
+        },
+        {
+          "type": "tool",
+          "id": "dee4OfVCx",
+          "name": "shell",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "cd /var/tmp/bench/ws-YEm7YZf4 && python3 demo_cli.py",
+              "timeout": 60000
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "== Crear carrito y añadir productos ==\n    [evento] CartCreated\nCarrito ec68246173c241898ffc85c4e9cfd7a5\n    [evento] ItemAdded\n    [evento] ItemAdded\n    [evento] ItemAdded\n    [evento] ItemQuantityUpdated\n\n== Recibo previo (con descuento del 10% e IVA 21%) ==\nRecibo del carrito ec68246173c241898ffc85c4e9cfd7a5\n  CAM-ORG  Camiseta orgánica  x2 @ 14.95 EUR = 29.90 EUR\n  LIBRO-PY  Python a fondo  x2 @ 29.99 EUR = 59.98 EUR\n  TAZA-LOG  Taza con logo  x1 @ 7.50 EUR = 7.50 EUR\n  Subtotal : 97.38 EUR\n  Descuento: -9.74 EUR\n  Impuestos: 18.40 EUR\n  TOTAL    : 106.04 EUR\n\n== Actualizar cantidad ==\n    [evento] ItemQuantityUpdated\nRecibo del carrito ec68246173c241898ffc85c4e9cfd7a5\n  CAM-ORG  Camiseta orgánica  x2 @ 14.95 EUR = 29.90 EUR\n  LIBRO-PY  Python a fondo  x2 @ 29.99 EUR = 59.98 EUR\n  TAZA-LOG  Taza con logo  x3 @ 7.50 EUR = 22.50 EUR\n  Subtotal : 112.38 EUR\n  Descuento: -11.24 EUR\n  Impuestos: 21.24 EUR\n  TOTAL    : 122.38 EUR\n\n== Checkout ==\n    [evento] CartCheckedOut\n    [evento] CartCleared\nRecibo del carrito ec68246173c241898ffc85c4e9cfd7a5\n  CAM-ORG  Camiseta orgánica  x2 @ 14.95 EUR = 29.90 EUR\n  LIBRO-PY  Python a fondo  x2 @ 29.99 EUR = 59.98 EUR\n  TAZA-LOG  Taza con logo  x3 @ 7.50 EUR = 22.50 EUR\n  Subtotal : 112.38 EUR\n  Descuento: -11.24 EUR\n  Impuestos: 21.24 EUR\n  TOTAL    : 122.38 EUR\nCarrito tras checkout: vacío = True\n"
+              }
+            ],
+            "metadata": {
+              "status": "completed",
+              "truncated": false,
+              "exit": 0
+            }
+          },
+          "time": {
+            "created": 1795198019251,
+            "ran": 1795198019348,
+            "completed": 1795198019429
+          }
+        },
+        {
+          "type": "tool",
+          "id": "fFo68v5BU",
+          "name": "shell",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "cd /var/tmp/bench/ws-YEm7YZf4 && python3 demo_cli.py /tmp/opencode/demo-carts.db && ls -la /tmp/opencode/demo-carts.db",
+              "timeout": 60000
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "== Crear carrito y añadir productos ==\n    [evento] CartCreated\nCarrito 07c4a440cd4f4a27aad857665fb4d245\n    [evento] ItemAdded\n    [evento] ItemAdded\n    [evento] ItemAdded\n    [evento] ItemQuantityUpdated\n\n== Recibo previo (con descuento del 10% e IVA 21%) ==\nRecibo del carrito 07c4a440cd4f4a27aad857665fb4d245\n  CAM-ORG  Camiseta orgánica  x2 @ 14.95 EUR = 29.90 EUR\n  LIBRO-PY  Python a fondo  x2 @ 29.99 EUR = 59.98 EUR\n  TAZA-LOG  Taza con logo  x1 @ 7.50 EUR = 7.50 EUR\n  Subtotal : 97.38 EUR\n  Descuento: -9.74 EUR\n  Impuestos: 18.40 EUR\n  TOTAL    : 106.04 EUR\n\n== Actualizar cantidad ==\n    [evento] ItemQuantityUpdated\nRecibo del carrito 07c4a440cd4f4a27aad857665fb4d245\n  CAM-ORG  Camiseta orgánica  x2 @ 14.95 EUR = 29.90 EUR\n  LIBRO-PY  Python a fondo  x2 @ 29.99 EUR = 59.98 EUR\n  TAZA-LOG  Taza con logo  x3 @ 7.50 EUR = 22.50 EUR\n  Subtotal : 112.38 EUR\n  Descuento: -11.24 EUR\n  Impuestos: 21.24 EUR\n  TOTAL    : 122.38 EUR\n\n== Checkout ==\n    [evento] CartCheckedOut\n    [evento] CartCleared\nRecibo del carrito 07c4a440cd4f4a27aad857665fb4d245\n  CAM-ORG  Camiseta orgánica  x2 @ 14.95 EUR = 29.90 EUR\n  LIBRO-PY  Python a fondo  x2 @ 29.99 EUR = 59.98 EUR\n  TAZA-LOG  Taza con logo  x3 @ 7.50 EUR = 22.50 EUR\n  Subtotal : 112.38 EUR\n  Descuento: -11.24 EUR\n  Impuestos: 21.24 EUR\n  TOTAL    : 122.38 EUR\nCarrito tras checkout: vacío = True\n\n(Datos persistidos en /tmp/opencode/demo-carts.db)\n-rw-r--r-- 1 root root 12288 Nov 20 18:06 /tmp/opencode/demo-carts.db\n"
+              }
+            ],
+            "metadata": {
+              "status": "completed",
+              "truncated": false,
+              "exit": 0
+            }
+          },
+          "time": {
+            "created": 1795198019253,
+            "ran": 1795198019351,
+            "completed": 1795198019458
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "tool_calls",
+      "cost": 0,
+      "tokens": {
+        "input": 672,
+        "output": 131,
+        "reasoning": 0,
+        "cache": {
+          "read": 20480,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa23e78f001meuzqZAQsqGRuz",
+      "time": {
+        "created": 1795198019477,
+        "firstToken": 1795198020925,
+        "streamed": 1795198028829,
+        "completed": 1795198028831
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "mistral-large-4",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "Todo funciona. Estructura final creada en `/var/tmp/bench/ws-YEm7YZf4`:\n\n```\ncart/\n├── domain/\n│   ├── value_objects.py    # Money (céntimos enteros, sin coma flotante), SKU, Quantity\n│   ├── entities.py         # Product, CartItem, Cart (thread-safe, con eventos de dominio)\n│   ├── events.py           # EventBus seguro entre hilos + 7 tipos de eventos\n│   └── exceptions.py       # errores de dominio tipados\n├── application/\n│   ├── ports.py            # protocolos CartRepository y ProductCatalog\n│   ├── pricing.py          # PricingEngine con estrategias enchufables (descuentos/impuestos)\n│   └── services.py         # CartService: crear, añadir, actualizar, quitar, tasar, checkout, merge\n└── infrastructure/\n    └── repositories.py     # adaptadores: InMemory y SQLite (JSON por carrito)\ntests/test_cart.py          # 24 tests (todos en verde)\ndemo_cli.py                 # demo ejecutable (memoria o SQLite)\nREADME.md\n```\n\n**Puntos clave de escalabilidad:**\n\n- **Arquitectura hexagonal**: el caso de uso (`CartService`) depende solo de protocolos (`ports.py`). Para cambiar a Redis/PostgreSQL/API basta implementar `CartRepository`/`ProductCatalog`; para añadir una promoción o un impuesto basta implementar `DiscountStrategy`/`TaxStrategy` y enchufarlo al `PricingEngine` — sin tocar el carrito.\n- **Eventos de dominio**: `CartCreated`, `ItemAdded`, `CartCheckedOut`, etc. Se publican *después* de persistir vía `EventBus`, con handlers aislados (uno que falla no rompe la operación) — ideal para enchufar auditoría, emails o métricas.\n- **Dinero exacto**: `Money` almacena céntimos (`0.1 + 0.2 == 0.3`), con redondeo half-up en porcentajes y contrôle de divisas.\n- **Seguridad y reglas de negocio**: locks internos en carrito/repositorios (test de concurrencia con 8 hilos pasando), límites de stock, de unidades por línea y de SKUs distintos por carrito.\n\n**Verificación**: `python3 -m unittest discover -s tests -v` → 24 tests OK; `python3 demo_cli.py` (y con ruta SQLite) ejecuta el flujo completo mostrando eventos, recibo con descuento del 10% + IVA 21% y checkout."
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 1395,
+        "output": 520,
+        "reasoning": 0,
+        "cache": {
+          "read": 20992,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fa240c220012KLjXqgO84Hss7",
+      "time": {
+        "created": 1795198028834
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

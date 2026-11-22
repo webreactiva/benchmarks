@@ -6,6 +6,8 @@
 #   /tmp        vacío      (ni las carpetas de trabajo de otros, ni el scratchpad de quien lo dirige)
 #   /root       vacío salvo .ccr (certificados del proxy, solo lectura) y <dir-config> (su configuración)
 #   /proc       solo sus procesos
+# Con TOKEN_CLAUDE=1 (lo pone lanzar-claude.sh) y si existe, monta además de solo lectura el login de Claude Code en la
+# nube (/home/claude/.claude/remote/.oauth_token), en la misma ruta: sin él, Claude Code interactivo dice «Not logged in».
 # La carpeta de trabajo vive en /var/tmp/bench/ws-XXXX y se vuelve a montar en la misma ruta.
 set -eu
 ws=$1 conf=$2; shift 2
@@ -25,10 +27,13 @@ if [ "$(uname)" = Darwin ]; then
   exec sandbox-exec -p "$perfil" "$@"
 fi
 [ "$(id -u)" = 0 ] || { echo "encierro.sh necesita root"; exit 1; }
+tok=/home/claude/.claude/remote/.oauth_token
+[ "${TOKEN_CLAUDE:-}" = 1 ] && [ -f "$tok" ] || tok=
 exec unshare --mount --propagation private --pid --fork --mount-proc bash -c '
   set -e
-  ws=$1 conf=$2; shift 2
+  ws=$1 conf=$2 tok=$3; shift 3
   mkdir -p /run/.enc/ws /run/.enc/conf /run/.enc/ccr
+  [ -n "$tok" ] && touch /run/.enc/tok && mount --bind "$tok" /run/.enc/tok
   mount --rbind "$ws" /run/.enc/ws
   mount --rbind "$conf" /run/.enc/conf
   mount --rbind /root/.ccr /run/.enc/ccr
@@ -41,6 +46,10 @@ exec unshare --mount --propagation private --pid --fork --mount-proc bash -c '
   mount --move /run/.enc/ws "$ws"
   mount --move /run/.enc/conf "$conf"
   mount --move /run/.enc/ccr /root/.ccr && mount -o remount,bind,ro /root/.ccr
+  if [ -n "$tok" ]; then
+    mkdir -p "$(dirname "$tok")" && touch "$tok"
+    mount --move /run/.enc/tok "$tok" && mount -o remount,bind,ro "$tok"
+  fi
   cd "$ws"
   exec "$@"
-' encierro "$ws" "$conf" "$@"
+' encierro "$ws" "$conf" "$tok" "$@"

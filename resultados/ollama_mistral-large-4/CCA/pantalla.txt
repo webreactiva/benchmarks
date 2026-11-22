@@ -1,0 +1,36 @@
+   Carrito de la compra escalabl +
+     │   └── exceptions.py       # errores de dominio tipados
+     ├── application/
+     │   ├── ports.py            # protocolos CartRepository y ProductCatalog
+     │   ├── pricing.py          # PricingEngine con estrategias enchufables (descuentos/impuestos)
+     │   └── services.py         # CartService: crear, añadir, actualizar, quitar, tasar, checkout, merge
+     └── infrastructure/
+         └── repositories.py     # adaptadores: InMemory y SQLite (JSON por carrito)
+     tests/test_cart.py          # 24 tests (todos en verde)
+     demo_cli.py                 # demo ejecutable (memoria o SQLite)
+     README.md
+
+     Puntos clave de escalabilidad:
+
+     - Arquitectura hexagonal: el caso de uso (CartService) depende solo de protocolos (ports.py). Para cambiar a
+       Redis/PostgreSQL/API basta implementar CartRepository/ProductCatalog; para añadir una promoción o un impuesto
+       basta implementar DiscountStrategy/TaxStrategy y enchufarlo al PricingEngine — sin tocar el carrito.
+     - Eventos de dominio: CartCreated, ItemAdded, CartCheckedOut, etc. Se publican después de persistir vía EventBus,
+       con handlers aislados (uno que falla no rompe la operación) — ideal para enchufar auditoría, emails o métricas.
+     - Dinero exacto: Money almacena céntimos (0.1 + 0.2 == 0.3), con redondeo half-up en porcentajes y contrôle de
+       divisas.
+     - Seguridad y reglas de negocio: locks internos en carrito/repositorios (test de concurrencia con 8 hilos
+       pasando), límites de stock, de unidades por línea y de SKUs distintos por carrito.
+
+     Verificación: python3 -m unittest discover -s tests -v → 24 tests OK; python3 demo_cli.py (y con ruta SQLite)
+     ejecuta el flujo completo mostrando eventos, recibo con descuento del 10% + IVA 21% y checkout.
+
+     Build · mistral-large-4 · 16m 52s · 39.7 tok/s · 2.0s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · mistral-large-4 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-YEm7YZf4                                                               22.9K (2%)  ctrl+p commands
+

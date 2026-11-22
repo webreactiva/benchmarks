@@ -1,0 +1,22 @@
+{
+  "nota": 10,
+  "veredicto": "escala de verdad, sin adornos",
+  "rubrica": {
+    "se ejecuta": 1,
+    "tests en verde": 1,
+    "dominio completo": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 1,
+    "concurrencia": 2,
+    "escala horizontal": 2,
+    "explica el escalado": 1
+  },
+  "resumen": "Servicio HTTP en Node sin estado con los carritos en Redis: cada escritura es un script Lua atómico, así que 50 altas a la vez repartidas entre dos instancias con el mismo Redis guardan las 50; dinero en céntimos, precio siempre del catálogo y validación estricta. Pasa 21 tests contra un Redis real y el README explica cada decisión de escalado, pero el dominio es el mínimo: ni stock, ni descuentos, ni checkout.",
+  "rarezas": [
+    "Miró qué había en la máquina, vio redis-server y lo arrancó para probar contra un Redis real en vez de quedarse con la memoria.",
+    "Los 21 tests pasaron a la primera; luego levantó dos réplicas contra el mismo Redis y comprobó con curl que 40 altas repartidas dejaban 40.",
+    "Dice que no ha probado el Dockerfile ni el docker-compose.",
+    "Entrega node_modules junto al código.",
+    "3 minutos y 6 peticiones: 20 000 tokens de salida y 295 000 en total (245 000 de caché)."
+  ]
+}

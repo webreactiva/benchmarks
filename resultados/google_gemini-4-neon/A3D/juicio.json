@@ -1,0 +1,18 @@
+{
+  "nota": 9,
+  "veredicto": "se recorre y se reconoce",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  },
+  "resumen": "Ruta guiada a pie de calle por siete paradas con three.js, que arranca sola, con modos de órbita, paseo libre y panorámica, minimapa y tres luces; se reconocen el patio circular de Carlos V, el pórtico de Arrayanes con Comares, el templete de los Leones y la acequia del Generalife, y las fichas son correctas. Pero en el Generalife los chorros de agua se ven como cuadrados blancos que tapan media pantalla.",
+  "rarezas": [
+    "Tercera tirada: las dos primeras se cortaron con «Network connection lost» porque Neon piensa más de 6 min antes de escribir el HTML (en _descartados/). Esta fue por AI Studio estándar con SALIDA_MAX=65536 y también tuvo cortes, pero los reintentos salieron y la sesión terminó; meta.json guarda el último error.",
+    "Escribió los 103 KB de una vez y revisó el JavaScript con node varias veces; no lo abrió en un navegador.",
+    "19 peticiones, 1 millón de tokens (860 000 de caché), 1,28 $."
+  ]
+}

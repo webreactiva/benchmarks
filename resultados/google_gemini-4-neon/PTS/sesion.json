@@ -1,0 +1,263 @@
+{
+  "info": {
+    "id": "ses_e0504397dffeAtM2AXljPOqyye",
+    "projectID": "e2fed7df7b73341d34129f490ee0f0821cb7504a",
+    "agent": "build",
+    "model": {
+      "id": "google/gemini-4-neon",
+      "providerID": "or",
+      "variant": "default"
+    },
+    "cost": 0.0856680165,
+    "tokens": {
+      "input": 10955,
+      "output": 2498,
+      "reasoning": 987,
+      "cache": {
+        "read": 9289,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1795212166808,
+      "updated": 1795212228589,
+      "busy": 1795212166912,
+      "idle": 1795212228595,
+      "viewed": 1795212228595
+    },
+    "location": {
+      "directory": "/var/tmp/bench/ws-9L9o9z1a"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_1fafbc688001k0m0LAI33euwzo",
+      "time": {
+        "created": 1795212166931
+      },
+      "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1fafbc730001MH2jpUFO0BoXok",
+      "time": {
+        "created": 1795212166969,
+        "firstToken": 1795212174058,
+        "streamed": 1795212174075,
+        "completed": 1795212174084
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "google/gemini-4-neon",
+        "providerID": "or",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "",
+          "native": {
+            "reasoningDetails": [
+              {
+                "type": "reasoning.encrypted",
+                "data": "EpICCo8CAWkUfRMdIEex6alV2Mjlq5SmakF4/oZoUlwhGegS9dwtsfO5DhtpJygaujF/A5e15yOLmrKveAIl4hJRSoCJsV+3/9t1ifhl5FpO//oYDGCz4mI3bQGKO2MKI9cyciMY0vc8R90TCeArFeOr6l+kbDoesAABaLn6T501MOFYiEbMnXLW+gFsXhfh0XmpNKazARsDfs//QhfcwrXSJkR02Bap4aJZPJt2UkWn01Acyt1BcZs7ACN81E0iNPgatKm43gs/wJ7eIAiRZL8Ub3Dy9LjvEOBcjLRXTa2h/PtLt4U4SFzlEwYbEqrHpXt5Xmp6OaO79cbBFf3fuzYaFz4Cfpb6xcBC8+q+F3qt8rwNMA==.eyJlbmRwb2ludF9zbHVnIjoiZ29vZ2xlL2dlbWluaS00LW5lb24tMjAyNjExMTh8Z29vZ2xlLWFpLXN0dWRpbyJ9",
+                "id": "call_12408693925541135465",
+                "format": "google-gemini-v1",
+                "index": 0
+              }
+            ]
+          },
+          "time": {
+            "created": 1795212174061,
+            "completed": 1795212174068
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_12408693925541135465",
+          "name": "read",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "path": "/var/tmp/bench/ws-9L9o9z1a"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Read directory /var/tmp/bench/ws-9L9o9z1a, 0 entries"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795212174063,
+            "ran": 1795212174073,
+            "completed": 1795212174081
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "STOP",
+      "cost": 0.01761507,
+      "tokens": {
+        "input": 5621,
+        "output": 36,
+        "reasoning": 26,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fafbe30e001yK0gdMln5ywXgF",
+      "time": {
+        "created": 1795212174100,
+        "firstToken": 1795212181168,
+        "streamed": 1795212218696,
+        "completed": 1795212218707
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "google/gemini-4-neon",
+        "providerID": "or",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "**Planning a Compelling Post**\n\nI'm starting to plan the blog post. I will address why failing tests can be worse than no tests, focusing on structure, engagement, and realistic viewpoints. The goal is an insightful and compelling post that resonates with readers.\n\n\n**Crafting the Narrative**\n\nI'm now outlining the blog post in Spanish, focusing on \"tests que fallan a veces.\" The goal is to hook readers with a relatable scenario—the \"re-run\" reflex—then explore why this is worse than having no tests. My structure will include a section on the cost of these tests, specifically highlighting the desensitization that leads to bugs slipping into production.\n\n\n**Analyzing Test Flakiness**\n\nI'm now diving deeper into the specifics of flaky tests. I'm considering the lost time and context from blocked PRs and disrupted workflows. Furthermore, I'm thinking about the resulting cultural degradation, where new tests are abandoned, or existing ones are carelessly bypassed. Finally, I'm exploring how these tests can mask actual concurrency or state bugs.\n\n\n**Outlining Solutions for Tests**\n\nI'm now outlining actionable solutions. My focus is \"zero tolerance\": address flaky tests immediately or remove them with an associated ticket. I'm also planning to explore pre-emptive detection (running new tests multiple times in CI), resisting the temptation of endless retries, and designing for determinism. The key takeaway, ultimately, will be that a small, reliable test suite is more valuable than a huge, untrusted one.\n\n\n",
+          "native": {
+            "reasoningField": "reasoning",
+            "reasoningDetails": [
+              {
+                "type": "reasoning.text",
+                "text": "**Planning a Compelling Post**\n\nI'm starting to plan the blog post. I will address why failing tests can be worse than no tests, focusing on structure, engagement, and realistic viewpoints. The goal is an insightful and compelling post that resonates with readers.\n\n\n**Crafting the Narrative**\n\nI'm now outlining the blog post in Spanish, focusing on \"tests que fallan a veces.\" The goal is to hook readers with a relatable scenario—the \"re-run\" reflex—then explore why this is worse than having no tests. My structure will include a section on the cost of these tests, specifically highlighting the desensitization that leads to bugs slipping into production.\n\n\n**Analyzing Test Flakiness**\n\nI'm now diving deeper into the specifics of flaky tests. I'm considering the lost time and context from blocked PRs and disrupted workflows. Furthermore, I'm thinking about the resulting cultural degradation, where new tests are abandoned, or existing ones are carelessly bypassed. Finally, I'm exploring how these tests can mask actual concurrency or state bugs.\n\n\n**Outlining Solutions for Tests**\n\nI'm now outlining actionable solutions. My focus is \"zero tolerance\": address flaky tests immediately or remove them with an associated ticket. I'm also planning to explore pre-emptive detection (running new tests multiple times in CI), resisting the temptation of endless retries, and designing for determinism. The key takeaway, ultimately, will be that a small, reliable test suite is more valuable than a huge, untrusted one.\n\n\n",
+                "format": "google-gemini-v1",
+                "index": 0
+              },
+              {
+                "type": "reasoning.encrypted",
+                "data": "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.eyJlbmRwb2ludF9zbHVnIjoiZ29vZ2xlL2dlbWluaS00LW5lb24tMjAyNjExMTh8Z29vZ2xlLWFpLXN0dWRpbyJ9",
+                "id": "call_5632096808240629262",
+                "format": "google-gemini-v1",
+                "index": 0
+              }
+            ]
+          },
+          "time": {
+            "created": 1795212181170,
+            "completed": 1795212218687
+          }
+        },
+        {
+          "type": "tool",
+          "id": "call_5632096808240629262",
+          "name": "write",
+          "executed": false,
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "# Por qué los tests que fallan a veces son peores que no tener tests\n\nTodos conocemos esa escena.\n\nAbres un *pull request* con un cambio trivial —has corregido una errata en un mensaje de error o ajustado un margen en CSS—, esperas diez minutos a que termine el CI y aparece la temida cruz roja. Entras a ver el log. Ha fallado un test de integración del módulo de facturación que no has tocado en tu vida.\n\nLe preguntas a un compañero por Slack. Su respuesta llega en cinco segundos:\n\n> *\"Ah, sí, ese falla a veces. Dale a **Re-run** y pasa.\"*\n\nLe das al botón. Diez minutos después está todo en verde. Haces *merge* y sigues con tu día.\n\nParece una molestia menor, un pequeño peaje del desarrollo de software moderno. Pero no lo es. Ese momento inocente es el síntoma de uno de los problemas más corrosivos que puede sufrir un equipo de ingeniería: los **tests intermitentes** (o *flaky tests*).\n\nY aunque suene contraintuitivo, convivir con ellos es objetivamente peor que no tener esos tests en absoluto.\n\n---\n\n## La diferencia entre no tener red y tener una red rota\n\nCuando un proyecto no tiene tests, la situación es mala, pero al menos es honesta. Todo el equipo sabe que camina sin red. Revisas los cambios con más cuidado, pruebas manualmente los flujos críticos antes de desplegar y eres consciente del riesgo que asumes.\n\nUn test que falla de forma aleatoria rompe ese contrato. Promete darte una señal binaria —*funciona* o *está roto*— y en su lugar te devuelve ruido. Y en ingeniería, el ruido disfrazado de señal es mucho más peligroso que el silencio.\n\n### 1. El síndrome de «que viene el lobo»\n\nEl único valor real de una suite de tests es la **confianza** que depositas en su veredicto. Cuando el CI se pone rojo, tu reacción instintiva debería ser: *\"He roto algo, voy a ver qué es\"*.\n\nCuando el equipo se acostumbra a los fallos intermitentes, esa reacción desaparece y es reemplazada por otra: *\"Otra vez el CI haciendo el tonto, vamos a relanzarlo\"*.\n\nEn el momento en que pulsar *Re-run* se vuelve un reflejo automático, tu suite ha dejado de protegerte. Tarde o temprano, un test fallará por un bug real, alguien asumirá que es el fallo de siempre, insistirá hasta que pase (o lo ignorará) y el error llegará a producción.\n\n### 2. Un impuesto invisible sobre el tiempo y la concentración\n\nUn solo test con un 5% de probabilidad de fallo parece inofensivo sobre el papel. Sin embargo, las matemáticas no perdonan: si tienes 20 tests así en tu suite, la probabilidad de que una ejecución completa pase a la primera cae al **36%**. Casi dos de cada tres *builds* fallarán sin motivo.\n\nEl coste no son solo los minutos extra de CI:\n\n- **Cambios de contexto constantes:** dejas lo que estás haciendo para investigar un error que no existe.\n- **Cuellos de botella en los despliegues:** *hotfixes* urgentes bloqueados esperando a que la ruleta del CI salga verde.\n- **Fricción innecesaria en las revisiones:** los *pull requests* se quedan atascados durante horas por causas ajenas al código revisado.\n\n### 3. La erosión de la cultura de testing\n\nLos tests inestables son contagiosos a nivel cultural. Cuando un desarrollador nuevo llega al equipo y ve que la mitad de los fallos del CI se ignoran, aprende rápido una lección tóxica: *los tests aquí son un trámite burocrático, no una herramienta útil*.\n\nA partir de ahí, todo va cuesta abajo:\n\n- La gente deja de escribir tests completos porque «solo dan problemas».\n- Los tests existentes dejan de mantenerse.\n- Cuando un fallo es legítimo pero difícil de depurar, aumenta la tentación de marcarlo como `skip` o «arreglarlo» añadiendo un `sleep(2000)` que empeora el problema.\n\n### 4. Esconden bugs reales de producción\n\nEste es el daño menos obvio y, a veces, el más caro. No todos los tests *flaky* son tests mal escritos. A menudo, un test que falla una de cada veinte veces está destapando una **condición de carrera**, un problema de concurrencia o un fallo de ordenación real en tu código de producción.\n\nSi tu reflejo es darle a *Re-run* hasta que se ponga verde, no solo estás ignorando el test: estás silenciando la única alarma que te avisaba de un bug que tus usuarios van a sufrir de forma aleatoria en producción.\n\n---\n\n## De dónde salen casi siempre los tests inestables\n\nAunque cada proyecto tiene sus particularidades, la gran mayoría de los tests intermitentes se explican por un puñado de causas muy concretas:\n\n1. **Dependencia del tiempo real:** usar `sleep` o `setTimeout` esperando que una operación asíncrona «ya habrá terminado para entonces». En tu portátil tarda 50 ms; en un *runner* saturado del CI tarda 400 ms y el test explota. Lo mismo ocurre con fechas sin congelar (`Date.now()`, cambios de día a medianoche o zonas horarias).\n2. **Estado compartido entre tests:** un test deja registros en la base de datos, muta una variable global o ensucia una caché, y el siguiente test solo pasa si se ejecuta en un orden concreto.\n3. **Asincronía mal sincronizada:** comprobar el resultado de una interfaz o de una cola de mensajes antes de que el evento haya terminado de procesarse, en lugar de esperar explícitamente a la condición esperada.\n4. **Dependencias externas reales:** llamadas a servicios de terceros, red inestable o ficheros compartidos fuera del control del test.\n5. **Aleatoriedad sin semilla fija:** generar datos aleatorios (como *fakers* de usuarios o importes) que ocasionalmente producen un caso límite no contemplado por las aserciones.\n\nUn ejemplo clásico en JavaScript:\n\n```js\n// Frágil: depende de la velocidad de la máquina\ntest(\"muestra la notificación tras guardar\", async () => {\n  clickSaveButton();\n  await sleep(300);\n  expect(screen.queryByText(\"Guardado\")).toBeInTheDocument();\n});\n\n// Determinista: espera explícitamente a la condición con un timeout razonable\ntest(\"muestra la notificación tras guardar\", async () => {\n  clickSaveButton();\n  expect(await screen.findByText(\"Guardado\")).toBeInTheDocument();\n});\n```\n\nLa diferencia parece mínima, pero una versión apuesta contra la carga de la CPU y la otra espera a que ocurra lo que de verdad importa.\n\n---\n\n## Qué hacer en lugar de convivir con ellos\n\nAceptar los tests intermitentes como «algo normal» es una decisión, no una fatalidad. Si quieres recuperar la confianza en tu suite, hacen falta medidas firmes:\n\n### Trata un test *flaky* como un bug prioritario (o bórralo)\n\nSi un test falla sin que haya cambiado el código, solo hay dos salidas aceptables a corto plazo: **arreglarlo hoy** o **sacarlo de la suite principal** (ponerlo en cuarentena o eliminarlo) mientras se investiga.\n\nA mucha gente le cuesta borrar un test porque siente que pierde cobertura. Pero un test que miente no aporta cobertura: aporta ruido y destruye la credibilidad del resto de la suite. Prefiere 100 tests en los que el equipo confíe al 100% antes que 1.000 de los que nadie se fíe.\n\n### Cuidado con los reintentos automáticos (`retries`)\n\nConfigurar el *test runner* para reintentar automáticamente los tests fallidos es muy tentador. El CI vuelve a estar verde de la noche a la mañana.\n\nEl problema es que los reintentos son un analgésico, no una cura:\n\n- Si no registras y monitorizas qué tests necesitaron reintento, el problema simplemente se vuelve invisible.\n- Multiplican el tiempo de ejecución del CI cuando hay fallos reales.\n- Tapan condiciones de carrera en el código de producción.\n\nSi usas reintentos en tests *end-to-end* por razones prácticas, asegúrate de que cada reintento dispare una métrica o una alerta para corregir el test cuanto antes.\n\n### Estresa los tests nuevos antes de hacer *merge*\n\nEl mejor momento para cazar un test inestable es antes de que entre en la rama principal. Ejecutar los tests nuevos o modificados 10 o 20 veces seguidas en el CI (o en local) suele bastar para sacar a la luz dependencias de tiempo o estado compartido cuando todavía tienes todo el contexto en la cabeza.\n\n### Diseña pensando en el determinismo\n\n- **Inyecta el reloj:** controla las fechas y horas en los tests en lugar de depender del reloj del sistema.\n- **Aísla cada test:** cada caso debe crear sus propios datos y limpiar su propio estado, de modo que pueda ejecutarse solo, en paralelo o en cualquier orden.\n- **Usa semillas fijas** si generas datos aleatorios, e imprime la semilla en el log si el test falla para poder reproducirlo exactamente.\n- **Empuja la lógica hacia abajo:** cuanto más dependas de tests pesados de navegador para verificar reglas de negocio, mayor será la superficie de inestabilidad.\n\n---\n\n## En resumen\n\nUna suite de tests es un sistema de alarma contra incendios. Si no tienes alarma, al menos sabes que tienes que vigilar la cocina. Pero si tienes una alarma que suena cada dos días porque sí, acabarás quitándole las pilas.\n\nLa próxima vez que alguien te diga *\"dale a re-run y ya pasa\"*, no lo normalices. Ese botón no está arreglando tu CI: está entrenando a tu equipo para ignorar sus propias pruebas. Y cuando nadie cree en los tests, ya da igual cuántos tengas.\n",
+              "path": "/var/tmp/bench/ws-9L9o9z1a/por-que-los-tests-flaky-son-peores-que-no-tener-tests.md"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Created file successfully: por-que-los-tests-flaky-son-peores-que-no-tener-tests.md"
+              }
+            ],
+            "metadata": {
+              "truncated": false
+            }
+          },
+          "time": {
+            "created": 1795212218683,
+            "ran": 1795212218693,
+            "completed": 1795212218704
+          }
+        }
+      ],
+      "finish": "tool-calls",
+      "rawFinish": "STOP",
+      "cost": 0.0534966795,
+      "tokens": {
+        "input": 2154,
+        "output": 2271,
+        "reasoning": 865,
+        "cache": {
+          "read": 3567,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fafc915f001vwGkBEUWbfIP8O",
+      "time": {
+        "created": 1795212218725,
+        "firstToken": 1795212226867,
+        "streamed": 1795212228586,
+        "completed": 1795212228589
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "google/gemini-4-neon",
+        "providerID": "or",
+        "variant": "default"
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "He escrito el artículo y lo he guardado en `por-que-los-tests-flaky-son-peores-que-no-tener-tests.md`.\n\nEl post cubre:\n- **El problema de la confianza:** por qué el ruido disfrazado de señal (el reflejo de pulsar *Re-run*) erosiona la utilidad de toda la suite.\n- **El coste oculto:** impacto en el tiempo de CI, cambios de contexto, degradación cultural y ocultación de bugs reales de concurrencia.\n- **Causas habituales:** dependencia del tiempo, estado compartido, asincronía mal sincronizada, dependencias externas y aleatoriedad sin semilla (con un ejemplo práctico en código).\n- **Soluciones prácticas:** cuarentena/eliminación de tests inestables, uso responsable de `retries`, pruebas repetidas antes del *merge* y diseño determinista."
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "native": {
+            "reasoningDetails": [
+              {
+                "type": "reasoning.encrypted",
+                "data": "EqoECqcEAWkUfROByEJ1ZArPaWgEF8+oxnIiaotUIwnhzrQ10dxV0pznfuQi0CeOlr2QQtxLm+h9LfSE9cDm/IxCE46FMiuN0f8B5I59oMTY9FIjL8eJrpvpA6Ce4G9++2Y9wx8xokBoFM0jSIFynsgO54FWIGc4kNMoZrsTYC1u+n7XkYmNih8ooFSqLBwXrD76tKsq9Qnd/TpYTZlEv22n+cp/C6xVEF6qFlKt5jPp1B7pHnt2Kpcfcaj86WAIxLKtfGrKkSNMVUfCe5/8uqW5yBMeA/llgaGhuXrVlOAkqLJ3A9QlAwcR+fv2IKt6ZpSWD9shAxcFuoW505L4OyCi3akrzXz4r6LPiACkVfs/IEGKZqwZDYQxU7hqjFqjqDaCpoFXNfnYpFNj2Z+BmNHzMRz3K8b3RvBQhFp5nCoCn4vfOCJ8lS4BwSfealN9KtdBeOkn9g40DEvQRal1uJBP1476X6e1p1/bjU0bliusBAsmkrDSDftJIxrgLg2CDGMo8RsX2C745PHIGQjFXBkvSggz2p+SDs1Ckv6bZODPUJlTmeMIKtN4gI25vJ+yPabCYpaFa90z/I+b+067DSl71VIXsfaoJ13vwoVsngQqFZILaImLy6ZAGpeKC4Z/DksQ4L8CzG/eNG3oPI5qbC6J/JWctVVxJcEE9yaEQ3rbc3IgyJV6ecurMHPjsNVAYMrqEWNPJbf6ocnh5qX/LmbWoalcpgAZsETBzO0=.eyJlbmRwb2ludF9zbHVnIjoiZ29vZ2xlL2dlbWluaS00LW5lb24tMjAyNjExMTh8Z29vZ2xlLWFpLXN0dWRpbyJ9",
+                "format": "google-gemini-v1",
+                "index": 0
+              }
+            ]
+          },
+          "time": {
+            "created": 1795212228575,
+            "completed": 1795212228578
+          }
+        }
+      ],
+      "finish": "stop",
+      "rawFinish": "STOP",
+      "cost": 0.014556267,
+      "tokens": {
+        "input": 3180,
+        "output": 191,
+        "reasoning": 96,
+        "cache": {
+          "read": 5722,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_1fafcb7f30019xMSgQZ8kR5EKS",
+      "time": {
+        "created": 1795212228595
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

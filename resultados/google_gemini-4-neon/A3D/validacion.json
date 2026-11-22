@@ -1,0 +1,30 @@
+{
+ "html": [
+  {
+   "fichero": "alhambra-3d.html",
+   "errores": [],
+   "titulo": "La Alhambra de Granada · Ruta 3D Interactiva",
+   "canvas": 2,
+   "texto": "La Alhambra de Granada\nRuta 3D Nazarí · Alcazaba · Palacios · Generalife\n✦ Ruta Guiada\n◎ Explorar\n❖ Paseo Libre\n▲ Panorámica\nAtardecer\nDía\nNoche\n〰 Ruta\n♪ Agua\n◫ Info\nPARADA 1 DE 7\n1348 · Sultán Yusuf I\nPuerta de la Justicia y Murallas Rojas\n\nGran acceso monumental al recinto amurallado de la Sabika. Su imponente arco de herradura en piedra y ladrillo rojo luce talladas la mano de Fátima y la llave",
+   "scripts": [],
+   "captura": "capturas/alhambra-3d.html.png",
+   "capturas_extra": [
+    "capturas/auto-2min.png",
+    "capturas/parada-3.png",
+    "capturas/parada-4.png",
+    "capturas/parada-5.png",
+    "capturas/parada-6.png",
+    "capturas/parada-8.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; 103 KB con three.js 0.160 de jsDelivr",
+  "✔ 7 paradas en orden de visita: Justicia, Alcazaba, Carlos V, Arrayanes, Leones, Partal, Generalife",
+  "✔ la ruta guiada arranca sola: Alcazaba a los 60 s y Carlos V a los 120 s con render por software a 2 fps",
+  "✔ se reconoce: patio circular de dos pisos de Carlos V, pórtico de Arrayanes con la torre de Comares, templete del Patio de los Leones, Torre de la Vela, acequia del Generalife",
+  "✖ en el Generalife los chorros de agua se dibujan como cuadrados blancos enormes que tapan media vista",
+  "✔ textos correctos (Yusuf I, Machuca, pórtico de siete arcos, Muhammad III, Torre de la Vela)"
+ ]
+}

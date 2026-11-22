@@ -1,0 +1,4 @@
+Límite nuestro: se acabó el crédito de OpenRouter a mitad de la prueba.
+OpenRouter rechaza una petición si max_tokens × precio supera el saldo (402: «requires more credits, or fewer max_tokens»; 65 536 × 15 $/M ≈ 0,98 $).
+Se quedó tras 12 peticiones (0,75 $) con package.json, tsconfig.json y src/: sin README, sin tests ejecutados y sin respuesta final.
+Se repite cuando haya crédito.

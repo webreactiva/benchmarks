@@ -1,5 +1,325 @@
 [
   {
+    "dir": "resultados/anthropic_claude-fable-5-2/A3D",
+    "codigo": "A3D",
+    "modelo": "claude-fable-5-2",
+    "agente": "Claude Code",
+    "fecha": "2026-11-22T08:34:18Z",
+    "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 18,
+      "output": 86844,
+      "reasoning": 0,
+      "cache_read": 951426,
+      "cache_write": 111110,
+      "total": 1149398
+    },
+    "peticiones": 9,
+    "error": null,
+    "herramientas": {
+      "Bash": 7,
+      "Write": 1,
+      "Read": 4,
+      "ToolSearch": 1
+    },
+    "mensajes_usuario": [
+      "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+      "[Image: original 2000x2040, displayed at 1904x1942. Multiply coordinates by 1.05 to map to original image.]"
+    ],
+    "ficheros": [
+      "alhambra-ruta-3d.html"
+    ],
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alhambra-ruta-3d.html",
+          "errores": [],
+          "titulo": "La Alhambra de Granada · Ruta en 3D",
+          "canvas": 2,
+          "texto": "1\nPuerta de la Justicia\n2\nAlcazaba y Torre de la Vela\n3\nPalacio de Carlos V\n4\nEl Mexuar\n5\nPatio de los Arrayanes\n6\nPatio de los Leones\n7\nEl Partal\n8\nPaseo de las Torres\n9\nJardines del Generalife\n10\nPatio de la Acequia\nLa Alhambra\n\nGRANADA · RUTA EN 3D\n\nPARADAS\n◆\nLa colina de la Sabika\n1\nPuerta de la Justicia\n2\nAlcazaba y Torre de la Vela\n3\nPalacio de Carlos V\n4\nEl Mexuar\n5\nPatio de los Arrayanes\n6",
+          "scripts": [],
+          "captura": "capturas/alhambra-ruta-3d.html.png",
+          "capturas_extra": [
+            "capturas/auto-120s.png",
+            "capturas/auto-180s.png",
+            "capturas/auto-240s.png",
+            "capturas/auto-300s.png",
+            "capturas/parada-1.png",
+            "capturas/parada-2.png",
+            "capturas/parada-3.png",
+            "capturas/parada-5.png",
+            "capturas/parada-6.png",
+            "capturas/parada-6-noche.png",
+            "capturas/parada-7.png",
+            "capturas/parada-9.png",
+            "capturas/parada-10.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ un solo HTML de 730 KB con three.js 0.160 incrustado (bajado de jsDelivr) (funciona sin conexión); carga sin errores de consola",
+        "✔ 10 paradas reales en orden de visita: Justicia, Alcazaba y Vela, Carlos V, Mexuar, Arrayanes, Leones, Partal, Paseo de las Torres, Jardines Nuevos y Patio de la Acequia, más una vista general desde el Albaicín",
+        "✔ «Iniciar recorrido» lleva la cámara a ras de suelo por el camino dibujado de una parada a la siguiente, gira 11 s en cada una y sigue sola; también lista lateral, Anterior/Siguiente, teclado, minimapa y enlace #p=N",
+        "✔ se reconoce: arco de herradura de la Justicia, torres almenadas de la Alcazaba, patio circular de Carlos V, alberca de Arrayanes con Comares, patio de la Acequia con su galería, setos y cipreses del Generalife",
+        "~ Leones se ve desde arriba entre tejados: patio alargado con columnas y fuente pequeña; la reconoce quien la conozca",
+        "~ cada parada lleva un disco blanco y un haz de luz vertical que marcan el punto: pequeños, no tapan la escena",
+        "~ en el contenedor el render por software va a 1 fps; el avance usa dt ≤ 0,1, así que de la parada 1 a la 3 tarda 5 min (unos 30 s en un navegador normal)",
+        "✔ luces de día, atardecer y noche (con ventanas encendidas)",
+        "✔ textos correctos: mano y llave de la Justicia, Vela de 27 m, Carlos V de 63 m con patio de 30 m, alberca de 34 m y Comares de 45 m, 124 columnas en Leones, las tres infantas de Irving"
+      ]
+    },
+    "juicio": {
+      "nota": 10,
+      "veredicto": "maqueta completa que se recorre",
+      "rubrica": {
+        "abre sin errores": 1,
+        "ruta con paradas reales": 2,
+        "la ruta se recorre": 3,
+        "se reconoce la Alhambra": 2,
+        "vista limpia": 1,
+        "textos sin errores": 1
+      },
+      "resumen": "Maqueta de toda la colina de la Sabika con three.js incrustado: diez paradas en orden de visita, de la Puerta de la Justicia al Patio de la Acequia, con un recorrido que camina a ras de suelo por el camino dibujado y sigue solo, minimapa, lista de paradas y luz de día, atardecer y noche. Se reconocen el arco de la Justicia, la Alcazaba, el patio circular de Carlos V, la alberca de Arrayanes con Comares y el Patio de la Acequia, y las fichas son correctas; solo los Leones quedan algo escondidos entre tejados.",
+      "rarezas": [
+        "Se hizo capturas con Chrome sin interfaz de cada parada, las miró en hojas de contactos y corrigió encuadres, colores y la cubierta de Carlos V.",
+        "La sesión acabó con dos procesos de capturas aún en segundo plano y el mensaje «Esperando a que termine el lote de capturas»: el lanzador lo dio por terminado y cerró Claude Code. Los últimos cambios sí estaban ya en el HTML; quedaba revisar las paradas 7 a 10.",
+        "Bajó three.js 0.160 de jsDelivr y lo metió dentro del HTML para que funcione sin conexión: 730 KB en un fichero.",
+        "9 peticiones y 1,15 millones de tokens (950 000 de caché), 87 000 de salida."
+      ]
+    },
+    "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
+  },
+  {
+    "dir": "resultados/anthropic_claude-fable-5-2/AIF",
+    "codigo": "AIF",
+    "modelo": "claude-fable-5-2",
+    "agente": "Claude Code",
+    "fecha": "2026-11-22T08:57:09Z",
+    "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 10,
+      "output": 22523,
+      "reasoning": 0,
+      "cache_read": 235705,
+      "cache_write": 32386,
+      "total": 290624
+    },
+    "peticiones": 5,
+    "error": null,
+    "herramientas": {
+      "Write": 1,
+      "Bash": 2,
+      "ToolSearch": 1,
+      "WebFetch": 2
+    },
+    "mensajes_usuario": [
+      "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "alquimia-reactiva.html"
+    ],
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alquimia-reactiva.html",
+          "errores": [],
+          "titulo": "Alquimia Reactiva",
+          "canvas": 0,
+          "texto": "Alquimia Reactiva\n\nMezcla conceptos del desarrollo web y descubre de qué está hecho un podcast.\n\nArrastra elementos hasta aquí y suéltalos\nuno encima de otro para combinarlos.\n💡 Pista\n🧹 Limpiar\n↺ Reiniciar\nDescubiertos\n6 / 141\n🕘\n📄\nHTML\n🎨\nCSS\n⚡\nJavaScript\n🖥️\nServidor\n🎙️\nMicrófono\n☕\nCafé\nJuego no oficial inspirado en los temas del podcast Web Reactiva. Suelta aquí un elemento para quitarlo de",
+          "scripts": [],
+          "captura": "capturas/alquimia-reactiva.html.png",
+          "capturas_extra": [
+            "capturas/mezcla.png",
+            "capturas/sin-receta.png",
+            "capturas/pista.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; un HTML de 28 KB sin dependencias",
+        "✔ tablero libre: se arrastra una ficha desde el panel y se suelta sobre otra (clic la pone al azar, doble clic duplica, soltar en el panel la quita)",
+        "✔ HTML + CSS → Página web; JavaScript + Servidor → Node.js; CSS + CSS → Flexbox; Micrófono + Café → Podcast; Podcast + Página web → Web Reactiva",
+        "✔ 141 de 141 elementos alcanzables desde 6 iniciales, 157 recetas, ninguna repetida ni rota (juez/alcanzables.js)",
+        "✖ no es infinito: Node.js + Flexbox → «Aquí no reacciona nada… prueba otra mezcla.» (lo dice en su respuesta)",
+        "~ Web Reactiva a medias: 6 elementos de la casa (Web Reactiva, Daniel Primo, Malandriner, Invitado, Episodio, Newsletter de los domingos) entre 141 de cultura web genérica; 2 WebFetch a webreactiva.com, después de escribir el juego, para corregir dos descripciones",
+        "✔ guarda en localStorage (12/141 tras recargar), buscador, pista («Micrófono + ❓ = 🗣️»), orden alfabético o por descubrimiento, reiniciar"
+      ]
+    },
+    "juicio": {
+      "nota": 8,
+      "veredicto": "buen juego, poco Web Reactiva",
+      "rubrica": {
+        "abre sin errores": 1,
+        "mecánica de Infinite Craft": 2,
+        "las combinaciones funcionan": 2,
+        "progresión": 1,
+        "«infinito»": 0,
+        "contenido de Web Reactiva": 1,
+        "acabado": 1
+      },
+      "resumen": "Tablero libre donde se arrastra una ficha sobre otra, 141 elementos y 157 recetas, todos alcanzables desde HTML, CSS, JavaScript, Servidor, Micrófono y Café, con buscador, pista y progreso guardado. El contenido es cultura del desarrollo web en general (frameworks, Docker, «Centrar un div», «Deploy en viernes») con seis elementos de la casa; las mezclas sin receta no dan nada.",
+      "rarezas": [
+        "Escribió el juego entero de una vez sin mirar webreactiva.com; luego hizo dos WebFetch (portada y newsletter) solo para corregir dos descripciones: Web Reactiva («cursos y guías para dominar la IA») y la newsletter («12 recursos cada domingo»).",
+        "Comprobó el grafo de recetas con un script y dijo que no lo había probado en un navegador: honesto con lo que no comprobó.",
+        "Avisa de que no es infinito («no hay IA generando resultados») y pone en el pie «Juego no oficial inspirado en los temas del podcast Web Reactiva».",
+        "5 peticiones y 22 500 tokens de salida: barato para un AIF."
+      ]
+    },
+    "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
+    "dir": "resultados/anthropic_claude-fable-5-2/CCA",
+    "codigo": "CCA",
+    "modelo": "claude-fable-5-2",
+    "agente": "Claude Code",
+    "fecha": "2026-11-22T09:01:14Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 12,
+      "output": 20142,
+      "reasoning": 0,
+      "cache_read": 244828,
+      "cache_write": 30476,
+      "total": 295458
+    },
+    "peticiones": 6,
+    "error": null,
+    "herramientas": {
+      "Bash": 5,
+      "Write": 13
+    },
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      ".dockerignore",
+      ".gitignore",
+      "Dockerfile",
+      "README.md",
+      "docker-compose.yml",
+      "package-lock.json",
+      "package.json",
+      "src/app.js",
+      "src/cartService.js",
+      "src/catalog.js",
+      "src/config.js",
+      "src/errors.js",
+      "src/server.js",
+      "src/stores/memoryStore.js",
+      "src/stores/redisStore.js",
+      "test/api.test.js",
+      "test/store.test.js"
+    ],
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [],
+      "mermaid": [],
+      "extra": [
+        "✔ npm ci y npm start; npm test: 13/13 en memoria (1 saltado) y 21/21 con REDIS_URL contra un Redis real",
+        "✔ 50 altas a la vez: 50 guardadas en una instancia (memoria y Redis) y repartidas entre dos instancias con el mismo Redis",
+        "✔ cada escritura es un script Lua atómico en Redis: sin leer-modificar-escribir en la aplicación",
+        "✔ dinero en céntimos enteros, una moneda por catálogo; el precio sale del catálogo al leer (se ignora el del cliente)",
+        "✔ valida cantidad 0, negativa, decimal, enorme y en texto; SKU inexistente, SKU y cartId con «../», cuerpo vacío o no JSON",
+        "~ sin Redis, dos instancias reparten el carrito (25 + 25): el README avisa de que la memoria es solo para desarrollo",
+        "~ entrega node_modules junto al código; Dockerfile y docker-compose sin probar (lo dice)"
+      ],
+      "comprobacion": "Copia en el scratchpad sin node_modules; npm ci, npm test con y sin REDIS_URL (redis-server local) y juez/juez.mjs con cuatro instancias: dos en memoria y dos con el mismo Redis",
+      "juez_salida": [
+        "50 altas a la vez (CAM-001): una instancia en memoria 200 × 50 → 50; una con Redis 200 × 50 → 50",
+        "repartidas entre dos instancias con el mismo Redis: 200 × 50 → 50 en las dos",
+        "repartidas entre dos instancias sin Redis: 200 × 50 → 25 y 25 (cada una su memoria)",
+        "precio desde el cliente (price: 1, unitPrice: 1) → 200, se guarda 9,50 € del catálogo",
+        "quantity 0 / -3 / 1,5 / 1e9 / «2» → 400; SKU inexistente → 404; SKU «../../etc/passwd» → 400; cartId y SKU con «../» en la ruta → 404; cuerpo vacío o «hola» → 400",
+        "0,10 × 3 y monedas mezcladas no aplican: importes enteros en céntimos y una sola moneda por catálogo",
+        "fijar cantidad 3 → 28,50 €; quitar → vacío; vaciar → 204; mutar la respuesta y releer → 2 (cada respuesta es JSON nuevo)"
+      ]
+    },
+    "juicio": {
+      "nota": 10,
+      "veredicto": "escala de verdad, sin adornos",
+      "rubrica": {
+        "se ejecuta": 1,
+        "tests en verde": 1,
+        "dominio completo": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 1,
+        "concurrencia": 2,
+        "escala horizontal": 2,
+        "explica el escalado": 1
+      },
+      "resumen": "Servicio HTTP en Node sin estado con los carritos en Redis: cada escritura es un script Lua atómico, así que 50 altas a la vez repartidas entre dos instancias con el mismo Redis guardan las 50; dinero en céntimos, precio siempre del catálogo y validación estricta. Pasa 21 tests contra un Redis real y el README explica cada decisión de escalado, pero el dominio es el mínimo: ni stock, ni descuentos, ni checkout.",
+      "rarezas": [
+        "Miró qué había en la máquina, vio redis-server y lo arrancó para probar contra un Redis real en vez de quedarse con la memoria.",
+        "Los 21 tests pasaron a la primera; luego levantó dos réplicas contra el mismo Redis y comprobó con curl que 40 altas repartidas dejaban 40.",
+        "Dice que no ha probado el Dockerfile ni el docker-compose.",
+        "Entrega node_modules junto al código.",
+        "3 minutos y 6 peticiones: 20 000 tokens de salida y 295 000 en total (245 000 de caché)."
+      ]
+    },
+    "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/anthropic_claude-fable-5-2/PTS",
+    "codigo": "PTS",
+    "modelo": "claude-fable-5-2",
+    "agente": "Claude Code",
+    "fecha": "2026-11-22T09:04:39Z",
+    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 4,
+      "output": 3027,
+      "reasoning": 0,
+      "cache_read": 61924,
+      "cache_write": 11650,
+      "total": 76605
+    },
+    "peticiones": 2,
+    "error": null,
+    "herramientas": {
+      "Write": 1
+    },
+    "mensajes_usuario": [
+      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "tests-intermitentes.md"
+    ],
+    "veces_decide_tu": 0,
+    "validacion": {
+      "slop": "933 palabras · 7 títulos · 5 líneas de lista · frase media 16.3 · slop 7.5 (0.8/100 palabras)\n  15-negritas             10  negritas: **Tiempo:**, **Orden:**, **Concurrencia:**, **Exterior:**, **Azar:**, **Poner el test en cuarentena de inmediato.**\n  16-lista-con-titulo      5  listas con etiqueta en negrita y dos puntos: \n- **Tiempo:**, - **Orden:**, - **Concurrencia:**, - **Exterior:**, - **Azar:**",
+      "extra": [
+        "✔ un post en Markdown, en español, de 933 palabras",
+        "✔ 0,8 marcas de slop por cada 100 palabras: 10 negritas y una lista de causas con etiqueta; sin rayas, sin «En resumen»",
+        "✔ código antes y después: test con sleep(1) frente a reloj inyectado (RelojFalso)",
+        "✔ cifras correctas: 0,999^200 ≈ 82 % de suites limpias; con 1000 tests falla el 63 %",
+        "✔ mecanismo: sin tests sabes que no hay información; con tests intermitentes hay ruido que parece información y el equipo aprende a reintentar, también ante una condición de carrera real"
+      ]
+    },
+    "juicio": {
+      "rubrica": {
+        "hay post": 1,
+        "tesis con mecanismo": 2,
+        "se ciñe al tema": 1,
+        "ejemplos concretos": 2,
+        "sin errores ni inventos": 1,
+        "slop": 2,
+        "extensión": 1
+      },
+      "nota": 10,
+      "veredicto": "completo y limpio",
+      "resumen": "Defiende la tesis con un mecanismo claro (ruido que parece información y la fatiga de alarmas que deja pasar una condición de carrera real), con cuentas correctas y un ejemplo de código antes y después. Se queda por debajo de una marca de slop por cada 100 palabras.",
+      "rarezas": [
+        "Una sola petición con herramienta: escribe el post con un Write y no lo relee ni lo revisa.",
+        "En la respuesta da la ruta absoluta de la carpeta de trabajo y ofrece adaptar el front matter o el lenguaje del ejemplo."
+      ]
+    },
+    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+  },
+  {
     "dir": "resultados/anthropic_claude-haiku-5-5/A3D",
     "codigo": "A3D",
     "modelo": "claude-haiku-5-5",
@@ -1754,6 +2074,322 @@
       "resumen": "Defiende la tesis con su mecanismo: sin tests el equipo sabe que va a ciegas y actúa con cautela, mientras que un test intermitente le enseña a pulsar re-run hasta que el fallo real pasa con el sello de «todos los checks en verde». Trae código (el sleep de 100 ms que en CI tarda 120), causas típicas y qué hacer, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».",
       "rarezas": [
         "4 peticiones, 32 000 tokens, 0,05 $: leyó la carpeta, escribió el post y terminó."
+      ]
+    },
+    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+  },
+  {
+    "dir": "resultados/google_gemini-4-neon/A3D",
+    "codigo": "A3D",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T21:24:24Z",
+    "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 92374,
+      "output": 48945,
+      "reasoning": 9851,
+      "cache_read": 860304,
+      "cache_write": 0,
+      "total": 1011474
+    },
+    "peticiones": 19,
+    "error": "Network connection lost.",
+    "mensajes_usuario": [
+      "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 5,
+      "write": 1,
+      "shell": 4,
+      "edit": 4,
+      "grep": 2
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e052758b6ffejtCokEOcftufPw",
+    "coste_usd": 1.2844,
+    "ficheros": [
+      "alhambra-3d.html"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 65536,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alhambra-3d.html",
+          "errores": [],
+          "titulo": "La Alhambra de Granada · Ruta 3D Interactiva",
+          "canvas": 2,
+          "texto": "La Alhambra de Granada\nRuta 3D Nazarí · Alcazaba · Palacios · Generalife\n✦ Ruta Guiada\n◎ Explorar\n❖ Paseo Libre\n▲ Panorámica\nAtardecer\nDía\nNoche\n〰 Ruta\n♪ Agua\n◫ Info\nPARADA 1 DE 7\n1348 · Sultán Yusuf I\nPuerta de la Justicia y Murallas Rojas\n\nGran acceso monumental al recinto amurallado de la Sabika. Su imponente arco de herradura en piedra y ladrillo rojo luce talladas la mano de Fátima y la llave",
+          "scripts": [],
+          "captura": "capturas/alhambra-3d.html.png",
+          "capturas_extra": [
+            "capturas/auto-2min.png",
+            "capturas/parada-3.png",
+            "capturas/parada-4.png",
+            "capturas/parada-5.png",
+            "capturas/parada-6.png",
+            "capturas/parada-8.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; 103 KB con three.js 0.160 de jsDelivr",
+        "✔ 7 paradas en orden de visita: Justicia, Alcazaba, Carlos V, Arrayanes, Leones, Partal, Generalife",
+        "✔ la ruta guiada arranca sola: Alcazaba a los 60 s y Carlos V a los 120 s con render por software a 2 fps",
+        "✔ se reconoce: patio circular de dos pisos de Carlos V, pórtico de Arrayanes con la torre de Comares, templete del Patio de los Leones, Torre de la Vela, acequia del Generalife",
+        "✖ en el Generalife los chorros de agua se dibujan como cuadrados blancos enormes que tapan media vista",
+        "✔ textos correctos (Yusuf I, Machuca, pórtico de siete arcos, Muhammad III, Torre de la Vela)"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "se recorre y se reconoce",
+      "rubrica": {
+        "abre sin errores": 1,
+        "ruta con paradas reales": 2,
+        "la ruta se recorre": 3,
+        "se reconoce la Alhambra": 2,
+        "vista limpia": 0,
+        "textos sin errores": 1
+      },
+      "resumen": "Ruta guiada a pie de calle por siete paradas con three.js, que arranca sola, con modos de órbita, paseo libre y panorámica, minimapa y tres luces; se reconocen el patio circular de Carlos V, el pórtico de Arrayanes con Comares, el templete de los Leones y la acequia del Generalife, y las fichas son correctas. Pero en el Generalife los chorros de agua se ven como cuadrados blancos que tapan media pantalla.",
+      "rarezas": [
+        "Tercera tirada: las dos primeras se cortaron con «Network connection lost» porque Neon piensa más de 6 min antes de escribir el HTML (en _descartados/). Esta fue por AI Studio estándar con SALIDA_MAX=65536 y también tuvo cortes, pero los reintentos salieron y la sesión terminó; meta.json guarda el último error.",
+        "Escribió los 103 KB de una vez y revisó el JavaScript con node varias veces; no lo abrió en un navegador.",
+        "19 peticiones, 1 millón de tokens (860 000 de caché), 1,28 $."
+      ]
+    },
+    "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
+  },
+  {
+    "dir": "resultados/google_gemini-4-neon/AIF",
+    "codigo": "AIF",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T21:45:39Z",
+    "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 134641,
+      "output": 54057,
+      "reasoning": 12633,
+      "cache_read": 693401,
+      "cache_write": 0,
+      "total": 894732
+    },
+    "peticiones": 11,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 2,
+      "websearch": 2,
+      "webfetch": 8,
+      "write": 1,
+      "shell": 2,
+      "edit": 5
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e0513e09fffezAY2EmJbxlJrbm",
+    "coste_usd": 1.4992,
+    "ficheros": [
+      "index.html"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 65536,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 1,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "index.html",
+          "errores": [],
+          "titulo": "Alquimia Reactiva — Infinite Craft × Web Reactiva",
+          "canvas": 1,
+          "texto": "Alquimia Reactiva\nEN PANTUFLAS\n\nCombina conceptos de Web Reactiva · Programa con IA sin alucinar\n\n🥿 + 🤖 = ✨\nArrastra elementos al tablero\n\nSuelta un elemento encima de otro para descubrir conceptos, herramientas, podcasts y secretos de Web Reactiva.\n\nClic añade al tablero · Doble clic duplica · Clic derecho elimina\n\n🧭\nAtlas\n💡\nPista\n∞\nModo Libre\n🧹\nLimpiar\n🔊\n🌙\n🗑️\nSuelta aquí para retirar\nDes",
+          "scripts": [],
+          "captura": "capturas/index.html.png",
+          "capturas_extra": [
+            "capturas/dani-primo.png",
+            "capturas/sin-receta-libre.png",
+            "capturas/pista.png",
+            "capturas/atlas.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; un HTML de 122 KB sin dependencias",
+        "✔ tablero libre: se suelta una ficha sobre otra (clic añade, doble clic duplica, arrastrar al panel retira)",
+        "✔ Pantuflas + Código → Developer; Pantuflas + Podcast → Dani Primo; Código + IA → Prompt; Podcast + Podcast → +710 Episodios",
+        "✔ 144 de 144 elementos alcanzables desde 4 iniciales, 360 recetas (juez/alcanzables.js)",
+        "~ infinito con interruptor: Dani Primo + Developer no da nada con el Modo Libre apagado (por defecto) y «Meta-Developer» con él encendido",
+        "✔ contenido de webreactiva.com (8 webfetch): Atlas Malandriner, Selector de Modelos, Bingo de Mentiras, Chuleta OpenCode, Robotito, LinkedIn-5-5, Fichómetro",
+        "✔ guarda en localStorage (8/144 tras recargar), buscador, pistas en dos niveles, Atlas con rarezas y compartir"
+      ]
+    },
+    "juicio": {
+      "nota": 10,
+      "veredicto": "el AIF más documentado",
+      "rubrica": {
+        "abre sin errores": 1,
+        "mecánica de Infinite Craft": 2,
+        "las combinaciones funcionan": 2,
+        "progresión": 1,
+        "«infinito»": 1,
+        "contenido de Web Reactiva": 2,
+        "acabado": 1
+      },
+      "resumen": "Tablero libre donde se suelta una ficha sobre otra, 144 elementos y 360 recetas todos alcanzables desde Pantuflas, Código, IA y Podcast, con Atlas Malandriner, pistas en dos niveles, buscador y guardado; las mezclas sin receta dan fusiones con el Modo Libre encendido. El contenido sale de ocho páginas de webreactiva.com: Selector de Modelos, Bingo de Mentiras, Chuleta OpenCode, Robotito, LinkedIn-5-5, Fichómetro, skills y SDD.",
+      "rarezas": [
+        "La primera búsqueda web quedó cancelada por el permiso; buscó otra vez y leyó ocho páginas de webreactiva.com con webfetch, el que más del benchmark.",
+        "El Modo Libre (mezclas sin receta) viene apagado: quien no lo encienda juega a un juego con recetas cerradas.",
+        "11 peticiones, 895 000 tokens, 1,50 $: el AIF más caro de los Gemini."
+      ]
+    },
+    "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
+    "dir": "resultados/google_gemini-4-neon/CCA",
+    "codigo": "CCA",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T21:54:35Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 49177,
+      "output": 33866,
+      "reasoning": 5111,
+      "cache_read": 125261,
+      "cache_write": 0,
+      "total": 213415
+    },
+    "peticiones": 12,
+    "error": "This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 62602. To increase, visit https://openrouter.ai/settings/credits and add more credits",
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 1,
+      "shell": 4,
+      "write": 27,
+      "edit": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e050bb62affeMZtUQyWybIfv2e",
+    "coste_usd": 0.748,
+    "ficheros": [
+      "package.json",
+      "src/api/server.ts",
+      "src/application/cart-service.ts",
+      "src/bootstrap.ts",
+      "src/demo.ts",
+      "src/domain/cart.ts",
+      "src/domain/errors.ts",
+      "src/domain/events.ts",
+      "src/domain/money.ts",
+      "src/domain/pricing.ts",
+      "src/index.ts",
+      "src/infrastructure/file-cart-repository.ts",
+      "src/infrastructure/in-memory-cart-repository.ts",
+      "src/infrastructure/in-memory-catalog.ts",
+      "src/infrastructure/in-memory-event-bus.ts",
+      "src/infrastructure/in-memory-idempotency-store.ts",
+      "src/infrastructure/in-memory-inventory.ts",
+      "src/infrastructure/in-memory-lock-manager.ts",
+      "src/main.ts",
+      "src/ports/cart-repository.ts",
+      "src/ports/catalog-provider.ts",
+      "src/ports/event-bus.ts",
+      "src/ports/idempotency-store.ts",
+      "src/ports/inventory-provider.ts",
+      "src/ports/lock-manager.ts",
+      "src/types/node.d.ts",
+      "tsconfig.json"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 65536,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 0,
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/google_gemini-4-neon/PTS",
+    "codigo": "PTS",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T22:02:45Z",
+    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 10955,
+      "output": 2498,
+      "reasoning": 987,
+      "cache_read": 9289,
+      "cache_write": 0,
+      "total": 23729
+    },
+    "peticiones": 3,
+    "error": null,
+    "mensajes_usuario": [
+      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 1,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e0504397dffeAtM2AXljPOqyye",
+    "coste_usd": 0.0857,
+    "ficheros": [
+      "por-que-los-tests-flaky-son-peores-que-no-tener-tests.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 32768,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "slop": "1486 palabras · 13 títulos · 18 líneas de lista · frase media 20.4 · slop 18.8 (1.26/100 palabras)\n  13-raya                  4  rayas (—): —, —, —, —\n  15-negritas             19  negritas: **Re-run**, **tests intermitentes**, **confianza**, **36%**, **Cambios de contexto constantes:**, **Cuellos de botella en los despliegues:**\n  16-lista-con-titulo      7  listas con etiqueta en negrita y dos puntos: \n- **Cambios de contexto constantes:**, - **Cuellos de botella en los despliegues:**, - **Fricción innecesaria en las revisiones:**, \n- **Inyecta el reloj:**, - **Aísla cada test:**, - **Usa semillas fijas**\n  23-relleno               1  muletillas: En resumen\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que",
+      "extra": [
+        "✔ un post en Markdown, en español, de 1486 palabras",
+        "~ 1,26 marcas de slop por cada 100 palabras: 19 negritas, 7 listas con etiqueta, «En resumen», «La próxima vez que…»",
+        "✔ código antes y después (sleep(300) frente a findByText) y la cifra correcta: 20 tests con un 5 % de fallo → 0,95²⁰ ≈ 36 % de pasar a la primera",
+        "✔ mecanismo: sin tests sabes que no hay red; con tests intermitentes el equipo aprende a pulsar Re-run y el fallo real llega a producción"
+      ]
+    },
+    "juicio": {
+      "nota": 9,
+      "veredicto": "completo, con tics de formato",
+      "rubrica": {
+        "hay post": 1,
+        "tesis con mecanismo": 2,
+        "se ciñe al tema": 1,
+        "ejemplos concretos": 2,
+        "sin errores ni inventos": 1,
+        "slop": 1,
+        "extensión": 1
+      },
+      "resumen": "Defiende la tesis con su mecanismo: sin tests el equipo sabe que no tiene red; con tests intermitentes aprende a pulsar Re-run y la alarma real se ignora, además de esconder condiciones de carrera reales. Trae una escena reconocible, la cifra correcta (20 tests al 5 % → 36 % de pasar a la primera), código antes y después y qué hacer con los reintentos, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».",
+      "rarezas": [
+        "Repetido con SALIDA_MAX=32768 porque la primera tirada no pudo empezar: OpenRouter rechazaba el tope de 65 536 tokens por falta de saldo (en _descartados/).",
+        "3 peticiones, 24 000 tokens, 0,09 $."
       ]
     },
     "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
@@ -6247,6 +6883,370 @@
         "Se le cuelan palabras de otro idioma, como a MiniMax M3 en su A3D y su PTS: «todos|scale-targeted», «discoverirse».",
         "27 ediciones sobre el borrador y 15 peticiones para un post.",
         "Frontmatter YAML de blog que nadie pidió."
+      ]
+    },
+    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+  },
+  {
+    "dir": "resultados/ollama_mistral-large-4/A3D",
+    "codigo": "A3D",
+    "modelo": "ollama/mistral-large-4",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T15:36:54Z",
+    "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 25108,
+      "output": 25084,
+      "reasoning": 0,
+      "cache_read": 83456,
+      "cache_write": 0,
+      "total": 133648
+    },
+    "peticiones": 10,
+    "error": "Gateway Timeout",
+    "mensajes_usuario": [
+      "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "glob": 1,
+      "write": 2,
+      "edit": 3,
+      "shell": 2
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e06657cc5ffeQ1nvA5OwQj0oy7",
+    "coste_usd": 0,
+    "ficheros": [
+      "alhambra-ruta-3d.html"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 262144,
+      "output_proveedor": 262144,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "alhambra-ruta-3d.html",
+          "errores": [],
+          "titulo": "La Alhambra de Granada — Ruta 3D",
+          "canvas": 1,
+          "texto": "✦ LA ALHAMBRA DE GRANADA ✦\n\nRuta tridimensional por el conjunto palaciego nazarí\n\nPUNTOS DE LA RUTA\n1.Puerta de la Justicia\n2.Alcazaba y torres\n3.Patio de los Arrayanes\n4.Palacio de Comares\n5.Patio de los Leones\n6.Sala de las Dos Hermanas\n7.Sala de los Abencerrajes\n8.Generalife y jardines\n✕\n\n▶ Iniciar ruta\n⏸ Pausa\n⟲ Reiniciar\n🧭 Vuelo libre\nVelocidad: 1×\nArrastra para mirar · rueda para acercar · ",
+          "scripts": [],
+          "captura": "capturas/alhambra-ruta-3d.html.png",
+          "capturas_extra": [
+            "capturas/inicio.png",
+            "capturas/auto-60s.png",
+            "capturas/auto-180s.png",
+            "capturas/parada-3.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; 32 KB con three.js 0.160 de unpkg",
+        "✔ 8 paradas: Justicia, Alcazaba, Arrayanes, Comares, Leones, Dos Hermanas, Abencerrajes, Generalife",
+        "✔ la ruta guiada recorre todas las paradas y vuelve a empezar (a 4×: Arrayanes a los 30 s, Leones a los 60, Generalife a los 90)",
+        "✖ la cámara acaba dentro o pegada a los muros: en Leones mira una caja de azulejos, en Abencerrajes y el Generalife solo hay pared",
+        "~ se reconocen murallas almenadas y torres; ni la fuente de los Leones, ni Arrayanes, ni Carlos V",
+        "✖ «la gran losa de mármol que da nombre» a la Sala de las Dos Hermanas: son dos losas gemelas",
+        "~ con la ruta en pausa, pulsar un lugar de la lista no cambia la ficha"
+      ]
+    },
+    "juicio": {
+      "nota": 7,
+      "veredicto": "se recorre, entre muros",
+      "rubrica": {
+        "abre sin errores": 1,
+        "ruta con paradas reales": 2,
+        "la ruta se recorre": 3,
+        "se reconoce la Alhambra": 1,
+        "vista limpia": 0,
+        "textos sin errores": 0
+      },
+      "resumen": "Ruta guiada con three.js por ocho paradas de los palacios nazaríes al Generalife, con lista, fichas, vuelo libre y velocidad hasta 4×; la cámara viaja de una a otra y el recorrido vuelve a empezar. Pero casi todas las vistas acaban pegadas a un muro, solo se reconocen murallas y torres, y una ficha se equivoca con el nombre de la Sala de las Dos Hermanas.",
+      "rarezas": [
+        "Ollama Cloud cortó tres de sus peticiones (dos ECONNRESET y un 504 Gateway Timeout, todas hacia los 5 minutos); OpenCode las reintentó y la sesión terminó. meta.json guarda el último error («Gateway Timeout») aunque el trabajo se completó.",
+        "Escribió el fichero, dijo que tenía un error de sintaxis y lo reescribió entero; luego tres edit y una comprobación de sintaxis con python + node. No lo abrió en un navegador.",
+        "10 peticiones y 134 000 tokens, en unos 40 minutos por los reintentos."
+      ]
+    },
+    "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
+  },
+  {
+    "dir": "resultados/ollama_mistral-large-4/AIF",
+    "codigo": "AIF",
+    "modelo": "ollama/mistral-large-4",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T17:27:08Z",
+    "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 34647,
+      "output": 62045,
+      "reasoning": 0,
+      "cache_read": 170496,
+      "cache_write": 0,
+      "total": 267188
+    },
+    "peticiones": 9,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "write": 2,
+      "shell": 2,
+      "edit": 5,
+      "grep": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e06008f5dffeWGXxaQ7P6YAX9o",
+    "coste_usd": 0,
+    "ficheros": [
+      "reactiva-craft.html"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 262144,
+      "output_proveedor": 262144,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "reactiva-craft.html",
+          "errores": [],
+          "titulo": "⚛️ ReactivaCraft — Infinite Craft de Web Reactiva",
+          "canvas": 0,
+          "texto": "⚛️ ReactivaCraft\n🔍 4 / 268 elementos\n💡 Pista\n🧹 Limpiar\n🗑️ Reiniciar\nEl Infinite Craft de Web Reactiva: toca un elemento del panel para colocarlo en el lienzo y selecciona dos para combinarlos. ¿Cuántos elementos del ecosistema web podrás descubrir?\n💻\nComputadora\n🌐\nInternet\n⚡\nElectricidad\n📝\nPapel\n💻\nComputadora\n🌐\nInternet\n⚡\nElectricidad\n📝\nPapel\n👋 ¡Bienvenido a ReactivaCraft! Arrastra y co",
+          "scripts": [],
+          "captura": "capturas/reactiva-craft.html.png",
+          "capturas_extra": [
+            "capturas/mezcla.png",
+            "capturas/sin-receta.png",
+            "capturas/pista.png"
+          ]
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ carga sin errores; un HTML de 27 KB sin dependencias",
+        "~ se combina seleccionando dos fichas del lienzo (clic y clic); arrastrar una sobre otra no hace nada",
+        "✔ Computadora + Internet → Navegador; Papel + Internet → Periódico; Computadora + Electricidad → Programa",
+        "✔ 268 de 268 elementos alcanzables desde 4 bases (juez/alcanzables.js)",
+        "✖ sin modo infinito: Papel + Electricidad no tiene receta y no da nada",
+        "✖ contenido de desarrollo web genérico; de Web Reactiva solo el nombre, como combinación de Podcast + Comunidad",
+        "✔ guarda en localStorage (7/268 tras recargar), buscador y pista"
+      ]
+    },
+    "juicio": {
+      "nota": 6,
+      "veredicto": "funciona, sin Web Reactiva",
+      "rubrica": {
+        "abre sin errores": 1,
+        "mecánica de Infinite Craft": 1,
+        "las combinaciones funcionan": 2,
+        "progresión": 1,
+        "«infinito»": 0,
+        "contenido de Web Reactiva": 0,
+        "acabado": 1
+      },
+      "resumen": "Juego de combinar con 268 elementos y 264 recetas, todos alcanzables desde Computadora, Internet, Electricidad y Papel, con pista, buscador y guardado. Pero se combina seleccionando dos fichas en vez de soltar una sobre otra, las mezclas sin receta no dan nada y el contenido es desarrollo web genérico: de Web Reactiva solo queda el nombre, como Podcast + Comunidad.",
+      "rarezas": [
+        "No intentó buscar nada sobre Web Reactiva: lo resolvió con un elemento «Web Reactiva» y una fanfarria al crearlo.",
+        "Validó con node que no hubiera recetas duplicadas ni ingredientes huérfanos y que todo fuera alcanzable.",
+        "9 peticiones y 267 000 tokens."
+      ]
+    },
+    "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
+    "dir": "resultados/ollama_mistral-large-4/CCA",
+    "codigo": "CCA",
+    "modelo": "ollama/mistral-large-4",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T17:50:14Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 29609,
+      "output": 39503,
+      "reasoning": 0,
+      "cache_read": 121344,
+      "cache_write": 0,
+      "total": 190456
+    },
+    "peticiones": 9,
+    "error": null,
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 1,
+      "shell": 5,
+      "write": 15,
+      "edit": 4
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e05eb6950ffeTAH8j3ImfIexQ5",
+    "coste_usd": 0,
+    "ficheros": [
+      "README.md",
+      "cart/__init__.py",
+      "cart/__pycache__/__init__.cpython-313.pyc",
+      "cart/application/__init__.py",
+      "cart/application/__pycache__/__init__.cpython-313.pyc",
+      "cart/application/__pycache__/ports.cpython-313.pyc",
+      "cart/application/__pycache__/pricing.cpython-313.pyc",
+      "cart/application/__pycache__/services.cpython-313.pyc",
+      "cart/application/ports.py",
+      "cart/application/pricing.py",
+      "cart/application/services.py",
+      "cart/domain/__init__.py",
+      "cart/domain/__pycache__/__init__.cpython-313.pyc",
+      "cart/domain/__pycache__/entities.cpython-313.pyc",
+      "cart/domain/__pycache__/events.cpython-313.pyc",
+      "cart/domain/__pycache__/exceptions.cpython-313.pyc",
+      "cart/domain/__pycache__/value_objects.cpython-313.pyc",
+      "cart/domain/entities.py",
+      "cart/domain/events.py",
+      "cart/domain/exceptions.py",
+      "cart/domain/value_objects.py",
+      "cart/infrastructure/__init__.py",
+      "cart/infrastructure/__pycache__/__init__.cpython-313.pyc",
+      "cart/infrastructure/__pycache__/repositories.cpython-313.pyc",
+      "cart/infrastructure/repositories.py",
+      "demo_cli.py",
+      "tests/__pycache__/test_cart.cpython-313.pyc",
+      "tests/test_cart.py"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 262144,
+      "output_proveedor": 262144,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [],
+      "mermaid": [],
+      "extra": [
+        "✔ sin dependencias: 24/24 tests (unittest) y la demo, en memoria y con SQLite",
+        "✔ 50 altas a la vez (hilos) con un servicio: 50 guardadas",
+        "✖ dos servicios sobre el mismo SQLite: 50 aceptadas y 47 guardadas; se pierden 3 sin aviso",
+        "✔ dinero en céntimos (0,10 × 3 = 0,30), EUR + USD da error, el precio sale del catálogo (la API no admite precio)",
+        "✔ valida cantidad 0, negativa, decimal, en texto y por encima de 999; SKU y carrito con «../»",
+        "~ librería sin servidor; el cerrojo que la protege vive en el proceso"
+      ],
+      "comprobacion": "Copia en /tmp sin __pycache__, unittest, demo_cli.py en memoria y con SQLite, y juez/juez.py (del juez)",
+      "juez_salida": [
+        "50 add_item en hilos, un servicio en memoria: 50 ok → 50 guardadas",
+        "50 add_item repartidos entre dos CartService con SqliteCartRepository sobre el mismo fichero: 50 ok → 47 guardadas",
+        "add_item(price=0.01) → TypeError: la API no acepta precio",
+        "cantidad 0 / -3 / 1,5 / «2» → ValueError; 10⁹ → InvalidQuantity (máx. 999)",
+        "SKU y carrito con «../» → no encontrado; 0,10 × 3 = 0.30 EUR; EUR + USD → ValueError",
+        "mutar las líneas del carrito devuelto → AttributeError (inmutables)"
+      ]
+    },
+    "juicio": {
+      "nota": 8,
+      "veredicto": "sólido en un proceso",
+      "rubrica": {
+        "se ejecuta": 1,
+        "tests en verde": 1,
+        "dominio completo": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 1,
+        "concurrencia": 1,
+        "escala horizontal": 1,
+        "explica el escalado": 1
+      },
+      "resumen": "Librería Python sin dependencias, hexagonal, con dinero en céntimos, una moneda por carrito, precio del catálogo, descuentos e impuestos enchufables, eventos de dominio, límites y repositorio en memoria o SQLite; 24 tests y una demo que funcionan, y 50 altas a la vez con un servicio no pierden nada. Pero la concurrencia depende de un cerrojo del proceso: con dos servicios sobre el mismo SQLite se pierden 3 de 50 altas sin aviso.",
+      "rarezas": [
+        "El primer unittest no cargó por un nombre de test con un espacio; lo arregló y pasaron los 24.",
+        "Probó la demo con SQLite en /tmp/opencode, fuera de su carpeta (dentro del encierro).",
+        "Entrega las carpetas __pycache__ junto al código.",
+        "9 peticiones y 190 000 tokens."
+      ]
+    },
+    "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/ollama_mistral-large-4/PTS",
+    "codigo": "PTS",
+    "modelo": "ollama/mistral-large-4",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T18:07:28Z",
+    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 17200,
+      "output": 8453,
+      "reasoning": 0,
+      "cache_read": 121856,
+      "cache_write": 0,
+      "total": 147509
+    },
+    "peticiones": 14,
+    "error": null,
+    "mensajes_usuario": [
+      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+      "Decide tú.",
+      "Decide tú.",
+      "Decide tú.",
+      "Decide tú.",
+      "Decide tú."
+    ],
+    "herramientas": {
+      "write": 5,
+      "edit": 4,
+      "shell": 1,
+      "grep": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e05dba181ffe6R4A8R0Xj9mv5c",
+    "coste_usd": 0,
+    "ficheros": [
+      "guion-video-corto-tests-que-fallan.md",
+      "hilo-redes-sociales-tests-que-fallan.md",
+      "newsletter-tests-que-fallan.md",
+      "por-que-los-tests-que-fallan-son-peores-que-no-tener-tests.md",
+      "why-failing-tests-are-worse-than-no-tests.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 262144,
+      "output_proveedor": 262144,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 5,
+    "validacion": {
+      "slop": "889 palabras · 9 títulos · 7 líneas de lista · frase media 16.6 · slop 10.2 (1.15/100 palabras)\n  7-vocabulario            2  vocabulario de IA: fundamental, clave\n  13-raya                  2  rayas (—): —, —\n  15-negritas             13  negritas: **Fecha:**, **Categoría:**, **un test que falla de forma intermitente puede hacer más daño que no tener ningún test**, **Los tests inestables crean un velo de ruido bajo el cual los bugs reales se esconden.**, **determinista**, **determinidad**\n  20-chatbot               1  frases de chatbot: Cuéntame en los comentarios\n  titulo-conclusión        1  sección «Conclusión»: Conclusión",
+      "extra": [
+        "✔ un post en Markdown, en español, de 889 palabras (más otros cuatro ficheros, ver rarezas)",
+        "~ 1,15 marcas de slop por cada 100 palabras: 13 negritas, «Conclusión», «Cuéntame en los comentarios»",
+        "~ un caso (el fallo real en el cálculo de precios que queda camuflado), sin código ni cifras",
+        "✖ errores de lengua: «suites de tests rotas diente tras diente», «no Gana confianza», «determinidad»"
+      ]
+    },
+    "juicio": {
+      "nota": 7,
+      "veredicto": "correcto, sin ejemplos, con extras",
+      "rubrica": {
+        "hay post": 1,
+        "tesis con mecanismo": 2,
+        "se ciñe al tema": 1,
+        "ejemplos concretos": 1,
+        "sin errores ni inventos": 0,
+        "slop": 1,
+        "extensión": 1
+      },
+      "resumen": "Defiende la tesis con su mecanismo: el equipo aprende a ignorar la alarma, pierde tiempo con fantasmas y deja de confiar, y el fallo real se camufla entre los falsos; termina con qué hacer. Pero no trae ni código ni cifras, tiene fallos de lengua («diente tras diente», «determinidad») y, a fuerza de «Decide tú.», acabó entregando también una versión en inglés, una newsletter, un hilo y un guion de vídeo.",
+      "rarezas": [
+        "Terminaba cada entrega preguntando «¿lo dejamos aquí o quieres algo más?»; el lanzador contestó «Decide tú.» cinco veces (el máximo) y cada vez añadió otro formato: versión en inglés, hilo para redes, newsletter y guion de vídeo corto. 3068 palabras en cinco ficheros para un post.",
+        "En su revisión final encontró y quitó «una palabra en coreano accidental» del guion.",
+        "14 peticiones y 148 000 tokens."
       ]
     },
     "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."

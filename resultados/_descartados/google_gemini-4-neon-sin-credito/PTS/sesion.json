@@ -1,0 +1,85 @@
+{
+  "info": {
+    "id": "ses_e0506ebc9ffe85wND951QlYGbN",
+    "projectID": "735b36de3d850b8836f3a66b0b5caec47efc0064",
+    "agent": "build",
+    "model": {
+      "id": "google/gemini-4-neon",
+      "providerID": "or",
+      "variant": "default"
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "outcome": "failed",
+    "time": {
+      "created": 1795211990089,
+      "updated": 1795211990641,
+      "busy": 1795211990178,
+      "idle": 1795211990646,
+      "viewed": 1795211990646
+    },
+    "location": {
+      "directory": "/var/tmp/bench/ws-TmKRLoaG"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_1faf9143e001cCXW2J3MwDrsEj",
+      "time": {
+        "created": 1795211990201
+      },
+      "text": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1faf914d5001cSV4hJvJl353VT",
+      "time": {
+        "created": 1795211990235,
+        "completed": 1795211990641
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "google/gemini-4-neon",
+        "providerID": "or",
+        "variant": "default"
+      },
+      "content": [],
+      "finish": "error",
+      "error": {
+        "type": "provider.quota",
+        "message": "This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 62602. To increase, visit https://openrouter.ai/settings/credits and add more credits",
+        "status": 402,
+        "response": {
+          "body": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 62602. To increase, visit https://openrouter.ai/settings/credits and add more credits\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider_name\":null}},\"user_id\":\"user_2d6tGr5tcxwQia9FlUemVekXmZu\"}"
+        }
+      }
+    },
+    {
+      "id": "msg_1faf91676001xLJqSIvrQXaHBJ",
+      "time": {
+        "created": 1795211990646
+      },
+      "type": "idle",
+      "outcome": "failed",
+      "error": {
+        "type": "provider.quota",
+        "message": "This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 62602. To increase, visit https://openrouter.ai/settings/credits and add more credits",
+        "status": 402,
+        "response": {
+          "body": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 62602. To increase, visit https://openrouter.ai/settings/credits and add more credits\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider_name\":null}},\"user_id\":\"user_2d6tGr5tcxwQia9FlUemVekXmZu\"}"
+        }
+      }
+    }
+  ]
+}

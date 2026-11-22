@@ -1,0 +1,18 @@
+{
+  "nota": 7,
+  "veredicto": "se recorre, entre muros",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 1,
+    "vista limpia": 0,
+    "textos sin errores": 0
+  },
+  "resumen": "Ruta guiada con three.js por ocho paradas de los palacios nazaríes al Generalife, con lista, fichas, vuelo libre y velocidad hasta 4×; la cámara viaja de una a otra y el recorrido vuelve a empezar. Pero casi todas las vistas acaban pegadas a un muro, solo se reconocen murallas y torres, y una ficha se equivoca con el nombre de la Sala de las Dos Hermanas.",
+  "rarezas": [
+    "Ollama Cloud cortó tres de sus peticiones (dos ECONNRESET y un 504 Gateway Timeout, todas hacia los 5 minutos); OpenCode las reintentó y la sesión terminó. meta.json guarda el último error («Gateway Timeout») aunque el trabajo se completó.",
+    "Escribió el fichero, dijo que tenía un error de sintaxis y lo reescribió entero; luego tres edit y una comprobación de sintaxis con python + node. No lo abrió en un navegador.",
+    "10 peticiones y 134 000 tokens, en unos 40 minutos por los reintentos."
+  ]
+}

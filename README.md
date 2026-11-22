@@ -49,6 +49,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 
 | Modelo | Agente | A3D | AIF | CCA | PTS | Media | Peticiones | Tokens |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
+| [claude-fable-5-2](resultados/anthropic_claude-fable-5-2/README.md) | Claude Code | 10 | 8 | 10 | 10 | **9,5** | 22 | 1,8 M |
 | [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | 9 | 10 | 9 | 9 | **9,2** | 48 | 1,6 M |
 | [claude-opus-5-5 (medium)](resultados/anthropic_claude-opus-5-5-medium/README.md) | Claude Code | 9 | 8 | 10 | 8 | **8,8** | 36 | 3,3 M |
 | [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | 9 | 9 | 8 | 9 | **8,8** | 41 | 1,3 M |
@@ -63,10 +64,12 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | 10 | 8 | 5 | 8 | **7,8** | 89 | 4,4 M |
 | [ollama/minimax-m3](resultados/ollama_minimax-m3/README.md) | OpenCode | 4 | 9 | 10 | 8 | **7,8** | 317 | 35,8 M |
 | [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | 6 | 9 | 6 | 8 | **7,2** | 94 | 6,1 M |
+| [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | 7 | 6 | 8 | 7 | **7,0** | 42 | 0,7 M |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | 6 | 8 | 4 | 9 | **6,8** | 24 | 0,5 M |
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | 10 | **6,8** | 19 | 0,4 M |
 | [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | 7 | **5,8** | 38 | 0,6 M |
 | [nvidia/nemotron-3-ultra-550b-a55b:free](resultados/nvidia_nemotron-3-ultra-550b-a55b_free/README.md) | OpenCode | 6 | 3 | 4 | 4 | **4,2** | 34 | 0,6 M |
+| [google/gemini-4-neon](resultados/google_gemini-4-neon/README.md) | OpenCode | 9 | 10 | – | 9 | **en curso** | 45 | 2,1 M |
 
 Notas con las rúbricas de `rubricas.md`. Las pruebas que fallaron por la parte técnica (respuestas cortadas en el tope de 32 000 tokens de OpenCode, GLM compactando sin parar por nuestra configuración de límites, MiniMax preguntando antes de que existiera la regla «Decide tú.») se repitieron. Las versiones anteriores están en `resultados/_descartados/`.
 

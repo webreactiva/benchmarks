@@ -1,0 +1,19 @@
+{
+  "nota": 10,
+  "veredicto": "maqueta completa que se recorre",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 3,
+    "se reconoce la Alhambra": 2,
+    "vista limpia": 1,
+    "textos sin errores": 1
+  },
+  "resumen": "Maqueta de toda la colina de la Sabika con three.js incrustado: diez paradas en orden de visita, de la Puerta de la Justicia al Patio de la Acequia, con un recorrido que camina a ras de suelo por el camino dibujado y sigue solo, minimapa, lista de paradas y luz de día, atardecer y noche. Se reconocen el arco de la Justicia, la Alcazaba, el patio circular de Carlos V, la alberca de Arrayanes con Comares y el Patio de la Acequia, y las fichas son correctas; solo los Leones quedan algo escondidos entre tejados.",
+  "rarezas": [
+    "Se hizo capturas con Chrome sin interfaz de cada parada, las miró en hojas de contactos y corrigió encuadres, colores y la cubierta de Carlos V.",
+    "La sesión acabó con dos procesos de capturas aún en segundo plano y el mensaje «Esperando a que termine el lote de capturas»: el lanzador lo dio por terminado y cerró Claude Code. Los últimos cambios sí estaban ya en el HTML; quedaba revisar las paradas 7 a 10.",
+    "Bajó three.js 0.160 de jsDelivr y lo metió dentro del HTML para que funcione sin conexión: 730 KB en un fichero.",
+    "9 peticiones y 1,15 millones de tokens (950 000 de caché), 87 000 de salida."
+  ]
+}

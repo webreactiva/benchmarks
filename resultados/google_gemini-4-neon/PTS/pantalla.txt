@@ -1,0 +1,36 @@
+   New session                   +
+
+  ┃
+  ┃  Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener
+  ┃  tests. Guarda lo que generes en la carpeta actual.
+  ┃
+
+     + 1 edit, 1 thought, 1 read
+
+     He escrito el artículo y lo he guardado en por-que-los-tests-flaky-son-peores-que-no-tener-tests.md.
+
+     El post cubre:
+
+     - El problema de la confianza: por qué el ruido disfrazado de señal (el reflejo de pulsar Re-run) erosiona la
+       utilidad de toda la suite.
+     - El coste oculto: impacto en el tiempo de CI, cambios de contexto, degradación cultural y ocultación de bugs
+       reales de concurrencia.
+     - Causas habituales: dependencia del tiempo, estado compartido, asincronía mal sincronizada, dependencias
+       externas y aleatoriedad sin semilla (con un ejemplo práctico en código).
+     - Soluciones prácticas: cuarentena/eliminación de tests inestables, uso responsable de retries, pruebas repetidas
+       antes del merge y diseño determinista.
+
+     Build · google/gemini-4-neon · 1m 1s · 88.8 tok/s · 7.1s ttft
+
+
+
+
+
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · google/gemini-4-neon OpenRouter
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-9L9o9z1a                                                        9.2K (1%) · $0.09  ctrl+p commands
+

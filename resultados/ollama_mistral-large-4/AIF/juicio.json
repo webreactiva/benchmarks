@@ -1,0 +1,19 @@
+{
+  "nota": 6,
+  "veredicto": "funciona, sin Web Reactiva",
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 1,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 0,
+    "acabado": 1
+  },
+  "resumen": "Juego de combinar con 268 elementos y 264 recetas, todos alcanzables desde Computadora, Internet, Electricidad y Papel, con pista, buscador y guardado. Pero se combina seleccionando dos fichas en vez de soltar una sobre otra, las mezclas sin receta no dan nada y el contenido es desarrollo web genérico: de Web Reactiva solo queda el nombre, como Podcast + Comunidad.",
+  "rarezas": [
+    "No intentó buscar nada sobre Web Reactiva: lo resolvió con un elemento «Web Reactiva» y una fanfarria al crearlo.",
+    "Validó con node que no hubiera recetas duplicadas ni ingredientes huérfanos y que todo fuera alcanzable.",
+    "9 peticiones y 267 000 tokens."
+  ]
+}

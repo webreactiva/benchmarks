@@ -1,0 +1,29 @@
+{
+ "html": [
+  {
+   "fichero": "index.html",
+   "errores": [],
+   "titulo": "Alquimia Reactiva — Infinite Craft × Web Reactiva",
+   "canvas": 1,
+   "texto": "Alquimia Reactiva\nEN PANTUFLAS\n\nCombina conceptos de Web Reactiva · Programa con IA sin alucinar\n\n🥿 + 🤖 = ✨\nArrastra elementos al tablero\n\nSuelta un elemento encima de otro para descubrir conceptos, herramientas, podcasts y secretos de Web Reactiva.\n\nClic añade al tablero · Doble clic duplica · Clic derecho elimina\n\n🧭\nAtlas\n💡\nPista\n∞\nModo Libre\n🧹\nLimpiar\n🔊\n🌙\n🗑️\nSuelta aquí para retirar\nDes",
+   "scripts": [],
+   "captura": "capturas/index.html.png",
+   "capturas_extra": [
+    "capturas/dani-primo.png",
+    "capturas/sin-receta-libre.png",
+    "capturas/pista.png",
+    "capturas/atlas.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; un HTML de 122 KB sin dependencias",
+  "✔ tablero libre: se suelta una ficha sobre otra (clic añade, doble clic duplica, arrastrar al panel retira)",
+  "✔ Pantuflas + Código → Developer; Pantuflas + Podcast → Dani Primo; Código + IA → Prompt; Podcast + Podcast → +710 Episodios",
+  "✔ 144 de 144 elementos alcanzables desde 4 iniciales, 360 recetas (juez/alcanzables.js)",
+  "~ infinito con interruptor: Dani Primo + Developer no da nada con el Modo Libre apagado (por defecto) y «Meta-Developer» con él encendido",
+  "✔ contenido de webreactiva.com (8 webfetch): Atlas Malandriner, Selector de Modelos, Bingo de Mentiras, Chuleta OpenCode, Robotito, LinkedIn-5-5, Fichómetro",
+  "✔ guarda en localStorage (8/144 tras recargar), buscador, pistas en dos niveles, Atlas con rarezas y compartir"
+ ]
+}

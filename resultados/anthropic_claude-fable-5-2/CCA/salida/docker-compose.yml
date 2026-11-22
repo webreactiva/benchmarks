@@ -1,0 +1,22 @@
+# Ejemplo local: varias réplicas sin estado compartiendo un Redis.
+#   docker compose up --build --scale cart=3
+# Las réplicas se publican en puertos consecutivos del rango 3000-3009.
+services:
+  cart:
+    build: .
+    environment:
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "3000-3009:3000"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    # AOF para que los carritos sobrevivan a un reinicio de Redis.
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:

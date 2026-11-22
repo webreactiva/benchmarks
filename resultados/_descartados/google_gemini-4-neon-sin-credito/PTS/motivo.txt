@@ -1,0 +1,2 @@
+Límite nuestro: sin crédito suficiente en OpenRouter para el tope de 65 536 tokens; la primera petición devolvió 402 y no hizo nada.
+Se repite con SALIDA_MAX=32768 (un post no llega a 4 000 tokens; el tope solo cambia la reserva de saldo).

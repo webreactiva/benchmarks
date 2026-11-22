@@ -1,0 +1,9 @@
+{
+  "slop": "1486 palabras · 13 títulos · 18 líneas de lista · frase media 20.4 · slop 18.8 (1.26/100 palabras)\n  13-raya                  4  rayas (—): —, —, —, —\n  15-negritas             19  negritas: **Re-run**, **tests intermitentes**, **confianza**, **36%**, **Cambios de contexto constantes:**, **Cuellos de botella en los despliegues:**\n  16-lista-con-titulo      7  listas con etiqueta en negrita y dos puntos: \n- **Cambios de contexto constantes:**, - **Cuellos de botella en los despliegues:**, - **Fricción innecesaria en las revisiones:**, \n- **Inyecta el reloj:**, - **Aísla cada test:**, - **Usa semillas fijas**\n  23-relleno               1  muletillas: En resumen\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que",
+  "extra": [
+    "✔ un post en Markdown, en español, de 1486 palabras",
+    "~ 1,26 marcas de slop por cada 100 palabras: 19 negritas, 7 listas con etiqueta, «En resumen», «La próxima vez que…»",
+    "✔ código antes y después (sleep(300) frente a findByText) y la cifra correcta: 20 tests con un 5 % de fallo → 0,95²⁰ ≈ 36 % de pasar a la primera",
+    "✔ mecanismo: sin tests sabes que no hay red; con tests intermitentes el equipo aprende a pulsar Re-run y el fallo real llega a producción"
+  ]
+}

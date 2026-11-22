@@ -1,0 +1,16 @@
+El juego ya está escrito y las recetas validadas; ahora compruebo un par de datos sobre Web Reactiva en su web antes de darlo por bueno.
+
+---
+
+El juego está en `/var/tmp/bench/ws-RbIR5jA2/alquimia-reactiva.html`: un único archivo, sin dependencias, que se abre directamente en el navegador. No lo he probado en un navegador; solo he validado con un script que el código no tiene errores de sintaxis y que los 141 elementos son alcanzables desde los seis iniciales.
+
+- **Mecánica:** empiezas con HTML, CSS, JavaScript, Servidor, Micrófono y Café, y al soltar un elemento sobre otro se combinan si existe receta (hay 157).
+- **Contenido:** frameworks, herramientas, IA, cultura del oficio y cuatro elementos objetivo resaltados: Web Reactiva, Daniel Primo, Malandriner y Newsletter de los domingos. Cada descubrimiento muestra una frase descriptiva.
+- **Controles:** arrastrar desde el panel (o tocar, en móvil), doble clic para duplicar y soltar sobre el panel para quitar. Hay buscador, cambio de orden, pista, limpiar tablero y reiniciar.
+- **Progreso:** se guarda en el navegador (`localStorage`).
+
+A diferencia de Infinite Craft, las combinaciones no son infinitas: no hay IA generando resultados, así que las mezclas sin receta simplemente no reaccionan.
+
+Los datos sobre Web Reactiva (12 recursos cada domingo, comunidad malandriner, enfoque actual en IA) los comprobé en webreactiva.com. El resto de textos son de cosecha propia, no citas del podcast.
+
+He puesto en el pie la nota «Juego no oficial inspirado en los temas del podcast Web Reactiva»; si el proyecto es tuyo, quítala.

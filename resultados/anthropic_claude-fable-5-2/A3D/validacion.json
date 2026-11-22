@@ -1,0 +1,40 @@
+{
+ "html": [
+  {
+   "fichero": "alhambra-ruta-3d.html",
+   "errores": [],
+   "titulo": "La Alhambra de Granada · Ruta en 3D",
+   "canvas": 2,
+   "texto": "1\nPuerta de la Justicia\n2\nAlcazaba y Torre de la Vela\n3\nPalacio de Carlos V\n4\nEl Mexuar\n5\nPatio de los Arrayanes\n6\nPatio de los Leones\n7\nEl Partal\n8\nPaseo de las Torres\n9\nJardines del Generalife\n10\nPatio de la Acequia\nLa Alhambra\n\nGRANADA · RUTA EN 3D\n\nPARADAS\n◆\nLa colina de la Sabika\n1\nPuerta de la Justicia\n2\nAlcazaba y Torre de la Vela\n3\nPalacio de Carlos V\n4\nEl Mexuar\n5\nPatio de los Arrayanes\n6",
+   "scripts": [],
+   "captura": "capturas/alhambra-ruta-3d.html.png",
+   "capturas_extra": [
+    "capturas/auto-120s.png",
+    "capturas/auto-180s.png",
+    "capturas/auto-240s.png",
+    "capturas/auto-300s.png",
+    "capturas/parada-1.png",
+    "capturas/parada-2.png",
+    "capturas/parada-3.png",
+    "capturas/parada-5.png",
+    "capturas/parada-6.png",
+    "capturas/parada-6-noche.png",
+    "capturas/parada-7.png",
+    "capturas/parada-9.png",
+    "capturas/parada-10.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ un solo HTML de 730 KB con three.js 0.160 incrustado (bajado de jsDelivr) (funciona sin conexión); carga sin errores de consola",
+  "✔ 10 paradas reales en orden de visita: Justicia, Alcazaba y Vela, Carlos V, Mexuar, Arrayanes, Leones, Partal, Paseo de las Torres, Jardines Nuevos y Patio de la Acequia, más una vista general desde el Albaicín",
+  "✔ «Iniciar recorrido» lleva la cámara a ras de suelo por el camino dibujado de una parada a la siguiente, gira 11 s en cada una y sigue sola; también lista lateral, Anterior/Siguiente, teclado, minimapa y enlace #p=N",
+  "✔ se reconoce: arco de herradura de la Justicia, torres almenadas de la Alcazaba, patio circular de Carlos V, alberca de Arrayanes con Comares, patio de la Acequia con su galería, setos y cipreses del Generalife",
+  "~ Leones se ve desde arriba entre tejados: patio alargado con columnas y fuente pequeña; la reconoce quien la conozca",
+  "~ cada parada lleva un disco blanco y un haz de luz vertical que marcan el punto: pequeños, no tapan la escena",
+  "~ en el contenedor el render por software va a 1 fps; el avance usa dt ≤ 0,1, así que de la parada 1 a la 3 tarda 5 min (unos 30 s en un navegador normal)",
+  "✔ luces de día, atardecer y noche (con ventanas encendidas)",
+  "✔ textos correctos: mano y llave de la Justicia, Vela de 27 m, Carlos V de 63 m con patio de 30 m, alberca de 34 m y Comares de 45 m, 124 columnas en Leones, las tres infantas de Irving"
+ ]
+}
