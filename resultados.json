@@ -2324,8 +2324,52 @@
       "fuente": "openrouter /api/v1/models · SALIDA_MAX"
     },
     "veces_decide_tu": 0,
-    "validacion": null,
-    "juicio": null,
+    "validacion": {
+      "html": [],
+      "mermaid": [],
+      "extra": [
+        "✔ node src/demo.ts: invitado + usuario, fusión, cupón WELCOME10, checkout idempotente y 8 eventos",
+        "✖ sin tests: npm test busca tests/*.test.ts, que no existe (0 tests)",
+        "✖ tsc --noEmit: 9 errores (structuredClone no está en sus declaraciones de Node)",
+        "✔ 50 altas a la vez: 50 guardadas (cerrojo por carrito en el proceso)",
+        "✖ dos instancias con el mismo FileCartRepository: 20 altas aceptadas, 10 guardadas",
+        "✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)",
+        "✔ valida cantidad 0, negativa, decimal y enorme; «../» en producto o carrito → no encontrado",
+        "✖ sin README: la sesión se cortó antes"
+      ],
+      "comprobacion": "Copia en el scratchpad, tsc --noEmit, npm test, node src/demo.ts y juez/juez.mjs (del juez) cargando los .ts con Node 24",
+      "juez_salida": [
+        "50 addItem a la vez: 50 ok → 50 unidades guardadas",
+        "precio desde el cliente (unitPrice 0,01) → se ignora, guarda 24,50 del catálogo",
+        "quantity 0 / -3 / 1,5 → VALIDATION_ERROR; 1e9 → INSUFFICIENT_STOCK",
+        "sku y cartId con «../» → PRODUCT_NOT_FOUND / CART_NOT_FOUND",
+        "0,10 × 3 → 30 céntimos; EUR + USD → CURRENCY_MISMATCH; producto EUR en carrito USD → CURRENCY_MISMATCH",
+        "mutar el carrito devuelto no cambia lo guardado",
+        "dos createDefaultCartSystem con el mismo fichero, 20 altas alternas: 20 ok, 10 guardadas (pierde la mitad sin error)"
+      ]
+    },
+    "juicio": {
+      "nota": 6,
+      "veredicto": "sólido pero sin terminar",
+      "rubrica": {
+        "se ejecuta": 1,
+        "tests en verde": 0,
+        "dominio completo": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 1,
+        "concurrencia": 1,
+        "escala horizontal": 1,
+        "explica el escalado": 0
+      },
+      "resumen": "TypeScript hexagonal sin dependencias, que Node 22 ejecuta tal cual: dinero en céntimos con moneda comprobada, precio del catálogo, promociones, IVA por región, envío, idempotencia, fusión y checkout con reserva de stock, más una API HTTP y una demo que funciona. La sesión se cortó por falta de crédito antes de los tests y el README, y la versión optimista solo aguanta dentro de un proceso: dos instancias sobre el mismo fichero pierden la mitad de las altas sin avisar.",
+      "rarezas": [
+        "Juzgado tal cual quedó: la sesión se cortó a las 12 peticiones porque OpenRouter rechazó la siguiente con un 402 por falta de saldo (límite nuestro). Se juzga por decisión del autor, con nota definitiva.",
+        "Escribió 27 ficheros y 3700 líneas sin ejecutar nada: los cuatro comandos de shell fueron para ver versiones de node, tsc y los paquetes globales.",
+        "Para no depender de @types/node escribió sus propias declaraciones de Node (src/types/node.d.ts), pero le faltó structuredClone: tsc --noEmit da 9 errores aunque el código corre.",
+        "package.json apunta a tests/*.test.ts, que no existe: npm test pasa con 0 tests.",
+        "12 peticiones, 213 000 tokens, 0,75 $."
+      ]
+    },
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {

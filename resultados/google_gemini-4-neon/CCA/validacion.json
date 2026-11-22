@@ -1,0 +1,24 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ node src/demo.ts: invitado + usuario, fusión, cupón WELCOME10, checkout idempotente y 8 eventos",
+    "✖ sin tests: npm test busca tests/*.test.ts, que no existe (0 tests)",
+    "✖ tsc --noEmit: 9 errores (structuredClone no está en sus declaraciones de Node)",
+    "✔ 50 altas a la vez: 50 guardadas (cerrojo por carrito en el proceso)",
+    "✖ dos instancias con el mismo FileCartRepository: 20 altas aceptadas, 10 guardadas",
+    "✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)",
+    "✔ valida cantidad 0, negativa, decimal y enorme; «../» en producto o carrito → no encontrado",
+    "✖ sin README: la sesión se cortó antes"
+  ],
+  "comprobacion": "Copia en el scratchpad, tsc --noEmit, npm test, node src/demo.ts y juez/juez.mjs (del juez) cargando los .ts con Node 24",
+  "juez_salida": [
+    "50 addItem a la vez: 50 ok → 50 unidades guardadas",
+    "precio desde el cliente (unitPrice 0,01) → se ignora, guarda 24,50 del catálogo",
+    "quantity 0 / -3 / 1,5 → VALIDATION_ERROR; 1e9 → INSUFFICIENT_STOCK",
+    "sku y cartId con «../» → PRODUCT_NOT_FOUND / CART_NOT_FOUND",
+    "0,10 × 3 → 30 céntimos; EUR + USD → CURRENCY_MISMATCH; producto EUR en carrito USD → CURRENCY_MISMATCH",
+    "mutar el carrito devuelto no cambia lo guardado",
+    "dos createDefaultCartSystem con el mismo fichero, 20 altas alternas: 20 ok, 10 guardadas (pierde la mitad sin error)"
+  ]
+}
