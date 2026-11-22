@@ -19,7 +19,7 @@ cp "$H/claude-aislado.sh" "$base/"
 s=c-$cod tp="=c-$cod:"
 tmux kill-session -t "=$s" 2>/dev/null || true
 tmux new-session -d -s "$s" -x 120 -y 36 -c "$ws" \
-  "$B/scripts/encierro.sh $ws $base env HOME=$casa CLAUDE_LOOP_CONFIG=$conf $base/claude-aislado.sh --permission-mode auto --model $alias"
+  "TOKEN_CLAUDE=1 $B/scripts/encierro.sh $ws $base env HOME=$casa CLAUDE_LOOP_CONFIG=$conf $base/claude-aislado.sh --permission-mode auto --model $alias"
 tmux set-option -t "$tp" @agente claude
 tmux set-option -t "$tp" @pantallas "$B/resultados/.pantallas"
 pantalla() { tmux capture-pane -p -t "$tp" 2>/dev/null; }
