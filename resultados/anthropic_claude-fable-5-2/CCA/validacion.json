@@ -1,0 +1,23 @@
+{
+  "html": [],
+  "mermaid": [],
+  "extra": [
+    "✔ npm ci y npm start; npm test: 13/13 en memoria (1 saltado) y 21/21 con REDIS_URL contra un Redis real",
+    "✔ 50 altas a la vez: 50 guardadas en una instancia (memoria y Redis) y repartidas entre dos instancias con el mismo Redis",
+    "✔ cada escritura es un script Lua atómico en Redis: sin leer-modificar-escribir en la aplicación",
+    "✔ dinero en céntimos enteros, una moneda por catálogo; el precio sale del catálogo al leer (se ignora el del cliente)",
+    "✔ valida cantidad 0, negativa, decimal, enorme y en texto; SKU inexistente, SKU y cartId con «../», cuerpo vacío o no JSON",
+    "~ sin Redis, dos instancias reparten el carrito (25 + 25): el README avisa de que la memoria es solo para desarrollo",
+    "~ entrega node_modules junto al código; Dockerfile y docker-compose sin probar (lo dice)"
+  ],
+  "comprobacion": "Copia en el scratchpad sin node_modules; npm ci, npm test con y sin REDIS_URL (redis-server local) y juez/juez.mjs con cuatro instancias: dos en memoria y dos con el mismo Redis",
+  "juez_salida": [
+    "50 altas a la vez (CAM-001): una instancia en memoria 200 × 50 → 50; una con Redis 200 × 50 → 50",
+    "repartidas entre dos instancias con el mismo Redis: 200 × 50 → 50 en las dos",
+    "repartidas entre dos instancias sin Redis: 200 × 50 → 25 y 25 (cada una su memoria)",
+    "precio desde el cliente (price: 1, unitPrice: 1) → 200, se guarda 9,50 € del catálogo",
+    "quantity 0 / -3 / 1,5 / 1e9 / «2» → 400; SKU inexistente → 404; SKU «../../etc/passwd» → 400; cartId y SKU con «../» en la ruta → 404; cuerpo vacío o «hola» → 400",
+    "0,10 × 3 y monedas mezcladas no aplican: importes enteros en céntimos y una sola moneda por catálogo",
+    "fijar cantidad 3 → 28,50 €; quitar → vacío; vaciar → 204; mutar la respuesta y releer → 2 (cada respuesta es JSON nuevo)"
+  ]
+}
