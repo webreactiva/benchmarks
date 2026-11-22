@@ -1,0 +1,28 @@
+{
+ "html": [
+  {
+   "fichero": "alquimia-reactiva.html",
+   "errores": [],
+   "titulo": "Alquimia Reactiva",
+   "canvas": 0,
+   "texto": "Alquimia Reactiva\n\nMezcla conceptos del desarrollo web y descubre de qué está hecho un podcast.\n\nArrastra elementos hasta aquí y suéltalos\nuno encima de otro para combinarlos.\n💡 Pista\n🧹 Limpiar\n↺ Reiniciar\nDescubiertos\n6 / 141\n🕘\n📄\nHTML\n🎨\nCSS\n⚡\nJavaScript\n🖥️\nServidor\n🎙️\nMicrófono\n☕\nCafé\nJuego no oficial inspirado en los temas del podcast Web Reactiva. Suelta aquí un elemento para quitarlo de",
+   "scripts": [],
+   "captura": "capturas/alquimia-reactiva.html.png",
+   "capturas_extra": [
+    "capturas/mezcla.png",
+    "capturas/sin-receta.png",
+    "capturas/pista.png"
+   ]
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ carga sin errores; un HTML de 28 KB sin dependencias",
+  "✔ tablero libre: se arrastra una ficha desde el panel y se suelta sobre otra (clic la pone al azar, doble clic duplica, soltar en el panel la quita)",
+  "✔ HTML + CSS → Página web; JavaScript + Servidor → Node.js; CSS + CSS → Flexbox; Micrófono + Café → Podcast; Podcast + Página web → Web Reactiva",
+  "✔ 141 de 141 elementos alcanzables desde 6 iniciales, 157 recetas, ninguna repetida ni rota (juez/alcanzables.js)",
+  "✖ no es infinito: Node.js + Flexbox → «Aquí no reacciona nada… prueba otra mezcla.» (lo dice en su respuesta)",
+  "~ Web Reactiva a medias: 6 elementos de la casa (Web Reactiva, Daniel Primo, Malandriner, Invitado, Episodio, Newsletter de los domingos) entre 141 de cultura web genérica; 2 WebFetch a webreactiva.com, después de escribir el juego, para corregir dos descripciones",
+  "✔ guarda en localStorage (12/141 tras recargar), buscador, pista («Micrófono + ❓ = 🗣️»), orden alfabético o por descubrimiento, reiniciar"
+ ]
+}

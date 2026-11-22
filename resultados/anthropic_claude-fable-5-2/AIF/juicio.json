@@ -1,0 +1,20 @@
+{
+  "nota": 8,
+  "veredicto": "buen juego, poco Web Reactiva",
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 1,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 1,
+    "acabado": 1
+  },
+  "resumen": "Tablero libre donde se arrastra una ficha sobre otra, 141 elementos y 157 recetas, todos alcanzables desde HTML, CSS, JavaScript, Servidor, Micrófono y Café, con buscador, pista y progreso guardado. El contenido es cultura del desarrollo web en general (frameworks, Docker, «Centrar un div», «Deploy en viernes») con seis elementos de la casa; las mezclas sin receta no dan nada.",
+  "rarezas": [
+    "Escribió el juego entero de una vez sin mirar webreactiva.com; luego hizo dos WebFetch (portada y newsletter) solo para corregir dos descripciones: Web Reactiva («cursos y guías para dominar la IA») y la newsletter («12 recursos cada domingo»).",
+    "Comprobó el grafo de recetas con un script y dijo que no lo había probado en un navegador: honesto con lo que no comprobó.",
+    "Avisa de que no es infinito («no hay IA generando resultados») y pone en el pie «Juego no oficial inspirado en los temas del podcast Web Reactiva».",
+    "5 peticiones y 22 500 tokens de salida: barato para un AIF."
+  ]
+}
