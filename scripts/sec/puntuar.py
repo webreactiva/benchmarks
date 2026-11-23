@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""puntuar.py <resultados-vN/<modelo>/SEC>
+"""puntuar.py <resultados/<modelo>/SEC>
 
 Lee juez/hallazgos.json (lo rellena el juez a mano, un objeto por cada hallazgo del informe) y calcula la nota con
-rubrica.md: la métrica principal de RealVuln (F3, recall pesado 9:1) con su regla de cruce estricta. Escribe
+rubricas.md (SEC): la métrica principal de RealVuln (F3, recall pesado 9:1) con su regla de cruce estricta. Escribe
 juez/puntuacion.json y la imprime.
 
 hallazgos.json:

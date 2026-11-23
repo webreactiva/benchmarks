@@ -1,0 +1,31 @@
+{
+  "codigo": "SEC",
+  "modelo": "claude-haiku-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-23T20:48:46Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 30,
+    "output": 42652,
+    "reasoning": 0,
+    "cache_read": 1372292,
+    "cache_write": 130256,
+    "total": 1545230
+  },
+  "peticiones": 15,
+  "error": null,
+  "herramientas": {
+    "Bash": 18,
+    "Write": 1,
+    "Edit": 2
+  },
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "auditoria-seguridad.md"
+  ],
+  "veces_decide_tu": 0,
+  "semilla": "/tmp/claude-0/-home-user-benchmarks/5a3d274a-9338-5409-be17-0609cc15933d/scratchpad/prep2/semilla",
+  "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado"
+}

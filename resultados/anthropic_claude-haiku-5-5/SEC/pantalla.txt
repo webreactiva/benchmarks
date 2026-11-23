@@ -1,0 +1,36 @@
+    firma del token.
+  - C2 · Reset de contraseña predecible: el token es md5(email + timestamp) y la respuesta devuelve el instante exacto
+    de la petición. Cualquier cuenta, incluidas las de admin, se puede tomar.
+  - C3 · Toma de cuenta por soporte: support-access acepta el email de cualquier usuario y el token de soporte conserva
+    el rol, así que sirve también para entrar como admin.
+  - C4 · Alta como ADMIN: el registro acepta un campo role arbitrario.
+  - C5 · Contraseñas en claro en los logs: el login escribe la contraseña en app.log, y ese fichero se sirve con
+    root/admin.
+  - C6 · Inyección SQL sin autenticación: en la búsqueda de productos y en el tracking (aquí a través de
+    X-Forwarded-For).
+  - C7 · Lectura arbitraria de ficheros: /api/files acepta ../ y lee .env.local o flag.txt.
+  - C8 · Dinero infinito: el total del pedido lo envía el cliente, y las tarjetas regalo se crean sin pago y se canjean
+    por saldo.
+  - C9 · IDOR: cualquier usuario autenticado lee cualquier pedido (email y dirección).
+  - C10 · Enlaces de compartir forjables: clave AES fija en el código y sin autenticación del mensaje.
+  - C11 · XSS almacenado en reseñas: el contenido se inserta con innerHTML y se re-ejecutan sus scripts.
+
+  Hay además 14 hallazgos altos (entre ellos SSRF, XXE, secretos versionados, MD5 sin sal con cuentas admin/admin
+  sembradas, la clave de retransmisión visible para cualquier usuario y dependencias con CVE probables), 13 medios y 7
+  bajos. Cada uno lleva fichero y línea.
+
+  Lo más urgente:
+  1. Rotar todos los secretos que aparecen en el repositorio y quitarlos del historial. .env.local no está excluido ni
+     en .gitignore ni en .dockerignore, así que termina en la imagen Docker.
+  2. Definir JWT_SECRET y verificar la firma en el middleware.
+  3. Quitar el campo role del registro y limitar support-access al propio usuario.
+  4. Dejar de loguear contraseñas y parametrizar todas las consultas $queryRawUnsafe.
+
+  Los CVE de Next 15.2.2 y React 19.2.0 los cito de memoria; hay que confirmarlos con npm audit.
+
+✻ Cogitated for 3m 17s · done 8:52 PM
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)

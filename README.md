@@ -7,6 +7,7 @@ Abre `index.html` para ver la tabla: tokens, peticiones, validación, nota del j
 ## Reglas
 
 - **El prompt es el que es.** Está en `prompts/<CÓDIGO>.txt` y no se toca. Solo se le añade `prompts/_destino.txt` (dónde guardar lo que genere).
+- **SEC empieza con un proyecto.** Es el único prompt que no arranca en una carpeta vacía: el agente recibe en ella una tienda Next.js anonimizada (`scripts/semilla.sh` la prepara con `scripts/sec/preparar.py`; detalle en `scripts/sec/README.md`), y corre sin búsqueda ni descarga web para que no busque el proyecto original. `salida/` guarda solo lo que creó o cambió (`cambios.txt`).
 - **Un mensaje por sesión.** Sesión nueva para cada prompt y nada de pedir correcciones después. Lo que salga es el resultado. Si el modelo pregunta, da opciones o pide que elijamos, se le contesta «Decide tú.» cada vez: decide siempre el modelo.
 - **Sin topes.** Cada modelo corre con el contexto y la salida máxima reales de su proveedor (`scripts/limites.py`); quedan en su `meta.json`.
 - **Aislado.** OpenCode corre con su propia configuración, su propio `HOME` y en una carpeta vacía fuera del repo: no lee `AGENTS.md`, ni skills, ni la configuración de nadie.
@@ -21,6 +22,7 @@ Abre `index.html` para ver la tabla: tokens, peticiones, validación, nota del j
 | AIF | visual | Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. |
 | CCA | código | Implementa un carrito de la compra escalable |
 | PTS | texto | Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. |
+| SEC | seguridad | Haz una auditoría de seguridad de este proyecto |
 
 ## Cómo se lanza
 
@@ -44,6 +46,8 @@ Necesita `OPEN_ROUTER_API_KEY`, `opencode-ai` y tmux. La clave gratuita da 50 pe
 `resultados/_descartados/` guarda pruebas que no valen y por qué.
 
 ## Estado
+
+SEC (auditoría de seguridad) se añadió el 23 nov. 2026: mientras no lo tengan todos los modelos, la media sigue siendo la de los otros cuatro prompts.
 
 MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos sacaban un 8 o un 9. Sus resultados están en `resultados/_retirados/` y las medias son sobre los otros cuatro prompts.
 

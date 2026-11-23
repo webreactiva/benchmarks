@@ -9,6 +9,7 @@ B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CRIT = {
  "A3D": ["abre sin errores", "ruta con paradas reales", "la ruta se recorre", "se reconoce la Alhambra", "vista limpia", "textos sin errores"],
  "MWP": ["compila", "en español", "camino conectado", "piezas clave", "sin errores ni inventos", "se puede leer"],
+ "SEC": ["F3 estricto", "críticas", "fichero y línea", "CWE"],
  "AIF": ["abre sin errores", "mecánica de Infinite Craft", "las combinaciones funcionan", "progresión", "«infinito»", "contenido de Web Reactiva", "acabado"],
  "CCA": ["se ejecuta", "tests en verde", "dominio completo", "dinero exacto", "precio del catálogo y validación", "concurrencia", "escala horizontal", "explica el escalado"],
  "PTS": ["hay post", "tesis con mecanismo", "se ciñe al tema", "ejemplos concretos", "sin errores ni inventos", "slop", "extensión"],

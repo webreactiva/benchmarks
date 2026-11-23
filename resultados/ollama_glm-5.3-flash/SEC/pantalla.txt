@@ -1,0 +1,36 @@
+   Auditoría de seguridad del pr +
+     │ 🔴 │ Path traversal anónimo: GET /api/files?file=../.env.local                 │ app/api/files                │
+     ├────┼───────────────────────────────────────────────────────────────────────────┼──────────────────────────────┤
+     │ 🔴 │ SQLi no autenticada vía header X-Forwarded-For                            │ app/api/tracking             │
+     ├────┼───────────────────────────────────────────────────────────────────────────┼──────────────────────────────┤
+     │ 🔴 │ SQLi no autenticada en búsqueda de productos                              │ app/api/products/search      │
+     ├────┼───────────────────────────────────────────────────────────────────────────┼──────────────────────────────┤
+     │ 🔴 │ Reset de contraseña predecible: token = md5(email+timestamp) y la API     │ app/api/auth/forgot-password │
+     │    │ devuelve el timestamp → account takeover                                  │                              │
+     ├────┼───────────────────────────────────────────────────────────────────────────┼──────────────────────────────┤
+     │ 🔴 │ JWT con secreto por defecto "secret" (no configurado) → forja de sesiones │ lib/server-auth.ts           │
+     │    │ admin                                                                     │                              │
+     ├────┼───────────────────────────────────────────────────────────────────────────┼──────────────────────────────┤
+     │ 🔴 │ SQLi adicional en orders/search y admin/reviews                           │ ambos rutas                  │
+     ├────┼───────────────────────────────────────────────────────────────────────────┼──────────────────────────────┤
+     │ 🔴 │ XSS almacenado con ejecución de <script> en reviews (inyectable sin auth) │ ProductDetailClient.tsx      │
+     └────┴───────────────────────────────────────────────────────────────────────────┴──────────────────────────────┘
+
+     Otros destacados: contraseñas en MD5 sin salt, contraseñas logueadas en texto plano (y el SIEM se accede con
+     cookie forjable o root:admin), XXE en importación de proveedores (lee supplier-registry.txt), SSRF en /api/
+     support, total de pedido enviado desde el cliente (fraude de precio), race condition en cupones, códigos de gift
+     card predecibles (LCG por timestamp — la tarjeta de $500 sembrada es bruteable), secretos hardcodeados en código
+     y .env.local versionado con NEXT_PUBLIC_ en un secreto, y Next.js 15.2.2 vulnerable a CVE-2025-29927.
+
+     El informe incluye ubicaciones exactas (archivo:línea), PoCs, impacto, mitigación por hallazgo, cadenas de ataque
+     completas, un plan de remediación priorizado (P0/P1/P2) y un apéndice con los secretos a rotar.
+
+     Build · glm-5.3-flash · 2m 17s · 200.6 tok/s · 766ms ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-GlEWt9EF                                                             117.6K (11%)  ctrl+p commands
+

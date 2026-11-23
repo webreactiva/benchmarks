@@ -20,6 +20,9 @@ slug=$(echo "$modelo" | tr '/:' '__')
 dest=$B/resultados/$slug/$cod
 [ -e "$dest/meta.json" ] && { echo "Ya existe $dest: bórralo para repetir"; exit 1; }
 prompt="$(cat "$B/prompts/$cod.txt") $(cat "$B/prompts/_destino.txt")"
+# Prompts que empiezan con un proyecto en la carpeta (SEC, scripts/semilla.sh): la copia, sin búsqueda web y más tiempo
+SEMILLA=${SEMILLA:-$("$B/scripts/semilla.sh" "$cod")}
+[ -n "$SEMILLA" ] && { SIN_WEB=${SIN_WEB:-1}; ESPERA_MAX=${ESPERA_MAX:-5400}; }
 
 # Una configuración por modelo: así se pueden lanzar varios modelos a la vez sin pisarse
 export OPENCODE_AISLADO=${OPENCODE_AISLADO:-$HOME/.opencode-bench/$slug}
@@ -32,7 +35,7 @@ limites=$(python3 "$B/scripts/limites.py" "$modelo")
 # petición al nivel «flex» de AI Studio, más lento: gemini-4-neon pasaba de ~6 min y se cortaba («Network connection lost»).
 [ -n "${SALIDA_MAX:-}" ] && limites=$(echo "$limites" | python3 -c 'import json,sys; l=json.load(sys.stdin); l["output"]=min(l["output"], int(sys.argv[1])); l["fuente"]+=" · SALIDA_MAX"; print(json.dumps(l))' "$SALIDA_MAX")
 salida_max=$(echo "$limites" | python3 -c 'import json,sys; print(json.load(sys.stdin)["output"])')
-python3 - "$conf" "$modelo" "$limites" <<'PY'
+SIN_WEB=${SIN_WEB:-} python3 - "$conf" "$modelo" "$limites" <<'PY'
 import json, sys, os
 f, m, lim = sys.argv[1], sys.argv[2], json.loads(sys.argv[3])
 c = json.load(open(f)) if os.path.exists(f) else {
@@ -55,11 +58,15 @@ o = c["provider"]["or"]["options"]; o.pop("provider", None)  # OpenCode 2.x solo
 if po: o["extraBody"] = {"provider": {"only": [po], "allow_fallbacks": False}}
 else: o.pop("extraBody", None)
 c["model"] = p + "/" + id
+# SIN_WEB=1 (SEC): sin búsqueda ni descarga web, para que no busque el proyecto original
+web = "deny" if os.environ.get("SIN_WEB") else "allow"
+c.setdefault("permission", {}).update({"webfetch": web, "websearch": web})
 json.dump(c, open(f, "w"), indent=2)
 PY
 
 # Carpeta con nombre aleatorio, que se borra al terminar: así ningún modelo encuentra el trabajo de otro
 mkdir -p /var/tmp/bench; ws=$(mktemp -d /var/tmp/bench/ws-XXXXXXXX)
+if [ -n "$SEMILLA" ]; then cp -a "$SEMILLA"/. "$ws"/; fi
 s=b-$cod-$(echo "$slug" | { md5sum 2>/dev/null || md5; } | cut -c1-6)
 tmux kill-session -t "=$s" 2>/dev/null || true
 # HOME propio: si no, OpenCode carga las skills de ~/.claude/skills y ~/.agents (pasó en la primera tanda)
@@ -109,7 +116,9 @@ tmux capture-pane -p -t "=$s:" -S -3000 > "$dest/pantalla.txt"
 # La sesión: la última de esa carpeta
 id=$(cd "$ws" && HOME=$casa "$H/opencode-aislado.sh" session list --format json 2>/dev/null | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d[0]["id"] if d else "")' || true)
 [ -n "$id" ] && exporta "$id" > "$dest/sesion.json" || true
-rm -rf "$dest/salida"; cp -R "$ws" "$dest/salida"; rm -rf "$ws"
+rm -rf "$dest/salida"
+if [ -n "$SEMILLA" ]; then python3 "$B/scripts/salida-semilla.py" "$SEMILLA" "$ws" "$dest"; else cp -R "$ws" "$dest/salida"; fi
+rm -rf "$ws"
 python3 "$B/scripts/tokens.py" "$dest" "$cod" "$modelo" "$inicio" "$prompt"
 # Los límites con que corrió, en meta.json
 python3 - "$dest/meta.json" "$limites" <<'PY'
@@ -121,6 +130,13 @@ python3 - "$dest/meta.json" "$pregunto" <<'PY'
 import json, sys
 f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2]); json.dump(m, open(f, "w"), indent=2, ensure_ascii=False)
 PY
+if [ -n "$SEMILLA" ]; then python3 - "$dest/meta.json" "$SEMILLA" "${SIN_WEB:-}" <<'PY'
+import json, sys
+f = sys.argv[1]; m = json.load(open(f)); m["semilla"] = sys.argv[2]
+if sys.argv[3]: m["sin_web"] = "webfetch y websearch denegados en opencode.json"
+json.dump(m, open(f, "w"), indent=2, ensure_ascii=False)
+PY
+fi
 # Excepción macOS: con qué aislamiento y qué versión de OpenCode corrió
 if [ "$(uname)" = Darwin ]; then python3 - "$dest/meta.json" "$(opencode --version 2>/dev/null)" <<'PY'
 import json, sys

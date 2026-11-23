@@ -1,0 +1,548 @@
+{
+ "hallazgos": [
+  {
+   "id": "C1",
+   "titulo": "secreto JWT por defecto y middleware sin verificar firma",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true
+    }
+   ],
+   "nota": "El middleware sin firma es real y no está etiquetado."
+  },
+  {
+   "id": "C2",
+   "titulo": "token de reset predecible md5(email+timestamp)",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false
+  },
+  {
+   "id": "C3",
+   "titulo": "support-access con email arbitrario",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "titulo": "alta con rol arbitrario",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "C5",
+   "titulo": "contraseñas en claro en el log",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "C6",
+   "titulo": "SQLi en búsqueda de productos y tracking",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": true
+    },
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "C7",
+   "titulo": "path traversal en /api/files",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "línea 20"
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "nota": "línea 62"
+    }
+   ]
+  },
+  {
+   "id": "C8",
+   "titulo": "total del pedido del cliente; tarjetas regalo sin pago",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "C9",
+   "titulo": "IDOR en pedidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "C10",
+   "titulo": "enlaces de compartir forjables, clave AES fija",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true
+    }
+   ],
+   "nota": "Habla de CBC sin MAC, no del oráculo de padding (018)."
+  },
+  {
+   "id": "C11",
+   "titulo": "XSS almacenado en reseñas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-039",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A1",
+   "titulo": "SQLi en búsqueda de pedidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A2",
+   "titulo": "SSRF en soporte y en el servidor MCP del asistente",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true
+    },
+    {
+     "id": "oss-oopssec-store-008",
+     "estricto": false,
+     "nota": "cita 200-202 (la llamada); la entrada es la función fetch, 69-81"
+    }
+   ]
+  },
+  {
+   "id": "A3",
+   "titulo": "XXE",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A4",
+   "titulo": "credenciales fijas del SIEM",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A5",
+   "titulo": "cabecera MCP fija como control de acceso",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "A6",
+   "titulo": "XSS en analytics por X-Forwarded-For",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A7",
+   "titulo": "clave RTMP expuesta y emisión secuestrable",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "A8",
+   "titulo": "secretos versionados (.env.local…)",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-001",
+     "estricto": true,
+     "nota": "sin línea"
+    }
+   ]
+  },
+  {
+   "id": "A9",
+   "titulo": "MD5 sin sal y cuentas por defecto",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": true,
+     "nota": "reset-password:46"
+    },
+    {
+     "id": "oss-oopssec-store-042",
+     "estricto": true,
+     "nota": "seed 658-713"
+    }
+   ]
+  },
+  {
+   "id": "A10",
+   "titulo": "X-Payment-Auth no se valida en servidor",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "A11",
+   "titulo": "SVG con script como imagen de producto",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A12",
+   "titulo": "API de flags pública",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-023",
+     "estricto": true
+    },
+    {
+     "id": "oss-oopssec-store-021",
+     "estricto": true,
+     "nota": "sin línea"
+    }
+   ]
+  },
+  {
+   "id": "A13",
+   "titulo": "dependencias con CVE",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real (Next 15.2.2)."
+  },
+  {
+   "id": "A14",
+   "titulo": "sin rate limiting",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-013",
+     "estricto": false,
+     "nota": "sin fichero («todo el proyecto»)"
+    }
+   ]
+  },
+  {
+   "id": "M1",
+   "titulo": "cupones: carrera y descuento",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "M2",
+   "titulo": "códigos de regalo predecibles",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "M3",
+   "titulo": "enumeración de cuentas en el login",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-014",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "M4",
+   "titulo": "open redirect en LoginForm",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-037",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "M5",
+   "titulo": "sesiones sin revocación, token de soporte en la URL",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-015",
+     "estricto": true,
+     "nota": "logout sin línea"
+    }
+   ]
+  },
+  {
+   "id": "M6",
+   "titulo": "tokens de reset y soporte en claro",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real; es el fallo de 034 pero lo sitúa en el esquema y no en support-access:73-80."
+  },
+  {
+   "id": "M7",
+   "titulo": "fuga de información en errores de exportación",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": true,
+     "nota": "cita 130-137"
+    }
+   ]
+  },
+  {
+   "id": "M8",
+   "titulo": "filtro de prompt injection trivial, secreto en el prompt",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-009",
+     "estricto": false,
+     "nota": "cita línea 22 y el filtro; la entrada es la 221"
+    },
+    {
+     "id": "oss-oopssec-store-010",
+     "estricto": false,
+     "nota": "«las salidas de herramientas se tratan como confiables», sin línea cercana a 291"
+    }
+   ]
+  },
+  {
+   "id": "M9",
+   "titulo": "SQL dinámico con db.exec en reseñas de admin",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-005",
+     "estricto": true,
+     "nota": "línea 120"
+    },
+    {
+     "id": "oss-oopssec-store-006",
+     "estricto": false,
+     "nota": "cita el rango 103-134, que empieza fuera de ±10"
+    }
+   ]
+  },
+  {
+   "id": "M10",
+   "titulo": "token fijo en diag",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-003",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "M11",
+   "titulo": "XSS en el formulario de soporte con el contenido de la SSRF",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "M12",
+   "titulo": "contenedor como root y sin cabeceras",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real y genérico."
+  },
+  {
+   "id": "M13",
+   "titulo": "autor de reseñas suplantable",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Plausible."
+  },
+  {
+   "id": "B1",
+   "titulo": "app.log leído entero en memoria",
+   "clase": "FP",
+   "linea": true,
+   "cwe": false,
+   "nota": "No es un fallo de seguridad explotable."
+  },
+  {
+   "id": "B2",
+   "titulo": "PII en logs",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Menor."
+  },
+  {
+   "id": "B3",
+   "titulo": "GET de support-access devuelve el token",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-035",
+     "estricto": true,
+     "nota": "sin línea; mismo fichero y clase (exposición del token)"
+    }
+   ]
+  },
+  {
+   "id": "B4",
+   "titulo": "nota de desarrollo oculta en el HTML de documentos",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: resto del juego que la v2 no quitó."
+  },
+  {
+   "id": "B5",
+   "titulo": "caché immutable en uploads",
+   "clase": "FP",
+   "linea": true,
+   "cwe": false,
+   "nota": "El propio informe dice que es correcto."
+  },
+  {
+   "id": "B6",
+   "titulo": "reduce sin valor inicial en el carrito",
+   "clase": "FP",
+   "linea": true,
+   "cwe": false,
+   "nota": "Bug funcional, no de seguridad."
+  },
+  {
+   "id": "B7",
+   "titulo": "versión de eslint-config-next",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "No es un fallo de seguridad."
+  }
+ ]
+}

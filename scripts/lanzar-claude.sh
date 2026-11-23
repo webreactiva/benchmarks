@@ -12,9 +12,12 @@ esf=${ESFUERZO:-}; efarg=""; sufijo=""
 B=$(cd "$(dirname "$0")/.." && pwd); R=$(cd "$B/.." && pwd)
 # Herramientas: en el repositorio público van en herramientas/; aquí, en _comun/herramientas
 if [ -d "$B/herramientas" ]; then H=$B/herramientas; else H=$R/_comun/herramientas; fi
-# Experimentos (experimentos/auditoria): PROMPTS y RESULTADOS cambian de dónde sale el prompt y dónde se guarda;
-# SEMILLA copia un proyecto en la carpeta de trabajo antes de empezar; SIN_WEB=1 le quita WebSearch y WebFetch.
+# PROMPTS y RESULTADOS cambian de dónde sale el prompt y dónde se guarda (pruebas aparte). SEMILLA copia un proyecto en
+# la carpeta de trabajo antes de empezar (scripts/semilla.sh la da para SEC); SIN_WEB=1 le quita WebSearch y WebFetch.
 P=${PROMPTS:-$B/prompts}; RES=${RESULTADOS:-$B/resultados}
+# Prompts que empiezan con un proyecto en la carpeta (SEC): la copia, sin búsqueda web y con más tiempo
+SEMILLA=${SEMILLA:-$("$B/scripts/semilla.sh" "$cod")}
+[ -n "$SEMILLA" ] && { SIN_WEB=${SIN_WEB:-1}; ESPERA_MAX=${ESPERA_MAX:-5400}; }
 prompt="$(cat "$P/$cod.txt") $(cat "$P/_destino.txt")"
 base=${CLAUDE_BENCH:-$HOME/.claude-bench/$alias$sufijo}
 conf=$base/config; casa=$base/home; mkdir -p "$conf" "$casa"
@@ -107,26 +110,7 @@ cp "$reg" "$dest/sesion.jsonl"; mv "$reg" "$reg.hecho"
 rm -rf "$dest/salida"
 if [ -n "${SEMILLA:-}" ]; then
   # Con semilla, salida/ guarda solo lo que el modelo creó o cambió; cambios.txt lista lo cambiado y lo borrado
-  python3 - "$SEMILLA" "$ws" "$dest" <<'PY'
-import filecmp, os, pathlib, shutil, sys
-sem, ws, dest = map(pathlib.Path, sys.argv[1:4]); sal = dest / "salida"; sal.mkdir(parents=True)
-ign = {"node_modules", ".next", ".git"}; lineas = []
-def ficheros(r):
-    for raiz, dirs, fs in os.walk(r):
-        dirs[:] = [d for d in dirs if d not in ign]
-        for f in fs: yield (pathlib.Path(raiz) / f).relative_to(r)
-antes = set(ficheros(sem))
-for rel in sorted(ficheros(ws)):
-    a = sem / rel
-    if rel not in antes or not filecmp.cmp(a, ws / rel, shallow=False):
-        lineas.append(("cambiado " if rel in antes else "nuevo ") + rel.as_posix())
-        (sal / rel).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(ws / rel, sal / rel)
-ahora = set(ficheros(ws))
-lineas += ["borrado " + r.as_posix() for r in sorted(antes - ahora)]
-for d in ign:
-    if (ws / d).exists(): lineas.append(f"generado {d}/ (no se guarda)")
-(dest / "cambios.txt").write_text("\n".join(lineas) + "\n")
-PY
+  python3 "$B/scripts/salida-semilla.py" "$SEMILLA" "$ws" "$dest"
 else cp -R "$ws" "$dest/salida"; fi
 rm -rf "$ws"
 python3 "$B/scripts/tokens-claude.py" "$dest" "$cod" "$modelo" "$inicio" "$prompt"

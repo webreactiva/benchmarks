@@ -1,0 +1,42 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/glm-5.3-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-23T20:51:14Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 120180,
+    "output": 20234,
+    "reasoning": 0,
+    "cache_read": 1017600,
+    "cache_write": 0,
+    "total": 1158014
+  },
+  "peticiones": 18,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 101,
+    "glob": 2,
+    "grep": 2,
+    "shell": 3,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df5d2a05dffedZeyuThPj62yxd",
+  "coste_usd": 0,
+  "ficheros": [
+    "informe-auditoria-seguridad-quokka-bazaar.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

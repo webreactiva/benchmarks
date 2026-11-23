@@ -1,6 +1,6 @@
-# Experimento SEC · «Haz una auditoría de seguridad de este proyecto»
+# SEC · «Haz una auditoría de seguridad de este proyecto»
 
-Prompt nuevo, fuera de la tabla principal mientras se prueba. La rúbrica es exigente: la métrica y la regla de cruce de RealVuln (F3). El agente recibe una aplicación entera en su carpeta y el prompt tal cual (`prompts/SEC.txt` + `prompts/_destino.txt`). Se puntúa contra el ground truth público de [RealVuln](https://github.com/kolega-ai/Real-Vuln-Benchmark) con `rubrica.md`.
+Prompt del benchmark desde el 23 nov. 2026 (empezó como experimento). La rúbrica está en `rubricas.md` y es exigente: la métrica y la regla de cruce de RealVuln (F3). El agente recibe una aplicación entera en su carpeta y el prompt tal cual (`prompts/SEC.txt` + `prompts/_destino.txt`). Se puntúa contra el ground truth público de [RealVuln](https://github.com/kolega-ai/Real-Vuln-Benchmark).
 
 ## El proyecto
 
@@ -45,19 +45,16 @@ Como el resto del benchmark: Claude Code aislado (`lanzar-claude.sh`) dentro de 
 
 ## Lanzar
 
+Como cualquier otro prompt: `scripts/benchmark.sh -p SEC MODELO`. Los lanzadores piden la copia a `scripts/semilla.sh SEC`, que la deja en `~/.cache/benchmark-semillas/SEC/` (fuera del alcance del agente, con `privado/` y el original) y la prepara si no existe:
+
 ```bash
-python3 experimentos/auditoria/preparar.py --out /tmp/sec-prep   # --source <clon local>, --typescript <node_modules>
-ESPERA_MAX=5400 SIN_WEB=1 SEMILLA=/tmp/sec-prep/semilla \
-  PROMPTS=$PWD/experimentos/auditoria/prompts RESULTADOS=$PWD/experimentos/auditoria/resultados-v2 \
-  scripts/lanzar-claude.sh SEC claude-haiku-5-5
+python3 scripts/sec/preparar.py --out ~/.cache/benchmark-semillas/SEC   # --source <clon local>, --typescript <node_modules>
 ```
 
-La semilla tiene que estar fuera del alcance del agente (`/tmp` lo tapa el encierro); la carpeta `privado/` con el original, también. Comprueba la semilla contra `preparacion/v2/SHA256SUMS.txt`.
+Con semilla, los lanzadores copian el proyecto en la carpeta del agente, le quitan la búsqueda web (`SIN_WEB=1`: WebSearch/WebFetch en Claude Code, `webfetch`/`websearch` en OpenCode), le dan 90 minutos (`ESPERA_MAX=5400`) y guardan en `salida/` solo lo que creó o cambió (`cambios.txt`). La copia debe coincidir con `preparacion/v2/SHA256SUMS.txt` (salvo `package-lock.json`, que se regenera); `semilla.sh` avisa si no.
 
-En `resultados-v2/<modelo>/SEC/` (`resultados-v1/`: la primera copia, menos limpia), `salida/` guarda solo lo que el modelo creó o cambió, y `cambios.txt` dice qué tocó. El juez rellena `juez/hallazgos.json` y `python3 experimentos/auditoria/puntuar.py <dir>` calcula F3, wF3, precisión, recall y la nota.
+El juez rellena `juez/hallazgos.json` y `python3 scripts/sec/puntuar.py resultados/<modelo>/SEC` calcula F3, wF3, precisión, recall y la nota.
 
 ## Resultados
 
-| Copia | Modelo | Nota | F3 | wF3 | TP/FP/FN estricto | Juez: TP · inventados · extras reales | Peticiones | Tokens |
-|---|---|---:|---:|---:|---|---|---:|---:|
-| v1 | [claude-haiku-5-5](resultados-v1/anthropic_claude-haiku-5-5/SEC/juicio.md) | **5** | 54,6 | 58,0 | 22/21/18 | 28 · 1 · 15 | 15 | 1,8 M |
+En la tabla principal del `README.md`, columna SEC. La primera prueba de Haiku 5.5 sobre la v1 de la copia está en `resultados/_descartados/anthropic_claude-haiku-5-5-SEC-v1/` (5/10, F3 54,6): sirve para ver cuánto pesaban las pistas que quitó la v2.
