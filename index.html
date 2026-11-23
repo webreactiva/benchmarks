@@ -15,7 +15,7 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 </style>
 <h1>Benchmark de modelos</h1>
 <p>Cada prompt se manda tal cual, en una sesión nueva de OpenCode aislado, con una sola frase añadida: «Guarda lo que generes en la carpeta actual.». Sin segundo mensaje ni correcciones. Tokens: suma de todas las peticiones de la sesión (entrada sin caché, salida, razonamiento y lectura de caché). Nota del juez de 0 a 10.</p>
-<ul><li><b>A3D</b> · Una ruta en 3D en la Alhambra de Granada en un solo fichero html</li><li><b>AIF</b> · Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML.</li><li><b>CCA</b> · Implementa un carrito de la compra escalable</li><li><b>PTS</b> · Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests.</li></ul>
+<ul><li><b>A3D</b> · Una ruta en 3D en la Alhambra de Granada en un solo fichero html</li><li><b>AIF</b> · Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML.</li><li><b>CCA</b> · Implementa un carrito de la compra escalable</li><li><b>SEC</b> · Haz una auditoría de seguridad de este proyecto</li></ul>
 <div class=wrap><table>
 <tr><th>Prompt</th><th>Modelo</th><th>Tokens</th><th>Pet.</th><th>Ficheros</th><th>Validación</th><th>Nota</th><th>Juicio</th><th>Captura</th></tr>
 <tr>
@@ -49,16 +49,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Servicio HTTP en Node sin estado con los carritos en Redis: cada escritura es un script Lua atómico, así que 50 altas a la vez repartidas entre dos instancias con el mismo Redis guardan las 50; dinero en céntimos, precio siempre del catálogo y validación estricta. Pasa 21 tests contra un Redis real y el README explica cada decisión de escalado, pero el dominio es el mínimo: ni stock, ni descuentos, ni checkout.</small> <a href="resultados/anthropic_claude-fable-5-2/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>claude-fable-5-2</small><br><small>Claude Code · 2026-11-22 09:04 UTC</small></td>
-<td class=n><b>76.6 k</b><br><small>in 4 · out 3.0 k<br>razon. 0 · caché 61.9 k</small></td>
-<td class=n>2</td>
-<td><small><a href="resultados/anthropic_claude-fable-5-2/PTS/salida/tests-intermitentes.md">tests-intermitentes.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 933 palabras<br>✔ 0,8 marcas de slop por cada 100 palabras: 10 negritas y una lista de causas con etiqueta; sin rayas, sin «En resumen»<br>✔ código antes y después: test con sleep(1) frente a reloj inyectado (RelojFalso)<br>✔ cifras correctas: 0,999^200 ≈ 82 % de suites limpias; con 1000 tests falla el 63 %<br>✔ mecanismo: sin tests sabes que no hay información; con tests intermitentes hay ruido que parece información y el equipo aprende a reintentar, también ante una condición de carrera real</small></td>
-<td class="nota n2">10<br><small>completo y limpio</small></td>
-<td><small>Defiende la tesis con un mecanismo claro (ruido que parece información y la fatiga de alarmas que deja pasar una condición de carrera real), con cuentas correctas y un ejemplo de código antes y después. Se queda por debajo de una marca de slop por cada 100 palabras.</small> <a href="resultados/anthropic_claude-fable-5-2/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-19 21:07 UTC</small></td>
 <td class=n><b>981.1 k</b><br><small>in 22 · out 55.5 k<br>razon. 0 · caché 856.3 k</small></td>
@@ -89,14 +79,14 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Librería JS sin dependencias que resuelve lo que «escalable» exige: servicio sin estado, concurrencia optimista por versión con reintentos, dinero en céntimos, una moneda por carrito, precios del catálogo y no del cliente, dominio inmutable, reglas de precio e impuestos. 30 tests en verde. Le falta un adaptador real (solo memoria), caducidad de carritos y espera entre reintentos.</small> <a href="resultados/anthropic_claude-haiku-5-5/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-19 21:03 UTC</small></td>
-<td class=n><b>75.1 k</b><br><small>in 4 · out 3.1 k<br>razon. 0 · caché 61.1 k</small></td>
-<td class=n>2</td>
-<td><small><a href="resultados/anthropic_claude-haiku-5-5/PTS/salida/tests-que-fallan-peor-que-no-tenerlos.md">tests-que-fallan-peor-que-no-tenerlos.md</a></small></td>
-<td><small>953 palabras · slop 14.0 (1.47/100 pal.)</small></td>
-<td class="nota n1">6<br><small>bien</small></td>
-<td><small>953 palabras con un argumento de verdad: un test inestable enseña al equipo a ignorar el rojo («normalización del fallo») y da una seguridad falsa que sin tests no existe. Un caso concreto (timeout de red, regresión de facturación que se pierde) y cinco prácticas útiles. Le sobran la lista con etiquetas en negrita, la «Conclusión» y una cita inventada.</small> <a href="resultados/anthropic_claude-haiku-5-5/PTS/juicio.md">juicio</a></td>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-23 20:48 UTC</small></td>
+<td class=n><b>1545.2 k</b><br><small>in 30 · out 42.7 k<br>razon. 0 · caché 1372.3 k</small></td>
+<td class=n>15</td>
+<td><small><a href="resultados/anthropic_claude-haiku-5-5/SEC/salida/auditoria-seguridad.md">auditoria-seguridad.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n1">6<br><small>Cobertura alta, sin CWE</small></td>
+<td><small>Informe de 45 hallazgos con fichero y línea en casi todos: cubre 25 de las 40 entradas con la regla estricta (F3 61,3), 35 con el criterio del juez, y solo 4 no son fallos. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el IDOR de wishlists y la página de noticias; no da ningún CWE.</small> <a href="resultados/anthropic_claude-haiku-5-5/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -129,16 +119,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Servicio REST en Node sin dependencias, hexagonal, con carrito inmutable, céntimos, precios del catálogo, versión optimista con reintentos y backoff, y un adaptador de Redis con compare-and-swap en Lua que se conecta con REDIS_URL y aguanta 50 altas a la vez desde dos instancias sin perder nada. Lo flojo es menor: la moneda la pone el cliente sin validar, ioredis no está en package.json y la idempotencia y el catálogo solo existen en memoria, cosa que el README admite.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:21 UTC</small></td>
-<td class=n><b>78.4 k</b><br><small>in 4 · out 5.5 k<br>razon. 0 · caché 60.4 k</small></td>
-<td class=n>2</td>
-<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/PTS/salida/tests-intermitentes-peor-que-no-tener-tests.md">tests-intermitentes-peor-que-no-tener-tests.md</a></small></td>
-<td><small>✔ un post en Markdown con cabecera YAML, en español, de 1929 palabras<br>✖ por encima de 1800 palabras, con 23 títulos y 27 líneas de lista<br>✔ 0,49 marcas de slop por cada 100 palabras (26 negritas, sección «Resumen», «la próxima vez que»)<br>✔ tres bloques de código (sleep de 2 s y su arreglo en Python, reloj real en Jest) y una cuenta de horas<br>✖ la cuenta no sale: 10 personas × 5 PR × 5 días × 10 % × 15 min son 6,25 h a la semana, no 12; y 12 h no son «una persona y media a tiempo completo»<br>✖ pone @RepeatedTest de JUnit 5 como reintento automático: repite el test N veces, no reintenta los fallos<br>✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-tCkcAp3h; fugas.py sin hallazgos</small></td>
-<td class="nota n2">8<br><small>completo pero se pasa</small></td>
-<td><small>El argumento es el mejor de los dos Claude: el test como detector de humo, la regla implícita «un rojo no significa nada» que se contagia a toda la suite y el bug intermitente real que se relanza hasta que pasa, con tres fragmentos de código y una guía de cuarentena útil. Pero son 1929 palabras con 23 títulos, la cuenta de horas da el doble de lo que sale (6,25 h, no 12) y pone @RepeatedTest como reintento.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 10:52 UTC</small></td>
 <td class=n><b>2661.8 k</b><br><small>in 38 · out 102.6 k<br>razon. 0 · caché 2428.4 k</small></td>
@@ -167,16 +147,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ python3 tests/test_cart.py: 8/8, sin dependencias<br>✔ python3 -m cart.api arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50<br>✔ Redis real, dos instancias HTTP: 50 POST a la vez, aceptadas = guardadas; 2-6 acaban en 409 explícito tras 8 reintentos<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>~ una sola moneda fija (EUR): el catálogo no tiene moneda, así que no hay nada que mezclar<br>~ id ../ lo para la ruta HTTP (404); el servicio lo acepta<br>✖ el carrito devuelto se puede mutar y cambia lo guardado en memoria: 500 unidades a 1 ¢ sin pasar por catálogo ni límites<br>~ RedisCartRepository no está conectado en api.py ni exportado en cart/__init__.py: hay que montarlo a mano</small></td>
 <td class="nota n2">9<br><small>escala en 400 líneas</small></td>
 <td><small>Python sin dependencias con servicio sin estado, versión optimista con reintentos y un adaptador de Redis con compare-and-swap en Lua y TTL que funciona: con dos instancias sobre el mismo Redis, 50 altas a la vez acaban guardadas o en un 409 explícito, sin pérdidas. Pero el carrito que devuelve se puede mutar y en memoria eso cambia lo guardado (500 unidades a 1 céntimo sin pasar por el catálogo), solo hay una moneda fija y el adaptador de Redis no lo probó ni lo conectó a la API.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:14 UTC</small></td>
-<td class=n><b>74.5 k</b><br><small>in 4 · out 3.6 k<br>razon. 0 · caché 60.4 k</small></td>
-<td class=n>2</td>
-<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/PTS/salida/tests-intermitentes-peores-que-no-tener-tests.md">tests-intermitentes-peores-que-no-tener-tests.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 1210 palabras<br>~ 0,99 marcas de slop por cada 100 palabras según slop.py; el cierre «Cuéntalo en los comentarios» se le escapa a la regla de chatbot (peso 2) y con él serían 1,16<br>✔ dos bloques de Python: el test con time.sleep(1) en una cola de pedidos y su arreglo con espera a una condición<br>✖ 0,98^500 ≈ 0,0041 %, no «0,00004 %»: confunde la probabilidad con el porcentaje (cien veces menos)<br>✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-LbTlNHJV; fugas.py sin hallazgos</small></td>
-<td class="nota n2">8<br><small>sólido, con la cuenta mal</small></td>
-<td><small>1210 palabras centradas en los tests intermitentes, con la tesis bien armada (un hueco sin test es honesto, un test intermitente miente y enseña a pulsar «Re-run» también cuando el fallo es real) y un ejemplo de código con sleep y su arreglo. Pierde el punto de errores por la cuenta estrella, 0,98^500 ≈ «0,00004 %» cuando es 0,0041 %, y otro de slop por el formato de manual y el cierre de chatbot.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -209,16 +179,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>TypeScript sobre Node 22 sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, cupones, IVA, envío, idempotencia, checkout con reserva de stock y SQLite en WAL con compare-and-set por versión: 50 altas a la vez no pierden nada, ni repartidas entre dos instancias con el mismo fichero. Pero cada instancia guarda una caché L1 que sirve lecturas viejas cuando escribe la otra, y el stock y la idempotencia viven en memoria de cada proceso.</small> <a href="resultados/google_gemini-4-carbon/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 10:23 UTC</small></td>
-<td class=n><b>22.5 k</b><br><small>in 10.3 k · out 2.2 k<br>razon. 734 · caché 9.3 k</small></td>
-<td class=n>3</td>
-<td><small><a href="resultados/google_gemini-4-carbon/PTS/salida/tests-que-fallan-a-veces.md">tests-que-fallan-a-veces.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 1196 palabras<br>~ 1,3 marcas de slop por cada 100 palabras: 18 negritas, listas con etiqueta, ❌/✅, sección «Conclusión»<br>✔ código antes y después (TTL de un token con setTimeout frente a reloj inyectado)<br>✔ la cifra de las colas de merge es correcta: 1 − 0,95³ ≈ 14 %, uno de cada siete</small></td>
-<td class="nota n2">9<br><small>completo, con tics de formato</small></td>
-<td><small>Defiende bien la tesis (no tener tests es una incertidumbre honesta; un test intermitente da permiso para ignorar la prueba) con un ejemplo de código antes y después y una cifra correcta sobre colas de merge. Pierde un punto por el formato de blog generado: dieciocho negritas, listas con etiqueta, emojis y una sección «Conclusión».</small> <a href="resultados/google_gemini-4-carbon/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>google/gemini-4-hydrogen</small><br><small>OpenCode · 2026-11-20 15:20 UTC</small></td>
 <td class=n><b>220.3 k</b><br><small>in 59.3 k · out 37.6 k<br>razon. 7.2 k · caché 116.2 k</small></td>
@@ -247,16 +207,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ npm test: tsc + 14/14 (node:test); npm run demo recorre carrito, cupón y checkout<br>✖ 50 altas a la vez: 5 guardadas y 45 rechazadas con CONCURRENCY_CONFLICT (5 reintentos sin espera)<br>✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)<br>~ valida cantidades negativas, decimales y enormes; acepta cantidad 0<br>~ librería sin servidor: solo adaptadores en memoria; Redis o Postgres, en el README<br>~ entrega dist/ compilado; usa el tsc global de la máquina (no es dependencia)</small></td>
 <td class="nota n2">8<br><small>bien hecho, poca concurrencia</small></td>
 <td><small>Librería TypeScript sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, promociones (porcentaje, fijo, 3x2, volumen), IVA por categoría, envío, idempotencia, fusión de carritos y checkout con compensación de stock; 14 tests y una demo que funcionan. La versión optimista no pierde datos, pero con 50 altas a la vez rechaza 45 porque reintenta cinco veces sin esperar, y solo hay adaptadores en memoria.</small> <a href="resultados/google_gemini-4-hydrogen/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>google/gemini-4-hydrogen</small><br><small>OpenCode · 2026-11-20 15:33 UTC</small></td>
-<td class=n><b>31.8 k</b><br><small>in 12.8 k · out 2.1 k<br>razon. 996 · caché 15.9 k</small></td>
-<td class=n>4</td>
-<td><small><a href="resultados/google_gemini-4-hydrogen/PTS/salida/por-que-los-flaky-tests-son-peores-que-no-tener-tests.md">por-que-los-flaky-tests-son-peores-que-no-tener-tests.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 1220 palabras<br>~ 1,54 marcas de slop por cada 100 palabras: 19 negritas, listas con etiqueta, «En resumen», «La próxima vez que…»<br>✔ código del sleep(100) que en CI tarda 120 ms, y números de coste (pipeline de 15 min con un 10 % de fallo aleatorio)<br>✔ mecanismo claro: sin tests sabes que vas a ciegas; con tests intermitentes el equipo aprende a pulsar re-run y deja pasar el fallo real</small></td>
-<td class="nota n2">9<br><small>claro y útil, algo de slop</small></td>
-<td><small>Defiende la tesis con su mecanismo: sin tests el equipo sabe que va a ciegas y actúa con cautela, mientras que un test intermitente le enseña a pulsar re-run hasta que el fallo real pasa con el sello de «todos los checks en verde». Trae código (el sleep de 100 ms que en CI tarda 120), causas típicas y qué hacer, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».</small> <a href="resultados/google_gemini-4-hydrogen/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -289,16 +239,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>TypeScript hexagonal sin dependencias, que Node 22 ejecuta tal cual: dinero en céntimos con moneda comprobada, precio del catálogo, promociones, IVA por región, envío, idempotencia, fusión y checkout con reserva de stock, más una API HTTP y una demo que funciona. La sesión se cortó por falta de crédito antes de los tests y el README, y la versión optimista solo aguanta dentro de un proceso: dos instancias sobre el mismo fichero pierden la mitad de las altas sin avisar.</small> <a href="resultados/google_gemini-4-neon/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>google/gemini-4-neon</small><br><small>OpenCode · 2026-11-20 22:02 UTC</small></td>
-<td class=n><b>23.7 k</b><br><small>in 11.0 k · out 2.5 k<br>razon. 987 · caché 9.3 k</small></td>
-<td class=n>3</td>
-<td><small><a href="resultados/google_gemini-4-neon/PTS/salida/por-que-los-tests-flaky-son-peores-que-no-tener-tests.md">por-que-los-tests-flaky-son-peores-que-no-tener-tests.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 1486 palabras<br>~ 1,26 marcas de slop por cada 100 palabras: 19 negritas, 7 listas con etiqueta, «En resumen», «La próxima vez que…»<br>✔ código antes y después (sleep(300) frente a findByText) y la cifra correcta: 20 tests con un 5 % de fallo → 0,95²⁰ ≈ 36 % de pasar a la primera<br>✔ mecanismo: sin tests sabes que no hay red; con tests intermitentes el equipo aprende a pulsar Re-run y el fallo real llega a producción</small></td>
-<td class="nota n2">9<br><small>completo, con tics de formato</small></td>
-<td><small>Defiende la tesis con su mecanismo: sin tests el equipo sabe que no tiene red; con tests intermitentes aprende a pulsar Re-run y la alarma real se ignora, además de esconder condiciones de carrera reales. Trae una escena reconocible, la cifra correcta (20 tests al 5 % → 36 % de pasar a la primera), código antes y después y qué hacer con los reintentos, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».</small> <a href="resultados/google_gemini-4-neon/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:41 UTC</small></td>
 <td class=n><b>111.6 k</b><br><small>in 18.4 k · out 6.4 k<br>razon. 23 · caché 86.8 k</small></td>
@@ -327,16 +267,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula envío y total; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: cantidades negativas, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
 <td class="nota n1">4<br><small>maqueta de carrito, sin escalar</small></td>
 <td><small>Una página de carrito bien acabada con cuatro láminas, envío gratis desde 75 € y persistencia en localStorage que valida lo que lee. No hay tests, ni servidor, ni README: «escalable» se queda en que el catálogo es una lista que se puede ampliar.</small> <a href="resultados/openai_gpt-6.2-astra-default/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:39 UTC</small></td>
-<td class=n><b>95.4 k</b><br><small>in 6.3 k · out 1.9 k<br>razon. 0 · caché 87.2 k</small></td>
-<td class=n>5</td>
-<td><small><a href="resultados/openai_gpt-6.2-astra-default/PTS/salida/tests-intermitentes.md">tests-intermitentes.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 611 palabras<br>✔ 0,2 marcas de slop por cada 100 palabras (una negrita, un cierre «La próxima vez que»)<br>✖ por debajo de 700 palabras<br>✔ un caso con código (sleep de 0,5 s) y números (20 ms en local, 700 ms en CI)</small></td>
-<td class="nota n2">9<br><small>afilado, con código, corto</small></td>
-<td><small>Defiende la tesis con el mecanismo correcto: relanzar el rojo es racional para cada persona y, repetido por todo el equipo, esconde la regresión real del IVA. Tiene un caso con código y números bien elegidos, sin slop ni errores, pero se queda en 611 palabras.</small> <a href="resultados/openai_gpt-6.2-astra-default/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -369,16 +299,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Una página de carrito cuidada para una tienda de café, con fotos generadas, guardar para después y envío gratis desde 60 €, que valida lo que lee de localStorage. No hay tests, ni servidor, ni README: «escalable» es que el catálogo es una lista ampliable.</small> <a href="resultados/openai_gpt-6.2-astra-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-20 09:55 UTC</small></td>
-<td class=n><b>67.0 k</b><br><small>in 6.9 k · out 1.4 k<br>razon. 0 · caché 58.8 k</small></td>
-<td class=n>4</td>
-<td><small><a href="resultados/openai_gpt-6.2-astra-medium/PTS/salida/tests-intermitentes.md">tests-intermitentes.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 709 palabras<br>✔ 0,14 marcas de slop por cada 100 palabras (un cierre «La próxima vez que»)<br>✔ dos bloques de Python: el test que falla al cruzar la medianoche y su arreglo; el juez comprueba que el ejemplo de 23:30 UTC-5 da el 1 de febrero</small></td>
-<td class="nota n2">10<br><small>el post completo</small></td>
-<td><small>Explica por qué un test intermitente puede salir más caro que el hueco que deja: da una falsa sensación de cobertura y enseña a ignorar el único aviso útil. Lo ilustra con un test de Python que falla al cruzar la medianoche y su arreglo, ambos correctos, sin slop y con la extensión justa.</small> <a href="resultados/openai_gpt-6.2-astra-medium/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-20 09:01 UTC</small></td>
 <td class=n><b>1688.3 k</b><br><small>in 70.6 k · out 21.4 k<br>razon. 2.9 k · caché 1593.5 k</small></td>
@@ -407,16 +327,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ npm start sin dependencias: sirve la app en el puerto 3000<br>✔ npm test: 4 de 4<br>✔ precios en céntimos; 0,10 × 3 = 30<br>✔ id con ../ ignorado; cantidades negativas o decimales, a 0; por encima de las existencias, al tope<br>✔ el localStorage manipulado solo conserva id y cantidad válidos<br>✖ no hay API: el carrito vive en el navegador (localStorage); el servidor solo sirve ficheros<br>✖ las 50 altas a la vez no se pueden probar: no hay servicio<br>✖ quoteCart devuelve el producto del catálogo: cambiar su precio cambia el catálogo<br>~ no hay botón de vaciar; el carrito se vacía al confirmar el pedido</small></td>
 <td class="nota n1">5<br><small>bonita tienda, no escala</small></td>
 <td><small>Una tienda en el navegador muy cuidada, con fotos generadas, cupón, envío y deshacer, y un carrito con funciones puras en céntimos que valida bien lo que lee de localStorage. «Escalable» lo entiende como un catálogo ampliable: no hay servicio, ni almacenamiento compartido, ni concurrencia, y el README solo dice que para producción haría falta un servidor.</small> <a href="resultados/openai_gpt-6.2-sol-medium/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-20 09:01 UTC</small></td>
-<td class=n><b>48.8 k</b><br><small>in 5.1 k · out 989<br>razon. 38 · caché 42.6 k</small></td>
-<td class=n>3</td>
-<td><small><a href="resultados/openai_gpt-6.2-sol-medium/PTS/salida/tests-que-fallan-a-veces.md">tests-que-fallan-a-veces.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 607 palabras<br>✔ 0 marcas de slop<br>✖ por debajo de 700 palabras<br>~ un solo caso (cola de correos con espera de 100 ms), sin código</small></td>
-<td class="nota n2">8<br><small>limpio, centrado y corto</small></td>
-<td><small>Defiende la tesis con el mecanismo correcto: un rojo que se relanza enseña a ignorar el rojo, y el día que es una regresión real nadie lo mira. Sin slop ni errores, con un caso bien contado, pero se queda en 607 palabras y sin código.</small> <a href="resultados/openai_gpt-6.2-sol-medium/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -449,16 +359,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Librería TypeScript ordenada (servicio, adaptadores de almacenamiento, bus de eventos) que compila y pasa sus 24 tests. Lo que pedía el prompt, «escalable», no aguanta: 50 peticiones concurrentes al mismo carrito dejan 1 línea, sin TTL, sin control de versiones y dinero en coma flotante.</small> <a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>nvidia/nemotron-3-ultra-550b-a55b:free</small><br><small>OpenCode · 2026-11-19 20:46 UTC</small></td>
-<td class=n><b>17.6 k</b><br><small>in 8.1 k · out 682<br>razon. 71 · caché 8.8 k</small></td>
-<td class=n>2</td>
-<td><small><a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/PTS/salida/por-que-tests-flaky-son-peores-que-no-tener-tests.md">por-que-tests-flaky-son-peores-que-no-tener-tests.md</a></small></td>
-<td><small>359 palabras · slop 8.0 (2.23/100 pal.)</small></td>
-<td class="nota n1">4<br><small>cumple el mínimo</small></td>
-<td><small>Post de 359 palabras con estructura de listado: cinco razones y cinco consejos sin un solo ejemplo, dato o caso. Tesis clara y limpio de muletillas, pero cierre de chatbot, «costo», anglicismos y nada que no esté en el primer resultado de Google.</small> <a href="resultados/nvidia_nemotron-3-ultra-550b-a55b_free/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>ollama/beam</small><br><small>OpenCode · 2026-11-20 03:10 UTC</small></td>
 <td class=n><b>63.9 k</b><br><small>in 15.0 k · out 9.9 k<br>razon. 0 · caché 39.1 k</small></td>
@@ -487,16 +387,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ npm test 4/4<br>✔ 50 altas a la vez: 50 unidades (cerrojo en memoria)<br>✖ dinero en coma flotante: 0,10 × 3 = 0.30000000000000004<br>✖ el precio lo manda el cliente<br>✖ sin almacenamiento compartido ni README</small></td>
 <td class="nota n1">4<br><small>funciona, no escala</small></td>
 <td><small>Node sin dependencias, 413 líneas: carrito, gestor con un cerrojo en memoria por carrito, repositorio en memoria, inventario opcional, eventos, cupones y una API HTTP, con 4 tests en verde. Pero el dinero va en coma flotante, el precio lo manda el cliente, todo vive en un proceso y no hay README.</small> <a href="resultados/ollama_beam/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/beam</small><br><small>OpenCode · 2026-11-20 03:14 UTC</small></td>
-<td class=n><b>55.5 k</b><br><small>in 13.9 k · out 3.8 k<br>razon. 0 · caché 37.8 k</small></td>
-<td class=n>6</td>
-<td><small><a href="resultados/ollama_beam/PTS/salida/post-tests-flaky.md">post-tests-flaky.md</a></small></td>
-<td><small>662 palabras · slop 8.8 (1.32/100 pal.)</small></td>
-<td class="nota n1">7<br><small>esquema útil, poco post</small></td>
-<td><small>662 palabras que van al grano y no se salen del tema: un test intermitente es información falsa y sin tests al menos «no te mientes»; el test como sensor, la regla de reproducirlo en 5 minutos o borrarlo en 24 horas, siete estrategias y una checklist. Pero es casi un esquema en listas, sin un caso ni código, y mezcla inglés («beats», «un test suite», «Des moralización»).</small> <a href="resultados/ollama_beam/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -529,14 +419,14 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Una tienda completa y muy cuidada (catálogo, búsqueda, carrito, cupones, envío, IVA, checkout) con un motor de precios por reglas, dinero en céntimos, almacenamiento intercambiable y 23 tests. Pero el carrito vive en localStorage y el servidor solo sirve estáticos: «escalable» lo resuelve como código fácil de ampliar, sin nada que aguante muchos usuarios.</small> <a href="resultados/ollama_deepseek-v4.1-flash/CCA/juicio.md">juicio</a></td>
 <td class=cap><a href="resultados/ollama_deepseek-v4.1-flash/CCA/capturas/tienda.png"><img src="resultados/ollama_deepseek-v4.1-flash/CCA/capturas/tienda.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-19 22:49 UTC</small></td>
-<td class=n><b>29.6 k</b><br><small>in 9.2 k · out 2.9 k<br>razon. 0 · caché 17.5 k</small></td>
-<td class=n>3</td>
-<td><small><a href="resultados/ollama_deepseek-v4.1-flash/PTS/salida/tests-que-fallan-peores-que-no-tener-tests.md">tests-que-fallan-peores-que-no-tener-tests.md</a></small></td>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-23 20:52 UTC</small></td>
+<td class=n><b>3103.0 k</b><br><small>in 120.4 k · out 46.6 k<br>razon. 0 · caché 2936.1 k</small></td>
+<td class=n>30</td>
+<td><small><a href="resultados/ollama_deepseek-v4.1-flash/SEC/salida/README_AUDITORIA.md">README_AUDITORIA.md</a><br><a href="resultados/ollama_deepseek-v4.1-flash/SEC/salida/SECURITY_AUDIT.md">SECURITY_AUDIT.md</a><br><a href="resultados/ollama_deepseek-v4.1-flash/SEC/salida/flags_encontrados.csv">flags_encontrados.csv</a><br><a href="resultados/ollama_deepseek-v4.1-flash/SEC/salida/hallazgos.json">hallazgos.json</a></small></td>
 <td><small>–</small></td>
-<td class="nota n2">8<br><small>bueno, pero se desvía</small></td>
-<td><small>1426 palabras con buenos argumentos (habituación, fatiga de alarmas, «500 tests con 30 en rojo son 470 con un 100 % de desconfianza», el test que se vuelve «guardián del error») y un ejemplo de skip en pytest. Pero trata sobre todo de tests que fallan siempre o se ignoran, no de los que fallan «a veces», y tiene más slop de formato: 20 negritas, listas con etiqueta y «Conclusión».</small> <a href="resultados/ollama_deepseek-v4.1-flash/PTS/juicio.md">juicio</a></td>
+<td class="nota n">–<br><small></small></td>
+<td><small></small></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -569,16 +459,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>API Express en TypeScript con capas y puertos, SQLite nativo de Node, dinero en céntimos, precio siempre del catálogo, descuentos, envío, IVA, checkout con stock, validación estricta y una interfaz web; compila, pasa 19 tests y 50 altas a la vez en una instancia no pierden nada. Pero no tiene control de versión: con dos instancias sobre el mismo SQLite seis de cincuenta altas acaban en error 500.</small> <a href="resultados/ollama_glm-5.3/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/glm-5.3</small><br><small>OpenCode · 2026-11-20 16:08 UTC</small></td>
-<td class=n><b>16.0 k</b><br><small>in 3.2 k · out 2.6 k<br>razon. 0 · caché 10.2 k</small></td>
-<td class=n>2</td>
-<td><small><a href="resultados/ollama_glm-5.3/PTS/salida/tests-flaky-peores-que-no-tener-tests.md">tests-flaky-peores-que-no-tener-tests.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 1296 palabras<br>~ 1,39 marcas de slop por cada 100 palabras: 20 negritas, 9 listas con etiqueta, sección «Conclusión»<br>✔ código antes y después (sleep(2000) frente a esperar la condición) y números (suite de 20 min, 90 % en verde)<br>✖ errores: «cuarenta» por «cuarentena» (dos veces), «Pensa», el «guardia de seguridad» que grita «¡lobo!», y `flake8-ignore-comments` como forma de silenciar tests</small></td>
-<td class="nota n2">8<br><small>buen argumento, descuidado</small></td>
-<td><small>Defiende bien la tesis: sin tests el equipo sabe que no tiene red y va con cuidado; con tests intermitentes aprende a pulsar retry y el fallo real se cuela, además de inflar la cobertura. Trae código del sleep frente a esperar la condición, causas y qué hacer, pero con erratas («cuarenta» por «cuarentena», «Pensa»), un pastor convertido en guardia y un flake8-ignore-comments que no sirve para silenciar tests.</small> <a href="resultados/ollama_glm-5.3/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-20 00:36 UTC</small></td>
 <td class=n><b>1822.9 k</b><br><small>in 77.6 k · out 63.8 k<br>razon. 0 · caché 1681.5 k</small></td>
@@ -609,14 +489,14 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Python con capas (dominio, aplicación, infraestructura, API HTTP), Decimal para el dinero, precios del catálogo, bloqueo por carrito en memoria, límites y 24 tests en verde. Pero el adaptador de Redis, que es lo que lo haría escalar, captura self._client.WatchError, que no existe: un conflicto de concurrencia o cualquier error de negocio acaba en AttributeError.</small> <a href="resultados/ollama_glm-5.3-flash/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-19 22:48 UTC</small></td>
-<td class=n><b>29.6 k</b><br><small>in 10.1 k · out 2.6 k<br>razon. 0 · caché 17.0 k</small></td>
-<td class=n>3</td>
-<td><small><a href="resultados/ollama_glm-5.3-flash/PTS/salida/tests-flaky-son-peores-que-no-tener-tests.md">tests-flaky-son-peores-que-no-tener-tests.md</a></small></td>
-<td><small>981 palabras · slop 7.8 (0.79/100 pal.)</small></td>
-<td class="nota n2">9<br><small>el mejor post</small></td>
-<td><small>981 palabras con la tesis bien defendida (sin tests sabes que no hay red; con tests que mienten crees que la hay), costes con números (un test que falla 1 de cada 50 con 100 ejecuciones al día interrumpe a diario), un ejemplo en Go, las causas típicas y cinco pasos. El menos slop de todos. Falla en el ejemplo: dice que pasa el 99 % y casi siempre fallará.</small> <a href="resultados/ollama_glm-5.3-flash/PTS/juicio.md">juicio</a></td>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-23 20:51 UTC</small></td>
+<td class=n><b>1158.0 k</b><br><small>in 120.2 k · out 20.2 k<br>razon. 0 · caché 1017.6 k</small></td>
+<td class=n>18</td>
+<td><small><a href="resultados/ollama_glm-5.3-flash/SEC/salida/informe-auditoria-seguridad-quokka-bazaar.md">informe-auditoria-seguridad-quokka-bazaar.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n1">4<br><small>Ve casi todo, localiza mal</small></td>
+<td><small>Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero la nota cuenta 18 (F3 45,3): seis aciertos no dan línea (valen medio) y siete citan rangos de más de 20 líneas. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.</small> <a href="resultados/ollama_glm-5.3-flash/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -649,14 +529,14 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>API Fastify sin estado en TypeScript, con capas y puertos, dinero en céntimos, precio del catálogo, cupones, IVA, envío, caducidad de carritos y compare-and-set por versión en el repositorio. Compila, pasa 21 tests y 50 altas a la vez no pierden nada. Pero solo trae repositorios en memoria: Redis o Postgres quedan como «pendiente».</small> <a href="resultados/ollama_inkling-2-small/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-20 01:47 UTC</small></td>
-<td class=n><b>30.7 k</b><br><small>in 11.4 k · out 2.2 k<br>razon. 0 · caché 17.2 k</small></td>
-<td class=n>3</td>
-<td><small><a href="resultados/ollama_inkling-2-small/PTS/salida/tests-que-fallan-peor-que-no-tener-tests.md">tests-que-fallan-peor-que-no-tener-tests.md</a></small></td>
-<td><small>1045 palabras · slop 9.8 (0.93/100 pal.)</small></td>
-<td class="nota n2">8<br><small>limpio y útil, se abre de tema</small></td>
-<td><small>1045 palabras con la tesis bien defendida (fatiga de alertas, el rojo que deja de bloquear, «saltar con una red que no sabes si está atada»), un caso concreto de flujo de CI y un plan de salida útil (presupuesto de flakiness, cuarentena con dueño, orden aleatorio, reloj inyectado). Poco slop. Pero reparte el post entre cuatro tipos de test que falla y los intermitentes son solo uno.</small> <a href="resultados/ollama_inkling-2-small/PTS/juicio.md">juicio</a></td>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-23 20:52 UTC</small></td>
+<td class=n><b>852.4 k</b><br><small>in 261.0 k · out 16.5 k<br>razon. 0 · caché 575.0 k</small></td>
+<td class=n>16</td>
+<td><small><a href="resultados/ollama_inkling-2-small/SEC/salida/SECURITY_AUDIT.md">SECURITY_AUDIT.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n0">3<br><small>Ve mucho, no localiza</small></td>
+<td><small>Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: la nota cuenta 2 aciertos enteros y 28 a medio punto (F3 40,1). Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.</small> <a href="resultados/ollama_inkling-2-small/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -689,16 +569,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Una clase Carrito en Python, limpia y bien validada (Decimal, una moneda por carrito, precio y stock del catálogo, 17 tests), pero sin servicio, sin persistencia y sin nada que responda a «escalable»: el carrito vive en un objeto en memoria y no hay README que lo explique.</small> <a href="resultados/ollama_kimi-k3.1-pro/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/kimi-k3.1-pro</small><br><small>OpenCode · 2026-11-20 02:10 UTC</small></td>
-<td class=n><b>42.3 k</b><br><small>in 9.5 k · out 3.5 k<br>razon. 0 · caché 29.4 k</small></td>
-<td class=n>4</td>
-<td><small><a href="resultados/ollama_kimi-k3.1-pro/PTS/salida/tests-intermitentes-peores-que-no-tener-tests.md">tests-intermitentes-peores-que-no-tener-tests.md</a></small></td>
-<td><small>1409 palabras · slop 10.8 (0.76/100 pal.)</small></td>
-<td class="nota n2">10<br><small>el mejor post</small></td>
-<td><small>1409 palabras sin salirse de los tests intermitentes, con la tesis defendida desde el principio («una habitación a oscuras» frente a «una alarma que suena al azar»), cuatro costes con mecanismo (oculta regresiones, entrena a ignorar el rojo, agranda los cambios, gasta atención), la cuenta bien hecha (200 tests al 99 % → 87 % de ejecuciones con algún fallo) y un plan práctico. El menos slop de todos.</small> <a href="resultados/ollama_kimi-k3.1-pro/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-19 22:39 UTC</small></td>
 <td class=n><b>11368.3 k</b><br><small>in 232.8 k · out 199.5 k<br>razon. 0 · caché 10935.9 k</small></td>
@@ -727,16 +597,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ npm ci, build, typecheck y lint<br>✔ 69/69 tests, también los de integración con Redis<br>✔ dos instancias con el mismo Redis: 40 altas a la vez, 22 guardadas = 22 aceptadas, 18 con 409 explícito<br>✔ límite de 10 unidades por línea (422)</small></td>
 <td class="nota n2">10<br><small>escala de verdad, con Redis</small></td>
 <td><small>Monorepo TypeScript con dominio hexagonal, API Fastify sin estado, Redis con scripts Lua (CAS por versión, reserva de stock, idempotencia), outbox, métricas, SSE y una tienda React. Compila, pasa 69 tests y, con dos instancias sobre el mismo Redis, 40 altas a la vez no pierden ni un dato. Lo único discutible: bajo mucha contención devuelve 409 en vez de reintentar más.</small> <a href="resultados/ollama_minimax-m3/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-19 23:44 UTC</small></td>
-<td class=n><b>103.9 k</b><br><small>in 15.2 k · out 11.0 k<br>razon. 0 · caché 77.7 k</small></td>
-<td class=n>6</td>
-<td><small><a href="resultados/ollama_minimax-m3/PTS/salida/tests-que-fallan.md">tests-que-fallan.md</a></small></td>
-<td><small>2800 palabras · slop 26.8 (0.96/100 pal.)</small></td>
-<td class="nota n2">8<br><small>un ensayo, no un post</small></td>
-<td><small>2800 palabras con lo que no tiene ningún otro: la cuenta de por qué la suite casi nunca sale verde (0,95^1000), tablas de coste, código TypeScript con el antes y el después, niveles de suite y caducidad de la cuarentena. Pero es tres veces más largo que un post, tiene errores dentro de sus propios ejemplos y 43 negritas, 8 rayas y emojis.</small> <a href="resultados/ollama_minimax-m3/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -769,16 +629,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>API Fastify sin estado con todo el carrito en Redis y cada mutación atómica en un script Lua, más concurrencia optimista por versión, idempotencia, outbox con worker y grupo de consumidores, rate limiting distribuido, JWT, métricas, Docker Compose para escalar réplicas y una prueba de carga con k6. Compila, pasa 42 tests y, con dos instancias, 40 altas a la vez entran todas sin un conflicto.</small> <a href="resultados/ollama_minimax-m3.1-flash/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-20 03:08 UTC</small></td>
-<td class=n><b>331.8 k</b><br><small>in 29.8 k · out 10.8 k<br>razon. 0 · caché 291.2 k</small></td>
-<td class=n>15</td>
-<td><small><a href="resultados/ollama_minimax-m3.1-flash/PTS/salida/post-tests-que-fallan.md">post-tests-que-fallan.md</a></small></td>
-<td><small>3011 palabras · slop 40.5 (1.35/100 pal.)</small></td>
-<td class="nota n1">7<br><small>un manual, no un post</small></td>
-<td><small>3011 palabras con muy buen código (test que se «arregla» afirmando lo contrario, reloj congelado, espera activa en lugar de sleep, xfail con strict=True) y un plan por fases para salir de una suite roja. Pero cambia el tema: el título quita el «a veces», casi todo va de tests en rojo permanente y los intermitentes ocupan una sección. Tres veces más largo que un post, 66 negritas y palabras rotas.</small> <a href="resultados/ollama_minimax-m3.1-flash/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>ollama/mistral-large-4</small><br><small>OpenCode · 2026-11-20 15:36 UTC</small></td>
 <td class=n><b>133.6 k</b><br><small>in 25.1 k · out 25.1 k<br>razon. 0 · caché 83.5 k</small></td>
@@ -809,16 +659,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Librería Python sin dependencias, hexagonal, con dinero en céntimos, una moneda por carrito, precio del catálogo, descuentos e impuestos enchufables, eventos de dominio, límites y repositorio en memoria o SQLite; 24 tests y una demo que funcionan, y 50 altas a la vez con un servicio no pierden nada. Pero la concurrencia depende de un cerrojo del proceso: con dos servicios sobre el mismo SQLite se pierden 3 de 50 altas sin aviso.</small> <a href="resultados/ollama_mistral-large-4/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/mistral-large-4</small><br><small>OpenCode · 2026-11-20 18:07 UTC</small></td>
-<td class=n><b>147.5 k</b><br><small>in 17.2 k · out 8.5 k<br>razon. 0 · caché 121.9 k</small></td>
-<td class=n>14</td>
-<td><small><a href="resultados/ollama_mistral-large-4/PTS/salida/guion-video-corto-tests-que-fallan.md">guion-video-corto-tests-que-fallan.md</a><br><a href="resultados/ollama_mistral-large-4/PTS/salida/hilo-redes-sociales-tests-que-fallan.md">hilo-redes-sociales-tests-que-fallan.md</a><br><a href="resultados/ollama_mistral-large-4/PTS/salida/newsletter-tests-que-fallan.md">newsletter-tests-que-fallan.md</a><br><a href="resultados/ollama_mistral-large-4/PTS/salida/por-que-los-tests-que-fallan-son-peores-que-no-tener-tests.md">por-que-los-tests-que-fallan-son-peores-que-no-tener-tests.md</a><br><a href="resultados/ollama_mistral-large-4/PTS/salida/why-failing-tests-are-worse-than-no-tests.md">why-failing-tests-are-worse-than-no-tests.md</a></small></td>
-<td><small>✔ un post en Markdown, en español, de 889 palabras (más otros cuatro ficheros, ver rarezas)<br>~ 1,15 marcas de slop por cada 100 palabras: 13 negritas, «Conclusión», «Cuéntame en los comentarios»<br>~ un caso (el fallo real en el cálculo de precios que queda camuflado), sin código ni cifras<br>✖ errores de lengua: «suites de tests rotas diente tras diente», «no Gana confianza», «determinidad»</small></td>
-<td class="nota n1">7<br><small>correcto, sin ejemplos, con extras</small></td>
-<td><small>Defiende la tesis con su mecanismo: el equipo aprende a ignorar la alarma, pierde tiempo con fantasmas y deja de confiar, y el fallo real se camufla entre los falsos; termina con qué hacer. Pero no trae ni código ni cifras, tiene fallos de lengua («diente tras diente», «determinidad») y, a fuerza de «Decide tú.», acabó entregando también una versión en inglés, una newsletter, un hilo y un guion de vídeo.</small> <a href="resultados/ollama_mistral-large-4/PTS/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-20 03:15 UTC</small></td>
 <td class=n><b>88.0 k</b><br><small>in 8.3 k · out 16.2 k<br>razon. 0 · caché 63.5 k</small></td>
@@ -847,16 +687,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ pytest 12/12 y main.py<br>✔ 50 hilos con 4 shards: 50 unidades<br>✔ versión optimista en el almacenamiento, Decimal, precio del inventario<br>~ sin almacenamiento compartido real (Redis/DynamoDB «intercambiable»)</small></td>
 <td class="nota n2">9<br><small>bien pensado, sin Redis</small></td>
 <td><small>Python sin dependencias: agregado de carrito con límites, motor de precios con reglas (por volumen, categoría, cupón), IVA y envío, reserva de stock, bus de eventos, servicio sin estado con versión optimista y reintentos, almacenamiento en memoria, en fichero o repartido en shards, y una API REST. Pasa 12 tests y 50 hilos no pierden nada. Pero Redis o DynamoDB son solo un contrato.</small> <a href="resultados/ollama_muse-spark-open/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
-<td><b>PTS</b><br><small>texto</small></td>
-<td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-20 03:28 UTC</small></td>
-<td class=n><b>26.3 k</b><br><small>in 6.3 k · out 1.2 k<br>razon. 0 · caché 18.8 k</small></td>
-<td class=n>3</td>
-<td><small><a href="resultados/ollama_muse-spark-open/PTS/salida/blog-tests-que-fallan.md">blog-tests-que-fallan.md</a></small></td>
-<td><small>444 palabras · slop 2.0 (0.45/100 pal.)</small></td>
-<td class="nota n2">8<br><small>limpio y corto, se va al rojo fijo</small></td>
-<td><small>444 palabras directas y con muy poco slop (0,45 por cada 100 palabras): la tesis en dos frases (sin tests sabes que estás desprotegido; con tests rojos que ignoras crees que estás cubierto), dos imágenes que funcionan (la alarma del coche, quitar la pila al detector de humo), la salida de `npm test` con «3 failed» y cuatro reglas. Pero arranca con tests que «fallan constantemente» y apenas toca los que fallan a veces, y es corto para un post.</small> <a href="resultados/ollama_muse-spark-open/PTS/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr>
 </table></div>

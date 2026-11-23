@@ -263,63 +263,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/anthropic_claude-fable-5-2/PTS",
-    "codigo": "PTS",
-    "modelo": "claude-fable-5-2",
-    "agente": "Claude Code",
-    "fecha": "2026-11-22T09:04:39Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 4,
-      "output": 3027,
-      "reasoning": 0,
-      "cache_read": 61924,
-      "cache_write": 11650,
-      "total": 76605
-    },
-    "peticiones": 2,
-    "error": null,
-    "herramientas": {
-      "Write": 1
-    },
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "ficheros": [
-      "tests-intermitentes.md"
-    ],
-    "veces_decide_tu": 0,
-    "validacion": {
-      "slop": "933 palabras · 7 títulos · 5 líneas de lista · frase media 16.3 · slop 7.5 (0.8/100 palabras)\n  15-negritas             10  negritas: **Tiempo:**, **Orden:**, **Concurrencia:**, **Exterior:**, **Azar:**, **Poner el test en cuarentena de inmediato.**\n  16-lista-con-titulo      5  listas con etiqueta en negrita y dos puntos: \n- **Tiempo:**, - **Orden:**, - **Concurrencia:**, - **Exterior:**, - **Azar:**",
-      "extra": [
-        "✔ un post en Markdown, en español, de 933 palabras",
-        "✔ 0,8 marcas de slop por cada 100 palabras: 10 negritas y una lista de causas con etiqueta; sin rayas, sin «En resumen»",
-        "✔ código antes y después: test con sleep(1) frente a reloj inyectado (RelojFalso)",
-        "✔ cifras correctas: 0,999^200 ≈ 82 % de suites limpias; con 1000 tests falla el 63 %",
-        "✔ mecanismo: sin tests sabes que no hay información; con tests intermitentes hay ruido que parece información y el equipo aprende a reintentar, también ante una condición de carrera real"
-      ]
-    },
-    "juicio": {
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 2,
-        "extensión": 1
-      },
-      "nota": 10,
-      "veredicto": "completo y limpio",
-      "resumen": "Defiende la tesis con un mecanismo claro (ruido que parece información y la fatiga de alarmas que deja pasar una condición de carrera real), con cuentas correctas y un ejemplo de código antes y después. Se queda por debajo de una marca de slop por cada 100 palabras.",
-      "rarezas": [
-        "Una sola petición con herramienta: escribe el post con un Write y no lo relee ni lo revisa.",
-        "En la respuesta da la ruta absoluta de la carpeta de trabajo y ofrece adaptar el front matter o el lenguaje del ejemplo."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/anthropic_claude-haiku-5-5/A3D",
     "codigo": "A3D",
     "modelo": "claude-haiku-5-5",
@@ -554,121 +497,75 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/anthropic_claude-haiku-5-5/PTS",
-    "codigo": "PTS",
+    "dir": "resultados/anthropic_claude-haiku-5-5/SEC",
+    "codigo": "SEC",
     "modelo": "claude-haiku-5-5",
     "agente": "Claude Code",
-    "fecha": "2026-11-19T21:03:52Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "fecha": "2026-11-23T20:48:46Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
     "tokens": {
-      "input": 4,
-      "output": 3129,
+      "input": 30,
+      "output": 42652,
       "reasoning": 0,
-      "cache_read": 61111,
-      "cache_write": 10867,
-      "total": 75111
+      "cache_read": 1372292,
+      "cache_write": 130256,
+      "total": 1545230
     },
-    "peticiones": 2,
+    "peticiones": 15,
     "error": null,
     "herramientas": {
-      "Write": 1
+      "Bash": 18,
+      "Write": 1,
+      "Edit": 2
     },
     "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
     ],
     "ficheros": [
-      "tests-que-fallan-peor-que-no-tenerlos.md"
+      "auditoria-seguridad.md"
     ],
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 953,
-        "titulos": 7,
-        "lineas_lista": 10,
-        "bloques_codigo": 0,
-        "frase_media": 16.2,
-        "marcas": {
-          "5-atribución-vaga": {
-            "que": "atribuciones vagas",
-            "n": 1,
-            "ejemplos": [
-              "Como decía alguien"
-            ]
-          },
-          "9-no-solo-sino": {
-            "que": "«no solo X, sino Y»",
-            "n": 1,
-            "ejemplos": [
-              "es "
-            ]
-          },
-          "15-negritas": {
-            "que": "negritas",
-            "n": 12,
-            "ejemplos": [
-              "**normalización del fallo**",
-              "**Tiempo de investigación.**",
-              "**Cambio de contexto.**",
-              "**Tests que se comentan o se marcan como `skip`.**",
-              "**Tests que codifican el comportamiento equivocado.**",
-              "**Desconfianza hacia la herramienta.**"
-            ]
-          },
-          "16-lista-con-titulo": {
-            "que": "listas con etiqueta en negrita y dos puntos",
-            "n": 5,
-            "ejemplos": [
-              "\n- **Tiempo de investigación.**",
-              "- **Cambio de contexto.**",
-              "- **Tests que se comentan o se marcan como `skip`.**",
-              "- **Tests que codifican el comportamiento equivocado.**",
-              "- **Desconfianza hacia la herramienta.**"
-            ]
-          },
-          "25-cierre-genérico": {
-            "que": "cierres genéricos",
-            "n": 1,
-            "ejemplos": [
-              "la próxima vez que"
-            ]
-          },
-          "titulo-conclusión": {
-            "que": "sección «Conclusión»",
-            "n": 1,
-            "ejemplos": [
-              "Conclusión"
-            ]
-          }
-        },
-        "puntos": 14.0,
-        "densidad_100": 1.47
+    "veces_decide_tu": 0,
+    "semilla": "/tmp/claude-0/-home-user-benchmarks/5a3d274a-9338-5409-be17-0609cc15933d/scratchpad/prep2/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "claude-haiku-5-5",
+      "nota": 6,
+      "rubrica": {
+        "f3": 5,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
       },
-      "extra": [
-        "953 palabras · slop 14.0 (1.47/100 pal.)"
+      "veredicto": "Cobertura alta, sin CWE",
+      "resumen": "Informe de 45 hallazgos con fichero y línea en casi todos: cubre 25 de las 40 entradas con la regla estricta (F3 61,3), 35 con el criterio del juez, y solo 4 no son fallos. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el IDOR de wishlists y la página de noticias; no da ningún CWE.",
+      "cifras": {
+        "tp_estricto": 27.0,
+        "con_linea_tp": 25,
+        "sin_linea_tp": 4,
+        "fp_estricto": 20,
+        "fn_estricto": 13.0,
+        "f3": 66.3,
+        "wf3": 65.6,
+        "precision": 0.574,
+        "recall": 0.675,
+        "juez": {
+          "tp": 35,
+          "fp_inventados": 4,
+          "extra_reales": 13,
+          "f3": 87.7
+        }
+      },
+      "rarezas": [
+        "Dice que el proyecto «parece un laboratorio de entrenamiento en seguridad» por las flags QKB{…} y los identificadores «case-…»; no nombra el proyecto original.",
+        "No usa subagentes esta vez (en la tirada anterior lanzó tres en segundo plano y el lanzador cortó; ver _descartados).",
+        "No sale a internet: no ejecuta npm audit y cita los CVE de Next de memoria, avisando de que hay que confirmarlos.",
+        "Lista como hallazgos un bug funcional (reduce sin valor inicial) y un desajuste de versiones de eslint.",
+        "No toca el código: solo crea auditoria-seguridad.md."
       ]
     },
-    "juicio": {
-      "nota": 6,
-      "veredicto": "bien",
-      "resumen": "953 palabras con un argumento de verdad: un test inestable enseña al equipo a ignorar el rojo («normalización del fallo») y da una seguridad falsa que sin tests no existe. Un caso concreto (timeout de red, regresión de facturación que se pierde) y cinco prácticas útiles. Le sobran la lista con etiquetas en negrita, la «Conclusión» y una cita inventada.",
-      "rarezas": [
-        "«Como decía alguien en una charla que no recuerdo bien»: se inventa una fuente que no puede nombrar.",
-        "Amplía el tema a los tests que llevan semanas en rojo, no solo a los que fallan a veces.",
-        "Responde a su propio título con «Entonces, ¿mejor no tener tests? No.», que matiza la tesis que le pedían defender."
-      ],
-      "nota_previa": 7,
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 0,
-        "ejemplos concretos": 1,
-        "sin errores ni inventos": 0,
-        "slop": 1,
-        "extensión": 1
-      }
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/anthropic_claude-opus-5-5-medium/A3D",
@@ -940,68 +837,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/anthropic_claude-opus-5-5-medium/PTS",
-    "codigo": "PTS",
-    "modelo": "claude-opus-5-5 (medium)",
-    "agente": "Claude Code",
-    "fecha": "2026-11-20T11:21:39Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 4,
-      "output": 5539,
-      "reasoning": 0,
-      "cache_read": 60375,
-      "cache_write": 12471,
-      "total": 78389
-    },
-    "peticiones": 2,
-    "error": null,
-    "herramientas": {
-      "Write": 1
-    },
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "ficheros": [
-      "tests-intermitentes-peor-que-no-tener-tests.md"
-    ],
-    "veces_decide_tu": 0,
-    "esfuerzo": "medium",
-    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
-    "validacion": {
-      "slop": "1929 palabras · 23 títulos · 27 líneas de lista · frase media 19.1 · slop 9.5 (0.49/100 palabras)\n  7-vocabulario            1  vocabulario de IA: clave\n  15-negritas             26  negritas: **\"Re-run failed jobs\"**, **Un test que falla de forma intermitente puede ser peor que no tener ese test.**, **con el mismo código y la misma configuración**, **el resultado no te dice nada sobre el código**, **sabes**, **información**\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que\n  titulo-conclusión        1  sección «Conclusión»: Resumen",
-      "extra": [
-        "✔ un post en Markdown con cabecera YAML, en español, de 1929 palabras",
-        "✖ por encima de 1800 palabras, con 23 títulos y 27 líneas de lista",
-        "✔ 0,49 marcas de slop por cada 100 palabras (26 negritas, sección «Resumen», «la próxima vez que»)",
-        "✔ tres bloques de código (sleep de 2 s y su arreglo en Python, reloj real en Jest) y una cuenta de horas",
-        "✖ la cuenta no sale: 10 personas × 5 PR × 5 días × 10 % × 15 min son 6,25 h a la semana, no 12; y 12 h no son «una persona y media a tiempo completo»",
-        "✖ pone @RepeatedTest de JUnit 5 como reintento automático: repite el test N veces, no reintenta los fallos",
-        "✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-tCkcAp3h; fugas.py sin hallazgos"
-      ]
-    },
-    "juicio": {
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 0,
-        "slop": 2,
-        "extensión": 0
-      },
-      "nota": 8,
-      "veredicto": "completo pero se pasa",
-      "resumen": "El argumento es el mejor de los dos Claude: el test como detector de humo, la regla implícita «un rojo no significa nada» que se contagia a toda la suite y el bug intermitente real que se relanza hasta que pasa, con tres fragmentos de código y una guía de cuarentena útil. Pero son 1929 palabras con 23 títulos, la cuenta de horas da el doble de lo que sale (6,25 h, no 12) y pone @RepeatedTest como reintento.",
-      "rarezas": [
-        "Dos peticiones y una sola llamada (Write) en 59 s; 5,5 k tokens de salida, la mitad más que Sonnet.",
-        "Añade cabecera YAML (title, date, tags, description) que nadie le pidió, como si fuera a un generador de blogs estáticos.",
-        "Cierra el post con una sección «Resumen» en viñetas que repite lo que acaba de decir."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/anthropic_claude-sonnet-5-5-medium/A3D",
     "codigo": "A3D",
     "modelo": "claude-sonnet-5-5 (medium)",
@@ -1256,66 +1091,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/anthropic_claude-sonnet-5-5-medium/PTS",
-    "codigo": "PTS",
-    "modelo": "claude-sonnet-5-5 (medium)",
-    "agente": "Claude Code",
-    "fecha": "2026-11-20T11:14:57Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 4,
-      "output": 3617,
-      "reasoning": 0,
-      "cache_read": 60377,
-      "cache_write": 10473,
-      "total": 74471
-    },
-    "peticiones": 2,
-    "error": null,
-    "herramientas": {
-      "Write": 1
-    },
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "ficheros": [
-      "tests-intermitentes-peores-que-no-tener-tests.md"
-    ],
-    "veces_decide_tu": 0,
-    "esfuerzo": "medium",
-    "aislamiento": "Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, pero ve el resto del disco, incluido el repo. Revisado con scripts/fugas.py.",
-    "validacion": {
-      "slop": "1210 palabras · 11 títulos · 12 líneas de lista · frase media 16.1 · slop 12.0 (0.99/100 palabras)\n  15-negritas             16  negritas: **miente**, **te hace cambiar de decisión**, **bugs reales de concurrencia**, **Tiempo y esperas**, **Orden de ejecución y estado compartido**, **Concurrencia**\n  16-lista-con-titulo      6  listas con etiqueta en negrita y dos puntos: \n- **Tiempo y esperas**:, - **Orden de ejecución y estado compartido**:, - **Concurrencia**:, - **Dependencias externas**:, - **Datos no deterministas**:, - **Entorno**:\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que\n  titulo-conclusión        1  sección «Conclusión»: Conclusión",
-      "extra": [
-        "✔ un post en Markdown, en español, de 1210 palabras",
-        "~ 0,99 marcas de slop por cada 100 palabras según slop.py; el cierre «Cuéntalo en los comentarios» se le escapa a la regla de chatbot (peso 2) y con él serían 1,16",
-        "✔ dos bloques de Python: el test con time.sleep(1) en una cola de pedidos y su arreglo con espera a una condición",
-        "✖ 0,98^500 ≈ 0,0041 %, no «0,00004 %»: confunde la probabilidad con el porcentaje (cien veces menos)",
-        "✔ sesión limpia: una sola llamada (Write) dentro de /var/tmp/bench/ws-LbTlNHJV; fugas.py sin hallazgos"
-      ]
-    },
-    "juicio": {
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 0,
-        "slop": 1,
-        "extensión": 1
-      },
-      "nota": 8,
-      "veredicto": "sólido, con la cuenta mal",
-      "resumen": "1210 palabras centradas en los tests intermitentes, con la tesis bien armada (un hueco sin test es honesto, un test intermitente miente y enseña a pulsar «Re-run» también cuando el fallo es real) y un ejemplo de código con sleep y su arreglo. Pierde el punto de errores por la cuenta estrella, 0,98^500 ≈ «0,00004 %» cuando es 0,0041 %, y otro de slop por el formato de manual y el cierre de chatbot.",
-      "rarezas": [
-        "Dos peticiones y una sola llamada (Write): escribe el post de un tirón en 31 s, sin borrador ni relectura.",
-        "Repite el número equivocado en la respuesta del chat («con la cuenta de 0.98^500») como argumento de venta.",
-        "Termina con «¿Cuál es el test flaky más absurdo…? Cuéntalo en los comentarios», que la regla de chatbot de slop.py no caza por la forma «cuéntalo»."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
     "dir": "resultados/google_gemini-4-carbon/A3D",
@@ -1610,72 +1385,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/google_gemini-4-carbon/PTS",
-    "codigo": "PTS",
-    "modelo": "google/gemini-4-carbon",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T10:23:00Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 10297,
-      "output": 2166,
-      "reasoning": 734,
-      "cache_read": 9288,
-      "cache_write": 0,
-      "total": 22485
-    },
-    "peticiones": 3,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 1,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e0784db71ffeLnGuJTu7xDxyNA",
-    "coste_usd": 0.0532,
-    "ficheros": [
-      "tests-que-fallan-a-veces.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 943718,
-      "fuente": "openrouter /api/v1/models"
-    },
-    "veces_decide_tu": 0,
-    "aislamiento": "macOS: sandbox-exec (sin leer /Users salvo su configuración y node; escribe solo en su carpeta), OpenCode 2.3.0 --standalone",
-    "validacion": {
-      "slop": "1196 palabras · 7 títulos · 13 líneas de lista · frase media 23.8 · slop 15.5 (1.3/100 palabras)\n  7-vocabulario            1  vocabulario de IA: fundamental\n  13-raya                  3  rayas (—): —, —, —\n  15-negritas             18  negritas: **honesto**, **ilusión de seguridad**, **señal determinista**, **entrenamiento psicológico**, **el bug llega a producción con el sello de aprobación del CI**, **Cambio de contexto constante:**\n  16-lista-con-titulo      4  listas con etiqueta en negrita y dos puntos: - **`sleep()` en tests end-to-end**, - **Estado compartido**, - **Datos aleatorios o fechas actuales (`new Date()`)**, - **Dependencias de servicios externos reales**\n  18-emojis                2  emojis decorativos: ❌, ✅\n  titulo-conclusión        1  sección «Conclusión»: Conclusión",
-      "extra": [
-        "✔ un post en Markdown, en español, de 1196 palabras",
-        "~ 1,3 marcas de slop por cada 100 palabras: 18 negritas, listas con etiqueta, ❌/✅, sección «Conclusión»",
-        "✔ código antes y después (TTL de un token con setTimeout frente a reloj inyectado)",
-        "✔ la cifra de las colas de merge es correcta: 1 − 0,95³ ≈ 14 %, uno de cada siete"
-      ]
-    },
-    "juicio": {
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 1,
-        "extensión": 1
-      },
-      "nota": 9,
-      "veredicto": "completo, con tics de formato",
-      "resumen": "Defiende bien la tesis (no tener tests es una incertidumbre honesta; un test intermitente da permiso para ignorar la prueba) con un ejemplo de código antes y después y una cifra correcta sobre colas de merge. Pierde un punto por el formato de blog generado: dieciocho negritas, listas con etiqueta, emojis y una sección «Conclusión».",
-      "rarezas": [
-        "Mira la carpeta, escribe el post y contesta: tres peticiones y 0,05 $"
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
     "dir": "resultados/google_gemini-4-hydrogen/A3D",
@@ -2014,71 +1723,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/google_gemini-4-hydrogen/PTS",
-    "codigo": "PTS",
-    "modelo": "google/gemini-4-hydrogen",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T15:33:22Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 12785,
-      "output": 2149,
-      "reasoning": 996,
-      "cache_read": 15861,
-      "cache_write": 0,
-      "total": 31791
-    },
-    "peticiones": 4,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 2,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e0668b751ffe2XCkxpcyDU3X18",
-    "coste_usd": 0.0503,
-    "ficheros": [
-      "por-que-los-flaky-tests-son-peores-que-no-tener-tests.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 943718,
-      "fuente": "openrouter /api/v1/models"
-    },
-    "veces_decide_tu": 0,
-    "validacion": {
-      "slop": "1220 palabras · 12 títulos · 12 líneas de lista · frase media 20.6 · slop 18.8 (1.54/100 palabras)\n  7-vocabulario            1  vocabulario de IA: exhaustiva\n  13-raya                  4  rayas (—): —, —, —, —\n  15-negritas             19  negritas: **\"Re-run failed jobs\"**, **flaky test**, **una suite con tests que fallan a veces suele ser peor que no tener tests en absoluto**, **dar una señal clara e inequívoca**, **La primera vez**, **La tercera vez**\n  16-lista-con-titulo      5  listas con etiqueta en negrita y dos puntos: \n* **La primera vez**, * **La tercera vez**, * **La décima vez**, * **Cuellos de botella en las entregas:**, * **Normalización de la mediocridad:**\n  23-relleno               1  muletillas: En resumen\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que\n  realidad-compleja        1  frases hechas de giro («la realidad es más compleja»): a primera vista",
-      "extra": [
-        "✔ un post en Markdown, en español, de 1220 palabras",
-        "~ 1,54 marcas de slop por cada 100 palabras: 19 negritas, listas con etiqueta, «En resumen», «La próxima vez que…»",
-        "✔ código del sleep(100) que en CI tarda 120 ms, y números de coste (pipeline de 15 min con un 10 % de fallo aleatorio)",
-        "✔ mecanismo claro: sin tests sabes que vas a ciegas; con tests intermitentes el equipo aprende a pulsar re-run y deja pasar el fallo real"
-      ]
-    },
-    "juicio": {
-      "nota": 9,
-      "veredicto": "claro y útil, algo de slop",
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 1,
-        "extensión": 1
-      },
-      "resumen": "Defiende la tesis con su mecanismo: sin tests el equipo sabe que va a ciegas y actúa con cautela, mientras que un test intermitente le enseña a pulsar re-run hasta que el fallo real pasa con el sello de «todos los checks en verde». Trae código (el sleep de 100 ms que en CI tarda 120), causas típicas y qué hacer, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».",
-      "rarezas": [
-        "4 peticiones, 32 000 tokens, 0,05 $: leyó la carpeta, escribió el post y terminó."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/google_gemini-4-neon/A3D",
     "codigo": "A3D",
     "modelo": "google/gemini-4-neon",
@@ -2373,72 +2017,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/google_gemini-4-neon/PTS",
-    "codigo": "PTS",
-    "modelo": "google/gemini-4-neon",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T22:02:45Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 10955,
-      "output": 2498,
-      "reasoning": 987,
-      "cache_read": 9289,
-      "cache_write": 0,
-      "total": 23729
-    },
-    "peticiones": 3,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 1,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e0504397dffeAtM2AXljPOqyye",
-    "coste_usd": 0.0857,
-    "ficheros": [
-      "por-que-los-tests-flaky-son-peores-que-no-tener-tests.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 32768,
-      "output_proveedor": 943718,
-      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
-    },
-    "veces_decide_tu": 0,
-    "validacion": {
-      "slop": "1486 palabras · 13 títulos · 18 líneas de lista · frase media 20.4 · slop 18.8 (1.26/100 palabras)\n  13-raya                  4  rayas (—): —, —, —, —\n  15-negritas             19  negritas: **Re-run**, **tests intermitentes**, **confianza**, **36%**, **Cambios de contexto constantes:**, **Cuellos de botella en los despliegues:**\n  16-lista-con-titulo      7  listas con etiqueta en negrita y dos puntos: \n- **Cambios de contexto constantes:**, - **Cuellos de botella en los despliegues:**, - **Fricción innecesaria en las revisiones:**, \n- **Inyecta el reloj:**, - **Aísla cada test:**, - **Usa semillas fijas**\n  23-relleno               1  muletillas: En resumen\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que",
-      "extra": [
-        "✔ un post en Markdown, en español, de 1486 palabras",
-        "~ 1,26 marcas de slop por cada 100 palabras: 19 negritas, 7 listas con etiqueta, «En resumen», «La próxima vez que…»",
-        "✔ código antes y después (sleep(300) frente a findByText) y la cifra correcta: 20 tests con un 5 % de fallo → 0,95²⁰ ≈ 36 % de pasar a la primera",
-        "✔ mecanismo: sin tests sabes que no hay red; con tests intermitentes el equipo aprende a pulsar Re-run y el fallo real llega a producción"
-      ]
-    },
-    "juicio": {
-      "nota": 9,
-      "veredicto": "completo, con tics de formato",
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 1,
-        "extensión": 1
-      },
-      "resumen": "Defiende la tesis con su mecanismo: sin tests el equipo sabe que no tiene red; con tests intermitentes aprende a pulsar Re-run y la alarma real se ignora, además de esconder condiciones de carrera reales. Trae una escena reconocible, la cifra correcta (20 tests al 5 % → 36 % de pasar a la primera), código antes y después y qué hacer con los reintentos, pero con el formato de blog generado: 19 negritas, listas con etiqueta y «En resumen».",
-      "rarezas": [
-        "Repetido con SALIDA_MAX=32768 porque la primera tirada no pudo empezar: OpenRouter rechazaba el tope de 65 536 tokens por falta de saldo (en _descartados/).",
-        "3 peticiones, 24 000 tokens, 0,09 $."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/openai_gpt-6.2-astra-default/A3D",
     "codigo": "A3D",
     "modelo": "gpt-6.2-astra (default)",
@@ -2663,64 +2241,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/openai_gpt-6.2-astra-default/PTS",
-    "codigo": "PTS",
-    "modelo": "gpt-6.2-astra (default)",
-    "agente": "Codex CLI",
-    "esfuerzo": "default",
-    "fecha": "2026-11-20T09:39:43Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 6284,
-      "output": 1911,
-      "reasoning": 0,
-      "cache_read": 87168,
-      "cache_write": 0,
-      "total": 95363
-    },
-    "peticiones": 5,
-    "error": null,
-    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos (escribe en su carpeta, red abierta, sin leer el repo ni otras configuraciones)",
-    "esfuerzo_real": null,
-    "herramientas": {
-      "exec": 4
-    },
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "veces_decide_tu": 0,
-    "ficheros": [
-      "tests-intermitentes.md"
-    ],
-    "validacion": {
-      "slop": "611 palabras · 4 títulos · 0 líneas de lista · frase media 15.9 · slop 1.2 (0.2/100 palabras)\n  15-negritas              1  negritas: **la factura de ese pedido**\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que",
-      "extra": [
-        "✔ un post en Markdown, en español, de 611 palabras",
-        "✔ 0,2 marcas de slop por cada 100 palabras (una negrita, un cierre «La próxima vez que»)",
-        "✖ por debajo de 700 palabras",
-        "✔ un caso con código (sleep de 0,5 s) y números (20 ms en local, 700 ms en CI)"
-      ]
-    },
-    "juicio": {
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 2,
-        "extensión": 0
-      },
-      "nota": 9,
-      "veredicto": "afilado, con código, corto",
-      "resumen": "Defiende la tesis con el mecanismo correcto: relanzar el rojo es racional para cada persona y, repetido por todo el equipo, esconde la regresión real del IVA. Tiene un caso con código y números bien elegidos, sin slop ni errores, pero se queda en 611 palabras.",
-      "rarezas": [
-        "Cinco peticiones y cuatro llamadas para un post: lo escribe y lo relee"
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/openai_gpt-6.2-astra-medium/A3D",
     "codigo": "A3D",
     "modelo": "gpt-6.2-astra (medium)",
@@ -2941,63 +2461,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/openai_gpt-6.2-astra-medium/PTS",
-    "codigo": "PTS",
-    "modelo": "gpt-6.2-astra (medium)",
-    "agente": "Codex CLI",
-    "esfuerzo": "medium",
-    "fecha": "2026-11-20T09:55:26Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 6888,
-      "output": 1394,
-      "reasoning": 0,
-      "cache_read": 58752,
-      "cache_write": 0,
-      "total": 67034
-    },
-    "peticiones": 4,
-    "error": null,
-    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
-    "esfuerzo_real": "medium",
-    "herramientas": {
-      "exec": 3
-    },
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "veces_decide_tu": 0,
-    "ficheros": [
-      "tests-intermitentes.md"
-    ],
-    "validacion": {
-      "slop": "709 palabras · 4 títulos · 0 líneas de lista · frase media 16.6 · slop 1.0 (0.14/100 palabras)\n  25-cierre-genérico       1  cierres genéricos: La próxima vez que",
-      "extra": [
-        "✔ un post en Markdown, en español, de 709 palabras",
-        "✔ 0,14 marcas de slop por cada 100 palabras (un cierre «La próxima vez que»)",
-        "✔ dos bloques de Python: el test que falla al cruzar la medianoche y su arreglo; el juez comprueba que el ejemplo de 23:30 UTC-5 da el 1 de febrero"
-      ]
-    },
-    "juicio": {
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 2,
-        "extensión": 1
-      },
-      "nota": 10,
-      "veredicto": "el post completo",
-      "resumen": "Explica por qué un test intermitente puede salir más caro que el hueco que deja: da una falsa sensación de cobertura y enseña a ignorar el único aviso útil. Lo ilustra con un test de Python que falla al cruzar la medianoche y su arreglo, ambos correctos, sin slop y con la extensión justa.",
-      "rarezas": [
-        "Comprueba sus dos fragmentos de código antes de entregarlo"
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
     "dir": "resultados/openai_gpt-6.2-sol-medium/A3D",
@@ -3238,64 +2701,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/openai_gpt-6.2-sol-medium/PTS",
-    "codigo": "PTS",
-    "modelo": "gpt-6.2-sol (medium)",
-    "agente": "Codex CLI",
-    "esfuerzo": "medium",
-    "fecha": "2026-11-20T09:01:14Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 5099,
-      "output": 989,
-      "reasoning": 38,
-      "cache_read": 42624,
-      "cache_write": 0,
-      "total": 48750
-    },
-    "peticiones": 3,
-    "error": null,
-    "aislamiento": "macOS sin encierro.sh: sandbox de Codex (workspace-write, red abierta)",
-    "herramientas": {
-      "exec": 2
-    },
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "veces_decide_tu": 0,
-    "ficheros": [
-      "tests-que-fallan-a-veces.md"
-    ],
-    "validacion": {
-      "slop": "607 palabras · 4 títulos · 0 líneas de lista · frase media 15.7 · slop 0.0 (0.0/100 palabras)",
-      "extra": [
-        "✔ un post en Markdown, en español, de 607 palabras",
-        "✔ 0 marcas de slop",
-        "✖ por debajo de 700 palabras",
-        "~ un solo caso (cola de correos con espera de 100 ms), sin código"
-      ]
-    },
-    "juicio": {
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 1,
-        "sin errores ni inventos": 1,
-        "slop": 2,
-        "extensión": 0
-      },
-      "nota": 8,
-      "veredicto": "limpio, centrado y corto",
-      "resumen": "Defiende la tesis con el mecanismo correcto: un rojo que se relanza enseña a ignorar el rojo, y el día que es una regresión real nadie lo mira. Sin slop ni errores, con un caso bien contado, pero se queda en 607 palabras y sin código.",
-      "rarezas": [
-        "Antes de escribir busca un AGENTS.md en la carpeta vacía",
-        "Escribe el post entero de un tirón con un heredoc: dos llamadas y tres peticiones en total"
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
     "dir": "resultados/nvidia_nemotron-3-ultra-550b-a55b_free/A3D",
@@ -3542,110 +2947,6 @@
       }
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/nvidia_nemotron-3-ultra-550b-a55b_free/PTS",
-    "codigo": "PTS",
-    "modelo": "nvidia/nemotron-3-ultra-550b-a55b:free",
-    "agente": "OpenCode",
-    "fecha": "2026-11-19T20:46:54Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 8080,
-      "output": 682,
-      "reasoning": 71,
-      "cache_read": 8768,
-      "cache_write": 0,
-      "total": 17601
-    },
-    "peticiones": 2,
-    "error": null,
-    "herramientas": {
-      "write": 1
-    },
-    "sesion": "ses_e0a7007c2ffe3HDJ8qlbJRcrEJ",
-    "ficheros": [
-      "por-que-tests-flaky-son-peores-que-no-tener-tests.md"
-    ],
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 359,
-        "titulos": 9,
-        "lineas_lista": 5,
-        "bloques_codigo": 0,
-        "frase_media": 11.2,
-        "marcas": {
-          "15-negritas": {
-            "que": "negritas",
-            "n": 8,
-            "ejemplos": [
-              "**dar confianza**",
-              "**crees que estás cubierto cuando no lo estás**",
-              "**Bórralos o arréglalos ya**",
-              "**Aísla la causa**",
-              "**Usa timeouts generosos**",
-              "**Prioriza tests deterministas**"
-            ]
-          },
-          "20-chatbot": {
-            "que": "frases de chatbot",
-            "n": 1,
-            "ejemplos": [
-              "Cuéntame tu experiencia en los comentarios"
-            ]
-          },
-          "dos-puntos-efecto": {
-            "que": "dos puntos de efecto («El resultado: …»)",
-            "n": 1,
-            "ejemplos": [
-              "El resultado"
-            ]
-          },
-          "realidad-compleja": {
-            "que": "frases hechas de giro («la realidad es más compleja»)",
-            "n": 2,
-            "ejemplos": [
-              "A primera vista",
-              "la realidad es más compleja"
-            ]
-          },
-          "titulo-conclusión": {
-            "que": "sección «Conclusión»",
-            "n": 1,
-            "ejemplos": [
-              "Conclusión"
-            ]
-          }
-        },
-        "puntos": 8.0,
-        "densidad_100": 2.23
-      },
-      "extra": [
-        "359 palabras · slop 8.0 (2.23/100 pal.)"
-      ]
-    },
-    "juicio": {
-      "nota": 4,
-      "veredicto": "cumple el mínimo",
-      "resumen": "Post de 359 palabras con estructura de listado: cinco razones y cinco consejos sin un solo ejemplo, dato o caso. Tesis clara y limpio de muletillas, pero cierre de chatbot, «costo», anglicismos y nada que no esté en el primer resultado de Google.",
-      "rarezas": [
-        "Con la skill de Web Reactiva cargada por error (tanda descartada) escribió 1621 palabras, FAQ «optimizada para GEO», 12 rayas y 10 emojis en 6 peticiones; sin skill, 359 palabras en 2 peticiones. El modelo copia la forma de lo que tenga en contexto.",
-        "Titula «tests flaky» cuando el prompt dice «tests que fallan a veces»: mete el anglicismo en el título."
-      ],
-      "nota_previa": 4,
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 1,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 0,
-        "sin errores ni inventos": 1,
-        "slop": 0,
-        "extensión": 0
-      }
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
     "dir": "resultados/ollama_beam/A3D",
@@ -3895,109 +3196,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_beam/PTS",
-    "codigo": "PTS",
-    "modelo": "ollama/beam",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T03:14:29Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 13931,
-      "output": 3814,
-      "reasoning": 0,
-      "cache_read": 37760,
-      "cache_write": 0,
-      "total": 55505
-    },
-    "peticiones": 6,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "bash": 2,
-      "write": 3
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e090d2f05ffeeFbHvl80e5h3J1",
-    "ficheros": [
-      "post-tests-flaky.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 131072,
-      "output_proveedor": 131072,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 662,
-        "titulos": 9,
-        "lineas_lista": 24,
-        "bloques_codigo": 0,
-        "frase_media": 13.0,
-        "marcas": {
-          "13-raya": {
-            "que": "rayas (—)",
-            "n": 2,
-            "ejemplos": [
-              "—",
-              "—"
-            ]
-          },
-          "15-negritas": {
-            "que": "negritas",
-            "n": 11,
-            "ejemplos": [
-              "**Falsos positivos**",
-              "**Pérdida de señal**",
-              "**Des moralización**",
-              "**Fuga de recursos**",
-              "**Cuarentena**",
-              "**Réplicas**"
-            ]
-          },
-          "16-lista-con-titulo": {
-            "que": "listas con etiqueta en negrita y dos puntos",
-            "n": 4,
-            "ejemplos": [
-              "\n- **Falsos positivos**:",
-              "- **Pérdida de señal**:",
-              "- **Des moralización**:",
-              "- **Fuga de recursos**:"
-            ]
-          }
-        },
-        "puntos": 8.8,
-        "densidad_100": 1.32
-      },
-      "extra": [
-        "662 palabras · slop 8.8 (1.32/100 pal.)"
-      ]
-    },
-    "juicio": {
-      "nota": 7,
-      "veredicto": "esquema útil, poco post",
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 1,
-        "sin errores ni inventos": 1,
-        "slop": 1,
-        "extensión": 0
-      },
-      "resumen": "662 palabras que van al grano y no se salen del tema: un test intermitente es información falsa y sin tests al menos «no te mientes»; el test como sensor, la regla de reproducirlo en 5 minutos o borrarlo en 24 horas, siete estrategias y una checklist. Pero es casi un esquema en listas, sin un caso ni código, y mezcla inglés («beats», «un test suite», «Des moralización»).",
-      "rarezas": [
-        "6 peticiones."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/ollama_deepseek-v4.1-flash/A3D",
     "codigo": "A3D",
     "modelo": "ollama/deepseek-v4.1-flash",
@@ -4236,52 +3434,51 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_deepseek-v4.1-flash/PTS",
-    "codigo": "PTS",
+    "dir": "resultados/ollama_deepseek-v4.1-flash/SEC",
+    "codigo": "SEC",
     "modelo": "ollama/deepseek-v4.1-flash",
     "agente": "OpenCode",
-    "fecha": "2026-11-19T22:49:49Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "fecha": "2026-11-23T20:52:09Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
     "tokens": {
-      "input": 9200,
-      "output": 2883,
+      "input": 120371,
+      "output": 46604,
       "reasoning": 0,
-      "cache_read": 17506,
+      "cache_read": 2936064,
       "cache_write": 0,
-      "total": 29589
+      "total": 3103039
     },
-    "peticiones": 3,
+    "peticiones": 30,
     "error": null,
-    "herramientas": {
-      "bash": 1,
-      "write": 1
-    },
-    "sesion": "ses_e09ff7c27ffeg1zXDvLBX9Fu82",
-    "ficheros": [
-      "tests-que-fallan-peores-que-no-tener-tests.md"
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
     ],
-    "validacion": null,
-    "juicio": {
-      "nota": 8,
-      "veredicto": "bueno, pero se desvía",
-      "resumen": "1426 palabras con buenos argumentos (habituación, fatiga de alarmas, «500 tests con 30 en rojo son 470 con un 100 % de desconfianza», el test que se vuelve «guardián del error») y un ejemplo de skip en pytest. Pero trata sobre todo de tests que fallan siempre o se ignoran, no de los que fallan «a veces», y tiene más slop de formato: 20 negritas, listas con etiqueta y «Conclusión».",
-      "rarezas": [
-        "El más largo de todos (1426 palabras) y el que más se aleja del tema pedido: los tests intermitentes ocupan una sección de nueve.",
-        "Usa variante americana en un texto por lo demás neutro: «costo», «monitoreo», «la falla».",
-        "3 peticiones y 2,9 k tokens de salida."
-      ],
-      "nota_previa": 7,
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 0,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 1,
-        "extensión": 1
-      }
+    "herramientas": {
+      "shell": 43,
+      "write": 3,
+      "edit": 2
     },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+    "compactaciones": 0,
+    "sesion": "ses_df5d1c7e4ffexbB3n7lautsoj4",
+    "coste_usd": 0,
+    "ficheros": [
+      "README_AUDITORIA.md",
+      "SECURITY_AUDIT.md",
+      "flags_encontrados.csv",
+      "hallazgos.json"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 393216,
+      "output_proveedor": 393216,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_glm-5.3/A3D",
@@ -4635,70 +3832,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_glm-5.3/PTS",
-    "codigo": "PTS",
-    "modelo": "ollama/glm-5.3",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T16:08:33Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 3152,
-      "output": 2606,
-      "reasoning": 0,
-      "cache_read": 10240,
-      "cache_write": 0,
-      "total": 15998
-    },
-    "peticiones": 2,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e064881d7ffeH1Rderb5HbNGiN",
-    "coste_usd": 0,
-    "ficheros": [
-      "tests-flaky-peores-que-no-tener-tests.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 1048576,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "validacion": {
-      "slop": "1296 palabras · 8 títulos · 18 líneas de lista · frase media 16.4 · slop 18.0 (1.39/100 palabras)\n  9-no-solo-sino           1  «no solo X, sino Y»: es \n  15-negritas             20  negritas: **un test no determinista es, en la práctica, peor que no tener test alguno**, **los tests existen para darnos confianza a la hora de cambiar el código**, **aprender a ignorar las alarmas**, **el pipeline ha dejado de ser una señal y se ha convertido en una ruleta**, **Tiempo de re-ejecución.**, **Tiempo de investigación.**\n  16-lista-con-titulo      9  listas con etiqueta en negrita y dos puntos: \n- **Tiempo de re-ejecución.**, - **Tiempo de investigación.**, - **Coste de cómputo.**, - **Paralización del flujo.**, \n- **Dependencia del tiempo.**, - **Estado compartido entre tests.**\n  realidad-compleja        1  frases hechas de giro («la realidad es más compleja»): spoiler\n  titulo-conclusión        1  sección «Conclusión»: Conclusión",
-      "extra": [
-        "✔ un post en Markdown, en español, de 1296 palabras",
-        "~ 1,39 marcas de slop por cada 100 palabras: 20 negritas, 9 listas con etiqueta, sección «Conclusión»",
-        "✔ código antes y después (sleep(2000) frente a esperar la condición) y números (suite de 20 min, 90 % en verde)",
-        "✖ errores: «cuarenta» por «cuarentena» (dos veces), «Pensa», el «guardia de seguridad» que grita «¡lobo!», y `flake8-ignore-comments` como forma de silenciar tests"
-      ]
-    },
-    "juicio": {
-      "nota": 8,
-      "veredicto": "buen argumento, descuidado",
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 0,
-        "slop": 1,
-        "extensión": 1
-      },
-      "resumen": "Defiende bien la tesis: sin tests el equipo sabe que no tiene red y va con cuidado; con tests intermitentes aprende a pulsar retry y el fallo real se cuela, además de inflar la cobertura. Trae código del sleep frente a esperar la condición, causas y qué hacer, pero con erratas («cuarenta» por «cuarentena», «Pensa»), un pastor convertido en guardia y un flake8-ignore-comments que no sirve para silenciar tests.",
-      "rarezas": [
-        "2 peticiones y 15.998 tokens: escribió el post de una vez y terminó."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/ollama_glm-5.3-flash/A3D",
     "codigo": "A3D",
     "modelo": "ollama/glm-5.3-flash",
@@ -4986,92 +4119,86 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_glm-5.3-flash/PTS",
-    "codigo": "PTS",
+    "dir": "resultados/ollama_glm-5.3-flash/SEC",
+    "codigo": "SEC",
     "modelo": "ollama/glm-5.3-flash",
     "agente": "OpenCode",
-    "fecha": "2026-11-19T22:48:31Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "fecha": "2026-11-23T20:51:14Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
     "tokens": {
-      "input": 10115,
-      "output": 2551,
+      "input": 120180,
+      "output": 20234,
       "reasoning": 0,
-      "cache_read": 16960,
+      "cache_read": 1017600,
       "cache_write": 0,
-      "total": 29626
+      "total": 1158014
     },
-    "peticiones": 3,
+    "peticiones": 18,
     "error": null,
-    "herramientas": {
-      "write": 1,
-      "edit": 2
-    },
-    "sesion": "ses_e0a00ae97ffebRDgH6L7bphgF4",
-    "ficheros": [
-      "tests-flaky-son-peores-que-no-tener-tests.md"
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
     ],
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 981,
-        "titulos": 7,
-        "lineas_lista": 12,
-        "bloques_codigo": 1,
-        "frase_media": 17.9,
-        "marcas": {
-          "15-negritas": {
-            "que": "negritas",
-            "n": 15,
-            "ejemplos": [
-              "**de verdad**",
-              "**Tiempo de ingeniería.**",
-              "**Latencia de entrega.**",
-              "**Cuellos de botella en release.**",
-              "**Falsa calibración mental.**",
-              "**Tiempo y concurrencia:**"
-            ]
-          },
-          "16-lista-con-titulo": {
-            "que": "listas con etiqueta en negrita y dos puntos",
-            "n": 4,
-            "ejemplos": [
-              "\n- **Tiempo y concurrencia:**",
-              "- **Estado compartido:**",
-              "- **El mundo exterior:**",
-              "- **Dependencia del entorno:**"
-            ]
-          }
-        },
-        "puntos": 7.8,
-        "densidad_100": 0.79
+    "herramientas": {
+      "read": 101,
+      "glob": 2,
+      "grep": 2,
+      "shell": 3,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df5d2a05dffedZeyuThPj62yxd",
+    "coste_usd": 0,
+    "ficheros": [
+      "informe-auditoria-seguridad-quokka-bazaar.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/glm-5.3-flash",
+      "nota": 4,
+      "rubrica": {
+        "f3": 3,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
       },
-      "extra": [
-        "981 palabras · slop 7.8 (0.79/100 pal.)"
+      "veredicto": "Ve casi todo, localiza mal",
+      "resumen": "Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero la nota cuenta 18 (F3 45,3): seis aciertos no dan línea (valen medio) y siete citan rangos de más de 20 líneas. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.",
+      "cifras": {
+        "tp_estricto": 18.0,
+        "con_linea_tp": 15,
+        "sin_linea_tp": 6,
+        "fp_estricto": 19,
+        "fn_estricto": 22.0,
+        "f3": 45.3,
+        "wf3": 46.9,
+        "precision": 0.486,
+        "recall": 0.45,
+        "juez": {
+          "tp": 35,
+          "fp_inventados": 1,
+          "extra_reales": 9,
+          "f3": 88.4
+        }
+      },
+      "rarezas": [
+        "Dice que es «una app tipo CTF» con vulnerabilidades plantadas por las flags QKB{…}; no nombra el proyecto original.",
+        "No sale a internet: solo usa read, glob, grep y tres comandos de shell locales (grep en package-lock, cat de .dockerignore, un script de Python sobre package-lock). El CVE de Next lo cita de memoria; los curl solo aparecen en las PoC del informe.",
+        "Lee 101 ficheros uno a uno sin subagentes y termina en 2 min 17 s, sin errores ni compactaciones.",
+        "Da CWE en los 20 hallazgos críticos y altos y en ninguno de los medios y bajos; seis aciertos sin línea y siete rangos de más de 20 líneas (19-67, 51-101, 45-67, 8-75, 103-134, 35-218) le cuestan ocho entradas estrictas.",
+        "No toca el código: solo crea informe-auditoria-seguridad-quokka-bazaar.md."
       ]
     },
-    "juicio": {
-      "nota": 9,
-      "veredicto": "el mejor post",
-      "resumen": "981 palabras con la tesis bien defendida (sin tests sabes que no hay red; con tests que mienten crees que la hay), costes con números (un test que falla 1 de cada 50 con 100 ejecuciones al día interrumpe a diario), un ejemplo en Go, las causas típicas y cinco pasos. El menos slop de todos. Falla en el ejemplo: dice que pasa el 99 % y casi siempre fallará.",
-      "rarezas": [
-        "Único post con código: un test en Go con una goroutine sin sincronizar.",
-        "Se equivoca justo en el ejemplo: sin sincronizar, la goroutine casi nunca termina antes de repo.Get, así que el test fallará casi siempre, no pasará «el 99 % de las veces».",
-        "«El efecto del lobo cibernético» como título de sección: traducción rara de «gritar que viene el lobo».",
-        "3 peticiones y 2,6 k tokens de salida."
-      ],
-      "nota_previa": 8,
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 0,
-        "slop": 2,
-        "extensión": 1
-      }
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_inkling-2-small/A3D",
@@ -5342,33 +4469,35 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_inkling-2-small/PTS",
-    "codigo": "PTS",
+    "dir": "resultados/ollama_inkling-2-small/SEC",
+    "codigo": "SEC",
     "modelo": "ollama/inkling-2-small",
     "agente": "OpenCode",
-    "fecha": "2026-11-20T01:47:55Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
+    "fecha": "2026-11-23T20:52:12Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
     "tokens": {
-      "input": 11361,
-      "output": 2165,
+      "input": 260998,
+      "output": 16453,
       "reasoning": 0,
-      "cache_read": 17152,
+      "cache_read": 574976,
       "cache_write": 0,
-      "total": 30678
+      "total": 852427
     },
-    "peticiones": 3,
+    "peticiones": 16,
     "error": null,
     "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
     ],
     "herramientas": {
-      "bash": 1,
+      "shell": 13,
+      "read": 5,
       "write": 1
     },
     "compactaciones": 0,
-    "sesion": "ses_e095c72faffe2UQ3wTc9aZV0W3",
+    "sesion": "ses_df5d1bf44ffeRJvDFFQ7wPh97C",
+    "coste_usd": 0,
     "ficheros": [
-      "tests-que-fallan-peor-que-no-tener-tests.md"
+      "SECURITY_AUDIT.md"
     ],
     "limites": {
       "context": 1048576,
@@ -5377,80 +4506,49 @@
       "fuente": "ollama /api/show + error de max_tokens"
     },
     "veces_decide_tu": 0,
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 1045,
-        "titulos": 17,
-        "lineas_lista": 19,
-        "bloques_codigo": 0,
-        "frase_media": 14.1,
-        "marcas": {
-          "13-raya": {
-            "que": "rayas (—)",
-            "n": 2,
-            "ejemplos": [
-              "—",
-              "—"
-            ]
-          },
-          "15-negritas": {
-            "que": "negritas",
-            "n": 7,
-            "ejemplos": [
-              "**es**",
-              "**Fatiga de alertas.**",
-              "**Coste cognitivo constante.**",
-              "**Falsa sensación de seguridad.**",
-              "**Erosionan la cultura de calidad.**",
-              "**Contaminan la señal del CI.**"
-            ]
-          },
-          "16-lista-con-titulo": {
-            "que": "listas con etiqueta en negrita y dos puntos",
-            "n": 5,
-            "ejemplos": [
-              "\n- **Fatiga de alertas.**",
-              "- **Coste cognitivo constante.**",
-              "- **Falsa sensación de seguridad.**",
-              "- **Erosionan la cultura de calidad.**",
-              "- **Contaminan la señal del CI.**"
-            ]
-          },
-          "titulo-conclusión": {
-            "que": "sección «Conclusión»",
-            "n": 1,
-            "ejemplos": [
-              "Reflexión final"
-            ]
-          }
-        },
-        "puntos": 9.8,
-        "densidad_100": 0.93
-      },
-      "extra": [
-        "1045 palabras · slop 9.8 (0.93/100 pal.)"
-      ]
-    },
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
     "juicio": {
-      "nota": 8,
-      "veredicto": "limpio y útil, se abre de tema",
+      "codigo": "SEC",
+      "modelo": "ollama/inkling-2-small",
+      "nota": 3,
       "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 0,
-        "ejemplos concretos": 1,
-        "sin errores ni inventos": 1,
-        "slop": 2,
-        "extensión": 1
+        "f3": 3,
+        "criticas": 0,
+        "linea": 0,
+        "cwe": 0
       },
-      "resumen": "1045 palabras con la tesis bien defendida (fatiga de alertas, el rojo que deja de bloquear, «saltar con una red que no sabes si está atada»), un caso concreto de flujo de CI y un plan de salida útil (presupuesto de flakiness, cuarentena con dueño, orden aleatorio, reloj inyectado). Poco slop. Pero reparte el post entre cuatro tipos de test que falla y los intermitentes son solo uno.",
+      "veredicto": "Ve mucho, no localiza",
+      "resumen": "Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: la nota cuenta 2 aciertos enteros y 28 a medio punto (F3 40,1). Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.",
+      "cifras": {
+        "tp_estricto": 16.0,
+        "con_linea_tp": 2,
+        "sin_linea_tp": 28,
+        "fp_estricto": 23,
+        "fn_estricto": 24.0,
+        "f3": 40.1,
+        "wf3": 40.0,
+        "precision": 0.41,
+        "recall": 0.4,
+        "juez": {
+          "tp": 32,
+          "fp_inventados": 6,
+          "extra_reales": 15,
+          "f3": 80.4
+        }
+      },
       "rarezas": [
-        "3 peticiones y 2,2 k tokens de salida."
+        "Ejecuta npm audit y lo consigue: sale al registro de npm pese a correr sin web (webfetch y websearch estaban denegados, el shell no).",
+        "Vuelca todas las rutas API a /tmp/opencode/api-routes.txt, fuera de la carpeta de trabajo, para leerlas por trozos.",
+        "No nombra el proyecto original; ve las flags QKB{…} y avisa de que no reproduce sus valores.",
+        "La tabla del resumen dice 8 medios y 6 bajos; el informe trae 10 y 15. Dos de los bajos son controles que están bien (B-12, B-15).",
+        "XXE y open redirect solo aparecen en las cadenas de ataque, sin hallazgo propio; la SQLi de admin/reviews solo en el resumen y en las prioridades.",
+        "Casi no da líneas (3 de 46 hallazgos) ni ningún CWE.",
+        "No toca el código: solo crea SECURITY_AUDIT.md. 16 peticiones, 2 min 9 s."
       ]
     },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_kimi-k3.1-pro/A3D",
@@ -5714,118 +4812,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_kimi-k3.1-pro/PTS",
-    "codigo": "PTS",
-    "modelo": "ollama/kimi-k3.1-pro",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T02:10:14Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 9470,
-      "output": 3504,
-      "reasoning": 0,
-      "cache_read": 29361,
-      "cache_write": 0,
-      "total": 42335
-    },
-    "peticiones": 4,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 2,
-      "glob": 1,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e0948044cffe5zu5tZsldM5i5k",
-    "ficheros": [
-      "tests-intermitentes-peores-que-no-tener-tests.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 1048576,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 1409,
-        "titulos": 12,
-        "lineas_lista": 17,
-        "bloques_codigo": 0,
-        "frase_media": 16.7,
-        "marcas": {
-          "7-vocabulario": {
-            "que": "vocabulario de IA",
-            "n": 1,
-            "ejemplos": [
-              "esencial"
-            ]
-          },
-          "15-negritas": {
-            "que": "negritas",
-            "n": 11,
-            "ejemplos": [
-              "**Tiempo real y esperas arbitrarias:**",
-              "**Concurrencia:**",
-              "**Estado residual:**",
-              "**Dependencias externas:**",
-              "**Orden y paralelismo:**",
-              "**Datos ambiguos:**"
-            ]
-          },
-          "16-lista-con-titulo": {
-            "que": "listas con etiqueta en negrita y dos puntos",
-            "n": 6,
-            "ejemplos": [
-              "\n- **Tiempo real y esperas arbitrarias:**",
-              "- **Concurrencia:**",
-              "- **Estado residual:**",
-              "- **Dependencias externas:**",
-              "- **Orden y paralelismo:**",
-              "- **Datos ambiguos:**"
-            ]
-          },
-          "25-cierre-genérico": {
-            "que": "cierres genéricos",
-            "n": 1,
-            "ejemplos": [
-              "la próxima vez que"
-            ]
-          }
-        },
-        "puntos": 10.8,
-        "densidad_100": 0.76
-      },
-      "extra": [
-        "1409 palabras · slop 10.8 (0.76/100 pal.)"
-      ]
-    },
-    "juicio": {
-      "nota": 10,
-      "veredicto": "el mejor post",
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 2,
-        "extensión": 1
-      },
-      "resumen": "1409 palabras sin salirse de los tests intermitentes, con la tesis defendida desde el principio («una habitación a oscuras» frente a «una alarma que suena al azar»), cuatro costes con mecanismo (oculta regresiones, entrena a ignorar el rojo, agranda los cambios, gasta atención), la cuenta bien hecha (200 tests al 99 % → 87 % de ejecuciones con algún fallo) y un plan práctico. El menos slop de todos.",
-      "rarezas": [
-        "4 peticiones y 3,5 k tokens de salida."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   },
   {
     "dir": "resultados/ollama_minimax-m3/A3D",
@@ -6317,118 +5303,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_minimax-m3/PTS",
-    "codigo": "PTS",
-    "modelo": "ollama/minimax-m3",
-    "agente": "OpenCode",
-    "fecha": "2026-11-19T23:44:09Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 15243,
-      "output": 10953,
-      "reasoning": 0,
-      "cache_read": 77696,
-      "cache_write": 0,
-      "total": 103892
-    },
-    "peticiones": 6,
-    "error": null,
-    "herramientas": {
-      "bash": 3,
-      "write": 2,
-      "read": 1
-    },
-    "sesion": "ses_e09cdbf7effeBn11ZrJxRQ2Tl9",
-    "ficheros": [
-      "tests-que-fallan.md"
-    ],
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 2800,
-        "titulos": 19,
-        "lineas_lista": 26,
-        "bloques_codigo": 6,
-        "frase_media": 21.7,
-        "marcas": {
-          "13-raya": {
-            "que": "rayas (—)",
-            "n": 8,
-            "ejemplos": [
-              "—",
-              "—",
-              "—",
-              "—",
-              "—",
-              "—"
-            ]
-          },
-          "15-negritas": {
-            "que": "negritas",
-            "n": 43,
-            "ejemplos": [
-              "**ya no puedes fiarte de él**",
-              "**en ciertas circunstancias, una suite de tests que falla de forma crónica es peor que no tener tests**",
-              "**no se trata de que el test sea rojo, se trata de que el equipo haya aprendido a ignorar el rojo**",
-              "**el test depende de algo que el test no controla**",
-              "**consume la atención del equipo cuando se rompe el código de verdad**",
-              "**La fiabilidad de la suite es (aproximadamente) el producto de la fiabilidad de sus tests.**"
-            ]
-          },
-          "16-lista-con-titulo": {
-            "que": "listas con etiqueta en negrita y dos puntos",
-            "n": 4,
-            "ejemplos": [
-              "\n- **Nivel 0 — Smoke (bloqueante, < 5 min).**",
-              "- **Nivel 1 — Rápidos (bloqueante, < 15 min).**",
-              "- **Nivel 2 — Integración / E2E (informativo, no bloqueante).**",
-              "- **Caducidad obligatoria**:"
-            ]
-          },
-          "18-emojis": {
-            "que": "emojis decorativos",
-            "n": 4,
-            "ejemplos": [
-              "❌",
-              "✅",
-              "❌",
-              "✅"
-            ]
-          }
-        },
-        "puntos": 26.8,
-        "densidad_100": 0.96
-      },
-      "extra": [
-        "2800 palabras · slop 26.8 (0.96/100 pal.)"
-      ]
-    },
-    "juicio": {
-      "nota": 8,
-      "veredicto": "un ensayo, no un post",
-      "resumen": "2800 palabras con lo que no tiene ningún otro: la cuenta de por qué la suite casi nunca sale verde (0,95^1000), tablas de coste, código TypeScript con el antes y el después, niveles de suite y caducidad de la cuarentena. Pero es tres veces más largo que un post, tiene errores dentro de sus propios ejemplos y 43 negritas, 8 rayas y emojis.",
-      "rarezas": [
-        "Volvió a buscar en su texto palabras en inglés («the», «would», «phenomenon», «shapedando») para limpiarlas, como en A3D.",
-        "Añadió frontmatter YAML de blog (title, date, tags, excerpt) sin que nadie se lo pidiera.",
-        "El primer ejemplo de «test que depende del reloj real» es justo el arreglo: usa clock.setSystemTime.",
-        "Define «flake rate» como ejecuciones en rojo entre ejecuciones totales, que es la tasa de fallo, no la de intermitencia.",
-        "6 peticiones y 11 k tokens de salida."
-      ],
-      "nota_previa": 7,
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 0,
-        "slop": 2,
-        "extensión": 0
-      }
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/ollama_minimax-m3.1-flash/A3D",
     "codigo": "A3D",
     "modelo": "ollama/minimax-m3.1-flash",
@@ -6811,127 +5685,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_minimax-m3.1-flash/PTS",
-    "codigo": "PTS",
-    "modelo": "ollama/minimax-m3.1-flash",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T03:08:32Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 29768,
-      "output": 10849,
-      "reasoning": 0,
-      "cache_read": 291200,
-      "cache_write": 0,
-      "total": 331817
-    },
-    "peticiones": 15,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "bash": 12,
-      "write": 1,
-      "edit": 25
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e0912a099ffeJccXfcoMj2MLZi",
-    "ficheros": [
-      "post-tests-que-fallan.md"
-    ],
-    "limites": {
-      "context": 1000000,
-      "output": 500000,
-      "output_proveedor": 524288,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 3011,
-        "titulos": 23,
-        "lineas_lista": 25,
-        "bloques_codigo": 7,
-        "frase_media": 19.8,
-        "marcas": {
-          "7-vocabulario": {
-            "que": "vocabulario de IA",
-            "n": 3,
-            "ejemplos": [
-              "Robusto",
-              "Robusto",
-              "fundamental"
-            ]
-          },
-          "13-raya": {
-            "que": "rayas (—)",
-            "n": 11,
-            "ejemplos": [
-              "—",
-              "—",
-              "—",
-              "—",
-              "—",
-              "—"
-            ]
-          },
-          "15-negritas": {
-            "que": "negritas",
-            "n": 66,
-            "ejemplos": [
-              "**un**",
-              "**arreglar**",
-              "**una suite roja crónica que todo el mundo aprende a ignorar**",
-              "**Test rojo en CI**",
-              "**Test rojo conocido y documentado**",
-              "**Test rojo deliberado**"
-            ]
-          },
-          "16-lista-con-titulo": {
-            "que": "listas con etiqueta en negrita y dos puntos",
-            "n": 10,
-            "ejemplos": [
-              "\n- **El PR queda en rojo.**",
-              "- **El pipeline falla.**",
-              "- **El binario no se publica.**",
-              "\n- **Sin `sleep`**",
-              "- **Sin tests que dependan del orden de ejecución.**",
-              "- **Sin `skip` silenciosos.**"
-            ]
-          }
-        },
-        "puntos": 40.5,
-        "densidad_100": 1.35
-      },
-      "extra": [
-        "3011 palabras · slop 40.5 (1.35/100 pal.)"
-      ]
-    },
-    "juicio": {
-      "nota": 7,
-      "veredicto": "un manual, no un post",
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 0,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 1,
-        "extensión": 0
-      },
-      "resumen": "3011 palabras con muy buen código (test que se «arregla» afirmando lo contrario, reloj congelado, espera activa en lugar de sleep, xfail con strict=True) y un plan por fases para salir de una suite roja. Pero cambia el tema: el título quita el «a veces», casi todo va de tests en rojo permanente y los intermitentes ocupan una sección. Tres veces más largo que un post, 66 negritas y palabras rotas.",
-      "rarezas": [
-        "Se le cuelan palabras de otro idioma, como a MiniMax M3 en su A3D y su PTS: «todos|scale-targeted», «discoverirse».",
-        "27 ediciones sobre el borrador y 15 peticiones para un post.",
-        "Frontmatter YAML de blog que nadie pidió."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/ollama_mistral-large-4/A3D",
     "codigo": "A3D",
     "modelo": "ollama/mistral-large-4",
@@ -7218,84 +5971,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_mistral-large-4/PTS",
-    "codigo": "PTS",
-    "modelo": "ollama/mistral-large-4",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T18:07:28Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 17200,
-      "output": 8453,
-      "reasoning": 0,
-      "cache_read": 121856,
-      "cache_write": 0,
-      "total": 147509
-    },
-    "peticiones": 14,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-      "Decide tú.",
-      "Decide tú.",
-      "Decide tú.",
-      "Decide tú.",
-      "Decide tú."
-    ],
-    "herramientas": {
-      "write": 5,
-      "edit": 4,
-      "shell": 1,
-      "grep": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e05dba181ffe6R4A8R0Xj9mv5c",
-    "coste_usd": 0,
-    "ficheros": [
-      "guion-video-corto-tests-que-fallan.md",
-      "hilo-redes-sociales-tests-que-fallan.md",
-      "newsletter-tests-que-fallan.md",
-      "por-que-los-tests-que-fallan-son-peores-que-no-tener-tests.md",
-      "why-failing-tests-are-worse-than-no-tests.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 262144,
-      "output_proveedor": 262144,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 5,
-    "validacion": {
-      "slop": "889 palabras · 9 títulos · 7 líneas de lista · frase media 16.6 · slop 10.2 (1.15/100 palabras)\n  7-vocabulario            2  vocabulario de IA: fundamental, clave\n  13-raya                  2  rayas (—): —, —\n  15-negritas             13  negritas: **Fecha:**, **Categoría:**, **un test que falla de forma intermitente puede hacer más daño que no tener ningún test**, **Los tests inestables crean un velo de ruido bajo el cual los bugs reales se esconden.**, **determinista**, **determinidad**\n  20-chatbot               1  frases de chatbot: Cuéntame en los comentarios\n  titulo-conclusión        1  sección «Conclusión»: Conclusión",
-      "extra": [
-        "✔ un post en Markdown, en español, de 889 palabras (más otros cuatro ficheros, ver rarezas)",
-        "~ 1,15 marcas de slop por cada 100 palabras: 13 negritas, «Conclusión», «Cuéntame en los comentarios»",
-        "~ un caso (el fallo real en el cálculo de precios que queda camuflado), sin código ni cifras",
-        "✖ errores de lengua: «suites de tests rotas diente tras diente», «no Gana confianza», «determinidad»"
-      ]
-    },
-    "juicio": {
-      "nota": 7,
-      "veredicto": "correcto, sin ejemplos, con extras",
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 1,
-        "ejemplos concretos": 1,
-        "sin errores ni inventos": 0,
-        "slop": 1,
-        "extensión": 1
-      },
-      "resumen": "Defiende la tesis con su mecanismo: el equipo aprende a ignorar la alarma, pierde tiempo con fantasmas y deja de confiar, y el fallo real se camufla entre los falsos; termina con qué hacer. Pero no trae ni código ni cifras, tiene fallos de lengua («diente tras diente», «determinidad») y, a fuerza de «Decide tú.», acabó entregando también una versión en inglés, una newsletter, un hilo y un guion de vídeo.",
-      "rarezas": [
-        "Terminaba cada entrega preguntando «¿lo dejamos aquí o quieres algo más?»; el lanzador contestó «Decide tú.» cinco veces (el máximo) y cada vez añadió otro formato: versión en inglés, hilo para redes, newsletter y guion de vídeo corto. 3068 palabras en cinco ficheros para un post.",
-        "En su revisión final encontró y quitó «una palabra en coreano accidental» del guion.",
-        "14 peticiones y 148 000 tokens."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
-  },
-  {
     "dir": "resultados/ollama_muse-spark-open/A3D",
     "codigo": "A3D",
     "modelo": "ollama/muse-spark-open",
@@ -7563,96 +6238,5 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_muse-spark-open/PTS",
-    "codigo": "PTS",
-    "modelo": "ollama/muse-spark-open",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T03:28:06Z",
-    "prompt_enviado": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 6333,
-      "output": 1193,
-      "reasoning": 0,
-      "cache_read": 18816,
-      "cache_write": 0,
-      "total": 26342
-    },
-    "peticiones": 3,
-    "error": null,
-    "mensajes_usuario": [
-      "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests. Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 1,
-      "bash": 1,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e0900b72affep2LE2BleWM8J97",
-    "ficheros": [
-      "blog-tests-que-fallan.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 1048576,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "slop": {
-        "palabras": 444,
-        "titulos": 9,
-        "lineas_lista": 7,
-        "bloques_codigo": 1,
-        "frase_media": 15.6,
-        "marcas": {
-          "15-negritas": {
-            "que": "negritas",
-            "n": 4,
-            "ejemplos": [
-              "**Tolerancia cero al rojo en main.**",
-              "**Borrar es mejor que silenciar.**",
-              "**Tests deterministas o nada.**",
-              "**Cuarentena con fecha de caducidad.**"
-            ]
-          },
-          "titulo-conclusión": {
-            "que": "sección «Conclusión»",
-            "n": 1,
-            "ejemplos": [
-              "Conclusión"
-            ]
-          }
-        },
-        "puntos": 2.0,
-        "densidad_100": 0.45
-      },
-      "extra": [
-        "444 palabras · slop 2.0 (0.45/100 pal.)"
-      ]
-    },
-    "juicio": {
-      "nota": 8,
-      "veredicto": "limpio y corto, se va al rojo fijo",
-      "rubrica": {
-        "hay post": 1,
-        "tesis con mecanismo": 2,
-        "se ciñe al tema": 0,
-        "ejemplos concretos": 2,
-        "sin errores ni inventos": 1,
-        "slop": 2,
-        "extensión": 0
-      },
-      "resumen": "444 palabras directas y con muy poco slop (0,45 por cada 100 palabras): la tesis en dos frases (sin tests sabes que estás desprotegido; con tests rojos que ignoras crees que estás cubierto), dos imágenes que funcionan (la alarma del coche, quitar la pila al detector de humo), la salida de `npm test` con «3 failed» y cuatro reglas. Pero arranca con tests que «fallan constantemente» y apenas toca los que fallan a veces, y es corto para un post.",
-      "rarezas": [
-        "3 peticiones y 1,2 k tokens de salida: el post más barato del benchmark."
-      ]
-    },
-    "prompt": "Escribe un post para un blog de programación sobre por qué los tests que fallan a veces son peores que no tener tests."
   }
 ]

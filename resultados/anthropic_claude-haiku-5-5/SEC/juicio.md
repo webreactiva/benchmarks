@@ -4,18 +4,18 @@
 
 ## Validación
 
-Cruce a mano de los 45 hallazgos de `salida/auditoria-seguridad.md` con el ground truth (`juez/hallazgos.json`; cifras en `juez/puntuacion.json`). Cada hallazgo sin entrada se comprobó en el código de la copia.
-
-| | Estricto (nota) | Juez |
+<!-- cifras -->
+| | Nota (estricto) | Juez |
 |---|---:|---:|
-| Entradas cubiertas (de 40) | 25 | 35 |
-| F3 | 61,3 | 87,7 |
-| wF3 | 60,5 | |
-| Falsos positivos | 23 (incluye 13 fallos reales sin etiquetar) | 4 |
+| Entradas cubiertas (de 40) | 27 (25 con línea, 4 sin línea a medio punto) | 35 |
+| F3 | 66,3 | 87,7 |
+| wF3 | 65,6 | |
+| Falsos positivos | 20 (incluye 13 fallos reales sin etiquetar) | 4 inventados |
 
-La regla estricta exige línea (no cuentan `.env.local`, la API de flags por slug, el logout ni el token de soporte, que cita sin línea) y rangos de hasta 20 líneas (no cuenta su C3, 58-80).
+Rúbrica: F3 5/7, críticas 1 (5 de 6), fichero y línea 0 (84 % de los hallazgos), CWE 0 (0 %). **Nota: 6/10.**
+<!-- /cifras -->
 
-Rúbrica: F3 5/7, críticas 1 (4 de 6 con línea; falla el oráculo de padding y `.env.local` va sin línea), fichero y línea 0 (84 %), CWE 0 (ninguno).
+Cruce a mano de los 45 hallazgos de `salida/auditoria-seguridad.md` con el ground truth (`juez/hallazgos.json`; cifras en `juez/puntuacion.json`). Cada hallazgo sin entrada se comprobó en el código de la copia.
 
 ## Lo que está bien
 

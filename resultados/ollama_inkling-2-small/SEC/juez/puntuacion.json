@@ -1,13 +1,15 @@
 {
   "hallazgos": 46,
-  "tp_estricto": 2,
-  "fp_estricto": 44,
-  "fn_estricto": 38,
+  "tp_estricto": 16.0,
+  "con_linea_tp": 2,
+  "sin_linea_tp": 28,
+  "fp_estricto": 23,
+  "fn_estricto": 24.0,
   "no_puntuables": 0,
-  "f3": 4.9,
-  "wf3": 5.7,
-  "recall": 0.05,
-  "precision": 0.043,
+  "f3": 40.1,
+  "wf3": 40.0,
+  "recall": 0.4,
+  "precision": 0.41,
   "juez": {
     "tp": 32,
     "fp_inventados": 6,
@@ -17,6 +19,8 @@
   "con_linea": 0.07,
   "con_cwe": 0.0,
   "criticas_estricto": [
+    "oss-oopssec-store-001",
+    "oss-oopssec-store-002",
     "oss-oopssec-store-040"
   ],
   "no_encontradas": [
@@ -30,10 +34,10 @@
     "oss-oopssec-store-042"
   ],
   "rubrica": {
-    "f3": 0,
+    "f3": 3,
     "criticas": 0,
     "linea": 0,
     "cwe": 0
   },
-  "nota": 0
+  "nota": 3
 }

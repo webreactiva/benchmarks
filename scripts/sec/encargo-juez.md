@@ -12,7 +12,7 @@ Después:
 2. Numera cada hallazgo con el id que use el modelo (o H1, H2…) y crúzalo con la tabla. Comprueba en el código de la copia (`/root/.cache/benchmark-semillas/SEC/semilla/`, mismas líneas que el ground truth) todo lo que no cubra una entrada, para marcarlo `EXTRA` (fallo real) o `FP` (inventado, no se sostiene, mal localizado o no es de seguridad). Si el modelo cita una línea, compruébala: si el fallo no está ahí ni a ±10 líneas, no es estricto.
 3. Escribe `juez/hallazgos.json` y ejecuta `python3 scripts/sec/puntuar.py resultados/<MODELO>/SEC`.
 4. Revisa la sesión (`sesion.json` de OpenCode: herramientas usadas, si intentó salir a internet con curl/git/webfetch, si nombra el proyecto original «OopsSec», «RealVuln», si tocó código —`cambios.txt`—, errores o cortes).
-5. Escribe `juicio.json` (codigo, modelo —el de meta.json—, nota y rubrica de puntuacion.json, veredicto de tres o cuatro palabras, resumen de dos frases, cifras, rarezas) y `juicio.md` con las mismas secciones que el ejemplo. En español, sin muletillas.
+5. Escribe `juicio.json` (codigo, modelo —el de meta.json—, nota y rubrica de puntuacion.json, veredicto de tres o cuatro palabras, resumen de dos frases, cifras, rarezas) y `juicio.md` con las mismas secciones que el ejemplo, sin tabla de cifras propia: al acabar ejecuta `python3 scripts/sec/actualizar-juicio.py resultados/<MODELO>/SEC`, que pone la nota, la rúbrica y el bloque de cifras. En el texto, una ubicación sin línea «vale medio acierto». En español, sin muletillas.
 
 Si el modelo no dejó informe ni hallazgos (sesión cortada, error de la API), no inventes: escribe solo un `juicio.md` que lo diga, con la causa que veas en `pantalla.txt`, `meta.json` y la sesión, y avisa en tu respuesta final.
 

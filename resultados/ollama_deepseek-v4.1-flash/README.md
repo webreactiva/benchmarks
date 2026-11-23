@@ -1,15 +1,15 @@
 # ollama/deepseek-v4.1-flash
 
-Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-19.
+Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-23.
 
-**Nota media: 7,2 / 10** (4 de 4 prompts juzgados). Total: 94 peticiones y 6050,4 k tokens.
+**Nota media: 7,0 / 10** (3 de 4 prompts juzgados). Total: 121 peticiones y 9123,8 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
 | [A3D](A3D/juicio.md) | visual | 33 | 2231,2 k | 6 | la mejor maqueta, el tour falla | La vista general es la mejor de todo el benchmark: colina de la Sabika amurallada, Alcazaba con torres, Palacio de Carlos V con su patio circular, Generalife con la acequia, casas alrededor y Sierra Nevada. Pero al iniciar el recorrido la cámara se mete dentro de la muralla y a los 35 s sigue en la primera de solo 5 paradas. | [▶ alhambra-3d.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_deepseek-v4.1-flash/A3D/salida/alhambra-3d.html) |
 | [AIF](AIF/juicio.md) | visual | 32 | 2646,1 k | 9 | Infinite Craft de verdad | La mecánica más fiel a Infinite Craft de todo el benchmark: lienzo libre donde se suelta una pieza sobre otra, almacén con buscador y una misión (descubrir el Atlas Malandriner). 78 elementos y 90 recetas sacados de webreactiva.com, todos alcanzables, con pistas, sonido y guardado. Pero no es infinito: fuera de las 90 recetas, las mezclas no dan nada. | [▶ index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_deepseek-v4.1-flash/AIF/salida/index.html) |
 | [CCA](CCA/juicio.md) | código | 26 | 1143,5 k | 6 | bonito, escala el código, no el sistema | Una tienda completa y muy cuidada (catálogo, búsqueda, carrito, cupones, envío, IVA, checkout) con un motor de precios por reglas, dinero en céntimos, almacenamiento intercambiable y 23 tests. Pero el carrito vive en localStorage y el servidor solo sirve estáticos: «escalable» lo resuelve como código fácil de ampliar, sin nada que aguante muchos usuarios. | – |
-| [PTS](PTS/juicio.md) | texto | 3 | 29,6 k | 8 | bueno, pero se desvía | 1426 palabras con buenos argumentos (habituación, fatiga de alarmas, «500 tests con 30 en rojo son 470 con un 100 % de desconfianza», el test que se vuelve «guardián del error») y un ejemplo de skip en pytest. Pero trata sobre todo de tests que fallan siempre o se ignoran, no de los que fallan «a veces», y tiene más slop de formato: 20 negritas, listas con etiqueta y «Conclusión». | – |
+| [SEC](SEC/juicio.md) | seguridad | 30 | 3103,0 k | – | sin juzgar |  | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
@@ -35,9 +35,3 @@ Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamient
 - 26 peticiones y 1,14 millones de tokens.
 - El único CCA con interfaz: los demás entregaron librerías o API.
 - Listó la carpeta de sus propias pruebas anteriores (A3D, MWP) buscando contexto; no tocó las de otros modelos. Corrió antes del encierro.
-
-**PTS**
-
-- El más largo de todos (1426 palabras) y el que más se aleja del tema pedido: los tests intermitentes ocupan una sección de nueve.
-- Usa variante americana en un texto por lo demás neutro: «costo», «monitoreo», «la falla».
-- 3 peticiones y 2,9 k tokens de salida.

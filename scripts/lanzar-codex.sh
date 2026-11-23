@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # lanzar-codex.sh <CODIGO> <modelo> [esfuerzo]
-#   lanzar-codex.sh PTS gpt-6.2-sol medium
-#   lanzar-codex.sh PTS gpt-6.2-astra default      # «default»: no se pasa esfuerzo, el del modelo
+#   lanzar-codex.sh CCA gpt-6.2-sol medium
+#   lanzar-codex.sh CCA gpt-6.2-astra default      # «default»: no se pasa esfuerzo, el del modelo
 # Como lanzar-claude.sh, pero con Codex CLI (codex exec, no interactivo): CODEX_HOME y HOME propios (solo se copia
 # auth.json: sin config.toml, skills, AGENTS.md ni memorias de nadie; sin apps ni plugins de la cuenta, que traen MCP), carpeta vacía fuera del repo y un solo mensaje:
 # el prompt tal cual + prompts/_destino.txt. Si acaba con una pregunta sin haber escrito nada, se reanuda la misma

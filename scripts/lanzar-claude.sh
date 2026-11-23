@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # lanzar-claude.sh <CODIGO> <modelo de Claude Code>
-#   lanzar-claude.sh PTS haiku
-#   ESFUERZO=medium lanzar-claude.sh PTS claude-sonnet-5-5   # con --effort; la carpeta es anthropic_<modelo>-<esfuerzo>
+#   lanzar-claude.sh CCA haiku
+#   ESFUERZO=medium lanzar-claude.sh CCA claude-sonnet-5-5   # con --effort; la carpeta es anthropic_<modelo>-<esfuerzo>
 # Como lanzar.sh, pero con Claude Code aislado (claude-aislado.sh, --permission-mode auto): configuración y HOME
 # propios (sin skills, sin CLAUDE.md, sin ajustes de nadie), carpeta vacía fuera del repo y un solo mensaje:
 # el prompt tal cual + prompts/_destino.txt. Guarda lo mismo que lanzar.sh; sesion.jsonl es el registro de Claude Code.

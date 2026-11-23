@@ -1,6 +1,6 @@
 ---
 name: benchmark-modelos
-description: Lanza el benchmark propio de modelos de Web Reactiva () con uno o varios modelos, valida lo que generan y hace de juez. Cinco prompts fijos (A3D, AIF, CCA, PTS, SEC; MWP se retiró), cada uno en una sesión nueva y aislada de OpenCode (modelos de OpenRouter) o de Claude Code (haiku, sonnet, opus), con tokens, validación, nota, veredicto y rarezas. Úsala cuando pidan «pasa el benchmark a X», «prueba este modelo con los prompts», «benchmark con haiku y gemma», «/benchmark-modelos», o quieran comparar modelos con estos prompts.
+description: Lanza el benchmark propio de modelos de Web Reactiva () con uno o varios modelos, valida lo que generan y hace de juez. Cuatro prompts fijos (A3D, AIF, CCA, SEC; MWP y PTS se retiraron), cada uno en una sesión nueva y aislada de OpenCode (modelos de OpenRouter) o de Claude Code (haiku, sonnet, opus), con tokens, validación, nota, veredicto y rarezas. Úsala cuando pidan «pasa el benchmark a X», «prueba este modelo con los prompts», «benchmark con haiku y gemma», «/benchmark-modelos», o quieran comparar modelos con estos prompts.
 ---
 
 # Benchmark de modelos
@@ -21,7 +21,7 @@ Todo vive en este repositorio. Lee su `README.md` antes de empezar: reglas, prom
 
 ```bash
 scripts/benchmark.sh MODELO [MODELO...]              # los cuatro prompts
-scripts/benchmark.sh -p CCA,PTS MODELO               # solo algunos
+scripts/benchmark.sh -p CCA,SEC MODELO               # solo algunos
 ```
 
 - Con `/` va con OpenCode (`lanzar.sh`): `ollama/<id>` es de Ollama Cloud (`OLLAMA_CLOUD_API_KEY`; los ids, en `curl -s https://ollama.com/v1/models -H "Authorization: Bearer $OLLAMA_CLOUD_API_KEY"`) y el resto, de OpenRouter (`OPEN_ROUTER_API_KEY`). Los gratuitos (`:free`) se listan con `curl -s https://openrouter.ai/api/v1/models` filtrando precio 0, y conviene probar antes que responde (algunos dan 429 del proveedor).
@@ -95,7 +95,6 @@ Primero: ¿existe lo que dice que ha hecho? Compara `respuesta.md` con `meta.jso
 |---|---|
 | A3D, AIF | `node scripts/validar.mjs <dir>`: errores de consola y captura. Luego usarlo con Playwright: en A3D, arrancar el tour y capturar a los ~10 s y en una parada intermedia; en AIF, combinar dos pares obvios (HTML + CSS…) y calcular cuántas recetas se pueden alcanzar desde los elementos base (`juez/alcanzables.js` de nemotron sirve de modelo). |
 | CCA | En `/tmp`: instalar, compilar, sus tests y su ejemplo. Después un script del juez con las mismas pruebas para todos: 50 altas concurrentes sobre el mismo carrito, monedas mezcladas, 0,10 × 3, id con `../`, si el objeto devuelto se puede mutar. Ver `CCA/juez/` de los modelos ya hechos. |
-| PTS | `python3 scripts/slop.py <post.md>`: palabras, títulos, marcas de slop y densidad. Guarda el resultado en `validacion.json` (`slop` y `extra`). Léelo entero: tesis, ejemplos, datos, inventos. |
 | SEC | Lee el informe entero y cruza **cada** hallazgo con `scripts/sec/ground-truth.json` en `juez/hallazgos.json` (formato en `scripts/sec/puntuar.py`; ejemplo en `resultados/anthropic_claude-haiku-5-5/SEC/juez/`). Acierto estricto: mismo fichero, línea en el rango ±10 (o sin línea) y clase equivalente a un CWE de `acceptable_cwes`; un hallazgo cubre una entrada por ubicación citada. Lo que no acierta es FP aunque sea real: compruébalo en el código y márcalo `EXTRA` (real) o `FP` (inventado). Las rutas son las de la copia (`~/.cache/benchmark-semillas/SEC/semilla`; mismas líneas que el original). Después `python3 scripts/sec/puntuar.py resultados/<modelo>/SEC` y copia `rubrica` y `nota` al juicio. Mira `cambios.txt` (si tocó código) y si nombra el proyecto original (OopsSec, RealVuln). |
 
 En el contenedor sin GPU, Chromium dibuja WebGL por software (`--use-gl=swiftshader`) a ~1 fps: en A3D, las escenas que avanzan con `dt` limitado (p. ej. `Math.min(dt, 0.05)`) van hasta 15 veces más lentas. Mide los fps antes de decir que «el tour no avanza» y espera a que acabe el vuelo de cámara antes de capturar una parada (ver `google_gemini-4-carbon/A3D/juez/`). En AIF, combina con la mesa limpia y solo las dos fichas: si se amontonan, la detección por «ficha más cercana» puede acertar a otra.

@@ -8,7 +8,7 @@ verlo y para seguir lanzándolo:
   prompts/                                                  los prompts tal cual (y los retirados)
   scripts/                                                  lanzadores, validador, slop, juez, índice
   herramientas/                                             tmux-agente.sh, opencode-aislado.sh, claude-aislado.sh
-  resultados/<modelo>/{A3D,AIF,CCA,PTS}/                    salida, sesión, meta, validación, capturas, juez, juicio
+  resultados/<modelo>/{A3D,AIF,CCA,SEC}/                    salida, sesión, meta, validación, capturas, juez, juicio
   resultados/_descartados/, resultados/_retirados/          lo que no cuenta, con su motivo
   .claude/skills/benchmark-modelos/SKILL.md                 la skill, con las rutas del repositorio público
 

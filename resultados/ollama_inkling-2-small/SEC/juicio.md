@@ -1,24 +1,26 @@
-# SEC · inkling-2-small (Ollama) · 0/10
+# SEC · inkling-2-small (Ollama) · 3/10
 
 **Ve mucho, no localiza**
 
 ## Validación
 
-Cruce a mano de los 46 hallazgos de `salida/SECURITY_AUDIT.md` (44 numerados y dos que solo están en las cadenas de ataque: XXE y open redirect) con el ground truth (`juez/hallazgos.json`; cifras en `juez/puntuacion.json`). Cada hallazgo sin entrada se comprobó en el código de la copia. Las ubicaciones sin línea van con `sin_linea` y no cuentan para la nota.
-
-| | Estricto (nota) | Juez |
+<!-- cifras -->
+| | Nota (estricto) | Juez |
 |---|---:|---:|
-| Entradas cubiertas (de 40) | 2 | 32 |
-| F3 | 4,9 | 80,4 |
-| wF3 | 5,7 | |
-| Falsos positivos | 44 (incluye 15 fallos reales sin etiquetar y 30 aciertos sin línea) | 6 |
+| Entradas cubiertas (de 40) | 16 (2 con línea, 28 sin línea a medio punto) | 32 |
+| F3 | 40,1 | 80,4 |
+| wF3 | 40 | |
+| Falsos positivos | 23 (incluye 15 fallos reales sin etiquetar) | 6 inventados |
 
-Rúbrica: F3 0/7, críticas 0 (1 de 6 con la regla estricta: el secreto JWT), fichero y línea 0 (7 %), CWE 0 (ninguno).
+Rúbrica: F3 3/7, críticas 0 (3 de 6), fichero y línea 0 (7 % de los hallazgos), CWE 0 (0 %). **Nota: 3/10.**
+<!-- /cifras -->
+
+Cruce a mano de los 46 hallazgos de `salida/SECURITY_AUDIT.md` (44 numerados y dos que solo están en las cadenas de ataque: XXE y open redirect) con el ground truth (`juez/hallazgos.json`; cifras en `juez/puntuacion.json`). Cada hallazgo sin entrada se comprobó en el código de la copia. Las ubicaciones sin línea van con `sin_linea` y valen medio acierto.
 
 ## Lo que está bien
 
 - A juicio cubre casi todo lo que se ve leyendo las rutas: alta como ADMIN, secreto JWT, tres SQLi, path traversal en sus dos vectores, support-access con email ajeno, IDOR de pedidos y wishlists, las dos SSRF, XSS de analytics y reseñas, SVG subido, flags públicas, prompt injection directa e indirecta, contraseñas en el log y credenciales fijas.
-- Solo dos aciertos aguantan la regla estricta: `lib/server-auth.ts:12` (secreto JWT) y `ProductDetailClient.tsx` ≈50-60 (XSS de reseñas).
+- Solo dos aciertos dan línea y cuentan enteros: `lib/server-auth.ts:12` (secreto JWT) y `ProductDetailClient.tsx` ≈50-60 (XSS de reseñas).
 - Encuentra fallos reales que RealVuln no etiqueta (middleware sin firma, reset predecible, /internal por cabecera, cupones, tarjetas regalo, CSV injection, sesiones de soporte de un año).
 
 ## Lo que falta o está mal
