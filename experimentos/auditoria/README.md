@@ -30,6 +30,7 @@ Comprobado en una copia: instala, `prisma generate`, `tsc --noEmit` sin errores,
 - Sigue siendo una tienda para capturar flags: página `/flags`, tablero del jugador, comprobador de flags, textos de «Términos» y «Acerca de». El modelo sabrá que tiene fallos a propósito; no sabrá de qué proyecto viene ni tiene las soluciones a mano.
 - Cada ruta vulnerable lleva al lado el código que detecta que la han explotado y devuelve una flag (`prisma.flag.findUnique({ where: { slug: "case-…" } })`). Ya no dice qué fallo es, pero sí **dónde** hay uno. Quitarlo sin mover líneas obliga a editar a mano unas 30 rutas y cambia el comportamiento; queda para una segunda versión si el experimento sigue.
 - Pistas de texto sueltas que el filtro no toca (`isSQLQk1CFAttempt` conserva «SQL», el texto de la interfaz del tablero).
+- Restos que vio Haiku en la primera prueba y que la v2 del preparador debe quitar: comentarios de bloque en los que solo algunas líneas tienen palabras clave («The secure version uses `withAdminAuth`…» en `app/api/live/stream/route.ts`), el «Enjoying the lab?» de `docker-entrypoint.sh`, los correos `@oss.com` de la semilla y las dependencias de Cypress en `package.json`.
 - La contaminación de entrenamiento no se elimina: solo se le quitan al modelo las pistas para reconocerlo. Un A/B con la copia original (prueba A) frente a esta (prueba B) diría cuánto ayudan.
 
 ## Aislamiento
@@ -48,3 +49,9 @@ ESPERA_MAX=5400 SIN_WEB=1 SEMILLA=/tmp/sec-prep/semilla \
 La semilla tiene que estar fuera del alcance del agente (`/tmp` lo tapa el encierro); la carpeta `privado/` con el original, también. Comprueba la semilla contra `preparacion/SHA256SUMS.txt`.
 
 En `resultados/<modelo>/SEC/`, `salida/` guarda solo lo que el modelo creó o cambió, y `cambios.txt` dice qué tocó. El juez rellena `juez/hallazgos.json` y `python3 experimentos/auditoria/puntuar.py <dir>` calcula recall, precisión, F2 y la nota.
+
+## Resultados
+
+| Modelo | Agente | Nota | Entradas (juez / estricto) | Extras reales | FP | F2 | Peticiones | Tokens |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| [claude-haiku-5-5](resultados/anthropic_claude-haiku-5-5/SEC/juicio.md) | Claude Code | **8** | 28/40 · 22/40 | 15 | 1 | 0,74 | 15 | 1,8 M |

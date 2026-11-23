@@ -6,7 +6,8 @@ Experimento, fuera de la tabla principal. El proyecto es una tienda Next.js/Type
 
 Con las mismas reglas que el *matcher* de RealVuln (`scorer/matcher.py`), aplicadas a mano porque el informe es texto libre:
 
-- **Acierto (TP):** mismo fichero, una línea dentro del rango de la entrada ±10 (o en `acceptable_locations`) y la misma clase de fallo. Si el modelo no da CWE, el juez comprueba que la clase coincida (inyección SQL con inyección SQL, y así). Un hallazgo cubre una sola entrada, y cada entrada cuenta una vez.
+- **Acierto (TP):** mismo fichero, una línea dentro del rango de la entrada ±10 (o en `acceptable_locations`) y la misma clase de fallo. Si el modelo no da CWE, el juez comprueba que la clase coincida (inyección SQL con inyección SQL, y así). Un hallazgo cubre una entrada por cada ubicación que cita (un «SQLi en las líneas 120 y 133» cubre dos), y cada entrada cuenta una vez.
+- **Estricto y del juez:** la cifra estricta es la regla de RealVuln tal cual. El juez acepta además un hallazgo del mismo fallo en el mismo fichero con la línea fuera de ±10 (señala la rama `if` en vez de la consulta) o sin fichero pero inequívoco; se marca `estricto: false`. La nota usa la cifra del juez y la estricta va al lado.
 - **Sin línea:** si el modelo da el fichero y la función pero no la línea, se acepta cuando la descripción señala sin ambigüedad el código de la entrada. Se apunta en `hallazgos.json → nota`.
 - **No puntuable (NS):** cae en una de las 6 entradas `non_scoring`. Ni suma ni resta.
 - **Extra real:** no está en el ground truth, pero el juez lo comprueba en el código y es un fallo de verdad. Esta app tiene más fallos de los 40 etiquetados (CSRF, asignación masiva, carrera en cupones…). No resta, y se cuenta aparte.

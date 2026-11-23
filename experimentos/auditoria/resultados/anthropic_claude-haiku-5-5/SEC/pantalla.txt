@@ -1,0 +1,38 @@
+Welcome to Claude Code v2.1.330
+..........................................................
+  - Críticos: 11. Los más graves:
+    - Admin sin credenciales: el middleware no verifica la firma del JWT, y si no hay JWT_SECRET se usa "secret", que es
+      público. Cualquiera puede forjar una sesión ADMIN.
+    - Registro como ADMIN: /api/auth/signup acepta "role": "ADMIN" en el body.
+    - Escalada por soporte: cualquier usuario puede crear un token de soporte de 365 días para admin@oss.com, y el login
+      de soporte no comprueba revoked.
+    - Takeover de cuentas: el token de reset es md5(email + timestamp), y la respuesta de forgot-password devuelve ese
+      timestamp.
+    - Sin autenticación: /api/files lee cualquier fichero (file=../../.env.local, la base de datos SQLite),
+      /api/products/search y /api/tracking tienen SQL injection, y /api/support hace SSRF con reflejo de la respuesta.
+    - SIEM: credenciales fijas root/admin, cookie constante siem_session=authenticated, y contraseñas en texto claro en
+      logs/app.log.
+    - Dependencias: Next.js 15.2.2 tiene CVEs críticos (RCE en React Flight, bypass de middleware). npm audit reporta 53
+      vulnerabilidades en total.
+  - Altos: 12. XSS almacenado vía IP en el panel de analytics, IDOR en pedidos y wishlists, tokens de compartición
+    forjables con la clave por defecto del código, precio de pedido enviado por el cliente, cualquier usuario puede
+    cambiar el stream en directo y leer la clave RTMP, XXE en la importación de pedidos, y .env.local copiado dentro de
+    la imagen Docker (.dockerignore no lo excluye). El contenedor corre como root.
+  - Medios: 12 y bajos: 4, con correcciones por cada uno.
+
+  Prioridad
+
+  1. Inmediato: C-01, C-02, C-03, C-06, C-07, C-08, C-09. Rotar todos los secretos que aparecen en el repositorio.
+  2. Después: C-04, C-05, C-10, y los IDOR y XSS altos.
+  3. Dependencias: actualizar Next.js a 15.5.29 (la versión sugerida por npm) y revisar Prisma y Zod como cambios
+     separados.
+
+  Si quieres, puedo preparar parches para los críticos de autenticación (C-01 a C-05) o verificar alguno de los
+  hallazgos en un entorno aislado.
+
+✻ Churned for 3m 29s · done 8:29 PM
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)
