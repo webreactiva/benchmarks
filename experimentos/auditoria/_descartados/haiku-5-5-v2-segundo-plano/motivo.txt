@@ -1,0 +1,1 @@
+Haiku 5.5 sobre la copia v2 lanzó tres subagentes en segundo plano y cerró su turno esperándolos («Waiting for 3 background agents»). lanzar-claude.sh lo tomó por el final y cerró la sesión a los ~2 min, sin informe. Fallo técnico del lanzador: ahora espera mientras la pantalla muestre tareas en segundo plano (espera_fondo). Se repite.

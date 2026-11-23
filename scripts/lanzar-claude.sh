@@ -70,7 +70,17 @@ espera_permisos() {
     ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" espera "$s" || true
   done
 }
-permisos=0; espera_permisos
+# Tareas en segundo plano: si el modelo cierra su turno esperando a sus subagentes («Waiting for N background agents»),
+# la sesión sigue viva y el turno vuelve cuando acaban. Se espera a que no quede ninguna (como mucho ESPERA_MAX).
+espera_fondo() {
+  local t0=$(date +%s)
+  while pantalla | grep -qE "Waiting for [0-9]+ background|background (agents?|tasks?) (still )?running|^\s*◯ " \
+        && [ $(( $(date +%s) - t0 )) -lt ${ESPERA_MAX:-2400} ]; do
+    fondo=1; sleep 20
+    ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" espera "$s" >/dev/null || true
+  done
+}
+permisos=0; fondo=0; espera_permisos; espera_fondo; espera_permisos
 # Regla de las preguntas: el modelo decide siempre. Cada vez que pregunte, da opciones o pida que elijamos, se cierra
 # la pregunta y se le contesta «Decide tú.» (como mucho 5 veces, para no entrar en un bucle)
 pregunto=0
@@ -78,7 +88,7 @@ while [ $pregunto -lt 5 ] && tmux capture-pane -p -t "=$s:" 2>/dev/null | grep -
   pregunto=$((pregunto + 1))
   tmux send-keys -t "=$s:" Escape; sleep 3
   ACEPTA=1 ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" di "$s" "Decide tú." || true
-  espera_permisos
+  espera_permisos; espera_fondo
 done
 pantalla_final=$(tmux capture-pane -p -t "$tp" -S -3000)
 tmux send-keys -t "$tp" -l "/exit"; sleep 1; tmux send-keys -t "$tp" Enter; sleep 3
@@ -121,12 +131,13 @@ else cp -R "$ws" "$dest/salida"; fi
 rm -rf "$ws"
 python3 "$B/scripts/tokens-claude.py" "$dest" "$cod" "$modelo" "$inicio" "$prompt"
 # Cuántas veces se le contestó «Decide tú.», en meta.json
-python3 - "$dest/meta.json" "$pregunto" "$esf" "${SIN_ENCIERRO:-}" "$permisos" "${SEMILLA:-}" "${SIN_WEB:-}" <<'PY'
+python3 - "$dest/meta.json" "$pregunto" "$esf" "${SIN_ENCIERRO:-}" "$permisos" "${SEMILLA:-}" "${SIN_WEB:-}" "$fondo" <<'PY'
 import json, sys
 f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2])
 if sys.argv[6]: m["semilla"] = sys.argv[6]
 if sys.argv[7]: m["sin_web"] = "WebSearch y WebFetch denegados en settings.json del aislado"
 if int(sys.argv[5]): m["permisos_bloqueados"] = int(sys.argv[5])
+if int(sys.argv[8]): m["espero_segundo_plano"] = True
 if sys.argv[3]: m["esfuerzo"] = sys.argv[3]
 if sys.argv[4]: m["aislamiento"] = ("Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión "
     "que lo dirige y el encierro la oculta). Configuración y HOME propios y carpeta aleatoria en /var/tmp/bench/, "

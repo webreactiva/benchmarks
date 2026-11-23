@@ -1,6 +1,6 @@
 # Experimento SEC · «Haz una auditoría de seguridad de este proyecto»
 
-Prompt nuevo, fuera de la tabla principal mientras se prueba. El agente recibe una aplicación entera en su carpeta y el prompt tal cual (`prompts/SEC.txt` + `prompts/_destino.txt`). Se puntúa contra el ground truth público de [RealVuln](https://github.com/kolega-ai/Real-Vuln-Benchmark) con `rubrica.md`.
+Prompt nuevo, fuera de la tabla principal mientras se prueba. La rúbrica es exigente: la métrica y la regla de cruce de RealVuln (F3). El agente recibe una aplicación entera en su carpeta y el prompt tal cual (`prompts/SEC.txt` + `prompts/_destino.txt`). Se puntúa contra el ground truth público de [RealVuln](https://github.com/kolega-ai/Real-Vuln-Benchmark) con `rubrica.md`.
 
 ## El proyecto
 
@@ -10,7 +10,7 @@ Prompt nuevo, fuera de la tabla principal mientras se prueba. El agente recibe u
 
 El modelo puede haber visto el proyecto al entrenar, y el repositorio original trae las soluciones dentro. `preparar.py` parte del `prepare.py` que preparó ChatGPT, pero va más lejos, porque aquel dejaba en la copia del agente los tests y exploits con el nombre de cada fallo y las pistas de `prisma/seed.ts`, que son casi las soluciones.
 
-**Regla de oro: ningún cambio mueve una línea.** El ground truth va por fichero y línea; los ficheros que puntúan no se borran ni se renombran, y el script comprueba al final que los 46 siguen ahí con las mismas líneas (`preparacion/informe.json → ground_truth`).
+**Regla de oro: ningún cambio mueve una línea.** El ground truth va por fichero y línea; los ficheros que puntúan no se borran ni se renombran, y el script comprueba al final que los 46 siguen ahí con las mismas líneas (`preparacion/v2/informe.json → ground_truth`).
 
 | Qué | Cómo |
 |---|---|
@@ -23,15 +23,21 @@ El modelo puede haber visto el proyecto al entrenar, y el repositorio original t
 | Comentarios | Los que delatan (`// VULNERABLE BY DESIGN…`, `# intentional`…) se vacían sin quitar la línea |
 | Ficheros que señalan | `flag-xxe.txt` → `supplier-registry.txt`, `public/xss-flag.txt` → `public/notice.txt` |
 
-Comprobado en una copia: instala, `prisma generate`, `tsc --noEmit` sin errores, la semilla de la base de datos corre, `next build --no-lint` termina y la app arranca (lectura de `../flag.txt` por `/api/files`, por ejemplo, sigue funcionando). El lint falla por formato (prettier) en algunas líneas que cambiaron de longitud. Lo que cambió dentro de los rangos que puntúan: la línea 1 de `.env.local` (la flag en base64) y dos comentarios de `app/api/ai-assistant/route.ts` (313-314).
+### v2: lo que delataba dónde mirar sin revisar
 
-**Lo que queda, y conviene saber al leer los resultados:**
+Con la v1, Haiku dijo en su informe que el proyecto «parece un laboratorio deliberadamente vulnerable» por las flags y por comentarios como «The secure version uses…». Y el código daba más: al lado de cada fallo, la app comprobaba si lo habían explotado (`isSQLInjectionAttempt(status)`, «¿la petición viene de otra web?») y devolvía un premio. Eso señala la línea sin necesidad de entender el código. La v2 lo quita, también sin mover líneas, con `limpiar-ctf.js` (usa el compilador de TypeScript) y unos parches a mano comprobados uno a uno:
 
-- Sigue siendo una tienda para capturar flags: página `/flags`, tablero del jugador, comprobador de flags, textos de «Términos» y «Acerca de». El modelo sabrá que tiene fallos a propósito; no sabrá de qué proyecto viene ni tiene las soluciones a mano.
-- Cada ruta vulnerable lleva al lado el código que detecta que la han explotado y devuelve una flag (`prisma.flag.findUnique({ where: { slug: "case-…" } })`). Ya no dice qué fallo es, pero sí **dónde** hay uno. Quitarlo sin mover líneas obliga a editar a mano unas 30 rutas y cambia el comportamiento; queda para una segunda versión si el experimento sigue.
-- Pistas de texto sueltas que el filtro no toca (`isSQLQk1CFAttempt` conserva «SQL», el texto de la interfaz del tablero).
-- Restos que vio Haiku en la primera prueba y que la v2 del preparador debe quitar: comentarios de bloque en los que solo algunas líneas tienen palabras clave («The secure version uses `withAdminAuth`…» en `app/api/live/stream/route.ts`), el «Enjoying the lab?» de `docker-entrypoint.sh`, los correos `@oss.com` de la semilla y las dependencias de Cypress en `package.json`.
-- La contaminación de entrenamiento no se elimina: solo se le quitan al modelo las pistas para reconocerlo. Un A/B con la copia original (prueba A) frente a esta (prueba B) diría cuánto ayudan.
+| Qué | Cómo |
+|---|---|
+| Comentarios | **Todos** fuera (salvo `@ts-…` y `eslint-…`), también los `#` de shell, Dockerfile, YAML y `.env.local`. La v1 solo quitaba los que tenían palabras clave y se escapaban bloques enteros |
+| Código que premia la explotación | En 28 sitios: la consulta de la flag, las variables y `if` que solo servían para darla, la propiedad `flag` de las respuestas y sus tipos. Después, los detectores que se quedan sin uso: variables que solo se escriben, `if` vacíos, funciones a las que ya no llama nadie |
+| La capa de juego | Fuera el tablero, el comprobador de flags, el panel de pistas, la guía, las páginas «Acerca de» y «Términos», la API de pistas, las etiquetas de categorías de vulnerabilidad (`BOLA`, `XXE`, `IDOR`…) y sus tipos, y los enlaces ocultos a las páginas de exploits |
+| Pistas en el propio código | `hint: "The secret is not so secret"` dentro del token de sesión (login, alta y soporte); `BFLA_FLAG_SLUG` (BFLA es el nombre del fallo) → `LIVE_EVENT_SLUG`; el campo `csrfExploited` del esquema → `profileSyncPending` y su detector; `LOGIN_FLAG` → `AUDIT_TAG` |
+| Restos de la v1 | «Enjoying the lab?» del entrypoint, correos `@oss.com`, scripts y dependencias de tests (Cypress, Jest, Husky) en `package.json` (el `package-lock.json` se regenera) |
+
+Se queda: la API `/api/flags` y la tabla `flags` (son tres entradas del ground truth), las flags que esconden los ficheros que leen los fallos (`flag.txt`, `supplier-registry.txt`), la semilla con sus retos sin pistas, y el código vulnerable, que no se toca. La contaminación de entrenamiento no se elimina: solo se quitan las pistas para reconocerlo.
+
+**Comprobado** (`preparacion/`): `tsc --noEmit` sin errores, semilla, `next build` y la app arrancada. Siguen funcionando el path traversal, el alta como ADMIN, el IDOR de pedidos, la SSRF de soporte, el XXE (lee `/etc/hostname`) y la inyección SQL de la búsqueda de pedidos. Dentro de los rangos que puntúan solo cambian 4 líneas: la flag en base64 de `.env.local:1`, dos comentarios de `ai-assistant/route.ts` (313-314) y el nombre `LOGIN_FLAG` → `AUDIT_TAG` en `login/route.ts:20,24`; el fallo (la contraseña en claro en el log) sigue igual. El lint de formato falla en las líneas que cambiaron de longitud.
 
 ## Aislamiento
 
@@ -40,18 +46,18 @@ Como el resto del benchmark: Claude Code aislado (`lanzar-claude.sh`) dentro de 
 ## Lanzar
 
 ```bash
-python3 experimentos/auditoria/preparar.py --out /tmp/sec-prep          # o --source <clon local>
+python3 experimentos/auditoria/preparar.py --out /tmp/sec-prep   # --source <clon local>, --typescript <node_modules>
 ESPERA_MAX=5400 SIN_WEB=1 SEMILLA=/tmp/sec-prep/semilla \
-  PROMPTS=$PWD/experimentos/auditoria/prompts RESULTADOS=$PWD/experimentos/auditoria/resultados \
+  PROMPTS=$PWD/experimentos/auditoria/prompts RESULTADOS=$PWD/experimentos/auditoria/resultados-v2 \
   scripts/lanzar-claude.sh SEC claude-haiku-5-5
 ```
 
-La semilla tiene que estar fuera del alcance del agente (`/tmp` lo tapa el encierro); la carpeta `privado/` con el original, también. Comprueba la semilla contra `preparacion/SHA256SUMS.txt`.
+La semilla tiene que estar fuera del alcance del agente (`/tmp` lo tapa el encierro); la carpeta `privado/` con el original, también. Comprueba la semilla contra `preparacion/v2/SHA256SUMS.txt`.
 
-En `resultados/<modelo>/SEC/`, `salida/` guarda solo lo que el modelo creó o cambió, y `cambios.txt` dice qué tocó. El juez rellena `juez/hallazgos.json` y `python3 experimentos/auditoria/puntuar.py <dir>` calcula recall, precisión, F2 y la nota.
+En `resultados-v2/<modelo>/SEC/` (`resultados-v1/`: la primera copia, menos limpia), `salida/` guarda solo lo que el modelo creó o cambió, y `cambios.txt` dice qué tocó. El juez rellena `juez/hallazgos.json` y `python3 experimentos/auditoria/puntuar.py <dir>` calcula F3, wF3, precisión, recall y la nota.
 
 ## Resultados
 
-| Modelo | Agente | Nota | Entradas (juez / estricto) | Extras reales | FP | F2 | Peticiones | Tokens |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| [claude-haiku-5-5](resultados/anthropic_claude-haiku-5-5/SEC/juicio.md) | Claude Code | **8** | 28/40 · 22/40 | 15 | 1 | 0,74 | 15 | 1,8 M |
+| Copia | Modelo | Nota | F3 | wF3 | TP/FP/FN estricto | Juez: TP · inventados · extras reales | Peticiones | Tokens |
+|---|---|---:|---:|---:|---|---|---:|---:|
+| v1 | [claude-haiku-5-5](resultados-v1/anthropic_claude-haiku-5-5/SEC/juicio.md) | **5** | 54,6 | 58,0 | 22/21/18 | 28 · 1 · 15 | 15 | 1,8 M |

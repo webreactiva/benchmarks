@@ -1,0 +1,1009 @@
+{
+ "repo": "https://github.com/kolega-ai-dev/realvuln-oss-oopssec-store",
+ "commit": "0373cf43a9cc35ec835f79b562eb47f9fd1b1649",
+ "nombre": "Quokka Bazaar",
+ "borrados": [
+  ".github/",
+  ".husky/",
+  ".cursor/",
+  "docs/",
+  "content/",
+  "hall-of-fame/",
+  "lab/",
+  "packages/",
+  "tests/",
+  "cypress/",
+  "app/vulnerabilities/",
+  "app/hall-of-fame/",
+  "public/exploits/",
+  "public/screen.png",
+  "AGENTS.md",
+  "EDUCATORS.md",
+  "CONTRIBUTING.md",
+  "CODE_OF_CONDUCT.md",
+  "README.md",
+  "cypress.config.ts",
+  "jest.config.ts",
+  "tsconfig.jest.json",
+  ".degitignore",
+  "app/flags/",
+  "app/player-dashboard/",
+  "app/about/",
+  "app/terms/",
+  "app/api/hints/",
+  "app/api/flags/verify/",
+  "app/api/flags/count/",
+  "lib/validation/schemas/flags.ts",
+  "lib/format.ts",
+  "app/components/SupportBanner.tsx",
+  "app/components/FlagChecker.tsx",
+  "app/components/FlagCheckerWrapper.tsx",
+  "app/components/FlagDisplay.tsx",
+  "app/components/FlagToast.tsx",
+  "app/components/HintPanel.tsx",
+  "app/components/HintPanelWrapper.tsx",
+  "app/components/OnboardingGuide.tsx",
+  "app/components/ConsoleWelcome.tsx"
+ ],
+ "renombrados": {
+  "flag-xxe.txt": "supplier-registry.txt",
+  "public/xss-flag.txt": "public/notice.txt"
+ },
+ "cambios_por_fichero": {
+  "prisma/seed.ts": {
+   "seed": 281,
+   "flags": 35,
+   "slugs": 35,
+   "marca": 4,
+   "comentarios": 20
+  },
+  ".dockerignore": {
+   "marca": 1
+  },
+  "LICENSE": {
+   "marca": 3
+  },
+  ".env.local": {
+   "flags": 1,
+   "flags_base64": 1
+  },
+  "flag.txt": {
+   "flags": 1,
+   "marca": 1
+  },
+  "supplier-registry.txt": {
+   "flags": 1,
+   "marca": 1
+  },
+  "package-lock.json": {
+   "marca": 1,
+   "metadatos": 1
+  },
+  "package.json": {
+   "frases": 1,
+   "marca": 5,
+   "metadatos": 1
+  },
+  "docker-entrypoint.sh": {
+   "marca": 2
+  },
+  "prisma/schema.prisma": {
+   "identificadores": 1
+  },
+  "public/notice.txt": {
+   "flags": 1
+  },
+  "app/layout.tsx": {
+   "frases": 1,
+   "marca": 1
+  },
+  "scripts/setup.sh": {
+   "marca": 2,
+   "rotulo_ascii": 5
+  },
+  "lib/live-stream.ts": {
+   "slugs": 1,
+   "identificadores": 1,
+   "marca": 2,
+   "comentarios": 1
+  },
+  "lib/server-auth.ts": {
+   "identificadores": 2
+  },
+  "lib/config.ts": {
+   "flags": 1,
+   "marca": 2,
+   "comentarios": 3,
+   "parche": 1
+  },
+  "lib/invoice.ts": {
+   "marca": 1
+  },
+  "lib/mcp-constants.ts": {
+   "marca": 1
+  },
+  "app/components/Footer.tsx": {
+   "frases": 2,
+   "marca": 3
+  },
+  "app/components/Header.tsx": {
+   "marca": 1
+  },
+  "app/admin/AdminClient.tsx": {
+   "frases": 3,
+   "marca": 1,
+   "parche": 1
+  },
+  "app/profile/ProfileClient.tsx": {
+   "identificadores": 2
+  },
+  "app/news/page.tsx": {
+   "identificadores": 1
+  },
+  "app/live/page.tsx": {
+   "identificadores": 1,
+   "marca": 1,
+   "comentarios": 1
+  },
+  "app/gift-cards/page.tsx": {
+   "marca": 1
+  },
+  "app/internal/page.tsx": {
+   "slugs": 1,
+   "parche": 2
+  },
+  "app/internal/oauth/callback/page.tsx": {
+   "slugs": 1,
+   "identificadores": 1,
+   "parche": 2
+  },
+  "app/support/ai-assistant/AIAssistantChat.tsx": {
+   "marca": 3
+  },
+  "app/checkout/redeem/page.tsx": {
+   "marca": 1
+  },
+  "app/api/admin/route.ts": {
+   "slugs": 4,
+   "identificadores": 1,
+   "marca": 1
+  },
+  "app/api/orders/route.ts": {
+   "flags": 2,
+   "comentarios": 2
+  },
+  "app/api/ai-assistant/route.ts": {
+   "flags": 1,
+   "marca": 1,
+   "comentarios": 7
+  },
+  "app/api/tracking/route.ts": {
+   "slugs": 1,
+   "identificadores": 3,
+   "comentarios": 5
+  },
+  "app/api/mcp/route.ts": {
+   "slugs": 1,
+   "marca": 2,
+   "comentarios": 3,
+   "parche": 2
+  },
+  "app/api/documents/share/route.ts": {
+   "slugs": 1
+  },
+  "app/api/gift-cards/redeem/route.ts": {
+   "flags": 1
+  },
+  "app/api/live/stream/route.ts": {
+   "identificadores": 1,
+   "comentarios": 3
+  },
+  "app/api/products/search/route.ts": {
+   "slugs": 1,
+   "identificadores": 3
+  },
+  "app/api/wishlists/[id]/route.ts": {
+   "slugs": 1
+  },
+  "app/api/orders/[id]/route.ts": {
+   "flags": 1,
+   "slugs": 1,
+   "identificadores": 1
+  },
+  "app/api/orders/search/route.ts": {
+   "slugs": 1,
+   "identificadores": 3
+  },
+  "app/api/auth/signup/route.ts": {
+   "identificadores": 1,
+   "parche": 1
+  },
+  "app/api/auth/reset-password/route.ts": {
+   "slugs": 1
+  },
+  "app/api/auth/login/route.ts": {
+   "flags": 1,
+   "slugs": 1,
+   "identificadores": 2,
+   "parche": 6
+  },
+  "app/api/auth/support-login/route.ts": {
+   "identificadores": 1,
+   "parche": 1
+  },
+  "app/api/user/profile/route.ts": {
+   "slugs": 2,
+   "identificadores": 3,
+   "parche": 3
+  },
+  "app/api/user/export/route.ts": {
+   "slugs": 1,
+   "parche": 2
+  },
+  "app/api/admin/reviews/route.ts": {
+   "slugs": 1,
+   "identificadores": 3
+  },
+  "app/api/admin/diag/route.ts": {
+   "slugs": 1
+  },
+  "app/api/admin/support-audit/route.ts": {
+   "flags": 1,
+   "slugs": 1
+  },
+  "app/api/admin/suppliers/import-order/route.ts": {
+   "marca": 1
+  },
+  "app/api/admin/products/[id]/image/route.ts": {
+   "slugs": 1,
+   "identificadores": 1
+  },
+  "app/profile/gift-cards/page.tsx": {
+   "marca": 2
+  },
+  "app/profile/gift-cards/ProfileGiftCardsClient.tsx": {
+   "marca": 1
+  },
+  "app/monitoring/internal-status/page.tsx": {
+   "slugs": 1,
+   "parche": 2
+  },
+  "app/admin/live/page.tsx": {
+   "marca": 1
+  },
+  "app/admin/live/LiveManagementClient.tsx": {
+   "marca": 1
+  },
+  "app/admin/analytics/AnalyticsClient.tsx": {
+   "flags": 1,
+   "comentarios": 1
+  },
+  "app/order/OrderClient.tsx": {
+   "parche": 3
+  },
+  "app/checkout/CheckoutClient.tsx": {
+   "parche": 2
+  },
+  "lib/types/index.ts": {
+   "parche": 1
+  },
+  "Dockerfile": {
+   "comentarios_shell": 1
+  },
+  ".gitignore": {
+   "comentarios_shell": 1
+  }
+ },
+ "ground_truth": [
+  {
+   "id": "oss-oopssec-store-001",
+   "fichero": ".env.local",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [
+    1
+   ],
+   "detalle": [
+    [
+     1,
+     "NEXT_PUBLIC_PAYMENT_SECRET=\"T1NTe3B1YmxpY18zbnZpcjBubWVudF92NHJpNGJsM30=\"",
+     "NEXT_PUBLIC_PAYMENT_SECRET=\"UUtCezcyMGYyYTc3MWU1MH0=\""
+    ]
+   ]
+  },
+  {
+   "id": "oss-oopssec-store-002",
+   "fichero": "app/admin/analytics/AnalyticsClient.tsx",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-003",
+   "fichero": "app/api/admin/diag/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-004",
+   "fichero": "app/api/admin/products/[id]/image/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-005",
+   "fichero": "app/api/admin/reviews/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-006",
+   "fichero": "app/api/admin/reviews/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-007",
+   "fichero": "app/api/admin/suppliers/import-order/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-008",
+   "fichero": "app/api/ai-assistant/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-009",
+   "fichero": "app/api/ai-assistant/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-010",
+   "fichero": "app/api/ai-assistant/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-011",
+   "fichero": "app/api/ai-assistant/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [
+    313,
+    314
+   ],
+   "detalle": [
+    [
+     313,
+     "// VULNERABLE BY DESIGN: Leaking internal MCP server URL and tool list",
+     ""
+    ],
+    [
+     314,
+     "// allows attackers to discover the restricted get_compliance_report tool.",
+     ""
+    ]
+   ]
+  },
+  {
+   "id": "oss-oopssec-store-012",
+   "fichero": "app/api/auth/login/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [
+    20,
+    24
+   ],
+   "detalle": [
+    [
+     20,
+     "flag: LOGIN_FLAG,",
+     "tag: AUDIT_TAG,"
+    ],
+    [
+     24,
+     "`[auth] login attempt email=${email} password=${password} flag=${LOGIN_FLAG}`",
+     "`[auth] login attempt email=${email} password=${password} tag=${AUDIT_TAG}`"
+    ]
+   ]
+  },
+  {
+   "id": "oss-oopssec-store-013",
+   "fichero": "app/api/auth/login/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-014",
+   "fichero": "app/api/auth/login/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-015",
+   "fichero": "app/api/auth/logout/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-016",
+   "fichero": "app/api/auth/reset-password/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-017",
+   "fichero": "app/api/auth/signup/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-018",
+   "fichero": "app/api/documents/share/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-019",
+   "fichero": "app/api/files/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-020",
+   "fichero": "app/api/files/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-021",
+   "fichero": "app/api/flags/[slug]/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-022",
+   "fichero": "app/api/flags/progress/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-023",
+   "fichero": "app/api/flags/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-024",
+   "fichero": "app/api/monitoring/auth/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-025",
+   "fichero": "app/api/orders/[id]/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-026",
+   "fichero": "app/api/orders/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-027",
+   "fichero": "app/api/orders/search/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-028",
+   "fichero": "app/api/products/search/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-029",
+   "fichero": "app/api/products/search/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-030",
+   "fichero": "app/api/support/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-031",
+   "fichero": "app/api/tracking/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-032",
+   "fichero": "app/api/user/export/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-033",
+   "fichero": "app/api/user/support-access/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-034",
+   "fichero": "app/api/user/support-access/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-035",
+   "fichero": "app/api/user/support-access/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-036",
+   "fichero": "app/api/wishlists/[id]/route.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-037",
+   "fichero": "app/login/LoginForm.tsx",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-038",
+   "fichero": "app/news/page.tsx",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-039",
+   "fichero": "app/products/[id]/ProductDetailClient.tsx",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-040",
+   "fichero": "lib/server-auth.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-041",
+   "fichero": "lib/share-crypto.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-042",
+   "fichero": "prisma/seed.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": 428,
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-043",
+   "fichero": "prisma/seed.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-044",
+   "fichero": "prisma/seed.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-045",
+   "fichero": "prisma/seed.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  },
+  {
+   "id": "oss-oopssec-store-046",
+   "fichero": "prisma/seed.ts",
+   "existe": true,
+   "mismas_lineas": true,
+   "lineas_cambiadas_en_rango": [],
+   "detalle": []
+  }
+ ],
+ "mapas": {
+  "flags": {
+   "OSS{0ops_i_h4ck3d_1t}": "QKB{9d2d3fa081c7}",
+   "OSS{0p3n_r3d1r3ct_l0g1n_byp4ss}": "QKB{566c38fe9c97}",
+   "OSS{1nf0_d1scl0sur3_4p1_3rr0r}": "QKB{8c7654b4b293}",
+   "OSS{1ns3cur3_d1r3ct_0bj3ct_r3f3r3nc3}": "QKB{714699fac7af}",
+   "OSS{1ns3cur3_p4ssw0rd_r3s3t}": "QKB{e0bef337cc00}",
+   "OSS{1ns3cur3_r4nd0mn3ss_g1ft_c4rd}": "QKB{2e1d87a75fe7}",
+   "OSS{brok3n_0bj3ct_l3v3l_4uth0r1z4t10n}": "QKB{2e7ee785ef68}",
+   "OSS{brok3n_funct10n_l3v3l_4uth0r1z4t10n}": "QKB{2e6f8f1fd086}",
+   "OSS{brut3_f0rc3_n0_r4t3_l1m1t}": "QKB{998c662cec6e}",
+   "OSS{cl13nt_s1d3_pr1c3_m4n1pul4t10n}": "QKB{1500bfa91fc8}",
+   "OSS{cr0ss_s1t3_r3qu3st_f0rg3ry}": "QKB{d523b6befadd}",
+   "OSS{cr0ss_s1t3_scr1pt1ng_xss}": "QKB{0928ba72fab4}",
+   "OSS{csrf_pr0f1l3_t4k30v3r_ch41n}": "QKB{fa92d8abf817}",
+   "OSS{m1ddl3w4r3_byp4ss}": "QKB{675f5011c5b8}",
+   "OSS{m4l1c10us_f1l3_upl04d_xss}": "QKB{eb181563d144}",
+   "OSS{m4ss_4ss1gnm3nt_vuln3r4b1l1ty}": "QKB{46018e2f84e0}",
+   "OSS{mcp_p01s0n3d_t00l_r3sp0ns3}": "QKB{f7dd5bf4ff60}",
+   "OSS{npm_typ0sqv4tt1ng_dr0p_4i_rul3s}": "QKB{ddc6fc62e837}",
+   "OSS{p4dd1ng_0r4cl3_f0rg3d_t0k3n}": "QKB{eec185b5488c}",
+   "OSS{p4th_tr4v3rs4l_4tt4ck}": "QKB{a77e424511f7}",
+   "OSS{pl41nt3xt_p4ssw0rd_1n_l0gs}": "QKB{5db6d39c813f}",
+   "OSS{pr0duct_s34rch_sql_1nj3ct10n}": "QKB{fa01d17c2ff1}",
+   "OSS{pr0mpt_1nj3ct10n_41_4ss1st4nt}": "QKB{282aa326914e}",
+   "OSS{public_3nvir0nment_v4ri4bl3}": "QKB{720f2a771e50}",
+   "OSS{r3act2sh3ll}": "QKB{6b2cad3174c3}",
+   "OSS{r4c3_c0nd1t10n_c0up0n_4bus3}": "QKB{bb56a58c2f6a}",
+   "OSS{rul3s_f1l3_b4ckd00r_3xpl01t3d}": "QKB{c4e2058d68ee}",
+   "OSS{s3c0nd_0rd3r_sql_1nj3ct10n}": "QKB{5c02bc36da3f}",
+   "OSS{s3lf_xss_pr0f1l3_1nj3ct10n}": "QKB{a01fc278c405}",
+   "OSS{s3rv3r_s1d3_r3qu3st_f0rg3ry}": "QKB{52b335463929}",
+   "OSS{s3ss10n_f1x4t10n_4tt4ck}": "QKB{009b855a3d8d}",
+   "OSS{sql_1nj3ct10n_vuln3r4b1l1ty}": "QKB{7f1758d21816}",
+   "OSS{w34k_jwt_s3cr3t_k3y}": "QKB{bf11e8c49d64}",
+   "OSS{w34k_md5_h4sh1ng}": "QKB{7e8aa36bdf38}",
+   "OSS{x_f0rw4rd3d_f0r_sql1}": "QKB{19c528964855}",
+   "OSS{xml_3xt3rn4l_3nt1ty_1nj3ct10n}": "QKB{9ed09177557e}"
+  },
+  "slugs": {
+   "react2shell": "case-8f5014",
+   "public-env-variable": "case-4f5d8d",
+   "weak-jwt-secret": "case-d4cc0b",
+   "client-side-price-manipulation": "case-1b5731",
+   "weak-md5-hashing": "case-08eeca",
+   "insecure-direct-object-reference": "case-4fa8ee",
+   "cross-site-scripting-xss": "case-7d0c94",
+   "cross-site-request-forgery": "case-fcd987",
+   "mass-assignment": "case-707166",
+   "path-traversal": "case-a8577c",
+   "server-side-request-forgery": "case-28c506",
+   "sql-injection": "case-38abd3",
+   "information-disclosure-api-error": "case-d79d12",
+   "malicious-file-upload": "case-7300dd",
+   "product-search-sql-injection": "case-48d593",
+   "session-fixation-weak-session-management": "case-1bd095",
+   "brute-force-no-rate-limiting": "case-fa9361",
+   "x-forwarded-for-sql-injection": "case-849256",
+   "prompt-injection-ai-assistant": "case-2d4718",
+   "broken-object-level-authorization": "case-b99ba3",
+   "broken-function-level-authorization": "case-add43a",
+   "second-order-sql-injection": "case-a256c1",
+   "plaintext-password-in-logs": "case-ee09b9",
+   "xxe-supplier-order-import": "case-a0424c",
+   "insecure-password-reset": "case-b65883",
+   "open-redirect": "case-f3527c",
+   "self-xss-profile-injection": "case-b06b33",
+   "csrf-profile-takeover-chain": "case-725c7e",
+   "aes-cbc-padding-oracle": "case-27f0b1",
+   "mcp-malicious-server": "case-1a3b98",
+   "middleware-authorization-bypass": "case-722748",
+   "race-condition-coupon-abuse": "case-ef372b",
+   "insecure-randomness-gift-card": "case-1becf8",
+   "npm-supply-chain-typosquat": "case-387ee1",
+   "ai-rules-file-backdoor": "case-95d6df"
+  },
+  "identificadores": {
+   "createWeakJWT": "createSessionToken",
+   "decodeWeakJWT": "decodeSessionToken",
+   "leakedData": "extraData",
+   "BFLA_FLAG_SLUG": "LIVE_EVENT_SLUG",
+   "csrfExploited": "profileSyncPending",
+   "bruteForceFlag": "qk464ForceFlag",
+   "containsMaliciousContent": "containsQkBC9Content",
+   "cr0ss_s1t3_scr1pt1ng_xss": "cr0ss_s1t3_scr1pt1ng_qk20e",
+   "csrfFlag": "qk658Flag",
+   "csrf_pr0f1l3_t4k30v3r_ch41n": "qk658_pr0f1l3_t4k30v3r_ch41n",
+   "isSQLInjectionAttempt": "isSQLQk1CFAttempt",
+   "m4l1c10us_f1l3_upl04d_xss": "m4l1c10us_f1l3_upl04d_qk20e",
+   "m4ss_4ss1gnm3nt_vuln3r4b1l1ty": "m4ss_4ss1gnm3nt_qk7933r4b1l1ty",
+   "s3lf_xss_pr0f1l3_1nj3ct10n": "s3lf_qk20e_pr0f1l3_1nj3ct10n",
+   "sessionFixationFlag": "sessionQkDBCFlag",
+   "setCsrfFlag": "setQk658Flag",
+   "sqlInjectionDetected": "sqlQk1CFDetected",
+   "sqlInjectionFlag": "sqlQk1CFFlag",
+   "sql_1nj3ct10n_vuln3r4b1l1ty": "sql_1nj3ct10n_qk7933r4b1l1ty",
+   "xssFlag": "qk20eFlag"
+  }
+ },
+ "restos": [
+  {
+   "f": "package-lock.json",
+   "l": 5733,
+   "t": "\"deprecated\": \"Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Ple"
+  },
+  {
+   "f": "package-lock.json",
+   "l": 8452,
+   "t": "\"deprecated\": \"This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/CVE-2025-66478 for more details.\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 49,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 59,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 69,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 79,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 89,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 99,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 109,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 119,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 129,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 139,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 149,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 159,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 169,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 178,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 188,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 199,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 209,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 219,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 229,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 238,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 248,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 259,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 269,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 279,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 289,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 299,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 309,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 319,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 329,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 339,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 350,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 360,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 370,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 380,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/seed.ts",
+   "l": 390,
+   "t": "walkthroughSlug: \"\","
+  },
+  {
+   "f": "prisma/schema.prisma",
+   "l": 112,
+   "t": "walkthroughSlug String?"
+  },
+  {
+   "f": "app/contact/page.tsx",
+   "l": 172,
+   "t": "vulnerabilities. Please follow responsible disclosure"
+  },
+  {
+   "f": "app/api/flags/progress/route.ts",
+   "l": 18,
+   "t": "walkthroughSlug: true,"
+  },
+  {
+   "f": "app/api/flags/progress/route.ts",
+   "l": 60,
+   "t": "walkthroughSlug: f.flag.walkthroughSlug,"
+  }
+ ]
+}

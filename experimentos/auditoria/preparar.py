@@ -30,7 +30,11 @@ BORRAR = [
     "app/vulnerabilities", "app/hall-of-fame", "public/exploits", "public/screen.png",
     "AGENTS.md", "CLAUDE.md", "EDUCATORS.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "README.md",
     "cypress.config.ts", "jest.config.ts", "tsconfig.jest.json", ".degitignore",
-]
+    # v2: la capa de juego (tablero, comprobador, pistas, guía) y las páginas que explican el reto
+    "app/flags", "app/player-dashboard", "app/about", "app/terms", "app/api/hints", "app/api/flags/verify",
+    "app/api/flags/count", "lib/validation/schemas/flags.ts", "lib/format.ts", "app/components/SupportBanner.tsx",
+] + [f"app/components/{c}.tsx" for c in ("FlagChecker", "FlagCheckerWrapper", "FlagDisplay", "FlagToast", "HintPanel",
+                                          "HintPanelWrapper", "OnboardingGuide", "ConsoleWelcome")]
 # 2. Ficheros renombrados (y sus referencias): el nombre decía qué fallo los lee
 RENOMBRAR = {"flag-xxe.txt": "supplier-registry.txt", "public/xss-flag.txt": "public/notice.txt"}
 
@@ -41,7 +45,8 @@ MARCA = [
     ("oss-oopssec-store", NOMBRE_SLUG), ("oss-oopssec", NOMBRE_SLUG),
     ("OSS – OopsSec Store", NOMBRE), ("OopsSec Store", NOMBRE), ("OopsSec", "Quokka"), ("oopssec", "quokka"),
     ("OOPSSEC", "QUOKKA"), ("kOaDT", "quokka-labs"), ("koadt", "quokka-labs"), ("oss-store", NOMBRE_SLUG),
-    ("Oopsie!", "Hello!"), ("flag-xxe.txt", "supplier-registry.txt"), ("xss-flag.txt", "notice.txt"),
+    ("Oopsie!", "Hello!"), ("@oss.com", "@quokka.store"),
+    ("★ Enjoying the lab? A star helps others find it:", "Quokka Bazaar is ready."), ("flag-xxe.txt", "supplier-registry.txt"), ("xss-flag.txt", "notice.txt"),
 ]
 # 4. Raíces de identificadores que señalan el fallo (sqlInjectionDetected, csrfFlag, isSQLInjectionAttempt…).
 #    Solo se tocan identificadores compuestos (camelCase/PascalCase/snake); las palabras sueltas pueden ser texto.
@@ -158,6 +163,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", required=True)
     ap.add_argument("--source", help="clon local que contenga el commit fijado")
+    ap.add_argument("--typescript", help="node_modules con typescript (si no, se instala en privado/herramientas)")
     a = ap.parse_args()
     out = pathlib.Path(a.out).resolve()
     if out.exists():
@@ -224,13 +230,14 @@ def main():
                 compuesto = bool(re.search(r"[a-z][A-Z]|[A-Z]{2,}[a-z]|_", tok)) and not tok.isupper()
                 if compuesto and not tok.startswith("OSS"):
                     candidatos.add(tok)
-    mapa_ids = {"createWeakJWT": "createSessionToken", "decodeWeakJWT": "decodeSessionToken", "leakedData": "extraData"}
+    mapa_ids = {"createWeakJWT": "createSessionToken", "decodeWeakJWT": "decodeSessionToken", "leakedData": "extraData",
+                "BFLA_FLAG_SLUG": "LIVE_EVENT_SLUG", "csrfExploited": "profileSyncPending"}
     for tok in sorted(candidatos):
         nuevo = tok
         for r in sorted(RAICES, key=len, reverse=True):
             nuevo = re.sub(r, "Qk" + h(r, 3).upper(), nuevo)
             nuevo = re.sub(r"(?<![A-Za-z])" + r.lower(), "qk" + h(r, 3), nuevo)
-        if nuevo != tok:
+        if nuevo != tok and tok not in mapa_ids:
             mapa_ids[tok] = nuevo
 
     # 5. Aplicar a todos los ficheros de texto
@@ -280,6 +287,76 @@ def main():
             o["packages"][""]["name"] = NOMBRE_SLUG
         pj.write_text(json.dumps(o, indent=2, ensure_ascii=False) + "\n")
         anota(pj.name, "metadatos")
+
+    # 6b. v2: comentarios, código que da flags junto a cada fallo y restos de la capa de juego (limpiar-ctf.js)
+    rangos = {}
+    for f in gt:
+        a_, b_ = f["location"]["start_line"], f["location"]["end_line"]
+        if b_ - a_ < 200:
+            rangos.setdefault(f["file"], []).append([a_, b_])
+        for loc in f.get("acceptable_locations", []):
+            rangos.setdefault(loc["file"], []).append([loc["start_line"], loc["end_line"]])
+    (priv / "rangos.json").write_text(json.dumps(rangos))
+    tsdir = pathlib.Path(a.typescript) if a.typescript else priv / "herramientas" / "node_modules"
+    if not (tsdir / "typescript").exists():
+        run("npm", "install", "--silent", "--no-audit", "--no-fund", "--prefix", str(tsdir.parent), "typescript@5.9.3")
+    subprocess.run(["node", str(HERE / "limpiar-ctf.js"), str(sem), str(priv / "rangos.json"), str(priv / "limpieza-ctf.json")],
+                   check=True, env={**__import__("os").environ, "NODE_PATH": str(tsdir)})
+    # Parches a mano (v2): lo que el limpiador automático no alcanza. Cada uno debe aplicarse exactamente las veces
+    # indicadas y no mover líneas.
+    def parche(rel, patron, nuevo, veces=1):
+        f = sem / rel; t = f.read_text()
+        t2, n = re.subn(patron, nuevo, t)
+        assert n == veces, f"parche {rel}: {patron[:50]!r} se aplicó {n} veces (esperaba {veces})"
+        assert t2.count("\n") == t.count("\n"), f"parche {rel}: mueve líneas"
+        f.write_text(t2); anota(rel, "parche", n)
+    blanco = lambda m: "\n" * m.group(0).count("\n")
+    for rel in ("app/api/auth/login/route.ts", "app/api/auth/signup/route.ts", "app/api/auth/support-login/route.ts"):
+        parche(rel, r'\n\s*hint: "The secret is not so secret",', "\n")          # pista del secreto JWT en el token
+    for rel in ("app/internal/page.tsx", "app/internal/oauth/callback/page.tsx", "app/monitoring/internal-status/page.tsx"):
+        parche(rel, r"async function getFlag\(\) \{\n[\s\S]*?\n\}", blanco)
+        parche(rel, r"const flag = await getFlag\(\);", "")
+    for rel in ("app/admin/products/ProductsManagementClient.tsx", "app/orders/search/OrderSearchClient.tsx",
+                "app/products/search/ProductSearchClient.tsx"):
+        f = sem / rel; t = f.read_text(); f.write_text(re.sub(r"\bflag\b", "notice", re.sub(r"\bsetFlag\b", "setNotice", t)))
+    for rel in ("app/api/user/export/route.ts", "app/api/mcp/route.ts"):
+        parche(rel, r"const flag = await prisma\.flag", "const row = await prisma.flag")
+        parche(rel, r"\bflag\?\.flag\b", "row?.flag")
+    parche("app/api/auth/login/route.ts", r"\bLOGIN_FLAG\b", "AUDIT_TAG", veces=3)
+    parche("app/api/auth/login/route.ts", r"\bflag: AUDIT_TAG", "tag: AUDIT_TAG")
+    parche("app/api/auth/login/route.ts", r"flag=\$\{AUDIT_TAG\}", "tag=${AUDIT_TAG}")
+    parche("app/order/OrderClient.tsx", r"\bflagFromUrl\b", "noteFromUrl", veces=2)
+    parche("app/order/OrderClient.tsx", r'searchParams\.get\("flag"\)', 'searchParams.get("note")')
+    parche("app/checkout/CheckoutClient.tsx", r"\n\s*flag\?: string;", "\n")
+    parche("app/checkout/CheckoutClient.tsx",
+           r"const url = order\.flag\n\s*\? `/order\?id=\$\{order\.id\}&flag=\$\{encodeURIComponent\(order\.flag\)\}`\n\s*: (`/order\?id=\$\{order\.id\}`);",
+           lambda m: f"const url = {m.group(1)};\n\n")
+    for rel in ("app/api/orders/search/route.ts", "app/api/products/search/route.ts", "app/api/admin/reviews/route.ts"):
+        f = sem / rel; t = f.read_text(); f.write_text(t.replace('includes("flags")', 'includes("qkb{")').replace('includes("flag")', 'includes("qkb{")'))
+    parche("app/admin/AdminClient.tsx",                                       # enlaces ocultos a las páginas de exploits
+           r'<div className="mt-8 text-center text-xs text-slate-500 dark:text-slate-400">\n[\s\S]*?Profile Update\n\s*</a>\n\s*</div>', blanco)
+    parche("lib/types/index.ts", r"export type FlagCategory =[\s\S]*?export interface HintState \{[\s\S]*?\n\}", blanco)
+    # Detector de peticiones de otro origen en el perfil: marcaba el usuario y lo limpiaba al leerlo
+    parche("app/api/user/profile/route.ts", r"\n\s*profileSyncPending: true,", "\n")
+    parche("app/api/user/profile/route.ts", r"\n    if \(dbUser\.profileSyncPending\) \{[\s\S]*?\n    \}", blanco)
+    parche("app/api/user/profile/route.ts", r'const referer = request\.headers\.get\("referer"\);[\s\S]*?\n    \}', blanco)
+    parche("lib/config.ts", r'export const TUTORIAL_FLAG = "[^"]*";', "")
+
+    # comentarios «#» de shell, Dockerfile, yml y .env (menos el shebang)
+    for p in sem.rglob("*"):
+        if p.is_file() and (p.suffix in (".sh", ".yml", ".yaml") or p.name in ("Dockerfile", ".env.local", ".dockerignore", ".gitignore")):
+            t = p.read_text(); ls_ = t.split("\n")
+            ls_ = [("" if l.strip().startswith("#") and not l.startswith("#!") else l) for l in ls_]
+            if "\n".join(ls_) != t:
+                p.write_text("\n".join(ls_)); anota(p.relative_to(sem).as_posix(), "comentarios_shell")
+    # package.json: fuera los scripts y dependencias de tests y documentación de la app original
+    pj = sem / "package.json"; o = json.loads(pj.read_text())
+    o["scripts"] = {k: v for k, v in o["scripts"].items() if not re.match(r"(docs:|test|prepare$)", k)}
+    for dep in ("cypress", "jest", "ts-jest", "@types/jest", "@testing-library/jest-dom", "wait-on", "husky", "lint-staged"):
+        o.get("devDependencies", {}).pop(dep, None)
+    o.pop("lint-staged", None)
+    pj.write_text(json.dumps(o, indent=2, ensure_ascii=False) + "\n")
+    run("npm", "install", "--package-lock-only", "--ignore-scripts", "--no-audit", "--no-fund", "--silent", cwd=sem)
 
     # 7. Comprobaciones: los ficheros del ground truth siguen ahí y con las mismas líneas; diff de cada rango puntuable
     comp = []

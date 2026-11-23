@@ -1,0 +1,333 @@
+{
+ "ficheros": {
+  "app/admin/AdminClient.tsx": [
+   "6: import ../components/FlagDisplay",
+   "111: IfStatement",
+   "245: JSX {flag…}",
+   "249: JSX {flag…}"
+  ],
+  "app/admin/analytics/AnalyticsClient.tsx": [
+   "6 comentarios",
+   "7: import @/app/components/FlagDisplay",
+   "9: FirstStatement",
+   "201: JSX {flag…}",
+   "119: sin uso: hasInvalidIp",
+   "11: sin uso: isValidIp"
+  ],
+  "app/admin/live/LiveManagementClient.tsx": [
+   "1 comentarios",
+   "6: import ../../components/FlagDisplay",
+   "23: propiedad flag",
+   "32: FirstStatement",
+   "87: IfStatement",
+   "107: JSX {flag…}",
+   "121: JSX {flag…}"
+  ],
+  "app/admin/products/ProductsManagementClient.tsx": [
+   "8: import ../../components/FlagDisplay",
+   "66: IfStatement",
+   "119: IfStatement",
+   "228: JSX {flag…}"
+  ],
+  "app/admin/reviews/ReviewsClient.tsx": [
+   "6: import ../../components/FlagDisplay",
+   "21: propiedad flag",
+   "31: FirstStatement",
+   "66: IfStatement",
+   "178: JSX {flag…}"
+  ],
+  "app/api/admin/diag/route.ts": [
+   "17: FirstStatement",
+   "24: propiedad flag"
+  ],
+  "app/api/admin/products/[id]/image/route.ts": [
+   "98: FirstStatement",
+   "106: propiedad flag",
+   "97: if que devuelve lo mismo que el camino normal",
+   "19: función sin uso: containsQkBC9Content",
+   "96: sin uso: content",
+   "95: if vacío",
+   "94: sin uso: isSvg"
+  ],
+  "app/api/admin/reviews/route.ts": [
+   "59: FirstStatement",
+   "67: FirstStatement",
+   "78: IfStatement",
+   "90: IfStatement",
+   "186: propiedad flag",
+   "193: IfStatement",
+   "95: escritura de flag",
+   "63: escritura de sqlQk1CFDetected",
+   "10: sin uso: isSQLQk1CFAttempt",
+   "60: sin uso: sqlQk1CFDetected",
+   "66: sin uso: normalizedFilter",
+   "65: sin uso: upperFilter",
+   "62: if vacío"
+  ],
+  "app/api/admin/route.ts": [
+   "17: IfStatement",
+   "30: IfStatement",
+   "55: IfStatement",
+   "73: FirstStatement",
+   "77: IfStatement",
+   "48: sin uso: expectedEmails"
+  ],
+  "app/api/admin/support-audit/route.ts": [
+   "34: FirstStatement",
+   "42: propiedad flag"
+  ],
+  "app/api/ai-assistant/route.ts": [
+   "9 comentarios"
+  ],
+  "app/api/auth/login/route.ts": [
+   "59: FirstStatement",
+   "61: IfStatement",
+   "76: propiedad flag",
+   "66: escritura de flagData",
+   "58: sin uso: isVisBruta"
+  ],
+  "app/api/auth/reset-password/route.ts": [
+   "58: propiedad flag",
+   "62: FirstStatement",
+   "66: IfStatement"
+  ],
+  "app/api/documents/share/route.ts": [
+   "92: FirstStatement",
+   "101: propiedad flag"
+  ],
+  "app/api/gift-cards/redeem/route.ts": [
+   "9: FirstStatement",
+   "78: propiedad flag",
+   "85: IfStatement",
+   "8: sin uso: SEEDED_GIFT_CARD_ID"
+  ],
+  "app/api/live/stream/route.ts": [
+   "4 comentarios",
+   "81: FirstStatement",
+   "95: propiedad flag"
+  ],
+  "app/api/mcp/route.ts": [
+   "3 comentarios"
+  ],
+  "app/api/orders/[id]/route.ts": [
+   "44: propiedad flag",
+   "60: IfStatement",
+   "146: propiedad flag",
+   "155: IfStatement",
+   "138: sin uso: isFromAdminDashboard",
+   "136: sin uso: referer"
+  ],
+  "app/api/orders/route.ts": [
+   "6 comentarios",
+   "62: FirstStatement",
+   "84: IfStatement",
+   "196: propiedad flag",
+   "203: IfStatement",
+   "207: IfStatement",
+   "82: escritura de expectedTotal",
+   "85: escritura de couponRaceFlag",
+   "61: sin uso: expectedTotal",
+   "56: sin uso: calculatedTotal"
+  ],
+  "app/api/orders/search/route.ts": [
+   "42: FirstStatement",
+   "49: FirstStatement",
+   "60: IfStatement",
+   "71: IfStatement",
+   "130: propiedad flag",
+   "136: IfStatement",
+   "76: escritura de flag",
+   "46: escritura de sqlQk1CFDetected",
+   "8: sin uso: isSQLQk1CFAttempt",
+   "43: sin uso: sqlQk1CFDetected",
+   "48: sin uso: normalizedStatus",
+   "47: sin uso: upperStatus",
+   "45: if vacío"
+  ],
+  "app/api/products/search/route.ts": [
+   "46: FirstStatement",
+   "53: FirstStatement",
+   "64: IfStatement",
+   "75: IfStatement",
+   "135: propiedad flag",
+   "141: IfStatement",
+   "80: escritura de flag",
+   "50: escritura de sqlQk1CFDetected",
+   "7: sin uso: isSQLQk1CFAttempt",
+   "47: sin uso: sqlQk1CFDetected",
+   "52: sin uso: normalizedQuery",
+   "51: sin uso: upperQuery",
+   "49: if vacío"
+  ],
+  "app/api/tracking/route.ts": [
+   "7 comentarios",
+   "36: FirstStatement",
+   "66: FirstStatement",
+   "71: IfStatement",
+   "84: IfStatement",
+   "115: propiedad flag",
+   "121: IfStatement",
+   "89: escritura de flag",
+   "83: escritura de sqlQk1CFDetected",
+   "7: sin uso: isSQLQk1CFAttempt",
+   "67: sin uso: sqlQk1CFDetected",
+   "69: if vacío"
+  ],
+  "app/api/user/profile/route.ts": [
+   "35: FirstStatement",
+   "38: IfStatement",
+   "89: IfStatement",
+   "88: sin uso: htmlTagPattern"
+  ],
+  "app/api/wishlists/[id]/route.ts": [
+   "51: propiedad flag",
+   "72: IfStatement"
+  ],
+  "app/checkout/redeem/RedeemClient.tsx": [
+   "7: import ../../components/FlagDisplay",
+   "13: propiedad flag",
+   "94: JSX {flag…}"
+  ],
+  "app/components/AddToWishlistButton.tsx": [
+   "1 comentarios"
+  ],
+  "app/components/Footer.tsx": [
+   "184: JSX <Link>",
+   "190: JSX <Link>",
+   "196: JSX <Link>",
+   "210: JSX <Link>"
+  ],
+  "app/components/Header.tsx": [
+   "29: JSX <Link>"
+  ],
+  "app/components/Hero.tsx": [
+   "26: JSX <Link>"
+  ],
+  "app/components/VisitorTracker.tsx": [
+   "1 comentarios"
+  ],
+  "app/internal/oauth/callback/page.tsx": [
+   "7: import @/app/components/FlagDisplay",
+   "77: JSX {flag…}"
+  ],
+  "app/internal/page.tsx": [
+   "6: import ../components/FlagDisplay",
+   "75: JSX {flag…}"
+  ],
+  "app/layout.tsx": [
+   "4: import ./components/FlagCheckerWrapper",
+   "5: import ./components/HintPanelWrapper",
+   "6: import ./components/ConsoleWelcome",
+   "8: import ./components/OnboardingGuide",
+   "31: JSX <FlagCheckerWrapper>",
+   "32: JSX <HintPanelWrapper>",
+   "33: JSX <ConsoleWelcome>",
+   "35: JSX <OnboardingGuide>"
+  ],
+  "app/live/page.tsx": [
+   "3 comentarios",
+   "3: import ../components/FlagDisplay",
+   "20: FirstStatement",
+   "48: JSX {flag…}"
+  ],
+  "app/login/LoginForm.tsx": [
+   "26: propiedad flag",
+   "32: IfStatement"
+  ],
+  "app/login/reset-password/ResetPasswordForm.tsx": [
+   "7: import @/app/components/FlagDisplay",
+   "18: FirstStatement",
+   "57: propiedad flag",
+   "60: IfStatement",
+   "85: JSX {flag…}"
+  ],
+  "app/monitoring/internal-status/page.tsx": [
+   "2: import @/app/components/FlagDisplay",
+   "111: JSX {flag…}"
+  ],
+  "app/monitoring/siem/page.tsx": [
+   "1 comentarios"
+  ],
+  "app/order/OrderClient.tsx": [
+   "6: import ../components/FlagDisplay",
+   "35: IfStatement",
+   "127: JSX {flag…}"
+  ],
+  "app/orders/search/OrderSearchClient.tsx": [
+   "6: import ../../components/FlagDisplay",
+   "61: IfStatement",
+   "124: JSX {flag…}"
+  ],
+  "app/page.tsx": [
+   "8: import ./components/FlagToast",
+   "32: JSX <FlagToast>"
+  ],
+  "app/products/search/ProductSearchClient.tsx": [
+   "7: import ../../components/FlagDisplay",
+   "65: IfStatement",
+   "138: JSX {flag…}"
+  ],
+  "app/profile/ProfileClient.tsx": [
+   "1 comentarios",
+   "8: import ../components/FlagDisplay",
+   "74: FirstStatement",
+   "75: FirstStatement",
+   "85: propiedad qk658Flag",
+   "91: IfStatement",
+   "181: IfStatement",
+   "354: JSX {flag…}",
+   "155: sin uso: handleLogout",
+   "160: sin uso: handleProfileUpdate",
+   "67: sin uso: isUpdatingProfile,setIsUpdatingProfile",
+   "68: sin uso: profileUpdateSuccess,setProfileUpdateSuccess",
+   "71: sin uso: profileUpdateError,setProfileUpdateError"
+  ],
+  "app/wishlists/WishlistClient.tsx": [
+   "9: import ../components/FlagDisplay",
+   "34: propiedad flag",
+   "173: JSX {flag…}"
+  ],
+  "instrumentation.node.ts": [
+   "1 comentarios"
+  ],
+  "lib/config.ts": [
+   "2 comentarios"
+  ],
+  "lib/live-stream.ts": [
+   "1 comentarios"
+  ],
+  "lib/types/index.ts": [
+   "59: propiedad flag",
+   "79: propiedad flag",
+   "96: propiedad activeFlag",
+   "103: propiedad allFlagsFound",
+   "136: propiedad flag"
+  ],
+  "prisma/seed.ts": [
+   "2 comentarios"
+  ],
+  "prisma.config.ts": [
+   "2 comentarios"
+  ]
+ },
+ "protegidos": [
+  {
+   "f": "app/api/auth/login/route.ts",
+   "l": 20,
+   "motivo": "propiedad flag",
+   "t": "flag: LOGIN_FLAG"
+  },
+  {
+   "f": "app/api/auth/login/route.ts",
+   "l": 20,
+   "motivo": "propiedad flag",
+   "t": "flag: LOGIN_FLAG"
+  },
+  {
+   "f": "app/api/auth/login/route.ts",
+   "l": 20,
+   "motivo": "propiedad flag",
+   "t": "flag: LOGIN_FLAG"
+  }
+ ]
+}

@@ -1,63 +1,66 @@
 {
- "informe_ordenado": true,
  "hallazgos": [
   {
    "id": "C-01",
    "titulo": "middleware no verifica la firma del JWT",
    "clase": "EXTRA",
-   "verificable": true,
-   "nota": "Real: decodeJWT solo hace atob del payload. No etiquetado en RealVuln."
+   "nota": "Real: decodeJWT solo hace atob del payload. No etiquetado en RealVuln.",
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-02",
    "titulo": "secreto JWT por defecto",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-040",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-03",
    "titulo": "registro con rol ADMIN",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-017",
      "estricto": true,
      "nota": "cita 52-60; la entrada es 61-63, dentro de ±10"
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-04",
    "titulo": "IDOR en support-access y tokens no revocables",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-033",
      "estricto": true
     }
    ],
-   "nota": "La parte de revoked (support-login no lo comprueba) también es real."
+   "nota": "La parte de revoked (support-login no lo comprueba) también es real.",
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-05",
    "titulo": "token de reset predecible md5(email+timestamp)",
    "clase": "EXTRA",
-   "verificable": true,
-   "nota": "Real (forgot-password). La entrada 016 (MD5 de la contraseña en reset-password:46) no la cubre."
+   "nota": "Real (forgot-password). La entrada 016 (MD5 de la contraseña en reset-password:46) no la cubre.",
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-06",
    "titulo": "SQLi sin autenticación en products/search y tracking",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-029",
@@ -68,25 +71,27 @@
      "estricto": true,
      "nota": "tracking sin línea, descripción inequívoca del INSERT"
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-07",
    "titulo": "SQLi en orders/search",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-027",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-08",
    "titulo": "path traversal y listado en /api/files",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-019",
@@ -98,25 +103,27 @@
      "estricto": false,
      "nota": "cita 49 (el join que alimenta la lectura de 62); fuera de ±10"
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-09",
    "titulo": "SSRF en /api/support",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-030",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-10",
    "titulo": "SIEM: credenciales fijas, cookie constante, contraseñas en logs",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-024",
@@ -126,32 +133,35 @@
      "id": "oss-oopssec-store-012",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "C-11",
    "titulo": "dependencias con CVE (Next 15.2.2)",
    "clase": "EXTRA",
-   "verificable": true,
-   "nota": "Real según npm audit; incluye el CVE-2025-55182 que la app usa como reto."
+   "nota": "Real según npm audit; incluye el CVE-2025-55182 que la app usa como reto.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "A-01",
    "titulo": "XSS almacenado en analytics",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-002",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-02",
    "titulo": "flags expuestos sin autenticación",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-023",
@@ -162,71 +172,77 @@
      "estricto": true
     }
    ],
-   "nota": "Sin líneas; los dos ficheros citados."
+   "nota": "Sin líneas; los dos ficheros citados.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "A-03",
    "titulo": "IDOR en pedidos",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-025",
      "estricto": false,
      "nota": "cita 60-61 (la rama que deja pasar al no propietario); la entrada es 12-22"
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-04",
    "titulo": "IDOR en wishlists",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-036",
      "estricto": false,
      "nota": "cita 72-80; la entrada es 10-24"
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-05",
    "titulo": "tokens de compartición falsificables, clave por defecto",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-041",
      "estricto": true
     }
    ],
-   "nota": "Habla de CBC sin MAC, pero no del oráculo de padding (018)."
+   "nota": "Habla de CBC sin MAC, pero no del oráculo de padding (018).",
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-06",
    "titulo": "precio del pedido del cliente",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-026",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-07",
    "titulo": "BFLA en el stream en directo y clave RTMP",
    "clase": "EXTRA",
-   "verificable": true,
-   "nota": "Real. Lo delata un comentario que el preparador no vació («The secure version uses withAdminAuth»)."
+   "nota": "Real. Lo delata un comentario que el preparador no vació («The secure version uses withAdminAuth»).",
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-08",
    "titulo": "SQLi en reseñas de admin con db.exec",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-005",
@@ -238,192 +254,214 @@
      "estricto": true,
      "nota": "línea 133"
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-09",
    "titulo": "XXE en import-order",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-007",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-10",
    "titulo": "token fijo en admin/diag",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-003",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "A-11",
    "titulo": "secretos en repo e imagen Docker",
    "clase": "TP",
-   "verificable": true,
    "gt": [
     {
      "id": "oss-oopssec-store-001",
      "estricto": true,
      "nota": "sin línea; NEXT_PUBLIC_PAYMENT_SECRET en .env.local"
     }
-   ]
+   ],
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "A-12",
    "titulo": "contenedor como root",
    "clase": "EXTRA",
-   "verificable": true,
-   "nota": "Real (sin USER en el Dockerfile); endurecimiento genérico."
+   "nota": "Real (sin USER en el Dockerfile); endurecimiento genérico.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "M-01",
    "titulo": "MD5 sin sal y contraseñas semilla débiles",
    "clase": "TP",
-   "verificable": false,
    "gt": [
     {
      "id": "oss-oopssec-store-042",
      "estricto": true
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "M-02",
    "titulo": "sin rate limiting en login",
    "clase": "TP",
-   "verificable": false,
    "gt": [
     {
      "id": "oss-oopssec-store-013",
      "estricto": false,
      "nota": "sin fichero concreto («todas las rutas de auth», nombra login)"
     }
-   ]
+   ],
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "M-03",
    "titulo": "sin cabeceras de seguridad",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Real y genérico."
+   "nota": "Real y genérico.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "M-04",
    "titulo": "sesiones sin revocación, logout solo borra la cookie",
    "clase": "TP",
-   "verificable": false,
    "gt": [
     {
      "id": "oss-oopssec-store-015",
      "estricto": true,
      "nota": "sin línea"
     }
-   ]
+   ],
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "M-05",
    "titulo": "token de sesión en la query string",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Real; es el fallo de la entrada 035, pero lo sitúa en support-login y no en support-access:90."
+   "nota": "Real; es el fallo de la entrada 035, pero lo sitúa en support-login y no en support-access:90.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "M-06",
    "titulo": "XSS almacenado en la bio",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Real (ProfileClient:411)."
+   "nota": "Real (ProfileClient:411).",
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "M-07",
    "titulo": "SVG subido servido con script",
    "clase": "TP",
-   "verificable": false,
    "gt": [
     {
      "id": "oss-oopssec-store-004",
      "estricto": false,
      "nota": "cita 14 y 94; la entrada es la comprobación de tipos (64-72)"
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "M-08",
    "titulo": "códigos de regalo predecibles (LCG)",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Real."
+   "nota": "Real.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "M-09",
    "titulo": "carrera en cupones",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Real (setTimeout de 150 ms entre comprobar y usar)."
+   "nota": "Real (setTimeout de 150 ms entre comprobar y usar).",
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "M-10",
    "titulo": "secreto de pago en el cliente y no validado",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Real; relacionado con 001."
+   "nota": "Real; relacionado con 001.",
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "M-11",
    "titulo": "/api/hints/reveal público",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Real, aunque es la mecánica del juego."
+   "nota": "Real, aunque es la mecánica del juego.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "M-12",
    "titulo": "fuga de información en errores de exportación",
    "clase": "TP",
-   "verificable": false,
    "gt": [
     {
      "id": "oss-oopssec-store-032",
      "estricto": false,
      "nota": "cita línea 7 y «los bloques de error» con getSystemDiagnostics; la entrada es 123-126"
     }
-   ]
+   ],
+   "linea": true,
+   "cwe": false
   },
   {
    "id": "B-01",
    "titulo": "autor de reseñas suplantable",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Plausible: el autor sale del cuerpo si no hay sesión."
+   "nota": "Plausible: el autor sale del cuerpo si no hay sesión.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "B-02",
    "titulo": "redirect sin validar",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Real, pero lo sitúa en login/route.ts y oauth/callback; la entrada 037 es LoginForm.tsx:37 (window.location.href = redirect)."
+   "nota": "Real, pero lo sitúa en login/route.ts y oauth/callback; la entrada 037 es LoginForm.tsx:37 (window.location.href = redirect).",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "B-03",
    "titulo": "PII en logs",
    "clase": "EXTRA",
-   "verificable": false,
-   "nota": "Menor."
+   "nota": "Menor.",
+   "linea": false,
+   "cwe": false
   },
   {
    "id": "B-04",
    "titulo": "rol en localStorage",
    "clase": "FP",
-   "verificable": false,
-   "nota": "No es un fallo: el propio informe dice que la protección está en el servidor."
+   "nota": "No es un fallo: el propio informe dice que la protección está en el servidor.",
+   "linea": false,
+   "cwe": false
   }
  ]
 }
