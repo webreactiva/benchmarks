@@ -1,0 +1,40 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/inkling-2-small",
+  "agente": "OpenCode",
+  "fecha": "2026-11-23T20:52:12Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 260998,
+    "output": 16453,
+    "reasoning": 0,
+    "cache_read": 574976,
+    "cache_write": 0,
+    "total": 852427
+  },
+  "peticiones": 16,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "shell": 13,
+    "read": 5,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df5d1bf44ffeRJvDFFQ7wPh97C",
+  "coste_usd": 0,
+  "ficheros": [
+    "SECURITY_AUDIT.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 131072,
+    "output_proveedor": 131072,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}
