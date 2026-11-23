@@ -1,0 +1,552 @@
+{
+ "hallazgos": [
+  {
+   "id": "C-01",
+   "titulo": "alta con rol ADMIN (mass assignment)",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "nota": "cita ≈52-83"
+    }
+   ]
+  },
+  {
+   "id": "C-02",
+   "titulo": "MD5 sin sal para contraseñas",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": true,
+     "nota": "evidencia en lib/server-auth.ts; nombra reset-password como usuaria, sin línea"
+    }
+   ]
+  },
+  {
+   "id": "C-03",
+   "titulo": "secreto JWT por defecto y middleware sin verificar firma",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true
+    }
+   ],
+   "nota": "El middleware sin firma es real y no está etiquetado."
+  },
+  {
+   "id": "C-04",
+   "titulo": "token de reset predecible md5(email+timestamp)",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real (forgot-password:14-42)."
+  },
+  {
+   "id": "C-05",
+   "titulo": "SQLi en búsqueda de productos",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": true,
+     "nota": "sin línea"
+    }
+   ]
+  },
+  {
+   "id": "C-06",
+   "titulo": "SQLi en búsqueda de pedidos",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": true,
+     "nota": "sin línea"
+    }
+   ]
+  },
+  {
+   "id": "C-07",
+   "titulo": "SQLi en tracking vía X-Forwarded-For",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true,
+     "nota": "sin línea"
+    }
+   ]
+  },
+  {
+   "id": "C-08",
+   "titulo": "path traversal en /api/files (file y list+path)",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "vector ?list=true&path="
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "nota": "vector ?file="
+    }
+   ]
+  },
+  {
+   "id": "C-09",
+   "titulo": "support-access con email arbitrario y devuelve supportLoginUrl",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true
+    },
+    {
+     "id": "oss-oopssec-store-035",
+     "estricto": true,
+     "nota": "dice que devuelve supportLoginUrl con el token de la víctima (línea 90)"
+    }
+   ]
+  },
+  {
+   "id": "A-01",
+   "titulo": "IDOR en pedidos",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A-02",
+   "titulo": "XSS en analytics por la IP",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A-03",
+   "titulo": "XSS almacenado en reseñas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-039",
+     "estricto": true,
+     "nota": "cita ≈50-60"
+    }
+   ]
+  },
+  {
+   "id": "A-04",
+   "titulo": "SSRF en /api/support",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A-05",
+   "titulo": "/internal confía en la cabecera x-internal-request",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real (app/internal/page.tsx:17)."
+  },
+  {
+   "id": "A-06",
+   "titulo": "contraseñas en el log y SIEM con root/admin",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "nota": "login/route.ts sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true,
+     "nota": "«/api/monitoring/auth tiene el mismo par»"
+    }
+   ],
+   "nota": "monitoring/logs:7-8 con root/admin también es real."
+  },
+  {
+   "id": "A-07",
+   "titulo": "total del pedido del cliente",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "A-08",
+   "titulo": "hash de contraseña exportable y diagnósticos en errores de export",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": true,
+     "nota": "systemDiagnostics en el error, sin línea"
+    }
+   ]
+  },
+  {
+   "id": "A-09",
+   "titulo": "XSS en SupportForm con el contenido de la SSRF",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "A-10",
+   "titulo": "tokens de compartir AES-CBC sin MAC, clave fija",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true
+    }
+   ],
+   "nota": "Habla de CBC maleable, no del oráculo de padding (018)."
+  },
+  {
+   "id": "M-01",
+   "titulo": "HTML oculto con nota de desarrollo en admin/documents",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real: resto del juego."
+  },
+  {
+   "id": "M-02",
+   "titulo": "secretos fijos: RTMP, token de diag, cabecera MCP, root/admin",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-003",
+     "estricto": true,
+     "nota": "diag sin línea"
+    }
+   ],
+   "nota": "RTMP y cabecera MCP son reales y sin etiquetar."
+  },
+  {
+   "id": "M-03",
+   "titulo": ".env.local versionado, NEXT_PUBLIC_PAYMENT_SECRET, supplier-registry",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-001",
+     "estricto": true,
+     "nota": "sin línea"
+    }
+   ]
+  },
+  {
+   "id": "M-04",
+   "titulo": "host header en enlaces de compartir pedido",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real y menor (orders/[id]/share:22); cita x-forwarded-host, que no está, pero sí host."
+  },
+  {
+   "id": "M-05",
+   "titulo": "IDs de pedido secuenciales",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real (orders/route.ts:119-123), menor."
+  },
+  {
+   "id": "M-06",
+   "titulo": "códigos de tarjeta regalo predecibles",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "M-07",
+   "titulo": "carrera en cupones",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "M-08",
+   "titulo": "prompt injection, mcpServerUrl del cliente, resultados de herramientas al LLM",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-008",
+     "estricto": true,
+     "nota": "mcpServerUrl → SSRF, sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-009",
+     "estricto": true,
+     "nota": "filtro de 4 regex, sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-010",
+     "estricto": true,
+     "nota": "«reenvía resultados al LLM», sin línea"
+    }
+   ],
+   "nota": "La cabecera X-MCP-Session fija es real y sin etiquetar."
+  },
+  {
+   "id": "M-09",
+   "titulo": "enumeración de usuarios en el login, sin rate limiting",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-014",
+     "estricto": true
+    },
+    {
+     "id": "oss-oopssec-store-013",
+     "estricto": true,
+     "nota": "«sin rate limiting» dentro del mismo hallazgo del login"
+    }
+   ]
+  },
+  {
+   "id": "M-10",
+   "titulo": "sesiones y tokens de soporte de un año, token en la URL",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real (support-login:47, support-access:9)."
+  },
+  {
+   "id": "B-01",
+   "titulo": "dependencias con CVE (npm audit)",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real (Next 15.2.2)."
+  },
+  {
+   "id": "B-02",
+   "titulo": "cookie sin __Host- y sin token CSRF",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "SameSite=Lax; el propio informe lo da por aceptable."
+  },
+  {
+   "id": "B-03",
+   "titulo": "sin cabeceras de seguridad",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real y genérico."
+  },
+  {
+   "id": "B-04",
+   "titulo": "Dockerfile como root, prisma studio en setup",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real (sin USER; scripts/setup.sh:53)."
+  },
+  {
+   "id": "B-05",
+   "titulo": "package.json con private:false",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "Higiene, no fallo de seguridad."
+  },
+  {
+   "id": "B-06",
+   "titulo": "errores con detalles internos; orders/search relanza",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "El ejemplo no se sostiene: el catch exterior devuelve un error genérico."
+  },
+  {
+   "id": "B-07",
+   "titulo": "inyección CSV en export",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real: toCSV no neutraliza =,+,-,@."
+  },
+  {
+   "id": "B-08",
+   "titulo": "SVG con script como imagen de producto",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "B-09",
+   "titulo": "IDOR en wishlists",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-036",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "B-10",
+   "titulo": "API de flags pública",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-023",
+     "estricto": true
+    },
+    {
+     "id": "oss-oopssec-store-021",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "B-11",
+   "titulo": "middleware duplica auth sin verificar firma",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real; repite C-03."
+  },
+  {
+   "id": "B-12",
+   "titulo": "comparación en tiempo constante en gift cards (positivo)",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "El propio informe dice que está bien."
+  },
+  {
+   "id": "B-13",
+   "titulo": "app.log sin rotación con PII",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Menor."
+  },
+  {
+   "id": "B-14",
+   "titulo": "docker-compose con env_file .env.local",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "Es la forma normal de pasar variables; el fallo real (.env.local en la imagen) ya está en M-03."
+  },
+  {
+   "id": "B-15",
+   "titulo": "build sin ignoreBuildErrors (correcto)",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "El propio informe dice que es correcto."
+  },
+  {
+   "id": "K-1",
+   "titulo": "XXE en import-order (cadena de ataque 1)",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true,
+     "nota": "noent/dtdload en import-order, sin línea"
+    }
+   ],
+   "nota": "Solo aparece en las cadenas de ataque."
+  },
+  {
+   "id": "K-2",
+   "titulo": "open redirect en /login?redirect= (cadena de ataque 2)",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-037",
+     "estricto": false,
+     "nota": "no cita LoginForm.tsx ni línea"
+    }
+   ],
+   "nota": "Solo aparece en las cadenas de ataque."
+  }
+ ]
+}
