@@ -66,7 +66,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [ollama/muse-spark-open](resultados/ollama_muse-spark-open/README.md) | OpenCode | 7 | 8 | 9 | – | **8,0** | 38 | 1,1 M |
 | [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | 10 | 8 | 5 | – | **7,7** | 86 | 4,4 M |
 | [ollama/minimax-m3](resultados/ollama_minimax-m3/README.md) | OpenCode | 4 | 9 | 10 | – | **7,7** | 311 | 35,7 M |
-| [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | 6 | 9 | 6 | – | **7,0** | 121 | 9,1 M |
+| [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | 6 | 9 | 6 | 6 | **7,0** | 121 | 9,1 M |
 | [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | 7 | 6 | 8 | – | **7,0** | 28 | 0,6 M |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | 6 | 8 | 4 | – | **6,0** | 19 | 0,4 M |
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | – | **5,7** | 15 | 0,3 M |
