@@ -9,8 +9,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-017",
-     "estricto": true,
-     "nota": "cita ≈52-83"
+     "estricto": false,
+     "nota": "cita ≈52-83: toca la ventana pero abarca 32 líneas (> 20)"
     }
    ]
   },
@@ -24,7 +24,8 @@
     {
      "id": "oss-oopssec-store-016",
      "estricto": true,
-     "nota": "evidencia en lib/server-auth.ts; nombra reset-password como usuaria, sin línea"
+     "nota": "evidencia en lib/server-auth.ts; nombra reset-password como usuaria, sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -60,7 +61,8 @@
     {
      "id": "oss-oopssec-store-029",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -74,7 +76,8 @@
     {
      "id": "oss-oopssec-store-027",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -88,7 +91,8 @@
     {
      "id": "oss-oopssec-store-031",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -102,12 +106,14 @@
     {
      "id": "oss-oopssec-store-019",
      "estricto": true,
-     "nota": "vector ?list=true&path="
+     "nota": "vector ?list=true&path=",
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-020",
      "estricto": true,
-     "nota": "vector ?file="
+     "nota": "vector ?file=",
+     "sin_linea": true
     }
    ]
   },
@@ -120,12 +126,14 @@
    "gt": [
     {
      "id": "oss-oopssec-store-033",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-035",
      "estricto": true,
-     "nota": "dice que devuelve supportLoginUrl con el token de la víctima (línea 90)"
+     "nota": "dice que devuelve supportLoginUrl con el token de la víctima (línea 90)",
+     "sin_linea": true
     }
    ]
   },
@@ -138,7 +146,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-025",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     }
    ]
   },
@@ -151,7 +160,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-002",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     }
    ]
   },
@@ -178,7 +188,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-030",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     }
    ]
   },
@@ -200,12 +211,14 @@
     {
      "id": "oss-oopssec-store-012",
      "estricto": true,
-     "nota": "login/route.ts sin línea"
+     "nota": "login/route.ts sin línea",
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-024",
      "estricto": true,
-     "nota": "«/api/monitoring/auth tiene el mismo par»"
+     "nota": "«/api/monitoring/auth tiene el mismo par»",
+     "sin_linea": true
     }
    ],
    "nota": "monitoring/logs:7-8 con root/admin también es real."
@@ -219,7 +232,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-026",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     }
    ]
   },
@@ -233,7 +247,8 @@
     {
      "id": "oss-oopssec-store-032",
      "estricto": true,
-     "nota": "systemDiagnostics en el error, sin línea"
+     "nota": "systemDiagnostics en el error, sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -254,7 +269,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-041",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     }
    ],
    "nota": "Habla de CBC maleable, no del oráculo de padding (018)."
@@ -277,7 +293,8 @@
     {
      "id": "oss-oopssec-store-003",
      "estricto": true,
-     "nota": "diag sin línea"
+     "nota": "diag sin línea",
+     "sin_linea": true
     }
    ],
    "nota": "RTMP y cabecera MCP son reales y sin etiquetar."
@@ -292,7 +309,8 @@
     {
      "id": "oss-oopssec-store-001",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -338,17 +356,20 @@
     {
      "id": "oss-oopssec-store-008",
      "estricto": true,
-     "nota": "mcpServerUrl → SSRF, sin línea"
+     "nota": "mcpServerUrl → SSRF, sin línea",
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-009",
      "estricto": true,
-     "nota": "filtro de 4 regex, sin línea"
+     "nota": "filtro de 4 regex, sin línea",
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-010",
      "estricto": true,
-     "nota": "«reenvía resultados al LLM», sin línea"
+     "nota": "«reenvía resultados al LLM», sin línea",
+     "sin_linea": true
     }
    ],
    "nota": "La cabecera X-MCP-Session fija es real y sin etiquetar."
@@ -362,12 +383,14 @@
    "gt": [
     {
      "id": "oss-oopssec-store-014",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-013",
      "estricto": true,
-     "nota": "«sin rate limiting» dentro del mismo hallazgo del login"
+     "nota": "«sin rate limiting» dentro del mismo hallazgo del login",
+     "sin_linea": true
     }
    ]
   },
@@ -444,7 +467,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-004",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     }
    ]
   },
@@ -457,7 +481,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-036",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     }
    ]
   },
@@ -470,11 +495,13 @@
    "gt": [
     {
      "id": "oss-oopssec-store-023",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-021",
-     "estricto": true
+     "estricto": true,
+     "sin_linea": true
     }
    ]
   },
@@ -528,7 +555,8 @@
     {
      "id": "oss-oopssec-store-007",
      "estricto": true,
-     "nota": "noent/dtdload en import-order, sin línea"
+     "nota": "noent/dtdload en import-order, sin línea",
+     "sin_linea": true
     }
    ],
    "nota": "Solo aparece en las cadenas de ataque."
@@ -543,7 +571,8 @@
     {
      "id": "oss-oopssec-store-037",
      "estricto": false,
-     "nota": "no cita LoginForm.tsx ni línea"
+     "nota": "no cita LoginForm.tsx ni línea",
+     "sin_linea": true
     }
    ],
    "nota": "Solo aparece en las cadenas de ataque."

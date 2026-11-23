@@ -1,4 +1,4 @@
-# SEC · claude-haiku-5-5 · 7/10
+# SEC · claude-haiku-5-5 · 6/10
 
 **Cobertura alta, sin CWE**
 
@@ -8,12 +8,14 @@ Cruce a mano de los 45 hallazgos de `salida/auditoria-seguridad.md` con el groun
 
 | | Estricto (nota) | Juez |
 |---|---:|---:|
-| Entradas cubiertas (de 40) | 30 | 35 |
-| F3 | 73,3 | 87,7 |
-| wF3 | 73,2 | |
-| Falsos positivos | 19 (incluye 13 fallos reales sin etiquetar) | 4 |
+| Entradas cubiertas (de 40) | 25 | 35 |
+| F3 | 61,3 | 87,7 |
+| wF3 | 60,5 | |
+| Falsos positivos | 23 (incluye 13 fallos reales sin etiquetar) | 4 |
 
-Rúbrica: F3 6/7, críticas 1 (5 de 6; falla el oráculo de padding), fichero y línea 0 (84 %, le faltan los secretos, dependencias, rate limiting y algunos bajos), CWE 0 (ninguno).
+La regla estricta exige línea (no cuentan `.env.local`, la API de flags por slug, el logout ni el token de soporte, que cita sin línea) y rangos de hasta 20 líneas (no cuenta su C3, 58-80).
+
+Rúbrica: F3 5/7, críticas 1 (4 de 6 con línea; falla el oráculo de padding y `.env.local` va sin línea), fichero y línea 0 (84 %), CWE 0 (ninguno).
 
 ## Lo que está bien
 

@@ -24,12 +24,14 @@
     {
      "id": "oss-oopssec-store-023",
      "estricto": true,
-     "nota": "sin línea; describe la falta de autenticación aunque da CWE-200"
+     "nota": "sin línea; describe la falta de autenticación aunque da CWE-200",
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-021",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -42,13 +44,13 @@
    "gt": [
     {
      "id": "oss-oopssec-store-019",
-     "estricto": true,
-     "nota": "rango 19-67 empieza en la 19"
+     "estricto": false,
+     "nota": "rango 19-67 abarca más de 20 líneas"
     },
     {
      "id": "oss-oopssec-store-020",
      "estricto": false,
-     "nota": "un solo rango 19-67, que empieza fuera de ±10 de la 62"
+     "nota": "rango 19-67 abarca más de 20 líneas"
     }
    ]
   },
@@ -67,7 +69,8 @@
     {
      "id": "oss-oopssec-store-002",
      "estricto": false,
-     "nota": "menciona el XSS de la IP en administración, sin citar AnalyticsClient"
+     "nota": "menciona el XSS de la IP en administración, sin citar AnalyticsClient",
+     "sin_linea": true
     }
    ]
   },
@@ -80,8 +83,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-029",
-     "estricto": false,
-     "nota": "cita 85-96; el rango empieza fuera de ±10 de 100-103"
+     "estricto": true,
+     "nota": "cita 85-96 (12 líneas), toca la ventana 90-113"
     }
    ]
   },
@@ -94,8 +97,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-027",
-     "estricto": false,
-     "nota": "cita 81-98; el rango empieza fuera de ±10 de 102-105"
+     "estricto": true,
+     "nota": "cita 81-98 (18 líneas), toca la ventana 92-115"
     }
    ]
   },
@@ -109,12 +112,12 @@
     {
      "id": "oss-oopssec-store-005",
      "estricto": false,
-     "nota": "rango 103-134 sin la línea 120; empieza fuera de ±10"
+     "nota": "rango 103-134 abarca más de 20 líneas; no cita la 120"
     },
     {
      "id": "oss-oopssec-store-006",
      "estricto": false,
-     "nota": "rango 103-134, empieza fuera de ±10 de 122-136"
+     "nota": "rango 103-134 abarca más de 20 líneas"
     }
    ]
   },
@@ -148,8 +151,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-033",
-     "estricto": true,
-     "nota": "51-101"
+     "estricto": false,
+     "nota": "rango 51-101 abarca más de 20 líneas"
     }
    ]
   },
@@ -168,7 +171,8 @@
     {
      "id": "oss-oopssec-store-016",
      "estricto": false,
-     "nota": "cita «login/signup/reset» sin fichero ni línea"
+     "nota": "cita «login/signup/reset» sin fichero ni línea",
+     "sin_linea": true
     }
    ]
   },
@@ -182,7 +186,7 @@
     {
      "id": "oss-oopssec-store-026",
      "estricto": false,
-     "nota": "rango 35-218, empieza fuera de ±10 de 125-133"
+     "nota": "rango 35-218 abarca más de 20 líneas"
     }
    ]
   },
@@ -208,8 +212,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-039",
-     "estricto": true,
-     "nota": "45-67"
+     "estricto": false,
+     "nota": "rango 45-67 abarca 23 líneas"
     }
    ]
   },
@@ -279,7 +283,7 @@
     {
      "id": "oss-oopssec-store-004",
      "estricto": true,
-     "nota": "cita 9-15 y 79-87; la 79 cae a ±10 de 64-72"
+     "nota": "cita 9-15 (fuera) y 79-87 (9 líneas, toca la ventana 54-82)"
     }
    ],
    "nota": "El traversal por id no se sostiene: el producto tiene que existir (findUnique)."
@@ -330,7 +334,8 @@
     {
      "id": "oss-oopssec-store-001",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -357,8 +362,8 @@
    "gt": [
     {
      "id": "oss-oopssec-store-025",
-     "estricto": true,
-     "nota": "8-75"
+     "estricto": false,
+     "nota": "rango 8-75 abarca más de 20 líneas"
     }
    ]
   },
@@ -401,12 +406,14 @@
     {
      "id": "oss-oopssec-store-009",
      "estricto": true,
-     "nota": "cita ai-assistant/route.ts sin línea"
+     "nota": "cita ai-assistant/route.ts sin línea",
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-008",
      "estricto": false,
-     "nota": "menciona mcpServerUrl del cliente sin llamarlo SSRF ni dar línea"
+     "nota": "menciona mcpServerUrl del cliente sin llamarlo SSRF ni dar línea",
+     "sin_linea": true
     }
    ]
   },
@@ -428,7 +435,8 @@
     {
      "id": "oss-oopssec-store-035",
      "estricto": true,
-     "nota": "sin línea; supportLoginUrl con el token"
+     "nota": "sin línea; supportLoginUrl con el token",
+     "sin_linea": true
     }
    ]
   },
@@ -442,7 +450,8 @@
     {
      "id": "oss-oopssec-store-036",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -464,7 +473,8 @@
     {
      "id": "oss-oopssec-store-013",
      "estricto": false,
-     "nota": "«todos los endpoints», sin fichero"
+     "nota": "«todos los endpoints», sin fichero",
+     "sin_linea": true
     }
    ]
   },
@@ -507,7 +517,8 @@
     {
      "id": "oss-oopssec-store-015",
      "estricto": false,
-     "nota": "en notas de higiene, sin fichero"
+     "nota": "en notas de higiene, sin fichero",
+     "sin_linea": true
     }
    ]
   }
