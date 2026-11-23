@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # benchmark.sh [-p A3D,AIF,...] MODELO [MODELO...]
 #   benchmark.sh nvidia/nemotron-3-ultra-550b-a55b:free haiku
-#   benchmark.sh -p CCA,PTS sonnet google/gemma-4-31b-it:free
+#   benchmark.sh -p CCA,SEC sonnet google/gemma-4-31b-it:free
 # Lanza los prompts (todos por defecto, en el orden de abajo) para cada modelo, uno detrás de otro.
 # Un modelo con «/» va con OpenCode (lanzar.sh): «ollama/…» es de Ollama Cloud y el resto, de OpenRouter; haiku, sonnet, opus o claude-* van con
 # Claude Code (lanzar-claude.sh, esfuerzo opcional en ESFUERZO); gpt-* va con Codex CLI (lanzar-codex.sh, esfuerzo en ESFUERZO, por defecto medium).
 # Lo que ya tiene meta.json no se repite. Para al primer 429 de OpenRouter.
 set -u
 B=$(cd "$(dirname "$0")/.." && pwd)
-prompts="A3D AIF CCA PTS SEC"
+prompts="A3D AIF CCA SEC"
 [ "${1:-}" = -p ] && { prompts=$(echo "$2" | tr ',' ' '); shift 2; }
 [ $# -ge 1 ] || { sed -n '2,8p' "$0"; exit 1; }
 for m in "$@"; do

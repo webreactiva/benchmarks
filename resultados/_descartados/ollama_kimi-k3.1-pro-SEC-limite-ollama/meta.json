@@ -1,0 +1,45 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/kimi-k3.1-pro",
+  "agente": "OpenCode",
+  "fecha": "2026-11-23T20:58:19Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 135299,
+    "output": 24950,
+    "reasoning": 0,
+    "cache_read": 1614276,
+    "cache_write": 0,
+    "total": 1774525
+  },
+  "peticiones": 26,
+  "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: dd7ad8e2-bea5-4744-807c-581573b80a75)",
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 54,
+    "glob": 4,
+    "subagent": 3,
+    "shell": 14,
+    "grep": 13,
+    "execute": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df5cc2559ffeGHorXuTE0HbFag",
+  "coste_usd": 0,
+  "ficheros": [
+    "auditoria-npm-pack.json",
+    "auditoria-npm-produccion.json",
+    "auditoria-npm.json"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

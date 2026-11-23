@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # lanzar.sh <CODIGO> <modelo>
-#   lanzar.sh PTS nvidia/nemotron-3-ultra-550b-a55b:free     OpenRouter (OPEN_ROUTER_API_KEY)
-#   lanzar.sh PTS ollama/deepseek-v4.1-flash                  Ollama Cloud (OLLAMA_CLOUD_API_KEY)
+#   lanzar.sh CCA nvidia/nemotron-3-ultra-550b-a55b:free     OpenRouter (OPEN_ROUTER_API_KEY)
+#   lanzar.sh CCA ollama/deepseek-v4.1-flash                  Ollama Cloud (OLLAMA_CLOUD_API_KEY)
 # Abre un OpenCode aislado (sin la configuración ni el entorno de esta sesión) en tmux, en una carpeta vacía fuera
 # del repo, le manda el prompt tal cual + la frase de destino (prompts/_destino.txt), espera a que acabe y guarda en
 # resultados/<modelo>/<CODIGO>/:

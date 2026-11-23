@@ -1,0 +1,34 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/minimax-m3.1-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-23T21:09:57Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "reasoning": 0,
+    "cache_read": 0,
+    "cache_write": 0,
+    "total": 0
+  },
+  "peticiones": 1,
+  "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 146ba6b9-d6f7-4a19-a346-23793b1e6d12)",
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {},
+  "compactaciones": 0,
+  "sesion": "ses_df5c17d88ffes0jbFFwPcV3Q9I",
+  "coste_usd": 0,
+  "ficheros": [],
+  "limites": {
+    "context": 1000000,
+    "output": 500000,
+    "output_proveedor": 1000000,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

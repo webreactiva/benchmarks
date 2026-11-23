@@ -1,0 +1,36 @@
+ ⠋ Auditoría de seguridad del pr +
+
+  ┃
+  ┃  Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.
+  ┃
+
+     + 3 commands, 4 thoughts, 15 reads, 8 tools
+
+     ↳ Shell finished · npm audit --package-lock-only --json > auditoria-npm.json
+
+     + 3 commands, 9 thoughts, 28 reads, 5 tools
+
+     ↳ Shell finished · npm audit --package-lock-only --omit=dev --json > auditoria-npm-produccion.json
+
+     + 7 commands, 10 thoughts, 11 reads, 7 tools
+
+     ↳ Explore finished · Auditar configuración y exposición
+
+     + 1 command, 2 thoughts, 1 tool
+
+     ↳ Explore finished · Auditar autenticación y autorización
+
+     Error: you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/
+     upgrade or add usage credits: https://ollama.com/settings (ref: dd7ad8e2-bea5-4744-807c-581573b80a75)
+
+     Build · kimi-k3.1-pro · 10m 49s · 1.0s ttft
+
+
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · kimi-k3.1-pro Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-EoyxBeHU                                              ↓ 1 subagent · 132.3K (13%)  ctrl+p commands
+
