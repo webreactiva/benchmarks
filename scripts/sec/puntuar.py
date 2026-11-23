@@ -10,7 +10,8 @@ hallazgos.json:
                   "gt": [{"id": "oss-oopssec-store-029", "estricto": true, "nota": "..."}], "nota": "..."}]}
 
 - Un hallazgo cubre una entrada por cada ubicación que cita. «estricto» = cumple la regla de RealVuln (mismo fichero,
-  línea en el rango ±10 o sin línea, y clase equivalente a un CWE de acceptable_cwes).
+  línea en el rango ±10, y clase equivalente a un CWE de acceptable_cwes). «sin_linea»: esa ubicación no da línea;
+  RealVuln la aceptaría, aquí no cuenta como estricta.
 - Como en RealVuln, todo hallazgo que no cubre ninguna entrada de forma estricta es un falso positivo, aunque el juez
   lo haya comprobado y sea real (EXTRA): se cuenta aparte, como información, pero no salva el F3.
 - linea: da fichero y línea. cwe: da un CWE.
@@ -25,8 +26,13 @@ cvss = {f["id"]: f["cvss"]["base_score"] for f in gt if f.get("cvss")}
 criticas = {f["id"] for f in gt if f["id"] in puntuables and f.get("cvss", {}).get("severity") == "CRITICAL"}
 hs = json.load(open(d / "juez" / "hallazgos.json"))["hallazgos"]
 
+def estricta(g):
+    # Estricta: la regla de RealVuln (fichero, línea ±10, clase) y además con línea: sin ella, en texto libre basta
+    # nombrar el fichero, y eso no es una auditoría
+    return bool(g.get("estricto")) and not g.get("sin_linea")
+
 def cubre(estricto):
-    ids = [g["id"] for x in hs if x["clase"] == "TP" for g in x.get("gt", []) if g.get("estricto") or not estricto]
+    ids = [g["id"] for x in hs if x["clase"] == "TP" for g in x.get("gt", []) if estricta(g) or not estricto]
     assert len(ids) == len(set(ids)), "una entrada del ground truth contada dos veces"
     assert set(ids) <= puntuables, set(ids) - puntuables
     return set(ids)
@@ -36,7 +42,7 @@ def f3(tp, fp, fn):
 
 tp_e, tp_j = cubre(True), cubre(False)
 ns = sum(x["clase"] == "NS" for x in hs)
-fp_e = sum(1 for x in hs if x["clase"] != "NS" and not any(g.get("estricto") for g in x.get("gt", [])))
+fp_e = sum(1 for x in hs if x["clase"] != "NS" and not any(estricta(g) for g in x.get("gt", [])))
 fp_j = sum(x["clase"] == "FP" for x in hs)
 fn_e, fn_j = len(puntuables) - len(tp_e), len(puntuables) - len(tp_j)
 F3 = f3(len(tp_e), fp_e, fn_e)

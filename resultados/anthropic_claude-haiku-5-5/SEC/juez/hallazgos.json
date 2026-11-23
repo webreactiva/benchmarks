@@ -245,7 +245,8 @@
     {
      "id": "oss-oopssec-store-001",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -303,7 +304,8 @@
     {
      "id": "oss-oopssec-store-021",
      "estricto": true,
-     "nota": "sin línea"
+     "nota": "sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -381,7 +383,8 @@
     {
      "id": "oss-oopssec-store-015",
      "estricto": true,
-     "nota": "logout sin línea"
+     "nota": "logout sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -508,7 +511,8 @@
     {
      "id": "oss-oopssec-store-035",
      "estricto": true,
-     "nota": "sin línea; mismo fichero y clase (exposición del token)"
+     "nota": "sin línea; mismo fichero y clase (exposición del token)",
+     "sin_linea": true
     }
    ]
   },

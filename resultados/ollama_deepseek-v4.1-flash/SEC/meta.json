@@ -1,0 +1,43 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/deepseek-v4.1-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-23T20:52:09Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 120371,
+    "output": 46604,
+    "reasoning": 0,
+    "cache_read": 2936064,
+    "cache_write": 0,
+    "total": 3103039
+  },
+  "peticiones": 30,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "shell": 43,
+    "write": 3,
+    "edit": 2
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df5d1c7e4ffexbB3n7lautsoj4",
+  "coste_usd": 0,
+  "ficheros": [
+    "README_AUDITORIA.md",
+    "SECURITY_AUDIT.md",
+    "flags_encontrados.csv",
+    "hallazgos.json"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 393216,
+    "output_proveedor": 393216,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

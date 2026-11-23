@@ -5,7 +5,7 @@ Modelo a juzgar: `resultados/<MODELO>/SEC/`.
 Lee primero, enteros:
 1. `scripts/sec/JUEZ.md`: el procedimiento y la tabla de las 46 entradas del ground truth (fichero, líneas, clase, CWE aceptados). La fuente completa es `scripts/sec/ground-truth.json`.
 2. `rubricas.md`, sección SEC.
-3. El ejemplo ya juzgado: `resultados/anthropic_claude-haiku-5-5/SEC/juez/hallazgos.json`, `juicio.json` y `juicio.md`. Sigue su formato y su vara de medir (cuándo es `estricto: true`, cuándo `false`, cuándo `EXTRA` o `FP`).
+3. El ejemplo ya juzgado: `resultados/anthropic_claude-haiku-5-5/SEC/juez/hallazgos.json`, `juicio.json` y `juicio.md`. Sigue su formato y su vara de medir. Ojo: una ubicación sin número de línea lleva `"sin_linea": true` en su entrada de `gt` (no cuenta como estricta) (cuándo es `estricto: true`, cuándo `false`, cuándo `EXTRA` o `FP`).
 
 Después:
 1. Lee el informe del modelo: el fichero de `salida/` (lo que creó; `cambios.txt` dice qué) y, si no dejó fichero, `respuesta.md`. Si dejó varios ficheros, júzgalos todos como un solo informe.

@@ -1,0 +1,396 @@
+{
+  "project": "quokka-bazaar",
+  "version": "2.17.0",
+  "audit_date": "2026-11-23",
+  "scope": "Repositorio completo (código, configuración, dependencias, contenedores)",
+  "summary": {
+    "critical": 8,
+    "high": 19,
+    "medium": 8,
+    "low": 3,
+    "total": 38
+  },
+  "findings": [
+    {
+      "id": "F-01",
+      "title": "Exposición no autenticada de todos los flags",
+      "severity": "Crítica",
+      "cvss": 9.1,
+      "cwe": ["CWE-200", "CWE-862"],
+      "owasp": ["A01", "A05"],
+      "locations": ["app/api/flags/route.ts:6-13", "app/api/flags/[slug]/route.ts:6-16", "app/api/flags/progress/route.ts:6-70"],
+      "remediation": "Eliminar el endpoint público o exigir withAdminAuth; no devolver el campo flag."
+    },
+    {
+      "id": "F-02",
+      "title": "Secreto JWT por defecto y forja de sesiones",
+      "severity": "Crítica",
+      "cvss": 9.8,
+      "cwe": ["CWE-321", "CWE-798"],
+      "owasp": ["A02", "A07"],
+      "locations": ["lib/server-auth.ts:12", "lib/server-auth.ts:23-31"],
+      "remediation": "Obligar JWT_SECRET de alta entropía, rotarlo y verificar rol en BD."
+    },
+    {
+      "id": "F-03",
+      "title": "Middleware valida JWT sin verificar firma",
+      "severity": "Alta",
+      "cvss": 8.2,
+      "cwe": ["CWE-347"],
+      "owasp": ["A01"],
+      "locations": ["middleware.ts:3-20", "middleware.ts:22-35"],
+      "remediation": "Validar criptográficamente la firma en el middleware."
+    },
+    {
+      "id": "F-04",
+      "title": "Path traversal no autenticado en /api/files",
+      "severity": "Crítica",
+      "cvss": 9.1,
+      "cwe": ["CWE-22"],
+      "owasp": ["A01", "A05"],
+      "locations": ["app/api/files/route.ts:18-52"],
+      "remediation": "Resolver rutas y verificar contención en baseDir; exigir autenticación."
+    },
+    {
+      "id": "F-05",
+      "title": "SQL injection en búsqueda de productos y pedidos",
+      "severity": "Crítica",
+      "cvss": 9.3,
+      "cwe": ["CWE-89"],
+      "owasp": ["A03"],
+      "locations": ["app/api/products/search/route.ts:84-100", "app/api/orders/search/route.ts:81-102"],
+      "remediation": "Parametrizar consultas y usar Prisma.findMany/$queryRaw con placeholders."
+    },
+    {
+      "id": "F-06",
+      "title": "SQL injection en /api/tracking",
+      "severity": "Alta",
+      "cvss": 8.6,
+      "cwe": ["CWE-89"],
+      "owasp": ["A03"],
+      "locations": ["app/api/tracking/route.ts:88-103"],
+      "remediation": "Usar prisma.visitorLog.create y validar IP/sessionId."
+    },
+    {
+      "id": "F-07",
+      "title": "SQL injection en auditoría de reseñas",
+      "severity": "Media",
+      "cvss": 6.5,
+      "cwe": ["CWE-89"],
+      "owasp": ["A03"],
+      "locations": ["app/api/admin/reviews/route.ts:102-141"],
+      "remediation": "Parametrizar better-sqlite3 con placeholders."
+    },
+    {
+      "id": "F-08",
+      "title": "XSS almacenado en reseñas de producto",
+      "severity": "Alta",
+      "cvss": 8.2,
+      "cwe": ["CWE-79"],
+      "owasp": ["A03"],
+      "locations": ["app/products/[id]/ProductDetailClient.tsx:50-65", "app/api/products/[id]/reviews/route.ts:60-83"],
+      "remediation": "Renderizar como texto y eliminar innerHTML/reejecución de scripts."
+    },
+    {
+      "id": "F-09",
+      "title": "SSRF en /api/support y bypass de X-Internal-Request",
+      "severity": "Alta",
+      "cvss": 8.6,
+      "cwe": ["CWE-918", "CWE-290"],
+      "owasp": ["A10", "A01"],
+      "locations": ["app/api/support/route.ts:12-23", "app/internal/page.tsx:15-21"],
+      "remediation": "Allowlist de URLs, bloquear IPs privadas y autenticación interna real."
+    },
+    {
+      "id": "F-10",
+      "title": "XSS almacenado/reflejado en el formulario de soporte",
+      "severity": "Alta",
+      "cvss": 8.2,
+      "cwe": ["CWE-79"],
+      "owasp": ["A03"],
+      "locations": ["app/support/SupportForm.tsx:95-108"],
+      "remediation": "Renderizar texto o sanitizar con DOMPurify."
+    },
+    {
+      "id": "F-11",
+      "title": "Escalada de privilegios en el registro (role)",
+      "severity": "Crítica",
+      "cvss": 9.1,
+      "cwe": ["CWE-269"],
+      "owasp": ["A01"],
+      "locations": ["app/api/auth/signup/route.ts:59-61", "lib/validation/schemas/auth.ts:3-9"],
+      "remediation": "Forzar CUSTOMER y eliminar role del esquema."
+    },
+    {
+      "id": "F-12",
+      "title": "Abuso de support access para suplantar usuarios",
+      "severity": "Crítica",
+      "cvss": 9.6,
+      "cwe": ["CWE-269", "CWE-639"],
+      "owasp": ["A01"],
+      "locations": ["app/api/user/support-access/route.ts:52-92", "app/api/auth/support-login/route.ts:15-55"],
+      "remediation": "Limitar a la propia cuenta, verificar revoked y usar tokens de corta duración."
+    },
+    {
+      "id": "F-13",
+      "title": "Token de reset de contraseña predecible",
+      "severity": "Alta",
+      "cvss": 8.1,
+      "cwe": ["CWE-330", "CWE-640"],
+      "owasp": ["A02", "A07"],
+      "locations": ["app/api/auth/forgot-password/route.ts:14-35"],
+      "remediation": "Tokens CSPRNG de 128+ bits, hash en BD, un solo uso y expiración corta."
+    },
+    {
+      "id": "F-14",
+      "title": "Hash MD5 sin sal y credenciales por defecto",
+      "severity": "Alta",
+      "cvss": 8.1,
+      "cwe": ["CWE-916", "CWE-798"],
+      "owasp": ["A02", "A07"],
+      "locations": ["lib/server-auth.ts:14-16", "prisma/seed.ts", "app/login/LoginForm.tsx:56-66"],
+      "remediation": "Argon2id/bcrypt y eliminar credenciales demo en producción."
+    },
+    {
+      "id": "F-15",
+      "title": "Códigos de tarjeta regalo predecibles",
+      "severity": "Alta",
+      "cvss": 7.5,
+      "cwe": ["CWE-330", "CWE-340"],
+      "owasp": ["A02"],
+      "locations": ["lib/gift-card.ts:1-27", "app/api/gift-cards/route.ts:50-53", "app/api/gift-cards/redeem/route.ts:30-90"],
+      "remediation": "CSPRNG con 128+ bits, hash del código y límite de intentos.",
+      "notes": "Código de la tarjeta sembrada: JQSP-2G6N-G2ZY"
+    },
+    {
+      "id": "F-16",
+      "title": "XXE en importación XML de proveedores",
+      "severity": "Alta",
+      "cvss": 8.2,
+      "cwe": ["CWE-611"],
+      "owasp": ["A05"],
+      "locations": ["app/api/admin/suppliers/import-order/route.ts:24-27"],
+      "remediation": "noent:false, dtdload:false, nonet:true y validación XSD."
+    },
+    {
+      "id": "F-17",
+      "title": "Forja de enlaces compartidos (clave AES por defecto)",
+      "severity": "Alta",
+      "cvss": 8.1,
+      "cwe": ["CWE-321", "CWE-347"],
+      "owasp": ["A02", "A01"],
+      "locations": ["lib/share-crypto.ts:1-31", "app/api/documents/share/route.ts:10-90"],
+      "remediation": "AES-256-GCM, clave obligatoria y autorización en el canje."
+    },
+    {
+      "id": "F-18",
+      "title": "IDOR en GET /api/orders/[id]",
+      "severity": "Alta",
+      "cvss": 8.1,
+      "cwe": ["CWE-639"],
+      "owasp": ["A01"],
+      "locations": ["app/api/orders/[id]/route.ts:8-60"],
+      "remediation": "Filtrar por userId o exigir rol admin."
+    },
+    {
+      "id": "F-19",
+      "title": "BOLA en GET /api/wishlists/[id]",
+      "severity": "Alta",
+      "cvss": 7.5,
+      "cwe": ["CWE-639"],
+      "owasp": ["A01"],
+      "locations": ["app/api/wishlists/[id]/route.ts:7-55"],
+      "remediation": "Comprobar propietario o isPublic."
+    },
+    {
+      "id": "F-20",
+      "title": "Manipulación del total del pedido / bypass de pago",
+      "severity": "Alta",
+      "cvss": 8.1,
+      "cwe": ["CWE-472", "CWE-840"],
+      "owasp": ["A04"],
+      "locations": ["app/api/orders/route.ts:38-39,128-131", "app/checkout/CheckoutClient.tsx:119-140"],
+      "remediation": "Calcular el total en servidor y validar el pago."
+    },
+    {
+      "id": "F-21",
+      "title": "Condición de carrera en cupones",
+      "severity": "Media",
+      "cvss": 5.9,
+      "cwe": ["CWE-362"],
+      "owasp": ["A04"],
+      "locations": ["app/api/orders/route.ts:63-85", "app/api/coupon/apply/route.ts:10-45"],
+      "remediation": "Actualización atómica condicional y transacciones."
+    },
+    {
+      "id": "F-22",
+      "title": "XSS almacenado en analítica vía X-Forwarded-For",
+      "severity": "Alta",
+      "cvss": 8.2,
+      "cwe": ["CWE-79"],
+      "owasp": ["A03"],
+      "locations": ["app/admin/analytics/AnalyticsClient.tsx:360-367", "app/api/tracking/route.ts:84-90"],
+      "remediation": "Renderizar IP como texto y validar con net.isIP."
+    },
+    {
+      "id": "F-23",
+      "title": "Secuestro del directo y fuga de streamKey",
+      "severity": "Media",
+      "cvss": 6.5,
+      "cwe": ["CWE-862", "CWE-200"],
+      "owasp": ["A01"],
+      "locations": ["app/api/live/stream/route.ts:40-100", "lib/live-stream.ts:1-17"],
+      "remediation": "withAdminAuth y no devolver streamKey."
+    },
+    {
+      "id": "F-24",
+      "title": "Credenciales SIEM fijas, cookie forjable y contraseñas en logs",
+      "severity": "Alta",
+      "cvss": 8.2,
+      "cwe": ["CWE-798", "CWE-532"],
+      "owasp": ["A02", "A09"],
+      "locations": ["app/api/monitoring/auth/route.ts:5-24", "app/api/monitoring/logs/route.ts:6-27", "app/api/auth/login/route.ts:16-25"],
+      "remediation": "Sin credenciales fijas, sesiones firmadas y redacción de secretos en logs."
+    },
+    {
+      "id": "F-25",
+      "title": "Fuga del system prompt de IA + SSRF/tool poisoning",
+      "severity": "Alta",
+      "cvss": 8.1,
+      "cwe": ["CWE-200", "CWE-918"],
+      "owasp": ["A05", "A10"],
+      "locations": ["app/api/ai-assistant/route.ts:9-31,145-175", "lib/prompt-injection-filter.ts"],
+      "remediation": "No incluir secretos en prompts y permitir solo servidores MCP confiables."
+    },
+    {
+      "id": "F-26",
+      "title": "Cabecera de sesión MCP estática",
+      "severity": "Alta",
+      "cvss": 7.5,
+      "cwe": ["CWE-798", "CWE-306"],
+      "owasp": ["A01", "A07"],
+      "locations": ["lib/mcp-constants.ts:1-2", "app/api/mcp/route.ts:143-165,178-183"],
+      "remediation": "Autenticación real y autorización por herramienta."
+    },
+    {
+      "id": "F-27",
+      "title": "Secretos y flags en repositorio e imagen Docker",
+      "severity": "Crítica",
+      "cvss": 9.3,
+      "cwe": ["CWE-798", "CWE-538"],
+      "owasp": ["A02", "A05"],
+      "locations": [".env.local:1-2", "flag.txt:2", "supplier-registry.txt:4", "lib/live-stream.ts:11-14", "Dockerfile:10", ".gitignore:37", ".dockerignore:4"],
+      "remediation": "Rotar secretos, usar secret manager y excluir ficheros sensibles del repo/imagen."
+    },
+    {
+      "id": "F-28",
+      "title": "Dependencias vulnerables (CVE-2025-55182 / CVE-2025-29927)",
+      "severity": "Crítica",
+      "cvss": 9.8,
+      "cwe": ["CWE-1395"],
+      "owasp": ["A06"],
+      "locations": ["package.json:29-38", "package-lock.json"],
+      "remediation": "Actualizar Next.js/React a versiones parcheadas y añadir SCA."
+    },
+    {
+      "id": "F-29",
+      "title": "Open redirect / DOM XSS en redirect del login",
+      "severity": "Media",
+      "cvss": 6.1,
+      "cwe": ["CWE-601", "CWE-79"],
+      "owasp": ["A01", "A03"],
+      "locations": ["app/api/auth/login/route.ts:14,63-72", "app/login/LoginForm.tsx:34-38"],
+      "remediation": "Allowlist de rutas internas relativas."
+    },
+    {
+      "id": "F-30",
+      "title": "Autenticación del panel /internal basada en cabecera",
+      "severity": "Alta",
+      "cvss": 7.5,
+      "cwe": ["CWE-290"],
+      "owasp": ["A01"],
+      "locations": ["app/internal/page.tsx:15-21"],
+      "remediation": "Autenticación y autorización reales en servidor."
+    },
+    {
+      "id": "F-31",
+      "title": "Exportación de hash de contraseña y fuga de diagnóstico",
+      "severity": "Alta",
+      "cvss": 7.1,
+      "cwe": ["CWE-200", "CWE-209"],
+      "owasp": ["A01", "A05"],
+      "locations": ["app/api/user/export/route.ts:7,48-52,63-90,120-142"],
+      "remediation": "No exportar password ni devolver diagnósticos en errores."
+    },
+    {
+      "id": "F-32",
+      "title": "Carga de SVG → XSS almacenado",
+      "severity": "Media",
+      "cvss": 6.1,
+      "cwe": ["CWE-79", "CWE-434"],
+      "owasp": ["A03", "A04"],
+      "locations": ["app/api/admin/products/[id]/image/route.ts:9-16,60-90", "app/api/uploads/[...path]/route.ts:7-50"],
+      "remediation": "No permitir SVG o sanitizarlo; validar magic bytes."
+    },
+    {
+      "id": "F-33",
+      "title": "Token de diagnóstico fijo y fuga de nota de desarrollo",
+      "severity": "Media",
+      "cvss": 5.3,
+      "cwe": ["CWE-798", "CWE-200"],
+      "owasp": ["A05", "A07"],
+      "locations": ["app/api/admin/diag/route.ts:5-7", "app/admin/documents/page.tsx:5-12"],
+      "remediation": "Eliminar debug en producción y no incluir notas internas en HTML."
+    },
+    {
+      "id": "F-34",
+      "title": "Debilidades de sesión, CSRF, rate limiting y cabeceras",
+      "severity": "Media",
+      "cvss": 5.3,
+      "cwe": ["CWE-352", "CWE-307", "CWE-693"],
+      "owasp": ["A05", "A07"],
+      "locations": ["lib/server-auth.ts:56-85", "app/api/monitoring/auth/route.ts:16-21", "next.config.ts"],
+      "remediation": "Rate limiting, CSRF tokens/Origin checks, cookies seguras y cabeceras de seguridad."
+    },
+    {
+      "id": "F-35",
+      "title": "Contenedor ejecutado como root y hardening insuficiente",
+      "severity": "Baja",
+      "cvss": 4.0,
+      "cwe": ["CWE-250"],
+      "owasp": ["A05"],
+      "locations": ["Dockerfile:1-34", "docker-entrypoint.sh"],
+      "remediation": "Usuario no root, multi-stage, read-only y sin seed de credenciales demo."
+    },
+    {
+      "id": "F-36",
+      "title": "Validación de entrada insuficiente",
+      "severity": "Media",
+      "cvss": 5.3,
+      "cwe": ["CWE-20"],
+      "owasp": ["A03", "A04"],
+      "locations": ["lib/validation/schemas/auth.ts", "lib/validation/schemas/cart.ts", "lib/validation/schemas/orders.ts", "lib/validation/schemas/user.ts", "lib/validation/schemas/support.ts", "lib/validation/schemas/files.ts", "lib/validation/schemas/ai-assistant.ts"],
+      "remediation": "Esquemas estrictos, límites, enums y allowlists."
+    },
+    {
+      "id": "F-37",
+      "title": "Host header injection en URLs de compartición",
+      "severity": "Baja",
+      "cvss": 3.7,
+      "cwe": ["CWE-644"],
+      "owasp": ["A03"],
+      "locations": ["app/api/orders/[id]/share/route.ts:22-27"],
+      "remediation": "Usar base URL de configuración validada."
+    },
+    {
+      "id": "F-38",
+      "title": "Inyección/DoS en el logger global",
+      "severity": "Baja",
+      "cvss": 3.1,
+      "cwe": ["CWE-117", "CWE-400"],
+      "owasp": ["A09"],
+      "locations": ["instrumentation.node.ts:1-45", "lib/logger.ts"],
+      "remediation": "Logging asíncrono estructurado con escape, límites y rotación."
+    }
+  ]
+}
