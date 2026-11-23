@@ -12,11 +12,15 @@ esf=${ESFUERZO:-}; efarg=""; sufijo=""
 B=$(cd "$(dirname "$0")/.." && pwd); R=$(cd "$B/.." && pwd)
 # Herramientas: en el repositorio público van en herramientas/; aquí, en _comun/herramientas
 if [ -d "$B/herramientas" ]; then H=$B/herramientas; else H=$R/_comun/herramientas; fi
-prompt="$(cat "$B/prompts/$cod.txt") $(cat "$B/prompts/_destino.txt")"
+# Experimentos (experimentos/auditoria): PROMPTS y RESULTADOS cambian de dónde sale el prompt y dónde se guarda;
+# SEMILLA copia un proyecto en la carpeta de trabajo antes de empezar; SIN_WEB=1 le quita WebSearch y WebFetch.
+P=${PROMPTS:-$B/prompts}; RES=${RESULTADOS:-$B/resultados}
+prompt="$(cat "$P/$cod.txt") $(cat "$P/_destino.txt")"
 base=${CLAUDE_BENCH:-$HOME/.claude-bench/$alias$sufijo}
 conf=$base/config; casa=$base/home; mkdir -p "$conf" "$casa"
 # Carpeta con nombre aleatorio, que se borra al terminar: así ningún modelo encuentra el trabajo de otro
 mkdir -p /var/tmp/bench; ws=$(mktemp -d /var/tmp/bench/ws-XXXXXXXX)
+[ -n "${SEMILLA:-}" ] && cp -a "$SEMILLA"/. "$ws"/
 # Encerrado (scripts/encierro.sh): no ve el repo, ni /tmp, ni el resto de /root; el lanzador va en su configuración
 cp "$H/claude-aislado.sh" "$base/"
 # Sin la recomendación de plugins LSP: su diálogo tapa el «esc to interrupt» y el lanzador da la sesión por acabada
@@ -24,6 +28,12 @@ python3 -c '
 import json, os, sys
 f = sys.argv[1]; d = json.load(open(f)) if os.path.exists(f) else {}
 d["lspRecommendationDisabled"] = True; json.dump(d, open(f, "w"), indent=2)' "$conf/.claude.json"
+python3 -c '
+import json, os, sys
+f = sys.argv[1]; d = json.load(open(f)) if os.path.exists(f) else {}
+p = d.setdefault("permissions", {}); den = [x for x in p.get("deny", []) if x not in ("WebSearch", "WebFetch")]
+if sys.argv[2]: den += ["WebSearch", "WebFetch"]
+p["deny"] = den; json.dump(d, open(f, "w"), indent=2)' "$conf/settings.json" "${SIN_WEB:-}"
 s=c-$cod-$(echo "$alias$sufijo" | tr -cd "a-z0-9-") tp="=$s:"
 tmux kill-session -t "=$s" 2>/dev/null || true
 # SIN_ENCIERRO=1: sin encierro.sh, como en cursos-y-guias. En la nube Claude Code entra con la credencial de la sesión
@@ -80,16 +90,42 @@ import json,sys
 for l in open(sys.argv[1]):
     d=json.loads(l)
     if d.get("type")=="assistant" and d["message"].get("model","").startswith("claude"): print(d["message"]["model"]); break' "$reg")
-dest=$B/resultados/anthropic_$modelo$sufijo/$cod
+dest=$RES/anthropic_$modelo$sufijo/$cod
 [ -e "$dest/meta.json" ] && { echo "Ya existe $dest"; exit 1; }
 mkdir -p "$dest"; echo "$pantalla_final" > "$dest/pantalla.txt"
 cp "$reg" "$dest/sesion.jsonl"; mv "$reg" "$reg.hecho"
-rm -rf "$dest/salida"; cp -R "$ws" "$dest/salida"; rm -rf "$ws"
+rm -rf "$dest/salida"
+if [ -n "${SEMILLA:-}" ]; then
+  # Con semilla, salida/ guarda solo lo que el modelo creó o cambió; cambios.txt lista lo cambiado y lo borrado
+  python3 - "$SEMILLA" "$ws" "$dest" <<'PY'
+import filecmp, os, pathlib, shutil, sys
+sem, ws, dest = map(pathlib.Path, sys.argv[1:4]); sal = dest / "salida"; sal.mkdir(parents=True)
+ign = {"node_modules", ".next", ".git"}; lineas = []
+def ficheros(r):
+    for raiz, dirs, fs in os.walk(r):
+        dirs[:] = [d for d in dirs if d not in ign]
+        for f in fs: yield (pathlib.Path(raiz) / f).relative_to(r)
+antes = set(ficheros(sem))
+for rel in sorted(ficheros(ws)):
+    a = sem / rel
+    if rel not in antes or not filecmp.cmp(a, ws / rel, shallow=False):
+        lineas.append(("cambiado " if rel in antes else "nuevo ") + rel.as_posix())
+        (sal / rel).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(ws / rel, sal / rel)
+ahora = set(ficheros(ws))
+lineas += ["borrado " + r.as_posix() for r in sorted(antes - ahora)]
+for d in ign:
+    if (ws / d).exists(): lineas.append(f"generado {d}/ (no se guarda)")
+(dest / "cambios.txt").write_text("\n".join(lineas) + "\n")
+PY
+else cp -R "$ws" "$dest/salida"; fi
+rm -rf "$ws"
 python3 "$B/scripts/tokens-claude.py" "$dest" "$cod" "$modelo" "$inicio" "$prompt"
 # Cuántas veces se le contestó «Decide tú.», en meta.json
-python3 - "$dest/meta.json" "$pregunto" "$esf" "${SIN_ENCIERRO:-}" "$permisos" <<'PY'
+python3 - "$dest/meta.json" "$pregunto" "$esf" "${SIN_ENCIERRO:-}" "$permisos" "${SEMILLA:-}" "${SIN_WEB:-}" <<'PY'
 import json, sys
 f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2])
+if sys.argv[6]: m["semilla"] = sys.argv[6]
+if sys.argv[7]: m["sin_web"] = "WebSearch y WebFetch denegados en settings.json del aislado"
 if int(sys.argv[5]): m["permisos_bloqueados"] = int(sys.argv[5])
 if sys.argv[3]: m["esfuerzo"] = sys.argv[3]
 if sys.argv[4]: m["aislamiento"] = ("Sin encierro.sh (excepción: Claude Code en la nube entra con la credencial de la sesión "
