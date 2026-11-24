@@ -1,1 +1,0 @@
-Kimi-K3.1-pro repartió las 300 incidencias en bloques de 30 (ficheros .clasificacion_N_M.jsonl) y, tras 14 peticiones y 252 k tokens, Ollama Cloud cortó por el límite de uso de la sesión de la cuenta: la cuota ya venía gastada por las pruebas anteriores de la tanda. Sin clasificacion.jsonl. benchmark.sh se paró solo. Se repite cuando haya cupo.

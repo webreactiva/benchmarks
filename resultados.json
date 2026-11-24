@@ -5700,6 +5700,163 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_kimi-k3.1-pro/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/kimi-k3.1-pro",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T02:31:05Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 213936,
+      "output": 47850,
+      "reasoning": 0,
+      "cache_read": 3389736,
+      "cache_write": 0,
+      "total": 3651522
+    },
+    "peticiones": 34,
+    "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 02114973-41af-491c-ada5-7544bd805774)",
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 136,
+      "glob": 3,
+      "subagent": 3,
+      "shell": 9,
+      "grep": 10,
+      "write": 1,
+      "edit": 5
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df49b7ce7ffe6Ye2wfV7h8MzI5",
+    "coste_usd": 0,
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md",
+      "npm-audit-production.json",
+      "npm-audit-production.stderr",
+      "npm-audit.json",
+      "npm-audit.stderr",
+      "npm-pack-dry-run.json"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "nota_del_autor": "Cortado por el límite de uso de Ollama Cloud a mitad de una segunda pasada, con el informe ya escrito (438 líneas). Se juzga tal cual por decisión del autor (24 nov. 2026).",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
+    "dir": "resultados/ollama_kimi-k3.1-pro/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/kimi-k3.1-pro",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T09:11:11Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 43928,
+      "output": 9039,
+      "reasoning": 0,
+      "cache_read": 199199,
+      "cache_write": 0,
+      "total": 252166
+    },
+    "peticiones": 14,
+    "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 38e8e880-0e0d-48e4-b195-6b6ba24e7000)",
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "glob": 1,
+      "read": 1,
+      "shell": 3,
+      "write": 2,
+      "subagent": 10
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df32d2f2dffej9C8bvTKv0sxHj",
+    "coste_usd": 0,
+    "ficheros": [
+      ".clasificacion_121_150.jsonl",
+      ".clasificacion_151_180.jsonl",
+      ".clasificacion_181_210.jsonl",
+      ".clasificacion_211_240.jsonl",
+      ".clasificacion_31_60.jsonl",
+      ".clasificacion_61_90.jsonl",
+      ".clasificacion_91_120.jsonl",
+      ".instrucciones_clasificacion.md",
+      ".validar_clasificacion.py"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "espero_segundo_plano": true,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/kimi-k3.1-pro",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 3,
+        "tokens": 0,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "proyectada": true,
+      "veredicto": "El que mejor clasifica, el más caro",
+      "resumen": "Repartió las 300 incidencias entre 10 subagentes en paralelo y el límite de Ollama la cortó con 7 bloques hechos. En esas 210 es el que más se parece a jev (áreas F1 0,712, superficie 89 %); la nota es proyectada: calidad 6/6 y eficiencia 0/4, con unos 2,7 M de tokens, 134 peticiones y ≈ 1,37 $ para la tirada completa.",
+      "cifras": {
+        "calidad_en_210": {
+          "clasificadas": 210,
+          "tipo": 0.967,
+          "superficie": 0.89,
+          "areas_f1_micro": 0.712,
+          "exactas_pct": 0.329
+        },
+        "coste_real_hasta_el_corte": {
+          "tokens": 2419197,
+          "entrada": 464214,
+          "salida": 88391,
+          "cache_lectura": 1866592,
+          "peticiones": 117,
+          "segundos": 418,
+          "usd_estimado": 1.23
+        },
+        "coste_proyectado": {
+          "tokens": 2694541,
+          "entrada": 517049,
+          "salida": 98451,
+          "cache_lectura": 2079041,
+          "peticiones": 134,
+          "segundos": 478,
+          "usd_estimado": 1.37
+        }
+      },
+      "rarezas": [
+        "Nota proyectada, por decisión del autor: el límite de uso de Ollama la cortó y no se repite porque Kimi es caro. La calidad se mide en las 210 incidencias que clasificó; el coste suma lo real hasta el corte y lo que le faltaba.",
+        "Escribió unas instrucciones de clasificación propias (.instrucciones_clasificacion.md) y lanzó 10 subagentes de 30 incidencias cada uno, que leen el texto completo de cada incidencia.",
+        "Los 10 subagentes gastaron 2,2 M de los 2,4 M de tokens reales; lanzar.sh solo apuntó los 252 k del agente principal.",
+        "Supera el techo de calidad en áreas (0,712), aunque medido sobre el 70 % de las incidencias."
+      ]
+    },
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/ollama_minimax-m3/A3D",
     "codigo": "A3D",
     "modelo": "ollama/minimax-m3",
