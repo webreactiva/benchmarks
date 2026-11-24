@@ -132,12 +132,25 @@ out = {"fichero": str(f.relative_to(d)) if f else None, "incidencias": n, "clasi
 # Rúbrica (rubricas.md, TCI). Calidad: contra jev. Eficiencia: umbrales absolutos; jev no entra (es un modelo de
 # decisión, no un agente), y la eficiencia no se compara con él.
 tok = (meta.get("tokens") or {}).get("total") or 0
+# Coste estimado: el de meta.json si lo trae (OpenRouter); si no, tokens × precios.json
+coste = meta.get("coste_usd")
+precios = json.load(open(AQUI / "precios.json"))
+modelo = (meta.get("modelo") or "").removeprefix("ollama/")
+if coste is None and modelo in precios and meta.get("tokens"):
+    t, pr = meta["tokens"], precios[modelo]
+    coste = (t.get("input", 0) * pr["entrada"] + (t.get("output", 0) + t.get("reasoning", 0)) * pr["salida"]
+             + t.get("cache_read", 0) * pr["cache_lectura"] + t.get("cache_write", 0) * pr["cache_escritura"]) / 1e6
+out["coste"]["usd_estimado"] = round(coste, 3) if coste is not None else None
+# Tokens o coste: un agente que relee más contexto (OpenCode) gasta más tokens; si aun así cuesta como Haiku
+# (0,03 $) o poco más, se le compensa. Se toma lo mejor de las dos cuentas.
+por_tokens = 2 if 0 < tok <= 600_000 else 1 if 0 < tok <= 900_000 else 0
+por_coste = 0 if coste is None else 2 if coste <= 0.035 else 1 if coste <= 0.30 else 0
 pet = meta.get("peticiones") or 0
 rub = {
     "tipo": int(out["tipo"] >= 0.95),
     "superficie": 2 if out["superficie"] >= 0.85 else 1 if out["superficie"] >= 0.80 else 0,
     "areas": 3 if out["areas_f1_micro"] >= 0.65 else 2 if out["areas_f1_micro"] >= 0.60 else 1 if out["areas_f1_micro"] >= 0.55 else 0,
-    "tokens": 2 if 0 < tok <= 600_000 else 1 if 0 < tok <= 900_000 else 0,
+    "tokens": max(por_tokens, por_coste),
     "tiempo": int(dur is not None and dur <= 150),
     "peticiones": int(0 < pet <= 10),
 }

@@ -1,0 +1,7 @@
+{
+  "_nota": "Dólares por millón de tokens: entrada, salida, lectura de caché y escritura en caché. Claude: precios de la API (la escritura en caché, estimada a 1,25 veces la entrada; la lectura de Haiku, al 10 %). Modelos de Ollama Cloud: se cobran por suscripción; para comparar se usa el precio por token del mismo modelo en su API pública (OpenRouter u otro proveedor) cuando lo hay, y se apunta de dónde sale. Si meta.json trae coste_usd (OpenRouter), manda ese.",
+  "claude-haiku-5-5":  {"entrada": 0.10, "salida": 0.50, "cache_lectura": 0.01, "cache_escritura": 0.125},
+  "claude-sonnet-5-5": {"entrada": 2.00, "salida": 10.00, "cache_lectura": 0.10, "cache_escritura": 2.50},
+  "claude-opus-5-5":   {"entrada": 4.00, "salida": 20.00, "cache_lectura": 0.20, "cache_escritura": 5.00},
+  "claude-fable-5-2":  {"entrada": 8.00, "salida": 40.00, "cache_lectura": 0.20, "cache_escritura": 10.00}
+}
