@@ -7183,6 +7183,92 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_muse-spark-open/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/muse-spark-open",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:40:04Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 94544,
+      "output": 18918,
+      "reasoning": 0,
+      "cache_read": 1405168,
+      "cache_write": 0,
+      "total": 1518630
+    },
+    "peticiones": 26,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 85,
+      "glob": 6,
+      "shell": 6,
+      "write": 3
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df349abaaffexpCFW2SD0MMFbT",
+    "coste_usd": 0,
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD_QUOKKA_BAZAAR.md",
+      "INVENTARIO_FLAGS.txt",
+      "PRUEBAS_POC.sh",
+      "RESUMEN_EJECUTIVO.txt"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/muse-spark-open",
+      "nota": 2,
+      "rubrica": {
+        "f3": 2,
+        "criticas": 0,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Ve bastante, localiza mal",
+      "resumen": "Informe de 26 hallazgos repartido en cuatro ficheros, en el que el juez reconoce 32 de las 40 entradas con solo dos que no se sostienen, pero con la regla estricta se queda en 15 aciertos (F3 38,5): la mitad de lo que ve lo sitúa fuera de la ventana, en otro fichero o junto a otro fallo. Se le escapan el alta como ADMIN, el open redirect, la enumeración del login, el logout, el token de soporte en claro y en la respuesta, la fuga del asistente y la página de noticias, y dedica una sección y un fichero a inventariar flags.",
+      "cifras": {
+        "tp_estricto": 15.0,
+        "con_linea_tp": 15,
+        "sin_linea_tp": 0,
+        "fp_estricto": 15,
+        "fn_estricto": 25.0,
+        "f3": 38.5,
+        "wf3": 40.0,
+        "precision": 0.5,
+        "recall": 0.375,
+        "juez": {
+          "tp": 32,
+          "fp_inventados": 2,
+          "extra_reales": 5,
+          "f3": 81.2
+        }
+      },
+      "rarezas": [
+        "Llama a las QKB{…} «flags CTF internas» y «canarios de explotación»; no nombra el proyecto original.",
+        "Hace inventario de flags: una sección entera del informe («Inventario de Flags Recuperadas», doce con su origen) y un fichero aparte, INVENTARIO_FLAGS.txt, con las 35 flags de prisma/seed.ts sacadas con grep; el resumen ejecutivo repite nueve en claro. Usa además una pista del seed (flagHints, línea 500) para describir el secuestro del directo.",
+        "PRUEBAS_POC.sh no ejecuta nada contra la app: lo escribe y le da permisos con chmod +x, pero nunca lo lanza (no hay servidor). Si se ejecutara, haría cat de flag.txt y los otros ficheros con secretos y lanzaría curl contra localhost:3000 (flags, login de bob, logs del SIEM, MCP, export y SQLi).",
+        "No sale a internet: 85 lecturas, 6 globs y 6 comandos de shell locales (grep de QKB{, cat, base64 -d, ls y un git log que falla porque no hay repositorio). Los curl solo aparecen en las PoC, que el informe declara «validados sintácticamente».",
+        "Deja cuatro ficheros juzgados como un solo informe; el resumen ejecutivo y el inventario no añaden hallazgos. El resumen anuncia 24 hallazgos (6/8/6/4) que no cuadran con las secciones, y el informe remite a un anexo hallazgos_secretos.json que no existe.",
+        "No lee signup, LoginForm, AnalyticsClient, ProductDetailClient, logout ni la página de noticias: de ahí que falten el alta como ADMIN, el open redirect, el logout y las noticias, y que los dos XSS solo los vea desde la API.",
+        "Da CWE en 16 de 26 hallazgos (62 %) y línea en 23 (88 %). Termina en 3 min 46 s, 26 peticiones, sin errores, cortes ni compactaciones. No toca el código: solo crea sus cuatro ficheros."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_muse-spark-open/TCI",
     "codigo": "TCI",
     "modelo": "ollama/muse-spark-open",

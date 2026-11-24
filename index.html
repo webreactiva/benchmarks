@@ -849,6 +849,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Python sin dependencias: agregado de carrito con límites, motor de precios con reglas (por volumen, categoría, cupón), IVA y envío, reserva de stock, bus de eventos, servicio sin estado con versión optimista y reintentos, almacenamiento en memoria, en fichero o repartido en shards, y una API REST. Pasa 12 tests y 50 hilos no pierden nada. Pero Redis o DynamoDB son solo un contrato.</small> <a href="resultados/ollama_muse-spark-open/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-24 08:40 UTC</small></td>
+<td class=n><b>1518.6 k</b><br><small>in 94.5 k · out 18.9 k<br>razon. 0 · caché 1405.2 k</small></td>
+<td class=n>26</td>
+<td><small><a href="resultados/ollama_muse-spark-open/SEC/salida/AUDITORIA_SEGURIDAD_QUOKKA_BAZAAR.md">AUDITORIA_SEGURIDAD_QUOKKA_BAZAAR.md</a><br><a href="resultados/ollama_muse-spark-open/SEC/salida/INVENTARIO_FLAGS.txt">INVENTARIO_FLAGS.txt</a><br><a href="resultados/ollama_muse-spark-open/SEC/salida/PRUEBAS_POC.sh">PRUEBAS_POC.sh</a><br><a href="resultados/ollama_muse-spark-open/SEC/salida/RESUMEN_EJECUTIVO.txt">RESUMEN_EJECUTIVO.txt</a></small></td>
+<td><small>–</small></td>
+<td class="nota n0">2<br><small>Ve bastante, localiza mal</small></td>
+<td><small>Informe de 26 hallazgos repartido en cuatro ficheros, en el que el juez reconoce 32 de las 40 entradas con solo dos que no se sostienen, pero con la regla estricta se queda en 15 aciertos (F3 38,5): la mitad de lo que ve lo sitúa fuera de la ventana, en otro fichero o junto a otro fallo. Se le escapan el alta como ADMIN, el open redirect, la enumeración del login, el logout, el token de soporte en claro y en la respuesta, la fuga del asistente y la página de noticias, y dedica una sección y un fichero a inventariar flags.</small> <a href="resultados/ollama_muse-spark-open/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
 <td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-24 08:05 UTC</small></td>
 <td class=n><b>5007.4 k</b><br><small>in 156.6 k · out 54.6 k<br>razon. 0 · caché 4796.2 k</small></td>
