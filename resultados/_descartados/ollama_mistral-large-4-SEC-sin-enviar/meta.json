@@ -1,0 +1,20 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/mistral-large-4",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T08:39:21Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": null,
+  "peticiones": 0,
+  "error": null,
+  "ficheros": [],
+  "limites": {
+    "context": 1048576,
+    "output": 262144,
+    "output_proveedor": 262144,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}
