@@ -1,0 +1,38 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/beam",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T09:08:11Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 177390,
+    "output": 6829,
+    "reasoning": 0,
+    "cache_read": 1135936,
+    "cache_write": 0,
+    "total": 1320155
+  },
+  "peticiones": 32,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "shell": 33
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df32fecabffewcCQ5h6ckDXnvv",
+  "coste_usd": 0,
+  "ficheros": [
+    ".env"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 131072,
+    "output_proveedor": 131072,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}
