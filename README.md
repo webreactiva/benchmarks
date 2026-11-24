@@ -75,7 +75,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | – | – | **5,7** | 15 | 0,3 M |
 | [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | 1 | 6 | **5,3** | 82 | 3,6 M |
 | [nvidia/nemotron-3-ultra-550b-a55b:free](resultados/nvidia_nemotron-3-ultra-550b-a55b_free/README.md) | OpenCode | 6 | 3 | 4 | – | – | **4,3** | 32 | 0,6 M |
-| [gpt-6-luna (medium)](resultados/openai_gpt-6-luna-medium/README.md) | Codex CLI | – | – | – | 2 | 0 | **en curso** | 19 | 0,5 M |
+| [gpt-6-luna (medium)](resultados/openai_gpt-6-luna-medium/README.md) | Codex CLI | – | – | – | 2 | 0 | **en curso** | 22 | 0,6 M |
 
 Notas con las rúbricas de `rubricas.md`. Las pruebas que fallaron por la parte técnica (respuestas cortadas en el tope de 32 000 tokens de OpenCode, GLM compactando sin parar por nuestra configuración de límites, MiniMax preguntando antes de que existiera la regla «Decide tú.») se repitieron. Las versiones anteriores están en `resultados/_descartados/`.
 

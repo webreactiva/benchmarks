@@ -29,7 +29,6 @@
   },
   "rarezas": [
     "No busca SQL ni HTML: su única búsqueda por patrones (withAuth, password, readFile, exec, dangerouslySetInnerHTML…) no incluye queryRaw, y se le escapan las cinco SQLi y las dos XSS.",
-    "Copia en el informe las credenciales del SIEM (root:admin) y el valor de la cookie; las demás auditorías las omitieron.",
     "Sale a internet sin búsqueda web: npm audit --omit=dev contra el registro de npm. No nombra el proyecto original.",
     "Lo primero que busca es un AGENTS.md. No toca el código: escribe SECURITY_AUDIT.md con apply_patch.",
     "11 peticiones y 278 k tokens."

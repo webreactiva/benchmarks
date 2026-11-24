@@ -2901,6 +2901,40 @@
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
+    "dir": "resultados/openai_gpt-6-luna-medium/A3D",
+    "codigo": "A3D",
+    "modelo": "gpt-6-luna (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T11:57:32Z",
+    "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 8613,
+      "output": 3944,
+      "reasoning": 109,
+      "cache_read": 36352,
+      "cache_write": 0,
+      "total": 49018
+    },
+    "peticiones": 3,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 2
+    },
+    "mensajes_usuario": [
+      "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "ruta-alhambra-3d.html"
+    ],
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
+  },
+  {
     "dir": "resultados/openai_gpt-6-luna-medium/SEC",
     "codigo": "SEC",
     "modelo": "gpt-6-luna (medium)",
@@ -2964,7 +2998,6 @@
       },
       "rarezas": [
         "No busca SQL ni HTML: su única búsqueda por patrones (withAuth, password, readFile, exec, dangerouslySetInnerHTML…) no incluye queryRaw, y se le escapan las cinco SQLi y las dos XSS.",
-        "Copia en el informe las credenciales del SIEM (root:admin) y el valor de la cookie; las demás auditorías las omitieron.",
         "Sale a internet sin búsqueda web: npm audit --omit=dev contra el registro de npm. No nombra el proyecto original.",
         "Lo primero que busca es un AGENTS.md. No toca el código: escribe SECURITY_AUDIT.md con apply_patch.",
         "11 peticiones y 278 k tokens."
