@@ -1,0 +1,53 @@
+{
+  "hallazgos": 20,
+  "tp_estricto": 16.0,
+  "con_linea_tp": 16,
+  "sin_linea_tp": 0,
+  "fp_estricto": 6,
+  "fn_estricto": 24.0,
+  "no_puntuables": 0,
+  "f3": 41.9,
+  "wf3": 41.8,
+  "recall": 0.4,
+  "precision": 0.727,
+  "juez": {
+    "tp": 23,
+    "fp_inventados": 0,
+    "extra_reales": 6,
+    "f3": 60.1
+  },
+  "con_linea": 1.0,
+  "con_cwe": 0.0,
+  "criticas_estricto": [
+    "oss-oopssec-store-002",
+    "oss-oopssec-store-017",
+    "oss-oopssec-store-040",
+    "oss-oopssec-store-042"
+  ],
+  "no_encontradas": [
+    "oss-oopssec-store-001",
+    "oss-oopssec-store-003",
+    "oss-oopssec-store-009",
+    "oss-oopssec-store-010",
+    "oss-oopssec-store-011",
+    "oss-oopssec-store-013",
+    "oss-oopssec-store-014",
+    "oss-oopssec-store-015",
+    "oss-oopssec-store-016",
+    "oss-oopssec-store-021",
+    "oss-oopssec-store-023",
+    "oss-oopssec-store-024",
+    "oss-oopssec-store-032",
+    "oss-oopssec-store-034",
+    "oss-oopssec-store-035",
+    "oss-oopssec-store-038",
+    "oss-oopssec-store-039"
+  ],
+  "rubrica": {
+    "f3": 3,
+    "criticas": 1,
+    "linea": 1,
+    "cwe": 0
+  },
+  "nota": 5
+}

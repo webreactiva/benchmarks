@@ -1,0 +1,307 @@
+{
+ "hallazgos": [
+  {
+   "id": "A01",
+   "titulo": "alta con rol de administrador",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "nota": "signup:59"
+    }
+   ]
+  },
+  {
+   "id": "A02",
+   "titulo": "token de soporte para cualquier correo",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true,
+     "nota": "support-access:51, ventana 50-73"
+    }
+   ],
+   "nota": "no dice que el token vuelva en la respuesta (035)"
+  },
+  {
+   "id": "A03",
+   "titulo": "recuperación de contraseña predecible",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: md5(email+hora)"
+  },
+  {
+   "id": "A04",
+   "titulo": "contraseñas en el log y visor con cookie fija",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "nota": "login:16"
+    }
+   ],
+   "nota": "cita monitoring/logs, no monitoring/auth (024)"
+  },
+  {
+   "id": "A05",
+   "titulo": "clave JWT fija y administrador del seed",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true,
+     "nota": "server-auth:12"
+    },
+    {
+     "id": "oss-oopssec-store-042",
+     "estricto": true,
+     "nota": "seed.ts:709"
+    }
+   ]
+  },
+  {
+   "id": "A06",
+   "titulo": "Next.js 15.2.2",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "dependencia real"
+  },
+  {
+   "id": "A07",
+   "titulo": "SQLi en productos, pedidos, seguimiento y reseñas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true,
+     "nota": "tracking:97"
+    },
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": false,
+     "nota": "products/search:85; ventana 90-113"
+    },
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": false,
+     "nota": "orders/search:81; ventana 92-115"
+    },
+    {
+     "id": "oss-oopssec-store-005",
+     "estricto": false,
+     "nota": "admin/reviews:103; ventana 110-130"
+    },
+    {
+     "id": "oss-oopssec-store-006",
+     "estricto": false,
+     "nota": "admin/reviews:103; ventana 112-146"
+    }
+   ]
+  },
+  {
+   "id": "A08",
+   "titulo": "lectura y listado de archivos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "files:17"
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": false,
+     "nota": "solo cita la línea 17; la lectura es la 62"
+    }
+   ]
+  },
+  {
+   "id": "A09",
+   "titulo": "pedidos y listas de otros clientes",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true,
+     "nota": "orders/[id]:8"
+    },
+    {
+     "id": "oss-oopssec-store-036",
+     "estricto": true,
+     "nota": "wishlists:6"
+    }
+   ]
+  },
+  {
+   "id": "A10",
+   "titulo": "SSRF en soporte y MCP",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true,
+     "nota": "support:14"
+    },
+    {
+     "id": "oss-oopssec-store-008",
+     "estricto": false,
+     "nota": "ai-assistant:199; ventana 59-91"
+    }
+   ]
+  },
+  {
+   "id": "A11",
+   "titulo": "XSS en analítica y soporte",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true,
+     "nota": "AnalyticsClient.tsx:366"
+    }
+   ]
+  },
+  {
+   "id": "A12",
+   "titulo": "total del pedido del cliente y cupones",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true,
+     "nota": "orders/route:130"
+    }
+   ]
+  },
+  {
+   "id": "A13",
+   "titulo": "tarjetas regalo deterministas y sin pago",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: LCG en lib/gift-card.ts"
+  },
+  {
+   "id": "A14",
+   "titulo": "enlaces compartidos CBC con clave predeterminada",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true,
+     "nota": "share-crypto:3"
+    },
+    {
+     "id": "oss-oopssec-store-018",
+     "estricto": false,
+     "nota": "no describe el oráculo de padding"
+    }
+   ]
+  },
+  {
+   "id": "A15",
+   "titulo": "MD5 sin sal y hash en la exportación",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": false,
+     "nota": "lo sitúa en server-auth y signup, no en reset-password"
+    },
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": false,
+     "nota": "export:7; ventana 113-136"
+    }
+   ],
+   "nota": "real"
+  },
+  {
+   "id": "M1",
+   "titulo": "XXE en la importación",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true,
+     "nota": "import-order:21"
+    }
+   ]
+  },
+  {
+   "id": "M2",
+   "titulo": "middleware sin verificar firma",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real"
+  },
+  {
+   "id": "M3",
+   "titulo": "SVG en las subidas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": true,
+     "nota": "image/route:64"
+    }
+   ]
+  },
+  {
+   "id": "M4",
+   "titulo": "redirección abierta tras el login",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-037",
+     "estricto": true,
+     "nota": "LoginForm:36"
+    }
+   ]
+  },
+  {
+   "id": "M5",
+   "titulo": "secreto de pago en el cliente, .env.local en la imagen, sin USER",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real"
+  }
+ ]
+}

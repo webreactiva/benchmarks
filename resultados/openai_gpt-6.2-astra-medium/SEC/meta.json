@@ -1,0 +1,33 @@
+{
+  "codigo": "SEC",
+  "modelo": "gpt-6.2-astra",
+  "agente": "Codex CLI",
+  "esfuerzo": "medium",
+  "fecha": "2026-11-24T12:06:17Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 34700,
+    "output": 5914,
+    "reasoning": 7,
+    "cache_read": 429440,
+    "cache_write": 0,
+    "total": 470061
+  },
+  "peticiones": 14,
+  "error": null,
+  "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+  "esfuerzo_real": "medium",
+  "herramientas": {
+    "exec": 13
+  },
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "veces_decide_tu": 0,
+  "ficheros": [
+    "AUDITORIA_SEGURIDAD.md",
+    "auditoria-dependencias.json"
+  ],
+  "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "web_search=\"disabled\" en la configuración de Codex"
+}
