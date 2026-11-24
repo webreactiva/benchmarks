@@ -1,0 +1,41 @@
+{
+  "codigo": "TCI",
+  "modelo": "google/gemini-4-hydrogen",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T09:51:30Z",
+  "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+  "tokens": {
+    "input": 269793,
+    "output": 12488,
+    "reasoning": 34775,
+    "cache_read": 3132527,
+    "cache_write": 0,
+    "total": 3449583
+  },
+  "peticiones": 26,
+  "error": null,
+  "mensajes_usuario": [
+    "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  ],
+  "herramientas": {
+    "glob": 2,
+    "read": 4,
+    "shell": 33,
+    "write": 3
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df30843cbffe5PPDGAzYm2Avvz",
+  "coste_usd": 0.9866,
+  "ficheros": [
+    "clasificacion.jsonl"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 65536,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

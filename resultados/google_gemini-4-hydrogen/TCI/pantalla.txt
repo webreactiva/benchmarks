@@ -1,0 +1,36 @@
+   Clasificación de incidencias. +
+     Se han clasificado las 300 incidencias de incidencias.jsonl y se ha guardado el resultado en clasificacion.jsonl
+     (una línea JSON por incidencia, manteniendo el orden y los id originales, con los campos id, tipo, superficie y
+     areas).
+
+     Resumen de la clasificación
+
+     - Total de incidencias: 300
+     - Por tipo (tipo):
+       - bug: 263
+       - enhancement: 28
+       - documentation: 9
+     - Por superficie (superficie):
+       - app: 189
+       - CLI: 82
+       - extension: 14
+       - codex-web: 13
+       - iOS: 2
+     - Por áreas (areas): se asignaron las etiquetas correspondientes de la lista permitida (incluyendo [] en
+       incidencias retiradas/sin detalles técnicos aplicables):
+       - windows-os: 105, session: 64, sandbox: 60, tool-calls: 55, TUI: 39, config: 39, app-server: 37, connectivity:
+         35, auth: 26, rate-limits: 25, remote: 22, browser: 17, context: 13, computer-use: 12, mcp: 12, model-
+         behavior: 11, performance: 11, subagent: 11.
+
+     Se validó que clasificacion.jsonl tiene exactamente 300 líneas JSON válidas, coincidencia 1:1 con los id de
+     incidencias.jsonl y todos los valores dentro de las categorías permitidas.
+
+     Build · google/gemini-4-hydrogen · 4m 20s · 271.3 tok/s · 2.0s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · google/gemini-4-hydrogen OpenRouter
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-k8qyR3aD                                                     245.6K (23%) · $0.99  ctrl+p commands
+
