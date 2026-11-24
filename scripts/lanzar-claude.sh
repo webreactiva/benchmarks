@@ -18,7 +18,9 @@ P=${PROMPTS:-$B/prompts}; RES=${RESULTADOS:-$B/resultados}
 # Prompts que empiezan con un proyecto en la carpeta (SEC): la copia, sin búsqueda web y con más tiempo
 SEMILLA=${SEMILLA:-$("$B/scripts/semilla.sh" "$cod")}
 [ -n "$SEMILLA" ] && { SIN_WEB=${SIN_WEB:-1}; ESPERA_MAX=${ESPERA_MAX:-5400}; }
-prompt="$(cat "$P/$cod.txt") $(cat "$P/_destino.txt")"
+# Destino: prompts/_destino.txt, salvo que el prompt traiga el suyo (<COD>.destino; vacío en TCI, cuyo prompt ya dice dónde guardar)
+destino="$P/_destino.txt"; [ -f "$P/$cod.destino" ] && destino="$P/$cod.destino"
+prompt="$(cat "$P/$cod.txt")"; [ -s "$destino" ] && prompt="$prompt $(cat "$destino")"
 base=${CLAUDE_BENCH:-$HOME/.claude-bench/$alias$sufijo}
 conf=$base/config; casa=$base/home; mkdir -p "$conf" "$casa"
 # Carpeta con nombre aleatorio, que se borra al terminar: así ningún modelo encuentra el trabajo de otro

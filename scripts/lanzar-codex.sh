@@ -12,7 +12,9 @@
 set -eu
 cod=$1 modelo=$2 esfuerzo=${3:-medium}
 B=$(cd "$(dirname "$0")/.." && pwd)
-prompt="$(cat "$B/prompts/$cod.txt") $(cat "$B/prompts/_destino.txt")"
+# Destino: prompts/_destino.txt, salvo que el prompt traiga el suyo (<COD>.destino; vacío en TCI, cuyo prompt ya dice dónde guardar)
+destino="$B/prompts/_destino.txt"; [ -f "$B/prompts/$cod.destino" ] && destino="$B/prompts/$cod.destino"
+prompt="$(cat "$B/prompts/$cod.txt")"; [ -s "$destino" ] && prompt="$prompt $(cat "$destino")"
 slug=openai_$(echo "$modelo" | tr '/:' '__')-$esfuerzo
 dest=$B/resultados/$slug/$cod
 [ -e "$dest/meta.json" ] && { echo "Ya existe $dest"; exit 1; }

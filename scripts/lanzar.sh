@@ -19,7 +19,9 @@ if [ -d "$B/herramientas" ]; then H=$B/herramientas; else H=$R/_comun/herramient
 slug=$(echo "$modelo" | tr '/:' '__')
 dest=$B/resultados/$slug/$cod
 [ -e "$dest/meta.json" ] && { echo "Ya existe $dest: bórralo para repetir"; exit 1; }
-prompt="$(cat "$B/prompts/$cod.txt") $(cat "$B/prompts/_destino.txt")"
+# Destino: prompts/_destino.txt, salvo que el prompt traiga el suyo (<COD>.destino; vacío en TCI, cuyo prompt ya dice dónde guardar)
+destino="$B/prompts/_destino.txt"; [ -f "$B/prompts/$cod.destino" ] && destino="$B/prompts/$cod.destino"
+prompt="$(cat "$B/prompts/$cod.txt")"; [ -s "$destino" ] && prompt="$prompt $(cat "$destino")"
 # Prompts que empiezan con un proyecto en la carpeta (SEC, scripts/semilla.sh): la copia, sin búsqueda web y más tiempo
 SEMILLA=${SEMILLA:-$("$B/scripts/semilla.sh" "$cod")}
 [ -n "$SEMILLA" ] && { SIN_WEB=${SIN_WEB:-1}; ESPERA_MAX=${ESPERA_MAX:-5400}; }
