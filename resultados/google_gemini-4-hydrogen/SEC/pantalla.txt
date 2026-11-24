@@ -1,0 +1,36 @@
+   Auditoría de seguridad        +
+         AnalyticsClient.tsx, app/support/SupportForm.tsx y app/api/admin/products/[id]/image/route.ts / app/api/
+         uploads/[...path]/route.ts.
+       - Open Redirect en app/login/LoginForm.tsx.
+       - SSRF en app/api/support/route.ts y app/api/ai-assistant/route.ts.
+       - Condición de carrera (TOCTOU) en cupones (app/api/orders/route.ts).
+       - Logs con contraseñas en texto plano (app/api/auth/login/route.ts) y credenciales hardcodeadas/cookie estática
+         en SIEM (app/api/monitoring/auth/route.ts, app/api/monitoring/logs/route.ts).
+       - AES-256-CBC sin autenticación y clave hardcodeada en lib/share-crypto.ts + oráculo de errores en app/api/
+         documents/share/route.ts.
+       - Dependencias vulnerables en package.json (next@15.2.2, react@19.2.0, libxmljs2@0.37.0).
+
+     - Severidad Media (7 hallazgos):
+       - Generación predecible de códigos y falta de cobro en tarjetas regalo (lib/gift-card.ts, app/api/gift-cards/
+         route.ts).
+       - Exposición del campo password y diagnósticos internos en app/api/user/export/route.ts.
+       - Token estático en app/api/admin/diag/route.ts.
+       - .env.local no excluido en .gitignore/.dockerignore y secreto en NEXT_PUBLIC_PAYMENT_SECRET.
+       - Filtro de prompt injection por regex trivial (lib/prompt-injection-filter.ts) y cabecera estática MCP (lib/
+         mcp-constants.ts, app/api/mcp/route.ts).
+       - Validación de subida de imágenes solo por file.type, contenedor Docker corriendo como root y prisma studio
+         automático en scripts/setup.sh.
+       - Ausencia de cabeceras de seguridad HTTP en next.config.ts y protección CSRF explícita.
+
+     En AUDITORIA_SEGURIDAD.md encontrarás la ubicación exacta, el detalle técnico y el plan de remediación priorizado
+     en tres fases para cada punto.
+
+     Build · google/gemini-4-hydrogen · 3m 47s · 258.5 tok/s · 8.4s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · google/gemini-4-hydrogen OpenRouter
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-53wHkAn0                                                     250.8K (24%) · $0.76  ctrl+p commands
+
