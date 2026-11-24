@@ -1,0 +1,31 @@
+{
+  "codigo": "TCI",
+  "modelo": "gpt-6.2-astra",
+  "nota": 9,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 3,
+    "tokens": 2,
+    "tiempo": 1,
+    "peticiones": 0
+  },
+  "veredicto": "Bien clasificado, una vuelta de más",
+  "resumen": "Tipo 96,3 %, superficie 88,7 % y F1 de áreas 0,692 frente a jev (82 incidencias idénticas). Le costó 102 s, 13 peticiones y 477 k tokens (≈ 0,57 $): las peticiones pasan de 10.",
+  "cifras": {
+    "tipo": 0.963,
+    "superficie": 0.887,
+    "areas_f1_micro": 0.692,
+    "areas_f1_macro": 0.637,
+    "exactas": 82,
+    "segundos": 102,
+    "peticiones": 13,
+    "tokens": 476802,
+    "coste_usd_estimado": 0.567
+  },
+  "rarezas": [
+    "Lee las 300 por tandas con un script que saca de cada plantilla las respuestas (175 caracteres) o los primeros 360 del texto, y abre completas 29 dudosas.",
+    "Anota cada incidencia en una línea de códigos (C = CLI, A = app, E = enhancement, t = TUI, cfg = config…) y la expande a JSONL con un script; corrige a mano cuatro filas antes de escribir: 2947 tokens de salida.",
+    "Más caro que astra con el esfuerzo por defecto: 13 peticiones y 477 k tokens frente a 7 y 190 k, con la misma calidad."
+  ]
+}
