@@ -1,10 +1,8 @@
 # ollama/glm-5.3-flash
 
-Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-23.
+Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-24.
 
-**Nota media: 7,5 / 10** (4 de 5 prompts juzgados). Total: 84 peticiones y 4314,5 k tokens.
-
-Pendientes: TCI.
+**Nota media: 7,5 / 10** (4 de 5 prompts juzgados). Total: 99 peticiones y 5776,0 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
@@ -12,6 +10,7 @@ Pendientes: TCI.
 | [AIF](AIF/juicio.md) | visual | 4 | 250,7 k | 8 | buen juego, Web Reactiva inventado | Mecánica muy fiel a Infinite Craft (mesa infinita con zoom, soltar una ficha sobre otra, panel de descubrimientos con buscador, sonidos), 145 recetas todas alcanzables y un generador de «invenciones raras» para las mezclas sin receta. Pero el contenido de Web Reactiva es inventado: «Nacho Ojea», «Trece Tigres», «La Red», ZX Spectrum y GeoCities; parte de Internet, Radio, Cine y Juego. | [▶ web-reactiva-craft.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_glm-5.3-flash/AIF/salida/web-reactiva-craft.html) |
 | [CCA](CCA/juicio.md) | código | 33 | 1083,0 k | 8 | bien diseñado, Redis roto | Python con capas (dominio, aplicación, infraestructura, API HTTP), Decimal para el dinero, precios del catálogo, bloqueo por carrito en memoria, límites y 24 tests en verde. Pero el adaptador de Redis, que es lo que lo haría escalar, captura self._client.WatchError, que no existe: un conflicto de concurrencia o cualquier error de negocio acaba en AttributeError. | – |
 | [SEC](SEC/juicio.md) | seguridad | 18 | 1158,0 k | 5 | Ve casi todo, localiza a medias | Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 22 aciertos (15 con línea y 14 a medio punto) y F3 55,7: seis aciertos no dan línea y ocho citan rangos de más de 20 líneas, que valen como sin línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias. | – |
+| [TCI](TCI/juicio.md) | clasificación | 15 | 1461,5 k | – | sin juzgar |  | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 

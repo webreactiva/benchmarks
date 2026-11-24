@@ -1,16 +1,17 @@
 # ollama/muse-spark-open
 
-Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-20.
+Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 
-**Nota media: 8,0 / 10** (3 de 5 prompts juzgados). Total: 38 peticiones y 1083,4 k tokens.
+**Nota media: 8,0 / 10** (3 de 5 prompts juzgados). Total: 75 peticiones y 6090,7 k tokens.
 
-Pendientes: SEC, TCI.
+Pendientes: SEC.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
 | [A3D](A3D/juicio.md) | visual | 5 | 88,0 k | 7 | bonita por fuera, cámara perdida | Interfaz muy cuidada (Cinzel, fichas con datos, progreso, minimapa, leyenda, día y noche) y 7 paradas con textos correctos, y el recorrido automático avanza. Pero la escena está tan a escala que la cámara va siempre pegada a los volúmenes, hasta en «vista aérea», y al saltar de parada con «Siguiente» la consola se llena de errores (unos 150, uno por fotograma). | [▶ alhambra-ruta-3d.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_muse-spark-open/A3D/salida/alhambra-ruta-3d.html) |
 | [AIF](AIF/juicio.md) | visual | 9 | 391,6 k | 8 | muy de la casa, rama de IA bloqueada | Contenido sacado de cuatro páginas de webreactiva.com con mucho humor de la casa («Combustible oficial del developer. 100 % malandriner», «Dirigible (400 € en tokens)»), mesa libre donde se combina soltando una ficha sobre otra, filtros, pistas y recetas secretas. Pero una receta posterior (IA + Código = Python) pisa a la que anuncia como clave (Código + IA = Prompt): sin Prompt no se puede llegar a agentes, skills, MCP, Claude Code ni SDD. Solo 68 de 102 alcanzables, y el botón «Combinar» no registra nada. | [▶ index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_muse-spark-open/AIF/salida/index.html) |
 | [CCA](CCA/juicio.md) | código | 24 | 603,7 k | 9 | bien pensado, sin Redis | Python sin dependencias: agregado de carrito con límites, motor de precios con reglas (por volumen, categoría, cupón), IVA y envío, reserva de stock, bus de eventos, servicio sin estado con versión optimista y reintentos, almacenamiento en memoria, en fichero o repartido en shards, y una API REST. Pasa 12 tests y 50 hilos no pierden nada. Pero Redis o DynamoDB son solo un contrato. | – |
+| [TCI](TCI/juicio.md) | clasificación | 37 | 5007,4 k | – | sin juzgar |  | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 

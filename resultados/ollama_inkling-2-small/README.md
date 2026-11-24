@@ -1,10 +1,8 @@
 # ollama/inkling-2-small
 
-Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-23.
+Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 
-**Nota media: 7,8 / 10** (4 de 5 prompts juzgados). Total: 95 peticiones y 3785,7 k tokens.
-
-Pendientes: TCI.
+**Nota media: 7,8 / 10** (4 de 5 prompts juzgados). Total: 131 peticiones y 5352,0 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
@@ -12,6 +10,7 @@ Pendientes: TCI.
 | [AIF](AIF/juicio.md) | visual | 15 | 688,7 k | 9 | se juega, Web Reactiva a medias | Mesa libre con fichas que se combinan soltando una sobre otra, 125 elementos todos alcanzables y un generador para las mezclas sin receta. Parte de Agua, Fuego, Aire y Tierra y mezcla programación genérica (React, Rust, Docker) con algo de Web Reactiva (podcast, masterclass, «Maratón WR», «Membresía WR», «Slow Content»), sin mirar la web. | [▶ alquimia-reactiva.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_inkling-2-small/AIF/salida/alquimia-reactiva.html) |
 | [CCA](CCA/juicio.md) | código | 40 | 1042,4 k | 9 | bien diseñado, sin Redis | API Fastify sin estado en TypeScript, con capas y puertos, dinero en céntimos, precio del catálogo, cupones, IVA, envío, caducidad de carritos y compare-and-set por versión en el repositorio. Compila, pasa 21 tests y 50 altas a la vez no pierden nada. Pero solo trae repositorios en memoria: Redis o Postgres quedan como «pendiente». | – |
 | [SEC](SEC/juicio.md) | seguridad | 16 | 852,4 k | 4 | Ve mucho, localiza poco | Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: 2 aciertos con línea y 29 a medio punto dejan el F3 estricto en 41,4. Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews. | – |
+| [TCI](TCI/juicio.md) | clasificación | 36 | 1566,3 k | – | sin juzgar |  | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 

@@ -1,16 +1,17 @@
 # ollama/minimax-m3
 
-Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-20.
+Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-24.
 
-**Nota media: 7,7 / 10** (3 de 5 prompts juzgados). Total: 311 peticiones y 35744,8 k tokens.
+**Nota media: 7,7 / 10** (3 de 5 prompts juzgados). Total: 336 peticiones y 37508,1 k tokens.
 
-Pendientes: SEC, TCI.
+Pendientes: SEC.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
 | [A3D](A3D/juicio.md) | visual | 80 | 11368,3 k | 4 | lo más ambicioso, no se recorre | El A3D con más cosas: 15 paradas con textos ricos y consejos de visita, 4 vistas, deslizador de hora del día, narración por voz, minimapa y arcos de herradura generados por código. Pero el recorrido apenas avanza, saltar a una parada no mueve la cámara (se queda en la plaza de entrada) y el minimapa tapa las paradas 11 a 15 de la lista. | [▶ alhambra-3d.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_minimax-m3/A3D/salida/alhambra-3d.html) |
 | [AIF](AIF/juicio.md) | visual | 76 | 11453,8 k | 9 | el mejor AIF, con mucho | 399 elementos y 1780 recetas sacados de webreactiva.com de verdad (glosario, cursos, skills, comunidad Malandriner), un generador para las mezclas sin receta, 7 legendarios, pistas, bitácora, compartir por URL, y el logo, los colores y la tipografía de la marca. Funciona sin conexión. Le falta el lienzo libre de Infinite Craft: combina en dos calderos. | [▶ alquimia-reactiva.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_minimax-m3/AIF/salida/alquimia-reactiva.html) |
 | [CCA](CCA/juicio.md) | código | 155 | 12922,7 k | 10 | escala de verdad, con Redis | Monorepo TypeScript con dominio hexagonal, API Fastify sin estado, Redis con scripts Lua (CAS por versión, reserva de stock, idempotencia), outbox, métricas, SSE y una tienda React. Compila, pasa 69 tests y, con dos instancias sobre el mismo Redis, 40 altas a la vez no pierden ni un dato. Lo único discutible: bajo mucha contención devuelve 409 en vez de reintentar más. | – |
+| [TCI](TCI/juicio.md) | clasificación | 25 | 1763,3 k | – | sin juzgar |  | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 

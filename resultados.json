@@ -3664,6 +3664,50 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_beam/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/beam",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:16:57Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 151332,
+      "output": 20193,
+      "reasoning": 0,
+      "cache_read": 1589760,
+      "cache_write": 0,
+      "total": 1761285
+    },
+    "peticiones": 18,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "read": 10,
+      "write": 2,
+      "shell": 5
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df35ed424ffe2yGZoaxevUdyEP",
+    "coste_usd": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 131072,
+      "output_proveedor": 131072,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/ollama_deepseek-v4.1-flash/A3D",
     "codigo": "A3D",
     "modelo": "ollama/deepseek-v4.1-flash",
@@ -3984,6 +4028,50 @@
       ]
     },
     "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
+    "dir": "resultados/ollama_deepseek-v4.1-flash/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/deepseek-v4.1-flash",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T07:44:55Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 70317,
+      "output": 28668,
+      "reasoning": 0,
+      "cache_read": 760192,
+      "cache_write": 0,
+      "total": 859177
+    },
+    "peticiones": 15,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "shell": 13,
+      "read": 1,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df37c2906ffeKCDtUfcETqUG3M",
+    "coste_usd": 0,
+    "ficheros": [
+      "classificacion.jsonl"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 393216,
+      "output_proveedor": 393216,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
     "dir": "resultados/ollama_glm-5.3/A3D",
@@ -4335,6 +4423,133 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/ollama_glm-5.3/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/glm-5.3",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:34:50Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 109170,
+      "output": 36458,
+      "reasoning": 0,
+      "cache_read": 1517056,
+      "cache_write": 0,
+      "total": 1662684
+    },
+    "peticiones": 32,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 57,
+      "shell": 20,
+      "write": 2,
+      "edit": 2
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df34e77ceffeYqCEdjAkOcP6ZM",
+    "coste_usd": 0,
+    "ficheros": [
+      "AUDITORIA-SEGURIDAD.md",
+      "hallazgos.json"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/glm-5.3",
+      "nota": 6,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 1
+      },
+      "veredicto": "Amplio, localiza con rangos anchos",
+      "resumen": "Informe de 37 hallazgos (en Markdown y en JSON) en el que el juez reconoce 32 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 21,5 aciertos (16 con línea y 11 a medio punto) y F3 54,4: tres aciertos no dan línea y ocho caen en rangos de más de 20 líneas. Se le escapan el oráculo de padding, los dos XSS de reseñas y el open redirect, el IDOR de wishlists, el token de soporte en claro, la fuga de la URL del asistente, el logout y la página de noticias.",
+      "cifras": {
+        "tp_estricto": 21.5,
+        "con_linea_tp": 16,
+        "sin_linea_tp": 11,
+        "fp_estricto": 14,
+        "fn_estricto": 18.5,
+        "f3": 54.4,
+        "wf3": 57.0,
+        "precision": 0.606,
+        "recall": 0.537,
+        "juez": {
+          "tp": 32,
+          "fp_inventados": 1,
+          "extra_reales": 11,
+          "f3": 81.4
+        }
+      },
+      "rarezas": [
+        "Dice que es «un entorno de evaluación de seguridad tipo CTF» por flag.txt y las flags QKB{…}; no nombra el proyecto original.",
+        "No sale a internet: 57 lecturas y 20 comandos de shell locales (find, cat, sed, grep y dos node -e para validar su propio JSON). Los CVE de Next los cita de memoria y describe mal CVE-2025-55182 como envenenamiento de caché, deducido del nombre de una variable de .env.local; los curl solo aparecen en las PoC.",
+        "Deja dos ficheros con los mismos 37 hallazgos (AUDITORIA-SEGURIDAD.md y hallazgos.json); se juzgan como un solo informe. Corrige con dos edits los totales por severidad, que había escrito mal (38 en vez de 37). El resumen anuncia «4 vectores de XSS» y solo describe dos.",
+        "Termina en 3 min 29 s sin errores, cortes ni compactaciones.",
+        "Da CWE en los 37 hallazgos, pero cinco no dan línea y ocho aciertos caen en rangos de más de 20 líneas (51-91, 110-141, 81-102, 17-49, 8-64, 64-85, 37-133), que se quedan en medio punto.",
+        "No toca el código: solo crea sus dos ficheros de informe."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
+    "dir": "resultados/ollama_glm-5.3/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/glm-5.3",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T07:46:44Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 227195,
+      "output": 99731,
+      "reasoning": 0,
+      "cache_read": 975616,
+      "cache_write": 0,
+      "total": 1302542
+    },
+    "peticiones": 13,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "read": 10,
+      "write": 1,
+      "shell": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df37a805fffeSpsF25pY42i7iy",
+    "coste_usd": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
     "dir": "resultados/ollama_glm-5.3-flash/A3D",
@@ -4706,6 +4921,50 @@
     "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
+    "dir": "resultados/ollama_glm-5.3-flash/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/glm-5.3-flash",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T07:37:10Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 191508,
+      "output": 65725,
+      "reasoning": 0,
+      "cache_read": 1204224,
+      "cache_write": 0,
+      "total": 1461457
+    },
+    "peticiones": 15,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "read": 10,
+      "shell": 3,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df3834156ffeq6b0aefoZgtwbL",
+    "coste_usd": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/ollama_inkling-2-small/A3D",
     "codigo": "A3D",
     "modelo": "ollama/inkling-2-small",
@@ -5054,6 +5313,51 @@
       ]
     },
     "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
+    "dir": "resultados/ollama_inkling-2-small/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/inkling-2-small",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:29:40Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 158004,
+      "output": 36167,
+      "reasoning": 0,
+      "cache_read": 1372160,
+      "cache_write": 0,
+      "total": 1566331
+    },
+    "peticiones": 36,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "shell": 22,
+      "read": 4,
+      "subagent": 10
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df3533237ffe1x5DBZWqRgCNxn",
+    "coste_usd": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 131072,
+      "output_proveedor": 131072,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "espero_segundo_plano": true,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
     "dir": "resultados/ollama_kimi-k3.1-pro/A3D",
@@ -5808,6 +6112,50 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_minimax-m3/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/minimax-m3",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:09:39Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 112183,
+      "output": 31540,
+      "reasoning": 0,
+      "cache_read": 1619584,
+      "cache_write": 0,
+      "total": 1763307
+    },
+    "peticiones": 25,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "shell": 24,
+      "write": 2
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df36585faffeF6EI6T6BPf1ZYx",
+    "coste_usd": 0,
+    "ficheros": [
+      "clasificacion.jsonl",
+      "classify.py"
+    ],
+    "limites": {
+      "context": 512000,
+      "output": 131072,
+      "output_proveedor": 131072,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/ollama_minimax-m3.1-flash/A3D",
     "codigo": "A3D",
     "modelo": "ollama/minimax-m3.1-flash",
@@ -6190,6 +6538,51 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_minimax-m3.1-flash/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/minimax-m3.1-flash",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T07:53:58Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 135943,
+      "output": 28142,
+      "reasoning": 0,
+      "cache_read": 2056576,
+      "cache_write": 0,
+      "total": 2220661
+    },
+    "peticiones": 30,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "shell": 28,
+      "write": 2,
+      "edit": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df373e068ffemiZ2chNklGZFUQ",
+    "coste_usd": 0,
+    "ficheros": [
+      "clasificacion.jsonl",
+      "classify.py"
+    ],
+    "limites": {
+      "context": 1000000,
+      "output": 500000,
+      "output_proveedor": 524288,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/ollama_mistral-large-4/A3D",
     "codigo": "A3D",
     "modelo": "ollama/mistral-large-4",
@@ -6476,6 +6869,51 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_mistral-large-4/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/mistral-large-4",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T07:57:52Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 150699,
+      "output": 29451,
+      "reasoning": 0,
+      "cache_read": 1033216,
+      "cache_write": 0,
+      "total": 1213366
+    },
+    "peticiones": 14,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "read": 11,
+      "glob": 1,
+      "write": 1,
+      "shell": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df3704fdcffeq48YWw7T6qek7M",
+    "coste_usd": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 262144,
+      "output_proveedor": 262144,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/ollama_muse-spark-open/A3D",
     "codigo": "A3D",
     "modelo": "ollama/muse-spark-open",
@@ -6743,5 +7181,49 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/ollama_muse-spark-open/TCI",
+    "codigo": "TCI",
+    "modelo": "ollama/muse-spark-open",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:05:20Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 156624,
+      "output": 54569,
+      "reasoning": 0,
+      "cache_read": 4796160,
+      "cache_write": 0,
+      "total": 5007353
+    },
+    "peticiones": 37,
+    "error": null,
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "herramientas": {
+      "read": 11,
+      "shell": 23,
+      "subagent": 5
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df3697858ffeERmrbQT03tDVrc",
+    "coste_usd": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   }
 ]

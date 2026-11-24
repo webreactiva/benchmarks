@@ -1,10 +1,8 @@
 # ollama/deepseek-v4.1-flash
 
-Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-23.
+Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-24.
 
-**Nota media: 7,0 / 10** (4 de 5 prompts juzgados). Total: 121 peticiones y 9123,8 k tokens.
-
-Pendientes: TCI.
+**Nota media: 7,0 / 10** (4 de 5 prompts juzgados). Total: 136 peticiones y 9983,0 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
@@ -12,6 +10,7 @@ Pendientes: TCI.
 | [AIF](AIF/juicio.md) | visual | 32 | 2646,1 k | 9 | Infinite Craft de verdad | La mecánica más fiel a Infinite Craft de todo el benchmark: lienzo libre donde se suelta una pieza sobre otra, almacén con buscador y una misión (descubrir el Atlas Malandriner). 78 elementos y 90 recetas sacados de webreactiva.com, todos alcanzables, con pistas, sonido y guardado. Pero no es infinito: fuera de las 90 recetas, las mezclas no dan nada. | [▶ index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_deepseek-v4.1-flash/AIF/salida/index.html) |
 | [CCA](CCA/juicio.md) | código | 26 | 1143,5 k | 6 | bonito, escala el código, no el sistema | Una tienda completa y muy cuidada (catálogo, búsqueda, carrito, cupones, envío, IVA, checkout) con un motor de precios por reglas, dinero en céntimos, almacenamiento intercambiable y 23 tests. Pero el carrito vive en localStorage y el servidor solo sirve estáticos: «escalable» lo resuelve como código fácil de ampliar, sin nada que aguante muchos usuarios. | – |
 | [SEC](SEC/juicio.md) | seguridad | 30 | 3103,0 k | 7 | Ve mucho, con rangos anchos | Informe de 38 hallazgos, todos con CWE, en el que el juez reconoce 34 de las 40 entradas y solo dos no se sostienen, pero la nota cuenta 22,5 (F3 56,6): ocho de sus rangos pasan de 20 líneas y diez entradas valen medio acierto, como si no diera línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el logout, el token de soporte en claro y en la respuesta, y la página de noticias. | – |
+| [TCI](TCI/juicio.md) | clasificación | 15 | 859,2 k | – | sin juzgar |  | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
