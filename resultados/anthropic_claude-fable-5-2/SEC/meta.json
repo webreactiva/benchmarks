@@ -1,0 +1,32 @@
+{
+  "codigo": "SEC",
+  "modelo": "claude-fable-5-2",
+  "agente": "Claude Code",
+  "fecha": "2026-11-24T01:20:55Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 30,
+    "output": 20815,
+    "reasoning": 0,
+    "cache_read": 1624561,
+    "cache_write": 148259,
+    "total": 1793665
+  },
+  "peticiones": 15,
+  "error": null,
+  "herramientas": {
+    "Bash": 13,
+    "Read": 3,
+    "Write": 1,
+    "Edit": 1
+  },
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "AUDITORIA_SEGURIDAD.md"
+  ],
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado"
+}
