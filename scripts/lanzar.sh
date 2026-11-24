@@ -81,6 +81,13 @@ tmux set-option -t "=$s:" @pantallas "$B/resultados/.pantallas"
 for i in $(seq 1 90); do sleep 1; tmux capture-pane -p -t "=$s:" | grep -q "ctrl+p" && break; done
 inicio=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 ACEPTA=1 ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" di "$s" "$prompt" || true
+# A veces el Enter llega antes de que OpenCode acepte la entrada y el prompt se queda escrito en la caja, con la portada
+# (el logotipo) todavía en pantalla y sin ninguna petición: se vuelve a pulsar Enter (como mucho 3 veces).
+for reintento in 1 2 3; do
+  tmux capture-pane -p -t "=$s:" 2>/dev/null | grep -q "▀▀▀▀ █▀▀▀ ▀▀▀▀ ▀▀▀▀" || break
+  sleep 5; tmux send-keys -t "=$s:" Enter; sleep 5
+  ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" espera "$s" >/dev/null || true
+done
 # Subagentes en segundo plano: si el modelo cierra su turno esperándolos («↓ 6 subagents» en la barra de estado), la
 # sesión sigue viva y el turno vuelve cuando acaban. Se espera mientras la barra los muestre y la pantalla cambie; si
 # la pantalla no cambia en ~10 min con el agente libre, se da por acabado (por si la barra los sigue listando al terminar).

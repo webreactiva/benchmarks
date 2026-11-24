@@ -1,0 +1,29 @@
+QUOKKA BAZAAR - RESUMEN EJECUTIVO AUDITORÍA 2026-11-24
+Riesgo global: CRÍTICO (CVSS medio 8.7) - NO APTO PARA PRODUCCIÓN
+
+Hallazgos totales: 24 (6 críticos, 8 altos, 6 medios, 4 bajos)
+Superficie atacada: 73 endpoints API, 14 modelos BD, 3 volúmenes Docker
+
+TOP 5 RIESGOS INMEDIATOS:
+1. Inyección SQL (products/search, orders/search, tracking, reviews) -> extracción total BD
+2. XXE en libxmljs2 (admin/suppliers/import-order) -> lectura arbitraria ficheros
+3. Bypass JWT middleware (sin verificación firma) -> escalado ADMIN arbitrario
+4. Credential logging + SIEM root:admin -> robo masivo credenciales
+5. SSRF + Path Traversal + XSS almacenado -> compromiso cliente/servidor
+
+SECRETOS FILTRADOS (verificados):
+- flag.txt: QKB{a77e424511f7}
+- supplier-registry.txt: QKB{9ed09177557e}
+- .env.local PAYMENT_SECRET (NEXT_PUBLIC_) -> QKB{720f2a771e50}
+- .env.local CVE -> QKB{6b2cad3174c3}
+- public/notice.txt -> QKB{0928ba72fab4}
+- login AUDIT_TAG -> QKB{5db6d39c813f}
+- ai-assistant prompt -> QKB{282aa326914e}
+- wishlist BOLA wl-internal-001 -> QKB{2e7ee785ef68}
+- MCP compliance case-1a3b98 -> QKB{f7dd5bf4ff60}
++ 35 flags totales enumerables vía /api/flags sin auth (ver INVENTARIO_FLAGS.txt)
+
+ACCIÓN P0 (<48h): cerrar SQLi, XXE, JWT, rotar secretos, deshabilitar /api/flags público.
+Informe completo: AUDITORIA_SEGURIDAD_QUOKKA_BAZAAR.md (12 capítulos, PoCs reproducibles).
+PoCs: PRUEBAS_POC.sh
+Inventario flags: INVENTARIO_FLAGS.txt
