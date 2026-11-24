@@ -1,0 +1,40 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/muse-spark-open",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T08:05:20Z",
+  "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+  "tokens": {
+    "input": 156624,
+    "output": 54569,
+    "reasoning": 0,
+    "cache_read": 4796160,
+    "cache_write": 0,
+    "total": 5007353
+  },
+  "peticiones": 37,
+  "error": null,
+  "mensajes_usuario": [
+    "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  ],
+  "herramientas": {
+    "read": 11,
+    "shell": 23,
+    "subagent": 5
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df3697858ffeERmrbQT03tDVrc",
+  "coste_usd": 0,
+  "ficheros": [
+    "clasificacion.jsonl"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

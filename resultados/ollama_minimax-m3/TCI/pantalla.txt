@@ -1,0 +1,36 @@
+   Clasificación de incidencias  +
+     Las 18 áreas de la lista se utilizan; 142 incidencias llevan 2 áreas, 110 llevan 1, 28 llevan 3 y una lleva 4.
+
+     Criterios aplicados
+
+     - superficie: app = Codex/ChatGPT desktop (macOS, Windows, Linux); CLI = codex-cli/TUI/codex exec; extension =
+       extensión de VS Code y extensiones Chrome/Edge; codex-web = chatgpt.com (Projects, Codex Cloud, uso); iOS = app
+       móvil (incluye Android, que no existe en la lista).
+     - tipo: enhancement para peticiones de feature/UX explícitas (31); documentation para consultas de documentación
+       e integración (9, p.ej. el bloque de 6 duplicados 54480-54489); resto bug.
+     - areas: derivadas del contenido real, no del título. Clusters grandes: el fallo de setup refresh had errors /
+       error 32 sobre node_repl.exe → windows-os + sandbox (unas 25 incidencias repetidas); "Selected model is at
+       capacity" → rate-limits; averías de Sparkle/appcast 520 → connectivity; daemon/app-server → app-server +
+       config.
+
+     Dos criterios que conviene que valides
+
+     1. 19 incidencias tienen areas: [] porque su cuerpo es literalmente "Withdrawn" o un UUID sin contenido (p.ej.
+        codex-52032, codex-53499, codex-56376). No inventé áreas para esos casos; en su lugar elegí tipo y superficie
+        por defecto.
+     2. Para defectos puramente de interfaz del desktop sin encaje funcional (emoji picker recortado, texto japonés en
+        cajas, CSS en crudo, barra de input recortada) usé config como área genérica de "app/UI"; si tu taxonomía
+        prefiere otra etiqueta para ese bucket, es el punto más fácil de reajustar.
+
+     Dejé también classify.py, que regenera el fichero de forma determinista y valida que toda incidencia esté
+     clasificada y que los valores pertenezcan a las listas permitidas.
+
+     Build · minimax-m3 · 6m 54s · 89.0 tok/s · 1.6s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · minimax-m3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-BmTMtsd8                                                             135.6K (26%)  ctrl+p commands
+

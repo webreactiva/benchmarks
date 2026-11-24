@@ -35,3 +35,4 @@ for m in "$@"; do
     fi
   done
 done
+exit 0

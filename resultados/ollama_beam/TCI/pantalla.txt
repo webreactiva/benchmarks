@@ -1,0 +1,36 @@
+   Clasificación de incidencias. +
+
+  ┃
+  ┃  Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation)
+  ┃  , la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-
+  ┃  os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior,
+  ┃  performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl,
+  ┃  una línea por incidencia con su id.
+  ┃
+
+     + 5 commands, 2 edits, 18 thoughts, 10 reads
+
+     El archivo clasificacion.jsonl ha sido generado con 300 líneas, una por incidencia, con id, tipo, superficie y
+     areas, validado contra la lista permitida.
+
+     Build · beam · 1m 47s · 227.8 tok/s · 723ms ttft
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · beam Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-uO7AWKwK                                                             151.1K (14%)  ctrl+p commands
+
