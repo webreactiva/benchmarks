@@ -1,0 +1,37 @@
+{
+  "codigo": "SEC",
+  "modelo": "gpt-6-luna",
+  "nota": 2,
+  "rubrica": {
+    "f3": 1,
+    "criticas": 0,
+    "linea": 1,
+    "cwe": 0
+  },
+  "veredicto": "Preciso, pero sin inyecciones",
+  "resumen": "Informe de 13 hallazgos, 12 con fichero y línea, sin CWE y ninguno inventado: cubre 13 de las 40 entradas con la regla estricta (5 sin línea, a medio punto: 10,5 en la nota, F3 28,2), 15 con el criterio del juez. No ve ninguna SQLi ni XSS, ni las SSRF, el open redirect, las flags, el diag o las credenciales del seed.",
+  "cifras": {
+    "tp_estricto": 10.5,
+    "con_linea_tp": 8,
+    "sin_linea_tp": 5,
+    "fp_estricto": 2,
+    "fn_estricto": 29.5,
+    "f3": 28.2,
+    "wf3": 29.5,
+    "precision": 0.84,
+    "recall": 0.263,
+    "juez": {
+      "tp": 15,
+      "fp_inventados": 0,
+      "extra_reales": 2,
+      "f3": 40.0
+    }
+  },
+  "rarezas": [
+    "No busca SQL ni HTML: su única búsqueda por patrones (withAuth, password, readFile, exec, dangerouslySetInnerHTML…) no incluye queryRaw, y se le escapan las cinco SQLi y las dos XSS.",
+    "Copia en el informe las credenciales del SIEM (root:admin) y el valor de la cookie; las demás auditorías las omitieron.",
+    "Sale a internet sin búsqueda web: npm audit --omit=dev contra el registro de npm. No nombra el proyecto original.",
+    "Lo primero que busca es un AGENTS.md. No toca el código: escribe SECURITY_AUDIT.md con apply_patch.",
+    "11 peticiones y 278 k tokens."
+  ]
+}

@@ -1,0 +1,200 @@
+{
+ "hallazgos": [
+  {
+   "id": "P0-1",
+   "titulo": "clave JWT predeterminada",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true,
+     "nota": "server-auth:12"
+    }
+   ]
+  },
+  {
+   "id": "P0-2",
+   "titulo": "acceso de soporte a cualquier cuenta",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "support-access 51-90 (40 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-035",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "«devuelve el token/login URL»; 51-90; rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "P1-1",
+   "titulo": "rol de administrador en el registro",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "nota": "signup 48-61"
+    }
+   ]
+  },
+  {
+   "id": "P1-2",
+   "titulo": "pedidos ajenos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true,
+     "nota": "orders/[id] 8-22"
+    }
+   ]
+  },
+  {
+   "id": "P1-3",
+   "titulo": "lectura y listado de archivos con traversal",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "files 17-21"
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "nota": "files 49-67"
+    }
+   ]
+  },
+  {
+   "id": "P1-4",
+   "titulo": "credenciales SIEM estáticas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "cita monitoring/auth/route.ts sin línea"
+    }
+   ]
+  },
+  {
+   "id": "P1-5",
+   "titulo": "MD5, contraseñas en el log y reset predecible",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "nota": "login 16-27, contraseña en claro en el log"
+    },
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": false,
+     "nota": "«rutas de alta/restablecimiento» sin citar reset-password"
+    }
+   ],
+   "nota": "el reset predecible de forgot-password es real y no está en la tabla"
+  },
+  {
+   "id": "P1-6",
+   "titulo": "clave AES fija y CBC sin autenticación",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true,
+     "nota": "share-crypto 3-10"
+    },
+    {
+     "id": "oss-oopssec-store-018",
+     "estricto": false,
+     "nota": "CBC sin MAC, no describe el oráculo de padding"
+    }
+   ]
+  },
+  {
+   "id": "P1-7",
+   "titulo": "tokens de soporte revocados siguen valiendo",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: support-login no mira revoked"
+  },
+  {
+   "id": "P1-8",
+   "titulo": "XXE en la importación",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true,
+     "nota": "import-order 21-24"
+    }
+   ]
+  },
+  {
+   "id": "P2-1",
+   "titulo": "SVG activo en la subida de imágenes",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "cita image/route.ts sin línea"
+    }
+   ]
+  },
+  {
+   "id": "P2-2",
+   "titulo": "errores y exportación con información interna",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "export «120+»: rango abierto, cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "P2-3",
+   "titulo": "dependencias con avisos (npm audit)",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "real: npm audit contra el registro"
+  }
+ ]
+}
