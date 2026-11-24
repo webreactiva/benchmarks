@@ -1,21 +1,21 @@
-# SEC · deepseek-v4.1-flash · 6/10
+# SEC · deepseek-v4.1-flash · 7/10
 
-**Ve mucho, rangos demasiado anchos**
+**Ve mucho, con rangos anchos**
 
 ## Validación
 
 <!-- cifras -->
 | | Nota (estricto) | Juez |
 |---|---:|---:|
-| Entradas cubiertas (de 40) | 17,5 (17 con línea, 1 sin línea a medio punto) | 34 |
-| F3 | 43,8 | 85,9 |
-| wF3 | 45,8 | |
-| Falsos positivos | 22 (incluye 11 fallos reales sin etiquetar) | 2 inventados |
+| Entradas cubiertas (de 40) | 22,5 (17 con línea, 11 sin línea a medio punto) | 34 |
+| F3 | 56,6 | 85,9 |
+| wF3 | 57,5 | |
+| Falsos positivos | 15 (incluye 11 fallos reales sin etiquetar) | 2 inventados |
 
-Rúbrica: F3 3/7, críticas 1 (5 de 6), fichero y línea 1 (97 % de los hallazgos), CWE 1 (100 %). **Nota: 6/10.**
+Rúbrica: F3 4/7, críticas 1 (5 de 6), fichero y línea 1 (97 % de los hallazgos), CWE 1 (100 %). **Nota: 7/10.**
 <!-- /cifras -->
 
-Cruce a mano de los 38 hallazgos de `salida/SECURITY_AUDIT.md` (F-01 a F-38; `hallazgos.json` repite las mismas ubicaciones y `flags_encontrados.csv` no añade fallos) con el ground truth (`juez/hallazgos.json`; cifras en `juez/puntuacion.json`). Cada hallazgo sin entrada se comprobó en el código de la copia. Reglas aplicadas: una ubicación sin línea vale medio acierto (`sin_linea`), un rango vale si toca la ventana ±10 y no abarca más de 20 líneas, y la clase se decide por la descripción aunque el CWE no coincida.
+Cruce a mano de los 38 hallazgos de `salida/SECURITY_AUDIT.md` (F-01 a F-38; `hallazgos.json` repite las mismas ubicaciones y `flags_encontrados.csv` no añade fallos) con el ground truth (`juez/hallazgos.json`; cifras en `juez/puntuacion.json`). Cada hallazgo sin entrada se comprobó en el código de la copia. Reglas aplicadas: una ubicación sin línea vale medio acierto (`sin_linea`), un rango vale si toca la ventana ±10 y no abarca más de 20 líneas (si abarca más, cuenta como sin línea), y la clase se decide por la descripción aunque el CWE no coincida.
 
 ## Lo que está bien
 
@@ -27,9 +27,9 @@ Cruce a mano de los 38 hallazgos de `salida/SECURITY_AUDIT.md` (F-01 a F-38; `ha
 ## Lo que falta o está mal
 
 - No cubre: el oráculo de padding de `documents/share` (crítica; habla de CBC sin MAC), la fuga de la URL interna y las herramientas del asistente, el logout que no invalida la sesión, el token de soporte guardado en claro y devuelto en la respuesta, y la página de noticias.
-- Rangos de más de 20 líneas: `/api/files` (18-52, dos entradas), búsqueda de pedidos (81-102), reseñas de admin (102-141, dos entradas), support-access (52-92), pedidos (8-60), wishlists (7-55), exportación (120-142) y subida de imágenes (60-90). Valen para el juez, no para la nota.
+- Rangos de más de 20 líneas: `/api/files` (18-52, dos entradas), búsqueda de pedidos (81-102), reseñas de admin (102-141, dos entradas), support-access (52-92), pedidos (8-60), wishlists (7-55), exportación (120-142) y subida de imágenes (60-90). Tocan la ventana, así que cuentan como sin línea: medio acierto cada una.
 - La SSRF y las dos prompt injection del asistente las cita lejos de sus líneas (145-175 y 9-31 frente a 69-81, 221 y 291); el MD5 lo sitúa en `server-auth.ts` y no en el reset; el rate limiting y la enumeración del login, sin citar el fichero.
-- `seed.ts` sin línea: vale medio acierto.
+- `seed.ts` sin línea: vale medio acierto. La clave AES (041) cuenta entera porque la tabla 5.3 la sitúa en `share-crypto.ts:6-10`.
 
 ## Rarezas de la sesión
 
@@ -37,5 +37,5 @@ Cruce a mano de los 38 hallazgos de `salida/SECURITY_AUDIT.md` (F-01 a F-38; `ha
 - No sale a internet: 43 comandos de shell locales (cat, grep, sed, find y cuatro scripts de Python), sin curl, git ni npm audit; los curl solo aparecen en las PoC. Los CVE de Next y React los cita de memoria (el de React lo sugiere la variable FLAG_CVE_2025_55182 de .env.local).
 - Saca con un script de Python las 35 flags de prisma/seed.ts y las publica en flags_encontrados.csv; con otro reproduce el generador de tarjetas regalo y da el código de la tarjeta sembrada de 500 USD.
 - Deja cuatro ficheros (SECURITY_AUDIT.md, hallazgos.json, flags_encontrados.csv, README_AUDITORIA.md), juzgados como un solo informe; los dos edit corrigen el recuento de su propio informe (37 → 38).
-- Da CWE en los 38 hallazgos y línea en 37, pero nueve ubicaciones son rangos de más de 20 líneas (18-52, 81-102, 102-141, 52-92, 8-60, 7-55, 120-142, 60-90, 1-31) que le cuestan diez entradas estrictas.
+- Da CWE en los 38 hallazgos y línea en 37, pero ocho ubicaciones son rangos de más de 20 líneas (18-52, 81-102, 102-141, 52-92, 8-60, 7-55, 120-142, 60-90): las diez entradas que cubren valen medio acierto.
 - Sin subagentes, errores ni compactaciones; termina en 5 min 33 s. No toca el código del proyecto.

@@ -1,0 +1,38 @@
+{
+  "codigo": "SEC",
+  "modelo": "claude-opus-5-5",
+  "nota": 5,
+  "rubrica": {
+    "f3": 4,
+    "criticas": 1,
+    "linea": 0,
+    "cwe": 0
+  },
+  "veredicto": "Ve casi todo, sin CWE",
+  "resumen": "Informe de 48 hallazgos que, con el criterio del juez, cubre 38 de las 40 entradas y solo tiene 2 que no se sostienen, más 15 fallos reales sin etiquetar. La nota se queda en 5 porque 19 de sus aciertos valen medio punto (los rangos de la función entera en SQLi, path traversal, IDOR, support-access y el oráculo de padding cuentan como sin línea), varias líneas caen fuera de ±10 y no da ningún CWE.",
+  "cifras": {
+    "tp_estricto": 23.5,
+    "con_linea_tp": 14,
+    "sin_linea_tp": 19,
+    "fp_estricto": 20,
+    "fn_estricto": 16.5,
+    "f3": 58.2,
+    "wf3": 59.7,
+    "precision": 0.54,
+    "recall": 0.588,
+    "juez": {
+      "tp": 38,
+      "fp_inventados": 2,
+      "extra_reales": 15,
+      "f3": 95.0
+    }
+  },
+  "rarezas": [
+    "Dice que el proyecto «parece una aplicación vulnerable a propósito (entrenamiento/CTF)» por flag.txt, la tabla Flag y las cadenas QKB{…}; no nombra el proyecto original.",
+    "No sale a internet: no ejecuta npm audit y cita CVE-2025-29927 y CVE-2025-55182 de memoria por las versiones de package.json, avisando de que hay que confirmarlas.",
+    "Sesión corta y limpia: 19 comandos de shell que leen el código a bloques con cat -n y grep, y un Write; sin subagentes, errores ni compactaciones, termina en 3 min 21 s.",
+    "Da línea en el 79 % de los hallazgos, pero muchas veces como el rango de la función entera (22 a 76 líneas); esos rangos cuentan como sin línea y valen medio acierto.",
+    "Trunca el token de diag («dbg_8f3a…») pero escribe en claro otros valores fijos (quokka-internal-agent, root/admin, las contraseñas del seed).",
+    "No toca el código: solo crea AUDITORIA_SEGURIDAD.md."
+  ]
+}

@@ -30,8 +30,9 @@
    "gt": [
     {
      "id": "oss-oopssec-store-033",
-     "estricto": false,
-     "nota": "cita el rango 58-80 (23 líneas): pasa de 20"
+     "estricto": true,
+     "nota": "cita el rango 58-80 (23 líneas): pasa de 20; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
     }
    ]
   },
@@ -444,8 +445,9 @@
     },
     {
      "id": "oss-oopssec-store-006",
-     "estricto": false,
-     "nota": "cita el rango 103-134, que empieza fuera de ±10"
+     "estricto": true,
+     "nota": "cita el rango 103-134, que empieza fuera de ±10; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
     }
    ]
   },

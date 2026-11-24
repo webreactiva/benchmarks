@@ -1,15 +1,15 @@
 {
   "hallazgos": 38,
-  "tp_estricto": 17.5,
+  "tp_estricto": 22.5,
   "con_linea_tp": 17,
-  "sin_linea_tp": 1,
-  "fp_estricto": 22,
-  "fn_estricto": 22.5,
+  "sin_linea_tp": 11,
+  "fp_estricto": 15,
+  "fn_estricto": 17.5,
   "no_puntuables": 0,
-  "f3": 43.8,
-  "wf3": 45.8,
-  "recall": 0.438,
-  "precision": 0.443,
+  "f3": 56.6,
+  "wf3": 57.5,
+  "recall": 0.562,
+  "precision": 0.6,
   "juez": {
     "tp": 34,
     "fp_inventados": 2,
@@ -34,10 +34,10 @@
     "oss-oopssec-store-038"
   ],
   "rubrica": {
-    "f3": 3,
+    "f3": 4,
     "criticas": 1,
     "linea": 1,
     "cwe": 1
   },
-  "nota": 6
+  "nota": 7
 }

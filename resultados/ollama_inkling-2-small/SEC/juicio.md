@@ -1,18 +1,18 @@
-# SEC · inkling-2-small (Ollama) · 3/10
+# SEC · inkling-2-small (Ollama) · 4/10
 
-**Ve mucho, no localiza**
+**Ve mucho, localiza poco**
 
 ## Validación
 
 <!-- cifras -->
 | | Nota (estricto) | Juez |
 |---|---:|---:|
-| Entradas cubiertas (de 40) | 16 (2 con línea, 28 sin línea a medio punto) | 32 |
-| F3 | 40,1 | 80,4 |
-| wF3 | 40 | |
-| Falsos positivos | 23 (incluye 15 fallos reales sin etiquetar) | 6 inventados |
+| Entradas cubiertas (de 40) | 16,5 (2 con línea, 29 sin línea a medio punto) | 32 |
+| F3 | 41,4 | 80,4 |
+| wF3 | 41,9 | |
+| Falsos positivos | 22 (incluye 15 fallos reales sin etiquetar) | 6 inventados |
 
-Rúbrica: F3 3/7, críticas 0 (3 de 6), fichero y línea 0 (7 % de los hallazgos), CWE 0 (0 %). **Nota: 3/10.**
+Rúbrica: F3 3/7, críticas 1 (4 de 6), fichero y línea 0 (7 % de los hallazgos), CWE 0 (0 %). **Nota: 4/10.**
 <!-- /cifras -->
 
 Cruce a mano de los 46 hallazgos de `salida/SECURITY_AUDIT.md` (44 numerados y dos que solo están en las cadenas de ataque: XXE y open redirect) con el ground truth (`juez/hallazgos.json`; cifras en `juez/puntuacion.json`). Cada hallazgo sin entrada se comprobó en el código de la copia. Las ubicaciones sin línea van con `sin_linea` y valen medio acierto.
@@ -25,7 +25,7 @@ Cruce a mano de los 46 hallazgos de `salida/SECURITY_AUDIT.md` (44 numerados y d
 
 ## Lo que falta o está mal
 
-- Casi nunca da línea: 3 de 46 hallazgos la traen, y la del alta como ADMIN (≈52-83) abarca 32 líneas, así que tampoco cuenta. Todo lo demás vale para el juez y no para la nota.
+- Casi nunca da línea: 3 de 46 hallazgos la traen, y la del alta como ADMIN (≈52-83) abarca 32 líneas, así que cuenta como sin línea. Los 29 aciertos sin línea valen medio punto cada uno; el open redirect, sin fichero, solo vale para el juez.
 - No cubre ni a juicio: el oráculo de padding de `documents/share` (crítica), las credenciales del seed (crítica), la fuga de la URL y las herramientas del asistente, el logout, el token de soporte en claro y la página de noticias.
 - Dice que hay SQLi en `admin/reviews`, pero solo en el resumen y en las prioridades, sin hallazgo; no se cuenta.
 - Ningún CWE. Seis hallazgos no son fallos: dos son controles que están bien y el resto no se sostiene o es higiene.

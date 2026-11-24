@@ -263,6 +263,42 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/anthropic_claude-fable-5-2/SEC",
+    "codigo": "SEC",
+    "modelo": "claude-fable-5-2",
+    "agente": "Claude Code",
+    "fecha": "2026-11-24T01:20:55Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 30,
+      "output": 20815,
+      "reasoning": 0,
+      "cache_read": 1624561,
+      "cache_write": 148259,
+      "total": 1793665
+    },
+    "peticiones": 15,
+    "error": null,
+    "herramientas": {
+      "Bash": 13,
+      "Read": 3,
+      "Write": 1,
+      "Edit": 1
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/anthropic_claude-fable-5-2/TCI",
     "codigo": "TCI",
     "modelo": "claude-fable-5-2",
@@ -604,15 +640,15 @@
       "veredicto": "Cobertura alta, sin CWE",
       "resumen": "Informe de 45 hallazgos con fichero y línea en casi todos: cubre 25 de las 40 entradas con la regla estricta (F3 61,3), 35 con el criterio del juez, y solo 4 no son fallos. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el IDOR de wishlists y la página de noticias; no da ningún CWE.",
       "cifras": {
-        "tp_estricto": 27.0,
+        "tp_estricto": 28.0,
         "con_linea_tp": 25,
-        "sin_linea_tp": 4,
-        "fp_estricto": 20,
-        "fn_estricto": 13.0,
-        "f3": 66.3,
-        "wf3": 65.6,
-        "precision": 0.574,
-        "recall": 0.675,
+        "sin_linea_tp": 6,
+        "fp_estricto": 19,
+        "fn_estricto": 12.0,
+        "f3": 68.8,
+        "wf3": 68.4,
+        "precision": 0.596,
+        "recall": 0.7,
         "juez": {
           "tp": 35,
           "fp_inventados": 4,
@@ -994,7 +1030,44 @@
     "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
     "esfuerzo": "medium",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "claude-opus-5-5",
+      "nota": 5,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Ve casi todo, sin CWE",
+      "resumen": "Informe de 48 hallazgos que, con el criterio del juez, cubre 38 de las 40 entradas y solo tiene 2 que no se sostienen, más 15 fallos reales sin etiquetar. La nota se queda en 5 porque 19 de sus aciertos valen medio punto (los rangos de la función entera en SQLi, path traversal, IDOR, support-access y el oráculo de padding cuentan como sin línea), varias líneas caen fuera de ±10 y no da ningún CWE.",
+      "cifras": {
+        "tp_estricto": 23.5,
+        "con_linea_tp": 14,
+        "sin_linea_tp": 19,
+        "fp_estricto": 20,
+        "fn_estricto": 16.5,
+        "f3": 58.2,
+        "wf3": 59.7,
+        "precision": 0.54,
+        "recall": 0.588,
+        "juez": {
+          "tp": 38,
+          "fp_inventados": 2,
+          "extra_reales": 15,
+          "f3": 95.0
+        }
+      },
+      "rarezas": [
+        "Dice que el proyecto «parece una aplicación vulnerable a propósito (entrenamiento/CTF)» por flag.txt, la tabla Flag y las cadenas QKB{…}; no nombra el proyecto original.",
+        "No sale a internet: no ejecuta npm audit y cita CVE-2025-29927 y CVE-2025-55182 de memoria por las versiones de package.json, avisando de que hay que confirmarlas.",
+        "Sesión corta y limpia: 19 comandos de shell que leen el código a bloques con cat -n y grep, y un Write; sin subagentes, errores ni compactaciones, termina en 3 min 21 s.",
+        "Da línea en el 79 % de los hallazgos, pero muchas veces como el rango de la función entera (22 a 76 líneas); esos rangos cuentan como sin línea y valen medio acierto.",
+        "Trunca el token de diag («dbg_8f3a…») pero escribe en claro otros valores fijos (quokka-internal-agent, root/admin, las contraseñas del seed).",
+        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md."
+      ]
+    },
     "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
@@ -3839,25 +3912,25 @@
     "juicio": {
       "codigo": "SEC",
       "modelo": "ollama/deepseek-v4.1-flash",
-      "nota": 6,
+      "nota": 7,
       "rubrica": {
-        "f3": 3,
+        "f3": 4,
         "criticas": 1,
         "linea": 1,
         "cwe": 1
       },
-      "veredicto": "Ve mucho, rangos demasiado anchos",
-      "resumen": "Informe de 38 hallazgos, todos con CWE, en el que el juez reconoce 34 de las 40 entradas y solo dos no se sostienen, pero la nota cuenta 17,5 (F3 43,8) porque nueve de sus rangos pasan de 20 líneas y le cuestan diez entradas. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el logout, el token de soporte en claro y en la respuesta, y la página de noticias.",
+      "veredicto": "Ve mucho, con rangos anchos",
+      "resumen": "Informe de 38 hallazgos, todos con CWE, en el que el juez reconoce 34 de las 40 entradas y solo dos no se sostienen, pero la nota cuenta 22,5 (F3 56,6): ocho de sus rangos pasan de 20 líneas y diez entradas valen medio acierto, como si no diera línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el logout, el token de soporte en claro y en la respuesta, y la página de noticias.",
       "cifras": {
-        "tp_estricto": 17.5,
+        "tp_estricto": 22.5,
         "con_linea_tp": 17,
-        "sin_linea_tp": 1,
-        "fp_estricto": 22,
-        "fn_estricto": 22.5,
-        "f3": 43.8,
-        "wf3": 45.8,
-        "precision": 0.443,
-        "recall": 0.438,
+        "sin_linea_tp": 11,
+        "fp_estricto": 15,
+        "fn_estricto": 17.5,
+        "f3": 56.6,
+        "wf3": 57.5,
+        "precision": 0.6,
+        "recall": 0.562,
         "juez": {
           "tp": 34,
           "fp_inventados": 2,
@@ -3870,7 +3943,7 @@
         "No sale a internet: 43 comandos de shell locales (cat, grep, sed, find y cuatro scripts de Python), sin curl, git ni npm audit; los curl solo aparecen en las PoC. Los CVE de Next y React los cita de memoria (el de React lo sugiere la variable FLAG_CVE_2025_55182 de .env.local).",
         "Saca con un script de Python las 35 flags de prisma/seed.ts y las publica en flags_encontrados.csv; con otro reproduce el generador de tarjetas regalo y da el código de la tarjeta sembrada de 500 USD.",
         "Deja cuatro ficheros (SECURITY_AUDIT.md, hallazgos.json, flags_encontrados.csv, README_AUDITORIA.md), juzgados como un solo informe; los dos edit corrigen el recuento de su propio informe (37 → 38).",
-        "Da CWE en los 38 hallazgos y línea en 37, pero nueve ubicaciones son rangos de más de 20 líneas (18-52, 81-102, 102-141, 52-92, 8-60, 7-55, 120-142, 60-90, 1-31) que le cuestan diez entradas estrictas.",
+        "Da CWE en los 38 hallazgos y línea en 37, pero ocho ubicaciones son rangos de más de 20 líneas (18-52, 81-102, 102-141, 52-92, 8-60, 7-55, 120-142, 60-90): las diez entradas que cubren valen medio acierto.",
         "Sin subagentes, errores ni compactaciones; termina en 5 min 33 s. No toca el código del proyecto."
       ]
     },
@@ -4560,25 +4633,25 @@
     "juicio": {
       "codigo": "SEC",
       "modelo": "ollama/glm-5.3-flash",
-      "nota": 4,
+      "nota": 5,
       "rubrica": {
-        "f3": 3,
+        "f3": 4,
         "criticas": 1,
         "linea": 0,
         "cwe": 0
       },
-      "veredicto": "Ve casi todo, localiza mal",
-      "resumen": "Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero la nota cuenta 18 (F3 45,3): seis aciertos no dan línea (valen medio) y siete citan rangos de más de 20 líneas. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.",
+      "veredicto": "Ve casi todo, localiza a medias",
+      "resumen": "Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 22 aciertos (15 con línea y 14 a medio punto) y F3 55,7: seis aciertos no dan línea y ocho citan rangos de más de 20 líneas, que valen como sin línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.",
       "cifras": {
-        "tp_estricto": 18.0,
+        "tp_estricto": 22.0,
         "con_linea_tp": 15,
-        "sin_linea_tp": 6,
-        "fp_estricto": 19,
-        "fn_estricto": 22.0,
-        "f3": 45.3,
-        "wf3": 46.9,
-        "precision": 0.486,
-        "recall": 0.45,
+        "sin_linea_tp": 14,
+        "fp_estricto": 13,
+        "fn_estricto": 18.0,
+        "f3": 55.7,
+        "wf3": 56.8,
+        "precision": 0.629,
+        "recall": 0.55,
         "juez": {
           "tp": 35,
           "fp_inventados": 1,
@@ -4590,7 +4663,7 @@
         "Dice que es «una app tipo CTF» con vulnerabilidades plantadas por las flags QKB{…}; no nombra el proyecto original.",
         "No sale a internet: solo usa read, glob, grep y tres comandos de shell locales (grep en package-lock, cat de .dockerignore, un script de Python sobre package-lock). El CVE de Next lo cita de memoria; los curl solo aparecen en las PoC del informe.",
         "Lee 101 ficheros uno a uno sin subagentes y termina en 2 min 17 s, sin errores ni compactaciones.",
-        "Da CWE en los 20 hallazgos críticos y altos y en ninguno de los medios y bajos; seis aciertos sin línea y siete rangos de más de 20 líneas (19-67, 51-101, 45-67, 8-75, 103-134, 35-218) le cuestan ocho entradas estrictas.",
+        "Da CWE en los 20 hallazgos críticos y altos y en ninguno de los medios y bajos; seis aciertos sin línea y ocho con rangos de más de 20 líneas (19-67, 51-101, 45-67, 8-75, 103-134, 35-218) se quedan en medio punto.",
         "No toca el código: solo crea informe-auditoria-seguridad-quokka-bazaar.md."
       ]
     },
@@ -4908,25 +4981,25 @@
     "juicio": {
       "codigo": "SEC",
       "modelo": "ollama/inkling-2-small",
-      "nota": 3,
+      "nota": 4,
       "rubrica": {
         "f3": 3,
-        "criticas": 0,
+        "criticas": 1,
         "linea": 0,
         "cwe": 0
       },
-      "veredicto": "Ve mucho, no localiza",
-      "resumen": "Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: la nota cuenta 2 aciertos enteros y 28 a medio punto (F3 40,1). Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.",
+      "veredicto": "Ve mucho, localiza poco",
+      "resumen": "Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: 2 aciertos con línea y 29 a medio punto dejan el F3 estricto en 41,4. Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.",
       "cifras": {
-        "tp_estricto": 16.0,
+        "tp_estricto": 16.5,
         "con_linea_tp": 2,
-        "sin_linea_tp": 28,
-        "fp_estricto": 23,
-        "fn_estricto": 24.0,
-        "f3": 40.1,
-        "wf3": 40.0,
-        "precision": 0.41,
-        "recall": 0.4,
+        "sin_linea_tp": 29,
+        "fp_estricto": 22,
+        "fn_estricto": 23.5,
+        "f3": 41.4,
+        "wf3": 41.9,
+        "precision": 0.429,
+        "recall": 0.412,
         "juez": {
           "tp": 32,
           "fp_inventados": 6,

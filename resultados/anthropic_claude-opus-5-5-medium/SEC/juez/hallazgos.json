@@ -1,0 +1,639 @@
+{
+ "hallazgos": [
+  {
+   "id": "C-01",
+   "titulo": "alta con rol arbitrario (mass assignment)",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "nota": "signup:59-61"
+    }
+   ]
+  },
+  {
+   "id": "C-02",
+   "titulo": "secreto JWT por defecto «secret» y comparación no constante",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true,
+     "nota": "server-auth:12"
+    }
+   ]
+  },
+  {
+   "id": "C-03",
+   "titulo": "middleware sin verificar la firma del JWT y CVE-2025-29927",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: decodeJWT solo decodifica el payload; Next 15.2.2."
+  },
+  {
+   "id": "C-04",
+   "titulo": "RCE en React Server Components (CVE-2025-55182)",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real por versión (react 19.2.0); citada de memoria."
+  },
+  {
+   "id": "C-05",
+   "titulo": "tokens de soporte para cualquier cuenta; support-login no comprueba revoked",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true,
+     "nota": "cita el rango 58-80 (23 líneas): pasa de 20; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-035",
+     "estricto": true,
+     "nota": "«lo devuelve en la respuesta», dentro del mismo rango 58-80, demasiado ancho; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "Que support-login no compruebe revoked es real y sin entrada. No dice que el token se guarde en claro (034)."
+  },
+  {
+   "id": "C-06",
+   "titulo": "token de reset predecible md5(email+timestamp)",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: forgot-password:22 y devuelve requestedAt."
+  },
+  {
+   "id": "C-07",
+   "titulo": "SQLi en búsqueda de productos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": true,
+     "nota": "rango 85-100 (16 líneas), toca la ventana 90-113"
+    }
+   ]
+  },
+  {
+   "id": "C-08",
+   "titulo": "SQLi en búsqueda de pedidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": true,
+     "nota": "cita el rango 81-102 (22 líneas): pasa de 20; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "C-09",
+   "titulo": "SQLi apilada con db.exec en reseñas de admin",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-005",
+     "estricto": true,
+     "nota": "cita el rango 102-136 (35 líneas): pasa de 20; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-006",
+     "estricto": true,
+     "nota": "mismo rango 102-136; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "C-10",
+   "titulo": "SQLi en tracking por X-Forwarded-For y sessionId",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true,
+     "nota": "cita el rango 58-103 (46 líneas): pasa de 20; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "C-11",
+   "titulo": "XXE en la importación de pedidos de proveedor",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true,
+     "nota": "21-24"
+    }
+   ]
+  },
+  {
+   "id": "C-12",
+   "titulo": "path traversal y listado de directorios en /api/files",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "cita el rango 17-67 (51 líneas): pasa de 20; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "nota": "mismo rango 17-67; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "C-13",
+   "titulo": "SSRF con lectura de la respuesta en soporte",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true,
+     "nota": "14-21"
+    }
+   ]
+  },
+  {
+   "id": "C-14",
+   "titulo": "secretos en el bundle (NEXT_PUBLIC_PAYMENT_SECRET), en la imagen Docker y .env.local versionado",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-001",
+     "estricto": true,
+     "nota": ".env.local sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "NEXT_PUBLIC_PAYMENT_SECRET (CheckoutClient.tsx:119) y .dockerignore sin .env.local: reales y sin entrada."
+  },
+  {
+   "id": "A-01",
+   "titulo": "IDOR en pedidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true,
+     "nota": "cita el rango 8-64 (57 líneas): pasa de 20; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "A-02",
+   "titulo": "IDOR en listas de deseos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-036",
+     "estricto": true,
+     "nota": "cita el rango 6-81 (76 líneas): pasa de 20; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "A-03",
+   "titulo": "total del pedido fijado por el cliente",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true,
+     "nota": "línea 130"
+    }
+   ]
+  },
+  {
+   "id": "A-04",
+   "titulo": "carrera en el uso de cupones",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: comprobación, espera de 150 ms e incremento no atómico (orders/route.ts:64-87)."
+  },
+  {
+   "id": "A-05",
+   "titulo": "XSS almacenado en analytics por X-Forwarded-For",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true,
+     "nota": "AnalyticsClient.tsx:366"
+    }
+   ]
+  },
+  {
+   "id": "A-06",
+   "titulo": "XSS almacenado en reseñas con ejecución de <script>",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-039",
+     "estricto": true,
+     "nota": "51-60"
+    }
+   ]
+  },
+  {
+   "id": "A-07",
+   "titulo": "autor de reseñas suplantable y sin sesión",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: reviews/route.ts:59-63 acepta author del cliente."
+  },
+  {
+   "id": "A-08",
+   "titulo": "XSS en SupportForm con el contenido de la SSRF",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: SupportForm.tsx:103."
+  },
+  {
+   "id": "A-09",
+   "titulo": "XSS por subida de SVG",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": false,
+     "nota": "cita 9-15 (la lista de tipos); la entrada es la comprobación 64-72"
+    }
+   ]
+  },
+  {
+   "id": "A-10",
+   "titulo": "SSRF por mcpServerUrl y prompt injection indirecta en el asistente",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-009",
+     "estricto": true,
+     "nota": "la ubicación 200-212 (descubrimiento de herramientas externas, cuyas descripciones llegan al LLM) toca la ventana 211-231; describe la inyección de prompt y el filtro de 4 regex"
+    },
+    {
+     "id": "oss-oopssec-store-008",
+     "estricto": false,
+     "nota": "la SSRF la sitúa en la llamada (200-212), no en la función fetch 69-81"
+    },
+    {
+     "id": "oss-oopssec-store-010",
+     "estricto": false,
+     "nota": "cita 277 (callMcpTool); la entrada es 291, ventana 281-301"
+    }
+   ]
+  },
+  {
+   "id": "A-11",
+   "titulo": "cabecera MCP fija como control de acceso",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: mcp/route.ts:181 y lib/mcp-constants.ts."
+  },
+  {
+   "id": "A-12",
+   "titulo": "página /internal protegida solo por x-internal-request",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: internal/page.tsx:16-21."
+  },
+  {
+   "id": "A-13",
+   "titulo": "SIEM con root/admin fijos y cookie siem_session forjable",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true,
+     "nota": "monitoring/auth:5-6"
+    }
+   ],
+   "nota": "La cookie siem_session=authenticated de monitoring/logs es real y sin entrada."
+  },
+  {
+   "id": "A-14",
+   "titulo": "contraseñas en claro en el log",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "nota": "login:16-25"
+    }
+   ]
+  },
+  {
+   "id": "A-15",
+   "titulo": "MD5 sin sal; /news publica hashes",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": false,
+     "nota": "sitúa MD5 en server-auth:14 y nombra «reset» sin fichero ni línea; la entrada es reset-password:46"
+    },
+    {
+     "id": "oss-oopssec-store-038",
+     "estricto": false,
+     "nota": "cita news/page.tsx:4-17 (el array); la entrada es la línea 126 que los pinta"
+    }
+   ]
+  },
+  {
+   "id": "A-16",
+   "titulo": "exportación con password y systemDiagnostics en el error",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": false,
+     "nota": "cita 7, 35-60 y 78-91; la entrada es 123-126, ventana 113-136"
+    }
+   ],
+   "nota": "password en la lista blanca (línea 7) y diagnostics en la rama de campos inválidos (78-91): reales."
+  },
+  {
+   "id": "M-01",
+   "titulo": "códigos de tarjeta regalo predecibles (LCG con Date.now)",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: lib/gift-card.ts."
+  },
+  {
+   "id": "M-02",
+   "titulo": "padding oracle y clave AES por defecto en los enlaces de compartir",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true,
+     "nota": "share-crypto sin línea; clave por defecto hardcodeada",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-018",
+     "estricto": true,
+     "nota": "describe el oráculo (400 de padding frente a 400 de tipo), pero cita el rango 14-42 (29 líneas): pasa de 20; toca la ventana: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M-03",
+   "titulo": "BFLA en el directo y fuga de la clave RTMP",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real: live/stream y lib/live-stream.ts."
+  },
+  {
+   "id": "M-04",
+   "titulo": "token fijo en diag; nota oculta con react-toastfy",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-003",
+     "estricto": true,
+     "nota": "diag:5-14"
+    }
+   ],
+   "nota": "La nota oculta en admin/documents es real y sin entrada."
+  },
+  {
+   "id": "M-05",
+   "titulo": "open redirect y javascript: en LoginForm",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-037",
+     "estricto": true,
+     "nota": "línea 37"
+    }
+   ]
+  },
+  {
+   "id": "M-06",
+   "titulo": "API de flags pública",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-023",
+     "estricto": true,
+     "nota": "flags/route.ts sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-021",
+     "estricto": true,
+     "nota": "flags/[slug] sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M-07",
+   "titulo": "enumeración de usuarios en login, signup y support-access",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-014",
+     "estricto": true,
+     "nota": "login:39-48"
+    }
+   ]
+  },
+  {
+   "id": "M-08",
+   "titulo": "sin rate limiting ni bloqueo de cuenta",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-013",
+     "estricto": true,
+     "nota": "nombra el login entre otros endpoints",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M-09",
+   "titulo": "sesiones largas y sin revocación; logout solo borra la cookie",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-015",
+     "estricto": true,
+     "nota": "logout sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M-10",
+   "titulo": "sin política de contraseñas en el registro",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real: signupBodySchema acepta password vacía."
+  },
+  {
+   "id": "M-11",
+   "titulo": "formularios urlencoded que permitirían CSRF",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "No se sostiene: el propio informe admite que la cookie SameSite=Lax lo impide."
+  },
+  {
+   "id": "B-01",
+   "titulo": "secretos en el código: streamKey, AUDIT_TAG, código en el system prompt, contraseñas del seed",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-042",
+     "estricto": true,
+     "nota": "«los usuarios seed con contraseñas admin/qwerty…», sin línea; el informe nombra prisma/seed.ts en la introducción",
+     "sin_linea": true
+    }
+   ],
+   "nota": "streamKey, AUDIT_TAG y el código del system prompt (ai-assistant:22): reales y sin entrada."
+  },
+  {
+   "id": "B-02",
+   "titulo": "errores verbosos en importación XML y exportación",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": true,
+     "nota": "«la exportación devuelve la traza de la pila», sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "B-03",
+   "titulo": "faltan cabeceras de seguridad",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real y genérico."
+  },
+  {
+   "id": "B-04",
+   "titulo": "cookie Secure solo en producción; la del SIEM nunca",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Menor."
+  },
+  {
+   "id": "B-05",
+   "titulo": "contenedor como root, toolchains y Prisma Studio sin autenticación",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real y genérico."
+  },
+  {
+   "id": "B-06",
+   "titulo": "usuario, rol y API key de Mistral en localStorage",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Menor: la clave es la del propio usuario; AIAssistantChat.tsx:44."
+  },
+  {
+   "id": "B-07",
+   "titulo": "private:false, rangos ^ y eslint-config-next@16",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "No es un fallo de seguridad."
+  }
+ ]
+}

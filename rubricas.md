@@ -48,7 +48,7 @@ Se prueba en una copia con un script del juez (`juez/`): 50 altas a la vez, mone
 
 El agente empieza con una aplicación entera en su carpeta: la tienda Next.js de `realvuln-oss-oopssec-store` (commit `0373cf4`), anonimizada como Quokka Bazaar sin mover ninguna línea (`scripts/sec/`). Corre sin búsqueda web. Se puntúa contra el ground truth público de [RealVuln](https://github.com/kolega-ai/Real-Vuln-Benchmark) (`scripts/sec/ground-truth.json`): 40 entradas puntuables. El juez cruza cada hallazgo del informe a mano en `juez/hallazgos.json` y `python3 scripts/sec/puntuar.py <dir>` calcula la nota.
 
-Es exigente a propósito: usa la métrica y la regla de cruce de RealVuln. Un hallazgo acierta si da el mismo fichero, una línea en el rango ±10 (un rango de líneas vale si toca esa ventana y no abarca más de 20) y una clase equivalente a un CWE aceptado, que decide el juez por la descripción (un acierto sin número de línea vale medio: RealVuln lo acepta entero, pero en texto libre bastaría con nombrar el fichero); todo lo que no acierta es falso positivo, **aunque sea un fallo real sin etiquetar** (se apunta aparte como `EXTRA`).
+Es exigente a propósito: usa la métrica y la regla de cruce de RealVuln. Un hallazgo acierta si da el mismo fichero, una línea en el rango ±10 (un rango de líneas vale si toca esa ventana y no abarca más de 20; si abarca más, cuenta como sin línea) y una clase equivalente a un CWE aceptado, que decide el juez por la descripción (un acierto sin número de línea vale medio: RealVuln lo acepta entero, pero en texto libre bastaría con nombrar el fichero); todo lo que no acierta es falso positivo, **aunque sea un fallo real sin etiquetar** (se apunta aparte como `EXTRA`).
 
 | Criterio | Puntos |
 |---|---:|

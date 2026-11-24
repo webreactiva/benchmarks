@@ -49,6 +49,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Servicio HTTP en Node sin estado con los carritos en Redis: cada escritura es un script Lua atómico, así que 50 altas a la vez repartidas entre dos instancias con el mismo Redis guardan las 50; dinero en céntimos, precio siempre del catálogo y validación estricta. Pasa 21 tests contra un Redis real y el README explica cada decisión de escalado, pero el dominio es el mínimo: ni stock, ni descuentos, ni checkout.</small> <a href="resultados/anthropic_claude-fable-5-2/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>claude-fable-5-2</small><br><small>Claude Code · 2026-11-24 01:20 UTC</small></td>
+<td class=n><b>1793.7 k</b><br><small>in 30 · out 20.8 k<br>razon. 0 · caché 1624.6 k</small></td>
+<td class=n>15</td>
+<td><small><a href="resultados/anthropic_claude-fable-5-2/SEC/salida/AUDITORIA_SEGURIDAD.md">AUDITORIA_SEGURIDAD.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n">–<br><small></small></td>
+<td><small></small></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
 <td><small>claude-fable-5-2</small><br><small>Claude Code · 2026-11-24 00:37 UTC</small></td>
 <td class=n><b>952.3 k</b><br><small>in 22 · out 16.0 k<br>razon. 0 · caché 829.0 k</small></td>
@@ -145,8 +155,8 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>19</td>
 <td><small><a href="resultados/anthropic_claude-opus-5-5-medium/SEC/salida/AUDITORIA_SEGURIDAD.md">AUDITORIA_SEGURIDAD.md</a></small></td>
 <td><small>–</small></td>
-<td class="nota n">–<br><small></small></td>
-<td><small></small></td>
+<td class="nota n1">5<br><small>Ve casi todo, sin CWE</small></td>
+<td><small>Informe de 48 hallazgos que, con el criterio del juez, cubre 38 de las 40 entradas y solo tiene 2 que no se sostienen, más 15 fallos reales sin etiquetar. La nota se queda en 5 porque 19 de sus aciertos valen medio punto (los rangos de la función entera en SQLi, path traversal, IDOR, support-access y el oráculo de padding cuentan como sin línea), varias líneas caen fuera de ±10 y no da ningún CWE.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -485,8 +495,8 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>30</td>
 <td><small><a href="resultados/ollama_deepseek-v4.1-flash/SEC/salida/README_AUDITORIA.md">README_AUDITORIA.md</a><br><a href="resultados/ollama_deepseek-v4.1-flash/SEC/salida/SECURITY_AUDIT.md">SECURITY_AUDIT.md</a><br><a href="resultados/ollama_deepseek-v4.1-flash/SEC/salida/flags_encontrados.csv">flags_encontrados.csv</a><br><a href="resultados/ollama_deepseek-v4.1-flash/SEC/salida/hallazgos.json">hallazgos.json</a></small></td>
 <td><small>–</small></td>
-<td class="nota n1">6<br><small>Ve mucho, rangos demasiado anchos</small></td>
-<td><small>Informe de 38 hallazgos, todos con CWE, en el que el juez reconoce 34 de las 40 entradas y solo dos no se sostienen, pero la nota cuenta 17,5 (F3 43,8) porque nueve de sus rangos pasan de 20 líneas y le cuestan diez entradas. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el logout, el token de soporte en claro y en la respuesta, y la página de noticias.</small> <a href="resultados/ollama_deepseek-v4.1-flash/SEC/juicio.md">juicio</a></td>
+<td class="nota n1">7<br><small>Ve mucho, con rangos anchos</small></td>
+<td><small>Informe de 38 hallazgos, todos con CWE, en el que el juez reconoce 34 de las 40 entradas y solo dos no se sostienen, pero la nota cuenta 22,5 (F3 56,6): ocho de sus rangos pasan de 20 líneas y diez entradas valen medio acierto, como si no diera línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el logout, el token de soporte en claro y en la respuesta, y la página de noticias.</small> <a href="resultados/ollama_deepseek-v4.1-flash/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -555,8 +565,8 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>18</td>
 <td><small><a href="resultados/ollama_glm-5.3-flash/SEC/salida/informe-auditoria-seguridad-quokka-bazaar.md">informe-auditoria-seguridad-quokka-bazaar.md</a></small></td>
 <td><small>–</small></td>
-<td class="nota n1">4<br><small>Ve casi todo, localiza mal</small></td>
-<td><small>Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero la nota cuenta 18 (F3 45,3): seis aciertos no dan línea (valen medio) y siete citan rangos de más de 20 líneas. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.</small> <a href="resultados/ollama_glm-5.3-flash/SEC/juicio.md">juicio</a></td>
+<td class="nota n1">5<br><small>Ve casi todo, localiza a medias</small></td>
+<td><small>Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 22 aciertos (15 con línea y 14 a medio punto) y F3 55,7: seis aciertos no dan línea y ocho citan rangos de más de 20 líneas, que valen como sin línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.</small> <a href="resultados/ollama_glm-5.3-flash/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -595,8 +605,8 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>16</td>
 <td><small><a href="resultados/ollama_inkling-2-small/SEC/salida/SECURITY_AUDIT.md">SECURITY_AUDIT.md</a></small></td>
 <td><small>–</small></td>
-<td class="nota n0">3<br><small>Ve mucho, no localiza</small></td>
-<td><small>Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: la nota cuenta 2 aciertos enteros y 28 a medio punto (F3 40,1). Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.</small> <a href="resultados/ollama_inkling-2-small/SEC/juicio.md">juicio</a></td>
+<td class="nota n1">4<br><small>Ve mucho, localiza poco</small></td>
+<td><small>Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: 2 aciertos con línea y 29 a medio punto dejan el F3 estricto en 41,4. Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.</small> <a href="resultados/ollama_inkling-2-small/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>

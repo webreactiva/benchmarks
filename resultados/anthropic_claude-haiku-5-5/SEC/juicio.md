@@ -7,10 +7,10 @@
 <!-- cifras -->
 | | Nota (estricto) | Juez |
 |---|---:|---:|
-| Entradas cubiertas (de 40) | 27 (25 con línea, 4 sin línea a medio punto) | 35 |
-| F3 | 66,3 | 87,7 |
-| wF3 | 65,6 | |
-| Falsos positivos | 20 (incluye 13 fallos reales sin etiquetar) | 4 inventados |
+| Entradas cubiertas (de 40) | 28 (25 con línea, 6 sin línea a medio punto) | 35 |
+| F3 | 68,8 | 87,7 |
+| wF3 | 68,4 | |
+| Falsos positivos | 19 (incluye 13 fallos reales sin etiquetar) | 4 inventados |
 
 Rúbrica: F3 5/7, críticas 1 (5 de 6), fichero y línea 0 (84 % de los hallazgos), CWE 0 (0 %). **Nota: 6/10.**
 <!-- /cifras -->

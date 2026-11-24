@@ -50,13 +50,15 @@
    "gt": [
     {
      "id": "oss-oopssec-store-019",
-     "estricto": false,
-     "nota": "rango 18-52 abarca más de 20 líneas"
+     "estricto": true,
+     "nota": "rango 18-52 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-020",
-     "estricto": false,
-     "nota": "rango 18-52 abarca más de 20 líneas"
+     "estricto": true,
+     "nota": "rango 18-52 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     }
    ]
   },
@@ -74,8 +76,9 @@
     },
     {
      "id": "oss-oopssec-store-027",
-     "estricto": false,
-     "nota": "cita 81-102: 22 líneas, pasa de 20"
+     "estricto": true,
+     "nota": "cita 81-102: 22 líneas, pasa de 20; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     }
    ]
   },
@@ -102,13 +105,15 @@
    "gt": [
     {
      "id": "oss-oopssec-store-005",
-     "estricto": false,
-     "nota": "rango 102-141 abarca más de 20 líneas"
+     "estricto": true,
+     "nota": "rango 102-141 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     },
     {
      "id": "oss-oopssec-store-006",
-     "estricto": false,
-     "nota": "rango 102-141 abarca más de 20 líneas"
+     "estricto": true,
+     "nota": "rango 102-141 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     }
    ]
   },
@@ -171,8 +176,9 @@
    "gt": [
     {
      "id": "oss-oopssec-store-033",
-     "estricto": false,
-     "nota": "rango 52-92 abarca más de 20 líneas"
+     "estricto": true,
+     "nota": "rango 52-92 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     }
    ],
    "nota": "No describe el token devuelto en la respuesta (035) ni guardado en claro (034)."
@@ -252,8 +258,9 @@
    "gt": [
     {
      "id": "oss-oopssec-store-025",
-     "estricto": false,
-     "nota": "rango 8-60 abarca más de 20 líneas"
+     "estricto": true,
+     "nota": "rango 8-60 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     }
    ]
   },
@@ -266,8 +273,9 @@
    "gt": [
     {
      "id": "oss-oopssec-store-036",
-     "estricto": false,
-     "nota": "rango 7-55 abarca más de 20 líneas"
+     "estricto": true,
+     "nota": "rango 7-55 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     }
    ]
   },
@@ -420,8 +428,9 @@
    "gt": [
     {
      "id": "oss-oopssec-store-032",
-     "estricto": false,
-     "nota": "cita 120-142: 23 líneas, pasa de 20"
+     "estricto": true,
+     "nota": "cita 120-142: 23 líneas, pasa de 20; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     }
    ],
    "nota": "Exportar el campo password (línea 7) es real y sin entrada."
@@ -435,8 +444,9 @@
    "gt": [
     {
      "id": "oss-oopssec-store-004",
-     "estricto": false,
-     "nota": "cita 9-16 (fuera) y 60-90 (31 líneas)"
+     "estricto": true,
+     "nota": "cita 9-16 (fuera) y 60-90 (31 líneas); toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
     }
    ]
   },
