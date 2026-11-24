@@ -3,22 +3,22 @@
   "modelo": "gpt-6-luna",
   "agente": "Codex CLI",
   "esfuerzo": "medium",
-  "fecha": "2026-11-24T11:54:40Z",
+  "fecha": "2026-11-24T12:04:43Z",
   "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
   "tokens": {
-    "input": 35066,
-    "output": 1946,
-    "reasoning": 440,
-    "cache_read": 209536,
+    "input": 33895,
+    "output": 2178,
+    "reasoning": 617,
+    "cache_read": 180608,
     "cache_write": 0,
-    "total": 246988
+    "total": 217298
   },
-  "peticiones": 8,
+  "peticiones": 7,
   "error": null,
   "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
   "esfuerzo_real": "medium",
   "herramientas": {
-    "exec": 7
+    "exec": 6
   },
   "mensajes_usuario": [
     "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."

@@ -3,107 +3,107 @@
   "incidencias": 300,
   "clasificadas": 300,
   "lineas_no_validas": 0,
-  "tipo": 0.9,
-  "superficie": 0.753,
-  "areas_f1_micro": 0.39,
-  "areas_f1_macro": 0.411,
-  "areas_jaccard": 0.263,
+  "tipo": 0.863,
+  "superficie": 0.733,
+  "areas_f1_micro": 0.404,
+  "areas_f1_macro": 0.406,
+  "areas_jaccard": 0.288,
   "areas_por_area": {
     "windows-os": {
-      "tp": 88,
-      "fp": 65,
-      "fn": 3,
-      "f1": 0.72
+      "tp": 86,
+      "fp": 37,
+      "fn": 5,
+      "f1": 0.8
     },
     "sandbox": {
-      "tp": 58,
-      "fp": 40,
-      "fn": 6,
-      "f1": 0.72
+      "tp": 44,
+      "fp": 26,
+      "fn": 20,
+      "f1": 0.66
     },
     "app-server": {
-      "tp": 36,
-      "fp": 28,
-      "fn": 39,
-      "f1": 0.52
+      "tp": 38,
+      "fp": 29,
+      "fn": 37,
+      "f1": 0.54
     },
     "connectivity": {
       "tp": 32,
-      "fp": 164,
+      "fp": 101,
       "fn": 0,
-      "f1": 0.28
+      "f1": 0.39
     },
     "TUI": {
       "tp": 25,
-      "fp": 137,
+      "fp": 121,
       "fn": 0,
-      "f1": 0.27
+      "f1": 0.29
     },
     "session": {
-      "tp": 29,
-      "fp": 199,
-      "fn": 0,
-      "f1": 0.23
+      "tp": 28,
+      "fp": 208,
+      "fn": 1,
+      "f1": 0.21
     },
     "rate-limits": {
-      "tp": 25,
-      "fp": 16,
-      "fn": 2,
-      "f1": 0.74
+      "tp": 26,
+      "fp": 24,
+      "fn": 1,
+      "f1": 0.68
     },
     "tool-calls": {
-      "tp": 38,
-      "fp": 36,
-      "fn": 14,
+      "tp": 32,
+      "fp": 22,
+      "fn": 20,
       "f1": 0.6
     },
     "browser": {
       "tp": 19,
-      "fp": 48,
+      "fp": 37,
       "fn": 1,
-      "f1": 0.44
+      "f1": 0.5
     },
     "remote": {
       "tp": 20,
-      "fp": 52,
+      "fp": 59,
       "fn": 2,
-      "f1": 0.43
+      "f1": 0.4
     },
     "model-behavior": {
-      "tp": 11,
-      "fp": 183,
-      "fn": 5,
-      "f1": 0.1
+      "tp": 10,
+      "fp": 93,
+      "fn": 6,
+      "f1": 0.17
     },
     "performance": {
-      "tp": 11,
-      "fp": 123,
-      "fn": 1,
+      "tp": 10,
+      "fp": 111,
+      "fn": 2,
       "f1": 0.15
     },
     "mcp": {
-      "tp": 12,
-      "fp": 25,
-      "fn": 2,
-      "f1": 0.47
+      "tp": 13,
+      "fp": 37,
+      "fn": 1,
+      "f1": 0.41
     },
     "auth": {
-      "tp": 20,
-      "fp": 135,
-      "fn": 2,
+      "tp": 17,
+      "fp": 106,
+      "fn": 5,
       "f1": 0.23
     },
     "context": {
-      "tp": 9,
-      "fp": 52,
-      "fn": 2,
-      "f1": 0.25
+      "tp": 10,
+      "fp": 87,
+      "fn": 1,
+      "f1": 0.19
     },
     "subagent": {
       "tp": 11,
-      "fp": 18,
+      "fp": 31,
       "fn": 1,
-      "f1": 0.54
+      "f1": 0.41
     },
     "config": {
       "tp": 40,
@@ -112,27 +112,27 @@
       "f1": 0.47
     },
     "computer-use": {
-      "tp": 10,
-      "fp": 40,
-      "fn": 15,
-      "f1": 0.27
+      "tp": 9,
+      "fp": 46,
+      "fn": 16,
+      "f1": 0.23
     }
   },
-  "exactas": 4,
-  "exactas_pct": 0.013,
+  "exactas": 8,
+  "exactas_pct": 0.027,
   "coste": {
-    "segundos": 57,
+    "segundos": 64,
     "tokens": {
-      "input": 35066,
-      "output": 1946,
-      "reasoning": 440,
-      "cache_read": 209536,
+      "input": 33895,
+      "output": 2178,
+      "reasoning": 617,
+      "cache_read": 180608,
       "cache_write": 0,
-      "total": 246988
+      "total": 217298
     },
-    "peticiones": 8,
+    "peticiones": 7,
     "herramientas": {
-      "exec": 7
+      "exec": 6
     },
     "usd_estimado": 0.007
   },

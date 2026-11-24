@@ -1,32 +1,31 @@
 {
   "codigo": "TCI",
   "modelo": "gpt-6-luna",
-  "nota": 0,
+  "nota": 4,
   "rubrica": {
     "tipo": 0,
     "superficie": 0,
     "areas": 0,
-    "tokens": 0,
-    "tiempo": 0,
-    "peticiones": 0
+    "tokens": 2,
+    "tiempo": 1,
+    "peticiones": 1
   },
-  "veredicto": "Regex en vez de leer",
-  "resumen": "Tipo 90,0 %, superficie 75,3 % y F1 de áreas 0,390 frente a jev (4 incidencias idénticas): no llega a ningún umbral de calidad, y con áreas por debajo de 0,50 la eficiencia no cuenta. Fue el más barato (57 s, 8 peticiones, 247 k tokens, ≈ 0,007 $), pero la clasificación no sirve.",
+  "veredicto": "Rapidísimo y barato, clasifica mal",
+  "resumen": "Tipo 86,3 %, superficie 73,3 % y F1 de áreas 0,404 frente a jev (8 incidencias idénticas): no llega a ningún umbral de calidad. Es el más eficiente de la prueba, 64 s, 7 peticiones y 217 k tokens (≈ 0,007 $), y esos 4 puntos son toda su nota.",
   "cifras": {
-    "tipo": 0.9,
-    "superficie": 0.753,
-    "areas_f1_micro": 0.39,
-    "areas_f1_macro": 0.411,
-    "exactas": 4,
-    "segundos": 57,
-    "peticiones": 8,
-    "tokens": 246988,
+    "tipo": 0.863,
+    "superficie": 0.733,
+    "areas_f1_micro": 0.404,
+    "areas_f1_macro": 0.406,
+    "exactas": 8,
+    "segundos": 64,
+    "peticiones": 7,
+    "tokens": 217298,
     "coste_usd_estimado": 0.007
   },
   "rarezas": [
-    "Hace cat del fichero entero y lista títulos y 180 caracteres de cada incidencia, pero no clasifica lo que lee: escribe un clasificador de expresiones regulares por palabras clave (windows|powershell|wsl…, sandbox|permission|approval…) y lo aplica a las 300.",
-    "Las reglas marcan áreas de más en casi todas: 183 falsos model-behavior, 199 session, 135 auth y 123 performance.",
-    "Lo primero que busca es un AGENTS.md en la carpeta.",
-    "Solo comprueba la forma del resultado (300 ids únicos, valores permitidos), no si la clasificación tiene sentido."
+    "Lee el fichero entero y una lista con título y 220 caracteres de cada incidencia, pero no clasifica lo que lee: escribe un clasificador de expresiones regulares por palabras clave y lo aplica a las 300.",
+    "Las reglas marcan áreas por cualquier mención: la mitad de las incidencias salen con 6 a 16 áreas (jev rara vez pasa de 4), y session aparece en 236 cuando la llevan 29.",
+    "Lo primero que busca es un AGENTS.md en la carpeta. Solo comprueba la forma del resultado (300 ids en orden, valores permitidos), no si la clasificación tiene sentido."
   ]
 }

@@ -72,10 +72,10 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | 6 | 9 | 6 | 7 | 9 | **7,0** | 136 | 10,0 M |
 | [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | 7 | 6 | 8 | 5 | 6 | **7,0** | 56 | 2,4 M |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | 6 | 8 | 4 | 3 | 10 | **6,0** | 36 | 0,8 M |
-| [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | – | – | **5,7** | 15 | 0,3 M |
+| [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | 5 | 9 | **5,7** | 42 | 1,3 M |
 | [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | 1 | 6 | **5,3** | 82 | 3,6 M |
+| [gpt-6-luna (medium)](resultados/openai_gpt-6-luna-medium/README.md) | Codex CLI | 5 | 6 | 3 | 2 | 4 | **4,7** | 32 | 0,8 M |
 | [nvidia/nemotron-3-ultra-550b-a55b:free](resultados/nvidia_nemotron-3-ultra-550b-a55b_free/README.md) | OpenCode | 6 | 3 | 4 | – | – | **4,3** | 32 | 0,6 M |
-| [gpt-6-luna (medium)](resultados/openai_gpt-6-luna-medium/README.md) | Codex CLI | 5 | 6 | – | 2 | 0 | **en curso** | 29 | 0,7 M |
 
 Notas con las rúbricas de `rubricas.md`. Las pruebas que fallaron por la parte técnica (respuestas cortadas en el tope de 32 000 tokens de OpenCode, GLM compactando sin parar por nuestra configuración de límites, MiniMax preguntando antes de que existiera la regla «Decide tú.») se repitieron. Las versiones anteriores están en `resultados/_descartados/`.
 
@@ -107,9 +107,9 @@ Etiqueta de cada prueba en la que el modelo saca 9 o más (la rehace `scripts/es
 | [ollama/glm-5.3-flash](resultados/ollama_glm-5.3-flash/README.md) | OpenCode | Visual (9) | 5 de 5 |
 | [ollama/muse-spark-open](resultados/ollama_muse-spark-open/README.md) | OpenCode | Ejecución (9) | 5 de 5 |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | Volumen (10) | 5 de 5 |
+| [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | Volumen (9) | 5 de 5 |
 | [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | – | 5 de 5 |
-| [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | – | 3 de 5 |
 | [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | – | 5 de 5 |
+| [gpt-6-luna (medium)](resultados/openai_gpt-6-luna-medium/README.md) | Codex CLI | – | 5 de 5 |
 | [nvidia/nemotron-3-ultra-550b-a55b:free](resultados/nvidia_nemotron-3-ultra-550b-a55b_free/README.md) | OpenCode | – | 3 de 5 |
-| [gpt-6-luna (medium)](resultados/openai_gpt-6-luna-medium/README.md) | Codex CLI | – | 4 de 5 |
 <!-- /etiquetas -->

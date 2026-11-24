@@ -389,6 +389,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa libre donde se suelta una ficha sobre otra, con colección, buscador y progreso guardado; Web + Código da DOM y DOM + Estado da Interfaz. Ahí se acaba: ninguna receta crea Usuario, del que depende todo lo demás, así que solo se alcanzan 6 de los 23 elementos, las mezclas sin receta no dan nada y el contenido es un tutorial de React con «Web Reactiva» como premio final.</small> <a href="resultados/openai_gpt-6-luna-medium/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/openai_gpt-6-luna-medium/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/openai_gpt-6-luna-medium/AIF/capturas/index.html.png"><img src="resultados/openai_gpt-6-luna-medium/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>gpt-6-luna (medium)</small><br><small>Codex CLI · 2026-11-24 12:01 UTC</small></td>
+<td class=n><b>74.8 k</b><br><small>in 19.3 k · out 9.8 k<br>razon. 202 · caché 45.6 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/cart-store.js">src/cart-store.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/main.js">src/main.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/products.js">src/products.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/styles.css">styles.css</a></small></td>
+<td><small>✔ se sirve con un servidor estático y funciona sin errores de consola<br>✔ añadir, cambiar cantidad, quitar, vaciar, subtotal y envío gratis; persiste al recargar<br>✖ sin tests<br>~ precios en euros enteros, sin céntimos; una sola moneda<br>✔ el precio sale del catálogo; descarta cantidad negativa, decimal e id «../x» de un localStorage manipulado<br>✖ acepta 1e9 unidades: subtotal de 38.000.000.000 €<br>✖ sin servidor, concurrencia ni almacenamiento compartido; el README no habla de escalado</small></td>
+<td class="nota n0">3<br><small>escaparate sin escala</small></td>
+<td><small>Una tienda en el navegador bien presentada, con búsqueda, categorías, orden por precio, carrito lateral, envío gratis y persistencia en localStorage. No hay servidor, ni tests, ni nada de escalado, y aunque descarta cantidades negativas, decimales e ids desconocidos, acepta mil millones de unidades sin tope.</small> <a href="resultados/openai_gpt-6-luna-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>gpt-6-luna (medium)</small><br><small>Codex CLI · 2026-11-24 11:55 UTC</small></td>
 <td class=n><b>277.6 k</b><br><small>in 53.2 k · out 3.7 k<br>razon. 634 · caché 220.0 k</small></td>
@@ -400,13 +410,13 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
-<td><small>gpt-6-luna (medium)</small><br><small>Codex CLI · 2026-11-24 11:54 UTC</small></td>
-<td class=n><b>247.0 k</b><br><small>in 35.1 k · out 1.9 k<br>razon. 440 · caché 209.5 k</small></td>
-<td class=n>8</td>
+<td><small>gpt-6-luna (medium)</small><br><small>Codex CLI · 2026-11-24 12:04 UTC</small></td>
+<td class=n><b>217.3 k</b><br><small>in 33.9 k · out 2.2 k<br>razon. 617 · caché 180.6 k</small></td>
+<td class=n>7</td>
 <td><small><a href="resultados/openai_gpt-6-luna-medium/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
 <td><small>–</small></td>
-<td class="nota n0">0<br><small>Regex en vez de leer</small></td>
-<td><small>Tipo 90,0 %, superficie 75,3 % y F1 de áreas 0,390 frente a jev (4 incidencias idénticas): no llega a ningún umbral de calidad, y con áreas por debajo de 0,50 la eficiencia no cuenta. Fue el más barato (57 s, 8 peticiones, 247 k tokens, ≈ 0,007 $), pero la clasificación no sirve.</small> <a href="resultados/openai_gpt-6-luna-medium/TCI/juicio.md">juicio</a></td>
+<td class="nota n1">4<br><small>Rapidísimo y barato, clasifica mal</small></td>
+<td><small>Tipo 86,3 %, superficie 73,3 % y F1 de áreas 0,404 frente a jev (8 incidencias idénticas): no llega a ningún umbral de calidad. Es el más eficiente de la prueba, 64 s, 7 peticiones y 217 k tokens (≈ 0,007 $), y esos 4 puntos son toda su nota.</small> <a href="resultados/openai_gpt-6-luna-medium/TCI/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -487,6 +497,26 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula; envío gratis desde 60 €; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: negativos, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
 <td class="nota n1">4<br><small>tienda de café, sin escalar</small></td>
 <td><small>Una página de carrito cuidada para una tienda de café, con fotos generadas, guardar para después y envío gratis desde 60 €, que valida lo que lee de localStorage. No hay tests, ni servidor, ni README: «escalable» es que el catálogo es una lista ampliable.</small> <a href="resultados/openai_gpt-6.2-astra-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-24 12:06 UTC</small></td>
+<td class=n><b>470.1 k</b><br><small>in 34.7 k · out 5.9 k<br>razon. 7 · caché 429.4 k</small></td>
+<td class=n>14</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-medium/SEC/salida/AUDITORIA_SEGURIDAD.md">AUDITORIA_SEGURIDAD.md</a><br><a href="resultados/openai_gpt-6.2-astra-medium/SEC/salida/auditoria-dependencias.json">auditoria-dependencias.json</a></small></td>
+<td><small>–</small></td>
+<td class="nota n1">5<br><small>Amplio y preciso, líneas de entrada</small></td>
+<td><small>Informe de 20 hallazgos, todos con fichero y una línea concreta, sin CWE y ninguno inventado: cubre 16 de las 40 entradas, todas con línea (F3 41,9), 23 con el criterio del juez. Ve casi todo lo grave, pero cita la primera línea de la función: cuatro SQLi, la SSRF del asistente y la lectura de archivos caen fuera de la ventana de ±10.</small> <a href="resultados/openai_gpt-6.2-astra-medium/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-24 12:04 UTC</small></td>
+<td class=n><b>476.8 k</b><br><small>in 33.9 k · out 2.9 k<br>razon. 58 · caché 439.9 k</small></td>
+<td class=n>13</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-medium/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
+<td><small>–</small></td>
+<td class="nota n2">9<br><small>Bien clasificado, una vuelta de más</small></td>
+<td><small>Tipo 96,3 %, superficie 88,7 % y F1 de áreas 0,692 frente a jev (82 incidencias idénticas). Le costó 102 s, 13 peticiones y 477 k tokens (≈ 0,57 $): las peticiones pasan de 10.</small> <a href="resultados/openai_gpt-6.2-astra-medium/TCI/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>

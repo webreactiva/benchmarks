@@ -3052,6 +3052,81 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/openai_gpt-6-luna-medium/CCA",
+    "codigo": "CCA",
+    "modelo": "gpt-6-luna (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T12:01:23Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 19266,
+      "output": 9801,
+      "reasoning": 202,
+      "cache_read": 45568,
+      "cache_write": 0,
+      "total": 74837
+    },
+    "peticiones": 4,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 3
+    },
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "README.md",
+      "index.html",
+      "src/cart-store.js",
+      "src/main.js",
+      "src/products.js",
+      "styles.css"
+    ],
+    "validacion": {
+      "html": [],
+      "mermaid": [],
+      "extra": [
+        "✔ se sirve con un servidor estático y funciona sin errores de consola",
+        "✔ añadir, cambiar cantidad, quitar, vaciar, subtotal y envío gratis; persiste al recargar",
+        "✖ sin tests",
+        "~ precios en euros enteros, sin céntimos; una sola moneda",
+        "✔ el precio sale del catálogo; descarta cantidad negativa, decimal e id «../x» de un localStorage manipulado",
+        "✖ acepta 1e9 unidades: subtotal de 38.000.000.000 €",
+        "✖ sin servidor, concurrencia ni almacenamiento compartido; el README no habla de escalado"
+      ],
+      "capturas_extra": [
+        "capturas/juez-carrito.png"
+      ],
+      "comprobacion": "Copia en el scratchpad servida con juez/jugar.mjs (Playwright)"
+    },
+    "juicio": {
+      "nota": 3,
+      "veredicto": "escaparate sin escala",
+      "rubrica": {
+        "se instala y ejecuta": 1,
+        "tests": 0,
+        "dominio": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 0,
+        "concurrencia": 0,
+        "escala horizontal": 0,
+        "explica el escalado": 0
+      },
+      "resumen": "Una tienda en el navegador bien presentada, con búsqueda, categorías, orden por precio, carrito lateral, envío gratis y persistencia en localStorage. No hay servidor, ni tests, ni nada de escalado, y aunque descarta cantidades negativas, decimales e ids desconocidos, acepta mil millones de unidades sin tope.",
+      "rarezas": [
+        "Lo primero que busca son las instrucciones locales del proyecto (AGENTS.md) y, al ver la carpeta vacía, decide hacer una tienda en el navegador.",
+        "Entiende «escalable» como separar catálogo, estado e interfaz: no hay servidor, ni almacenamiento compartido, ni concurrencia.",
+        "No prueba nada: 3 órdenes de shell, 4 peticiones y 75 000 tokens, sin abrir la página.",
+        "Las fotos de producto son enlaces a Unsplash: sin conexión, la tienda sale sin imágenes."
+      ]
+    },
+    "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
     "dir": "resultados/openai_gpt-6-luna-medium/SEC",
     "codigo": "SEC",
     "modelo": "gpt-6-luna (medium)",
@@ -3128,22 +3203,22 @@
     "modelo": "gpt-6-luna (medium)",
     "agente": "Codex CLI",
     "esfuerzo": "medium",
-    "fecha": "2026-11-24T11:54:40Z",
+    "fecha": "2026-11-24T12:04:43Z",
     "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
     "tokens": {
-      "input": 35066,
-      "output": 1946,
-      "reasoning": 440,
-      "cache_read": 209536,
+      "input": 33895,
+      "output": 2178,
+      "reasoning": 617,
+      "cache_read": 180608,
       "cache_write": 0,
-      "total": 246988
+      "total": 217298
     },
-    "peticiones": 8,
+    "peticiones": 7,
     "error": null,
     "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
     "esfuerzo_real": "medium",
     "herramientas": {
-      "exec": 7
+      "exec": 6
     },
     "mensajes_usuario": [
       "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
@@ -3157,33 +3232,32 @@
     "juicio": {
       "codigo": "TCI",
       "modelo": "gpt-6-luna",
-      "nota": 0,
+      "nota": 4,
       "rubrica": {
         "tipo": 0,
         "superficie": 0,
         "areas": 0,
-        "tokens": 0,
-        "tiempo": 0,
-        "peticiones": 0
+        "tokens": 2,
+        "tiempo": 1,
+        "peticiones": 1
       },
-      "veredicto": "Regex en vez de leer",
-      "resumen": "Tipo 90,0 %, superficie 75,3 % y F1 de áreas 0,390 frente a jev (4 incidencias idénticas): no llega a ningún umbral de calidad, y con áreas por debajo de 0,50 la eficiencia no cuenta. Fue el más barato (57 s, 8 peticiones, 247 k tokens, ≈ 0,007 $), pero la clasificación no sirve.",
+      "veredicto": "Rapidísimo y barato, clasifica mal",
+      "resumen": "Tipo 86,3 %, superficie 73,3 % y F1 de áreas 0,404 frente a jev (8 incidencias idénticas): no llega a ningún umbral de calidad. Es el más eficiente de la prueba, 64 s, 7 peticiones y 217 k tokens (≈ 0,007 $), y esos 4 puntos son toda su nota.",
       "cifras": {
-        "tipo": 0.9,
-        "superficie": 0.753,
-        "areas_f1_micro": 0.39,
-        "areas_f1_macro": 0.411,
-        "exactas": 4,
-        "segundos": 57,
-        "peticiones": 8,
-        "tokens": 246988,
+        "tipo": 0.863,
+        "superficie": 0.733,
+        "areas_f1_micro": 0.404,
+        "areas_f1_macro": 0.406,
+        "exactas": 8,
+        "segundos": 64,
+        "peticiones": 7,
+        "tokens": 217298,
         "coste_usd_estimado": 0.007
       },
       "rarezas": [
-        "Hace cat del fichero entero y lista títulos y 180 caracteres de cada incidencia, pero no clasifica lo que lee: escribe un clasificador de expresiones regulares por palabras clave (windows|powershell|wsl…, sandbox|permission|approval…) y lo aplica a las 300.",
-        "Las reglas marcan áreas de más en casi todas: 183 falsos model-behavior, 199 session, 135 auth y 123 performance.",
-        "Lo primero que busca es un AGENTS.md en la carpeta.",
-        "Solo comprueba la forma del resultado (300 ids únicos, valores permitidos), no si la clasificación tiene sentido."
+        "Lee el fichero entero y una lista con título y 220 caracteres de cada incidencia, pero no clasifica lo que lee: escribe un clasificador de expresiones regulares por palabras clave y lo aplica a las 300.",
+        "Las reglas marcan áreas por cualquier mención: la mitad de las incidencias salen con 6 a 16 áreas (jev rara vez pasa de 4), y session aparece en 236 cuando la llevan 29.",
+        "Lo primero que busca es un AGENTS.md en la carpeta. Solo comprueba la forma del resultado (300 ids en orden, valores permitidos), no si la clasificación tiene sentido."
       ]
     },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
@@ -3769,6 +3843,143 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/openai_gpt-6.2-astra-medium/SEC",
+    "codigo": "SEC",
+    "modelo": "gpt-6.2-astra (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T12:06:17Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 34700,
+      "output": 5914,
+      "reasoning": 7,
+      "cache_read": 429440,
+      "cache_write": 0,
+      "total": 470061
+    },
+    "peticiones": 14,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 13
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md",
+      "auditoria-dependencias.json"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "gpt-6.2-astra",
+      "nota": 5,
+      "rubrica": {
+        "f3": 3,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Amplio y preciso, líneas de entrada",
+      "resumen": "Informe de 20 hallazgos, todos con fichero y una línea concreta, sin CWE y ninguno inventado: cubre 16 de las 40 entradas, todas con línea (F3 41,9), 23 con el criterio del juez. Ve casi todo lo grave, pero cita la primera línea de la función: cuatro SQLi, la SSRF del asistente y la lectura de archivos caen fuera de la ventana de ±10.",
+      "cifras": {
+        "tp_estricto": 16.0,
+        "con_linea_tp": 16,
+        "sin_linea_tp": 0,
+        "fp_estricto": 6,
+        "fn_estricto": 24.0,
+        "f3": 41.9,
+        "wf3": 41.8,
+        "precision": 0.727,
+        "recall": 0.4,
+        "juez": {
+          "tp": 23,
+          "fp_inventados": 0,
+          "extra_reales": 6,
+          "f3": 60.1
+        }
+      },
+      "rarezas": [
+        "Busca con rg las palabras «vulnerab» e «intentionally» para saber si el proyecto se declara vulnerable a propósito. No nombra el proyecto original.",
+        "Sale a internet sin búsqueda web: npm audit contra el registro de npm, que deja en auditoria-dependencias.json. La herramienta de búsqueda estaba desactivada; la red, no.",
+        "Cita siempre una sola línea, la de entrada de la función: en las SQLi de productos, pedidos y reseñas cae a 5-20 líneas de la consulta y queda fuera de la ventana.",
+        "No toca el código. 14 peticiones y 470 k tokens, con 13 órdenes de shell."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
+    "dir": "resultados/openai_gpt-6.2-astra-medium/TCI",
+    "codigo": "TCI",
+    "modelo": "gpt-6.2-astra (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T12:04:32Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 33861,
+      "output": 2947,
+      "reasoning": 58,
+      "cache_read": 439936,
+      "cache_write": 0,
+      "total": 476802
+    },
+    "peticiones": 13,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 12
+    },
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/TCI/semilla",
+    "validacion": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "gpt-6.2-astra",
+      "nota": 9,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 3,
+        "tokens": 2,
+        "tiempo": 1,
+        "peticiones": 0
+      },
+      "veredicto": "Bien clasificado, una vuelta de más",
+      "resumen": "Tipo 96,3 %, superficie 88,7 % y F1 de áreas 0,692 frente a jev (82 incidencias idénticas). Le costó 102 s, 13 peticiones y 477 k tokens (≈ 0,57 $): las peticiones pasan de 10.",
+      "cifras": {
+        "tipo": 0.963,
+        "superficie": 0.887,
+        "areas_f1_micro": 0.692,
+        "areas_f1_macro": 0.637,
+        "exactas": 82,
+        "segundos": 102,
+        "peticiones": 13,
+        "tokens": 476802,
+        "coste_usd_estimado": 0.567
+      },
+      "rarezas": [
+        "Lee las 300 por tandas con un script que saca de cada plantilla las respuestas (175 caracteres) o los primeros 360 del texto, y abre completas 29 dudosas.",
+        "Anota cada incidencia en una línea de códigos (C = CLI, A = app, E = enhancement, t = TUI, cfg = config…) y la expande a JSONL con un script; corrige a mano cuatro filas antes de escribir: 2947 tokens de salida.",
+        "Más caro que astra con el esfuerzo por defecto: 13 peticiones y 477 k tokens frente a 7 y 190 k, con la misma calidad."
+      ]
+    },
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
     "dir": "resultados/openai_gpt-6.2-sol-medium/A3D",
