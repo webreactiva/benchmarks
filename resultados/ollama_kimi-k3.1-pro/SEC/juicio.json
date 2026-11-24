@@ -1,0 +1,38 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/kimi-k3.1-pro",
+  "nota": 8,
+  "rubrica": {
+    "f3": 5,
+    "criticas": 1,
+    "linea": 1,
+    "cwe": 1
+  },
+  "veredicto": "Amplio, preciso, rangos anchos",
+  "resumen": "Informe de 34 hallazgos sin ninguno inventado en el que el juez reconoce 35 de las 40 entradas, pero la nota cuenta 25,5 (F3 64,3): trece rangos pasan de 20 líneas y 17 entradas valen medio acierto. Se le escapan la SSRF del asistente (la borró justo antes del corte), la fuga de herramientas en su respuesta, la enumeración en el login, el oráculo de padding y el token de soporte en claro.",
+  "cifras": {
+    "tp_estricto": 25.5,
+    "con_linea_tp": 17,
+    "sin_linea_tp": 17,
+    "fp_estricto": 11,
+    "fn_estricto": 14.5,
+    "f3": 64.3,
+    "wf3": 65.0,
+    "precision": 0.699,
+    "recall": 0.637,
+    "juez": {
+      "tp": 35,
+      "fp_inventados": 0,
+      "extra_reales": 10,
+      "f3": 88.6
+    }
+  },
+  "rarezas": [
+    "Cortado por el límite de uso de Ollama Cloud (429, provider.quota) a los 11 min 17 s, en una segunda pasada con el informe ya escrito. Se juzga tal cual por decisión del autor (meta.json: error y nota_del_autor).",
+    "Su última edición antes del corte borró M-02 (SSRF por mcpServerUrl en ai-assistant:63-99, que habría cubierto la entrada 008 como medio acierto) para subirla de severidad, y no llegó a reinsertarla: el informe se queda sin la SSRF del asistente y el resumen sigue anunciando 36 grupos (12 medios) cuando hay 34 (10 medios).",
+    "Ejecuta dos veces npm audit --package-lock-only, que consulta el registro de npm: es la única salida a la red; sin curl, git ni webfetch. Los GHSA de Next.js salen de ese audit, no de memoria. npm pack --dry-run es local. Deja los JSON de ambos en salida/; no son hallazgos por sí mismos y se juzgan solo a través de C-09.",
+    "Lo llama «laboratorio vulnerable» por las flags; no nombra el proyecto original ni copia los valores de flags, claves o contraseñas al informe.",
+    "Reparte la revisión en tres subagentes (autenticación, inyección, configuración) y 136 lecturas; cinco edit sobre su propio informe. No toca el código del proyecto.",
+    "Da fichero y línea en los 34 hallazgos y CWE en 33 (C-09 pone «múltiples»), pero trece ubicaciones son rangos de más de 20 líneas (51-91, 81-103, 102-143, 8-67, 8-64, 6-37, 6-31, 95-135, 253-319, 47-85, 6-81, 5-25, 15-43): las 16 entradas que cubren valen medio acierto, y .env.local sin línea, otra más."
+  ]
+}

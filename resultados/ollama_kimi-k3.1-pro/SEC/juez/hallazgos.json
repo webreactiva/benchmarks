@@ -1,0 +1,507 @@
+{
+ "hallazgos": [
+  {
+   "id": "C-01",
+   "titulo": "secreto JWT de respaldo conocido",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true,
+     "nota": "server-auth.ts:12"
+    }
+   ],
+   "nota": "Que el middleware y exp opcional se acepten es real; va dentro del mismo hallazgo."
+  },
+  {
+   "id": "C-02",
+   "titulo": "registro público con rol ADMIN",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "nota": "signup:48-64 (17 líneas), toca la ventana 51-73; da CWE-915/862, la clase es la misma"
+    }
+   ]
+  },
+  {
+   "id": "C-03",
+   "titulo": "token de recuperación MD5(email+timestamp) con la hora en la respuesta",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (forgot-password:13-24). Cita reset-password:13-55 por el uso del token, no por el MD5 de la contraseña."
+  },
+  {
+   "id": "C-04",
+   "titulo": "acceso de soporte para cualquier cuenta",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true,
+     "nota": "rango 51-91 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-035",
+     "estricto": true,
+     "nota": "«el token se devuelve al solicitante… aparece en la query string»; mismo rango 51-91, sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "No habla del token guardado en claro (034). No comprobar revoked en support-login es real y sin entrada."
+  },
+  {
+   "id": "C-05",
+   "titulo": "SQLi en cuatro endpoints",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": true,
+     "nota": "products/search:85-103 (19 líneas), toca la ventana 90-113"
+    },
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true,
+     "nota": "tracking:96-103"
+    },
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": true,
+     "nota": "orders/search:81-103, 23 líneas; 36-40 queda fuera; abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-005",
+     "estricto": true,
+     "nota": "admin/reviews:102-143 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-006",
+     "estricto": true,
+     "nota": "admin/reviews:102-143 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ],
+   "nota": "Cita también products/search:35-40 como entrada de la SQLi (028, no puntuable). Describe la SQLi de segundo orden desde reseñas."
+  },
+  {
+   "id": "C-06",
+   "titulo": "lectura y listado de ficheros sin autenticación (traversal)",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "files:8-67 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "nota": "files:8-67 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "C-07",
+   "titulo": "contraseñas en el log y SIEM con credenciales fijas y cookie falsificable",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "nota": "login:16-25"
+    },
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true,
+     "nota": "monitoring/auth:5-20 (16 líneas); «credenciales SIEM estáticas en el código»"
+    }
+   ],
+   "nota": "La cookie siem_session con valor fijo (monitoring/logs) es real y sin entrada."
+  },
+  {
+   "id": "C-08",
+   "titulo": "credenciales del seed y de la pantalla de login",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-042",
+     "estricto": true,
+     "nota": "seed.ts:655-716; la entrada es todo el fichero"
+    }
+   ],
+   "nota": "Las credenciales de demostración en LoginForm:56-64 son reales y sin entrada."
+  },
+  {
+   "id": "C-09",
+   "titulo": "Next.js 15.2.2 con avisos críticos (npm audit)",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "Real; los GHSA salen del npm audit que ejecutó, no de memoria. Da «CWE: múltiples». La sección 7 (zod, prisma, libxmljs2…) es parte de este hallazgo."
+  },
+  {
+   "id": "C-10",
+   "titulo": "total del pedido decidido por el cliente, pago sin verificar",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true,
+     "nota": "orders:125-132; da CWE-840/345, describe la falta de validación de negocio en servidor"
+    }
+   ],
+   "nota": "NEXT_PUBLIC_PAYMENT_SECRET en el bundle es real y sin entrada."
+  },
+  {
+   "id": "H-01",
+   "titulo": "IDOR en pedidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true,
+     "nota": "orders/[id]:8-64 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "H-02",
+   "titulo": "SSRF en soporte",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true,
+     "nota": "support:6-37 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "H-03",
+   "titulo": "XSS almacenado en analytics por x-forwarded-for",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true,
+     "nota": "AnalyticsClient:354-367 (14 líneas)"
+    }
+   ]
+  },
+  {
+   "id": "H-04",
+   "titulo": "cualquier usuario altera el directo y lee la streamKey",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (live/stream; clave RTMP en lib/live-stream.ts)."
+  },
+  {
+   "id": "H-05",
+   "titulo": "XXE en importación XML",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true,
+     "nota": "import-order:12-24 (13 líneas)"
+    }
+   ]
+  },
+  {
+   "id": "H-06",
+   "titulo": "tokens de compartir forjables, clave AES de respaldo",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true,
+     "nota": "share-crypto.ts:6-31 (26 líneas) toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ],
+   "nota": "Habla de CBC sin MAC/AEAD, no del oráculo de padding (018)."
+  },
+  {
+   "id": "H-07",
+   "titulo": "flags, hashes y artefactos internos públicos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-023",
+     "estricto": true,
+     "nota": "flags/route:5-13; describe la falta de autenticación"
+    },
+    {
+     "id": "oss-oopssec-store-021",
+     "estricto": true,
+     "nota": "flags/[slug]:5-19 (15 líneas)"
+    },
+    {
+     "id": "oss-oopssec-store-038",
+     "estricto": true,
+     "nota": "news/page:95-135 (41 líneas; 4-17 fuera) toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ],
+   "nota": "public/notice.txt y supplier-registry.txt son reales y sin entrada."
+  },
+  {
+   "id": "H-08",
+   "titulo": "tarjetas regalo sin cobro y con códigos predecibles",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (LCG sembrado con Date.now en lib/gift-card.ts)."
+  },
+  {
+   "id": "H-09",
+   "titulo": "secretos en el contexto Docker y en el paquete npm",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-001",
+     "estricto": true,
+     "nota": ".env.local sin línea (cita .gitignore, .dockerignore, Dockerfile y package.json); describe los secretos de .env.local",
+     "sin_linea": true
+    }
+   ],
+   "nota": ".dockerignore sin .env.local y private:false son reales y sin entrada."
+  },
+  {
+   "id": "H-10",
+   "titulo": "MCP protegido por una constante pública y prompt injection en el asistente",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-009",
+     "estricto": true,
+     "nota": "ai-assistant:200-219 (20 líneas), toca la ventana 211-231; describe la inyección por el mensaje y el filtro de cuatro expresiones"
+    },
+    {
+     "id": "oss-oopssec-store-010",
+     "estricto": true,
+     "nota": "«no protege salidas, descripciones de MCP externas ni instrucciones indirectas»; rango 253-319 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ],
+   "nota": "La cabecera MCP fija (lib/mcp-constants.ts, mcp/route.ts) es real y sin entrada. No describe la SSRF (008) ni la fuga de mcpTools en la respuesta (011)."
+  },
+  {
+   "id": "H-11",
+   "titulo": "subida de SVG activo",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": true,
+     "nota": "image:9-17 (fuera) y 47-85 (39 líneas) toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ],
+   "nota": "El <object> sin sandbox en ProductDetailClient es real."
+  },
+  {
+   "id": "H-12",
+   "titulo": "MD5 sin sal y política de contraseña débil",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": true,
+     "nota": "reset-password:46"
+    }
+   ],
+   "nota": "Cita también seed.ts:576-578 (042 ya cubierta por C-08). La contraseña vacía aceptada en signup es real."
+  },
+  {
+   "id": "H-13",
+   "titulo": "XSS persistente en reseñas con reactivación de scripts",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-039",
+     "estricto": true,
+     "nota": "ProductDetailClient:51-67 (17 líneas), toca la ventana 45-65"
+    }
+   ]
+  },
+  {
+   "id": "M-01",
+   "titulo": "listas de deseos accesibles por ID",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-036",
+     "estricto": true,
+     "nota": "wishlists/[id]:6-81 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M-03",
+   "titulo": "middleware sin verificar firma y /internal por cabecera",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (middleware.ts, internal/page.tsx:17-21)."
+  },
+  {
+   "id": "M-04",
+   "titulo": "HTML sin sanear en la respuesta del formulario de soporte",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (SupportForm.tsx:103, dangerouslySetInnerHTML)."
+  },
+  {
+   "id": "M-05",
+   "titulo": "sin rate limiting, límites de cuerpo ni timeouts",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-013",
+     "estricto": false,
+     "nota": "«no hay limitador en login», sin citar login/route.ts"
+    }
+   ],
+   "nota": "Las ubicaciones que da (validation/index.ts, import-order, support, ai-assistant, monitoring/logs) son de límites de tamaño y timeouts."
+  },
+  {
+   "id": "M-06",
+   "titulo": "cupones y pedidos sin transacciones",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (carrera en coupon/apply)."
+  },
+  {
+   "id": "M-07",
+   "titulo": "sesiones no revocadas en logout y reset",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-015",
+     "estricto": true,
+     "nota": "logout:4-7"
+    }
+   ],
+   "nota": "El reset no atómico es real y sin entrada."
+  },
+  {
+   "id": "M-08",
+   "titulo": "exportación y diagnóstico revelan datos internos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": true,
+     "nota": "export:127-140 (14 líneas), toca la ventana 113-136"
+    },
+    {
+     "id": "oss-oopssec-store-003",
+     "estricto": true,
+     "nota": "diag:5-25, 21 líneas (una de más); toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ],
+   "nota": "Exportar el campo password (línea 7) y el comentario de admin/documents son reales y sin entrada."
+  },
+  {
+   "id": "M-09",
+   "titulo": "open redirect tras el login",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-037",
+     "estricto": true,
+     "nota": "LoginForm:15-43 abarca más de 20 líneas; toca la ventana: cuenta como sin línea (medio acierto)",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M-10",
+   "titulo": "API key de Mistral en localStorage",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real y menor: la clave es del propio usuario, pero la lee cualquier XSS del origen."
+  },
+  {
+   "id": "M-11",
+   "titulo": "contenedor como root con toolchain",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real y genérico."
+  },
+  {
+   "id": "L-01",
+   "titulo": "faltan cabeceras de seguridad y cookie SIEM sin Secure/SameSite",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (next.config.ts sin headers). Cita support-access:82-91 por el token en la query; la entrada 035 ya la cubre C-04."
+  }
+ ]
+}
