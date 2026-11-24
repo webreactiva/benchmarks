@@ -116,6 +116,13 @@ macro = sum(f1(*v) for v in por.values()) / len(AREAS)
 meta = json.load(open(d / "meta.json")) if (d / "meta.json").exists() else {}
 dur = None
 reg = d / "sesion.jsonl"
+oc = d / "sesion.json"  # OpenCode: info.time (ms) de creación y de vuelta a reposo
+if oc.exists():
+    try:
+        t = json.load(open(oc))["info"]["time"]
+        dur = round(((t.get("idle") or t["updated"]) - t["created"]) / 1000)
+    except (KeyError, TypeError, json.JSONDecodeError):
+        pass
 if reg.exists():
     ts = [json.loads(l).get("timestamp") for l in open(reg) if l.strip()]
     ts = [datetime.fromisoformat(t.replace("Z", "+00:00")) for t in ts if t]
@@ -134,6 +141,8 @@ out = {"fichero": str(f.relative_to(d)) if f else None, "incidencias": n, "clasi
 tok = (meta.get("tokens") or {}).get("total") or 0
 # Coste estimado: el de meta.json si lo trae (OpenRouter); si no, tokens × precios.json
 coste = meta.get("coste_usd")
+if not coste and (meta.get("modelo") or "").startswith("ollama/"):
+    coste = None  # Ollama Cloud se cobra por suscripción: OpenCode apunta 0, y se estima con el precio público
 precios = json.load(open(AQUI / "precios.json"))
 modelo = (meta.get("modelo") or "").removeprefix("ollama/")
 if coste is None and modelo in precios and meta.get("tokens"):
