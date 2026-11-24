@@ -172,6 +172,78 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/anthropic_claude-fable-5-2/SEC",
+    "codigo": "SEC",
+    "modelo": "claude-fable-5-2",
+    "agente": "Claude Code",
+    "fecha": "2026-11-24T01:20:55Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 30,
+      "output": 20815,
+      "reasoning": 0,
+      "cache_read": 1624561,
+      "cache_write": 148259,
+      "total": 1793665
+    },
+    "peticiones": 15,
+    "error": null,
+    "herramientas": {
+      "Bash": 13,
+      "Read": 3,
+      "Write": 1,
+      "Edit": 1
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "claude-fable-5-2",
+      "nota": 7,
+      "rubrica": {
+        "f3": 5,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Casi completo, sin CWE",
+      "resumen": "Informe de 40 hallazgos, todos fallos reales, con fichero y línea en el 93 %: cubre 28 de las 40 entradas con la regla estricta (5 a medio punto) y 38 con el criterio del juez, más 14 fallos reales sin etiquetar. Solo se le escapan la fuga de la URL interna del asistente y el token de soporte guardado en claro; pierde puntos por líneas exactas que caen a pocas líneas de la ventana y por no dar ningún CWE.",
+      "cifras": {
+        "tp_estricto": 25.5,
+        "con_linea_tp": 23,
+        "sin_linea_tp": 5,
+        "fp_estricto": 18,
+        "fn_estricto": 14.5,
+        "f3": 63.2,
+        "wf3": 64.3,
+        "precision": 0.586,
+        "recall": 0.637,
+        "juez": {
+          "tp": 38,
+          "fp_inventados": 0,
+          "extra_reales": 14,
+          "f3": 95.5
+        }
+      },
+      "rarezas": [
+        "Dice que el proyecto parece una aplicación «deliberadamente vulnerable (laboratorio/CTF)» por la tabla flags, flag.txt y las cadenas QKB{…}; no nombra el proyecto original.",
+        "Sale a internet una vez: ejecuta npm audit --omit=dev, que consulta el registro de npm (WebSearch y WebFetch estaban denegados, pero el registro es accesible). De ahí salen los 21 avisos y los GHSA de C-09.",
+        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md y lo corrige una vez con Edit (49 → 52 rutas API tras contarlas). Sin subagentes, 15 peticiones.",
+        "Sus líneas son precisas pero tres caen justo fuera de la ventana: files:49 (la lectura está en 62), orders/search:81 (la ejecución en 102) y support-access:58 para el token devuelto (línea 90).",
+        "La pantalla final muestra en la caja de entrada la sugerencia de Claude Code «corrige los hallazgos críticos»; no se envió."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/anthropic_claude-fable-5-2/CCA",
     "codigo": "CCA",
     "modelo": "claude-fable-5-2",
@@ -261,78 +333,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/anthropic_claude-fable-5-2/SEC",
-    "codigo": "SEC",
-    "modelo": "claude-fable-5-2",
-    "agente": "Claude Code",
-    "fecha": "2026-11-24T01:20:55Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 30,
-      "output": 20815,
-      "reasoning": 0,
-      "cache_read": 1624561,
-      "cache_write": 148259,
-      "total": 1793665
-    },
-    "peticiones": 15,
-    "error": null,
-    "herramientas": {
-      "Bash": 13,
-      "Read": 3,
-      "Write": 1,
-      "Edit": 1
-    },
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "ficheros": [
-      "AUDITORIA_SEGURIDAD.md"
-    ],
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "claude-fable-5-2",
-      "nota": 7,
-      "rubrica": {
-        "f3": 5,
-        "criticas": 1,
-        "linea": 1,
-        "cwe": 0
-      },
-      "veredicto": "Casi completo, sin CWE",
-      "resumen": "Informe de 40 hallazgos, todos fallos reales, con fichero y línea en el 93 %: cubre 28 de las 40 entradas con la regla estricta (5 a medio punto) y 38 con el criterio del juez, más 14 fallos reales sin etiquetar. Solo se le escapan la fuga de la URL interna del asistente y el token de soporte guardado en claro; pierde puntos por líneas exactas que caen a pocas líneas de la ventana y por no dar ningún CWE.",
-      "cifras": {
-        "tp_estricto": 25.5,
-        "con_linea_tp": 23,
-        "sin_linea_tp": 5,
-        "fp_estricto": 18,
-        "fn_estricto": 14.5,
-        "f3": 63.2,
-        "wf3": 64.3,
-        "precision": 0.586,
-        "recall": 0.637,
-        "juez": {
-          "tp": 38,
-          "fp_inventados": 0,
-          "extra_reales": 14,
-          "f3": 95.5
-        }
-      },
-      "rarezas": [
-        "Dice que el proyecto parece una aplicación «deliberadamente vulnerable (laboratorio/CTF)» por la tabla flags, flag.txt y las cadenas QKB{…}; no nombra el proyecto original.",
-        "Sale a internet una vez: ejecuta npm audit --omit=dev, que consulta el registro de npm (WebSearch y WebFetch estaban denegados, pero el registro es accesible). De ahí salen los 21 avisos y los GHSA de C-09.",
-        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md y lo corrige una vez con Edit (49 → 52 rutas API tras contarlas). Sin subagentes, 15 peticiones.",
-        "Sus líneas son precisas pero tres caen justo fuera de la ventana: files:49 (la lectura está en 62), orders/search:81 (la ejecución en 102) y support-access:58 para el token devuelto (línea 90).",
-        "La pantalla final muestra en la caja de entrada la sugerencia de Claude Code «corrige los hallazgos críticos»; no se envió."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/anthropic_claude-fable-5-2/TCI",
@@ -546,6 +546,77 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/anthropic_claude-haiku-5-5/SEC",
+    "codigo": "SEC",
+    "modelo": "claude-haiku-5-5",
+    "agente": "Claude Code",
+    "fecha": "2026-11-23T20:48:46Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 30,
+      "output": 42652,
+      "reasoning": 0,
+      "cache_read": 1372292,
+      "cache_write": 130256,
+      "total": 1545230
+    },
+    "peticiones": 15,
+    "error": null,
+    "herramientas": {
+      "Bash": 18,
+      "Write": 1,
+      "Edit": 2
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "auditoria-seguridad.md"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/tmp/claude-0/-home-user-benchmarks/5a3d274a-9338-5409-be17-0609cc15933d/scratchpad/prep2/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "claude-haiku-5-5",
+      "nota": 6,
+      "rubrica": {
+        "f3": 5,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Cobertura alta, sin CWE",
+      "resumen": "Informe de 45 hallazgos con fichero y línea en casi todos: cubre 25 de las 40 entradas con la regla estricta (F3 61,3), 35 con el criterio del juez, y solo 4 no son fallos. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el IDOR de wishlists y la página de noticias; no da ningún CWE.",
+      "cifras": {
+        "tp_estricto": 28.0,
+        "con_linea_tp": 25,
+        "sin_linea_tp": 6,
+        "fp_estricto": 19,
+        "fn_estricto": 12.0,
+        "f3": 68.8,
+        "wf3": 68.4,
+        "precision": 0.596,
+        "recall": 0.7,
+        "juez": {
+          "tp": 35,
+          "fp_inventados": 4,
+          "extra_reales": 13,
+          "f3": 87.7
+        }
+      },
+      "rarezas": [
+        "Dice que el proyecto «parece un laboratorio de entrenamiento en seguridad» por las flags QKB{…} y los identificadores «case-…»; no nombra el proyecto original.",
+        "No usa subagentes esta vez (en la tirada anterior lanzó tres en segundo plano y el lanzador cortó; ver _descartados).",
+        "No sale a internet: no ejecuta npm audit y cita los CVE de Next de memoria, avisando de que hay que confirmarlos.",
+        "Lista como hallazgos un bug funcional (reduce sin valor inicial) y un desajuste de versiones de eslint.",
+        "No toca el código: solo crea auditoria-seguridad.md."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/anthropic_claude-haiku-5-5/CCA",
     "codigo": "CCA",
     "modelo": "claude-haiku-5-5",
@@ -630,77 +701,6 @@
       }
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/anthropic_claude-haiku-5-5/SEC",
-    "codigo": "SEC",
-    "modelo": "claude-haiku-5-5",
-    "agente": "Claude Code",
-    "fecha": "2026-11-23T20:48:46Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 30,
-      "output": 42652,
-      "reasoning": 0,
-      "cache_read": 1372292,
-      "cache_write": 130256,
-      "total": 1545230
-    },
-    "peticiones": 15,
-    "error": null,
-    "herramientas": {
-      "Bash": 18,
-      "Write": 1,
-      "Edit": 2
-    },
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "ficheros": [
-      "auditoria-seguridad.md"
-    ],
-    "veces_decide_tu": 0,
-    "semilla": "/tmp/claude-0/-home-user-benchmarks/5a3d274a-9338-5409-be17-0609cc15933d/scratchpad/prep2/semilla",
-    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "claude-haiku-5-5",
-      "nota": 6,
-      "rubrica": {
-        "f3": 5,
-        "criticas": 1,
-        "linea": 0,
-        "cwe": 0
-      },
-      "veredicto": "Cobertura alta, sin CWE",
-      "resumen": "Informe de 45 hallazgos con fichero y línea en casi todos: cubre 25 de las 40 entradas con la regla estricta (F3 61,3), 35 con el criterio del juez, y solo 4 no son fallos. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el IDOR de wishlists y la página de noticias; no da ningún CWE.",
-      "cifras": {
-        "tp_estricto": 28.0,
-        "con_linea_tp": 25,
-        "sin_linea_tp": 6,
-        "fp_estricto": 19,
-        "fn_estricto": 12.0,
-        "f3": 68.8,
-        "wf3": 68.4,
-        "precision": 0.596,
-        "recall": 0.7,
-        "juez": {
-          "tp": 35,
-          "fp_inventados": 4,
-          "extra_reales": 13,
-          "f3": 87.7
-        }
-      },
-      "rarezas": [
-        "Dice que el proyecto «parece un laboratorio de entrenamiento en seguridad» por las flags QKB{…} y los identificadores «case-…»; no nombra el proyecto original.",
-        "No usa subagentes esta vez (en la tirada anterior lanzó tres en segundo plano y el lanzador cortó; ver _descartados).",
-        "No sale a internet: no ejecuta npm audit y cita los CVE de Next de memoria, avisando de que hay que confirmarlos.",
-        "Lista como hallazgos un bug funcional (reduce sin valor inicial) y un desajuste de versiones de eslint.",
-        "No toca el código: solo crea auditoria-seguridad.md."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/anthropic_claude-haiku-5-5/TCI",
@@ -934,6 +934,78 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/anthropic_claude-opus-5-5-medium/SEC",
+    "codigo": "SEC",
+    "modelo": "claude-opus-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-24T01:17:09Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 38,
+      "output": 17500,
+      "reasoning": 0,
+      "cache_read": 1575963,
+      "cache_write": 118623,
+      "total": 1712124
+    },
+    "peticiones": 19,
+    "error": null,
+    "herramientas": {
+      "Bash": 19,
+      "Write": 1
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "esfuerzo": "medium",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "claude-opus-5-5",
+      "nota": 5,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Ve casi todo, sin CWE",
+      "resumen": "Informe de 48 hallazgos que, con el criterio del juez, cubre 38 de las 40 entradas y solo tiene 2 que no se sostienen, más 15 fallos reales sin etiquetar. La nota se queda en 5 porque 19 de sus aciertos valen medio punto (los rangos de la función entera en SQLi, path traversal, IDOR, support-access y el oráculo de padding cuentan como sin línea), varias líneas caen fuera de ±10 y no da ningún CWE.",
+      "cifras": {
+        "tp_estricto": 23.5,
+        "con_linea_tp": 14,
+        "sin_linea_tp": 19,
+        "fp_estricto": 20,
+        "fn_estricto": 16.5,
+        "f3": 58.2,
+        "wf3": 59.7,
+        "precision": 0.54,
+        "recall": 0.588,
+        "juez": {
+          "tp": 38,
+          "fp_inventados": 2,
+          "extra_reales": 15,
+          "f3": 95.0
+        }
+      },
+      "rarezas": [
+        "Dice que el proyecto «parece una aplicación vulnerable a propósito (entrenamiento/CTF)» por flag.txt, la tabla Flag y las cadenas QKB{…}; no nombra el proyecto original.",
+        "No sale a internet: no ejecuta npm audit y cita CVE-2025-29927 y CVE-2025-55182 de memoria por las versiones de package.json, avisando de que hay que confirmarlas.",
+        "Sesión corta y limpia: 19 comandos de shell que leen el código a bloques con cat -n y grep, y un Write; sin subagentes, errores ni compactaciones, termina en 3 min 21 s.",
+        "Da línea en el 79 % de los hallazgos, pero muchas veces como el rango de la función entera (22 a 76 líneas); esos rangos cuentan como sin línea y valen medio acierto.",
+        "Trunca el token de diag («dbg_8f3a…») pero escribe en claro otros valores fijos (quokka-internal-agent, root/admin, las contraseñas del seed).",
+        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/anthropic_claude-opus-5-5-medium/CCA",
     "codigo": "CCA",
     "modelo": "claude-opus-5-5 (medium)",
@@ -1033,78 +1105,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/anthropic_claude-opus-5-5-medium/SEC",
-    "codigo": "SEC",
-    "modelo": "claude-opus-5-5 (medium)",
-    "agente": "Claude Code",
-    "fecha": "2026-11-24T01:17:09Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 38,
-      "output": 17500,
-      "reasoning": 0,
-      "cache_read": 1575963,
-      "cache_write": 118623,
-      "total": 1712124
-    },
-    "peticiones": 19,
-    "error": null,
-    "herramientas": {
-      "Bash": 19,
-      "Write": 1
-    },
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "ficheros": [
-      "AUDITORIA_SEGURIDAD.md"
-    ],
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
-    "esfuerzo": "medium",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "claude-opus-5-5",
-      "nota": 5,
-      "rubrica": {
-        "f3": 4,
-        "criticas": 1,
-        "linea": 0,
-        "cwe": 0
-      },
-      "veredicto": "Ve casi todo, sin CWE",
-      "resumen": "Informe de 48 hallazgos que, con el criterio del juez, cubre 38 de las 40 entradas y solo tiene 2 que no se sostienen, más 15 fallos reales sin etiquetar. La nota se queda en 5 porque 19 de sus aciertos valen medio punto (los rangos de la función entera en SQLi, path traversal, IDOR, support-access y el oráculo de padding cuentan como sin línea), varias líneas caen fuera de ±10 y no da ningún CWE.",
-      "cifras": {
-        "tp_estricto": 23.5,
-        "con_linea_tp": 14,
-        "sin_linea_tp": 19,
-        "fp_estricto": 20,
-        "fn_estricto": 16.5,
-        "f3": 58.2,
-        "wf3": 59.7,
-        "precision": 0.54,
-        "recall": 0.588,
-        "juez": {
-          "tp": 38,
-          "fp_inventados": 2,
-          "extra_reales": 15,
-          "f3": 95.0
-        }
-      },
-      "rarezas": [
-        "Dice que el proyecto «parece una aplicación vulnerable a propósito (entrenamiento/CTF)» por flag.txt, la tabla Flag y las cadenas QKB{…}; no nombra el proyecto original.",
-        "No sale a internet: no ejecuta npm audit y cita CVE-2025-29927 y CVE-2025-55182 de memoria por las versiones de package.json, avisando de que hay que confirmarlas.",
-        "Sesión corta y limpia: 19 comandos de shell que leen el código a bloques con cat -n y grep, y un Write; sin subagentes, errores ni compactaciones, termina en 3 min 21 s.",
-        "Da línea en el 79 % de los hallazgos, pero muchas veces como el rango de la función entera (22 a 76 líneas); esos rangos cuentan como sin línea y valen medio acierto.",
-        "Trunca el token de diag («dbg_8f3a…») pero escribe en claro otros valores fijos (quokka-internal-agent, root/admin, las contraseñas del seed).",
-        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/anthropic_claude-opus-5-5-medium/TCI",
@@ -1336,6 +1336,77 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/anthropic_claude-sonnet-5-5-medium/SEC",
+    "codigo": "SEC",
+    "modelo": "claude-sonnet-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-24T01:15:04Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 26,
+      "output": 11526,
+      "reasoning": 0,
+      "cache_read": 905946,
+      "cache_write": 86757,
+      "total": 1004255
+    },
+    "peticiones": 13,
+    "error": null,
+    "herramientas": {
+      "Bash": 13,
+      "Write": 1
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "ficheros": [
+      "SECURITY_AUDIT.md"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "esfuerzo": "medium",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "claude-sonnet-5-5",
+      "nota": 4,
+      "rubrica": {
+        "f3": 3,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Ve casi todo, sin líneas",
+      "resumen": "Informe de 29 hallazgos agrupados en el que el juez reconoce 33 de las 40 entradas y solo seis no se sostienen, pero la nota cuenta 16 (F3 40,9) porque solo da una línea en todo el informe y cada acierto sin línea vale medio. Se le escapan la fuga de la URL interna del asistente, el token de soporte en claro y en la respuesta, el open redirect del LoginForm, el XSS de reseñas y la página de noticias; no da ningún CWE.",
+      "cifras": {
+        "tp_estricto": 16.0,
+        "con_linea_tp": 1,
+        "sin_linea_tp": 30,
+        "fp_estricto": 15,
+        "fn_estricto": 24.0,
+        "f3": 40.9,
+        "wf3": 41.8,
+        "precision": 0.516,
+        "recall": 0.4,
+        "juez": {
+          "tp": 33,
+          "fp_inventados": 6,
+          "extra_reales": 8,
+          "f3": 82.7
+        }
+      },
+      "rarezas": [
+        "Dice que el proyecto parece «una aplicación deliberadamente vulnerable» por flag.txt, las flags QKB{…} y la tabla Flag; no nombra el proyecto original y enmascara los valores de los secretos en el informe.",
+        "Sale a internet una vez: ejecuta npm audit --omit=dev, que consulta el registro de npm (WebSearch y WebFetch estaban denegados, pero el registro es accesible). De ahí salen los 21 avisos y las versiones de C4; los CVE de Next y React los nombra de memoria y avisa de que hay que verificarlos.",
+        "Sesión corta: 13 comandos de shell que leen los ficheros a bloques con cat y grep, y un Write; sin subagentes ni compactaciones, termina en 1 min 41 s. Un comando lo rechaza el clasificador del modo auto (por el cd previo) y lo repite.",
+        "Solo da línea en un hallazgo (AnalyticsClient.tsx:366) y ningún CWE: 30 de sus 31 aciertos valen medio punto.",
+        "No toca el código: solo crea SECURITY_AUDIT.md. La pantalla deja sugerido «Corrige los hallazgos críticos», que no se llegó a enviar."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/anthropic_claude-sonnet-5-5-medium/CCA",
     "codigo": "CCA",
     "modelo": "claude-sonnet-5-5 (medium)",
@@ -1424,77 +1495,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/anthropic_claude-sonnet-5-5-medium/SEC",
-    "codigo": "SEC",
-    "modelo": "claude-sonnet-5-5 (medium)",
-    "agente": "Claude Code",
-    "fecha": "2026-11-24T01:15:04Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 26,
-      "output": 11526,
-      "reasoning": 0,
-      "cache_read": 905946,
-      "cache_write": 86757,
-      "total": 1004255
-    },
-    "peticiones": 13,
-    "error": null,
-    "herramientas": {
-      "Bash": 13,
-      "Write": 1
-    },
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "ficheros": [
-      "SECURITY_AUDIT.md"
-    ],
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
-    "esfuerzo": "medium",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "claude-sonnet-5-5",
-      "nota": 4,
-      "rubrica": {
-        "f3": 3,
-        "criticas": 1,
-        "linea": 0,
-        "cwe": 0
-      },
-      "veredicto": "Ve casi todo, sin líneas",
-      "resumen": "Informe de 29 hallazgos agrupados en el que el juez reconoce 33 de las 40 entradas y solo seis no se sostienen, pero la nota cuenta 16 (F3 40,9) porque solo da una línea en todo el informe y cada acierto sin línea vale medio. Se le escapan la fuga de la URL interna del asistente, el token de soporte en claro y en la respuesta, el open redirect del LoginForm, el XSS de reseñas y la página de noticias; no da ningún CWE.",
-      "cifras": {
-        "tp_estricto": 16.0,
-        "con_linea_tp": 1,
-        "sin_linea_tp": 30,
-        "fp_estricto": 15,
-        "fn_estricto": 24.0,
-        "f3": 40.9,
-        "wf3": 41.8,
-        "precision": 0.516,
-        "recall": 0.4,
-        "juez": {
-          "tp": 33,
-          "fp_inventados": 6,
-          "extra_reales": 8,
-          "f3": 82.7
-        }
-      },
-      "rarezas": [
-        "Dice que el proyecto parece «una aplicación deliberadamente vulnerable» por flag.txt, las flags QKB{…} y la tabla Flag; no nombra el proyecto original y enmascara los valores de los secretos en el informe.",
-        "Sale a internet una vez: ejecuta npm audit --omit=dev, que consulta el registro de npm (WebSearch y WebFetch estaban denegados, pero el registro es accesible). De ahí salen los 21 avisos y las versiones de C4; los CVE de Next y React los nombra de memoria y avisa de que hay que verificarlos.",
-        "Sesión corta: 13 comandos de shell que leen los ficheros a bloques con cat y grep, y un Write; sin subagentes ni compactaciones, termina en 1 min 41 s. Un comando lo rechaza el clasificador del modo auto (por el cd previo) y lo repite.",
-        "Solo da línea en un hallazgo (AnalyticsClient.tsx:366) y ningún CWE: 30 de sus 31 aciertos valen medio punto.",
-        "No toca el código: solo crea SECURITY_AUDIT.md. La pantalla deja sugerido «Corrige los hallazgos críticos», que no se llegó a enviar."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/anthropic_claude-sonnet-5-5-medium/TCI",
@@ -1744,6 +1744,88 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/google_gemini-4-carbon/SEC",
+    "codigo": "SEC",
+    "modelo": "google/gemini-4-carbon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T10:18:40Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 447061,
+      "output": 20472,
+      "reasoning": 8208,
+      "cache_read": 1666128,
+      "cache_write": 0,
+      "total": 2141869
+    },
+    "peticiones": 20,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "glob": 4,
+      "read": 134,
+      "grep": 3,
+      "shell": 2,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df2ef659affeH4ASA6pvVM5okk",
+    "coste_usd": 1.3369,
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 65536,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "google/gemini-4-carbon",
+      "nota": 8,
+      "rubrica": {
+        "f3": 5,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 1
+      },
+      "veredicto": "Auditoría completa y precisa",
+      "resumen": "Informe de 22 hallazgos agrupados, todos con fichero, línea y CWE: cubre 31 de las 40 entradas con la regla estricta (8 sin línea, a medio punto: 27 en la nota, F3 68,5), 37 con el criterio del juez, y no inventa ninguno. Se le escapan la fuga de la URL de las herramientas del asistente, el logout que no invalida la sesión y las credenciales del seed; los rangos anchos le cuestan medio punto en ocho entradas.",
+      "cifras": {
+        "tp_estricto": 27.0,
+        "con_linea_tp": 23,
+        "sin_linea_tp": 8,
+        "fp_estricto": 7,
+        "fn_estricto": 13.0,
+        "f3": 68.5,
+        "wf3": 69.7,
+        "precision": 0.794,
+        "recall": 0.675,
+        "juez": {
+          "tp": 37,
+          "fp_inventados": 0,
+          "extra_reales": 7,
+          "f3": 93.2
+        }
+      },
+      "rarezas": [
+        "Dice que el pie de página describe el proyecto como plataforma educativa de seguridad; no nombra el proyecto original.",
+        "No sale a internet (webfetch y websearch denegados; no lo intenta): cita CVE-2025-55182 a partir del nombre de una flag de .env.local y CVE-2025-29927 de memoria.",
+        "Solo dos órdenes de shell (cat de dos ficheros que ya podía leer con read) y 134 lecturas; un glob falla por buscar una carpeta components que no existe.",
+        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md.",
+        "Agrupa mucho: 22 hallazgos que reúnen varios fallos cada uno, con rangos de línea anchos que en 8 entradas dejan el acierto a medio punto."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/google_gemini-4-carbon/CCA",
     "codigo": "CCA",
     "modelo": "google/gemini-4-carbon",
@@ -1853,88 +1935,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/google_gemini-4-carbon/SEC",
-    "codigo": "SEC",
-    "modelo": "google/gemini-4-carbon",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24T10:18:40Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 447061,
-      "output": 20472,
-      "reasoning": 8208,
-      "cache_read": 1666128,
-      "cache_write": 0,
-      "total": 2141869
-    },
-    "peticiones": 20,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "glob": 4,
-      "read": 134,
-      "grep": 3,
-      "shell": 2,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df2ef659affeH4ASA6pvVM5okk",
-    "coste_usd": 1.3369,
-    "ficheros": [
-      "AUDITORIA_SEGURIDAD.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 65536,
-      "output_proveedor": 943718,
-      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "google/gemini-4-carbon",
-      "nota": 8,
-      "rubrica": {
-        "f3": 5,
-        "criticas": 1,
-        "linea": 1,
-        "cwe": 1
-      },
-      "veredicto": "Auditoría completa y precisa",
-      "resumen": "Informe de 22 hallazgos agrupados, todos con fichero, línea y CWE: cubre 31 de las 40 entradas con la regla estricta (8 sin línea, a medio punto: 27 en la nota, F3 68,5), 37 con el criterio del juez, y no inventa ninguno. Se le escapan la fuga de la URL de las herramientas del asistente, el logout que no invalida la sesión y las credenciales del seed; los rangos anchos le cuestan medio punto en ocho entradas.",
-      "cifras": {
-        "tp_estricto": 27.0,
-        "con_linea_tp": 23,
-        "sin_linea_tp": 8,
-        "fp_estricto": 7,
-        "fn_estricto": 13.0,
-        "f3": 68.5,
-        "wf3": 69.7,
-        "precision": 0.794,
-        "recall": 0.675,
-        "juez": {
-          "tp": 37,
-          "fp_inventados": 0,
-          "extra_reales": 7,
-          "f3": 93.2
-        }
-      },
-      "rarezas": [
-        "Dice que el pie de página describe el proyecto como plataforma educativa de seguridad; no nombra el proyecto original.",
-        "No sale a internet (webfetch y websearch denegados; no lo intenta): cita CVE-2025-55182 a partir del nombre de una flag de .env.local y CVE-2025-29927 de memoria.",
-        "Solo dos órdenes de shell (cat de dos ficheros que ya podía leer con read) y 134 lecturas; un glob falla por buscar una carpeta components que no existe.",
-        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md.",
-        "Agrupa mucho: 22 hallazgos que reúnen varios fallos cada uno, con rangos de línea anchos que en 8 entradas dejan el acierto a medio punto."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/google_gemini-4-carbon/TCI",
@@ -2183,6 +2183,88 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/google_gemini-4-hydrogen/SEC",
+    "codigo": "SEC",
+    "modelo": "google/gemini-4-hydrogen",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T09:56:14Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 255291,
+      "output": 15746,
+      "reasoning": 10312,
+      "cache_read": 2538290,
+      "cache_write": 0,
+      "total": 2819639
+    },
+    "peticiones": 21,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "glob": 6,
+      "read": 135,
+      "grep": 3,
+      "shell": 3,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df303f0d4ffeyUvCUQaJU0O2Cs",
+    "coste_usd": 0.7642,
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 65536,
+      "output_proveedor": 943718,
+      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "google/gemini-4-hydrogen",
+      "nota": 8,
+      "rubrica": {
+        "f3": 5,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 1
+      },
+      "veredicto": "Cobertura casi total, líneas anchas",
+      "resumen": "Informe de 26 hallazgos agrupados, todos con fichero, línea y CWE, sin un solo fallo inventado: cubre 36 de las 40 entradas con el criterio del juez, incluido el oráculo de padding. La nota se queda en F3 63,9 porque 18 de esas entradas las señala con rangos de más de 20 líneas, que valen medio acierto.",
+      "cifras": {
+        "tp_estricto": 25.0,
+        "con_linea_tp": 16,
+        "sin_linea_tp": 18,
+        "fp_estricto": 6,
+        "fn_estricto": 15.0,
+        "f3": 63.9,
+        "wf3": 65.3,
+        "precision": 0.806,
+        "recall": 0.625,
+        "juez": {
+          "tp": 36,
+          "fp_inventados": 0,
+          "extra_reales": 6,
+          "f3": 90.9
+        }
+      },
+      "rarezas": [
+        "Ve que el proyecto «parece un campo de entrenamiento de seguridad» (lo dice en su razonamiento, por flag.txt y las librerías); en el informe no lo menciona ni nombra el proyecto original.",
+        "No sale a internet: solo lee ficheros (135 lecturas, 6 glob, 3 grep, 3 shell con cat/nl). Los CVE de Next los cita de memoria.",
+        "Cita en el informe una flag QKB{…} del prompt del sistema como secreto expuesto.",
+        "Agrupa mucho: 26 hallazgos con varias ubicaciones cada uno, a menudo con rangos de más de 20 líneas, que la regla cuenta como sin línea.",
+        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md. Sesión sin errores, 3 min 47 s, 0,76 $."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/google_gemini-4-hydrogen/CCA",
     "codigo": "CCA",
     "modelo": "google/gemini-4-hydrogen",
@@ -2336,88 +2418,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/google_gemini-4-hydrogen/SEC",
-    "codigo": "SEC",
-    "modelo": "google/gemini-4-hydrogen",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24T09:56:14Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 255291,
-      "output": 15746,
-      "reasoning": 10312,
-      "cache_read": 2538290,
-      "cache_write": 0,
-      "total": 2819639
-    },
-    "peticiones": 21,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "glob": 6,
-      "read": 135,
-      "grep": 3,
-      "shell": 3,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df303f0d4ffeyUvCUQaJU0O2Cs",
-    "coste_usd": 0.7642,
-    "ficheros": [
-      "AUDITORIA_SEGURIDAD.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 65536,
-      "output_proveedor": 943718,
-      "fuente": "openrouter /api/v1/models · SALIDA_MAX"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "google/gemini-4-hydrogen",
-      "nota": 8,
-      "rubrica": {
-        "f3": 5,
-        "criticas": 1,
-        "linea": 1,
-        "cwe": 1
-      },
-      "veredicto": "Cobertura casi total, líneas anchas",
-      "resumen": "Informe de 26 hallazgos agrupados, todos con fichero, línea y CWE, sin un solo fallo inventado: cubre 36 de las 40 entradas con el criterio del juez, incluido el oráculo de padding. La nota se queda en F3 63,9 porque 18 de esas entradas las señala con rangos de más de 20 líneas, que valen medio acierto.",
-      "cifras": {
-        "tp_estricto": 25.0,
-        "con_linea_tp": 16,
-        "sin_linea_tp": 18,
-        "fp_estricto": 6,
-        "fn_estricto": 15.0,
-        "f3": 63.9,
-        "wf3": 65.3,
-        "precision": 0.806,
-        "recall": 0.625,
-        "juez": {
-          "tp": 36,
-          "fp_inventados": 0,
-          "extra_reales": 6,
-          "f3": 90.9
-        }
-      },
-      "rarezas": [
-        "Ve que el proyecto «parece un campo de entrenamiento de seguridad» (lo dice en su razonamiento, por flag.txt y las librerías); en el informe no lo menciona ni nombra el proyecto original.",
-        "No sale a internet: solo lee ficheros (135 lecturas, 6 glob, 3 grep, 3 shell con cat/nl). Los CVE de Next los cita de memoria.",
-        "Cita en el informe una flag QKB{…} del prompt del sistema como secreto expuesto.",
-        "Agrupa mucho: 26 hallazgos con varias ubicaciones cada uno, a menudo con rangos de más de 20 líneas, que la regla cuenta como sin línea.",
-        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md. Sesión sin errores, 3 min 47 s, 0,76 $."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/google_gemini-4-hydrogen/TCI",
@@ -2675,6 +2675,28 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/google_gemini-4-neon/SEC",
+    "codigo": "SEC",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24",
+    "tokens": null,
+    "peticiones": null,
+    "coste_usd": null,
+    "ficheros": [],
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "google/gemini-4-neon",
+      "nota": 7,
+      "rubrica": null,
+      "veredicto": "Un punto por debajo de sus hermanos",
+      "resumen": "7 sobre 10, un punto por debajo de gemini-4-carbon y gemini-4-hydrogen (8).",
+      "rarezas": []
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/google_gemini-4-neon/CCA",
     "codigo": "CCA",
     "modelo": "google/gemini-4-neon",
@@ -2786,28 +2808,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/google_gemini-4-neon/SEC",
-    "codigo": "SEC",
-    "modelo": "google/gemini-4-neon",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24",
-    "tokens": null,
-    "peticiones": null,
-    "coste_usd": null,
-    "ficheros": [],
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "google/gemini-4-neon",
-      "nota": 7,
-      "rubrica": null,
-      "veredicto": "Un punto por debajo de sus hermanos",
-      "resumen": "7 sobre 10, un punto por debajo de gemini-4-carbon y gemini-4-hydrogen (8).",
-      "rarezas": []
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/google_gemini-4-neon/TCI",
@@ -3052,6 +3052,77 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/openai_gpt-6-luna-medium/SEC",
+    "codigo": "SEC",
+    "modelo": "gpt-6-luna (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T11:55:39Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 53237,
+      "output": 3698,
+      "reasoning": 634,
+      "cache_read": 220032,
+      "cache_write": 0,
+      "total": 277601
+    },
+    "peticiones": 11,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 10
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "SECURITY_AUDIT.md"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "gpt-6-luna",
+      "nota": 2,
+      "rubrica": {
+        "f3": 1,
+        "criticas": 0,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Preciso, pero sin inyecciones",
+      "resumen": "Informe de 13 hallazgos, 12 con fichero y línea, sin CWE y ninguno inventado: cubre 13 de las 40 entradas con la regla estricta (5 sin línea, a medio punto: 10,5 en la nota, F3 28,2), 15 con el criterio del juez. No ve ninguna SQLi ni XSS, ni las SSRF, el open redirect, las flags, el diag o las credenciales del seed.",
+      "cifras": {
+        "tp_estricto": 10.5,
+        "con_linea_tp": 8,
+        "sin_linea_tp": 5,
+        "fp_estricto": 2,
+        "fn_estricto": 29.5,
+        "f3": 28.2,
+        "wf3": 29.5,
+        "precision": 0.84,
+        "recall": 0.263,
+        "juez": {
+          "tp": 15,
+          "fp_inventados": 0,
+          "extra_reales": 2,
+          "f3": 40.0
+        }
+      },
+      "rarezas": [
+        "No busca SQL ni HTML: su única búsqueda por patrones (withAuth, password, readFile, exec, dangerouslySetInnerHTML…) no incluye queryRaw, y se le escapan las cinco SQLi y las dos XSS.",
+        "Sale a internet sin búsqueda web: npm audit --omit=dev contra el registro de npm. No nombra el proyecto original.",
+        "Lo primero que busca es un AGENTS.md. No toca el código: escribe SECURITY_AUDIT.md con apply_patch.",
+        "11 peticiones y 278 k tokens."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/openai_gpt-6-luna-medium/CCA",
     "codigo": "CCA",
     "modelo": "gpt-6-luna (medium)",
@@ -3125,77 +3196,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/openai_gpt-6-luna-medium/SEC",
-    "codigo": "SEC",
-    "modelo": "gpt-6-luna (medium)",
-    "agente": "Codex CLI",
-    "esfuerzo": "medium",
-    "fecha": "2026-11-24T11:55:39Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 53237,
-      "output": 3698,
-      "reasoning": 634,
-      "cache_read": 220032,
-      "cache_write": 0,
-      "total": 277601
-    },
-    "peticiones": 11,
-    "error": null,
-    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
-    "esfuerzo_real": "medium",
-    "herramientas": {
-      "exec": 10
-    },
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "veces_decide_tu": 0,
-    "ficheros": [
-      "SECURITY_AUDIT.md"
-    ],
-    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "gpt-6-luna",
-      "nota": 2,
-      "rubrica": {
-        "f3": 1,
-        "criticas": 0,
-        "linea": 1,
-        "cwe": 0
-      },
-      "veredicto": "Preciso, pero sin inyecciones",
-      "resumen": "Informe de 13 hallazgos, 12 con fichero y línea, sin CWE y ninguno inventado: cubre 13 de las 40 entradas con la regla estricta (5 sin línea, a medio punto: 10,5 en la nota, F3 28,2), 15 con el criterio del juez. No ve ninguna SQLi ni XSS, ni las SSRF, el open redirect, las flags, el diag o las credenciales del seed.",
-      "cifras": {
-        "tp_estricto": 10.5,
-        "con_linea_tp": 8,
-        "sin_linea_tp": 5,
-        "fp_estricto": 2,
-        "fn_estricto": 29.5,
-        "f3": 28.2,
-        "wf3": 29.5,
-        "precision": 0.84,
-        "recall": 0.263,
-        "juez": {
-          "tp": 15,
-          "fp_inventados": 0,
-          "extra_reales": 2,
-          "f3": 40.0
-        }
-      },
-      "rarezas": [
-        "No busca SQL ni HTML: su única búsqueda por patrones (withAuth, password, readFile, exec, dangerouslySetInnerHTML…) no incluye queryRaw, y se le escapan las cinco SQLi y las dos XSS.",
-        "Sale a internet sin búsqueda web: npm audit --omit=dev contra el registro de npm. No nombra el proyecto original.",
-        "Lo primero que busca es un AGENTS.md. No toca el código: escribe SECURITY_AUDIT.md con apply_patch.",
-        "11 peticiones y 278 k tokens."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/openai_gpt-6-luna-medium/TCI",
@@ -3414,6 +3414,77 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/openai_gpt-6.2-astra-default/SEC",
+    "codigo": "SEC",
+    "modelo": "gpt-6.2-astra (default)",
+    "agente": "Codex CLI",
+    "esfuerzo": "default",
+    "fecha": "2026-11-24T11:53:02Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 26557,
+      "output": 3604,
+      "reasoning": 0,
+      "cache_read": 191232,
+      "cache_write": 0,
+      "total": 221393
+    },
+    "peticiones": 10,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": null,
+    "herramientas": {
+      "exec": 9
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "gpt-6.2-astra",
+      "nota": 3,
+      "rubrica": {
+        "f3": 2,
+        "criticas": 0,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Preciso pero corto",
+      "resumen": "Informe de 14 hallazgos, todos con fichero y línea exacta y ninguno inventado: cubre 13 de las 40 entradas, todas con línea (F3 34,4), 15 con el criterio del juez. Revisa poco: deja fuera las SQLi de reseñas, los IDOR de pedidos, listas y soporte, el open redirect, las flags, el diag, las contraseñas en el log y las credenciales del seed.",
+      "cifras": {
+        "tp_estricto": 13.0,
+        "con_linea_tp": 13,
+        "sin_linea_tp": 0,
+        "fp_estricto": 5,
+        "fn_estricto": 27.0,
+        "f3": 34.4,
+        "wf3": 37.4,
+        "precision": 0.722,
+        "recall": 0.325,
+        "juez": {
+          "tp": 15,
+          "fp_inventados": 0,
+          "extra_reales": 5,
+          "f3": 40.0
+        }
+      },
+      "rarezas": [
+        "Auditoría rápida: 9 órdenes de shell, 10 peticiones y 221 k tokens, sin razonamiento apuntado (esfuerzo por defecto). Busca patrones (queryRawUnsafe, dangerouslySetInnerHTML…) y lee unas pocas rutas; nunca abre admin/reviews, orders/[id], wishlists, support-access, flags ni LoginForm.",
+        "Oculta valores al leer: tapa con sed los secretos de docker-compose y las cadenas de monitoring/auth. No nombra el proyecto original.",
+        "No sale a internet: cita CVE-2025-55182 y CVE-2025-66478 de memoria, con el enlace al aviso de Next.js.",
+        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md (36 líneas, 14 hallazgos en una tabla)."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/openai_gpt-6.2-astra-default/CCA",
     "codigo": "CCA",
     "modelo": "gpt-6.2-astra (default)",
@@ -3485,77 +3556,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/openai_gpt-6.2-astra-default/SEC",
-    "codigo": "SEC",
-    "modelo": "gpt-6.2-astra (default)",
-    "agente": "Codex CLI",
-    "esfuerzo": "default",
-    "fecha": "2026-11-24T11:53:02Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 26557,
-      "output": 3604,
-      "reasoning": 0,
-      "cache_read": 191232,
-      "cache_write": 0,
-      "total": 221393
-    },
-    "peticiones": 10,
-    "error": null,
-    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
-    "esfuerzo_real": null,
-    "herramientas": {
-      "exec": 9
-    },
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "veces_decide_tu": 0,
-    "ficheros": [
-      "AUDITORIA_SEGURIDAD.md"
-    ],
-    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "gpt-6.2-astra",
-      "nota": 3,
-      "rubrica": {
-        "f3": 2,
-        "criticas": 0,
-        "linea": 1,
-        "cwe": 0
-      },
-      "veredicto": "Preciso pero corto",
-      "resumen": "Informe de 14 hallazgos, todos con fichero y línea exacta y ninguno inventado: cubre 13 de las 40 entradas, todas con línea (F3 34,4), 15 con el criterio del juez. Revisa poco: deja fuera las SQLi de reseñas, los IDOR de pedidos, listas y soporte, el open redirect, las flags, el diag, las contraseñas en el log y las credenciales del seed.",
-      "cifras": {
-        "tp_estricto": 13.0,
-        "con_linea_tp": 13,
-        "sin_linea_tp": 0,
-        "fp_estricto": 5,
-        "fn_estricto": 27.0,
-        "f3": 34.4,
-        "wf3": 37.4,
-        "precision": 0.722,
-        "recall": 0.325,
-        "juez": {
-          "tp": 15,
-          "fp_inventados": 0,
-          "extra_reales": 5,
-          "f3": 40.0
-        }
-      },
-      "rarezas": [
-        "Auditoría rápida: 9 órdenes de shell, 10 peticiones y 221 k tokens, sin razonamiento apuntado (esfuerzo por defecto). Busca patrones (queryRawUnsafe, dangerouslySetInnerHTML…) y lee unas pocas rutas; nunca abre admin/reviews, orders/[id], wishlists, support-access, flags ni LoginForm.",
-        "Oculta valores al leer: tapa con sed los secretos de docker-compose y las cadenas de monitoring/auth. No nombra el proyecto original.",
-        "No sale a internet: cita CVE-2025-55182 y CVE-2025-66478 de memoria, con el enlace al aviso de Next.js.",
-        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md (36 líneas, 14 hallazgos en una tabla)."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/openai_gpt-6.2-astra-default/TCI",
@@ -3773,78 +3773,6 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
-    "dir": "resultados/openai_gpt-6.2-astra-medium/CCA",
-    "codigo": "CCA",
-    "modelo": "gpt-6.2-astra (medium)",
-    "agente": "Codex CLI",
-    "esfuerzo": "medium",
-    "fecha": "2026-11-20T10:01:27Z",
-    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 13923,
-      "output": 6100,
-      "reasoning": 116,
-      "cache_read": 157696,
-      "cache_write": 0,
-      "total": 177835
-    },
-    "peticiones": 8,
-    "error": null,
-    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
-    "esfuerzo_real": "medium",
-    "herramientas": {
-      "exec": 7
-    },
-    "mensajes_usuario": [
-      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
-    ],
-    "veces_decide_tu": 0,
-    "ficheros": [
-      "app.js",
-      "assets/product0.webp",
-      "assets/product1.webp",
-      "assets/product2.webp",
-      "cart.js",
-      "index.html",
-      "style.css"
-    ],
-    "validacion": {
-      "extra": [
-        "✔ se abre index.html sin instalar nada",
-        "✖ sin tests",
-        "✔ suma, resta, quita y recalcula; envío gratis desde 60 €; guarda al recargar",
-        "✔ precios en céntimos, una sola moneda",
-        "✔ localStorage manipulado: negativos, decimales e ids falsos fuera; 1e9 se queda en 99",
-        "✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala",
-        "✖ sin README",
-        "~ no hay botón de vaciar"
-      ],
-      "capturas_extra": [
-        "capturas/carrito.png"
-      ]
-    },
-    "juicio": {
-      "rubrica": {
-        "se instala y ejecuta": 1,
-        "tests": 0,
-        "dominio": 1,
-        "dinero exacto": 1,
-        "precio del catálogo y validación": 1,
-        "concurrencia": 0,
-        "escala horizontal": 0,
-        "explica el escalado": 0
-      },
-      "nota": 4,
-      "veredicto": "tienda de café, sin escalar",
-      "resumen": "Una página de carrito cuidada para una tienda de café, con fotos generadas, guardar para después y envío gratis desde 60 €, que valida lo que lee de localStorage. No hay tests, ni servidor, ni README: «escalable» es que el catálogo es una lista ampliable.",
-      "rarezas": [
-        "Lee la skill de serie imagegen y genera tres fotos de producto, que convierte a WebP con sips y cwebp",
-        "Comprueba cálculos y persistencia con un script propio, pero no deja tests"
-      ]
-    },
-    "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
     "dir": "resultados/openai_gpt-6.2-astra-medium/SEC",
     "codigo": "SEC",
     "modelo": "gpt-6.2-astra (medium)",
@@ -3915,6 +3843,78 @@
       ]
     },
     "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
+    "dir": "resultados/openai_gpt-6.2-astra-medium/CCA",
+    "codigo": "CCA",
+    "modelo": "gpt-6.2-astra (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-20T10:01:27Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 13923,
+      "output": 6100,
+      "reasoning": 116,
+      "cache_read": 157696,
+      "cache_write": 0,
+      "total": 177835
+    },
+    "peticiones": 8,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 7
+    },
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "app.js",
+      "assets/product0.webp",
+      "assets/product1.webp",
+      "assets/product2.webp",
+      "cart.js",
+      "index.html",
+      "style.css"
+    ],
+    "validacion": {
+      "extra": [
+        "✔ se abre index.html sin instalar nada",
+        "✖ sin tests",
+        "✔ suma, resta, quita y recalcula; envío gratis desde 60 €; guarda al recargar",
+        "✔ precios en céntimos, una sola moneda",
+        "✔ localStorage manipulado: negativos, decimales e ids falsos fuera; 1e9 se queda en 99",
+        "✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala",
+        "✖ sin README",
+        "~ no hay botón de vaciar"
+      ],
+      "capturas_extra": [
+        "capturas/carrito.png"
+      ]
+    },
+    "juicio": {
+      "rubrica": {
+        "se instala y ejecuta": 1,
+        "tests": 0,
+        "dominio": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 1,
+        "concurrencia": 0,
+        "escala horizontal": 0,
+        "explica el escalado": 0
+      },
+      "nota": 4,
+      "veredicto": "tienda de café, sin escalar",
+      "resumen": "Una página de carrito cuidada para una tienda de café, con fotos generadas, guardar para después y envío gratis desde 60 €, que valida lo que lee de localStorage. No hay tests, ni servidor, ni README: «escalable» es que el catálogo es una lista ampliable.",
+      "rarezas": [
+        "Lee la skill de serie imagegen y genera tres fotos de producto, que convierte a WebP con sips y cwebp",
+        "Comprueba cálculos y persistencia con un script propio, pero no deja tests"
+      ]
+    },
+    "prompt": "Implementa un carrito de la compra escalable"
   },
   {
     "dir": "resultados/openai_gpt-6.2-astra-medium/TCI",
@@ -4136,6 +4136,89 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/openai_gpt-6.2-sol-medium/SEC",
+    "codigo": "SEC",
+    "modelo": "gpt-6.2-sol (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T11:47:05Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 79677,
+      "output": 9867,
+      "reasoning": 774,
+      "cache_read": 1103744,
+      "cache_write": 0,
+      "total": 1194062
+    },
+    "peticiones": 21,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 20
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "AUDITORIA_DEPENDENCIAS_NPM.json",
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
+    "validacion": {
+      "extra": [
+        "✔ informe en salida/AUDITORIA_SEGURIDAD.md (26 hallazgos) y anexo de npm audit",
+        "~ 26 de 40 entradas con la regla estricta, 15 a medio punto por rangos anchos (F3 47,7)",
+        "✔ 0 inventados; 9 fallos reales fuera de la tabla",
+        "✖ sin CWE en ningún hallazgo",
+        "~ sin búsqueda web, pero con red: npm audit y curl a la API de avisos de GitHub"
+      ],
+      "comprobacion": "Cruce a mano con scripts/sec/ground-truth.json (juez/hallazgos.json) y scripts/sec/puntuar.py"
+    },
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "gpt-6.2-sol",
+      "nota": 5,
+      "rubrica": {
+        "f3": 3,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Ve mucho, localiza con brocha gorda",
+      "resumen": "Informe de 26 hallazgos en tablas, todos con fichero y línea pero sin CWE: cubre 26 de las 40 entradas con la regla estricta (15 sin línea, a medio punto: 18,5 en la nota, F3 47,7), 29 con el criterio del juez, y no inventa ninguno. Los rangos anchos le cuestan medio punto en 15 entradas, y se le escapan la clave en .env.local, la SSRF y la inyección del asistente, el login sin límite de intentos y el logout.",
+      "cifras": {
+        "tp_estricto": 18.5,
+        "con_linea_tp": 11,
+        "sin_linea_tp": 15,
+        "fp_estricto": 9,
+        "fn_estricto": 21.5,
+        "f3": 47.7,
+        "wf3": 47.9,
+        "precision": 0.673,
+        "recall": 0.463,
+        "juez": {
+          "tp": 29,
+          "fp_inventados": 0,
+          "extra_reales": 9,
+          "f3": 74.6
+        }
+      },
+      "rarezas": [
+        "Busca un AGENTS.md en la carpeta y en las dos de arriba (/private/var/tmp/bench, /private/var/tmp) antes de empezar; no hay ninguno.",
+        "Filtra las líneas con «QKB{» al leer ficheros: evita a propósito las flags del laboratorio y dice que no copia credenciales ni datos de demostración. No nombra el proyecto original.",
+        "Sale a internet sin búsqueda web: npm audit contra el registro de npm (deja el resultado en AUDITORIA_DEPENDENCIAS_NPM.json) y curl a la API de avisos de GitHub para confirmar dos GHSA de Next.js. El perfil de Codex tiene red; solo la herramienta de búsqueda está desactivada.",
+        "No toca el código: crea AUDITORIA_SEGURIDAD.md y el anexo de npm.",
+        "Informe corto (71 líneas) y en tablas: 26 hallazgos con fichero y línea, ninguno con CWE, y con rangos anchos (51-90, 100-136, 6-59) que dejan 15 de sus 26 aciertos a medio punto.",
+        "21 peticiones, 1,19 M tokens."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/openai_gpt-6.2-sol-medium/CCA",
     "codigo": "CCA",
     "modelo": "gpt-6.2-sol (medium)",
@@ -4220,89 +4303,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/openai_gpt-6.2-sol-medium/SEC",
-    "codigo": "SEC",
-    "modelo": "gpt-6.2-sol (medium)",
-    "agente": "Codex CLI",
-    "esfuerzo": "medium",
-    "fecha": "2026-11-24T11:47:05Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 79677,
-      "output": 9867,
-      "reasoning": 774,
-      "cache_read": 1103744,
-      "cache_write": 0,
-      "total": 1194062
-    },
-    "peticiones": 21,
-    "error": null,
-    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
-    "esfuerzo_real": "medium",
-    "herramientas": {
-      "exec": 20
-    },
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "veces_decide_tu": 0,
-    "ficheros": [
-      "AUDITORIA_DEPENDENCIAS_NPM.json",
-      "AUDITORIA_SEGURIDAD.md"
-    ],
-    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
-    "validacion": {
-      "extra": [
-        "✔ informe en salida/AUDITORIA_SEGURIDAD.md (26 hallazgos) y anexo de npm audit",
-        "~ 26 de 40 entradas con la regla estricta, 15 a medio punto por rangos anchos (F3 47,7)",
-        "✔ 0 inventados; 9 fallos reales fuera de la tabla",
-        "✖ sin CWE en ningún hallazgo",
-        "~ sin búsqueda web, pero con red: npm audit y curl a la API de avisos de GitHub"
-      ],
-      "comprobacion": "Cruce a mano con scripts/sec/ground-truth.json (juez/hallazgos.json) y scripts/sec/puntuar.py"
-    },
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "gpt-6.2-sol",
-      "nota": 5,
-      "rubrica": {
-        "f3": 3,
-        "criticas": 1,
-        "linea": 1,
-        "cwe": 0
-      },
-      "veredicto": "Ve mucho, localiza con brocha gorda",
-      "resumen": "Informe de 26 hallazgos en tablas, todos con fichero y línea pero sin CWE: cubre 26 de las 40 entradas con la regla estricta (15 sin línea, a medio punto: 18,5 en la nota, F3 47,7), 29 con el criterio del juez, y no inventa ninguno. Los rangos anchos le cuestan medio punto en 15 entradas, y se le escapan la clave en .env.local, la SSRF y la inyección del asistente, el login sin límite de intentos y el logout.",
-      "cifras": {
-        "tp_estricto": 18.5,
-        "con_linea_tp": 11,
-        "sin_linea_tp": 15,
-        "fp_estricto": 9,
-        "fn_estricto": 21.5,
-        "f3": 47.7,
-        "wf3": 47.9,
-        "precision": 0.673,
-        "recall": 0.463,
-        "juez": {
-          "tp": 29,
-          "fp_inventados": 0,
-          "extra_reales": 9,
-          "f3": 74.6
-        }
-      },
-      "rarezas": [
-        "Busca un AGENTS.md en la carpeta y en las dos de arriba (/private/var/tmp/bench, /private/var/tmp) antes de empezar; no hay ninguno.",
-        "Filtra las líneas con «QKB{» al leer ficheros: evita a propósito las flags del laboratorio y dice que no copia credenciales ni datos de demostración. No nombra el proyecto original.",
-        "Sale a internet sin búsqueda web: npm audit contra el registro de npm (deja el resultado en AUDITORIA_DEPENDENCIAS_NPM.json) y curl a la API de avisos de GitHub para confirmar dos GHSA de Next.js. El perfil de Codex tiene red; solo la herramienta de búsqueda está desactivada.",
-        "No toca el código: crea AUDITORIA_SEGURIDAD.md y el anexo de npm.",
-        "Informe corto (71 líneas) y en tablas: 26 hallazgos con fichero y línea, ninguno con CWE, y con rangos anchos (51-90, 100-136, 6-59) que dejan 15 de sus 26 aciertos a medio punto.",
-        "21 peticiones, 1,19 M tokens."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/openai_gpt-6.2-sol-medium/TCI",
@@ -4779,6 +4779,83 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/ollama_beam/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/beam",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T09:08:11Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 177390,
+      "output": 6829,
+      "reasoning": 0,
+      "cache_read": 1135936,
+      "cache_write": 0,
+      "total": 1320155
+    },
+    "peticiones": 32,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "shell": 33
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df32fecabffewcCQ5h6ckDXnvv",
+    "coste_usd": 0,
+    "ficheros": [
+      ".env"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 131072,
+      "output_proveedor": 131072,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/beam",
+      "nota": 1,
+      "rubrica": {
+        "f3": 0,
+        "criticas": 0,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Sin informe",
+      "resumen": "Leyó el proyecto entero (33 órdenes de shell en 2 min 37 s) y fue anotando fallos en su razonamiento, pero no escribió ningún informe: en el último turno metió la siguiente llamada a herramienta como texto mal formado dentro del razonamiento, OpenCode no la reconoció y la sesión se cerró sin respuesta.",
+      "rarezas": [
+        "Fallo de formato de herramientas: la llamada va dentro del razonamiento como <rfl:parameter name=\"command\">…, y la sesión acaba como «succeeded» sin texto final.",
+        "Creó un .env copiando scripts/setup.sh para generar Prisma y probar el path traversal en vivo; no lo consiguió (sin node_modules, y npx descargó prisma 8, sin ese comando).",
+        "Salió a internet por npm: dos npm audit y la descarga de npx prisma.",
+        "Buscó las flags (grep «QKB{», flag.txt) y en el razonamiento lo llama «deliberately vulnerable benchmark», sin nombrar el original."
+      ],
+      "cifras": {
+        "tp_estricto": 0,
+        "con_linea_tp": 0,
+        "sin_linea_tp": 0,
+        "fp_estricto": 0,
+        "fn_estricto": 40,
+        "f3": 0.0,
+        "wf3": 0.0,
+        "precision": 0,
+        "recall": 0.0,
+        "juez": {
+          "tp": 0,
+          "fp_inventados": 0,
+          "extra_reales": 0,
+          "f3": 0.0
+        }
+      }
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_beam/CCA",
     "codigo": "CCA",
     "modelo": "ollama/beam",
@@ -4861,83 +4938,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_beam/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/beam",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24T09:08:11Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 177390,
-      "output": 6829,
-      "reasoning": 0,
-      "cache_read": 1135936,
-      "cache_write": 0,
-      "total": 1320155
-    },
-    "peticiones": 32,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "shell": 33
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df32fecabffewcCQ5h6ckDXnvv",
-    "coste_usd": 0,
-    "ficheros": [
-      ".env"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 131072,
-      "output_proveedor": 131072,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/beam",
-      "nota": 1,
-      "rubrica": {
-        "f3": 0,
-        "criticas": 0,
-        "linea": 0,
-        "cwe": 0
-      },
-      "veredicto": "Sin informe",
-      "resumen": "Leyó el proyecto entero (33 órdenes de shell en 2 min 37 s) y fue anotando fallos en su razonamiento, pero no escribió ningún informe: en el último turno metió la siguiente llamada a herramienta como texto mal formado dentro del razonamiento, OpenCode no la reconoció y la sesión se cerró sin respuesta.",
-      "rarezas": [
-        "Fallo de formato de herramientas: la llamada va dentro del razonamiento como <rfl:parameter name=\"command\">…, y la sesión acaba como «succeeded» sin texto final.",
-        "Creó un .env copiando scripts/setup.sh para generar Prisma y probar el path traversal en vivo; no lo consiguió (sin node_modules, y npx descargó prisma 8, sin ese comando).",
-        "Salió a internet por npm: dos npm audit y la descarga de npx prisma.",
-        "Buscó las flags (grep «QKB{», flag.txt) y en el razonamiento lo llama «deliberately vulnerable benchmark», sin nombrar el original."
-      ],
-      "cifras": {
-        "tp_estricto": 0,
-        "con_linea_tp": 0,
-        "sin_linea_tp": 0,
-        "fp_estricto": 0,
-        "fn_estricto": 40,
-        "f3": 0.0,
-        "wf3": 0.0,
-        "precision": 0,
-        "recall": 0.0,
-        "juez": {
-          "tp": 0,
-          "fp_inventados": 0,
-          "extra_reales": 0,
-          "f3": 0.0
-        }
-      }
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_beam/TCI",
@@ -5162,6 +5162,90 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/ollama_deepseek-v4.1-flash/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/deepseek-v4.1-flash",
+    "agente": "OpenCode",
+    "fecha": "2026-11-23T20:52:09Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 120371,
+      "output": 46604,
+      "reasoning": 0,
+      "cache_read": 2936064,
+      "cache_write": 0,
+      "total": 3103039
+    },
+    "peticiones": 30,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "shell": 43,
+      "write": 3,
+      "edit": 2
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df5d1c7e4ffexbB3n7lautsoj4",
+    "coste_usd": 0,
+    "ficheros": [
+      "README_AUDITORIA.md",
+      "SECURITY_AUDIT.md",
+      "flags_encontrados.csv",
+      "hallazgos.json"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 393216,
+      "output_proveedor": 393216,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/deepseek-v4.1-flash",
+      "nota": 7,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 1
+      },
+      "veredicto": "Ve mucho, con rangos anchos",
+      "resumen": "Informe de 38 hallazgos, todos con CWE, en el que el juez reconoce 34 de las 40 entradas y solo dos no se sostienen, pero la nota cuenta 22,5 (F3 56,6): ocho de sus rangos pasan de 20 líneas y diez entradas valen medio acierto, como si no diera línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el logout, el token de soporte en claro y en la respuesta, y la página de noticias.",
+      "cifras": {
+        "tp_estricto": 22.5,
+        "con_linea_tp": 17,
+        "sin_linea_tp": 11,
+        "fp_estricto": 15,
+        "fn_estricto": 17.5,
+        "f3": 56.6,
+        "wf3": 57.5,
+        "precision": 0.6,
+        "recall": 0.562,
+        "juez": {
+          "tp": 34,
+          "fp_inventados": 2,
+          "extra_reales": 11,
+          "f3": 85.9
+        }
+      },
+      "rarezas": [
+        "Dice que el proyecto es «un entorno de laboratorio/CTF» por las flags QKB{…}; no nombra el proyecto original.",
+        "No sale a internet: 43 comandos de shell locales (cat, grep, sed, find y cuatro scripts de Python), sin curl, git ni npm audit; los curl solo aparecen en las PoC. Los CVE de Next y React los cita de memoria (el de React lo sugiere la variable FLAG_CVE_2025_55182 de .env.local).",
+        "Saca con un script de Python las 35 flags de prisma/seed.ts y las publica en flags_encontrados.csv; con otro reproduce el generador de tarjetas regalo y da el código de la tarjeta sembrada de 500 USD.",
+        "Deja cuatro ficheros (SECURITY_AUDIT.md, hallazgos.json, flags_encontrados.csv, README_AUDITORIA.md), juzgados como un solo informe; los dos edit corrigen el recuento de su propio informe (37 → 38).",
+        "Da CWE en los 38 hallazgos y línea en 37, pero ocho ubicaciones son rangos de más de 20 líneas (18-52, 81-102, 102-141, 52-92, 8-60, 7-55, 120-142, 60-90): las diez entradas que cubren valen medio acierto.",
+        "Sin subagentes, errores ni compactaciones; termina en 5 min 33 s. No toca el código del proyecto."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_deepseek-v4.1-flash/CCA",
     "codigo": "CCA",
     "modelo": "ollama/deepseek-v4.1-flash",
@@ -5246,90 +5330,6 @@
       }
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_deepseek-v4.1-flash/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/deepseek-v4.1-flash",
-    "agente": "OpenCode",
-    "fecha": "2026-11-23T20:52:09Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 120371,
-      "output": 46604,
-      "reasoning": 0,
-      "cache_read": 2936064,
-      "cache_write": 0,
-      "total": 3103039
-    },
-    "peticiones": 30,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "shell": 43,
-      "write": 3,
-      "edit": 2
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df5d1c7e4ffexbB3n7lautsoj4",
-    "coste_usd": 0,
-    "ficheros": [
-      "README_AUDITORIA.md",
-      "SECURITY_AUDIT.md",
-      "flags_encontrados.csv",
-      "hallazgos.json"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 393216,
-      "output_proveedor": 393216,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/deepseek-v4.1-flash",
-      "nota": 7,
-      "rubrica": {
-        "f3": 4,
-        "criticas": 1,
-        "linea": 1,
-        "cwe": 1
-      },
-      "veredicto": "Ve mucho, con rangos anchos",
-      "resumen": "Informe de 38 hallazgos, todos con CWE, en el que el juez reconoce 34 de las 40 entradas y solo dos no se sostienen, pero la nota cuenta 22,5 (F3 56,6): ocho de sus rangos pasan de 20 líneas y diez entradas valen medio acierto, como si no diera línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el logout, el token de soporte en claro y en la respuesta, y la página de noticias.",
-      "cifras": {
-        "tp_estricto": 22.5,
-        "con_linea_tp": 17,
-        "sin_linea_tp": 11,
-        "fp_estricto": 15,
-        "fn_estricto": 17.5,
-        "f3": 56.6,
-        "wf3": 57.5,
-        "precision": 0.6,
-        "recall": 0.562,
-        "juez": {
-          "tp": 34,
-          "fp_inventados": 2,
-          "extra_reales": 11,
-          "f3": 85.9
-        }
-      },
-      "rarezas": [
-        "Dice que el proyecto es «un entorno de laboratorio/CTF» por las flags QKB{…}; no nombra el proyecto original.",
-        "No sale a internet: 43 comandos de shell locales (cat, grep, sed, find y cuatro scripts de Python), sin curl, git ni npm audit; los curl solo aparecen en las PoC. Los CVE de Next y React los cita de memoria (el de React lo sugiere la variable FLAG_CVE_2025_55182 de .env.local).",
-        "Saca con un script de Python las 35 flags de prisma/seed.ts y las publica en flags_encontrados.csv; con otro reproduce el generador de tarjetas regalo y da el código de la tarjeta sembrada de 500 USD.",
-        "Deja cuatro ficheros (SECURITY_AUDIT.md, hallazgos.json, flags_encontrados.csv, README_AUDITORIA.md), juzgados como un solo informe; los dos edit corrigen el recuento de su propio informe (37 → 38).",
-        "Da CWE en los 38 hallazgos y línea en 37, pero ocho ubicaciones son rangos de más de 20 líneas (18-52, 81-102, 102-141, 52-92, 8-60, 7-55, 120-142, 60-90): las diez entradas que cubren valen medio acierto.",
-        "Sin subagentes, errores ni compactaciones; termina en 5 min 33 s. No toca el código del proyecto."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_deepseek-v4.1-flash/TCI",
@@ -5586,6 +5586,89 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/ollama_glm-5.3/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/glm-5.3",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:34:50Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 109170,
+      "output": 36458,
+      "reasoning": 0,
+      "cache_read": 1517056,
+      "cache_write": 0,
+      "total": 1662684
+    },
+    "peticiones": 32,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 57,
+      "shell": 20,
+      "write": 2,
+      "edit": 2
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df34e77ceffeYqCEdjAkOcP6ZM",
+    "coste_usd": 0,
+    "ficheros": [
+      "AUDITORIA-SEGURIDAD.md",
+      "hallazgos.json"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/glm-5.3",
+      "nota": 6,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 1
+      },
+      "veredicto": "Amplio, localiza con rangos anchos",
+      "resumen": "Informe de 37 hallazgos (en Markdown y en JSON) en el que el juez reconoce 32 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 21,5 aciertos (16 con línea y 11 a medio punto) y F3 54,4: tres aciertos no dan línea y ocho caen en rangos de más de 20 líneas. Se le escapan el oráculo de padding, los dos XSS de reseñas y el open redirect, el IDOR de wishlists, el token de soporte en claro, la fuga de la URL del asistente, el logout y la página de noticias.",
+      "cifras": {
+        "tp_estricto": 21.5,
+        "con_linea_tp": 16,
+        "sin_linea_tp": 11,
+        "fp_estricto": 14,
+        "fn_estricto": 18.5,
+        "f3": 54.4,
+        "wf3": 57.0,
+        "precision": 0.606,
+        "recall": 0.537,
+        "juez": {
+          "tp": 32,
+          "fp_inventados": 1,
+          "extra_reales": 11,
+          "f3": 81.4
+        }
+      },
+      "rarezas": [
+        "Dice que es «un entorno de evaluación de seguridad tipo CTF» por flag.txt y las flags QKB{…}; no nombra el proyecto original.",
+        "No sale a internet: 57 lecturas y 20 comandos de shell locales (find, cat, sed, grep y dos node -e para validar su propio JSON). Los CVE de Next los cita de memoria y describe mal CVE-2025-55182 como envenenamiento de caché, deducido del nombre de una variable de .env.local; los curl solo aparecen en las PoC.",
+        "Deja dos ficheros con los mismos 37 hallazgos (AUDITORIA-SEGURIDAD.md y hallazgos.json); se juzgan como un solo informe. Corrige con dos edits los totales por severidad, que había escrito mal (38 en vez de 37). El resumen anuncia «4 vectores de XSS» y solo describe dos.",
+        "Termina en 3 min 29 s sin errores, cortes ni compactaciones.",
+        "Da CWE en los 37 hallazgos, pero cinco no dan línea y ocho aciertos caen en rangos de más de 20 líneas (51-91, 110-141, 81-102, 17-49, 8-64, 64-85, 37-133), que se quedan en medio punto.",
+        "No toca el código: solo crea sus dos ficheros de informe."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_glm-5.3/CCA",
     "codigo": "CCA",
     "modelo": "ollama/glm-5.3",
@@ -5754,89 +5837,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_glm-5.3/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/glm-5.3",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24T08:34:50Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 109170,
-      "output": 36458,
-      "reasoning": 0,
-      "cache_read": 1517056,
-      "cache_write": 0,
-      "total": 1662684
-    },
-    "peticiones": 32,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 57,
-      "shell": 20,
-      "write": 2,
-      "edit": 2
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df34e77ceffeYqCEdjAkOcP6ZM",
-    "coste_usd": 0,
-    "ficheros": [
-      "AUDITORIA-SEGURIDAD.md",
-      "hallazgos.json"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 1048576,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/glm-5.3",
-      "nota": 6,
-      "rubrica": {
-        "f3": 4,
-        "criticas": 1,
-        "linea": 0,
-        "cwe": 1
-      },
-      "veredicto": "Amplio, localiza con rangos anchos",
-      "resumen": "Informe de 37 hallazgos (en Markdown y en JSON) en el que el juez reconoce 32 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 21,5 aciertos (16 con línea y 11 a medio punto) y F3 54,4: tres aciertos no dan línea y ocho caen en rangos de más de 20 líneas. Se le escapan el oráculo de padding, los dos XSS de reseñas y el open redirect, el IDOR de wishlists, el token de soporte en claro, la fuga de la URL del asistente, el logout y la página de noticias.",
-      "cifras": {
-        "tp_estricto": 21.5,
-        "con_linea_tp": 16,
-        "sin_linea_tp": 11,
-        "fp_estricto": 14,
-        "fn_estricto": 18.5,
-        "f3": 54.4,
-        "wf3": 57.0,
-        "precision": 0.606,
-        "recall": 0.537,
-        "juez": {
-          "tp": 32,
-          "fp_inventados": 1,
-          "extra_reales": 11,
-          "f3": 81.4
-        }
-      },
-      "rarezas": [
-        "Dice que es «un entorno de evaluación de seguridad tipo CTF» por flag.txt y las flags QKB{…}; no nombra el proyecto original.",
-        "No sale a internet: 57 lecturas y 20 comandos de shell locales (find, cat, sed, grep y dos node -e para validar su propio JSON). Los CVE de Next los cita de memoria y describe mal CVE-2025-55182 como envenenamiento de caché, deducido del nombre de una variable de .env.local; los curl solo aparecen en las PoC.",
-        "Deja dos ficheros con los mismos 37 hallazgos (AUDITORIA-SEGURIDAD.md y hallazgos.json); se juzgan como un solo informe. Corrige con dos edits los totales por severidad, que había escrito mal (38 en vez de 37). El resumen anuncia «4 vectores de XSS» y solo describe dos.",
-        "Termina en 3 min 29 s sin errores, cortes ni compactaciones.",
-        "Da CWE en los 37 hallazgos, pero cinco no dan línea y ocho aciertos caen en rangos de más de 20 líneas (51-91, 110-141, 81-102, 17-49, 8-64, 64-85, 37-133), que se quedan en medio punto.",
-        "No toca el código: solo crea sus dos ficheros de informe."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_glm-5.3/TCI",
@@ -6075,6 +6075,88 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/ollama_glm-5.3-flash/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/glm-5.3-flash",
+    "agente": "OpenCode",
+    "fecha": "2026-11-23T20:51:14Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 120180,
+      "output": 20234,
+      "reasoning": 0,
+      "cache_read": 1017600,
+      "cache_write": 0,
+      "total": 1158014
+    },
+    "peticiones": 18,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 101,
+      "glob": 2,
+      "grep": 2,
+      "shell": 3,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df5d2a05dffedZeyuThPj62yxd",
+    "coste_usd": 0,
+    "ficheros": [
+      "informe-auditoria-seguridad-quokka-bazaar.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/glm-5.3-flash",
+      "nota": 5,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Ve casi todo, localiza a medias",
+      "resumen": "Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 22 aciertos (15 con línea y 14 a medio punto) y F3 55,7: seis aciertos no dan línea y ocho citan rangos de más de 20 líneas, que valen como sin línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.",
+      "cifras": {
+        "tp_estricto": 22.0,
+        "con_linea_tp": 15,
+        "sin_linea_tp": 14,
+        "fp_estricto": 13,
+        "fn_estricto": 18.0,
+        "f3": 55.7,
+        "wf3": 56.8,
+        "precision": 0.629,
+        "recall": 0.55,
+        "juez": {
+          "tp": 35,
+          "fp_inventados": 1,
+          "extra_reales": 9,
+          "f3": 88.4
+        }
+      },
+      "rarezas": [
+        "Dice que es «una app tipo CTF» con vulnerabilidades plantadas por las flags QKB{…}; no nombra el proyecto original.",
+        "No sale a internet: solo usa read, glob, grep y tres comandos de shell locales (grep en package-lock, cat de .dockerignore, un script de Python sobre package-lock). El CVE de Next lo cita de memoria; los curl solo aparecen en las PoC del informe.",
+        "Lee 101 ficheros uno a uno sin subagentes y termina en 2 min 17 s, sin errores ni compactaciones.",
+        "Da CWE en los 20 hallazgos críticos y altos y en ninguno de los medios y bajos; seis aciertos sin línea y ocho con rangos de más de 20 líneas (19-67, 51-101, 45-67, 8-75, 103-134, 35-218) se quedan en medio punto.",
+        "No toca el código: solo crea informe-auditoria-seguridad-quokka-bazaar.md."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_glm-5.3-flash/CCA",
     "codigo": "CCA",
     "modelo": "ollama/glm-5.3-flash",
@@ -6194,88 +6276,6 @@
       }
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_glm-5.3-flash/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/glm-5.3-flash",
-    "agente": "OpenCode",
-    "fecha": "2026-11-23T20:51:14Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 120180,
-      "output": 20234,
-      "reasoning": 0,
-      "cache_read": 1017600,
-      "cache_write": 0,
-      "total": 1158014
-    },
-    "peticiones": 18,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 101,
-      "glob": 2,
-      "grep": 2,
-      "shell": 3,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df5d2a05dffedZeyuThPj62yxd",
-    "coste_usd": 0,
-    "ficheros": [
-      "informe-auditoria-seguridad-quokka-bazaar.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 1048576,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/glm-5.3-flash",
-      "nota": 5,
-      "rubrica": {
-        "f3": 4,
-        "criticas": 1,
-        "linea": 0,
-        "cwe": 0
-      },
-      "veredicto": "Ve casi todo, localiza a medias",
-      "resumen": "Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 22 aciertos (15 con línea y 14 a medio punto) y F3 55,7: seis aciertos no dan línea y ocho citan rangos de más de 20 líneas, que valen como sin línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.",
-      "cifras": {
-        "tp_estricto": 22.0,
-        "con_linea_tp": 15,
-        "sin_linea_tp": 14,
-        "fp_estricto": 13,
-        "fn_estricto": 18.0,
-        "f3": 55.7,
-        "wf3": 56.8,
-        "precision": 0.629,
-        "recall": 0.55,
-        "juez": {
-          "tp": 35,
-          "fp_inventados": 1,
-          "extra_reales": 9,
-          "f3": 88.4
-        }
-      },
-      "rarezas": [
-        "Dice que es «una app tipo CTF» con vulnerabilidades plantadas por las flags QKB{…}; no nombra el proyecto original.",
-        "No sale a internet: solo usa read, glob, grep y tres comandos de shell locales (grep en package-lock, cat de .dockerignore, un script de Python sobre package-lock). El CVE de Next lo cita de memoria; los curl solo aparecen en las PoC del informe.",
-        "Lee 101 ficheros uno a uno sin subagentes y termina en 2 min 17 s, sin errores ni compactaciones.",
-        "Da CWE en los 20 hallazgos críticos y altos y en ninguno de los medios y bajos; seis aciertos sin línea y ocho con rangos de más de 20 líneas (19-67, 51-101, 45-67, 8-75, 103-134, 35-218) se quedan en medio punto.",
-        "No toca el código: solo crea informe-auditoria-seguridad-quokka-bazaar.md."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_glm-5.3-flash/TCI",
@@ -6515,6 +6515,88 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/ollama_inkling-2-small/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/inkling-2-small",
+    "agente": "OpenCode",
+    "fecha": "2026-11-23T20:52:12Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 260998,
+      "output": 16453,
+      "reasoning": 0,
+      "cache_read": 574976,
+      "cache_write": 0,
+      "total": 852427
+    },
+    "peticiones": 16,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "shell": 13,
+      "read": 5,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df5d1bf44ffeRJvDFFQ7wPh97C",
+    "coste_usd": 0,
+    "ficheros": [
+      "SECURITY_AUDIT.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 131072,
+      "output_proveedor": 131072,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/inkling-2-small",
+      "nota": 4,
+      "rubrica": {
+        "f3": 3,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Ve mucho, localiza poco",
+      "resumen": "Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: 2 aciertos con línea y 29 a medio punto dejan el F3 estricto en 41,4. Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.",
+      "cifras": {
+        "tp_estricto": 16.5,
+        "con_linea_tp": 2,
+        "sin_linea_tp": 29,
+        "fp_estricto": 22,
+        "fn_estricto": 23.5,
+        "f3": 41.4,
+        "wf3": 41.9,
+        "precision": 0.429,
+        "recall": 0.412,
+        "juez": {
+          "tp": 32,
+          "fp_inventados": 6,
+          "extra_reales": 15,
+          "f3": 80.4
+        }
+      },
+      "rarezas": [
+        "Ejecuta npm audit y lo consigue: sale al registro de npm pese a correr sin web (webfetch y websearch estaban denegados, el shell no).",
+        "Vuelca todas las rutas API a /tmp/opencode/api-routes.txt, fuera de la carpeta de trabajo, para leerlas por trozos.",
+        "No nombra el proyecto original; ve las flags QKB{…} y avisa de que no reproduce sus valores.",
+        "La tabla del resumen dice 8 medios y 6 bajos; el informe trae 10 y 15. Dos de los bajos son controles que están bien (B-12, B-15).",
+        "XXE y open redirect solo aparecen en las cadenas de ataque, sin hallazgo propio; la SQLi de admin/reviews solo en el resumen y en las prioridades.",
+        "Casi no da líneas (3 de 46 hallazgos) ni ningún CWE.",
+        "No toca el código: solo crea SECURITY_AUDIT.md. 16 peticiones, 2 min 9 s."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_inkling-2-small/CCA",
     "codigo": "CCA",
     "modelo": "ollama/inkling-2-small",
@@ -6614,88 +6696,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_inkling-2-small/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/inkling-2-small",
-    "agente": "OpenCode",
-    "fecha": "2026-11-23T20:52:12Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 260998,
-      "output": 16453,
-      "reasoning": 0,
-      "cache_read": 574976,
-      "cache_write": 0,
-      "total": 852427
-    },
-    "peticiones": 16,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "shell": 13,
-      "read": 5,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df5d1bf44ffeRJvDFFQ7wPh97C",
-    "coste_usd": 0,
-    "ficheros": [
-      "SECURITY_AUDIT.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 131072,
-      "output_proveedor": 131072,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/inkling-2-small",
-      "nota": 4,
-      "rubrica": {
-        "f3": 3,
-        "criticas": 1,
-        "linea": 0,
-        "cwe": 0
-      },
-      "veredicto": "Ve mucho, localiza poco",
-      "resumen": "Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: 2 aciertos con línea y 29 a medio punto dejan el F3 estricto en 41,4. Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.",
-      "cifras": {
-        "tp_estricto": 16.5,
-        "con_linea_tp": 2,
-        "sin_linea_tp": 29,
-        "fp_estricto": 22,
-        "fn_estricto": 23.5,
-        "f3": 41.4,
-        "wf3": 41.9,
-        "precision": 0.429,
-        "recall": 0.412,
-        "juez": {
-          "tp": 32,
-          "fp_inventados": 6,
-          "extra_reales": 15,
-          "f3": 80.4
-        }
-      },
-      "rarezas": [
-        "Ejecuta npm audit y lo consigue: sale al registro de npm pese a correr sin web (webfetch y websearch estaban denegados, el shell no).",
-        "Vuelca todas las rutas API a /tmp/opencode/api-routes.txt, fuera de la carpeta de trabajo, para leerlas por trozos.",
-        "No nombra el proyecto original; ve las flags QKB{…} y avisa de que no reproduce sus valores.",
-        "La tabla del resumen dice 8 medios y 6 bajos; el informe trae 10 y 15. Dos de los bajos son controles que están bien (B-12, B-15).",
-        "XXE y open redirect solo aparecen en las cadenas de ataque, sin hallazgo propio; la SQLi de admin/reviews solo en el resumen y en las prioridades.",
-        "Casi no da líneas (3 de 46 hallazgos) ni ningún CWE.",
-        "No toca el código: solo crea SECURITY_AUDIT.md. 16 peticiones, 2 min 9 s."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_inkling-2-small/TCI",
@@ -6957,97 +6957,6 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
-    "dir": "resultados/ollama_kimi-k3.1-pro/CCA",
-    "codigo": "CCA",
-    "modelo": "ollama/kimi-k3.1-pro",
-    "agente": "OpenCode",
-    "fecha": "2026-11-20T02:07:42Z",
-    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 17582,
-      "output": 12748,
-      "reasoning": 0,
-      "cache_read": 144298,
-      "cache_write": 0,
-      "total": 174628
-    },
-    "peticiones": 11,
-    "error": null,
-    "mensajes_usuario": [
-      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "todowrite": 5,
-      "read": 1,
-      "glob": 2,
-      "bash": 3,
-      "write": 9
-    },
-    "compactaciones": 0,
-    "sesion": "ses_e094a556cffeJSg5v8BhD2zkLn",
-    "ficheros": [
-      "main.py",
-      "models/__init__.py",
-      "models/__pycache__/__init__.cpython-313.pyc",
-      "models/__pycache__/carrito.cpython-313.pyc",
-      "models/__pycache__/item_carrito.cpython-313.pyc",
-      "models/__pycache__/producto.cpython-313.pyc",
-      "models/carrito.py",
-      "models/item_carrito.py",
-      "models/producto.py",
-      "service/__init__.py",
-      "service/__pycache__/__init__.cpython-313.pyc",
-      "service/__pycache__/producto_service.cpython-313.pyc",
-      "service/producto_service.py",
-      "tests/__init__.py",
-      "tests/__pycache__/test_carrito.cpython-313.pyc",
-      "tests/test_carrito.py"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 1048576,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "validacion": {
-      "html": [],
-      "mermaid": [],
-      "extra": [
-        "✔ 17/17 tests y main.py",
-        "✔ Decimal, una moneda, precio del catálogo, stock",
-        "✔ 50 hilos a la vez: 50 líneas",
-        "✖ una clase en memoria: sin servicio, sin persistencia, sin nada para escalar"
-      ],
-      "comprobacion": "Copia en /tmp, unittest, main.py y juez/juez.py (del juez)",
-      "juez_salida": [
-        "50 hilos: líneas 50",
-        "USD en carrito EUR: rechazado ValueError",
-        "0,10 × 3 = 0.30"
-      ]
-    },
-    "juicio": {
-      "nota": 6,
-      "veredicto": "correcto, pero no escala",
-      "rubrica": {
-        "se ejecuta": 1,
-        "tests en verde": 1,
-        "dominio completo": 1,
-        "dinero exacto": 1,
-        "precio del catálogo y validación": 1,
-        "concurrencia": 1,
-        "escala horizontal": 0,
-        "explica el escalado": 0
-      },
-      "resumen": "Una clase Carrito en Python, limpia y bien validada (Decimal, una moneda por carrito, precio y stock del catálogo, 17 tests), pero sin servicio, sin persistencia y sin nada que responda a «escalable»: el carrito vive en un objeto en memoria y no hay README que lo explique.",
-      "rarezas": [
-        "El más corto de todos los CCA: 11 peticiones y 175 k tokens. Entiende «escalable» como catálogo inyectable.",
-        "Dejó __pycache__ en la entrega."
-      ]
-    },
-    "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
     "dir": "resultados/ollama_kimi-k3.1-pro/SEC",
     "codigo": "SEC",
     "modelo": "ollama/kimi-k3.1-pro",
@@ -7146,6 +7055,97 @@
       ]
     },
     "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
+    "dir": "resultados/ollama_kimi-k3.1-pro/CCA",
+    "codigo": "CCA",
+    "modelo": "ollama/kimi-k3.1-pro",
+    "agente": "OpenCode",
+    "fecha": "2026-11-20T02:07:42Z",
+    "prompt_enviado": "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 17582,
+      "output": 12748,
+      "reasoning": 0,
+      "cache_read": 144298,
+      "cache_write": 0,
+      "total": 174628
+    },
+    "peticiones": 11,
+    "error": null,
+    "mensajes_usuario": [
+      "Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "todowrite": 5,
+      "read": 1,
+      "glob": 2,
+      "bash": 3,
+      "write": 9
+    },
+    "compactaciones": 0,
+    "sesion": "ses_e094a556cffeJSg5v8BhD2zkLn",
+    "ficheros": [
+      "main.py",
+      "models/__init__.py",
+      "models/__pycache__/__init__.cpython-313.pyc",
+      "models/__pycache__/carrito.cpython-313.pyc",
+      "models/__pycache__/item_carrito.cpython-313.pyc",
+      "models/__pycache__/producto.cpython-313.pyc",
+      "models/carrito.py",
+      "models/item_carrito.py",
+      "models/producto.py",
+      "service/__init__.py",
+      "service/__pycache__/__init__.cpython-313.pyc",
+      "service/__pycache__/producto_service.cpython-313.pyc",
+      "service/producto_service.py",
+      "tests/__init__.py",
+      "tests/__pycache__/test_carrito.cpython-313.pyc",
+      "tests/test_carrito.py"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "validacion": {
+      "html": [],
+      "mermaid": [],
+      "extra": [
+        "✔ 17/17 tests y main.py",
+        "✔ Decimal, una moneda, precio del catálogo, stock",
+        "✔ 50 hilos a la vez: 50 líneas",
+        "✖ una clase en memoria: sin servicio, sin persistencia, sin nada para escalar"
+      ],
+      "comprobacion": "Copia en /tmp, unittest, main.py y juez/juez.py (del juez)",
+      "juez_salida": [
+        "50 hilos: líneas 50",
+        "USD en carrito EUR: rechazado ValueError",
+        "0,10 × 3 = 0.30"
+      ]
+    },
+    "juicio": {
+      "nota": 6,
+      "veredicto": "correcto, pero no escala",
+      "rubrica": {
+        "se ejecuta": 1,
+        "tests en verde": 1,
+        "dominio completo": 1,
+        "dinero exacto": 1,
+        "precio del catálogo y validación": 1,
+        "concurrencia": 1,
+        "escala horizontal": 0,
+        "explica el escalado": 0
+      },
+      "resumen": "Una clase Carrito en Python, limpia y bien validada (Decimal, una moneda por carrito, precio y stock del catálogo, 17 tests), pero sin servicio, sin persistencia y sin nada que responda a «escalable»: el carrito vive en un objeto en memoria y no hay README que lo explique.",
+      "rarezas": [
+        "El más corto de todos los CCA: 11 peticiones y 175 k tokens. Entiende «escalable» como catálogo inyectable.",
+        "Dejó __pycache__ en la entrega."
+      ]
+    },
+    "prompt": "Implementa un carrito de la compra escalable"
   },
   {
     "dir": "resultados/ollama_kimi-k3.1-pro/TCI",
@@ -7406,6 +7406,89 @@
       }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
+    "dir": "resultados/ollama_minimax-m3/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/minimax-m3",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:59:06Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 75257,
+      "output": 36660,
+      "reasoning": 0,
+      "cache_read": 1582464,
+      "cache_write": 0,
+      "total": 1694381
+    },
+    "peticiones": 30,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "shell": 36,
+      "write": 2,
+      "edit": 5
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df337e5a8ffeOpQogH6Wv7uTS1",
+    "coste_usd": 0,
+    "ficheros": [
+      "SECURITY_AUDIT.md",
+      "security-findings.json"
+    ],
+    "limites": {
+      "context": 512000,
+      "output": 131072,
+      "output_proveedor": 131072,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/minimax-m3",
+      "nota": 6,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 1
+      },
+      "veredicto": "Amplio, flojo en líneas",
+      "resumen": "Informe de 46 hallazgos (en Markdown y en JSON) en el que el juez reconoce 31 de las 40 entradas, pero con la regla estricta se queda en 21 aciertos (18 con línea y 6 a medio punto) y F3 51,3: lo de severidad media va sin línea y cuatro aciertos citan líneas fuera de la ventana o otro fichero. Se le escapan el oráculo de padding, la API de flags, el XSS de reseñas, el open redirect, el logout, el token de soporte en claro, la fuga de la respuesta del asistente y la página de noticias.",
+      "cifras": {
+        "tp_estricto": 21.0,
+        "con_linea_tp": 18,
+        "sin_linea_tp": 6,
+        "fp_estricto": 28,
+        "fn_estricto": 19.0,
+        "f3": 51.3,
+        "wf3": 55.4,
+        "precision": 0.429,
+        "recall": 0.525,
+        "juez": {
+          "tp": 31,
+          "fp_inventados": 4,
+          "extra_reales": 20,
+          "f3": 78.5
+        }
+      },
+      "rarezas": [
+        "Dice que las cadenas QKB{…} son «flags de un ejercicio de captura de banderas (CTF)» y copia en el informe la de .env.local y el código del system prompt del asistente; no nombra el proyecto original.",
+        "Sale a internet dos veces: ejecuta npm audit --json, que consulta el registro de npm (WebFetch y WebSearch estaban denegados). De ahí salen los 33 avisos, los GHSA y la versión next@15.5.29 de QB-013. Guarda esa salida en /tmp/opencode/audit.json, fuera de la carpeta de trabajo.",
+        "Deja dos ficheros con los mismos 46 hallazgos (SECURITY_AUDIT.md y security-findings.json); se juzgan como un solo informe. El JSON añade líneas que el Markdown no da, pero las de la SSRF de soporte (42, 45, 48) apuntan al catch final y no a la fetch.",
+        "El primer borrador salió con caracteres chinos mezclados en el texto («的实施», «的其他»); los localiza con grep y node y los corrige con cinco edits, pero quedan palabras pegadas o en otro idioma («una.backdoor», «simpleZoop», «puedeidir», «La fonction», «unaofuscación»).",
+        "Anuncia «a verification script» que no llega a crear y el último mensaje sale vacío: termina en 8 min 16 s sin resumen en el chat, sin errores ni compactaciones.",
+        "Da CWE en los 46 hallazgos, pero solo 20 dan fichero y línea (43 %): los 18 de severidad media y baja van sin línea.",
+        "No toca el código: solo crea sus dos ficheros de informe (36 comandos de shell, 2 write y 5 edit)."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_minimax-m3/CCA",
@@ -7745,89 +7828,6 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
-    "dir": "resultados/ollama_minimax-m3/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/minimax-m3",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24T08:59:06Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 75257,
-      "output": 36660,
-      "reasoning": 0,
-      "cache_read": 1582464,
-      "cache_write": 0,
-      "total": 1694381
-    },
-    "peticiones": 30,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "shell": 36,
-      "write": 2,
-      "edit": 5
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df337e5a8ffeOpQogH6Wv7uTS1",
-    "coste_usd": 0,
-    "ficheros": [
-      "SECURITY_AUDIT.md",
-      "security-findings.json"
-    ],
-    "limites": {
-      "context": 512000,
-      "output": 131072,
-      "output_proveedor": 131072,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/minimax-m3",
-      "nota": 6,
-      "rubrica": {
-        "f3": 4,
-        "criticas": 1,
-        "linea": 0,
-        "cwe": 1
-      },
-      "veredicto": "Amplio, flojo en líneas",
-      "resumen": "Informe de 46 hallazgos (en Markdown y en JSON) en el que el juez reconoce 31 de las 40 entradas, pero con la regla estricta se queda en 21 aciertos (18 con línea y 6 a medio punto) y F3 51,3: lo de severidad media va sin línea y cuatro aciertos citan líneas fuera de la ventana o otro fichero. Se le escapan el oráculo de padding, la API de flags, el XSS de reseñas, el open redirect, el logout, el token de soporte en claro, la fuga de la respuesta del asistente y la página de noticias.",
-      "cifras": {
-        "tp_estricto": 21.0,
-        "con_linea_tp": 18,
-        "sin_linea_tp": 6,
-        "fp_estricto": 28,
-        "fn_estricto": 19.0,
-        "f3": 51.3,
-        "wf3": 55.4,
-        "precision": 0.429,
-        "recall": 0.525,
-        "juez": {
-          "tp": 31,
-          "fp_inventados": 4,
-          "extra_reales": 20,
-          "f3": 78.5
-        }
-      },
-      "rarezas": [
-        "Dice que las cadenas QKB{…} son «flags de un ejercicio de captura de banderas (CTF)» y copia en el informe la de .env.local y el código del system prompt del asistente; no nombra el proyecto original.",
-        "Sale a internet dos veces: ejecuta npm audit --json, que consulta el registro de npm (WebFetch y WebSearch estaban denegados). De ahí salen los 33 avisos, los GHSA y la versión next@15.5.29 de QB-013. Guarda esa salida en /tmp/opencode/audit.json, fuera de la carpeta de trabajo.",
-        "Deja dos ficheros con los mismos 46 hallazgos (SECURITY_AUDIT.md y security-findings.json); se juzgan como un solo informe. El JSON añade líneas que el Markdown no da, pero las de la SSRF de soporte (42, 45, 48) apuntan al catch final y no a la fetch.",
-        "El primer borrador salió con caracteres chinos mezclados en el texto («的实施», «的其他»); los localiza con grep y node y los corrige con cinco edits, pero quedan palabras pegadas o en otro idioma («una.backdoor», «simpleZoop», «puedeidir», «La fonction», «unaofuscación»).",
-        "Anuncia «a verification script» que no llega a crear y el último mensaje sale vacío: termina en 8 min 16 s sin resumen en el chat, sin errores ni compactaciones.",
-        "Da CWE en los 46 hallazgos, pero solo 20 dan fichero y línea (43 %): los 18 de severidad media y baja van sin línea.",
-        "No toca el código: solo crea sus dos ficheros de informe (36 comandos de shell, 2 write y 5 edit)."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
-  },
-  {
     "dir": "resultados/ollama_minimax-m3/TCI",
     "codigo": "TCI",
     "modelo": "ollama/minimax-m3",
@@ -8080,6 +8080,137 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/ollama_minimax-m3.1-flash/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/minimax-m3.1-flash",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:44:19Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 231838,
+      "output": 73641,
+      "reasoning": 0,
+      "cache_read": 5297152,
+      "cache_write": 0,
+      "total": 5602631
+    },
+    "peticiones": 100,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "shell": 39,
+      "read": 64,
+      "subagent": 2,
+      "write": 2,
+      "edit": 3
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df345c756ffe5cVF0S0DBPVVZ5",
+    "coste_usd": 0,
+    "ficheros": [
+      "SECURITY_AUDIT.md",
+      "documents/invoices/invoice-ORD-001.pdf",
+      "documents/invoices/invoice-ORD-002.pdf",
+      "documents/invoices/invoice-ORD-003.pdf",
+      "documents/invoices/invoice-ORD-004.pdf",
+      "lib/generated/prisma/browser.ts",
+      "lib/generated/prisma/client.ts",
+      "lib/generated/prisma/commonInputTypes.ts",
+      "lib/generated/prisma/enums.ts",
+      "lib/generated/prisma/internal/class.ts",
+      "lib/generated/prisma/internal/prismaNamespace.ts",
+      "lib/generated/prisma/internal/prismaNamespaceBrowser.ts",
+      "lib/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node",
+      "lib/generated/prisma/models.ts",
+      "lib/generated/prisma/models/Address.ts",
+      "lib/generated/prisma/models/Cart.ts",
+      "lib/generated/prisma/models/CartItem.ts",
+      "lib/generated/prisma/models/Coupon.ts",
+      "lib/generated/prisma/models/Flag.ts",
+      "lib/generated/prisma/models/FoundFlag.ts",
+      "lib/generated/prisma/models/GiftCard.ts",
+      "lib/generated/prisma/models/Hint.ts",
+      "lib/generated/prisma/models/Order.ts",
+      "lib/generated/prisma/models/OrderItem.ts",
+      "lib/generated/prisma/models/PasswordResetToken.ts",
+      "lib/generated/prisma/models/Product.ts",
+      "lib/generated/prisma/models/ProjectInit.ts",
+      "lib/generated/prisma/models/RevealedHint.ts",
+      "lib/generated/prisma/models/Review.ts",
+      "lib/generated/prisma/models/StreamConfig.ts",
+      "lib/generated/prisma/models/SupplierOrder.ts",
+      "lib/generated/prisma/models/SupportAccessToken.ts",
+      "lib/generated/prisma/models/User.ts",
+      "lib/generated/prisma/models/VisitorLog.ts",
+      "lib/generated/prisma/models/Wishlist.ts",
+      "lib/generated/prisma/models/WishlistItem.ts",
+      "logs/app.log",
+      "next-env.d.ts",
+      "security-audit/evidence/poc-run.txt",
+      "security-audit/poc/verify.sh"
+    ],
+    "limites": {
+      "context": 1000000,
+      "output": 500000,
+      "output_proveedor": 524288,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "subagentes": {
+      "sesiones": 2,
+      "tokens": 1571932,
+      "peticiones": 44,
+      "titulos": [
+        "Audit AI/MCP/SSRF surface",
+        "Audit business logic + IDOR"
+      ]
+    },
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/minimax-m3.1-flash",
+      "nota": 6,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Explota mucho, sin CWE",
+      "resumen": "Monta la tienda, la siembra y verifica en vivo 19 vectores; de sus 30 hallazgos el juez reconoce 29 entradas, ninguno inventado y nueve fallos reales sin etiquetar, pero la nota cuenta 21,5 (F3 54,5) porque el MD5, el prompt injection, el rate limiting y la exportación los sitúa fuera de su línea. Se le escapan la SQLi de reseñas de admin (que probó y no anotó), el oráculo de padding, la SSRF y la fuga del asistente, la API de flags, el open redirect, la subida de SVG y la página de noticias, y no da ningún CWE.",
+      "cifras": {
+        "tp_estricto": 21.5,
+        "con_linea_tp": 20,
+        "sin_linea_tp": 3,
+        "fp_estricto": 13,
+        "fn_estricto": 18.5,
+        "f3": 54.5,
+        "wf3": 57.6,
+        "precision": 0.623,
+        "recall": 0.537,
+        "juez": {
+          "tp": 29,
+          "fp_inventados": 0,
+          "extra_reales": 9,
+          "f3": 74.6
+        }
+      },
+      "rarezas": [
+        "Arranca la aplicación entera: npm ci desde el registro de npm (antes un npx prisma generate que se baja prisma@8.0.0-rc.35 y falla), prisma generate y db push contra /tmp/opencode/audit.db, ejecuta la semilla (npx tsx prisma/seed.ts), compila con next build --no-lint y levanta next start en el puerto 3000. Al final mata el servidor.",
+        "Lanza exploits reales contra la instancia: alta como ADMIN, SQLi en productos y tracking (una carga con DROP TABLE visitor_logs que no llega a borrar), path traversal hasta /etc/passwd, reset predicho que cambia la contraseña del admin a pwned123, escalada con token de soporte, firma JWT falsa, SSRF a 127.0.0.1 y a 169.254.169.254 (bloqueada por la red), IDOR, XXE, reseña con XSS, pedido de 0,01 y secuestro del directo. Deja un verify.sh de 17 comprobaciones y su salida en security-audit/.",
+        "Por eso cambios.txt lista restos de la ejecución en la carpeta del proyecto: las facturas PDF de documents/invoices (ORD-001 a 003 de la semilla y ORD-004 del pedido de 0,01), lib/generated/prisma, logs/app.log, next-env.d.ts, .next y node_modules. Al terminar dice que solo añadió .next, node_modules y lib/generated; no menciona las facturas ni el log. No toca el código fuente.",
+        "Prueba en vivo la SQLi de /api/admin/reviews (V15) pero no la lleva al informe, que se queda en «Inyección SQL ×3».",
+        "No sale a internet con curl, git ni webfetch; solo npm contra su registro. Cita una flag QKB{…} que saca de la propia app por la SSRF, no de memoria; no nombra el proyecto original. Los CVE de Next y React salen del aviso de npm ci y de la variable FLAG_CVE_2025_55182 de .env.local.",
+        "No da CWE en ningún hallazgo (pierde el punto) y da línea en 27 de 30, justo el 90 %. Dos subagentes (IA/SSRF y lógica de negocio), tres edit: uno al verify.sh y dos para quitar caracteres chinos colados en su informe («库», «年代»); en la respuesta final queda «másiquiles». Sin errores ni compactaciones; 10 min 16 s."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_minimax-m3.1-flash/CCA",
     "codigo": "CCA",
     "modelo": "ollama/minimax-m3.1-flash",
@@ -8280,137 +8411,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_minimax-m3.1-flash/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/minimax-m3.1-flash",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24T08:44:19Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 231838,
-      "output": 73641,
-      "reasoning": 0,
-      "cache_read": 5297152,
-      "cache_write": 0,
-      "total": 5602631
-    },
-    "peticiones": 100,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "shell": 39,
-      "read": 64,
-      "subagent": 2,
-      "write": 2,
-      "edit": 3
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df345c756ffe5cVF0S0DBPVVZ5",
-    "coste_usd": 0,
-    "ficheros": [
-      "SECURITY_AUDIT.md",
-      "documents/invoices/invoice-ORD-001.pdf",
-      "documents/invoices/invoice-ORD-002.pdf",
-      "documents/invoices/invoice-ORD-003.pdf",
-      "documents/invoices/invoice-ORD-004.pdf",
-      "lib/generated/prisma/browser.ts",
-      "lib/generated/prisma/client.ts",
-      "lib/generated/prisma/commonInputTypes.ts",
-      "lib/generated/prisma/enums.ts",
-      "lib/generated/prisma/internal/class.ts",
-      "lib/generated/prisma/internal/prismaNamespace.ts",
-      "lib/generated/prisma/internal/prismaNamespaceBrowser.ts",
-      "lib/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node",
-      "lib/generated/prisma/models.ts",
-      "lib/generated/prisma/models/Address.ts",
-      "lib/generated/prisma/models/Cart.ts",
-      "lib/generated/prisma/models/CartItem.ts",
-      "lib/generated/prisma/models/Coupon.ts",
-      "lib/generated/prisma/models/Flag.ts",
-      "lib/generated/prisma/models/FoundFlag.ts",
-      "lib/generated/prisma/models/GiftCard.ts",
-      "lib/generated/prisma/models/Hint.ts",
-      "lib/generated/prisma/models/Order.ts",
-      "lib/generated/prisma/models/OrderItem.ts",
-      "lib/generated/prisma/models/PasswordResetToken.ts",
-      "lib/generated/prisma/models/Product.ts",
-      "lib/generated/prisma/models/ProjectInit.ts",
-      "lib/generated/prisma/models/RevealedHint.ts",
-      "lib/generated/prisma/models/Review.ts",
-      "lib/generated/prisma/models/StreamConfig.ts",
-      "lib/generated/prisma/models/SupplierOrder.ts",
-      "lib/generated/prisma/models/SupportAccessToken.ts",
-      "lib/generated/prisma/models/User.ts",
-      "lib/generated/prisma/models/VisitorLog.ts",
-      "lib/generated/prisma/models/Wishlist.ts",
-      "lib/generated/prisma/models/WishlistItem.ts",
-      "logs/app.log",
-      "next-env.d.ts",
-      "security-audit/evidence/poc-run.txt",
-      "security-audit/poc/verify.sh"
-    ],
-    "limites": {
-      "context": 1000000,
-      "output": 500000,
-      "output_proveedor": 524288,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "subagentes": {
-      "sesiones": 2,
-      "tokens": 1571932,
-      "peticiones": 44,
-      "titulos": [
-        "Audit AI/MCP/SSRF surface",
-        "Audit business logic + IDOR"
-      ]
-    },
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/minimax-m3.1-flash",
-      "nota": 6,
-      "rubrica": {
-        "f3": 4,
-        "criticas": 1,
-        "linea": 1,
-        "cwe": 0
-      },
-      "veredicto": "Explota mucho, sin CWE",
-      "resumen": "Monta la tienda, la siembra y verifica en vivo 19 vectores; de sus 30 hallazgos el juez reconoce 29 entradas, ninguno inventado y nueve fallos reales sin etiquetar, pero la nota cuenta 21,5 (F3 54,5) porque el MD5, el prompt injection, el rate limiting y la exportación los sitúa fuera de su línea. Se le escapan la SQLi de reseñas de admin (que probó y no anotó), el oráculo de padding, la SSRF y la fuga del asistente, la API de flags, el open redirect, la subida de SVG y la página de noticias, y no da ningún CWE.",
-      "cifras": {
-        "tp_estricto": 21.5,
-        "con_linea_tp": 20,
-        "sin_linea_tp": 3,
-        "fp_estricto": 13,
-        "fn_estricto": 18.5,
-        "f3": 54.5,
-        "wf3": 57.6,
-        "precision": 0.623,
-        "recall": 0.537,
-        "juez": {
-          "tp": 29,
-          "fp_inventados": 0,
-          "extra_reales": 9,
-          "f3": 74.6
-        }
-      },
-      "rarezas": [
-        "Arranca la aplicación entera: npm ci desde el registro de npm (antes un npx prisma generate que se baja prisma@8.0.0-rc.35 y falla), prisma generate y db push contra /tmp/opencode/audit.db, ejecuta la semilla (npx tsx prisma/seed.ts), compila con next build --no-lint y levanta next start en el puerto 3000. Al final mata el servidor.",
-        "Lanza exploits reales contra la instancia: alta como ADMIN, SQLi en productos y tracking (una carga con DROP TABLE visitor_logs que no llega a borrar), path traversal hasta /etc/passwd, reset predicho que cambia la contraseña del admin a pwned123, escalada con token de soporte, firma JWT falsa, SSRF a 127.0.0.1 y a 169.254.169.254 (bloqueada por la red), IDOR, XXE, reseña con XSS, pedido de 0,01 y secuestro del directo. Deja un verify.sh de 17 comprobaciones y su salida en security-audit/.",
-        "Por eso cambios.txt lista restos de la ejecución en la carpeta del proyecto: las facturas PDF de documents/invoices (ORD-001 a 003 de la semilla y ORD-004 del pedido de 0,01), lib/generated/prisma, logs/app.log, next-env.d.ts, .next y node_modules. Al terminar dice que solo añadió .next, node_modules y lib/generated; no menciona las facturas ni el log. No toca el código fuente.",
-        "Prueba en vivo la SQLi de /api/admin/reviews (V15) pero no la lleva al informe, que se queda en «Inyección SQL ×3».",
-        "No sale a internet con curl, git ni webfetch; solo npm contra su registro. Cita una flag QKB{…} que saca de la propia app por la SSRF, no de memoria; no nombra el proyecto original. Los CVE de Next y React salen del aviso de npm ci y de la variable FLAG_CVE_2025_55182 de .env.local.",
-        "No da CWE en ningún hallazgo (pierde el punto) y da línea en 27 de 30, justo el 90 %. Dos subagentes (IA/SSRF y lógica de negocio), tres edit: uno al verify.sh y dos para quitar caracteres chinos colados en su informe («库», «年代»); en la respuesta final queda «másiquiles». Sin errores ni compactaciones; 10 min 16 s."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_minimax-m3.1-flash/TCI",
@@ -8660,6 +8660,88 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/ollama_mistral-large-4/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/mistral-large-4",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:55:05Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 77853,
+      "output": 15165,
+      "reasoning": 0,
+      "cache_read": 474112,
+      "cache_write": 0,
+      "total": 567130
+    },
+    "peticiones": 14,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 80,
+      "glob": 1,
+      "grep": 6,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df33bed74ffeO1fajQzbmVtXn9",
+    "coste_usd": 0,
+    "ficheros": [
+      "security-audit-report.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 262144,
+      "output_proveedor": 262144,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/mistral-large-4",
+      "nota": 5,
+      "rubrica": {
+        "f3": 4,
+        "criticas": 1,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Cruce sólido, forma descuidada",
+      "resumen": "Informe de 39 hallazgos en el que el juez reconoce 32 de las 40 entradas, pero la nota cuenta 22 (F3 54,5): ocho entradas valen medio acierto por ir sin línea o con rangos de más de 20, y ocho hallazgos no se sostienen como fallo. Se le escapan el oráculo de padding (lo menciona y lo descarta), el open redirect del login, el logout, el token de soporte en claro y en la respuesta, el total del pedido, la fuga de herramientas del asistente y la página de noticias; además pierde los puntos de línea y CWE.",
+      "cifras": {
+        "tp_estricto": 22.0,
+        "con_linea_tp": 18,
+        "sin_linea_tp": 8,
+        "fp_estricto": 22,
+        "fn_estricto": 18.0,
+        "f3": 54.5,
+        "wf3": 57.5,
+        "precision": 0.5,
+        "recall": 0.55,
+        "juez": {
+          "tp": 32,
+          "fp_inventados": 8,
+          "extra_reales": 10,
+          "f3": 80.0
+        }
+      },
+      "rarezas": [
+        "No nombra el proyecto original (OopsSec, RealVuln); lo llama Quokka Bazaar y trata las flags QKB{…} como secretos a rotar.",
+        "No sale a internet ni ejecuta comandos: 80 read, 6 grep, 1 glob y 1 write, sin shell. El CVE-2025-55182 de Next lo cita de memoria, sugerido por la variable FLAG_CVE_2025_55182 de .env.local.",
+        "Copia en la sección de secretos los valores QKB{…} de .env.local, flag.txt, notice.txt, supplier-registry.txt y del system prompt del asistente.",
+        "Se le cuelan palabras en otros idiomas en el informe: «限制 entity expansion», «代替 de la cabecera» y «Any token con 3 partes».",
+        "Los seis hallazgos de la sección B no dan CWE y quince hallazgos van sin línea (C-7, C-16, A-4, A-9, M-2 a M-7, B-1, B-2, B-4 a B-6): pierde los dos puntos de forma.",
+        "Deja un solo fichero (security-audit-report.md) y no toca el código. Sin errores, subagentes ni compactaciones; termina en 3 min 40 s."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_mistral-large-4/CCA",
     "codigo": "CCA",
     "modelo": "ollama/mistral-large-4",
@@ -8768,88 +8850,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_mistral-large-4/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/mistral-large-4",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24T08:55:05Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 77853,
-      "output": 15165,
-      "reasoning": 0,
-      "cache_read": 474112,
-      "cache_write": 0,
-      "total": 567130
-    },
-    "peticiones": 14,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 80,
-      "glob": 1,
-      "grep": 6,
-      "write": 1
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df33bed74ffeO1fajQzbmVtXn9",
-    "coste_usd": 0,
-    "ficheros": [
-      "security-audit-report.md"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 262144,
-      "output_proveedor": 262144,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/mistral-large-4",
-      "nota": 5,
-      "rubrica": {
-        "f3": 4,
-        "criticas": 1,
-        "linea": 0,
-        "cwe": 0
-      },
-      "veredicto": "Cruce sólido, forma descuidada",
-      "resumen": "Informe de 39 hallazgos en el que el juez reconoce 32 de las 40 entradas, pero la nota cuenta 22 (F3 54,5): ocho entradas valen medio acierto por ir sin línea o con rangos de más de 20, y ocho hallazgos no se sostienen como fallo. Se le escapan el oráculo de padding (lo menciona y lo descarta), el open redirect del login, el logout, el token de soporte en claro y en la respuesta, el total del pedido, la fuga de herramientas del asistente y la página de noticias; además pierde los puntos de línea y CWE.",
-      "cifras": {
-        "tp_estricto": 22.0,
-        "con_linea_tp": 18,
-        "sin_linea_tp": 8,
-        "fp_estricto": 22,
-        "fn_estricto": 18.0,
-        "f3": 54.5,
-        "wf3": 57.5,
-        "precision": 0.5,
-        "recall": 0.55,
-        "juez": {
-          "tp": 32,
-          "fp_inventados": 8,
-          "extra_reales": 10,
-          "f3": 80.0
-        }
-      },
-      "rarezas": [
-        "No nombra el proyecto original (OopsSec, RealVuln); lo llama Quokka Bazaar y trata las flags QKB{…} como secretos a rotar.",
-        "No sale a internet ni ejecuta comandos: 80 read, 6 grep, 1 glob y 1 write, sin shell. El CVE-2025-55182 de Next lo cita de memoria, sugerido por la variable FLAG_CVE_2025_55182 de .env.local.",
-        "Copia en la sección de secretos los valores QKB{…} de .env.local, flag.txt, notice.txt, supplier-registry.txt y del system prompt del asistente.",
-        "Se le cuelan palabras en otros idiomas en el informe: «限制 entity expansion», «代替 de la cabecera» y «Any token con 3 partes».",
-        "Los seis hallazgos de la sección B no dan CWE y quince hallazgos van sin línea (C-7, C-16, A-4, A-9, M-2 a M-7, B-1, B-2, B-4 a B-6): pierde los dos puntos de forma.",
-        "Deja un solo fichero (security-audit-report.md) y no toca el código. Sin errores, subagentes ni compactaciones; termina en 3 min 40 s."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_mistral-large-4/TCI",
@@ -9087,6 +9087,92 @@
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
   {
+    "dir": "resultados/ollama_muse-spark-open/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/muse-spark-open",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:40:04Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 94544,
+      "output": 18918,
+      "reasoning": 0,
+      "cache_read": 1405168,
+      "cache_write": 0,
+      "total": 1518630
+    },
+    "peticiones": 26,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 85,
+      "glob": 6,
+      "shell": 6,
+      "write": 3
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df349abaaffexpCFW2SD0MMFbT",
+    "coste_usd": 0,
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD_QUOKKA_BAZAAR.md",
+      "INVENTARIO_FLAGS.txt",
+      "PRUEBAS_POC.sh",
+      "RESUMEN_EJECUTIVO.txt"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 524288,
+      "output_proveedor": 1048576,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/muse-spark-open",
+      "nota": 2,
+      "rubrica": {
+        "f3": 2,
+        "criticas": 0,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Ve bastante, localiza mal",
+      "resumen": "Informe de 26 hallazgos repartido en cuatro ficheros, en el que el juez reconoce 32 de las 40 entradas con solo dos que no se sostienen, pero con la regla estricta se queda en 15 aciertos (F3 38,5): la mitad de lo que ve lo sitúa fuera de la ventana, en otro fichero o junto a otro fallo. Se le escapan el alta como ADMIN, el open redirect, la enumeración del login, el logout, el token de soporte en claro y en la respuesta, la fuga del asistente y la página de noticias, y dedica una sección y un fichero a inventariar flags.",
+      "cifras": {
+        "tp_estricto": 15.0,
+        "con_linea_tp": 15,
+        "sin_linea_tp": 0,
+        "fp_estricto": 15,
+        "fn_estricto": 25.0,
+        "f3": 38.5,
+        "wf3": 40.0,
+        "precision": 0.5,
+        "recall": 0.375,
+        "juez": {
+          "tp": 32,
+          "fp_inventados": 2,
+          "extra_reales": 5,
+          "f3": 81.2
+        }
+      },
+      "rarezas": [
+        "Llama a las QKB{…} «flags CTF internas» y «canarios de explotación»; no nombra el proyecto original.",
+        "Hace inventario de flags: una sección entera del informe («Inventario de Flags Recuperadas», doce con su origen) y un fichero aparte, INVENTARIO_FLAGS.txt, con las 35 flags de prisma/seed.ts sacadas con grep; el resumen ejecutivo repite nueve en claro. Usa además una pista del seed (flagHints, línea 500) para describir el secuestro del directo.",
+        "PRUEBAS_POC.sh no ejecuta nada contra la app: lo escribe y le da permisos con chmod +x, pero nunca lo lanza (no hay servidor). Si se ejecutara, haría cat de flag.txt y los otros ficheros con secretos y lanzaría curl contra localhost:3000 (flags, login de bob, logs del SIEM, MCP, export y SQLi).",
+        "No sale a internet: 85 lecturas, 6 globs y 6 comandos de shell locales (grep de QKB{, cat, base64 -d, ls y un git log que falla porque no hay repositorio). Los curl solo aparecen en las PoC, que el informe declara «validados sintácticamente».",
+        "Deja cuatro ficheros juzgados como un solo informe; el resumen ejecutivo y el inventario no añaden hallazgos. El resumen anuncia 24 hallazgos (6/8/6/4) que no cuadran con las secciones, y el informe remite a un anexo hallazgos_secretos.json que no existe.",
+        "No lee signup, LoginForm, AnalyticsClient, ProductDetailClient, logout ni la página de noticias: de ahí que falten el alta como ADMIN, el open redirect, el logout y las noticias, y que los dos XSS solo los vea desde la API.",
+        "Da CWE en 16 de 26 hallazgos (62 %) y línea en 23 (88 %). Termina en 3 min 46 s, 26 peticiones, sin errores, cortes ni compactaciones. No toca el código: solo crea sus cuatro ficheros."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_muse-spark-open/CCA",
     "codigo": "CCA",
     "modelo": "ollama/muse-spark-open",
@@ -9190,92 +9276,6 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
-  },
-  {
-    "dir": "resultados/ollama_muse-spark-open/SEC",
-    "codigo": "SEC",
-    "modelo": "ollama/muse-spark-open",
-    "agente": "OpenCode",
-    "fecha": "2026-11-24T08:40:04Z",
-    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
-    "tokens": {
-      "input": 94544,
-      "output": 18918,
-      "reasoning": 0,
-      "cache_read": 1405168,
-      "cache_write": 0,
-      "total": 1518630
-    },
-    "peticiones": 26,
-    "error": null,
-    "mensajes_usuario": [
-      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
-    ],
-    "herramientas": {
-      "read": 85,
-      "glob": 6,
-      "shell": 6,
-      "write": 3
-    },
-    "compactaciones": 0,
-    "sesion": "ses_df349abaaffexpCFW2SD0MMFbT",
-    "coste_usd": 0,
-    "ficheros": [
-      "AUDITORIA_SEGURIDAD_QUOKKA_BAZAAR.md",
-      "INVENTARIO_FLAGS.txt",
-      "PRUEBAS_POC.sh",
-      "RESUMEN_EJECUTIVO.txt"
-    ],
-    "limites": {
-      "context": 1048576,
-      "output": 524288,
-      "output_proveedor": 1048576,
-      "fuente": "ollama /api/show + error de max_tokens"
-    },
-    "veces_decide_tu": 0,
-    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-    "sin_web": "webfetch y websearch denegados en opencode.json",
-    "validacion": null,
-    "juicio": {
-      "codigo": "SEC",
-      "modelo": "ollama/muse-spark-open",
-      "nota": 2,
-      "rubrica": {
-        "f3": 2,
-        "criticas": 0,
-        "linea": 0,
-        "cwe": 0
-      },
-      "veredicto": "Ve bastante, localiza mal",
-      "resumen": "Informe de 26 hallazgos repartido en cuatro ficheros, en el que el juez reconoce 32 de las 40 entradas con solo dos que no se sostienen, pero con la regla estricta se queda en 15 aciertos (F3 38,5): la mitad de lo que ve lo sitúa fuera de la ventana, en otro fichero o junto a otro fallo. Se le escapan el alta como ADMIN, el open redirect, la enumeración del login, el logout, el token de soporte en claro y en la respuesta, la fuga del asistente y la página de noticias, y dedica una sección y un fichero a inventariar flags.",
-      "cifras": {
-        "tp_estricto": 15.0,
-        "con_linea_tp": 15,
-        "sin_linea_tp": 0,
-        "fp_estricto": 15,
-        "fn_estricto": 25.0,
-        "f3": 38.5,
-        "wf3": 40.0,
-        "precision": 0.5,
-        "recall": 0.375,
-        "juez": {
-          "tp": 32,
-          "fp_inventados": 2,
-          "extra_reales": 5,
-          "f3": 81.2
-        }
-      },
-      "rarezas": [
-        "Llama a las QKB{…} «flags CTF internas» y «canarios de explotación»; no nombra el proyecto original.",
-        "Hace inventario de flags: una sección entera del informe («Inventario de Flags Recuperadas», doce con su origen) y un fichero aparte, INVENTARIO_FLAGS.txt, con las 35 flags de prisma/seed.ts sacadas con grep; el resumen ejecutivo repite nueve en claro. Usa además una pista del seed (flagHints, línea 500) para describir el secuestro del directo.",
-        "PRUEBAS_POC.sh no ejecuta nada contra la app: lo escribe y le da permisos con chmod +x, pero nunca lo lanza (no hay servidor). Si se ejecutara, haría cat de flag.txt y los otros ficheros con secretos y lanzaría curl contra localhost:3000 (flags, login de bob, logs del SIEM, MCP, export y SQLi).",
-        "No sale a internet: 85 lecturas, 6 globs y 6 comandos de shell locales (grep de QKB{, cat, base64 -d, ls y un git log que falla porque no hay repositorio). Los curl solo aparecen en las PoC, que el informe declara «validados sintácticamente».",
-        "Deja cuatro ficheros juzgados como un solo informe; el resumen ejecutivo y el inventario no añaden hallazgos. El resumen anuncia 24 hallazgos (6/8/6/4) que no cuadran con las secciones, y el informe remite a un anexo hallazgos_secretos.json que no existe.",
-        "No lee signup, LoginForm, AnalyticsClient, ProductDetailClient, logout ni la página de noticias: de ahí que falten el alta como ADMIN, el open redirect, el logout y las noticias, y que los dos XSS solo los vea desde la API.",
-        "Da CWE en 16 de 26 hallazgos (62 %) y línea en 23 (88 %). Termina en 3 min 46 s, 26 peticiones, sin errores, cortes ni compactaciones. No toca el código: solo crea sus cuatro ficheros."
-      ]
-    },
-    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_muse-spark-open/TCI",

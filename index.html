@@ -15,7 +15,7 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 </style>
 <h1>Benchmark de modelos</h1>
 <p>Cada prompt se manda tal cual, en una sesión nueva de OpenCode aislado, con una sola frase añadida: «Guarda lo que generes en la carpeta actual.». Sin segundo mensaje ni correcciones. Tokens: suma de todas las peticiones de la sesión (entrada sin caché, salida, razonamiento y lectura de caché). Nota del juez de 0 a 10.</p>
-<ul><li><b>A3D</b> · Una ruta en 3D en la Alhambra de Granada en un solo fichero html</li><li><b>AIF</b> · Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML.</li><li><b>CCA</b> · Implementa un carrito de la compra escalable</li><li><b>SEC</b> · Haz una auditoría de seguridad de este proyecto</li><li><b>TCI</b> · Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.</li></ul>
+<ul><li><b>A3D</b> · Una ruta en 3D en la Alhambra de Granada en un solo fichero html</li><li><b>AIF</b> · Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML.</li><li><b>SEC</b> · Haz una auditoría de seguridad de este proyecto</li><li><b>CCA</b> · Implementa un carrito de la compra escalable</li><li><b>TCI</b> · Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.</li></ul>
 <div class=wrap><table>
 <tr><th>Prompt</th><th>Modelo</th><th>Tokens</th><th>Pet.</th><th>Ficheros</th><th>Validación</th><th>Nota</th><th>Juicio</th><th>Captura</th></tr>
 <tr>
@@ -39,16 +39,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Tablero libre donde se arrastra una ficha sobre otra, 141 elementos y 157 recetas, todos alcanzables desde HTML, CSS, JavaScript, Servidor, Micrófono y Café, con buscador, pista y progreso guardado. El contenido es cultura del desarrollo web en general (frameworks, Docker, «Centrar un div», «Deploy en viernes») con seis elementos de la casa; las mezclas sin receta no dan nada.</small> <a href="resultados/anthropic_claude-fable-5-2/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/anthropic_claude-fable-5-2/AIF/salida/alquimia-reactiva.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/anthropic_claude-fable-5-2/AIF/capturas/alquimia-reactiva.html.png"><img src="resultados/anthropic_claude-fable-5-2/AIF/capturas/alquimia-reactiva.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>claude-fable-5-2</small><br><small>Claude Code · 2026-11-22 09:01 UTC</small></td>
-<td class=n><b>295.5 k</b><br><small>in 12 · out 20.1 k<br>razon. 0 · caché 244.8 k</small></td>
-<td class=n>6</td>
-<td><small><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/.dockerignore">.dockerignore</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/Dockerfile">Dockerfile</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/docker-compose.yml">docker-compose.yml</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/package.json">package.json</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/src/app.js">src/app.js</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/src/cartService.js">src/cartService.js</a><br>… y 9 más</small></td>
-<td><small>✔ npm ci y npm start; npm test: 13/13 en memoria (1 saltado) y 21/21 con REDIS_URL contra un Redis real<br>✔ 50 altas a la vez: 50 guardadas en una instancia (memoria y Redis) y repartidas entre dos instancias con el mismo Redis<br>✔ cada escritura es un script Lua atómico en Redis: sin leer-modificar-escribir en la aplicación<br>✔ dinero en céntimos enteros, una moneda por catálogo; el precio sale del catálogo al leer (se ignora el del cliente)<br>✔ valida cantidad 0, negativa, decimal, enorme y en texto; SKU inexistente, SKU y cartId con «../», cuerpo vacío o no JSON<br>~ sin Redis, dos instancias reparten el carrito (25 + 25): el README avisa de que la memoria es solo para desarrollo<br>~ entrega node_modules junto al código; Dockerfile y docker-compose sin probar (lo dice)</small></td>
-<td class="nota n2">10<br><small>escala de verdad, sin adornos</small></td>
-<td><small>Servicio HTTP en Node sin estado con los carritos en Redis: cada escritura es un script Lua atómico, así que 50 altas a la vez repartidas entre dos instancias con el mismo Redis guardan las 50; dinero en céntimos, precio siempre del catálogo y validación estricta. Pasa 21 tests contra un Redis real y el README explica cada decisión de escalado, pero el dominio es el mínimo: ni stock, ni descuentos, ni checkout.</small> <a href="resultados/anthropic_claude-fable-5-2/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>claude-fable-5-2</small><br><small>Claude Code · 2026-11-24 01:20 UTC</small></td>
 <td class=n><b>1793.7 k</b><br><small>in 30 · out 20.8 k<br>razon. 0 · caché 1624.6 k</small></td>
@@ -57,6 +47,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">7<br><small>Casi completo, sin CWE</small></td>
 <td><small>Informe de 40 hallazgos, todos fallos reales, con fichero y línea en el 93 %: cubre 28 de las 40 entradas con la regla estricta (5 a medio punto) y 38 con el criterio del juez, más 14 fallos reales sin etiquetar. Solo se le escapan la fuga de la URL interna del asistente y el token de soporte guardado en claro; pierde puntos por líneas exactas que caen a pocas líneas de la ventana y por no dar ningún CWE.</small> <a href="resultados/anthropic_claude-fable-5-2/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>claude-fable-5-2</small><br><small>Claude Code · 2026-11-22 09:01 UTC</small></td>
+<td class=n><b>295.5 k</b><br><small>in 12 · out 20.1 k<br>razon. 0 · caché 244.8 k</small></td>
+<td class=n>6</td>
+<td><small><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/.dockerignore">.dockerignore</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/Dockerfile">Dockerfile</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/docker-compose.yml">docker-compose.yml</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/package.json">package.json</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/src/app.js">src/app.js</a><br><a href="resultados/anthropic_claude-fable-5-2/CCA/salida/src/cartService.js">src/cartService.js</a><br>… y 9 más</small></td>
+<td><small>✔ npm ci y npm start; npm test: 13/13 en memoria (1 saltado) y 21/21 con REDIS_URL contra un Redis real<br>✔ 50 altas a la vez: 50 guardadas en una instancia (memoria y Redis) y repartidas entre dos instancias con el mismo Redis<br>✔ cada escritura es un script Lua atómico en Redis: sin leer-modificar-escribir en la aplicación<br>✔ dinero en céntimos enteros, una moneda por catálogo; el precio sale del catálogo al leer (se ignora el del cliente)<br>✔ valida cantidad 0, negativa, decimal, enorme y en texto; SKU inexistente, SKU y cartId con «../», cuerpo vacío o no JSON<br>~ sin Redis, dos instancias reparten el carrito (25 + 25): el README avisa de que la memoria es solo para desarrollo<br>~ entrega node_modules junto al código; Dockerfile y docker-compose sin probar (lo dice)</small></td>
+<td class="nota n2">10<br><small>escala de verdad, sin adornos</small></td>
+<td><small>Servicio HTTP en Node sin estado con los carritos en Redis: cada escritura es un script Lua atómico, así que 50 altas a la vez repartidas entre dos instancias con el mismo Redis guardan las 50; dinero en céntimos, precio siempre del catálogo y validación estricta. Pasa 21 tests contra un Redis real y el README explica cada decisión de escalado, pero el dominio es el mínimo: ni stock, ni descuentos, ni checkout.</small> <a href="resultados/anthropic_claude-fable-5-2/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -89,16 +89,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa de juego como Infinite Craft (arrastrar y soltar una cosa sobre otra), 54 elementos y 50 recetas, todas alcanzables desde Código, Humano, Idea y Café. El contenido sale de webreactiva.com de verdad: agentes, skills, MCP, SDD, OpenSpec, AI slop, podcast, cursos. Le falta lo infinito: con una tabla fija, la mayoría de mezclas no dan nada.</small> <a href="resultados/anthropic_claude-haiku-5-5/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/anthropic_claude-haiku-5-5/AIF/salida/alquimia-web-reactiva.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/anthropic_claude-haiku-5-5/AIF/capturas/alquimia-web-reactiva.html.png"><img src="resultados/anthropic_claude-haiku-5-5/AIF/capturas/alquimia-web-reactiva.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-19 21:04 UTC</small></td>
-<td class=n><b>635.8 k</b><br><small>in 22 · out 32.1 k<br>razon. 0 · caché 561.6 k</small></td>
-<td class=n>11</td>
-<td><small><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/examples/basic.js">examples/basic.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/package.json">package.json</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/cart-service.js">src/cart-service.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/cart.js">src/cart.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/catalog.js">src/catalog.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/errors.js">src/errors.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/events.js">src/events.js</a><br>… y 7 más</small></td>
-<td><small>✔ npm test: 30/30 (node:test, sin dependencias)<br>✔ npm run example cuadra a mano<br>✔ 50 escrituras concurrentes: ninguna se pierde<br>✔ rechaza USD en carrito EUR y el id ../<br>~ 44 de 50 acaban en CONCURRENCY_CONFLICT con 5 reintentos</small></td>
-<td class="nota n2">9<br><small>escala de verdad</small></td>
-<td><small>Librería JS sin dependencias que resuelve lo que «escalable» exige: servicio sin estado, concurrencia optimista por versión con reintentos, dinero en céntimos, una moneda por carrito, precios del catálogo y no del cliente, dominio inmutable, reglas de precio e impuestos. 30 tests en verde. Le falta un adaptador real (solo memoria), caducidad de carritos y espera entre reintentos.</small> <a href="resultados/anthropic_claude-haiku-5-5/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-23 20:48 UTC</small></td>
 <td class=n><b>1545.2 k</b><br><small>in 30 · out 42.7 k<br>razon. 0 · caché 1372.3 k</small></td>
@@ -107,6 +97,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">6<br><small>Cobertura alta, sin CWE</small></td>
 <td><small>Informe de 45 hallazgos con fichero y línea en casi todos: cubre 25 de las 40 entradas con la regla estricta (F3 61,3), 35 con el criterio del juez, y solo 4 no son fallos. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el IDOR de wishlists y la página de noticias; no da ningún CWE.</small> <a href="resultados/anthropic_claude-haiku-5-5/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-19 21:04 UTC</small></td>
+<td class=n><b>635.8 k</b><br><small>in 22 · out 32.1 k<br>razon. 0 · caché 561.6 k</small></td>
+<td class=n>11</td>
+<td><small><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/examples/basic.js">examples/basic.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/package.json">package.json</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/cart-service.js">src/cart-service.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/cart.js">src/cart.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/catalog.js">src/catalog.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/errors.js">src/errors.js</a><br><a href="resultados/anthropic_claude-haiku-5-5/CCA/salida/src/events.js">src/events.js</a><br>… y 7 más</small></td>
+<td><small>✔ npm test: 30/30 (node:test, sin dependencias)<br>✔ npm run example cuadra a mano<br>✔ 50 escrituras concurrentes: ninguna se pierde<br>✔ rechaza USD en carrito EUR y el id ../<br>~ 44 de 50 acaban en CONCURRENCY_CONFLICT con 5 reintentos</small></td>
+<td class="nota n2">9<br><small>escala de verdad</small></td>
+<td><small>Librería JS sin dependencias que resuelve lo que «escalable» exige: servicio sin estado, concurrencia optimista por versión con reintentos, dinero en céntimos, una moneda por carrito, precios del catálogo y no del cliente, dominio inmutable, reglas de precio e impuestos. 30 tests en verde. Le falta un adaptador real (solo memoria), caducidad de carritos y espera entre reintentos.</small> <a href="resultados/anthropic_claude-haiku-5-5/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -139,16 +139,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa libre donde se suelta una ficha sobre otra, 178 elementos y 181 recetas, todos alcanzables desde Código, Café, Idea y Bug, con pistas, buscador, guardado y cinco objetivos con candado. De Web Reactiva tiene la capa de marca de memoria (Podcast, Newsletter, Dani Primo, Malandriner, Premium), unos 20 elementos; el resto es cultura de programador genérica, y las mezclas sin receta solo dan un chiste.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/anthropic_claude-opus-5-5-medium/AIF/salida/alquimia-reactiva.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/anthropic_claude-opus-5-5-medium/AIF/capturas/alquimia-reactiva.html.png"><img src="resultados/anthropic_claude-opus-5-5-medium/AIF/capturas/alquimia-reactiva.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:27 UTC</small></td>
-<td class=n><b>725.9 k</b><br><small>in 26 · out 33.1 k<br>razon. 0 · caché 650.2 k</small></td>
-<td class=n>13</td>
-<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/package.json">package.json</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/application/cartService.js">src/application/cartService.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/container.js">src/container.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/cart.js">src/domain/cart.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/errors.js">src/domain/errors.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/money.js">src/domain/money.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/pricing.js">src/domain/pricing.js</a><br>… y 9 más</small></td>
-<td><small>✔ npm test: 19/19 (node:test, sin dependencias), estable en tres pasadas<br>✔ npm start arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50, también con 50 productos distintos<br>✔ Redis real, dos instancias HTTP con REDIS_URL: 50 POST a la vez, aceptadas = guardadas; 1 acaba en 409 explícito. Con CLUSTER=1 y dos workers, igual<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>✔ el objeto devuelto se puede tocar, pero lo guardado no cambia (memoria serializada y Redis)<br>✔ id ../ no se puede crear (el id lo genera el servicio con UUID); la ruta HTTP da 404<br>~ la moneda la elige el cliente al crear y no se valida ({&quot;x&quot;:1} se guarda); el catálogo no tiene moneda, así que un carrito USD cobra los precios en euros<br>~ ioredis no está en package.json: para usar Redis hay que instalarlo a mano (el README lo dice)<br>~ idempotencia, catálogo y cupones solo en memoria: con varias réplicas la Idempotency-Key no se comparte (lo dice)</small></td>
-<td class="nota n2">10<br><small>escala, y Redis funciona</small></td>
-<td><small>Servicio REST en Node sin dependencias, hexagonal, con carrito inmutable, céntimos, precios del catálogo, versión optimista con reintentos y backoff, y un adaptador de Redis con compare-and-swap en Lua que se conecta con REDIS_URL y aguanta 50 altas a la vez desde dos instancias sin perder nada. Lo flojo es menor: la moneda la pone el cliente sin validar, ioredis no está en package.json y la idempotencia y el catálogo solo existen en memoria, cosa que el README admite.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-24 01:17 UTC</small></td>
 <td class=n><b>1712.1 k</b><br><small>in 38 · out 17.5 k<br>razon. 0 · caché 1576.0 k</small></td>
@@ -157,6 +147,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">5<br><small>Ve casi todo, sin CWE</small></td>
 <td><small>Informe de 48 hallazgos que, con el criterio del juez, cubre 38 de las 40 entradas y solo tiene 2 que no se sostienen, más 15 fallos reales sin etiquetar. La nota se queda en 5 porque 19 de sus aciertos valen medio punto (los rangos de la función entera en SQLi, path traversal, IDOR, support-access y el oráculo de padding cuentan como sin línea), varias líneas caen fuera de ±10 y no da ningún CWE.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:27 UTC</small></td>
+<td class=n><b>725.9 k</b><br><small>in 26 · out 33.1 k<br>razon. 0 · caché 650.2 k</small></td>
+<td class=n>13</td>
+<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/package.json">package.json</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/application/cartService.js">src/application/cartService.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/container.js">src/container.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/cart.js">src/domain/cart.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/errors.js">src/domain/errors.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/money.js">src/domain/money.js</a><br><a href="resultados/anthropic_claude-opus-5-5-medium/CCA/salida/src/domain/pricing.js">src/domain/pricing.js</a><br>… y 9 más</small></td>
+<td><small>✔ npm test: 19/19 (node:test, sin dependencias), estable en tres pasadas<br>✔ npm start arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50, también con 50 productos distintos<br>✔ Redis real, dos instancias HTTP con REDIS_URL: 50 POST a la vez, aceptadas = guardadas; 1 acaba en 409 explícito. Con CLUSTER=1 y dos workers, igual<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>✔ el objeto devuelto se puede tocar, pero lo guardado no cambia (memoria serializada y Redis)<br>✔ id ../ no se puede crear (el id lo genera el servicio con UUID); la ruta HTTP da 404<br>~ la moneda la elige el cliente al crear y no se valida ({&quot;x&quot;:1} se guarda); el catálogo no tiene moneda, así que un carrito USD cobra los precios en euros<br>~ ioredis no está en package.json: para usar Redis hay que instalarlo a mano (el README lo dice)<br>~ idempotencia, catálogo y cupones solo en memoria: con varias réplicas la Idempotency-Key no se comparte (lo dice)</small></td>
+<td class="nota n2">10<br><small>escala, y Redis funciona</small></td>
+<td><small>Servicio REST en Node sin dependencias, hexagonal, con carrito inmutable, céntimos, precios del catálogo, versión optimista con reintentos y backoff, y un adaptador de Redis con compare-and-swap en Lua que se conecta con REDIS_URL y aguanta 50 altas a la vez desde dos instancias sin perder nada. Lo flojo es menor: la moneda la pone el cliente sin validar, ioredis no está en package.json y la idempotencia y el catálogo solo existen en memoria, cosa que el README admite.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -189,16 +189,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa libre donde se suelta una ficha sobre otra, 63 elementos y 59 recetas, todos alcanzables desde Estado, Evento, Píxel y Pantalla, con buscador y guardado de la mesa. Pero leyó «Web Reactiva» como programación reactiva más diseño responsive (señales, Virtual DOM, media queries, clamp()): de la web, el podcast o la comunidad no hay nada, y las mezclas sin receta no dan nada.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/anthropic_claude-sonnet-5-5-medium/AIF/salida/alquimia-web-reactiva.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/anthropic_claude-sonnet-5-5-medium/AIF/capturas/alquimia-web-reactiva.html.png"><img src="resultados/anthropic_claude-sonnet-5-5-medium/AIF/capturas/alquimia-web-reactiva.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:16 UTC</small></td>
-<td class=n><b>124.3 k</b><br><small>in 6 · out 8.3 k<br>razon. 0 · caché 101.2 k</small></td>
-<td class=n>3</td>
-<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__init__.py">cart/__init__.py</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/__init__.cpython-313.pyc">cart/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/domain.cpython-313.pyc">cart/__pycache__/domain.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/repository.cpython-313.pyc">cart/__pycache__/repository.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/service.cpython-313.pyc">cart/__pycache__/service.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/api.py">cart/api.py</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/domain.py">cart/domain.py</a><br>… y 3 más</small></td>
-<td><small>✔ python3 tests/test_cart.py: 8/8, sin dependencias<br>✔ python3 -m cart.api arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50<br>✔ Redis real, dos instancias HTTP: 50 POST a la vez, aceptadas = guardadas; 2-6 acaban en 409 explícito tras 8 reintentos<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>~ una sola moneda fija (EUR): el catálogo no tiene moneda, así que no hay nada que mezclar<br>~ id ../ lo para la ruta HTTP (404); el servicio lo acepta<br>✖ el carrito devuelto se puede mutar y cambia lo guardado en memoria: 500 unidades a 1 ¢ sin pasar por catálogo ni límites<br>~ RedisCartRepository no está conectado en api.py ni exportado en cart/__init__.py: hay que montarlo a mano</small></td>
-<td class="nota n2">9<br><small>escala en 400 líneas</small></td>
-<td><small>Python sin dependencias con servicio sin estado, versión optimista con reintentos y un adaptador de Redis con compare-and-swap en Lua y TTL que funciona: con dos instancias sobre el mismo Redis, 50 altas a la vez acaban guardadas o en un 409 explícito, sin pérdidas. Pero el carrito que devuelve se puede mutar y en memoria eso cambia lo guardado (500 unidades a 1 céntimo sin pasar por el catálogo), solo hay una moneda fija y el adaptador de Redis no lo probó ni lo conectó a la API.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-24 01:15 UTC</small></td>
 <td class=n><b>1004.3 k</b><br><small>in 26 · out 11.5 k<br>razon. 0 · caché 905.9 k</small></td>
@@ -207,6 +197,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">4<br><small>Ve casi todo, sin líneas</small></td>
 <td><small>Informe de 29 hallazgos agrupados en el que el juez reconoce 33 de las 40 entradas y solo seis no se sostienen, pero la nota cuenta 16 (F3 40,9) porque solo da una línea en todo el informe y cada acierto sin línea vale medio. Se le escapan la fuga de la URL interna del asistente, el token de soporte en claro y en la respuesta, el open redirect del LoginForm, el XSS de reseñas y la página de noticias; no da ningún CWE.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 11:16 UTC</small></td>
+<td class=n><b>124.3 k</b><br><small>in 6 · out 8.3 k<br>razon. 0 · caché 101.2 k</small></td>
+<td class=n>3</td>
+<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__init__.py">cart/__init__.py</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/__init__.cpython-313.pyc">cart/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/domain.cpython-313.pyc">cart/__pycache__/domain.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/repository.cpython-313.pyc">cart/__pycache__/repository.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/__pycache__/service.cpython-313.pyc">cart/__pycache__/service.cpython-313.pyc</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/api.py">cart/api.py</a><br><a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/salida/cart/domain.py">cart/domain.py</a><br>… y 3 más</small></td>
+<td><small>✔ python3 tests/test_cart.py: 8/8, sin dependencias<br>✔ python3 -m cart.api arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50<br>✔ Redis real, dos instancias HTTP: 50 POST a la vez, aceptadas = guardadas; 2-6 acaban en 409 explícito tras 8 reintentos<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>~ una sola moneda fija (EUR): el catálogo no tiene moneda, así que no hay nada que mezclar<br>~ id ../ lo para la ruta HTTP (404); el servicio lo acepta<br>✖ el carrito devuelto se puede mutar y cambia lo guardado en memoria: 500 unidades a 1 ¢ sin pasar por catálogo ni límites<br>~ RedisCartRepository no está conectado en api.py ni exportado en cart/__init__.py: hay que montarlo a mano</small></td>
+<td class="nota n2">9<br><small>escala en 400 líneas</small></td>
+<td><small>Python sin dependencias con servicio sin estado, versión optimista con reintentos y un adaptador de Redis con compare-and-swap en Lua y TTL que funciona: con dos instancias sobre el mismo Redis, 50 altas a la vez acaban guardadas o en un 409 explícito, sin pérdidas. Pero el carrito que devuelve se puede mutar y en memoria eso cambia lo guardado (500 unidades a 1 céntimo sin pasar por el catálogo), solo hay una moneda fija y el adaptador de Redis no lo probó ni lo conectó a la API.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -239,16 +239,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa libre donde se suelta una ficha sobre otra, 112 elementos y 389 recetas todos alcanzables desde cuatro iniciales (Código, Micrófono, Café, Curiosidad), un generador para las mezclas sin receta, pistas, buscador, códice, logros y guardado. El contenido es de Web Reactiva de verdad (malandriner, Daniel Primo, Zona Premium, Telegram, café virtual, mastermind), aunque sacado de memoria porque la búsqueda web se canceló.</small> <a href="resultados/google_gemini-4-carbon/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/google_gemini-4-carbon/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/google_gemini-4-carbon/AIF/capturas/index.html.png"><img src="resultados/google_gemini-4-carbon/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 12:54 UTC</small></td>
-<td class=n><b>835.4 k</b><br><small>in 93.8 k · out 40.8 k<br>razon. 6.3 k · caché 694.5 k</small></td>
-<td class=n>25</td>
-<td><small><a href="resultados/google_gemini-4-carbon/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/README.md">README.md</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/package.json">package.json</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/application/cart-service.ts">src/application/cart-service.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/application/ports.ts">src/application/ports.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/errors.ts">src/domain/errors.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/events.ts">src/domain/events.ts</a><br>… y 16 más</small></td>
-<td><small>✔ sin dependencias: npm test (9/9 con node:test) y npm start con Node 22 y TypeScript nativo<br>✔ 50 altas a la vez: 50 guardadas en una instancia y en dos instancias con el mismo SQLite<br>✔ dinero en céntimos (0,10 × 3 = 0,30), sumar EUR y USD da error, precio del catálogo (se ignora el del cliente)<br>✔ valida cantidades (0, negativa, decimal, enorme), sku inexistente, ids con «../», cuerpo vacío<br>✖ la caché L1 de cada instancia sirve lecturas viejas cuando escribe la otra (juez/cache-l1.mjs)<br>~ stock, idempotencia y eventos viven en la memoria de cada proceso; el almacenamiento compartido es un fichero SQLite (una sola máquina)</small></td>
-<td class="nota n2">9<br><small>escala en una máquina</small></td>
-<td><small>TypeScript sobre Node 22 sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, cupones, IVA, envío, idempotencia, checkout con reserva de stock y SQLite en WAL con compare-and-set por versión: 50 altas a la vez no pierden nada, ni repartidas entre dos instancias con el mismo fichero. Pero cada instancia guarda una caché L1 que sirve lecturas viejas cuando escribe la otra, y el stock y la idempotencia viven en memoria de cada proceso.</small> <a href="resultados/google_gemini-4-carbon/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-24 10:18 UTC</small></td>
 <td class=n><b>2141.9 k</b><br><small>in 447.1 k · out 20.5 k<br>razon. 8.2 k · caché 1666.1 k</small></td>
@@ -257,6 +247,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n2">8<br><small>Auditoría completa y precisa</small></td>
 <td><small>Informe de 22 hallazgos agrupados, todos con fichero, línea y CWE: cubre 31 de las 40 entradas con la regla estricta (8 sin línea, a medio punto: 27 en la nota, F3 68,5), 37 con el criterio del juez, y no inventa ninguno. Se le escapan la fuga de la URL de las herramientas del asistente, el logout que no invalida la sesión y las credenciales del seed; los rangos anchos le cuestan medio punto en ocho entradas.</small> <a href="resultados/google_gemini-4-carbon/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 12:54 UTC</small></td>
+<td class=n><b>835.4 k</b><br><small>in 93.8 k · out 40.8 k<br>razon. 6.3 k · caché 694.5 k</small></td>
+<td class=n>25</td>
+<td><small><a href="resultados/google_gemini-4-carbon/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/README.md">README.md</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/package.json">package.json</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/application/cart-service.ts">src/application/cart-service.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/application/ports.ts">src/application/ports.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/errors.ts">src/domain/errors.ts</a><br><a href="resultados/google_gemini-4-carbon/CCA/salida/src/domain/events.ts">src/domain/events.ts</a><br>… y 16 más</small></td>
+<td><small>✔ sin dependencias: npm test (9/9 con node:test) y npm start con Node 22 y TypeScript nativo<br>✔ 50 altas a la vez: 50 guardadas en una instancia y en dos instancias con el mismo SQLite<br>✔ dinero en céntimos (0,10 × 3 = 0,30), sumar EUR y USD da error, precio del catálogo (se ignora el del cliente)<br>✔ valida cantidades (0, negativa, decimal, enorme), sku inexistente, ids con «../», cuerpo vacío<br>✖ la caché L1 de cada instancia sirve lecturas viejas cuando escribe la otra (juez/cache-l1.mjs)<br>~ stock, idempotencia y eventos viven en la memoria de cada proceso; el almacenamiento compartido es un fichero SQLite (una sola máquina)</small></td>
+<td class="nota n2">9<br><small>escala en una máquina</small></td>
+<td><small>TypeScript sobre Node 22 sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, cupones, IVA, envío, idempotencia, checkout con reserva de stock y SQLite en WAL con compare-and-set por versión: 50 altas a la vez no pierden nada, ni repartidas entre dos instancias con el mismo fichero. Pero cada instancia guarda una caché L1 que sirve lecturas viejas cuando escribe la otra, y el stock y la idempotencia viven en memoria de cada proceso.</small> <a href="resultados/google_gemini-4-carbon/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -289,16 +289,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa libre donde se suelta una ficha sobre otra, 109 elementos y 255 recetas todos alcanzables desde Código, Web, IA y Podcast, con pista de Robotito, buscador, Atlas Malandriner con rangos y guardado. El contenido sale de webreactiva.com (Robotito, Zona Premium, En Pantuflas, Atlas Malandriner, Programa con IA), pero las mezclas sin receta no dan nada.</small> <a href="resultados/google_gemini-4-hydrogen/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/google_gemini-4-hydrogen/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/google_gemini-4-hydrogen/AIF/capturas/index.html.png"><img src="resultados/google_gemini-4-hydrogen/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>google/gemini-4-hydrogen</small><br><small>OpenCode · 2026-11-20 15:29 UTC</small></td>
-<td class=n><b>678.4 k</b><br><small>in 74.2 k · out 31.4 k<br>razon. 6.2 k · caché 566.5 k</small></td>
-<td class=n>22</td>
-<td><small><a href="resultados/google_gemini-4-hydrogen/CCA/salida/README.md">README.md</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/examples/demo.mjs">examples/demo.mjs</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/package.json">package.json</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/application/cart-service.ts">src/application/cart-service.ts</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/domain/cart-item.ts">src/domain/cart-item.ts</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/domain/errors.ts">src/domain/errors.ts</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/domain/events.ts">src/domain/events.ts</a><br>… y 65 más</small></td>
-<td><small>✔ npm test: tsc + 14/14 (node:test); npm run demo recorre carrito, cupón y checkout<br>✖ 50 altas a la vez: 5 guardadas y 45 rechazadas con CONCURRENCY_CONFLICT (5 reintentos sin espera)<br>✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)<br>~ valida cantidades negativas, decimales y enormes; acepta cantidad 0<br>~ librería sin servidor: solo adaptadores en memoria; Redis o Postgres, en el README<br>~ entrega dist/ compilado; usa el tsc global de la máquina (no es dependencia)</small></td>
-<td class="nota n2">8<br><small>bien hecho, poca concurrencia</small></td>
-<td><small>Librería TypeScript sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, promociones (porcentaje, fijo, 3x2, volumen), IVA por categoría, envío, idempotencia, fusión de carritos y checkout con compensación de stock; 14 tests y una demo que funcionan. La versión optimista no pierde datos, pero con 50 altas a la vez rechaza 45 porque reintenta cinco veces sin esperar, y solo hay adaptadores en memoria.</small> <a href="resultados/google_gemini-4-hydrogen/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>google/gemini-4-hydrogen</small><br><small>OpenCode · 2026-11-24 09:56 UTC</small></td>
 <td class=n><b>2819.6 k</b><br><small>in 255.3 k · out 15.7 k<br>razon. 10.3 k · caché 2538.3 k</small></td>
@@ -307,6 +297,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n2">8<br><small>Cobertura casi total, líneas anchas</small></td>
 <td><small>Informe de 26 hallazgos agrupados, todos con fichero, línea y CWE, sin un solo fallo inventado: cubre 36 de las 40 entradas con el criterio del juez, incluido el oráculo de padding. La nota se queda en F3 63,9 porque 18 de esas entradas las señala con rangos de más de 20 líneas, que valen medio acierto.</small> <a href="resultados/google_gemini-4-hydrogen/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>google/gemini-4-hydrogen</small><br><small>OpenCode · 2026-11-20 15:29 UTC</small></td>
+<td class=n><b>678.4 k</b><br><small>in 74.2 k · out 31.4 k<br>razon. 6.2 k · caché 566.5 k</small></td>
+<td class=n>22</td>
+<td><small><a href="resultados/google_gemini-4-hydrogen/CCA/salida/README.md">README.md</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/examples/demo.mjs">examples/demo.mjs</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/package.json">package.json</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/application/cart-service.ts">src/application/cart-service.ts</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/domain/cart-item.ts">src/domain/cart-item.ts</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/domain/errors.ts">src/domain/errors.ts</a><br><a href="resultados/google_gemini-4-hydrogen/CCA/salida/src/domain/events.ts">src/domain/events.ts</a><br>… y 65 más</small></td>
+<td><small>✔ npm test: tsc + 14/14 (node:test); npm run demo recorre carrito, cupón y checkout<br>✖ 50 altas a la vez: 5 guardadas y 45 rechazadas con CONCURRENCY_CONFLICT (5 reintentos sin espera)<br>✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)<br>~ valida cantidades negativas, decimales y enormes; acepta cantidad 0<br>~ librería sin servidor: solo adaptadores en memoria; Redis o Postgres, en el README<br>~ entrega dist/ compilado; usa el tsc global de la máquina (no es dependencia)</small></td>
+<td class="nota n2">8<br><small>bien hecho, poca concurrencia</small></td>
+<td><small>Librería TypeScript sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, promociones (porcentaje, fijo, 3x2, volumen), IVA por categoría, envío, idempotencia, fusión de carritos y checkout con compensación de stock; 14 tests y una demo que funcionan. La versión optimista no pierde datos, pero con 50 altas a la vez rechaza 45 porque reintenta cinco veces sin esperar, y solo hay adaptadores en memoria.</small> <a href="resultados/google_gemini-4-hydrogen/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -339,16 +339,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Tablero libre donde se suelta una ficha sobre otra, 144 elementos y 360 recetas todos alcanzables desde Pantuflas, Código, IA y Podcast, con Atlas Malandriner, pistas en dos niveles, buscador y guardado; las mezclas sin receta dan fusiones con el Modo Libre encendido. El contenido sale de ocho páginas de webreactiva.com: Selector de Modelos, Bingo de Mentiras, Chuleta OpenCode, Robotito, LinkedIn-5-5, Fichómetro, skills y SDD.</small> <a href="resultados/google_gemini-4-neon/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/google_gemini-4-neon/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/google_gemini-4-neon/AIF/capturas/index.html.png"><img src="resultados/google_gemini-4-neon/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>google/gemini-4-neon</small><br><small>OpenCode · 2026-11-20 21:54 UTC</small></td>
-<td class=n><b>213.4 k</b><br><small>in 49.2 k · out 33.9 k<br>razon. 5.1 k · caché 125.3 k</small></td>
-<td class=n>12</td>
-<td><small><a href="resultados/google_gemini-4-neon/CCA/salida/package.json">package.json</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/api/server.ts">src/api/server.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/application/cart-service.ts">src/application/cart-service.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/bootstrap.ts">src/bootstrap.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/demo.ts">src/demo.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/domain/errors.ts">src/domain/errors.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/domain/events.ts">src/domain/events.ts</a><br>… y 19 más</small></td>
-<td><small>✔ node src/demo.ts: invitado + usuario, fusión, cupón WELCOME10, checkout idempotente y 8 eventos<br>✖ sin tests: npm test busca tests/*.test.ts, que no existe (0 tests)<br>✖ tsc --noEmit: 9 errores (structuredClone no está en sus declaraciones de Node)<br>✔ 50 altas a la vez: 50 guardadas (cerrojo por carrito en el proceso)<br>✖ dos instancias con el mismo FileCartRepository: 20 altas aceptadas, 10 guardadas<br>✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)<br>✔ valida cantidad 0, negativa, decimal y enorme; «../» en producto o carrito → no encontrado<br>✖ sin README: la sesión se cortó antes</small></td>
-<td class="nota n1">6<br><small>sólido pero sin terminar</small></td>
-<td><small>TypeScript hexagonal sin dependencias, que Node 22 ejecuta tal cual: dinero en céntimos con moneda comprobada, precio del catálogo, promociones, IVA por región, envío, idempotencia, fusión y checkout con reserva de stock, más una API HTTP y una demo que funciona. La sesión se cortó por falta de crédito antes de los tests y el README, y la versión optimista solo aguanta dentro de un proceso: dos instancias sobre el mismo fichero pierden la mitad de las altas sin avisar.</small> <a href="resultados/google_gemini-4-neon/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>google/gemini-4-neon</small><br><small>OpenCode · 2026-11-24 UTC</small></td>
 <td class=n><b>–</b><br><small>in – · out –<br>razon. – · caché –</small></td>
@@ -357,6 +347,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">7<br><small>Un punto por debajo de sus hermanos</small></td>
 <td><small>7 sobre 10, un punto por debajo de gemini-4-carbon y gemini-4-hydrogen (8).</small> <a href="resultados/google_gemini-4-neon/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>google/gemini-4-neon</small><br><small>OpenCode · 2026-11-20 21:54 UTC</small></td>
+<td class=n><b>213.4 k</b><br><small>in 49.2 k · out 33.9 k<br>razon. 5.1 k · caché 125.3 k</small></td>
+<td class=n>12</td>
+<td><small><a href="resultados/google_gemini-4-neon/CCA/salida/package.json">package.json</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/api/server.ts">src/api/server.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/application/cart-service.ts">src/application/cart-service.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/bootstrap.ts">src/bootstrap.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/demo.ts">src/demo.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/domain/errors.ts">src/domain/errors.ts</a><br><a href="resultados/google_gemini-4-neon/CCA/salida/src/domain/events.ts">src/domain/events.ts</a><br>… y 19 más</small></td>
+<td><small>✔ node src/demo.ts: invitado + usuario, fusión, cupón WELCOME10, checkout idempotente y 8 eventos<br>✖ sin tests: npm test busca tests/*.test.ts, que no existe (0 tests)<br>✖ tsc --noEmit: 9 errores (structuredClone no está en sus declaraciones de Node)<br>✔ 50 altas a la vez: 50 guardadas (cerrojo por carrito en el proceso)<br>✖ dos instancias con el mismo FileCartRepository: 20 altas aceptadas, 10 guardadas<br>✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)<br>✔ valida cantidad 0, negativa, decimal y enorme; «../» en producto o carrito → no encontrado<br>✖ sin README: la sesión se cortó antes</small></td>
+<td class="nota n1">6<br><small>sólido pero sin terminar</small></td>
+<td><small>TypeScript hexagonal sin dependencias, que Node 22 ejecuta tal cual: dinero en céntimos con moneda comprobada, precio del catálogo, promociones, IVA por región, envío, idempotencia, fusión y checkout con reserva de stock, más una API HTTP y una demo que funciona. La sesión se cortó por falta de crédito antes de los tests y el README, y la versión optimista solo aguanta dentro de un proceso: dos instancias sobre el mismo fichero pierden la mitad de las altas sin avisar.</small> <a href="resultados/google_gemini-4-neon/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -389,16 +389,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa libre donde se suelta una ficha sobre otra, con colección, buscador y progreso guardado; Web + Código da DOM y DOM + Estado da Interfaz. Ahí se acaba: ninguna receta crea Usuario, del que depende todo lo demás, así que solo se alcanzan 6 de los 23 elementos, las mezclas sin receta no dan nada y el contenido es un tutorial de React con «Web Reactiva» como premio final.</small> <a href="resultados/openai_gpt-6-luna-medium/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/openai_gpt-6-luna-medium/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/openai_gpt-6-luna-medium/AIF/capturas/index.html.png"><img src="resultados/openai_gpt-6-luna-medium/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>gpt-6-luna (medium)</small><br><small>Codex CLI · 2026-11-24 12:01 UTC</small></td>
-<td class=n><b>74.8 k</b><br><small>in 19.3 k · out 9.8 k<br>razon. 202 · caché 45.6 k</small></td>
-<td class=n>4</td>
-<td><small><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/cart-store.js">src/cart-store.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/main.js">src/main.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/products.js">src/products.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/styles.css">styles.css</a></small></td>
-<td><small>✔ se sirve con un servidor estático y funciona sin errores de consola<br>✔ añadir, cambiar cantidad, quitar, vaciar, subtotal y envío gratis; persiste al recargar<br>✖ sin tests<br>~ precios en euros enteros, sin céntimos; una sola moneda<br>✔ el precio sale del catálogo; descarta cantidad negativa, decimal e id «../x» de un localStorage manipulado<br>✖ acepta 1e9 unidades: subtotal de 38.000.000.000 €<br>✖ sin servidor, concurrencia ni almacenamiento compartido; el README no habla de escalado</small></td>
-<td class="nota n0">3<br><small>escaparate sin escala</small></td>
-<td><small>Una tienda en el navegador bien presentada, con búsqueda, categorías, orden por precio, carrito lateral, envío gratis y persistencia en localStorage. No hay servidor, ni tests, ni nada de escalado, y aunque descarta cantidades negativas, decimales e ids desconocidos, acepta mil millones de unidades sin tope.</small> <a href="resultados/openai_gpt-6-luna-medium/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>gpt-6-luna (medium)</small><br><small>Codex CLI · 2026-11-24 11:55 UTC</small></td>
 <td class=n><b>277.6 k</b><br><small>in 53.2 k · out 3.7 k<br>razon. 634 · caché 220.0 k</small></td>
@@ -407,6 +397,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n0">2<br><small>Preciso, pero sin inyecciones</small></td>
 <td><small>Informe de 13 hallazgos, 12 con fichero y línea, sin CWE y ninguno inventado: cubre 13 de las 40 entradas con la regla estricta (5 sin línea, a medio punto: 10,5 en la nota, F3 28,2), 15 con el criterio del juez. No ve ninguna SQLi ni XSS, ni las SSRF, el open redirect, las flags, el diag o las credenciales del seed.</small> <a href="resultados/openai_gpt-6-luna-medium/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>gpt-6-luna (medium)</small><br><small>Codex CLI · 2026-11-24 12:01 UTC</small></td>
+<td class=n><b>74.8 k</b><br><small>in 19.3 k · out 9.8 k<br>razon. 202 · caché 45.6 k</small></td>
+<td class=n>4</td>
+<td><small><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/cart-store.js">src/cart-store.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/main.js">src/main.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/src/products.js">src/products.js</a><br><a href="resultados/openai_gpt-6-luna-medium/CCA/salida/styles.css">styles.css</a></small></td>
+<td><small>✔ se sirve con un servidor estático y funciona sin errores de consola<br>✔ añadir, cambiar cantidad, quitar, vaciar, subtotal y envío gratis; persiste al recargar<br>✖ sin tests<br>~ precios en euros enteros, sin céntimos; una sola moneda<br>✔ el precio sale del catálogo; descarta cantidad negativa, decimal e id «../x» de un localStorage manipulado<br>✖ acepta 1e9 unidades: subtotal de 38.000.000.000 €<br>✖ sin servidor, concurrencia ni almacenamiento compartido; el README no habla de escalado</small></td>
+<td class="nota n0">3<br><small>escaparate sin escala</small></td>
+<td><small>Una tienda en el navegador bien presentada, con búsqueda, categorías, orden por precio, carrito lateral, envío gratis y persistencia en localStorage. No hay servidor, ni tests, ni nada de escalado, y aunque descarta cantidades negativas, decimales e ids desconocidos, acepta mil millones de unidades sin tope.</small> <a href="resultados/openai_gpt-6-luna-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -439,16 +439,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Un juego de casillas con 35 elementos y 32 recetas, todos alcanzables, con contenido reconocible de Web Reactiva (Zona Malandriner, En pantuflas, Atlas MCP) sin haber consultado la web. Guarda, busca y da pistas en 9 KB, pero no hay lienzo libre y las mezclas sin receta no dan nada.</small> <a href="resultados/openai_gpt-6.2-astra-default/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/openai_gpt-6.2-astra-default/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/openai_gpt-6.2-astra-default/AIF/capturas/index.html.png"><img src="resultados/openai_gpt-6.2-astra-default/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:46 UTC</small></td>
-<td class=n><b>191.7 k</b><br><small>in 16.4 k · out 6.0 k<br>razon. 73 · caché 169.2 k</small></td>
-<td class=n>9</td>
-<td><small><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/cart.js">cart.js</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/alpes.jpg">media/alpes.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/bosque.jpg">media/bosque.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/lago.jpg">media/lago.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/valle.jpg">media/valle.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/style.css">style.css</a></small></td>
-<td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula envío y total; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: cantidades negativas, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
-<td class="nota n1">4<br><small>maqueta de carrito, sin escalar</small></td>
-<td><small>Una página de carrito bien acabada con cuatro láminas, envío gratis desde 75 € y persistencia en localStorage que valida lo que lee. No hay tests, ni servidor, ni README: «escalable» se queda en que el catálogo es una lista que se puede ampliar.</small> <a href="resultados/openai_gpt-6.2-astra-default/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-24 11:53 UTC</small></td>
 <td class=n><b>221.4 k</b><br><small>in 26.6 k · out 3.6 k<br>razon. 0 · caché 191.2 k</small></td>
@@ -457,6 +447,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n0">3<br><small>Preciso pero corto</small></td>
 <td><small>Informe de 14 hallazgos, todos con fichero y línea exacta y ninguno inventado: cubre 13 de las 40 entradas, todas con línea (F3 34,4), 15 con el criterio del juez. Revisa poco: deja fuera las SQLi de reseñas, los IDOR de pedidos, listas y soporte, el open redirect, las flags, el diag, las contraseñas en el log y las credenciales del seed.</small> <a href="resultados/openai_gpt-6.2-astra-default/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:46 UTC</small></td>
+<td class=n><b>191.7 k</b><br><small>in 16.4 k · out 6.0 k<br>razon. 73 · caché 169.2 k</small></td>
+<td class=n>9</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/cart.js">cart.js</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/alpes.jpg">media/alpes.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/bosque.jpg">media/bosque.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/lago.jpg">media/lago.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/media/valle.jpg">media/valle.jpg</a><br><a href="resultados/openai_gpt-6.2-astra-default/CCA/salida/style.css">style.css</a></small></td>
+<td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula envío y total; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: cantidades negativas, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
+<td class="nota n1">4<br><small>maqueta de carrito, sin escalar</small></td>
+<td><small>Una página de carrito bien acabada con cuatro láminas, envío gratis desde 75 € y persistencia en localStorage que valida lo que lee. No hay tests, ni servidor, ni README: «escalable» se queda en que el catálogo es una lista que se puede ampliar.</small> <a href="resultados/openai_gpt-6.2-astra-default/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -489,16 +489,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Un juego de mesa de mezclas con 36 elementos y 32 recetas, todos alcanzables, que guarda, busca y da pistas. Lo de Web Reactiva se queda en Zona Malandriner, Top Malandriner, el podcast premium y la newsletter: el resto es frontend, backend, API y framework, y las mezclas sin receta no dan nada.</small> <a href="resultados/openai_gpt-6.2-astra-medium/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/openai_gpt-6.2-astra-medium/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/openai_gpt-6.2-astra-medium/AIF/capturas/index.html.png"><img src="resultados/openai_gpt-6.2-astra-medium/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-20 10:01 UTC</small></td>
-<td class=n><b>177.8 k</b><br><small>in 13.9 k · out 6.1 k<br>razon. 116 · caché 157.7 k</small></td>
-<td class=n>8</td>
-<td><small><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/app.js">app.js</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product0.webp">assets/product0.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product1.webp">assets/product1.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product2.webp">assets/product2.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/cart.js">cart.js</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/style.css">style.css</a></small></td>
-<td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula; envío gratis desde 60 €; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: negativos, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
-<td class="nota n1">4<br><small>tienda de café, sin escalar</small></td>
-<td><small>Una página de carrito cuidada para una tienda de café, con fotos generadas, guardar para después y envío gratis desde 60 €, que valida lo que lee de localStorage. No hay tests, ni servidor, ni README: «escalable» es que el catálogo es una lista ampliable.</small> <a href="resultados/openai_gpt-6.2-astra-medium/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-24 12:06 UTC</small></td>
 <td class=n><b>470.1 k</b><br><small>in 34.7 k · out 5.9 k<br>razon. 7 · caché 429.4 k</small></td>
@@ -507,6 +497,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">5<br><small>Amplio y preciso, líneas de entrada</small></td>
 <td><small>Informe de 20 hallazgos, todos con fichero y una línea concreta, sin CWE y ninguno inventado: cubre 16 de las 40 entradas, todas con línea (F3 41,9), 23 con el criterio del juez. Ve casi todo lo grave, pero cita la primera línea de la función: cuatro SQLi, la SSRF del asistente y la lectura de archivos caen fuera de la ventana de ±10.</small> <a href="resultados/openai_gpt-6.2-astra-medium/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-20 10:01 UTC</small></td>
+<td class=n><b>177.8 k</b><br><small>in 13.9 k · out 6.1 k<br>razon. 116 · caché 157.7 k</small></td>
+<td class=n>8</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/app.js">app.js</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product0.webp">assets/product0.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product1.webp">assets/product1.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/assets/product2.webp">assets/product2.webp</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/cart.js">cart.js</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/index.html">index.html</a><br><a href="resultados/openai_gpt-6.2-astra-medium/CCA/salida/style.css">style.css</a></small></td>
+<td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula; envío gratis desde 60 €; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: negativos, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
+<td class="nota n1">4<br><small>tienda de café, sin escalar</small></td>
+<td><small>Una página de carrito cuidada para una tienda de café, con fotos generadas, guardar para después y envío gratis desde 60 €, que valida lo que lee de localStorage. No hay tests, ni servidor, ni README: «escalable» es que el catálogo es una lista ampliable.</small> <a href="resultados/openai_gpt-6.2-astra-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -539,16 +539,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Un juego de ranuras con 52 elementos y 84 recetas, todos alcanzables, sacados de lo que encontró en webreactiva.com: el podcast, En pantuflas, Esperando a Eskainet, Wikipoke o el MCP de Web Reactiva. Guarda, busca y da pistas, pero no hay lienzo libre y las mezclas sin receta no dan nada.</small> <a href="resultados/openai_gpt-6.2-sol-medium/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/openai_gpt-6.2-sol-medium/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/openai_gpt-6.2-sol-medium/AIF/capturas/index.html.png"><img src="resultados/openai_gpt-6.2-sol-medium/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-20 09:19 UTC</small></td>
-<td class=n><b>1193.2 k</b><br><small>in 47.9 k · out 18.9 k<br>razon. 2.7 k · caché 1123.7 k</small></td>
-<td class=n>27</td>
-<td><small><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/package.json">package.json</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/bolsa.webp">public/assets/bolsa.webp</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/cuenco.webp">public/assets/cuenco.webp</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-sans-OFL.txt">public/assets/dm-sans-OFL.txt</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-sans.woff2">public/assets/dm-sans.woff2</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-serif-display-OFL.txt">public/assets/dm-serif-display-OFL.txt</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-serif-display.woff2">public/assets/dm-serif-display.woff2</a><br>… y 13 más</small></td>
-<td><small>✔ npm start sin dependencias: sirve la app en el puerto 3000<br>✔ npm test: 4 de 4<br>✔ precios en céntimos; 0,10 × 3 = 30<br>✔ id con ../ ignorado; cantidades negativas o decimales, a 0; por encima de las existencias, al tope<br>✔ el localStorage manipulado solo conserva id y cantidad válidos<br>✖ no hay API: el carrito vive en el navegador (localStorage); el servidor solo sirve ficheros<br>✖ las 50 altas a la vez no se pueden probar: no hay servicio<br>✖ quoteCart devuelve el producto del catálogo: cambiar su precio cambia el catálogo<br>~ no hay botón de vaciar; el carrito se vacía al confirmar el pedido</small></td>
-<td class="nota n1">5<br><small>bonita tienda, no escala</small></td>
-<td><small>Una tienda en el navegador muy cuidada, con fotos generadas, cupón, envío y deshacer, y un carrito con funciones puras en céntimos que valida bien lo que lee de localStorage. «Escalable» lo entiende como un catálogo ampliable: no hay servicio, ni almacenamiento compartido, ni concurrencia, y el README solo dice que para producción haría falta un servidor.</small> <a href="resultados/openai_gpt-6.2-sol-medium/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-24 11:47 UTC</small></td>
 <td class=n><b>1194.1 k</b><br><small>in 79.7 k · out 9.9 k<br>razon. 774 · caché 1103.7 k</small></td>
@@ -557,6 +547,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ informe en salida/AUDITORIA_SEGURIDAD.md (26 hallazgos) y anexo de npm audit<br>~ 26 de 40 entradas con la regla estricta, 15 a medio punto por rangos anchos (F3 47,7)<br>✔ 0 inventados; 9 fallos reales fuera de la tabla<br>✖ sin CWE en ningún hallazgo<br>~ sin búsqueda web, pero con red: npm audit y curl a la API de avisos de GitHub</small></td>
 <td class="nota n1">5<br><small>Ve mucho, localiza con brocha gorda</small></td>
 <td><small>Informe de 26 hallazgos en tablas, todos con fichero y línea pero sin CWE: cubre 26 de las 40 entradas con la regla estricta (15 sin línea, a medio punto: 18,5 en la nota, F3 47,7), 29 con el criterio del juez, y no inventa ninguno. Los rangos anchos le cuestan medio punto en 15 entradas, y se le escapan la clave en .env.local, la SSRF y la inyección del asistente, el login sin límite de intentos y el logout.</small> <a href="resultados/openai_gpt-6.2-sol-medium/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-20 09:19 UTC</small></td>
+<td class=n><b>1193.2 k</b><br><small>in 47.9 k · out 18.9 k<br>razon. 2.7 k · caché 1123.7 k</small></td>
+<td class=n>27</td>
+<td><small><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/README.md">README.md</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/package.json">package.json</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/bolsa.webp">public/assets/bolsa.webp</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/cuenco.webp">public/assets/cuenco.webp</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-sans-OFL.txt">public/assets/dm-sans-OFL.txt</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-sans.woff2">public/assets/dm-sans.woff2</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-serif-display-OFL.txt">public/assets/dm-serif-display-OFL.txt</a><br><a href="resultados/openai_gpt-6.2-sol-medium/CCA/salida/public/assets/dm-serif-display.woff2">public/assets/dm-serif-display.woff2</a><br>… y 13 más</small></td>
+<td><small>✔ npm start sin dependencias: sirve la app en el puerto 3000<br>✔ npm test: 4 de 4<br>✔ precios en céntimos; 0,10 × 3 = 30<br>✔ id con ../ ignorado; cantidades negativas o decimales, a 0; por encima de las existencias, al tope<br>✔ el localStorage manipulado solo conserva id y cantidad válidos<br>✖ no hay API: el carrito vive en el navegador (localStorage); el servidor solo sirve ficheros<br>✖ las 50 altas a la vez no se pueden probar: no hay servicio<br>✖ quoteCart devuelve el producto del catálogo: cambiar su precio cambia el catálogo<br>~ no hay botón de vaciar; el carrito se vacía al confirmar el pedido</small></td>
+<td class="nota n1">5<br><small>bonita tienda, no escala</small></td>
+<td><small>Una tienda en el navegador muy cuidada, con fotos generadas, cupón, envío y deshacer, y un carrito con funciones puras en céntimos que valida bien lo que lee de localStorage. «Escalable» lo entiende como un catálogo ampliable: no hay servicio, ni almacenamiento compartido, ni concurrencia, y el README solo dice que para producción haría falta un servidor.</small> <a href="resultados/openai_gpt-6.2-sol-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -619,16 +619,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa de dos ranuras con siete elementos iniciales de desarrollo web (HTML, CSS, JavaScript, Navegador, Servidor, Terminal, Git). Las primeras mezclas funcionan, pero de 169 elementos solo se pueden alcanzar 12: muchas recetas piden ingredientes, como React, que no salen de ninguna. De Web Reactiva tiene el nombre y algún «Podcast».</small> <a href="resultados/ollama_beam/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_beam/AIF/salida/web-reactiva-alchemy.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_beam/AIF/capturas/web-reactiva-alchemy.html.png"><img src="resultados/ollama_beam/AIF/capturas/web-reactiva-alchemy.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/beam</small><br><small>OpenCode · 2026-11-20 03:28 UTC</small></td>
-<td class=n><b>240.5 k</b><br><small>in 29.8 k · out 8.6 k<br>razon. 0 · caché 202.1 k</small></td>
-<td class=n>20</td>
-<td><small><a href="resultados/ollama_beam/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_beam/CCA/salida/src/cart.js">src/cart.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/cartManager.js">src/cartManager.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/events.js">src/events.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/http/server.js">src/http/server.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/index.js">src/index.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/inventory.js">src/inventory.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/locking.js">src/locking.js</a><br>… y 3 más</small></td>
-<td><small>✔ npm test 4/4<br>✔ 50 altas a la vez: 50 unidades (cerrojo en memoria)<br>✖ dinero en coma flotante: 0,10 × 3 = 0.30000000000000004<br>✖ el precio lo manda el cliente<br>✖ sin almacenamiento compartido ni README</small></td>
-<td class="nota n1">4<br><small>funciona, no escala</small></td>
-<td><small>Node sin dependencias, 413 líneas: carrito, gestor con un cerrojo en memoria por carrito, repositorio en memoria, inventario opcional, eventos, cupones y una API HTTP, con 4 tests en verde. Pero el dinero va en coma flotante, el precio lo manda el cliente, todo vive en un proceso y no hay README.</small> <a href="resultados/ollama_beam/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/beam</small><br><small>OpenCode · 2026-11-24 09:08 UTC</small></td>
 <td class=n><b>1320.2 k</b><br><small>in 177.4 k · out 6.8 k<br>razon. 0 · caché 1135.9 k</small></td>
@@ -637,6 +627,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n0">1<br><small>Sin informe</small></td>
 <td><small>Leyó el proyecto entero (33 órdenes de shell en 2 min 37 s) y fue anotando fallos en su razonamiento, pero no escribió ningún informe: en el último turno metió la siguiente llamada a herramienta como texto mal formado dentro del razonamiento, OpenCode no la reconoció y la sesión se cerró sin respuesta.</small> <a href="resultados/ollama_beam/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/beam</small><br><small>OpenCode · 2026-11-20 03:28 UTC</small></td>
+<td class=n><b>240.5 k</b><br><small>in 29.8 k · out 8.6 k<br>razon. 0 · caché 202.1 k</small></td>
+<td class=n>20</td>
+<td><small><a href="resultados/ollama_beam/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_beam/CCA/salida/src/cart.js">src/cart.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/cartManager.js">src/cartManager.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/events.js">src/events.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/http/server.js">src/http/server.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/index.js">src/index.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/inventory.js">src/inventory.js</a><br><a href="resultados/ollama_beam/CCA/salida/src/locking.js">src/locking.js</a><br>… y 3 más</small></td>
+<td><small>✔ npm test 4/4<br>✔ 50 altas a la vez: 50 unidades (cerrojo en memoria)<br>✖ dinero en coma flotante: 0,10 × 3 = 0.30000000000000004<br>✖ el precio lo manda el cliente<br>✖ sin almacenamiento compartido ni README</small></td>
+<td class="nota n1">4<br><small>funciona, no escala</small></td>
+<td><small>Node sin dependencias, 413 líneas: carrito, gestor con un cerrojo en memoria por carrito, repositorio en memoria, inventario opcional, eventos, cupones y una API HTTP, con 4 tests en verde. Pero el dinero va en coma flotante, el precio lo manda el cliente, todo vive en un proceso y no hay README.</small> <a href="resultados/ollama_beam/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -669,16 +669,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>La mecánica más fiel a Infinite Craft de todo el benchmark: lienzo libre donde se suelta una pieza sobre otra, almacén con buscador y una misión (descubrir el Atlas Malandriner). 78 elementos y 90 recetas sacados de webreactiva.com, todos alcanzables, con pistas, sonido y guardado. Pero no es infinito: fuera de las 90 recetas, las mezclas no dan nada.</small> <a href="resultados/ollama_deepseek-v4.1-flash/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_deepseek-v4.1-flash/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_deepseek-v4.1-flash/AIF/capturas/index.html.png"><img src="resultados/ollama_deepseek-v4.1-flash/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-19 22:47 UTC</small></td>
-<td class=n><b>1143.5 k</b><br><small>in 62.4 k · out 49.7 k<br>razon. 0 · caché 1031.4 k</small></td>
-<td class=n>26</td>
-<td><small><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/index.html">index.html</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/server.js">server.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/config/pricing.js">src/config/pricing.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/Cart.js">src/core/Cart.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/CheckoutService.js">src/core/CheckoutService.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/EventEmitter.js">src/core/EventEmitter.js</a><br>… y 12 más</small></td>
-<td><small>✔ carga · index.html<br>✔ npm test: 23/23<br>✔ npm start sirve la tienda y añadir al carrito funciona<br>~ el carrito vive en localStorage: no hay backend que escalar</small></td>
-<td class="nota n1">6<br><small>bonito, escala el código, no el sistema</small></td>
-<td><small>Una tienda completa y muy cuidada (catálogo, búsqueda, carrito, cupones, envío, IVA, checkout) con un motor de precios por reglas, dinero en céntimos, almacenamiento intercambiable y 23 tests. Pero el carrito vive en localStorage y el servidor solo sirve estáticos: «escalable» lo resuelve como código fácil de ampliar, sin nada que aguante muchos usuarios.</small> <a href="resultados/ollama_deepseek-v4.1-flash/CCA/juicio.md">juicio</a></td>
-<td class=cap><a href="resultados/ollama_deepseek-v4.1-flash/CCA/capturas/tienda.png"><img src="resultados/ollama_deepseek-v4.1-flash/CCA/capturas/tienda.png" loading="lazy"></a></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-23 20:52 UTC</small></td>
 <td class=n><b>3103.0 k</b><br><small>in 120.4 k · out 46.6 k<br>razon. 0 · caché 2936.1 k</small></td>
@@ -688,6 +678,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class="nota n1">7<br><small>Ve mucho, con rangos anchos</small></td>
 <td><small>Informe de 38 hallazgos, todos con CWE, en el que el juez reconoce 34 de las 40 entradas y solo dos no se sostienen, pero la nota cuenta 22,5 (F3 56,6): ocho de sus rangos pasan de 20 líneas y diez entradas valen medio acierto, como si no diera línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el logout, el token de soporte en claro y en la respuesta, y la página de noticias.</small> <a href="resultados/ollama_deepseek-v4.1-flash/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-19 22:47 UTC</small></td>
+<td class=n><b>1143.5 k</b><br><small>in 62.4 k · out 49.7 k<br>razon. 0 · caché 1031.4 k</small></td>
+<td class=n>26</td>
+<td><small><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/index.html">index.html</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/server.js">server.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/config/pricing.js">src/config/pricing.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/Cart.js">src/core/Cart.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/CheckoutService.js">src/core/CheckoutService.js</a><br><a href="resultados/ollama_deepseek-v4.1-flash/CCA/salida/src/core/EventEmitter.js">src/core/EventEmitter.js</a><br>… y 12 más</small></td>
+<td><small>✔ carga · index.html<br>✔ npm test: 23/23<br>✔ npm start sirve la tienda y añadir al carrito funciona<br>~ el carrito vive en localStorage: no hay backend que escalar</small></td>
+<td class="nota n1">6<br><small>bonito, escala el código, no el sistema</small></td>
+<td><small>Una tienda completa y muy cuidada (catálogo, búsqueda, carrito, cupones, envío, IVA, checkout) con un motor de precios por reglas, dinero en céntimos, almacenamiento intercambiable y 23 tests. Pero el carrito vive en localStorage y el servidor solo sirve estáticos: «escalable» lo resuelve como código fácil de ampliar, sin nada que aguante muchos usuarios.</small> <a href="resultados/ollama_deepseek-v4.1-flash/CCA/juicio.md">juicio</a></td>
+<td class=cap><a href="resultados/ollama_deepseek-v4.1-flash/CCA/capturas/tienda.png"><img src="resultados/ollama_deepseek-v4.1-flash/CCA/capturas/tienda.png" loading="lazy"></a></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
 <td><small>ollama/deepseek-v4.1-flash</small><br><small>OpenCode · 2026-11-24 07:44 UTC</small></td>
@@ -719,16 +719,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Tablero libre donde se suelta una ficha sobre otra, 187 elementos y 192 recetas todos alcanzables desde Humano, Café, Prompt y Terminal, y un generador para las mezclas sin receta que cuenta los inventos aparte. El contenido sale de la portada de webreactiva.com (Programa con IA, Fichómetro, Atlas Malandriner, En Pantuflas, «sin alucinar»), con pistas, retos, buscador y guardado.</small> <a href="resultados/ollama_glm-5.3/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_glm-5.3/AIF/salida/alquimia-reactiva.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_glm-5.3/AIF/capturas/alquimia-reactiva.html.png"><img src="resultados/ollama_glm-5.3/AIF/capturas/alquimia-reactiva.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/glm-5.3</small><br><small>OpenCode · 2026-11-20 16:01 UTC</small></td>
-<td class=n><b>1975.7 k</b><br><small>in 88.5 k · out 68.9 k<br>razon. 0 · caché 1818.4 k</small></td>
-<td class=n>31</td>
-<td><small><a href="resultados/ollama_glm-5.3/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/public/app.js">public/app.js</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/public/index.html">public/index.html</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/public/styles.css">public/styles.css</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/src/adapters/memory/memory-cart-repository.ts">src/adapters/memory/memory-cart-repository.ts</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/src/adapters/memory/memory-product-repository.ts">src/adapters/memory/memory-product-repository.ts</a><br>… y 80 más</small></td>
-<td><small>✔ npm ci, build y 19/19 tests (vitest); arranca la API con una interfaz web de demostración<br>✔ 50 altas a la vez en una instancia: 50 guardadas<br>✖ dos instancias con el mismo SQLite: 44 guardadas y 6 errores 500; sin control de versión<br>✔ dinero en céntimos, precio del catálogo (se ignora el del cliente), una sola moneda<br>✔ valida cantidad 0, negativa, decimal, enorme y en texto; productos y carritos con «../»; cuerpo vacío<br>~ entrega dist/ y data/cart.db junto al código</small></td>
-<td class="nota n2">8<br><small>limpio, una sola instancia</small></td>
-<td><small>API Express en TypeScript con capas y puertos, SQLite nativo de Node, dinero en céntimos, precio siempre del catálogo, descuentos, envío, IVA, checkout con stock, validación estricta y una interfaz web; compila, pasa 19 tests y 50 altas a la vez en una instancia no pierden nada. Pero no tiene control de versión: con dos instancias sobre el mismo SQLite seis de cincuenta altas acaban en error 500.</small> <a href="resultados/ollama_glm-5.3/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/glm-5.3</small><br><small>OpenCode · 2026-11-24 08:34 UTC</small></td>
 <td class=n><b>1662.7 k</b><br><small>in 109.2 k · out 36.5 k<br>razon. 0 · caché 1517.1 k</small></td>
@@ -737,6 +727,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">6<br><small>Amplio, localiza con rangos anchos</small></td>
 <td><small>Informe de 37 hallazgos (en Markdown y en JSON) en el que el juez reconoce 32 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 21,5 aciertos (16 con línea y 11 a medio punto) y F3 54,4: tres aciertos no dan línea y ocho caen en rangos de más de 20 líneas. Se le escapan el oráculo de padding, los dos XSS de reseñas y el open redirect, el IDOR de wishlists, el token de soporte en claro, la fuga de la URL del asistente, el logout y la página de noticias.</small> <a href="resultados/ollama_glm-5.3/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/glm-5.3</small><br><small>OpenCode · 2026-11-20 16:01 UTC</small></td>
+<td class=n><b>1975.7 k</b><br><small>in 88.5 k · out 68.9 k<br>razon. 0 · caché 1818.4 k</small></td>
+<td class=n>31</td>
+<td><small><a href="resultados/ollama_glm-5.3/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/public/app.js">public/app.js</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/public/index.html">public/index.html</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/public/styles.css">public/styles.css</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/src/adapters/memory/memory-cart-repository.ts">src/adapters/memory/memory-cart-repository.ts</a><br><a href="resultados/ollama_glm-5.3/CCA/salida/src/adapters/memory/memory-product-repository.ts">src/adapters/memory/memory-product-repository.ts</a><br>… y 80 más</small></td>
+<td><small>✔ npm ci, build y 19/19 tests (vitest); arranca la API con una interfaz web de demostración<br>✔ 50 altas a la vez en una instancia: 50 guardadas<br>✖ dos instancias con el mismo SQLite: 44 guardadas y 6 errores 500; sin control de versión<br>✔ dinero en céntimos, precio del catálogo (se ignora el del cliente), una sola moneda<br>✔ valida cantidad 0, negativa, decimal, enorme y en texto; productos y carritos con «../»; cuerpo vacío<br>~ entrega dist/ y data/cart.db junto al código</small></td>
+<td class="nota n2">8<br><small>limpio, una sola instancia</small></td>
+<td><small>API Express en TypeScript con capas y puertos, SQLite nativo de Node, dinero en céntimos, precio siempre del catálogo, descuentos, envío, IVA, checkout con stock, validación estricta y una interfaz web; compila, pasa 19 tests y 50 altas a la vez en una instancia no pierden nada. Pero no tiene control de versión: con dos instancias sobre el mismo SQLite seis de cincuenta altas acaban en error 500.</small> <a href="resultados/ollama_glm-5.3/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -769,16 +769,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mecánica muy fiel a Infinite Craft (mesa infinita con zoom, soltar una ficha sobre otra, panel de descubrimientos con buscador, sonidos), 145 recetas todas alcanzables y un generador de «invenciones raras» para las mezclas sin receta. Pero el contenido de Web Reactiva es inventado: «Nacho Ojea», «Trece Tigres», «La Red», ZX Spectrum y GeoCities; parte de Internet, Radio, Cine y Juego.</small> <a href="resultados/ollama_glm-5.3-flash/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_glm-5.3-flash/AIF/salida/web-reactiva-craft.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_glm-5.3-flash/AIF/capturas/web-reactiva-craft.html.png"><img src="resultados/ollama_glm-5.3-flash/AIF/capturas/web-reactiva-craft.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-19 22:45 UTC</small></td>
-<td class=n><b>1083.0 k</b><br><small>in 45.9 k · out 32.9 k<br>razon. 0 · caché 1004.2 k</small></td>
-<td class=n>33</td>
-<td><small><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/.gitignore">.pytest_cache/.gitignore</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/CACHEDIR.TAG">.pytest_cache/CACHEDIR.TAG</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/README.md">.pytest_cache/README.md</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/v/cache/lastfailed">.pytest_cache/v/cache/lastfailed</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/v/cache/nodeids">.pytest_cache/v/cache/nodeids</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/__pycache__/conftest.cpython-313-pytest-9.1.1.pyc">__pycache__/conftest.cpython-313-pytest-9.1.1.pyc</a><br>… y 44 más</small></td>
-<td><small>✔ pytest: 24/24<br>✔ 50 hilos concurrentes en memoria: 50 líneas<br>✔ Decimal: 0,10 × 3 = 0.30<br>✖ adaptador Redis: cualquier excepción acaba en AttributeError (self._client.WatchError no existe)</small></td>
-<td class="nota n2">8<br><small>bien diseñado, Redis roto</small></td>
-<td><small>Python con capas (dominio, aplicación, infraestructura, API HTTP), Decimal para el dinero, precios del catálogo, bloqueo por carrito en memoria, límites y 24 tests en verde. Pero el adaptador de Redis, que es lo que lo haría escalar, captura self._client.WatchError, que no existe: un conflicto de concurrencia o cualquier error de negocio acaba en AttributeError.</small> <a href="resultados/ollama_glm-5.3-flash/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-23 20:51 UTC</small></td>
 <td class=n><b>1158.0 k</b><br><small>in 120.2 k · out 20.2 k<br>razon. 0 · caché 1017.6 k</small></td>
@@ -787,6 +777,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">5<br><small>Ve casi todo, localiza a medias</small></td>
 <td><small>Informe de 39 hallazgos en el que el juez reconoce 35 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 22 aciertos (15 con línea y 14 a medio punto) y F3 55,7: seis aciertos no dan línea y ocho citan rangos de más de 20 líneas, que valen como sin línea. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, la inyección por salida de herramientas, el token de soporte en claro y la página de noticias.</small> <a href="resultados/ollama_glm-5.3-flash/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/glm-5.3-flash</small><br><small>OpenCode · 2026-11-19 22:45 UTC</small></td>
+<td class=n><b>1083.0 k</b><br><small>in 45.9 k · out 32.9 k<br>razon. 0 · caché 1004.2 k</small></td>
+<td class=n>33</td>
+<td><small><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/.gitignore">.pytest_cache/.gitignore</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/CACHEDIR.TAG">.pytest_cache/CACHEDIR.TAG</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/README.md">.pytest_cache/README.md</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/v/cache/lastfailed">.pytest_cache/v/cache/lastfailed</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/.pytest_cache/v/cache/nodeids">.pytest_cache/v/cache/nodeids</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_glm-5.3-flash/CCA/salida/__pycache__/conftest.cpython-313-pytest-9.1.1.pyc">__pycache__/conftest.cpython-313-pytest-9.1.1.pyc</a><br>… y 44 más</small></td>
+<td><small>✔ pytest: 24/24<br>✔ 50 hilos concurrentes en memoria: 50 líneas<br>✔ Decimal: 0,10 × 3 = 0.30<br>✖ adaptador Redis: cualquier excepción acaba en AttributeError (self._client.WatchError no existe)</small></td>
+<td class="nota n2">8<br><small>bien diseñado, Redis roto</small></td>
+<td><small>Python con capas (dominio, aplicación, infraestructura, API HTTP), Decimal para el dinero, precios del catálogo, bloqueo por carrito en memoria, límites y 24 tests en verde. Pero el adaptador de Redis, que es lo que lo haría escalar, captura self._client.WatchError, que no existe: un conflicto de concurrencia o cualquier error de negocio acaba en AttributeError.</small> <a href="resultados/ollama_glm-5.3-flash/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -819,16 +819,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa libre con fichas que se combinan soltando una sobre otra, 125 elementos todos alcanzables y un generador para las mezclas sin receta. Parte de Agua, Fuego, Aire y Tierra y mezcla programación genérica (React, Rust, Docker) con algo de Web Reactiva (podcast, masterclass, «Maratón WR», «Membresía WR», «Slow Content»), sin mirar la web.</small> <a href="resultados/ollama_inkling-2-small/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_inkling-2-small/AIF/salida/alquimia-reactiva.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_inkling-2-small/AIF/capturas/alquimia-reactiva.html.png"><img src="resultados/ollama_inkling-2-small/AIF/capturas/alquimia-reactiva.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-20 01:44 UTC</small></td>
-<td class=n><b>1042.4 k</b><br><small>in 145.2 k · out 31.4 k<br>razon. 0 · caché 865.8 k</small></td>
-<td class=n>40</td>
-<td><small><a href="resultados/ollama_inkling-2-small/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/cartService.ts">src/application/cartService.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/cartView.ts">src/application/cartView.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/ports.ts">src/application/ports.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/config.ts">src/config.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br>… y 16 más</small></td>
-<td><small>✔ build y 21/21 tests<br>✔ 50 altas a la vez: 50 guardadas<br>✔ precio del catálogo, céntimos, CAS por versión, TTL<br>~ solo repositorios en memoria: varias instancias no comparten carrito</small></td>
-<td class="nota n2">9<br><small>bien diseñado, sin Redis</small></td>
-<td><small>API Fastify sin estado en TypeScript, con capas y puertos, dinero en céntimos, precio del catálogo, cupones, IVA, envío, caducidad de carritos y compare-and-set por versión en el repositorio. Compila, pasa 21 tests y 50 altas a la vez no pierden nada. Pero solo trae repositorios en memoria: Redis o Postgres quedan como «pendiente».</small> <a href="resultados/ollama_inkling-2-small/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-23 20:52 UTC</small></td>
 <td class=n><b>852.4 k</b><br><small>in 261.0 k · out 16.5 k<br>razon. 0 · caché 575.0 k</small></td>
@@ -837,6 +827,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">4<br><small>Ve mucho, localiza poco</small></td>
 <td><small>Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: 2 aciertos con línea y 29 a medio punto dejan el F3 estricto en 41,4. Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews.</small> <a href="resultados/ollama_inkling-2-small/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/inkling-2-small</small><br><small>OpenCode · 2026-11-20 01:44 UTC</small></td>
+<td class=n><b>1042.4 k</b><br><small>in 145.2 k · out 31.4 k<br>razon. 0 · caché 865.8 k</small></td>
+<td class=n>40</td>
+<td><small><a href="resultados/ollama_inkling-2-small/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/package.json">package.json</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/cartService.ts">src/application/cartService.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/cartView.ts">src/application/cartView.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/application/ports.ts">src/application/ports.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/config.ts">src/config.ts</a><br><a href="resultados/ollama_inkling-2-small/CCA/salida/src/domain/cart.ts">src/domain/cart.ts</a><br>… y 16 más</small></td>
+<td><small>✔ build y 21/21 tests<br>✔ 50 altas a la vez: 50 guardadas<br>✔ precio del catálogo, céntimos, CAS por versión, TTL<br>~ solo repositorios en memoria: varias instancias no comparten carrito</small></td>
+<td class="nota n2">9<br><small>bien diseñado, sin Redis</small></td>
+<td><small>API Fastify sin estado en TypeScript, con capas y puertos, dinero en céntimos, precio del catálogo, cupones, IVA, envío, caducidad de carritos y compare-and-set por versión en el repositorio. Compila, pasa 21 tests y 50 altas a la vez no pierden nada. Pero solo trae repositorios en memoria: Redis o Postgres quedan como «pendiente».</small> <a href="resultados/ollama_inkling-2-small/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -869,16 +869,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Contenido sacado de cuatro páginas de webreactiva.com (Malandriner, En pantuflas, Claude Code, Skills, MCP, SDD, «Deploy en viernes»), 98 elementos todos alcanzables, rangos («Aprendiz en pantuflas»), hitos, pistas, bitácora y una interfaz de producto. Mesa libre donde se combina soltando una ficha sobre otra. No es infinito: las mezclas sin receta dan un mensaje.</small> <a href="resultados/ollama_kimi-k3.1-pro/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_kimi-k3.1-pro/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_kimi-k3.1-pro/AIF/capturas/index.html.png"><img src="resultados/ollama_kimi-k3.1-pro/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/kimi-k3.1-pro</small><br><small>OpenCode · 2026-11-20 02:07 UTC</small></td>
-<td class=n><b>174.6 k</b><br><small>in 17.6 k · out 12.7 k<br>razon. 0 · caché 144.3 k</small></td>
-<td class=n>11</td>
-<td><small><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/main.py">main.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__init__.py">models/__init__.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/__init__.cpython-313.pyc">models/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/carrito.cpython-313.pyc">models/__pycache__/carrito.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/item_carrito.cpython-313.pyc">models/__pycache__/item_carrito.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/producto.cpython-313.pyc">models/__pycache__/producto.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/carrito.py">models/carrito.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/item_carrito.py">models/item_carrito.py</a><br>… y 8 más</small></td>
-<td><small>✔ 17/17 tests y main.py<br>✔ Decimal, una moneda, precio del catálogo, stock<br>✔ 50 hilos a la vez: 50 líneas<br>✖ una clase en memoria: sin servicio, sin persistencia, sin nada para escalar</small></td>
-<td class="nota n1">6<br><small>correcto, pero no escala</small></td>
-<td><small>Una clase Carrito en Python, limpia y bien validada (Decimal, una moneda por carrito, precio y stock del catálogo, 17 tests), pero sin servicio, sin persistencia y sin nada que responda a «escalable»: el carrito vive en un objeto en memoria y no hay README que lo explique.</small> <a href="resultados/ollama_kimi-k3.1-pro/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/kimi-k3.1-pro</small><br><small>OpenCode · 2026-11-24 02:31 UTC</small></td>
 <td class=n><b>8675.1 k</b><br><small>in 784.2 k · out 161.2 k<br>razon. 0 · caché 7729.8 k</small></td>
@@ -887,6 +877,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n2">8<br><small>Amplio, preciso, rangos anchos</small></td>
 <td><small>Informe de 34 hallazgos sin ninguno inventado en el que el juez reconoce 35 de las 40 entradas, pero la nota cuenta 25,5 (F3 64,3): trece rangos pasan de 20 líneas y 17 entradas valen medio acierto. Se le escapan la SSRF del asistente (la borró justo antes del corte), la fuga de herramientas en su respuesta, la enumeración en el login, el oráculo de padding y el token de soporte en claro.</small> <a href="resultados/ollama_kimi-k3.1-pro/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/kimi-k3.1-pro</small><br><small>OpenCode · 2026-11-20 02:07 UTC</small></td>
+<td class=n><b>174.6 k</b><br><small>in 17.6 k · out 12.7 k<br>razon. 0 · caché 144.3 k</small></td>
+<td class=n>11</td>
+<td><small><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/main.py">main.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__init__.py">models/__init__.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/__init__.cpython-313.pyc">models/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/carrito.cpython-313.pyc">models/__pycache__/carrito.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/item_carrito.cpython-313.pyc">models/__pycache__/item_carrito.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/__pycache__/producto.cpython-313.pyc">models/__pycache__/producto.cpython-313.pyc</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/carrito.py">models/carrito.py</a><br><a href="resultados/ollama_kimi-k3.1-pro/CCA/salida/models/item_carrito.py">models/item_carrito.py</a><br>… y 8 más</small></td>
+<td><small>✔ 17/17 tests y main.py<br>✔ Decimal, una moneda, precio del catálogo, stock<br>✔ 50 hilos a la vez: 50 líneas<br>✖ una clase en memoria: sin servicio, sin persistencia, sin nada para escalar</small></td>
+<td class="nota n1">6<br><small>correcto, pero no escala</small></td>
+<td><small>Una clase Carrito en Python, limpia y bien validada (Decimal, una moneda por carrito, precio y stock del catálogo, 17 tests), pero sin servicio, sin persistencia y sin nada que responda a «escalable»: el carrito vive en un objeto en memoria y no hay README que lo explique.</small> <a href="resultados/ollama_kimi-k3.1-pro/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -919,16 +919,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>399 elementos y 1780 recetas sacados de webreactiva.com de verdad (glosario, cursos, skills, comunidad Malandriner), un generador para las mezclas sin receta, 7 legendarios, pistas, bitácora, compartir por URL, y el logo, los colores y la tipografía de la marca. Funciona sin conexión. Le falta el lienzo libre de Infinite Craft: combina en dos calderos.</small> <a href="resultados/ollama_minimax-m3/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_minimax-m3/AIF/salida/alquimia-reactiva.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_minimax-m3/AIF/capturas/alquimia-reactiva.html.png"><img src="resultados/ollama_minimax-m3/AIF/capturas/alquimia-reactiva.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-20 00:06 UTC</small></td>
-<td class=n><b>12922.7 k</b><br><small>in 137.4 k · out 112.2 k<br>razon. 0 · caché 12673.1 k</small></td>
-<td class=n>155</td>
-<td><small><a href="resultados/ollama_minimax-m3/CCA/salida/.env.example">.env.example</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.prettierignore">.prettierignore</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.prettierrc.json">.prettierrc.json</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/docker-compose.yml">docker-compose.yml</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/eslint.config.js">eslint.config.js</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/package.json">package.json</a><br>… y 254 más</small></td>
-<td><small>✔ npm ci, build, typecheck y lint<br>✔ 69/69 tests, también los de integración con Redis<br>✔ dos instancias con el mismo Redis: 40 altas a la vez, 22 guardadas = 22 aceptadas, 18 con 409 explícito<br>✔ límite de 10 unidades por línea (422)</small></td>
-<td class="nota n2">10<br><small>escala de verdad, con Redis</small></td>
-<td><small>Monorepo TypeScript con dominio hexagonal, API Fastify sin estado, Redis con scripts Lua (CAS por versión, reserva de stock, idempotencia), outbox, métricas, SSE y una tienda React. Compila, pasa 69 tests y, con dos instancias sobre el mismo Redis, 40 altas a la vez no pierden ni un dato. Lo único discutible: bajo mucha contención devuelve 409 en vez de reintentar más.</small> <a href="resultados/ollama_minimax-m3/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-24 08:59 UTC</small></td>
 <td class=n><b>1694.4 k</b><br><small>in 75.3 k · out 36.7 k<br>razon. 0 · caché 1582.5 k</small></td>
@@ -937,6 +927,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">6<br><small>Amplio, flojo en líneas</small></td>
 <td><small>Informe de 46 hallazgos (en Markdown y en JSON) en el que el juez reconoce 31 de las 40 entradas, pero con la regla estricta se queda en 21 aciertos (18 con línea y 6 a medio punto) y F3 51,3: lo de severidad media va sin línea y cuatro aciertos citan líneas fuera de la ventana o otro fichero. Se le escapan el oráculo de padding, la API de flags, el XSS de reseñas, el open redirect, el logout, el token de soporte en claro, la fuga de la respuesta del asistente y la página de noticias.</small> <a href="resultados/ollama_minimax-m3/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-20 00:06 UTC</small></td>
+<td class=n><b>12922.7 k</b><br><small>in 137.4 k · out 112.2 k<br>razon. 0 · caché 12673.1 k</small></td>
+<td class=n>155</td>
+<td><small><a href="resultados/ollama_minimax-m3/CCA/salida/.env.example">.env.example</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.prettierignore">.prettierignore</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/.prettierrc.json">.prettierrc.json</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/docker-compose.yml">docker-compose.yml</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/eslint.config.js">eslint.config.js</a><br><a href="resultados/ollama_minimax-m3/CCA/salida/package.json">package.json</a><br>… y 254 más</small></td>
+<td><small>✔ npm ci, build, typecheck y lint<br>✔ 69/69 tests, también los de integración con Redis<br>✔ dos instancias con el mismo Redis: 40 altas a la vez, 22 guardadas = 22 aceptadas, 18 con 409 explícito<br>✔ límite de 10 unidades por línea (422)</small></td>
+<td class="nota n2">10<br><small>escala de verdad, con Redis</small></td>
+<td><small>Monorepo TypeScript con dominio hexagonal, API Fastify sin estado, Redis con scripts Lua (CAS por versión, reserva de stock, idempotencia), outbox, métricas, SSE y una tienda React. Compila, pasa 69 tests y, con dos instancias sobre el mismo Redis, 40 altas a la vez no pierden ni un dato. Lo único discutible: bajo mucha contención devuelve 409 en vez de reintentar más.</small> <a href="resultados/ollama_minimax-m3/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -969,16 +969,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Mesa libre donde se suelta un elemento sobre otro, 203 elementos y 199 recetas todos alcanzables, sacados de varias páginas de webreactiva.com: agentes, skills, SDD con OpenSpec y Spec Kit, MCP, costes de tokens, seguridad y la capa de marca (Dani Primo, Zona y Atlas Malandriner, En pantuflas). Pistas, recetario, compartir y guardado. Fuera de las recetas no hay generador.</small> <a href="resultados/ollama_minimax-m3.1-flash/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_minimax-m3.1-flash/AIF/salida/alquimia-web-reactiva.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_minimax-m3.1-flash/AIF/capturas/alquimia-web-reactiva.html.png"><img src="resultados/ollama_minimax-m3.1-flash/AIF/capturas/alquimia-web-reactiva.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-20 02:48 UTC</small></td>
-<td class=n><b>14602.0 k</b><br><small>in 135.3 k · out 113.4 k<br>razon. 0 · caché 14353.3 k</small></td>
-<td class=n>154</td>
-<td><small><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.dockerignore">.dockerignore</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.env.example">.env.example</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/Dockerfile">Dockerfile</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/docker-compose.yml">docker-compose.yml</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/eslint.config.js">eslint.config.js</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/package.json">package.json</a><br>… y 119 más</small></td>
-<td><small>✔ build, typecheck, lint y 42/42 tests (arrancan su Redis)<br>✔ dos instancias sobre el mismo Redis: 40 altas a la vez, 40 aceptadas, 40 guardadas<br>✔ JWT (401 sin token), precio del servidor, céntimos</small></td>
-<td class="nota n2">10<br><small>el carrito más completo</small></td>
-<td><small>API Fastify sin estado con todo el carrito en Redis y cada mutación atómica en un script Lua, más concurrencia optimista por versión, idempotencia, outbox con worker y grupo de consumidores, rate limiting distribuido, JWT, métricas, Docker Compose para escalar réplicas y una prueba de carga con k6. Compila, pasa 42 tests y, con dos instancias, 40 altas a la vez entran todas sin un conflicto.</small> <a href="resultados/ollama_minimax-m3.1-flash/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-24 08:44 UTC</small></td>
 <td class=n><b>5602.6 k</b><br><small>in 231.8 k · out 73.6 k<br>razon. 0 · caché 5297.2 k</small></td>
@@ -987,6 +977,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">6<br><small>Explota mucho, sin CWE</small></td>
 <td><small>Monta la tienda, la siembra y verifica en vivo 19 vectores; de sus 30 hallazgos el juez reconoce 29 entradas, ninguno inventado y nueve fallos reales sin etiquetar, pero la nota cuenta 21,5 (F3 54,5) porque el MD5, el prompt injection, el rate limiting y la exportación los sitúa fuera de su línea. Se le escapan la SQLi de reseñas de admin (que probó y no anotó), el oráculo de padding, la SSRF y la fuga del asistente, la API de flags, el open redirect, la subida de SVG y la página de noticias, y no da ningún CWE.</small> <a href="resultados/ollama_minimax-m3.1-flash/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-20 02:48 UTC</small></td>
+<td class=n><b>14602.0 k</b><br><small>in 135.3 k · out 113.4 k<br>razon. 0 · caché 14353.3 k</small></td>
+<td class=n>154</td>
+<td><small><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.dockerignore">.dockerignore</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.env.example">.env.example</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/Dockerfile">Dockerfile</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/docker-compose.yml">docker-compose.yml</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/eslint.config.js">eslint.config.js</a><br><a href="resultados/ollama_minimax-m3.1-flash/CCA/salida/package.json">package.json</a><br>… y 119 más</small></td>
+<td><small>✔ build, typecheck, lint y 42/42 tests (arrancan su Redis)<br>✔ dos instancias sobre el mismo Redis: 40 altas a la vez, 40 aceptadas, 40 guardadas<br>✔ JWT (401 sin token), precio del servidor, céntimos</small></td>
+<td class="nota n2">10<br><small>el carrito más completo</small></td>
+<td><small>API Fastify sin estado con todo el carrito en Redis y cada mutación atómica en un script Lua, más concurrencia optimista por versión, idempotencia, outbox con worker y grupo de consumidores, rate limiting distribuido, JWT, métricas, Docker Compose para escalar réplicas y una prueba de carga con k6. Compila, pasa 42 tests y, con dos instancias, 40 altas a la vez entran todas sin un conflicto.</small> <a href="resultados/ollama_minimax-m3.1-flash/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -1019,16 +1019,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Juego de combinar con 268 elementos y 264 recetas, todos alcanzables desde Computadora, Internet, Electricidad y Papel, con pista, buscador y guardado. Pero se combina seleccionando dos fichas en vez de soltar una sobre otra, las mezclas sin receta no dan nada y el contenido es desarrollo web genérico: de Web Reactiva solo queda el nombre, como Podcast + Comunidad.</small> <a href="resultados/ollama_mistral-large-4/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_mistral-large-4/AIF/salida/reactiva-craft.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_mistral-large-4/AIF/capturas/reactiva-craft.html.png"><img src="resultados/ollama_mistral-large-4/AIF/capturas/reactiva-craft.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/mistral-large-4</small><br><small>OpenCode · 2026-11-20 17:50 UTC</small></td>
-<td class=n><b>190.5 k</b><br><small>in 29.6 k · out 39.5 k<br>razon. 0 · caché 121.3 k</small></td>
-<td class=n>9</td>
-<td><small><a href="resultados/ollama_mistral-large-4/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/__init__.py">cart/__init__.py</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/__pycache__/__init__.cpython-313.pyc">cart/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__init__.py">cart/application/__init__.py</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__pycache__/__init__.cpython-313.pyc">cart/application/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__pycache__/ports.cpython-313.pyc">cart/application/__pycache__/ports.cpython-313.pyc</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__pycache__/pricing.cpython-313.pyc">cart/application/__pycache__/pricing.cpython-313.pyc</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__pycache__/services.cpython-313.pyc">cart/application/__pycache__/services.cpython-313.pyc</a><br>… y 20 más</small></td>
-<td><small>✔ sin dependencias: 24/24 tests (unittest) y la demo, en memoria y con SQLite<br>✔ 50 altas a la vez (hilos) con un servicio: 50 guardadas<br>✖ dos servicios sobre el mismo SQLite: 50 aceptadas y 47 guardadas; se pierden 3 sin aviso<br>✔ dinero en céntimos (0,10 × 3 = 0,30), EUR + USD da error, el precio sale del catálogo (la API no admite precio)<br>✔ valida cantidad 0, negativa, decimal, en texto y por encima de 999; SKU y carrito con «../»<br>~ librería sin servidor; el cerrojo que la protege vive en el proceso</small></td>
-<td class="nota n2">8<br><small>sólido en un proceso</small></td>
-<td><small>Librería Python sin dependencias, hexagonal, con dinero en céntimos, una moneda por carrito, precio del catálogo, descuentos e impuestos enchufables, eventos de dominio, límites y repositorio en memoria o SQLite; 24 tests y una demo que funcionan, y 50 altas a la vez con un servicio no pierden nada. Pero la concurrencia depende de un cerrojo del proceso: con dos servicios sobre el mismo SQLite se pierden 3 de 50 altas sin aviso.</small> <a href="resultados/ollama_mistral-large-4/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/mistral-large-4</small><br><small>OpenCode · 2026-11-24 08:55 UTC</small></td>
 <td class=n><b>567.1 k</b><br><small>in 77.9 k · out 15.2 k<br>razon. 0 · caché 474.1 k</small></td>
@@ -1037,6 +1027,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n1">5<br><small>Cruce sólido, forma descuidada</small></td>
 <td><small>Informe de 39 hallazgos en el que el juez reconoce 32 de las 40 entradas, pero la nota cuenta 22 (F3 54,5): ocho entradas valen medio acierto por ir sin línea o con rangos de más de 20, y ocho hallazgos no se sostienen como fallo. Se le escapan el oráculo de padding (lo menciona y lo descarta), el open redirect del login, el logout, el token de soporte en claro y en la respuesta, el total del pedido, la fuga de herramientas del asistente y la página de noticias; además pierde los puntos de línea y CWE.</small> <a href="resultados/ollama_mistral-large-4/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/mistral-large-4</small><br><small>OpenCode · 2026-11-20 17:50 UTC</small></td>
+<td class=n><b>190.5 k</b><br><small>in 29.6 k · out 39.5 k<br>razon. 0 · caché 121.3 k</small></td>
+<td class=n>9</td>
+<td><small><a href="resultados/ollama_mistral-large-4/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/__init__.py">cart/__init__.py</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/__pycache__/__init__.cpython-313.pyc">cart/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__init__.py">cart/application/__init__.py</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__pycache__/__init__.cpython-313.pyc">cart/application/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__pycache__/ports.cpython-313.pyc">cart/application/__pycache__/ports.cpython-313.pyc</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__pycache__/pricing.cpython-313.pyc">cart/application/__pycache__/pricing.cpython-313.pyc</a><br><a href="resultados/ollama_mistral-large-4/CCA/salida/cart/application/__pycache__/services.cpython-313.pyc">cart/application/__pycache__/services.cpython-313.pyc</a><br>… y 20 más</small></td>
+<td><small>✔ sin dependencias: 24/24 tests (unittest) y la demo, en memoria y con SQLite<br>✔ 50 altas a la vez (hilos) con un servicio: 50 guardadas<br>✖ dos servicios sobre el mismo SQLite: 50 aceptadas y 47 guardadas; se pierden 3 sin aviso<br>✔ dinero en céntimos (0,10 × 3 = 0,30), EUR + USD da error, el precio sale del catálogo (la API no admite precio)<br>✔ valida cantidad 0, negativa, decimal, en texto y por encima de 999; SKU y carrito con «../»<br>~ librería sin servidor; el cerrojo que la protege vive en el proceso</small></td>
+<td class="nota n2">8<br><small>sólido en un proceso</small></td>
+<td><small>Librería Python sin dependencias, hexagonal, con dinero en céntimos, una moneda por carrito, precio del catálogo, descuentos e impuestos enchufables, eventos de dominio, límites y repositorio en memoria o SQLite; 24 tests y una demo que funcionan, y 50 altas a la vez con un servicio no pierden nada. Pero la concurrencia depende de un cerrojo del proceso: con dos servicios sobre el mismo SQLite se pierden 3 de 50 altas sin aviso.</small> <a href="resultados/ollama_mistral-large-4/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -1069,16 +1069,6 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Contenido sacado de cuatro páginas de webreactiva.com con mucho humor de la casa («Combustible oficial del developer. 100 % malandriner», «Dirigible (400 € en tokens)»), mesa libre donde se combina soltando una ficha sobre otra, filtros, pistas y recetas secretas. Pero una receta posterior (IA + Código = Python) pisa a la que anuncia como clave (Código + IA = Prompt): sin Prompt no se puede llegar a agentes, skills, MCP, Claude Code ni SDD. Solo 68 de 102 alcanzables, y el botón «Combinar» no registra nada.</small> <a href="resultados/ollama_muse-spark-open/AIF/juicio.md">juicio</a> · <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_muse-spark-open/AIF/salida/index.html">▶ en vivo</a></td>
 <td class=cap><a href="resultados/ollama_muse-spark-open/AIF/capturas/index.html.png"><img src="resultados/ollama_muse-spark-open/AIF/capturas/index.html.png" loading="lazy"></a></td>
 </tr><tr>
-<td><b>CCA</b><br><small>código</small></td>
-<td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-20 03:26 UTC</small></td>
-<td class=n><b>603.7 k</b><br><small>in 16.6 k · out 25.7 k<br>razon. 0 · caché 561.4 k</small></td>
-<td class=n>24</td>
-<td><small><a href="resultados/ollama_muse-spark-open/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__init__.py">api/__init__.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__pycache__/__init__.cpython-313.pyc">api/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__pycache__/app.cpython-313.pyc">api/__pycache__/app.cpython-313.pyc</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/app.py">api/app.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/fastapi_app.py">api/fastapi_app.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/cart/__init__.py">cart/__init__.py</a><br>… y 22 más</small></td>
-<td><small>✔ pytest 12/12 y main.py<br>✔ 50 hilos con 4 shards: 50 unidades<br>✔ versión optimista en el almacenamiento, Decimal, precio del inventario<br>~ sin almacenamiento compartido real (Redis/DynamoDB «intercambiable»)</small></td>
-<td class="nota n2">9<br><small>bien pensado, sin Redis</small></td>
-<td><small>Python sin dependencias: agregado de carrito con límites, motor de precios con reglas (por volumen, categoría, cupón), IVA y envío, reserva de stock, bus de eventos, servicio sin estado con versión optimista y reintentos, almacenamiento en memoria, en fichero o repartido en shards, y una API REST. Pasa 12 tests y 50 hilos no pierden nada. Pero Redis o DynamoDB son solo un contrato.</small> <a href="resultados/ollama_muse-spark-open/CCA/juicio.md">juicio</a></td>
-<td class=cap></td>
-</tr><tr>
 <td><b>SEC</b><br><small>seguridad</small></td>
 <td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-24 08:40 UTC</small></td>
 <td class=n><b>1518.6 k</b><br><small>in 94.5 k · out 18.9 k<br>razon. 0 · caché 1405.2 k</small></td>
@@ -1087,6 +1077,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>–</small></td>
 <td class="nota n0">2<br><small>Ve bastante, localiza mal</small></td>
 <td><small>Informe de 26 hallazgos repartido en cuatro ficheros, en el que el juez reconoce 32 de las 40 entradas con solo dos que no se sostienen, pero con la regla estricta se queda en 15 aciertos (F3 38,5): la mitad de lo que ve lo sitúa fuera de la ventana, en otro fichero o junto a otro fallo. Se le escapan el alta como ADMIN, el open redirect, la enumeración del login, el logout, el token de soporte en claro y en la respuesta, la fuga del asistente y la página de noticias, y dedica una sección y un fichero a inventariar flags.</small> <a href="resultados/ollama_muse-spark-open/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>CCA</b><br><small>código</small></td>
+<td><small>ollama/muse-spark-open</small><br><small>OpenCode · 2026-11-20 03:26 UTC</small></td>
+<td class=n><b>603.7 k</b><br><small>in 16.6 k · out 25.7 k<br>razon. 0 · caché 561.4 k</small></td>
+<td class=n>24</td>
+<td><small><a href="resultados/ollama_muse-spark-open/CCA/salida/.gitignore">.gitignore</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/README.md">README.md</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__init__.py">api/__init__.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__pycache__/__init__.cpython-313.pyc">api/__pycache__/__init__.cpython-313.pyc</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/__pycache__/app.cpython-313.pyc">api/__pycache__/app.cpython-313.pyc</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/app.py">api/app.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/api/fastapi_app.py">api/fastapi_app.py</a><br><a href="resultados/ollama_muse-spark-open/CCA/salida/cart/__init__.py">cart/__init__.py</a><br>… y 22 más</small></td>
+<td><small>✔ pytest 12/12 y main.py<br>✔ 50 hilos con 4 shards: 50 unidades<br>✔ versión optimista en el almacenamiento, Decimal, precio del inventario<br>~ sin almacenamiento compartido real (Redis/DynamoDB «intercambiable»)</small></td>
+<td class="nota n2">9<br><small>bien pensado, sin Redis</small></td>
+<td><small>Python sin dependencias: agregado de carrito con límites, motor de precios con reglas (por volumen, categoría, cupón), IVA y envío, reserva de stock, bus de eventos, servicio sin estado con versión optimista y reintentos, almacenamiento en memoria, en fichero o repartido en shards, y una API REST. Pasa 12 tests y 50 hilos no pierden nada. Pero Redis o DynamoDB son solo un contrato.</small> <a href="resultados/ollama_muse-spark-open/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
