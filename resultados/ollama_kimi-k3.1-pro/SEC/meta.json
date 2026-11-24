@@ -5,14 +5,14 @@
   "fecha": "2026-11-24T02:31:05Z",
   "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
   "tokens": {
-    "input": 213936,
-    "output": 47850,
+    "input": 784226,
+    "output": 161151,
     "reasoning": 0,
-    "cache_read": 3389736,
+    "cache_read": 7729761,
     "cache_write": 0,
-    "total": 3651522
+    "total": 8675138
   },
-  "peticiones": 34,
+  "peticiones": 84,
   "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 02114973-41af-491c-ada5-7544bd805774)",
   "mensajes_usuario": [
     "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
@@ -46,5 +46,15 @@
   "veces_decide_tu": 0,
   "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
   "sin_web": "webfetch y websearch denegados en opencode.json",
-  "nota_del_autor": "Cortado por el límite de uso de Ollama Cloud a mitad de una segunda pasada, con el informe ya escrito (438 líneas). Se juzga tal cual por decisión del autor (24 nov. 2026)."
+  "nota_del_autor": "Cortado por el límite de uso de Ollama Cloud a mitad de una segunda pasada, con el informe ya escrito (438 líneas). Se juzga tal cual por decisión del autor (24 nov. 2026).",
+  "subagentes": {
+    "sesiones": 3,
+    "tokens": 5023616,
+    "peticiones": 50,
+    "titulos": [
+      "Auditar autenticación y autorización",
+      "Auditar inyección y servicios",
+      "Auditar configuración y dependencias"
+    ]
+  }
 }

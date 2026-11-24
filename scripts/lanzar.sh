@@ -145,6 +145,8 @@ rm -rf "$dest/salida"
 if [ -n "$SEMILLA" ]; then python3 "$B/scripts/salida-semilla.py" "$SEMILLA" "$ws" "$dest"; else cp -R "$ws" "$dest/salida"; fi
 rm -rf "$ws"
 python3 "$B/scripts/tokens.py" "$dest" "$cod" "$modelo" "$inicio" "$prompt"
+# Los subagentes son sesiones hijas que la exportación no trae: se suman desde la base de datos de OpenCode
+python3 "$B/scripts/tokens-subagentes.py" "$dest" "$OPENCODE_AISLADO/data/opencode/opencode.db" || true
 # Los límites con que corrió, en meta.json
 python3 - "$dest/meta.json" "$limites" <<'PY'
 import json, sys

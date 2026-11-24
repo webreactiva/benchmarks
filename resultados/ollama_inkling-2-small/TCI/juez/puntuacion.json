@@ -123,20 +123,20 @@
   "coste": {
     "segundos": 284,
     "tokens": {
-      "input": 158004,
-      "output": 36167,
+      "input": 1137502,
+      "output": 147641,
       "reasoning": 0,
-      "cache_read": 1372160,
+      "cache_read": 4155904,
       "cache_write": 0,
-      "total": 1566331
+      "total": 5441047
     },
-    "peticiones": 36,
+    "peticiones": 147,
     "herramientas": {
       "shell": 22,
       "read": 4,
       "subagent": 10
     },
-    "usd_estimado": 0.125
+    "usd_estimado": 0.614
   },
   "coste_jev": {
     "modelo": "jev-1.14.0",
@@ -148,11 +148,11 @@
     "tipo": 1,
     "superficie": 2,
     "areas": 3,
-    "tokens": 1,
+    "tokens": 0,
     "tiempo": 0,
     "peticiones": 0
   },
-  "nota": 7,
+  "nota": 6,
   "nota_calidad": 6,
-  "nota_eficiencia": 1
+  "nota_eficiencia": 0
 }

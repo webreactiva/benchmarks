@@ -1,0 +1,27 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/beam",
+  "nota": 6,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 1,
+    "tokens": 1,
+    "tiempo": 1,
+    "peticiones": 0
+  },
+  "veredicto": "Rápido, áreas justas",
+  "resumen": "Tipo 96,0 %, superficie 88,0 % y F1 de áreas 0,596 frente a jev (62 idénticas). Le costó 107 s, 18 peticiones y 1,76 M tokens (≈ 0,138 $ al precio de OpenRouter).",
+  "cifras": {
+    "tipo": 0.96,
+    "superficie": 0.88,
+    "areas_f1_micro": 0.596,
+    "areas_f1_macro": 0.601,
+    "exactas": 62,
+    "segundos": 107,
+    "peticiones": 18,
+    "tokens": 1761285,
+    "coste_usd_estimado": 0.138
+  },
+  "rarezas": []
+}

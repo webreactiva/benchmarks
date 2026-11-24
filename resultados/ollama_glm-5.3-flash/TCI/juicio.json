@@ -1,0 +1,27 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/glm-5.3-flash",
+  "nota": 6,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 2,
+    "tokens": 1,
+    "tiempo": 0,
+    "peticiones": 0
+  },
+  "veredicto": "Bien, pero lento",
+  "resumen": "Tipo 96,3 %, superficie 87,7 % y F1 de áreas 0,608 frente a jev (63 idénticas). Le costó 348 s, 15 peticiones y 1,46 M tokens (≈ 0,072 $ al precio de OpenRouter).",
+  "cifras": {
+    "tipo": 0.963,
+    "superficie": 0.877,
+    "areas_f1_micro": 0.608,
+    "areas_f1_macro": 0.601,
+    "exactas": 63,
+    "segundos": 348,
+    "peticiones": 15,
+    "tokens": 1461457,
+    "coste_usd_estimado": 0.072
+  },
+  "rarezas": []
+}

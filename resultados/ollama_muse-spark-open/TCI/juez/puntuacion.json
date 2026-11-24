@@ -123,20 +123,20 @@
   "coste": {
     "segundos": 237,
     "tokens": {
-      "input": 156624,
-      "output": 54569,
+      "input": 392640,
+      "output": 116894,
       "reasoning": 0,
-      "cache_read": 4796160,
+      "cache_read": 6327424,
       "cache_write": 0,
-      "total": 5007353
+      "total": 6836958
     },
-    "peticiones": 37,
+    "peticiones": 75,
     "herramientas": {
       "read": 11,
       "shell": 23,
       "subagent": 5
     },
-    "usd_estimado": 1.147
+    "usd_estimado": 1.937
   },
   "coste_jev": {
     "modelo": "jev-1.14.0",

@@ -1,0 +1,27 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/mistral-large-4",
+  "nota": 6,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 2,
+    "tokens": 1,
+    "tiempo": 0,
+    "peticiones": 0
+  },
+  "veredicto": "Bien, el más lento",
+  "resumen": "Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,613 frente a jev (71 idénticas). Le costó 424 s, 14 peticiones y 1,21 M tokens (≈ 0,24 $ al precio de OpenRouter).",
+  "cifras": {
+    "tipo": 0.97,
+    "superficie": 0.877,
+    "areas_f1_micro": 0.613,
+    "areas_f1_macro": 0.61,
+    "exactas": 71,
+    "segundos": 424,
+    "peticiones": 14,
+    "tokens": 1213366,
+    "coste_usd_estimado": 0.24
+  },
+  "rarezas": []
+}

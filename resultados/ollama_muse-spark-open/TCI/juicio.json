@@ -1,0 +1,29 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/muse-spark-open",
+  "nota": 5,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 2,
+    "tokens": 0,
+    "tiempo": 0,
+    "peticiones": 0
+  },
+  "veredicto": "Bien, el más caro",
+  "resumen": "Tipo 96,0 %, superficie 85,0 % y F1 de áreas 0,627 frente a jev (73 idénticas). Le costó 237 s, 75 peticiones y 6,84 M tokens (≈ 1,937 $ al precio de OpenRouter).",
+  "cifras": {
+    "tipo": 0.96,
+    "superficie": 0.85,
+    "areas_f1_micro": 0.627,
+    "areas_f1_macro": 0.629,
+    "exactas": 73,
+    "segundos": 237,
+    "peticiones": 75,
+    "tokens": 6836958,
+    "coste_usd_estimado": 1.937
+  },
+  "rarezas": [
+    "Reparte el trabajo entre 3 subagentes, que gastan 1,8 M de los 6,8 M tokens y 38 de las 75 peticiones."
+  ]
+}

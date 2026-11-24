@@ -31,8 +31,29 @@ for l in open(os.path.join(d, "sesion.jsonl")):
     u = m.get("usage", {})
     tot["input"] += u.get("input_tokens", 0); tot["output"] += u.get("output_tokens", 0)
     tot["cache_read"] += u.get("cache_read_input_tokens", 0); tot["cache_write"] += u.get("cache_creation_input_tokens", 0)
+# Subagentes: sus registros van aparte (subagentes/agent-*.jsonl). Se suman sus tokens y peticiones a los de la sesión.
+sub = {"sesiones": 0, "tokens": 0, "peticiones": 0}
+dsub = os.path.join(d, "subagentes")
+for f in sorted(os.listdir(dsub)) if os.path.isdir(dsub) else []:
+    if not f.endswith(".jsonl"):
+        continue
+    sub["sesiones"] += 1; vs = set()
+    for l in open(os.path.join(dsub, f)):
+        x = json.loads(l)
+        if x.get("type") != "assistant":
+            continue
+        m = x["message"]
+        if m.get("id") in vs or m.get("model") == "<synthetic>":
+            continue
+        vs.add(m.get("id")); u = m.get("usage", {})
+        for k, v in (("input", "input_tokens"), ("output", "output_tokens"), ("cache_read", "cache_read_input_tokens"),
+                     ("cache_write", "cache_creation_input_tokens")):
+            tot[k] += u.get(v, 0); sub["tokens"] += u.get(v, 0)
+    sub["peticiones"] += len(vs)
 tot["total"] = sum(tot.values())
-meta.update(tokens=tot, peticiones=len(vistos), herramientas=herramientas, mensajes_usuario=usuario)
+meta.update(tokens=tot, peticiones=len(vistos) + sub["peticiones"], herramientas=herramientas, mensajes_usuario=usuario)
+if sub["sesiones"]:
+    meta["subagentes"] = sub
 salida = os.path.join(d, "salida")
 meta["ficheros"] = sorted(os.path.relpath(os.path.join(r, f), salida)
                           for r, _, fs in os.walk(salida) if "node_modules" not in r for f in fs)

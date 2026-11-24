@@ -2,7 +2,7 @@
 
 Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-24.
 
-**Nota media: 7,2 / 10** (4 de 5 prompts juzgados). Total: 366 peticiones y 39202,5 k tokens.
+**Nota media: 7,0 / 10** (5 de 5 prompts juzgados). Total: 366 peticiones y 39202,5 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
@@ -10,7 +10,7 @@ Agente: OpenCode. Fechas: 2026-11-19 a 2026-11-24.
 | [AIF](AIF/juicio.md) | visual | 76 | 11453,8 k | 9 | el mejor AIF, con mucho | 399 elementos y 1780 recetas sacados de webreactiva.com de verdad (glosario, cursos, skills, comunidad Malandriner), un generador para las mezclas sin receta, 7 legendarios, pistas, bitácora, compartir por URL, y el logo, los colores y la tipografía de la marca. Funciona sin conexión. Le falta el lienzo libre de Infinite Craft: combina en dos calderos. | [▶ alquimia-reactiva.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_minimax-m3/AIF/salida/alquimia-reactiva.html) |
 | [CCA](CCA/juicio.md) | código | 155 | 12922,7 k | 10 | escala de verdad, con Redis | Monorepo TypeScript con dominio hexagonal, API Fastify sin estado, Redis con scripts Lua (CAS por versión, reserva de stock, idempotencia), outbox, métricas, SSE y una tienda React. Compila, pasa 69 tests y, con dos instancias sobre el mismo Redis, 40 altas a la vez no pierden ni un dato. Lo único discutible: bajo mucha contención devuelve 409 en vez de reintentar más. | – |
 | [SEC](SEC/juicio.md) | seguridad | 30 | 1694,4 k | 6 | Amplio, flojo en líneas | Informe de 46 hallazgos (en Markdown y en JSON) en el que el juez reconoce 31 de las 40 entradas, pero con la regla estricta se queda en 21 aciertos (18 con línea y 6 a medio punto) y F3 51,3: lo de severidad media va sin línea y cuatro aciertos citan líneas fuera de la ventana o otro fichero. Se le escapan el oráculo de padding, la API de flags, el XSS de reseñas, el open redirect, el logout, el token de soporte en claro, la fuga de la respuesta del asistente y la página de noticias. | – |
-| [TCI](TCI/juicio.md) | clasificación | 25 | 1763,3 k | – | sin juzgar |  | – |
+| [TCI](TCI/juicio.md) | clasificación | 25 | 1763,3 k | 6 | Bien, con script propio | Tipo 96,3 %, superficie 86,3 % y F1 de áreas 0,617 frente a jev (54 idénticas). Le costó 414 s, 25 peticiones y 1,76 M tokens (≈ 0,169 $ al precio de OpenRouter). | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
@@ -48,3 +48,7 @@ Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamient
 - Anuncia «a verification script» que no llega a crear y el último mensaje sale vacío: termina en 8 min 16 s sin resumen en el chat, sin errores ni compactaciones.
 - Da CWE en los 46 hallazgos, pero solo 20 dan fichero y línea (43 %): los 18 de severidad media y baja van sin línea.
 - No toca el código: solo crea sus dos ficheros de informe (36 comandos de shell, 2 write y 5 edit).
+
+**TCI**
+
+- Escribe un classify.py y clasifica con él (lo deja en salida/).

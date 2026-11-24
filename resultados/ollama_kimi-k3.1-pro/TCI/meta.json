@@ -5,14 +5,14 @@
   "fecha": "2026-11-24T09:11:11Z",
   "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
   "tokens": {
-    "input": 43928,
-    "output": 9039,
+    "input": 463506,
+    "output": 88081,
     "reasoning": 0,
-    "cache_read": 199199,
+    "cache_read": 1866592,
     "cache_write": 0,
-    "total": 252166
+    "total": 2418179
   },
-  "peticiones": 14,
+  "peticiones": 117,
   "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 38e8e880-0e0d-48e4-b195-6b6ba24e7000)",
   "mensajes_usuario": [
     "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
@@ -47,5 +47,22 @@
   "veces_decide_tu": 0,
   "espero_segundo_plano": true,
   "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
-  "sin_web": "webfetch y websearch denegados en opencode.json"
+  "sin_web": "webfetch y websearch denegados en opencode.json",
+  "subagentes": {
+    "sesiones": 10,
+    "tokens": 2166013,
+    "peticiones": 103,
+    "titulos": [
+      "Clasificar incidencias 31-60",
+      "Clasificar incidencias 1-30",
+      "Clasificar incidencias 121-150",
+      "Clasificar incidencias 61-90",
+      "Clasificar incidencias 91-120",
+      "Clasificar incidencias 271-300",
+      "Clasificar incidencias 151-180",
+      "Clasificar incidencias 211-240",
+      "Clasificar incidencias 181-210",
+      "Clasificar incidencias 241-270"
+    ]
+  }
 }

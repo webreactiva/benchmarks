@@ -109,6 +109,8 @@ dest=$RES/anthropic_$modelo$sufijo/$cod
 [ -e "$dest/meta.json" ] && { echo "Ya existe $dest"; exit 1; }
 mkdir -p "$dest"; echo "$pantalla_final" > "$dest/pantalla.txt"
 cp "$reg" "$dest/sesion.jsonl"; mv "$reg" "$reg.hecho"
+# Subagentes (herramienta Agent): Claude Code guarda cada uno en <sesión>/subagents/agent-*.jsonl; tokens-claude.py los suma
+sub="${reg%.jsonl}/subagents"; [ -d "$sub" ] && cp -R "$sub" "$dest/subagentes"
 rm -rf "$dest/salida"
 if [ -n "${SEMILLA:-}" ]; then
   # Con semilla, salida/ guarda solo lo que el modelo creó o cambió; cambios.txt lista lo cambiado y lo borrado

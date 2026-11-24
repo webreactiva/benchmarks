@@ -5,14 +5,14 @@
   "fecha": "2026-11-24T08:44:19Z",
   "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
   "tokens": {
-    "input": 119830,
-    "output": 32469,
+    "input": 231838,
+    "output": 73641,
     "reasoning": 0,
-    "cache_read": 3878400,
+    "cache_read": 5297152,
     "cache_write": 0,
-    "total": 4030699
+    "total": 5602631
   },
-  "peticiones": 56,
+  "peticiones": 100,
   "error": null,
   "mensajes_usuario": [
     "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
@@ -77,5 +77,14 @@
   },
   "veces_decide_tu": 0,
   "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
-  "sin_web": "webfetch y websearch denegados en opencode.json"
+  "sin_web": "webfetch y websearch denegados en opencode.json",
+  "subagentes": {
+    "sesiones": 2,
+    "tokens": 1571932,
+    "peticiones": 44,
+    "titulos": [
+      "Audit AI/MCP/SSRF surface",
+      "Audit business logic + IDOR"
+    ]
+  }
 }

@@ -1,0 +1,30 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/inkling-2-small",
+  "nota": 6,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 3,
+    "tokens": 0,
+    "tiempo": 0,
+    "peticiones": 0
+  },
+  "veredicto": "Muy bien, muy caro",
+  "resumen": "Tipo 97,3 %, superficie 89,0 % y F1 de áreas 0,687 frente a jev (88 idénticas). Le costó 284 s, 147 peticiones y 5,44 M tokens (≈ 0,614 $ al precio de OpenRouter).",
+  "cifras": {
+    "tipo": 0.973,
+    "superficie": 0.89,
+    "areas_f1_micro": 0.687,
+    "areas_f1_macro": 0.662,
+    "exactas": 88,
+    "segundos": 284,
+    "peticiones": 147,
+    "tokens": 5441047,
+    "coste_usd_estimado": 0.614
+  },
+  "rarezas": [
+    "Reparte el trabajo entre 6 subagentes, que gastan 3,9 M de los 5,4 M tokens y 111 de las 147 peticiones.",
+    "El primer intento se cortó porque el lanzador cerró la sesión mientras los subagentes trabajaban (en _descartados); este es el repetido, con el lanzador que espera."
+  ]
+}

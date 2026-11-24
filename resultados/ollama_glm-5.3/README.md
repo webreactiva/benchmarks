@@ -2,7 +2,7 @@
 
 Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 
-**Nota media: 8,0 / 10** (4 de 5 prompts juzgados). Total: 126 peticiones y 10759,7 k tokens.
+**Nota media: 7,6 / 10** (5 de 5 prompts juzgados). Total: 126 peticiones y 10759,7 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
@@ -10,7 +10,7 @@ Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 | [AIF](AIF/juicio.md) | visual | 29 | 2753,7 k | 10 | infinito y de la casa | Tablero libre donde se suelta una ficha sobre otra, 187 elementos y 192 recetas todos alcanzables desde Humano, Café, Prompt y Terminal, y un generador para las mezclas sin receta que cuenta los inventos aparte. El contenido sale de la portada de webreactiva.com (Programa con IA, Fichómetro, Atlas Malandriner, En Pantuflas, «sin alucinar»), con pistas, retos, buscador y guardado. | [▶ alquimia-reactiva.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_glm-5.3/AIF/salida/alquimia-reactiva.html) |
 | [CCA](CCA/juicio.md) | código | 31 | 1975,7 k | 8 | limpio, una sola instancia | API Express en TypeScript con capas y puertos, SQLite nativo de Node, dinero en céntimos, precio siempre del catálogo, descuentos, envío, IVA, checkout con stock, validación estricta y una interfaz web; compila, pasa 19 tests y 50 altas a la vez en una instancia no pierden nada. Pero no tiene control de versión: con dos instancias sobre el mismo SQLite seis de cincuenta altas acaban en error 500. | – |
 | [SEC](SEC/juicio.md) | seguridad | 32 | 1662,7 k | 6 | Amplio, localiza con rangos anchos | Informe de 37 hallazgos (en Markdown y en JSON) en el que el juez reconoce 32 de las 40 entradas y solo uno no se sostiene, pero con la regla estricta se queda en 21,5 aciertos (16 con línea y 11 a medio punto) y F3 54,4: tres aciertos no dan línea y ocho caen en rangos de más de 20 líneas. Se le escapan el oráculo de padding, los dos XSS de reseñas y el open redirect, el IDOR de wishlists, el token de soporte en claro, la fuga de la URL del asistente, el logout y la página de noticias. | – |
-| [TCI](TCI/juicio.md) | clasificación | 13 | 1302,5 k | – | sin juzgar |  | – |
+| [TCI](TCI/juicio.md) | clasificación | 13 | 1302,5 k | 6 | Bien, lento y más caro | Tipo 97,3 %, superficie 88,7 % y F1 de áreas 0,608 frente a jev (71 idénticas). Le costó 409 s, 13 peticiones y 1,3 M tokens (≈ 0,223 $ al precio de OpenRouter). | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 

@@ -2,7 +2,7 @@
 
 Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 
-**Nota media: 6,5 / 10** (4 de 5 prompts juzgados). Total: 56 peticiones y 2371,8 k tokens.
+**Nota media: 6,4 / 10** (5 de 5 prompts juzgados). Total: 56 peticiones y 2371,8 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
@@ -10,7 +10,7 @@ Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 | [AIF](AIF/juicio.md) | visual | 9 | 267,2 k | 6 | funciona, sin Web Reactiva | Juego de combinar con 268 elementos y 264 recetas, todos alcanzables desde Computadora, Internet, Electricidad y Papel, con pista, buscador y guardado. Pero se combina seleccionando dos fichas en vez de soltar una sobre otra, las mezclas sin receta no dan nada y el contenido es desarrollo web genérico: de Web Reactiva solo queda el nombre, como Podcast + Comunidad. | [▶ reactiva-craft.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_mistral-large-4/AIF/salida/reactiva-craft.html) |
 | [CCA](CCA/juicio.md) | código | 9 | 190,5 k | 8 | sólido en un proceso | Librería Python sin dependencias, hexagonal, con dinero en céntimos, una moneda por carrito, precio del catálogo, descuentos e impuestos enchufables, eventos de dominio, límites y repositorio en memoria o SQLite; 24 tests y una demo que funcionan, y 50 altas a la vez con un servicio no pierden nada. Pero la concurrencia depende de un cerrojo del proceso: con dos servicios sobre el mismo SQLite se pierden 3 de 50 altas sin aviso. | – |
 | [SEC](SEC/juicio.md) | seguridad | 14 | 567,1 k | 5 | Cruce sólido, forma descuidada | Informe de 39 hallazgos en el que el juez reconoce 32 de las 40 entradas, pero la nota cuenta 22 (F3 54,5): ocho entradas valen medio acierto por ir sin línea o con rangos de más de 20, y ocho hallazgos no se sostienen como fallo. Se le escapan el oráculo de padding (lo menciona y lo descarta), el open redirect del login, el logout, el token de soporte en claro y en la respuesta, el total del pedido, la fuga de herramientas del asistente y la página de noticias; además pierde los puntos de línea y CWE. | – |
-| [TCI](TCI/juicio.md) | clasificación | 14 | 1213,4 k | – | sin juzgar |  | – |
+| [TCI](TCI/juicio.md) | clasificación | 14 | 1213,4 k | 6 | Bien, el más lento | Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,613 frente a jev (71 idénticas). Le costó 424 s, 14 peticiones y 1,21 M tokens (≈ 0,24 $ al precio de OpenRouter). | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 

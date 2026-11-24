@@ -2,7 +2,7 @@
 
 Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 
-**Nota media: 7,8 / 10** (4 de 5 prompts juzgados). Total: 131 peticiones y 5352,0 k tokens.
+**Nota media: 7,4 / 10** (5 de 5 prompts juzgados). Total: 242 peticiones y 9226,7 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
@@ -10,7 +10,7 @@ Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 | [AIF](AIF/juicio.md) | visual | 15 | 688,7 k | 9 | se juega, Web Reactiva a medias | Mesa libre con fichas que se combinan soltando una sobre otra, 125 elementos todos alcanzables y un generador para las mezclas sin receta. Parte de Agua, Fuego, Aire y Tierra y mezcla programación genérica (React, Rust, Docker) con algo de Web Reactiva (podcast, masterclass, «Maratón WR», «Membresía WR», «Slow Content»), sin mirar la web. | [▶ alquimia-reactiva.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_inkling-2-small/AIF/salida/alquimia-reactiva.html) |
 | [CCA](CCA/juicio.md) | código | 40 | 1042,4 k | 9 | bien diseñado, sin Redis | API Fastify sin estado en TypeScript, con capas y puertos, dinero en céntimos, precio del catálogo, cupones, IVA, envío, caducidad de carritos y compare-and-set por versión en el repositorio. Compila, pasa 21 tests y 50 altas a la vez no pierden nada. Pero solo trae repositorios en memoria: Redis o Postgres quedan como «pendiente». | – |
 | [SEC](SEC/juicio.md) | seguridad | 16 | 852,4 k | 4 | Ve mucho, localiza poco | Informe de 46 hallazgos que, a juicio, cubre 32 de las 40 entradas y solo tiene 6 que no son fallos, pero casi nunca da línea: 2 aciertos con línea y 29 a medio punto dejan el F3 estricto en 41,4. Se le escapan el oráculo de padding, las credenciales del seed, la fuga de la URL del asistente, el logout, la página de noticias y, como hallazgo, la SQLi de admin/reviews. | – |
-| [TCI](TCI/juicio.md) | clasificación | 36 | 1566,3 k | – | sin juzgar |  | – |
+| [TCI](TCI/juicio.md) | clasificación | 147 | 5441,0 k | 6 | Muy bien, muy caro | Tipo 97,3 %, superficie 89,0 % y F1 de áreas 0,687 frente a jev (88 idénticas). Le costó 284 s, 147 peticiones y 5,44 M tokens (≈ 0,614 $ al precio de OpenRouter). | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
@@ -43,3 +43,8 @@ Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamient
 - XXE y open redirect solo aparecen en las cadenas de ataque, sin hallazgo propio; la SQLi de admin/reviews solo en el resumen y en las prioridades.
 - Casi no da líneas (3 de 46 hallazgos) ni ningún CWE.
 - No toca el código: solo crea SECURITY_AUDIT.md. 16 peticiones, 2 min 9 s.
+
+**TCI**
+
+- Reparte el trabajo entre 6 subagentes, que gastan 3,9 M de los 5,4 M tokens y 111 de las 147 peticiones.
+- El primer intento se cortó porque el lanzador cerró la sesión mientras los subagentes trabajaban (en _descartados); este es el repetido, con el lanzador que espera.

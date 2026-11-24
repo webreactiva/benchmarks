@@ -88,6 +88,25 @@ SALIDA_MAX=65536 PROVEEDOR_OR=google-ai-studio scripts/benchmark.sh google/gemin
 **Cuidado al limpiar**: no borres carpetas de `/var/tmp/bench/` ni sesiones de tmux de otro modelo que esté corriendo; una carpeta vacía puede ser la de una prueba en marcha.
 
 
+### Lo aprendido con SEC y TCI (24 nov. 2026)
+
+**Subagentes: cuéntalos.** Los modelos lanzan subagentes (OpenCode: herramienta `subagent`; Claude Code: `Agent`) y su gasto no sale en la sesión principal. Kimi-K3.1-pro en TCI apuntaba 252 k tokens y gastó 2,4 M; en SEC, 3,7 M frente a 8,7 M reales. `lanzar.sh` lo suma con `scripts/tokens-subagentes.py` (sesiones hijas en `~/.opencode-bench/<modelo>/data/opencode/opencode.db`) y `lanzar-claude.sh` copia `<sesión>/subagents/agent-*.jsonl` a `subagentes/`, que suma `tokens-claude.py`. Lo sumado queda en `meta.json → subagentes`. En TCI cambia la nota (eficiencia): Inkling-2-small bajó de 7 a 6. Si un resultado viejo no lo tiene, pásale `tokens-subagentes.py` y vuelve a puntuar.
+
+**Subagentes en segundo plano: espera.** Si el modelo cierra su turno esperando a sus subagentes, los dos lanzadores esperan mientras la pantalla los muestre (Claude Code: «Waiting for N background agents»; OpenCode: «↓ N subagents» en la barra de estado). Antes se cerraba la sesión sin resultado (Haiku en SEC, Inkling-2-small en TCI, en `_descartados`).
+
+**Prompt sin enviar.** A veces el Enter llega antes de que OpenCode acepte la entrada: el prompt se queda escrito en la caja, con la portada en pantalla, y la prueba sale con 0 peticiones (MiniMax-m3.1-flash y Mistral-large-4 en SEC). `lanzar.sh` vuelve a pulsar Enter si la portada sigue ahí. Si ves 0 peticiones y `sesion` vacía, es esto: a `_descartados` y se repite.
+
+**Ollama Cloud y su límite de uso.** Uno detrás de otro, nunca a la vez. TCI antes que SEC: TCI gasta 1-2 M de tokens por modelo y un SEC puede pasar de 5 M. **Kimi-K3.1-pro, siempre el último**: es el que más gasta y su cuenta es cara. `benchmark.sh` se para al primer «usage limit» (sale con 3); lo cortado va a `_descartados/<modelo>-<CÓDIGO>-limite-ollama` y se repite en la siguiente ventana de cupo. Antes de lanzar, comprueba que hay cupo con una petición pequeña a `https://ollama.com/v1/chat/completions`.
+
+**No edites un lanzador mientras corre.** Bash lee el script a trozos: si cambias `lanzar.sh`, `lanzar-claude.sh` o `benchmark.sh` con una prueba en marcha, al volver ejecuta texto desplazado. Prepara la versión nueva en el scratchpad y cópiala cuando no haya ninguno corriendo (`pgrep -f "scripts/lanzar.sh "`). Para reordenar una cola sin perder la prueba en curso, mata solo `benchmark.sh` (el padre): el `lanzar.sh` en marcha termina y guarda; luego lanza la cola nueva, que se salta lo ya hecho.
+
+**Casos que decidió el autor** (no los generalices sin preguntar):
+- Kimi-K3.1-pro en SEC, cortado por el límite en una segunda pasada con el informe ya escrito: se juzga tal cual.
+- Kimi-K3.1-pro en TCI, cortado con 7 de 10 bloques: se juzga lo que hizo (sus bloques juntados) con el coste real, y se da por bueno. No se escribe que sea parcial ni proyectado.
+- Un modelo que falla por sí mismo sin error de la API (Beam en SEC: llamada a herramienta mal formada dentro del razonamiento, sin informe) se queda con un 0 y no se repite.
+
+**Coste en TCI.** OpenCode apunta 0 $ en los modelos de Ollama (suscripción): `puntuar.py` lo ignora y estima con `scripts/tci/precios.json` (precio del mismo modelo en OpenRouter, con la fuente). Un modelo nuevo necesita su línea ahí antes de puntuar.
+
 ## 2. Validar (en una copia)
 
 Primero: ¿existe lo que dice que ha hecho? Compara `respuesta.md` con `meta.json → ficheros`.

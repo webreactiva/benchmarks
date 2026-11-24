@@ -1,0 +1,27 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/minimax-m3.1-flash",
+  "nota": 6,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 2,
+    "tokens": 1,
+    "tiempo": 0,
+    "peticiones": 0
+  },
+  "veredicto": "Bien, con muchas peticiones",
+  "resumen": "Tipo 96,3 %, superficie 86,7 % y F1 de áreas 0,61 frente a jev (57 idénticas). Le costó 213 s, 30 peticiones y 2,22 M tokens (≈ 0,068 $ al precio de OpenRouter).",
+  "cifras": {
+    "tipo": 0.963,
+    "superficie": 0.867,
+    "areas_f1_micro": 0.61,
+    "areas_f1_macro": 0.606,
+    "exactas": 57,
+    "segundos": 213,
+    "peticiones": 30,
+    "tokens": 2220661,
+    "coste_usd_estimado": 0.068
+  },
+  "rarezas": []
+}

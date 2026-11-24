@@ -1,0 +1,30 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/deepseek-v4.1-flash",
+  "nota": 9,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 3,
+    "tokens": 2,
+    "tiempo": 1,
+    "peticiones": 0
+  },
+  "veredicto": "Casi igual, por un céntimo",
+  "resumen": "Tipo 96,0 %, superficie 87,3 % y F1 de áreas 0,667 frente a jev (70 idénticas). Le costó 87 s, 15 peticiones y 0,86 M tokens (≈ 0,01 $ al precio de OpenRouter).",
+  "cifras": {
+    "tipo": 0.96,
+    "superficie": 0.873,
+    "areas_f1_micro": 0.667,
+    "areas_f1_macro": 0.634,
+    "exactas": 70,
+    "segundos": 87,
+    "peticiones": 15,
+    "tokens": 859177,
+    "coste_usd_estimado": 0.01
+  },
+  "rarezas": [
+    "Guarda el resultado como classificacion.jsonl (con una s de más); el corrector lo encuentra igual.",
+    "Es el único que iguala la nota de Haiku 5.5, y por menos dinero."
+  ]
+}

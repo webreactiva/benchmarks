@@ -5,14 +5,14 @@
   "fecha": "2026-11-24T08:29:40Z",
   "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
   "tokens": {
-    "input": 158004,
-    "output": 36167,
+    "input": 1137502,
+    "output": 147641,
     "reasoning": 0,
-    "cache_read": 1372160,
+    "cache_read": 4155904,
     "cache_write": 0,
-    "total": 1566331
+    "total": 5441047
   },
-  "peticiones": 36,
+  "peticiones": 147,
   "error": null,
   "mensajes_usuario": [
     "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
@@ -37,5 +37,18 @@
   "veces_decide_tu": 0,
   "espero_segundo_plano": true,
   "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
-  "sin_web": "webfetch y websearch denegados en opencode.json"
+  "sin_web": "webfetch y websearch denegados en opencode.json",
+  "subagentes": {
+    "sesiones": 6,
+    "tokens": 3874716,
+    "peticiones": 111,
+    "titulos": [
+      "Clasificar lote 1 (50 incidencias)",
+      "Clasificar lote 2 (50 incidencias)",
+      "Clasificar lote 3 (50 incidencias)",
+      "Clasificar lote 4 (50 incidencias)",
+      "Clasificar lote 5 (50 incidencias)",
+      "Clasificar lote 6 (50 incidencias)"
+    ]
+  }
 }

@@ -3781,7 +3781,33 @@
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/beam",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 1,
+        "tokens": 1,
+        "tiempo": 1,
+        "peticiones": 0
+      },
+      "veredicto": "Rápido, áreas justas",
+      "resumen": "Tipo 96,0 %, superficie 88,0 % y F1 de áreas 0,596 frente a jev (62 idénticas). Le costó 107 s, 18 peticiones y 1,76 M tokens (≈ 0,138 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.96,
+        "superficie": 0.88,
+        "areas_f1_micro": 0.596,
+        "areas_f1_macro": 0.601,
+        "exactas": 62,
+        "segundos": 107,
+        "peticiones": 18,
+        "tokens": 1761285,
+        "coste_usd_estimado": 0.138
+      },
+      "rarezas": []
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
@@ -4147,7 +4173,36 @@
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/deepseek-v4.1-flash",
+      "nota": 9,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 3,
+        "tokens": 2,
+        "tiempo": 1,
+        "peticiones": 0
+      },
+      "veredicto": "Casi igual, por un céntimo",
+      "resumen": "Tipo 96,0 %, superficie 87,3 % y F1 de áreas 0,667 frente a jev (70 idénticas). Le costó 87 s, 15 peticiones y 0,86 M tokens (≈ 0,01 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.96,
+        "superficie": 0.873,
+        "areas_f1_micro": 0.667,
+        "areas_f1_macro": 0.634,
+        "exactas": 70,
+        "segundos": 87,
+        "peticiones": 15,
+        "tokens": 859177,
+        "coste_usd_estimado": 0.01
+      },
+      "rarezas": [
+        "Guarda el resultado como classificacion.jsonl (con una s de más); el corrector lo encuentra igual.",
+        "Es el único que iguala la nota de Haiku 5.5, y por menos dinero."
+      ]
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
@@ -4625,7 +4680,33 @@
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/glm-5.3",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 2,
+        "tokens": 1,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Bien, lento y más caro",
+      "resumen": "Tipo 97,3 %, superficie 88,7 % y F1 de áreas 0,608 frente a jev (71 idénticas). Le costó 409 s, 13 peticiones y 1,3 M tokens (≈ 0,223 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.973,
+        "superficie": 0.887,
+        "areas_f1_micro": 0.608,
+        "areas_f1_macro": 0.623,
+        "exactas": 71,
+        "segundos": 409,
+        "peticiones": 13,
+        "tokens": 1302542,
+        "coste_usd_estimado": 0.223
+      },
+      "rarezas": []
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
@@ -5038,7 +5119,33 @@
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/glm-5.3-flash",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 2,
+        "tokens": 1,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Bien, pero lento",
+      "resumen": "Tipo 96,3 %, superficie 87,7 % y F1 de áreas 0,608 frente a jev (63 idénticas). Le costó 348 s, 15 peticiones y 1,46 M tokens (≈ 0,072 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.963,
+        "superficie": 0.877,
+        "areas_f1_micro": 0.608,
+        "areas_f1_macro": 0.601,
+        "exactas": 63,
+        "segundos": 348,
+        "peticiones": 15,
+        "tokens": 1461457,
+        "coste_usd_estimado": 0.072
+      },
+      "rarezas": []
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
@@ -5399,14 +5506,14 @@
     "fecha": "2026-11-24T08:29:40Z",
     "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
     "tokens": {
-      "input": 158004,
-      "output": 36167,
+      "input": 1137502,
+      "output": 147641,
       "reasoning": 0,
-      "cache_read": 1372160,
+      "cache_read": 4155904,
       "cache_write": 0,
-      "total": 1566331
+      "total": 5441047
     },
-    "peticiones": 36,
+    "peticiones": 147,
     "error": null,
     "mensajes_usuario": [
       "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
@@ -5432,8 +5539,50 @@
     "espero_segundo_plano": true,
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
+    "subagentes": {
+      "sesiones": 6,
+      "tokens": 3874716,
+      "peticiones": 111,
+      "titulos": [
+        "Clasificar lote 1 (50 incidencias)",
+        "Clasificar lote 2 (50 incidencias)",
+        "Clasificar lote 3 (50 incidencias)",
+        "Clasificar lote 4 (50 incidencias)",
+        "Clasificar lote 5 (50 incidencias)",
+        "Clasificar lote 6 (50 incidencias)"
+      ]
+    },
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/inkling-2-small",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 3,
+        "tokens": 0,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Muy bien, muy caro",
+      "resumen": "Tipo 97,3 %, superficie 89,0 % y F1 de áreas 0,687 frente a jev (88 idénticas). Le costó 284 s, 147 peticiones y 5,44 M tokens (≈ 0,614 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.973,
+        "superficie": 0.89,
+        "areas_f1_micro": 0.687,
+        "areas_f1_macro": 0.662,
+        "exactas": 88,
+        "segundos": 284,
+        "peticiones": 147,
+        "tokens": 5441047,
+        "coste_usd_estimado": 0.614
+      },
+      "rarezas": [
+        "Reparte el trabajo entre 6 subagentes, que gastan 3,9 M de los 5,4 M tokens y 111 de las 147 peticiones.",
+        "El primer intento se cortó porque el lanzador cerró la sesión mientras los subagentes trabajaban (en _descartados); este es el repetido, con el lanzador que espera."
+      ]
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
@@ -5707,14 +5856,14 @@
     "fecha": "2026-11-24T02:31:05Z",
     "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
     "tokens": {
-      "input": 213936,
-      "output": 47850,
+      "input": 784226,
+      "output": 161151,
       "reasoning": 0,
-      "cache_read": 3389736,
+      "cache_read": 7729761,
       "cache_write": 0,
-      "total": 3651522
+      "total": 8675138
     },
-    "peticiones": 34,
+    "peticiones": 84,
     "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 02114973-41af-491c-ada5-7544bd805774)",
     "mensajes_usuario": [
       "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
@@ -5749,6 +5898,16 @@
     "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
     "nota_del_autor": "Cortado por el límite de uso de Ollama Cloud a mitad de una segunda pasada, con el informe ya escrito (438 líneas). Se juzga tal cual por decisión del autor (24 nov. 2026).",
+    "subagentes": {
+      "sesiones": 3,
+      "tokens": 5023616,
+      "peticiones": 50,
+      "titulos": [
+        "Auditar autenticación y autorización",
+        "Auditar inyección y servicios",
+        "Auditar configuración y dependencias"
+      ]
+    },
     "validacion": null,
     "juicio": {
       "codigo": "SEC",
@@ -5798,14 +5957,14 @@
     "fecha": "2026-11-24T09:11:11Z",
     "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
     "tokens": {
-      "input": 43928,
-      "output": 9039,
+      "input": 463506,
+      "output": 88081,
       "reasoning": 0,
-      "cache_read": 199199,
+      "cache_read": 1866592,
       "cache_write": 0,
-      "total": 252166
+      "total": 2418179
     },
-    "peticiones": 14,
+    "peticiones": 117,
     "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 38e8e880-0e0d-48e4-b195-6b6ba24e7000)",
     "mensajes_usuario": [
       "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
@@ -5841,6 +6000,23 @@
     "espero_segundo_plano": true,
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
+    "subagentes": {
+      "sesiones": 10,
+      "tokens": 2166013,
+      "peticiones": 103,
+      "titulos": [
+        "Clasificar incidencias 31-60",
+        "Clasificar incidencias 1-30",
+        "Clasificar incidencias 121-150",
+        "Clasificar incidencias 61-90",
+        "Clasificar incidencias 91-120",
+        "Clasificar incidencias 271-300",
+        "Clasificar incidencias 151-180",
+        "Clasificar incidencias 211-240",
+        "Clasificar incidencias 181-210",
+        "Clasificar incidencias 241-270"
+      ]
+    },
     "validacion": null,
     "juicio": {
       "codigo": "TCI",
@@ -6494,7 +6670,35 @@
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/minimax-m3",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 2,
+        "tokens": 1,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Bien, con script propio",
+      "resumen": "Tipo 96,3 %, superficie 86,3 % y F1 de áreas 0,617 frente a jev (54 idénticas). Le costó 414 s, 25 peticiones y 1,76 M tokens (≈ 0,169 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.963,
+        "superficie": 0.863,
+        "areas_f1_micro": 0.617,
+        "areas_f1_macro": 0.621,
+        "exactas": 54,
+        "segundos": 414,
+        "peticiones": 25,
+        "tokens": 1763307,
+        "coste_usd_estimado": 0.169
+      },
+      "rarezas": [
+        "Escribe un classify.py y clasifica con él (lo deja en salida/)."
+      ]
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
@@ -6887,14 +7091,14 @@
     "fecha": "2026-11-24T08:44:19Z",
     "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
     "tokens": {
-      "input": 119830,
-      "output": 32469,
+      "input": 231838,
+      "output": 73641,
       "reasoning": 0,
-      "cache_read": 3878400,
+      "cache_read": 5297152,
       "cache_write": 0,
-      "total": 4030699
+      "total": 5602631
     },
-    "peticiones": 56,
+    "peticiones": 100,
     "error": null,
     "mensajes_usuario": [
       "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
@@ -6960,6 +7164,15 @@
     "veces_decide_tu": 0,
     "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
+    "subagentes": {
+      "sesiones": 2,
+      "tokens": 1571932,
+      "peticiones": 44,
+      "titulos": [
+        "Audit AI/MCP/SSRF surface",
+        "Audit business logic + IDOR"
+      ]
+    },
     "validacion": null,
     "juicio": {
       "codigo": "SEC",
@@ -7043,7 +7256,33 @@
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/minimax-m3.1-flash",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 2,
+        "tokens": 1,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Bien, con muchas peticiones",
+      "resumen": "Tipo 96,3 %, superficie 86,7 % y F1 de áreas 0,61 frente a jev (57 idénticas). Le costó 213 s, 30 peticiones y 2,22 M tokens (≈ 0,068 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.963,
+        "superficie": 0.867,
+        "areas_f1_micro": 0.61,
+        "areas_f1_macro": 0.606,
+        "exactas": 57,
+        "segundos": 213,
+        "peticiones": 30,
+        "tokens": 2220661,
+        "coste_usd_estimado": 0.068
+      },
+      "rarezas": []
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
@@ -7456,7 +7695,33 @@
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/mistral-large-4",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 2,
+        "tokens": 1,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Bien, el más lento",
+      "resumen": "Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,613 frente a jev (71 idénticas). Le costó 424 s, 14 peticiones y 1,21 M tokens (≈ 0,24 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.97,
+        "superficie": 0.877,
+        "areas_f1_micro": 0.613,
+        "areas_f1_macro": 0.61,
+        "exactas": 71,
+        "segundos": 424,
+        "peticiones": 14,
+        "tokens": 1213366,
+        "coste_usd_estimado": 0.24
+      },
+      "rarezas": []
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
@@ -7822,14 +8087,14 @@
     "fecha": "2026-11-24T08:05:20Z",
     "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
     "tokens": {
-      "input": 156624,
-      "output": 54569,
+      "input": 392640,
+      "output": 116894,
       "reasoning": 0,
-      "cache_read": 4796160,
+      "cache_read": 6327424,
       "cache_write": 0,
-      "total": 5007353
+      "total": 6836958
     },
-    "peticiones": 37,
+    "peticiones": 75,
     "error": null,
     "mensajes_usuario": [
       "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
@@ -7854,8 +8119,46 @@
     "veces_decide_tu": 0,
     "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
+    "subagentes": {
+      "sesiones": 3,
+      "tokens": 1829605,
+      "peticiones": 38,
+      "titulos": [
+        "Clasificar incidencias 1/3",
+        "Clasificar incidencias 2/3",
+        "Clasificar incidencias 3/3"
+      ]
+    },
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "ollama/muse-spark-open",
+      "nota": 5,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 2,
+        "tokens": 0,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Bien, el más caro",
+      "resumen": "Tipo 96,0 %, superficie 85,0 % y F1 de áreas 0,627 frente a jev (73 idénticas). Le costó 237 s, 75 peticiones y 6,84 M tokens (≈ 1,937 $ al precio de OpenRouter).",
+      "cifras": {
+        "tipo": 0.96,
+        "superficie": 0.85,
+        "areas_f1_micro": 0.627,
+        "areas_f1_macro": 0.629,
+        "exactas": 73,
+        "segundos": 237,
+        "peticiones": 75,
+        "tokens": 6836958,
+        "coste_usd_estimado": 1.937
+      },
+      "rarezas": [
+        "Reparte el trabajo entre 3 subagentes, que gastan 1,8 M de los 6,8 M tokens y 38 de las 75 peticiones."
+      ]
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   }
 ]

@@ -2,7 +2,7 @@
 
 Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 
-**Nota media: 4,0 / 10** (4 de 5 prompts juzgados). Total: 82 peticiones y 3588,5 k tokens.
+**Nota media: 4,4 / 10** (5 de 5 prompts juzgados). Total: 82 peticiones y 3588,5 k tokens.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
@@ -10,7 +10,7 @@ Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 | [AIF](AIF/juicio.md) | visual | 7 | 202,7 k | 5 | solo se alcanzan 12 de 169 | Mesa de dos ranuras con siete elementos iniciales de desarrollo web (HTML, CSS, JavaScript, Navegador, Servidor, Terminal, Git). Las primeras mezclas funcionan, pero de 169 elementos solo se pueden alcanzar 12: muchas recetas piden ingredientes, como React, que no salen de ninguna. De Web Reactiva tiene el nombre y algún «Podcast». | [▶ web-reactiva-alchemy.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_beam/AIF/salida/web-reactiva-alchemy.html) |
 | [CCA](CCA/juicio.md) | código | 20 | 240,5 k | 4 | funciona, no escala | Node sin dependencias, 413 líneas: carrito, gestor con un cerrojo en memoria por carrito, repositorio en memoria, inventario opcional, eventos, cupones y una API HTTP, con 4 tests en verde. Pero el dinero va en coma flotante, el precio lo manda el cliente, todo vive en un proceso y no hay README. | – |
 | [SEC](SEC/juicio.md) | seguridad | 32 | 1320,2 k | 0 | Sin informe | Leyó el proyecto entero (33 órdenes de shell en 2 min 37 s) y fue anotando fallos en su razonamiento, pero no escribió ningún informe: en el último turno metió la siguiente llamada a herramienta como texto mal formado dentro del razonamiento, OpenCode no la reconoció y la sesión se cerró sin respuesta. | – |
-| [TCI](TCI/juicio.md) | clasificación | 18 | 1761,3 k | – | sin juzgar |  | – |
+| [TCI](TCI/juicio.md) | clasificación | 18 | 1761,3 k | 6 | Rápido, áreas justas | Tipo 96,0 %, superficie 88,0 % y F1 de áreas 0,596 frente a jev (62 idénticas). Le costó 107 s, 18 peticiones y 1,76 M tokens (≈ 0,138 $ al precio de OpenRouter). | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
