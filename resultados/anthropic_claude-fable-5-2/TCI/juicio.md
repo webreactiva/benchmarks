@@ -1,4 +1,4 @@
-# TCI · claude-fable-5-2 · 3/10
+# TCI · claude-fable-5-2 · 5/10
 
 **Criterio propio, lento y caro**
 
@@ -15,7 +15,7 @@
 | Tiempo · peticiones · tokens | 190 s · 11 · 952 k |
 | Coste estimado | ≈ 1,88 $ |
 
-Rúbrica: calidad 3/6 (tipo 1, superficie 1, áreas 1) y eficiencia 0/4 (tokens 0, tiempo 0, peticiones 0).
+Rúbrica: calidad 5/6 (tipo 1, superficie 2, áreas 2) y eficiencia 0/4 (tokens 0, tiempo 0, peticiones 0).
 
 Áreas más flojas: computer-use 0,28 (21 sin marcar, 0 de más), tool-calls 0,32 (42 sin marcar, 1 de más), config 0,39 (39 sin marcar, 1 de más), remote 0,44 (14 sin marcar, 6 de más).
 

@@ -2,7 +2,7 @@
 
 Agente: Claude Code. Fechas: 2026-11-20 a 2026-11-24.
 
-**Nota media: 8,2 / 10** (4 de 5 prompts juzgados). Total: 46 peticiones y 4019,8 k tokens.
+**Nota media: 8,8 / 10** (4 de 5 prompts juzgados). Total: 46 peticiones y 4019,8 k tokens.
 
 Pendientes: SEC.
 
@@ -11,7 +11,7 @@ Pendientes: SEC.
 | [A3D](A3D/juicio.md) | visual | 17 | 2281,3 k | 9 | la maqueta más vistosa | Una Alhambra con three.js a media tarde que se reconoce de un vistazo (Sierra Nevada nevada, Alcazaba con la Torre de la Vela, patio circular de Carlos V, alberca de Arrayanes con su pórtico, Leones con galerías y templetes, Partal, acequia del Generalife con arcos de agua) y un recorrido de 8 paradas que arranca solo y lleva la cámara en vuelo de una a otra. Pero a 1280×800 la ficha de la parada tapa el final de la lista (la parada 8 no se puede pulsar) y un cuarto de la escena, y en la vista final las etiquetas se montan. | [▶ alhambra-ruta-3d.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/anthropic_claude-opus-5-5-medium/A3D/salida/alhambra-ruta-3d.html) |
 | [AIF](AIF/juicio.md) | visual | 4 | 244,6 k | 8 | gran juego, Web Reactiva a medias | Mesa libre donde se suelta una ficha sobre otra, 178 elementos y 181 recetas, todos alcanzables desde Código, Café, Idea y Bug, con pistas, buscador, guardado y cinco objetivos con candado. De Web Reactiva tiene la capa de marca de memoria (Podcast, Newsletter, Dani Primo, Malandriner, Premium), unos 20 elementos; el resto es cultura de programador genérica, y las mezclas sin receta solo dan un chiste. | [▶ alquimia-reactiva.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/anthropic_claude-opus-5-5-medium/AIF/salida/alquimia-reactiva.html) |
 | [CCA](CCA/juicio.md) | código | 13 | 725,9 k | 10 | escala, y Redis funciona | Servicio REST en Node sin dependencias, hexagonal, con carrito inmutable, céntimos, precios del catálogo, versión optimista con reintentos y backoff, y un adaptador de Redis con compare-and-swap en Lua que se conecta con REDIS_URL y aguanta 50 altas a la vez desde dos instancias sin perder nada. Lo flojo es menor: la moneda la pone el cliente sin validar, ioredis no está en package.json y la idempotencia y el catálogo solo existen en memoria, cosa que el README admite. | – |
-| [TCI](TCI/juicio.md) | clasificación | 12 | 768,0 k | 6 | Mejor en áreas, caro | Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,668 frente a jev (86 incidencias idénticas). Le costó 125 s, 12 peticiones y 768 k tokens (≈ 0,79 $). | – |
+| [TCI](TCI/juicio.md) | clasificación | 12 | 768,0 k | 8 | Mejor en áreas, caro | Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,668 frente a jev (86 incidencias idénticas). Le costó 125 s, 12 peticiones y 768 k tokens (≈ 0,79 $). | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 

@@ -1,4 +1,4 @@
-# TCI · claude-sonnet-5-5 · 6/10
+# TCI · claude-sonnet-5-5 · 8/10
 
 **El más rápido, superficie justa**
 
@@ -15,7 +15,7 @@
 | Tiempo · peticiones · tokens | 69 s · 9 · 573 k |
 | Coste estimado | ≈ 0,29 $ |
 
-Rúbrica: calidad 2/6 (tipo 1, superficie 0, áreas 1) y eficiencia 4/4 (tokens 2, tiempo 1, peticiones 1).
+Rúbrica: calidad 4/6 (tipo 1, superficie 1, áreas 2) y eficiencia 4/4 (tokens 2, tiempo 1, peticiones 1).
 
 Áreas más flojas: config 0,28 (43 sin marcar, 3 de más), computer-use 0,28 (21 sin marcar, 0 de más), app-server 0,41 (55 sin marcar, 3 de más), tool-calls 0,49 (33 sin marcar, 6 de más).
 

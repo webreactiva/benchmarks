@@ -135,8 +135,8 @@ tok = (meta.get("tokens") or {}).get("total") or 0
 pet = meta.get("peticiones") or 0
 rub = {
     "tipo": int(out["tipo"] >= 0.95),
-    "superficie": 2 if out["superficie"] >= 0.90 else 1 if out["superficie"] >= 0.85 else 0,
-    "areas": 3 if out["areas_f1_micro"] >= 0.75 else 2 if out["areas_f1_micro"] >= 0.65 else 1 if out["areas_f1_micro"] >= 0.55 else 0,
+    "superficie": 2 if out["superficie"] >= 0.85 else 1 if out["superficie"] >= 0.80 else 0,
+    "areas": 3 if out["areas_f1_micro"] >= 0.65 else 2 if out["areas_f1_micro"] >= 0.60 else 1 if out["areas_f1_micro"] >= 0.55 else 0,
     "tokens": 2 if 0 < tok <= 600_000 else 1 if 0 < tok <= 900_000 else 0,
     "tiempo": int(dur is not None and dur <= 150),
     "peticiones": int(0 < pet <= 10),

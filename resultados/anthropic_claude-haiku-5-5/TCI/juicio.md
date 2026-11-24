@@ -1,4 +1,4 @@
-# TCI · claude-haiku-5-5 · 7/10
+# TCI · claude-haiku-5-5 · 9/10
 
 **Casi igual, por céntimos**
 
@@ -15,7 +15,7 @@
 | Tiempo · peticiones · tokens | 113 s · 8 · 499 k |
 | Coste estimado | ≈ 0,03 $ |
 
-Rúbrica: calidad 3/6 (tipo 1, superficie 1, áreas 1) y eficiencia 4/4 (tokens 2, tiempo 1, peticiones 1).
+Rúbrica: calidad 5/6 (tipo 1, superficie 2, áreas 2) y eficiencia 4/4 (tokens 2, tiempo 1, peticiones 1).
 
 Áreas más flojas: computer-use 0,28 (21 sin marcar, 0 de más), app-server 0,34 (59 sin marcar, 4 de más), performance 0,35 (8 sin marcar, 7 de más), tool-calls 0,48 (32 sin marcar, 11 de más).
 

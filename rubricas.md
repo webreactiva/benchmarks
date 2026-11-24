@@ -69,11 +69,11 @@ Mide dos cosas por separado. **Calidad**, contra jev. **Eficiencia**, con umbral
 |---|---:|
 | **Calidad (contra jev)** | **6** |
 | Tipo (bug, enhancement, documentation): ≥ 95 % de aciertos | 1 |
-| Superficie (app, CLI, extension, codex-web, iOS): 2 si ≥ 90 %, 1 si ≥ 85 % | 2 |
-| Áreas, F1 global: 3 si ≥ 0,75, 2 si ≥ 0,65, 1 si ≥ 0,55 | 3 |
+| Superficie (app, CLI, extension, codex-web, iOS): 2 si ≥ 85 %, 1 si ≥ 80 % | 2 |
+| Áreas, F1 global: 3 si ≥ 0,65, 2 si ≥ 0,60, 1 si ≥ 0,55 | 3 |
 | **Eficiencia** | **4** |
 | Tokens de toda la sesión (entrada, salida y caché): 2 si ≤ 600 000, 1 si ≤ 900 000 | 2 |
 | Tiempo de la sesión: ≤ 150 s | 1 |
 | Peticiones al modelo: ≤ 10 | 1 |
 
-La eficiencia solo puntúa si la clasificación sirve: tipo ≥ 90 % y F1 de áreas ≥ 0,50 (responder «bug, app, sin áreas» a todo da un 86 % de tipo y 0 de áreas). Va por las cifras y no por los puntos de calidad, para que unas décimas de superficie no se lleven por delante los 4 puntos. Una incidencia que falta o no se entiende cuenta como fallo en todo. El coste en dólares va aparte, como información (depende del proveedor y de la tarifa).
+La eficiencia solo puntúa si la clasificación sirve: tipo ≥ 90 % y F1 de áreas ≥ 0,50 (responder «bug, app, sin áreas» a todo da un 86 % de tipo y 0 de áreas). Va por las cifras y no por los puntos de calidad, para que unas décimas de superficie no se lleven por delante los 4 puntos. Los umbrales de calidad toman como techo lo que consiguen los mejores agentes, no la coincidencia total con jev: jev etiqueta con un criterio que no está en el prompt, y el mejor de los cuatro primeros (Opus 5.5) llega a 0,67 de F1 en áreas y nadie pasa del 90 % en superficie. Se recalibraron el 24 nov. 2026 con esos cuatro resultados; si otro modelo supera ese techo, se suben. Una incidencia que falta o no se entiende cuenta como fallo en todo. El coste en dólares va aparte, como información (depende del proveedor y de la tarifa).

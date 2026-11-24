@@ -7,11 +7,11 @@
     "Pone los avisos de «Selected model is at capacity» en connectivity (jev, en rate-limits) y lo dice en su respuesta.",
     "Es el que menos tokens de salida gasta (10 k) y el más rápido (69 s)."
   ],
-  "nota": 6,
+  "nota": 8,
   "rubrica": {
     "tipo": 1,
-    "superficie": 0,
-    "areas": 1,
+    "superficie": 1,
+    "areas": 2,
     "tokens": 2,
     "tiempo": 1,
     "peticiones": 1

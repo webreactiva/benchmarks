@@ -296,11 +296,11 @@
     "juicio": {
       "codigo": "TCI",
       "modelo": "claude-fable-5-2",
-      "nota": 3,
+      "nota": 5,
       "rubrica": {
         "tipo": 1,
-        "superficie": 1,
-        "areas": 1,
+        "superficie": 2,
+        "areas": 2,
         "tokens": 0,
         "tiempo": 0,
         "peticiones": 0
@@ -664,11 +664,11 @@
     "juicio": {
       "codigo": "TCI",
       "modelo": "claude-haiku-5-5",
-      "nota": 7,
+      "nota": 9,
       "rubrica": {
         "tipo": 1,
-        "superficie": 1,
-        "areas": 1,
+        "superficie": 2,
+        "areas": 2,
         "tokens": 2,
         "tiempo": 1,
         "peticiones": 1
@@ -996,11 +996,11 @@
     "juicio": {
       "codigo": "TCI",
       "modelo": "claude-opus-5-5",
-      "nota": 6,
+      "nota": 8,
       "rubrica": {
         "tipo": 1,
-        "superficie": 1,
-        "areas": 2,
+        "superficie": 2,
+        "areas": 3,
         "tokens": 1,
         "tiempo": 1,
         "peticiones": 0
@@ -1321,11 +1321,11 @@
         "Pone los avisos de «Selected model is at capacity» en connectivity (jev, en rate-limits) y lo dice en su respuesta.",
         "Es el que menos tokens de salida gasta (10 k) y el más rápido (69 s)."
       ],
-      "nota": 6,
+      "nota": 8,
       "rubrica": {
         "tipo": 1,
-        "superficie": 0,
-        "areas": 1,
+        "superficie": 1,
+        "areas": 2,
         "tokens": 2,
         "tiempo": 1,
         "peticiones": 1

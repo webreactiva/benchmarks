@@ -1,4 +1,4 @@
-# TCI · claude-opus-5-5 · 6/10
+# TCI · claude-opus-5-5 · 8/10
 
 **Mejor en áreas, caro**
 
@@ -15,7 +15,7 @@
 | Tiempo · peticiones · tokens | 125 s · 12 · 768 k |
 | Coste estimado | ≈ 0,79 $ |
 
-Rúbrica: calidad 4/6 (tipo 1, superficie 1, áreas 2) y eficiencia 2/4 (tokens 1, tiempo 1, peticiones 0).
+Rúbrica: calidad 6/6 (tipo 1, superficie 2, áreas 3) y eficiencia 2/4 (tokens 1, tiempo 1, peticiones 0).
 
 Áreas más flojas: config 0,37 (39 sin marcar, 5 de más), computer-use 0,38 (19 sin marcar, 1 de más), tool-calls 0,39 (39 sin marcar, 2 de más), remote 0,49 (12 sin marcar, 9 de más).
 
