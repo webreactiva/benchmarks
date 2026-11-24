@@ -1,0 +1,51 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/kimi-k3.1-pro",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T09:11:11Z",
+  "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+  "tokens": {
+    "input": 43928,
+    "output": 9039,
+    "reasoning": 0,
+    "cache_read": 199199,
+    "cache_write": 0,
+    "total": 252166
+  },
+  "peticiones": 14,
+  "error": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 38e8e880-0e0d-48e4-b195-6b6ba24e7000)",
+  "mensajes_usuario": [
+    "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  ],
+  "herramientas": {
+    "glob": 1,
+    "read": 1,
+    "shell": 3,
+    "write": 2,
+    "subagent": 10
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df32d2f2dffej9C8bvTKv0sxHj",
+  "coste_usd": 0,
+  "ficheros": [
+    ".clasificacion_121_150.jsonl",
+    ".clasificacion_151_180.jsonl",
+    ".clasificacion_181_210.jsonl",
+    ".clasificacion_211_240.jsonl",
+    ".clasificacion_31_60.jsonl",
+    ".clasificacion_61_90.jsonl",
+    ".clasificacion_91_120.jsonl",
+    ".instrucciones_clasificacion.md",
+    ".validar_clasificacion.py"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "espero_segundo_plano": true,
+  "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}
