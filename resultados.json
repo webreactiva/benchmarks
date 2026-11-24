@@ -2976,6 +2976,82 @@
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
   {
+    "dir": "resultados/openai_gpt-6-luna-medium/AIF",
+    "codigo": "AIF",
+    "modelo": "gpt-6-luna (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T11:58:51Z",
+    "prompt_enviado": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 23471,
+      "output": 7078,
+      "reasoning": 885,
+      "cache_read": 109952,
+      "cache_write": 0,
+      "total": 141386
+    },
+    "peticiones": 7,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 6
+    },
+    "mensajes_usuario": [
+      "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML. Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "index.html"
+    ],
+    "validacion": {
+      "html": [
+        {
+          "fichero": "index.html",
+          "errores": [],
+          "titulo": "Web Reactiva — Taller de alquimia",
+          "canvas": 0,
+          "texto": "✳\nWEB REACTIVA\nUN TALLER DE ALQUIMIA DIGITAL\n4 / 23 descubiertos\nCómo jugar\nReiniciar\nEXPERIMENTO 01 · INTERFACES VIVAS\nTodo está conectado.\n\nCombina ideas para descubrir cómo cobra vida una interfaz.\n\nArrastra dos conceptos uno sobre otro para combinarlos.\nTambién puedes pulsar un elemento para añadirlo a la mesa.\nLa mesa está lista\nElige algo del catálogo y empieza a experimentar.\nTu colección\n4",
+          "scripts": [],
+          "captura": "capturas/index.html.png"
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ abre sin errores; mesa libre donde se arrastra una ficha sobre otra",
+        "✔ Web + Código → DOM; DOM + Estado → Interfaz",
+        "✖ solo 6 de 23 elementos alcanzables: ninguna receta crea Usuario (juez/alcanzables.py)",
+        "✖ las mezclas sin receta no dan nada («Aún no se mezclan…»)",
+        "✖ contenido de React, Web Reactiva solo como nombre",
+        "✔ guarda el progreso y busca; sin pistas"
+      ],
+      "capturas_extra": [
+        "capturas/juez-jugar.png"
+      ]
+    },
+    "juicio": {
+      "nota": 6,
+      "veredicto": "se atasca en la segunda mezcla",
+      "rubrica": {
+        "abre sin errores": 1,
+        "mecánica de Infinite Craft": 2,
+        "las combinaciones funcionan": 2,
+        "progresión": 0,
+        "«infinito»": 0,
+        "contenido de Web Reactiva": 0,
+        "acabado": 1
+      },
+      "resumen": "Mesa libre donde se suelta una ficha sobre otra, con colección, buscador y progreso guardado; Web + Código da DOM y DOM + Estado da Interfaz. Ahí se acaba: ninguna receta crea Usuario, del que depende todo lo demás, así que solo se alcanzan 6 de los 23 elementos, las mezclas sin receta no dan nada y el contenido es un tutorial de React con «Web Reactiva» como premio final.",
+      "rarezas": [
+        "No busca nada de Web Reactiva: ni búsqueda web ni lectura de su web. El contenido sale de la palabra «reactiva»: un tutorial de React (useState, useEffect, limpieza, suscripción).",
+        "En el chat dice que está «afinando las combinaciones para que todas funcionen» y quitando dependencias externas; al terminar, 21 de las 23 recetas usan un ingrediente que no se puede conseguir.",
+        "No prueba el juego: 7 peticiones y 141 000 tokens, sin abrirlo en un navegador ni recorrer las recetas."
+      ]
+    },
+    "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
+  },
+  {
     "dir": "resultados/openai_gpt-6-luna-medium/SEC",
     "codigo": "SEC",
     "modelo": "gpt-6-luna (medium)",

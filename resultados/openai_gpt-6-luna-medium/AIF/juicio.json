@@ -1,0 +1,19 @@
+{
+  "nota": 6,
+  "veredicto": "se atasca en la segunda mezcla",
+  "rubrica": {
+    "abre sin errores": 1,
+    "mecánica de Infinite Craft": 2,
+    "las combinaciones funcionan": 2,
+    "progresión": 0,
+    "«infinito»": 0,
+    "contenido de Web Reactiva": 0,
+    "acabado": 1
+  },
+  "resumen": "Mesa libre donde se suelta una ficha sobre otra, con colección, buscador y progreso guardado; Web + Código da DOM y DOM + Estado da Interfaz. Ahí se acaba: ninguna receta crea Usuario, del que depende todo lo demás, así que solo se alcanzan 6 de los 23 elementos, las mezclas sin receta no dan nada y el contenido es un tutorial de React con «Web Reactiva» como premio final.",
+  "rarezas": [
+    "No busca nada de Web Reactiva: ni búsqueda web ni lectura de su web. El contenido sale de la palabra «reactiva»: un tutorial de React (useState, useEffect, limpieza, suscripción).",
+    "En el chat dice que está «afinando las combinaciones para que todas funcionen» y quitando dependencias externas; al terminar, 21 de las 23 recetas usan un ingrediente que no se puede conseguir.",
+    "No prueba el juego: 7 peticiones y 141 000 tokens, sin abrirlo en un navegador ni recorrer las recetas."
+  ]
+}

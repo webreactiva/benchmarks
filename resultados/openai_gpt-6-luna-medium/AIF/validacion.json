@@ -1,0 +1,25 @@
+{
+ "html": [
+  {
+   "fichero": "index.html",
+   "errores": [],
+   "titulo": "Web Reactiva — Taller de alquimia",
+   "canvas": 0,
+   "texto": "✳\nWEB REACTIVA\nUN TALLER DE ALQUIMIA DIGITAL\n4 / 23 descubiertos\nCómo jugar\nReiniciar\nEXPERIMENTO 01 · INTERFACES VIVAS\nTodo está conectado.\n\nCombina ideas para descubrir cómo cobra vida una interfaz.\n\nArrastra dos conceptos uno sobre otro para combinarlos.\nTambién puedes pulsar un elemento para añadirlo a la mesa.\nLa mesa está lista\nElige algo del catálogo y empieza a experimentar.\nTu colección\n4",
+   "scripts": [],
+   "captura": "capturas/index.html.png"
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ abre sin errores; mesa libre donde se arrastra una ficha sobre otra",
+  "✔ Web + Código → DOM; DOM + Estado → Interfaz",
+  "✖ solo 6 de 23 elementos alcanzables: ninguna receta crea Usuario (juez/alcanzables.py)",
+  "✖ las mezclas sin receta no dan nada («Aún no se mezclan…»)",
+  "✖ contenido de React, Web Reactiva solo como nombre",
+  "✔ guarda el progreso y busca; sin pistas"
+ ],
+ "capturas_extra": [
+  "capturas/juez-jugar.png"
+ ]
+}
