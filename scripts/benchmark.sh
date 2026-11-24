@@ -19,7 +19,10 @@ for m in "$@"; do
       q=-; [[ $m == ollama/* ]] || q=$(curl -sS https://openrouter.ai/api/v1/key -H "Authorization: Bearer $OPEN_ROUTER_API_KEY" |
         python3 -c 'import json,sys; d=json.load(sys.stdin)["data"].get("free_model_daily_requests") or {}; print(d.get("remaining","?"))')
       [[ $m == *:free ]] && [ "$q" = 0 ] && { echo "### $m $c: cupo gratuito agotado, paro"; exit 2; }
-      echo "### $m $c (cupo gratuito: $q)"; "$B/scripts/lanzar.sh" "$c" "$m" 2>&1 | tail -1
+      echo "### $m $c (cupo gratuito: $q)"; ult=$("$B/scripts/lanzar.sh" "$c" "$m" 2>&1 | tail -1); echo "$ult"
+      # Límite de uso de la cuenta de Ollama Cloud: los siguientes fallarían en la primera petición. Se para aquí.
+      echo "$ult" | grep -q "reached your session usage limit\|reached your weekly usage limit\|usage limit" && {
+        echo "### $m $c: límite de uso de Ollama Cloud, paro (aparta esta prueba a _descartados y relanza cuando haya cupo)"; exit 3; }
     elif [[ $m == gpt-* ]]; then
       e=${ESFUERZO:-medium}
       [ -e "$B/resultados/openai_$m-$e/$c/meta.json" ] && { echo "### $m $c: ya hecho"; continue; }
