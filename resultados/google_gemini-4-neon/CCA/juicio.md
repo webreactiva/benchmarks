@@ -2,7 +2,7 @@
 
 **Sólido pero sin terminar.** El dominio, el dinero y la validación están al nivel de los mejores, pero la sesión se cortó antes de los tests y del README, y la concurrencia solo aguanta dentro de un proceso.
 
-Se juzga tal cual quedó, por decisión del autor: OpenRouter rechazó la petición 13 con un 402 por falta de saldo (límite nuestro) y la sesión no llegó a dar su respuesta final.
+Se juzga tal cual quedó: OpenRouter rechazó la petición 13 con un 402 por falta de saldo (límite nuestro) y la sesión no llegó a dar su respuesta final.
 
 ## Rúbrica (rubricas.md)
 

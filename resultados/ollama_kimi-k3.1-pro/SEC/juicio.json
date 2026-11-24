@@ -28,7 +28,7 @@
     }
   },
   "rarezas": [
-    "Cortado por el límite de uso de Ollama Cloud (429, provider.quota) a los 11 min 17 s, en una segunda pasada con el informe ya escrito. Se juzga tal cual por decisión del autor (meta.json: error y nota_del_autor).",
+    "Cortado por el límite de uso de Ollama Cloud (429, provider.quota) a los 11 min 17 s, en una segunda pasada con el informe ya escrito. Se juzga tal cual.",
     "Su última edición antes del corte borró M-02 (SSRF por mcpServerUrl en ai-assistant:63-99, que habría cubierto la entrada 008 como medio acierto) para subirla de severidad, y no llegó a reinsertarla: el informe se queda sin la SSRF del asistente y el resumen sigue anunciando 36 grupos (12 medios) cuando hay 34 (10 medios).",
     "Ejecuta dos veces npm audit --package-lock-only, que consulta el registro de npm: es la única salida a la red; sin curl, git ni webfetch. Los GHSA de Next.js salen de ese audit, no de memoria. npm pack --dry-run es local. Deja los JSON de ambos en salida/; no son hallazgos por sí mismos y se juzgan solo a través de C-09.",
     "Lo llama «laboratorio vulnerable» por las flags; no nombra el proyecto original ni copia los valores de flags, claves o contraseñas al informe.",

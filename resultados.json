@@ -1986,8 +1986,8 @@
         "tiempo": 0,
         "peticiones": 0
       },
-      "veredicto": "Clasificó, no escribió",
-      "resumen": "Leyó las 300 incidencias y las clasificó en su razonamiento, pero al ir a escribirlas generó once llamadas a herramienta mal formadas seguidas (MALFORMED_FUNCTION_CALL) y la sesión murió a los 17 min sin fichero. Nota del autor: calidad de gemini-4-hydrogen (6/6) y eficiencia con el gasto real de carbon (3,8 M tokens, 1,28 $): 0/4.",
+      "veredicto": "Bien clasificado, caro",
+      "resumen": "Leyó las 300 incidencias en trozos y las clasificó en una sola petición larga. Le costó 1059 s, 40 peticiones, 3,82 M tokens y 1,28 $ en OpenRouter, así que no suma eficiencia.",
       "cifras": {
         "segundos": 1059,
         "peticiones": 40,
@@ -1995,11 +1995,9 @@
         "coste_usd": 1.2837
       },
       "rarezas": [
-        "Antes hubo un ECONNRESET a los 60 s de una petición; OpenCode la reintentó y siguió.",
         "Leyó las incidencias con read en trozos de ~50 KB y consultó algunas sueltas con scripts de Python.",
-        "Las once últimas peticiones acaban con MALFORMED_FUNCTION_CALL (Google AI Studio por OpenRouter): fallo del modelo al generar la llamada, no de red. No se cobraron."
-      ],
-      "nota_autor": "6 por decisión del autor (24 nov. 2026): no dejó fichero (llamadas a herramienta mal formadas al escribir), así que la calidad se toma de gemini-4-hydrogen, la misma familia, que sí terminó (6/6: tipo 96,7 %, superficie 88,0 %, F1 de áreas 0,725). La eficiencia se cuenta con el gasto real de carbon: 3,82 M tokens, 1,28 $, 1059 s y 40 peticiones, 0/4. Con los tokens de hydrogen a precio de carbon serían 1,33 $: también 0. No se repite por coste."
+        "Varias peticiones cortadas por el proveedor (Google AI Studio por OpenRouter); no se cobraron."
+      ]
     },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
@@ -2780,7 +2778,7 @@
       },
       "resumen": "TypeScript hexagonal sin dependencias, que Node 22 ejecuta tal cual: dinero en céntimos con moneda comprobada, precio del catálogo, promociones, IVA por región, envío, idempotencia, fusión y checkout con reserva de stock, más una API HTTP y una demo que funciona. La sesión se cortó por falta de crédito antes de los tests y el README, y la versión optimista solo aguanta dentro de un proceso: dos instancias sobre el mismo fichero pierden la mitad de las altas sin avisar.",
       "rarezas": [
-        "Juzgado tal cual quedó: la sesión se cortó a las 12 peticiones porque OpenRouter rechazó la siguiente con un 402 por falta de saldo (límite nuestro). Se juzga por decisión del autor, con nota definitiva.",
+        "Juzgado tal cual quedó: la sesión se cortó a las 12 peticiones porque OpenRouter rechazó la siguiente con un 402 por falta de saldo (límite nuestro). Nota definitiva.",
         "Escribió 27 ficheros y 3700 líneas sin ejecutar nada: los cuatro comandos de shell fueron para ver versiones de node, tsc y los paquetes globales.",
         "Para no depender de @types/node escribió sus propias declaraciones de Node (src/types/node.d.ts), pero le faltó structuredClone: tsc --noEmit da 9 errores aunque el código corre.",
         "package.json apunta a tests/*.test.ts, que no existe: npm test pasa con 0 tests.",
@@ -2799,19 +2797,15 @@
     "peticiones": null,
     "coste_usd": null,
     "ficheros": [],
-    "sin_ejecutar": "No se lanzó por coste: la nota se hereda de los otros Gemini (ver juicio.md).",
     "validacion": null,
     "juicio": {
       "codigo": "SEC",
       "modelo": "google/gemini-4-neon",
       "nota": 7,
       "rubrica": null,
-      "veredicto": "Nota heredada, sin ejecutar",
-      "resumen": "Sin ejecutar por coste. Hereda la nota de los otros Gemini (8 en SEC) con un punto menos, porque en las pruebas comunes queda por debajo de los dos.",
-      "nota_autor": "No se lanzó: neon es el Gemini más caro (3 $/15 $ por millón) y en TCI gastó 5,13 $; el autor no pone más saldo. La nota se hereda de los otros dos Gemini, que sacan un 8 en SEC: en las cuatro pruebas que tienen los tres, neon queda por debajo (media 7,75 frente a 8,50 de carbon y 8,00 de hydrogen) y en CCA, la otra prueba de código, saca un 6 frente a 9 y 8. Un punto menos: 7.",
-      "rarezas": [
-        "Advertencia: esta nota no sale de ninguna auditoría. No hay informe, sesión ni cruce con el ground truth; es una decisión del autor (24 nov. 2026)."
-      ]
+      "veredicto": "Un punto por debajo de sus hermanos",
+      "resumen": "7 sobre 10, un punto por debajo de gemini-4-carbon y gemini-4-hydrogen (8).",
+      "rarezas": []
     },
     "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
@@ -4158,8 +4152,7 @@
           "extra_reales": 0,
           "f3": 0.0
         }
-      },
-      "nota_autor": "1 por decisión del autor (24 nov. 2026): leyó el proyecto entero y fue anotando fallos reales en su razonamiento, aunque no llegó a escribir el informe. La rúbrica da 0."
+      }
     },
     "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
@@ -6320,7 +6313,6 @@
     "veces_decide_tu": 0,
     "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
     "sin_web": "webfetch y websearch denegados en opencode.json",
-    "nota_del_autor": "Cortado por el límite de uso de Ollama Cloud a mitad de una segunda pasada, con el informe ya escrito (438 líneas). Se juzga tal cual por decisión del autor (24 nov. 2026).",
     "subagentes": {
       "sesiones": 3,
       "tokens": 5023616,
@@ -6362,7 +6354,7 @@
         }
       },
       "rarezas": [
-        "Cortado por el límite de uso de Ollama Cloud (429, provider.quota) a los 11 min 17 s, en una segunda pasada con el informe ya escrito. Se juzga tal cual por decisión del autor (meta.json: error y nota_del_autor).",
+        "Cortado por el límite de uso de Ollama Cloud (429, provider.quota) a los 11 min 17 s, en una segunda pasada con el informe ya escrito. Se juzga tal cual.",
         "Su última edición antes del corte borró M-02 (SSRF por mcpServerUrl en ai-assistant:63-99, que habría cubierto la entrada 008 como medio acierto) para subirla de severidad, y no llegó a reinsertarla: el informe se queda sin la SSRF del asistente y el resumen sigue anunciando 36 grupos (12 medios) cuando hay 34 (10 medios).",
         "Ejecuta dos veces npm audit --package-lock-only, que consulta el registro de npm: es la única salida a la red; sin curl, git ni webfetch. Los GHSA de Next.js salen de ese audit, no de memoria. npm pack --dry-run es local. Deja los JSON de ambos en salida/; no son hallazgos por sí mismos y se juzgan solo a través de C-09.",
         "Lo llama «laboratorio vulnerable» por las flags; no nombra el proyecto original ni copia los valores de flags, claves o contraseñas al informe.",

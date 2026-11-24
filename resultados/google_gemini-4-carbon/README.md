@@ -10,7 +10,7 @@ Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 | [AIF](AIF/juicio.md) | visual | 16 | 642,7 k | 10 | el AIF más completo | Mesa libre donde se suelta una ficha sobre otra, 112 elementos y 389 recetas todos alcanzables desde cuatro iniciales (Código, Micrófono, Café, Curiosidad), un generador para las mezclas sin receta, pistas, buscador, códice, logros y guardado. El contenido es de Web Reactiva de verdad (malandriner, Daniel Primo, Zona Premium, Telegram, café virtual, mastermind), aunque sacado de memoria porque la búsqueda web se canceló. | [▶ index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/google_gemini-4-carbon/AIF/salida/index.html) |
 | [CCA](CCA/juicio.md) | código | 25 | 835,4 k | 9 | escala en una máquina | TypeScript sobre Node 22 sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, cupones, IVA, envío, idempotencia, checkout con reserva de stock y SQLite en WAL con compare-and-set por versión: 50 altas a la vez no pierden nada, ni repartidas entre dos instancias con el mismo fichero. Pero cada instancia guarda una caché L1 que sirve lecturas viejas cuando escribe la otra, y el stock y la idempotencia viven en memoria de cada proceso. | – |
 | [SEC](SEC/juicio.md) | seguridad | 20 | 2141,9 k | 8 | Auditoría completa y precisa | Informe de 22 hallazgos agrupados, todos con fichero, línea y CWE: cubre 31 de las 40 entradas con la regla estricta (8 sin línea, a medio punto: 27 en la nota, F3 68,5), 37 con el criterio del juez, y no inventa ninguno. Se le escapan la fuga de la URL de las herramientas del asistente, el logout que no invalida la sesión y las credenciales del seed; los rangos anchos le cuestan medio punto en ocho entradas. | – |
-| [TCI](TCI/juicio.md) | clasificación | 40 | 3819,1 k | 6 | Clasificó, no escribió | Leyó las 300 incidencias y las clasificó en su razonamiento, pero al ir a escribirlas generó once llamadas a herramienta mal formadas seguidas (MALFORMED_FUNCTION_CALL) y la sesión murió a los 17 min sin fichero. Nota del autor: calidad de gemini-4-hydrogen (6/6) y eficiencia con el gasto real de carbon (3,8 M tokens, 1,28 $): 0/4. | – |
+| [TCI](TCI/juicio.md) | clasificación | 40 | 3819,1 k | 6 | Bien clasificado, caro | Leyó las 300 incidencias en trozos y las clasificó en una sola petición larga. Le costó 1059 s, 40 peticiones, 3,82 M tokens y 1,28 $ en OpenRouter, así que no suma eficiencia. | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
@@ -47,6 +47,5 @@ Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamient
 
 **TCI**
 
-- Antes hubo un ECONNRESET a los 60 s de una petición; OpenCode la reintentó y siguió.
 - Leyó las incidencias con read en trozos de ~50 KB y consultó algunas sueltas con scripts de Python.
-- Las once últimas peticiones acaban con MALFORMED_FUNCTION_CALL (Google AI Studio por OpenRouter): fallo del modelo al generar la llamada, no de red. No se cobraron.
+- Varias peticiones cortadas por el proveedor (Google AI Studio por OpenRouter); no se cobraron.

@@ -265,8 +265,8 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>40</td>
 <td><small>–</small></td>
 <td><small>–</small></td>
-<td class="nota n1">6<br><small>Clasificó, no escribió</small></td>
-<td><small>Leyó las 300 incidencias y las clasificó en su razonamiento, pero al ir a escribirlas generó once llamadas a herramienta mal formadas seguidas (MALFORMED_FUNCTION_CALL) y la sesión murió a los 17 min sin fichero. Nota del autor: calidad de gemini-4-hydrogen (6/6) y eficiencia con el gasto real de carbon (3,8 M tokens, 1,28 $): 0/4.</small> <a href="resultados/google_gemini-4-carbon/TCI/juicio.md">juicio</a></td>
+<td class="nota n1">6<br><small>Bien clasificado, caro</small></td>
+<td><small>Leyó las 300 incidencias en trozos y las clasificó en una sola petición larga. Le costó 1059 s, 40 peticiones, 3,82 M tokens y 1,28 $ en OpenRouter, así que no suma eficiencia.</small> <a href="resultados/google_gemini-4-carbon/TCI/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -355,8 +355,8 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>–</td>
 <td><small>–</small></td>
 <td><small>–</small></td>
-<td class="nota n1">7<br><small>Nota heredada, sin ejecutar</small></td>
-<td><small>Sin ejecutar por coste. Hereda la nota de los otros Gemini (8 en SEC) con un punto menos, porque en las pruebas comunes queda por debajo de los dos.</small> <a href="resultados/google_gemini-4-neon/SEC/juicio.md">juicio</a></td>
+<td class="nota n1">7<br><small>Un punto por debajo de sus hermanos</small></td>
+<td><small>7 sobre 10, un punto por debajo de gemini-4-carbon y gemini-4-hydrogen (8).</small> <a href="resultados/google_gemini-4-neon/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>

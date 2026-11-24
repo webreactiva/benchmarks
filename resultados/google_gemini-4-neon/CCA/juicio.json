@@ -13,7 +13,7 @@
   },
   "resumen": "TypeScript hexagonal sin dependencias, que Node 22 ejecuta tal cual: dinero en céntimos con moneda comprobada, precio del catálogo, promociones, IVA por región, envío, idempotencia, fusión y checkout con reserva de stock, más una API HTTP y una demo que funciona. La sesión se cortó por falta de crédito antes de los tests y el README, y la versión optimista solo aguanta dentro de un proceso: dos instancias sobre el mismo fichero pierden la mitad de las altas sin avisar.",
   "rarezas": [
-    "Juzgado tal cual quedó: la sesión se cortó a las 12 peticiones porque OpenRouter rechazó la siguiente con un 402 por falta de saldo (límite nuestro). Se juzga por decisión del autor, con nota definitiva.",
+    "Juzgado tal cual quedó: la sesión se cortó a las 12 peticiones porque OpenRouter rechazó la siguiente con un 402 por falta de saldo (límite nuestro). Nota definitiva.",
     "Escribió 27 ficheros y 3700 líneas sin ejecutar nada: los cuatro comandos de shell fueron para ver versiones de node, tsc y los paquetes globales.",
     "Para no depender de @types/node escribió sus propias declaraciones de Node (src/types/node.d.ts), pero le faltó structuredClone: tsc --noEmit da 9 errores aunque el código corre.",
     "package.json apunta a tests/*.test.ts, que no existe: npm test pasa con 0 tests.",

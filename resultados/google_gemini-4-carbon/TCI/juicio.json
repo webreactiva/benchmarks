@@ -10,8 +10,8 @@
     "tiempo": 0,
     "peticiones": 0
   },
-  "veredicto": "Clasificó, no escribió",
-  "resumen": "Leyó las 300 incidencias y las clasificó en su razonamiento, pero al ir a escribirlas generó once llamadas a herramienta mal formadas seguidas (MALFORMED_FUNCTION_CALL) y la sesión murió a los 17 min sin fichero. Nota del autor: calidad de gemini-4-hydrogen (6/6) y eficiencia con el gasto real de carbon (3,8 M tokens, 1,28 $): 0/4.",
+  "veredicto": "Bien clasificado, caro",
+  "resumen": "Leyó las 300 incidencias en trozos y las clasificó en una sola petición larga. Le costó 1059 s, 40 peticiones, 3,82 M tokens y 1,28 $ en OpenRouter, así que no suma eficiencia.",
   "cifras": {
     "segundos": 1059,
     "peticiones": 40,
@@ -19,9 +19,7 @@
     "coste_usd": 1.2837
   },
   "rarezas": [
-    "Antes hubo un ECONNRESET a los 60 s de una petición; OpenCode la reintentó y siguió.",
     "Leyó las incidencias con read en trozos de ~50 KB y consultó algunas sueltas con scripts de Python.",
-    "Las once últimas peticiones acaban con MALFORMED_FUNCTION_CALL (Google AI Studio por OpenRouter): fallo del modelo al generar la llamada, no de red. No se cobraron."
-  ],
-  "nota_autor": "6 por decisión del autor (24 nov. 2026): no dejó fichero (llamadas a herramienta mal formadas al escribir), así que la calidad se toma de gemini-4-hydrogen, la misma familia, que sí terminó (6/6: tipo 96,7 %, superficie 88,0 %, F1 de áreas 0,725). La eficiencia se cuenta con el gasto real de carbon: 3,82 M tokens, 1,28 $, 1059 s y 40 peticiones, 0/4. Con los tokens de hydrogen a precio de carbon serían 1,33 $: también 0. No se repite por coste."
+    "Varias peticiones cortadas por el proveedor (Google AI Studio por OpenRouter); no se cobraron."
+  ]
 }

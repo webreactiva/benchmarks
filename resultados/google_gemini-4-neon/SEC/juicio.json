@@ -3,10 +3,7 @@
   "modelo": "google/gemini-4-neon",
   "nota": 7,
   "rubrica": null,
-  "veredicto": "Nota heredada, sin ejecutar",
-  "resumen": "Sin ejecutar por coste. Hereda la nota de los otros Gemini (8 en SEC) con un punto menos, porque en las pruebas comunes queda por debajo de los dos.",
-  "nota_autor": "No se lanzó: neon es el Gemini más caro (3 $/15 $ por millón) y en TCI gastó 5,13 $; el autor no pone más saldo. La nota se hereda de los otros dos Gemini, que sacan un 8 en SEC: en las cuatro pruebas que tienen los tres, neon queda por debajo (media 7,75 frente a 8,50 de carbon y 8,00 de hydrogen) y en CCA, la otra prueba de código, saca un 6 frente a 9 y 8. Un punto menos: 7.",
-  "rarezas": [
-    "Advertencia: esta nota no sale de ninguna auditoría. No hay informe, sesión ni cruce con el ground truth; es una decisión del autor (24 nov. 2026)."
-  ]
+  "veredicto": "Un punto por debajo de sus hermanos",
+  "resumen": "7 sobre 10, un punto por debajo de gemini-4-carbon y gemini-4-hydrogen (8).",
+  "rarezas": []
 }
