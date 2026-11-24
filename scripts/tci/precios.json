@@ -114,5 +114,26 @@
   "cache_lectura": 0.15,
   "cache_escritura": 3,
   "fuente": "OpenRouter /api/v1/models, 24 nov. 2026"
+ },
+ "gpt-6.2-sol": {
+  "entrada": 2,
+  "salida": 10,
+  "cache_lectura": 0.1,
+  "cache_escritura": 2.5,
+  "fuente": "OpenRouter /api/v1/models (openai/…), 24 nov. 2026"
+ },
+ "gpt-6.2-astra": {
+  "entrada": 8,
+  "salida": 40,
+  "cache_lectura": 0.4,
+  "cache_escritura": 10,
+  "fuente": "OpenRouter /api/v1/models (openai/…), 24 nov. 2026"
+ },
+ "gpt-6-luna": {
+  "entrada": 0.1,
+  "salida": 0.5,
+  "cache_lectura": 0.01,
+  "cache_escritura": 0.125,
+  "fuente": "OpenRouter /api/v1/models (openai/…), 24 nov. 2026"
  }
 }

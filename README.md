@@ -67,7 +67,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [ollama/glm-5.3-flash](resultados/ollama_glm-5.3-flash/README.md) | OpenCode | 9 | 8 | 8 | 5 | 6 | **8,3** | 99 | 5,8 M |
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | 10 | 9 | 6 | 8 | 6 | **8,3** | 260 | 14,0 M |
 | [ollama/muse-spark-open](resultados/ollama_muse-spark-open/README.md) | OpenCode | 7 | 8 | 9 | 2 | 5 | **8,0** | 139 | 9,4 M |
-| [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | 10 | 8 | 5 | – | – | **7,7** | 86 | 4,4 M |
+| [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | 10 | 8 | 5 | – | 9 | **7,7** | 98 | 4,9 M |
 | [ollama/minimax-m3](resultados/ollama_minimax-m3/README.md) | OpenCode | 4 | 9 | 10 | 6 | 6 | **7,7** | 366 | 39,2 M |
 | [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | 6 | 9 | 6 | 7 | 9 | **7,0** | 136 | 10,0 M |
 | [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | 7 | 6 | 8 | 5 | 6 | **7,0** | 56 | 2,4 M |
@@ -99,12 +99,12 @@ Etiqueta de cada prueba en la que el modelo saca 9 o más (la rehace `scripts/es
 | [claude-sonnet-5-5 (medium)](resultados/anthropic_claude-sonnet-5-5-medium/README.md) | Claude Code | Visual (9), Ejecución (9) | 5 de 5 |
 | [google/gemini-4-neon](resultados/google_gemini-4-neon/README.md) | OpenCode | Visual (9), Producto (10) | 5 de 5 |
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | Visual (10), Producto (9) | 5 de 5 |
+| [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | Visual (10), Volumen (9) | 4 de 5 |
 | [ollama/minimax-m3](resultados/ollama_minimax-m3/README.md) | OpenCode | Producto (9), Ejecución (10) | 5 de 5 |
 | [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | Producto (9), Volumen (9) | 5 de 5 |
 | [ollama/glm-5.3](resultados/ollama_glm-5.3/README.md) | OpenCode | Producto (10) | 5 de 5 |
 | [ollama/glm-5.3-flash](resultados/ollama_glm-5.3-flash/README.md) | OpenCode | Visual (9) | 5 de 5 |
 | [ollama/muse-spark-open](resultados/ollama_muse-spark-open/README.md) | OpenCode | Ejecución (9) | 5 de 5 |
-| [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | Visual (10) | 3 de 5 |
 | [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | – | 5 de 5 |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | – | 3 de 5 |
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | – | 3 de 5 |

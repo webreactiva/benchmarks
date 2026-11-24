@@ -3587,6 +3587,71 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/openai_gpt-6.2-sol-medium/TCI",
+    "codigo": "TCI",
+    "modelo": "gpt-6.2-sol (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T11:45:06Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 59038,
+      "output": 3651,
+      "reasoning": 376,
+      "cache_read": 461824,
+      "cache_write": 0,
+      "total": 524889
+    },
+    "peticiones": 12,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 11
+    },
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/TCI/semilla",
+    "validacion": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "gpt-6.2-sol",
+      "nota": 9,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 3,
+        "tokens": 2,
+        "tiempo": 1,
+        "peticiones": 0
+      },
+      "veredicto": "Como Opus, a mitad de precio",
+      "resumen": "Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,690 frente a jev (85 incidencias idénticas). Le costó 103 s, 12 peticiones y 525 k tokens (≈ 0,21 $).",
+      "cifras": {
+        "tipo": 0.97,
+        "superficie": 0.877,
+        "areas_f1_micro": 0.69,
+        "areas_f1_macro": 0.655,
+        "exactas": 85,
+        "segundos": 103,
+        "peticiones": 12,
+        "tokens": 524889,
+        "coste_usd_estimado": 0.205
+      },
+      "rarezas": [
+        "Lee las 300 incidencias en tres tandas de 100, recortadas a unos 400 caracteres, y abre completas unas 40 dudosas.",
+        "Clasifica con un código de letras propio (bc sdtg: bug, CLI, sandbox, app-server, TUI, config) y lo expande a JSONL con un script: 3651 tokens de salida para 300 incidencias, de los que menos (solo gemini-4-carbon gasta menos).",
+        "Avisa en el chat de lo que decidió: Android como app y bug/app provisional en las incidencias retiradas sin datos."
+      ]
+    },
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/nvidia_nemotron-3-ultra-550b-a55b_free/A3D",
     "codigo": "A3D",
     "modelo": "nvidia/nemotron-3-ultra-550b-a55b:free",

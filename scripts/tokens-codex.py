@@ -37,6 +37,28 @@ cache = u.get("cached_input_tokens", 0); razon = u.get("reasoning_output_tokens"
 tot = {"input": u.get("input_tokens", 0) - cache, "output": u.get("output_tokens", 0) - razon,
        "reasoning": razon, "cache_read": cache, "cache_write": u.get("cache_write_input_tokens", 0)}
 tot["total"] = sum(tot.values())
+# Subagentes (spawn_agent): cada uno deja su registro en subagentes/; se suma su último acumulado y sus peticiones
+dsub = os.path.join(d, "subagentes")
+if os.path.isdir(dsub):
+    sub = {"sesiones": 0, "tokens": 0, "peticiones": 0}
+    for n in sorted(os.listdir(dsub)):
+        fs = os.path.join(dsub, n)
+        limpio = re.sub(r'account_id":"[^"]*"', 'account_id":"<oculto>"', open(fs).read())
+        open(fs, "w").write(limpio)
+        us, pet = {}, 0
+        for l in limpio.splitlines():
+            x = json.loads(l); p = x.get("payload") or {}
+            if x["type"] == "event_msg" and p.get("type") == "token_count" and p.get("info"):
+                pet += 1; us = p["info"]["total_token_usage"]
+        c, r = us.get("cached_input_tokens", 0), us.get("reasoning_output_tokens", 0)
+        parte = {"input": us.get("input_tokens", 0) - c, "output": us.get("output_tokens", 0) - r,
+                 "reasoning": r, "cache_read": c, "cache_write": us.get("cache_write_input_tokens", 0)}
+        for k, v in parte.items():
+            tot[k] += v
+        sub["sesiones"] += 1; sub["tokens"] += sum(parte.values()); sub["peticiones"] += pet
+        peticiones += pet
+    tot["total"] = sum(v for k, v in tot.items() if k != "total")
+    meta["subagentes"] = sub
 meta.update(tokens=tot, peticiones=peticiones, herramientas=herramientas, mensajes_usuario=usuario,
             veces_decide_tu=int(pregunto))
 salida = os.path.join(d, "salida")
