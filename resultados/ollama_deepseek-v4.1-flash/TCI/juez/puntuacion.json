@@ -1,0 +1,158 @@
+{
+  "fichero": "salida/classificacion.jsonl",
+  "incidencias": 300,
+  "clasificadas": 300,
+  "lineas_no_validas": 0,
+  "tipo": 0.96,
+  "superficie": 0.873,
+  "areas_f1_micro": 0.667,
+  "areas_f1_macro": 0.634,
+  "areas_jaccard": 0.547,
+  "areas_por_area": {
+    "windows-os": {
+      "tp": 67,
+      "fp": 0,
+      "fn": 24,
+      "f1": 0.85
+    },
+    "sandbox": {
+      "tp": 56,
+      "fp": 6,
+      "fn": 8,
+      "f1": 0.89
+    },
+    "app-server": {
+      "tp": 27,
+      "fp": 4,
+      "fn": 48,
+      "f1": 0.51
+    },
+    "connectivity": {
+      "tp": 28,
+      "fp": 24,
+      "fn": 4,
+      "f1": 0.67
+    },
+    "TUI": {
+      "tp": 24,
+      "fp": 8,
+      "fn": 1,
+      "f1": 0.84
+    },
+    "session": {
+      "tp": 26,
+      "fp": 39,
+      "fn": 3,
+      "f1": 0.55
+    },
+    "rate-limits": {
+      "tp": 19,
+      "fp": 5,
+      "fn": 8,
+      "f1": 0.75
+    },
+    "tool-calls": {
+      "tp": 40,
+      "fp": 20,
+      "fn": 12,
+      "f1": 0.71
+    },
+    "browser": {
+      "tp": 16,
+      "fp": 1,
+      "fn": 4,
+      "f1": 0.86
+    },
+    "remote": {
+      "tp": 14,
+      "fp": 10,
+      "fn": 8,
+      "f1": 0.61
+    },
+    "model-behavior": {
+      "tp": 8,
+      "fp": 8,
+      "fn": 8,
+      "f1": 0.5
+    },
+    "performance": {
+      "tp": 7,
+      "fp": 16,
+      "fn": 5,
+      "f1": 0.4
+    },
+    "mcp": {
+      "tp": 8,
+      "fp": 1,
+      "fn": 6,
+      "f1": 0.7
+    },
+    "auth": {
+      "tp": 16,
+      "fp": 20,
+      "fn": 6,
+      "f1": 0.55
+    },
+    "context": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 7,
+      "f1": 0.53
+    },
+    "subagent": {
+      "tp": 6,
+      "fp": 1,
+      "fn": 6,
+      "f1": 0.63
+    },
+    "config": {
+      "tp": 24,
+      "fp": 27,
+      "fn": 28,
+      "f1": 0.47
+    },
+    "computer-use": {
+      "tp": 7,
+      "fp": 3,
+      "fn": 18,
+      "f1": 0.4
+    }
+  },
+  "exactas": 70,
+  "exactas_pct": 0.233,
+  "coste": {
+    "segundos": 87,
+    "tokens": {
+      "input": 70317,
+      "output": 28668,
+      "reasoning": 0,
+      "cache_read": 760192,
+      "cache_write": 0,
+      "total": 859177
+    },
+    "peticiones": 15,
+    "herramientas": {
+      "shell": 13,
+      "read": 1,
+      "write": 1
+    },
+    "usd_estimado": 0.01
+  },
+  "coste_jev": {
+    "modelo": "jev-1.14.0",
+    "segundos_total": 78.2,
+    "tokens_entrada": 495552,
+    "tokens_salida": 132435
+  },
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 3,
+    "tokens": 2,
+    "tiempo": 1,
+    "peticiones": 0
+  },
+  "nota": 9,
+  "nota_calidad": 6,
+  "nota_eficiencia": 3
+}

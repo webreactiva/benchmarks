@@ -1,0 +1,31 @@
+He leído las 300 incidencias del archivo. Ahora procedo a clasificarlas y generar el archivo `clasificacion.jsonl`.
+
+---
+
+Ahora verifico que el archivo sea válido y consistente con la entrada:
+
+---
+
+Clasificación completada. El archivo `clasificacion.jsonl` contiene las 300 incidencias, una por línea, en el mismo orden que `incidencias.jsonl`, con esta estructura:
+
+```json
+{"id": "codex-51098", "tipo": "bug", "superficie": "CLI", "areas": ["app-server", "sandbox", "session", "config"]}
+```
+
+**Resumen de la clasificación**
+
+| Campo | Distribución |
+|---|---|
+| **Tipo** | 265 bug · 26 enhancement · 9 documentation |
+| **Superficie** | 189 app · 82 CLI · 14 codex-web · 10 extension · 5 iOS |
+| **Áreas más frecuentes** | session (49), sandbox (48), windows-os (42), TUI (34), remote (33), app-server (28), connectivity (28), auth (26) |
+
+**Criterios aplicados**
+
+- **Familias de errores recurrentes**: todo el clúster de "setup refresh had errors / os error 32" en Windows (ACL `MAXIMUM_ALLOWED` sobre `node_repl.exe`) se marcó como `windows-os` + `sandbox`, añadiendo `remote` cuando eran tareas delegadas de dot, `browser` cuando bloqueaba la automatización del navegador y `computer-use` cuando el archivo lo retenían los helpers de computer-use.
+- **"Selected model is at capacity"** se clasificó como `rate-limits`; los errores de stream/WebSocket/appcast (520, SSE timeout, reconexiones) como `connectivity`.
+- **Send deshabilitado en Work/chats nuevos**: `session` (y `auth` cuando la causa era verificación de workspace/DeviceCheck/Cloudflare sobre la cuenta).
+- **Mejoras** (themes, tips, slash commands, status line, indicadores) como `enhancement`; las peticiones de documentación (6 duplicados de "Document a supported third-party attachment…", `exec_command` en macOS, etc.) como `documentation`.
+- **39 incidencias quedaron sin áreas** (lista vacía): son principalmente informes retirados sin contenido ("Withdrawn") y reportes de crash/UI sin suficiente información para asociarlos a ninguna de las 18 áreas, por lo que preferí no inventar una asignación.
+
+La verificación confirma: 300 líneas válidas en JSON, IDs únicos y en el mismo orden que el origen, y todos los valores de tipo, superficie y áreas dentro de los catálogos permitidos.

@@ -1,0 +1,40 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/deepseek-v4.1-flash",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T07:44:55Z",
+  "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+  "tokens": {
+    "input": 70317,
+    "output": 28668,
+    "reasoning": 0,
+    "cache_read": 760192,
+    "cache_write": 0,
+    "total": 859177
+  },
+  "peticiones": 15,
+  "error": null,
+  "mensajes_usuario": [
+    "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  ],
+  "herramientas": {
+    "shell": 13,
+    "read": 1,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df37c2906ffeKCDtUfcETqUG3M",
+  "coste_usd": 0,
+  "ficheros": [
+    "classificacion.jsonl"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 393216,
+    "output_proveedor": 393216,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

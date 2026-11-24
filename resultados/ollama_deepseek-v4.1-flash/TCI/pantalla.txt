@@ -1,0 +1,36 @@
+   Clasificación de incidencias. +
+
+  ┃
+  ┃  Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation)
+  ┃  , la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-
+  ┃  os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior,
+  ┃  performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl,
+  ┃  una línea por incidencia con su id.
+  ┃
+
+     + 13 commands, 1 edit, 14 thoughts, 1 read
+
+     Listo. Generé classificacion.jsonl con 300 líneas, una por incidencia, en el mismo orden que incidencias.jsonl.
+
+     Cada línea tiene este formato:
+
+     {"id": "codex-51098", "tipo": "bug", "superficie": "CLI", "areas": ["sandbox", "app-server", "remote"]}
+
+     Resumen de la clasificación:
+
+     - Tipo: 265 bug, 26 enhancement, 9 documentation
+     - Superficie: 191 app, 84 CLI, 12 codex-web, 10 extension, 3 iOS
+
+     Las incidencias retiradas o sin información suficiente se mantuvieron como bug y, cuando no había áreas
+     aplicables, se dejó areas vacío.
+
+     Build · deepseek-v4.1-flash · 1m 26s · 381.7 tok/s · 915ms ttft
+
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · deepseek-v4.1-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-Wvi3Sol3                                                               98.2K (9%)  ctrl+p commands
+
