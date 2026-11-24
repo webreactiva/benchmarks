@@ -2932,7 +2932,38 @@
     ],
     "semilla": "/Users/daniel/.cache/benchmark-semillas/TCI/semilla",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "gpt-6-luna",
+      "nota": 0,
+      "rubrica": {
+        "tipo": 0,
+        "superficie": 0,
+        "areas": 0,
+        "tokens": 0,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Regex en vez de leer",
+      "resumen": "Tipo 90,0 %, superficie 75,3 % y F1 de áreas 0,390 frente a jev (4 incidencias idénticas): no llega a ningún umbral de calidad, y con áreas por debajo de 0,50 la eficiencia no cuenta. Fue el más barato (57 s, 8 peticiones, 247 k tokens, ≈ 0,007 $), pero la clasificación no sirve.",
+      "cifras": {
+        "tipo": 0.9,
+        "superficie": 0.753,
+        "areas_f1_micro": 0.39,
+        "areas_f1_macro": 0.411,
+        "exactas": 4,
+        "segundos": 57,
+        "peticiones": 8,
+        "tokens": 246988,
+        "coste_usd_estimado": 0.007
+      },
+      "rarezas": [
+        "Hace cat del fichero entero y lista títulos y 180 caracteres de cada incidencia, pero no clasifica lo que lee: escribe un clasificador de expresiones regulares por palabras clave (windows|powershell|wsl…, sandbox|permission|approval…) y lo aplica a las 300.",
+        "Las reglas marcan áreas de más en casi todas: 183 falsos model-behavior, 199 session, 135 auth y 123 performance.",
+        "Lo primero que busca es un AGENTS.md en la carpeta.",
+        "Solo comprueba la forma del resultado (300 ids únicos, valores permitidos), no si la clasificación tiene sentido."
+      ]
+    },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
