@@ -1,0 +1,36 @@
+   Clasificación de incidencias. +
+     │ tipo               │ n        │        │ superficie      │ n        │        │ áreas más usadas      │ n      │
+     ├────────────────────┼──────────┼────────┼─────────────────┼──────────┼────────┼───────────────────────┼────────┤
+     │ bug                │ 258      │        │ app             │ 186      │        │ windows-os            │ 55     │
+     ├────────────────────┼──────────┼────────┼─────────────────┼──────────┼────────┼───────────────────────┼────────┤
+     │ enhancement        │ 33       │        │ CLI             │ 86       │        │ sandbox               │ 48     │
+     ├────────────────────┼──────────┼────────┼─────────────────┼──────────┼────────┼───────────────────────┼────────┤
+     │ documentation      │ 9        │        │ codex-web       │ 11       │        │ session               │ 42     │
+     ├────────────────────┼──────────┼────────┼─────────────────┼──────────┼────────┼───────────────────────┼────────┤
+     │                    │          │        │ extension       │ 11       │        │ connectivity          │ 34     │
+     ├────────────────────┼──────────┼────────┼─────────────────┼──────────┼────────┼───────────────────────┼────────┤
+     │                    │          │        │ iOS             │ 6        │        │ remote                │ 33     │
+     └────────────────────┴──────────┴────────┴─────────────────┴──────────┴────────┴───────────────────────┴────────┘
+
+     Criterios aplicados:
+
+     - Superficie: app = Codex/ChatGPT desktop (Windows/macOS/Linux); CLI = codex-cli/TUI/daemon; extension =
+       extensión de VS Code y extensiones de navegador (Edge/Chrome); codex-web = chatgpt.com/codex y Codex Cloud; iOS
+       = app móvil (incluí los casos Android, que no tienen categoría propia en la lista).
+     - Tipo: documentation para pedidos explícitos de docs/soporte de API (p. ej. lifecycle de exec_command en macOS,
+       API de attachment a tasks, cómo reanudar sesiones locales desde web); enhancement para feature requests y
+       quejas de UX sin defecto (tema del CLI, custom slash commands, status line, borrado de chats); el resto bug.
+     - Áreas: 35 incidencias quedan sin área — son reportes de crash genéricos, issues retiradas ("Withdrawn") o
+       fallos puramente de renderizado sin encaje en ninguna de las 18 áreas. Las queInvoke una sola área (±1) son
+       fallos de superficie muy acotada; los clusters grandes (sandbox de Windows con os error 32, fallos de daemon/
+       app-server, "model at capacity", usage/quotas) se etiquetaron con varias áreas coherentes.
+
+     Build · minimax-m3.1-flash · 3m 32s · 192.5 tok/s · 1.8s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · minimax-m3.1-flash Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-Xh5VyFCF                                                             135.4K (14%)  ctrl+p commands
+

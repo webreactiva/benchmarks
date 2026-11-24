@@ -1,0 +1,300 @@
+{"id": "codex-51098", "titulo": "0.160.0: --yolo ignored for new threads when TUI runs on managed app-server daemon / --remote", "tipo": "bug", "superficie": "CLI", "areas": ["app-server", "sandbox", "session"]}
+{"id": "codex-51101", "titulo": "[BUG] Ctrl+mouse wheel no longer changes Windows Terminal font size during Codex CLI", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "windows-os"]}
+{"id": "codex-51106", "titulo": "Document supported lifecycle and capture controls for macOS exec_command", "tipo": "documentation", "superficie": "app", "areas": ["tool-calls", "sandbox"]}
+{"id": "codex-51113", "titulo": "[macOS desktop] Migrated custom pet disappears from picker despite active service record", "tipo": "bug", "superficie": "app", "areas": ["config"]}
+{"id": "codex-51132", "titulo": "“Ask for approval” is selected, and internet access approval succeeds, but publishing fails", "tipo": "bug", "superficie": "app", "areas": ["sandbox", "tool-calls"]}
+{"id": "codex-51144", "titulo": "[macOS app] Readable local chat rejects submissions with thread_not_found; archive/unarchive restores loaded state", "tipo": "bug", "superficie": "app", "areas": ["session", "app-server"]}
+{"id": "codex-51152", "titulo": "app-server rejects every turn with \"invalid cwd\" once the daemon's own working directory is deleted, even when the request cwd is absolute", "tipo": "bug", "superficie": "CLI", "areas": ["app-server", "session"]}
+{"id": "codex-51153", "titulo": "Daemon bootstrap reports success while its updater exits with SUN_LEN under a deep CODEX_HOME (Linux)", "tipo": "bug", "superficie": "CLI", "areas": ["app-server", "config"]}
+{"id": "codex-51174", "titulo": "Custom Slash Commands for reusable workflows/prompts", "tipo": "enhancement", "superficie": "CLI", "areas": ["config", "TUI"]}
+{"id": "codex-51201", "titulo": "Managed daemon auto-update restart kills in-flight turns without a terminal event and reloads threads with default permissions instead of Full access (0.160.0 → 0.160.1, macOS)", "tipo": "bug", "superficie": "app", "areas": ["app-server", "session", "sandbox"]}
+{"id": "codex-51212", "titulo": "Pairing isn't working; I log in with Google—there's no error—but it gets stuck in a loop during the authorization flow for pairing ChatGPT on Android with Windows.", "tipo": "bug", "superficie": "iOS", "areas": ["auth", "remote"]}
+{"id": "codex-51267", "titulo": "For local PC \"A\" 's sessions, how to show and resume in web cloud app, and in another PC \"B\"?", "tipo": "documentation", "superficie": "codex-web", "areas": ["session", "remote"]}
+{"id": "codex-51269", "titulo": "Android: allow viewing the dot computer's browser cookies", "tipo": "enhancement", "superficie": "iOS", "areas": ["browser", "remote"]}
+{"id": "codex-51271", "titulo": "Approval prompts steal OS keyboard focus while I am typing in another application/window.", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-51279", "titulo": "ChatGPT Web: pinned project folders are omitted from the Projects interface", "tipo": "bug", "superficie": "codex-web", "areas": ["session"]}
+{"id": "codex-51293", "titulo": "Codex exec fails during in-process app-server initialization with read-only CODEX_HOME", "tipo": "bug", "superficie": "CLI", "areas": ["config", "app-server"]}
+{"id": "codex-51300", "titulo": "[Linux Desktop 26.930.61225] automation_update fails loading app-native tool dispatcher after update", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-51303", "titulo": "Desktop app crashing after several seconds", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-51309", "titulo": "Restore the Sparkle animation (maybe via config)", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "config"]}
+{"id": "codex-51322", "titulo": "Allow customizing user message background color in Codex CLI", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "config"]}
+{"id": "codex-51339", "titulo": "Windows: background daemon still fails with \"Access is denied (os error 5)\" on Codex CLI 0.160.1", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "app-server"]}
+{"id": "codex-51344", "titulo": "CLI turn off \"Tip\"", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-51365", "titulo": "Codex desktop app: show remaining usage limits and reset times in the header", "tipo": "enhancement", "superficie": "app", "areas": ["rate-limits"]}
+{"id": "codex-51372", "titulo": "dot cloud task creation and continuation fail with AppServerBackendRequestError / UNKNOWN while manual creation works", "tipo": "bug", "superficie": "app", "areas": ["app-server", "connectivity", "remote"]}
+{"id": "codex-51418", "titulo": "error", "tipo": "bug", "superficie": "app", "areas": ["sandbox", "tool-calls"]}
+{"id": "codex-51428", "titulo": "Command Center: preserve selection and keep the list visible when deleting chats", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "session"]}
+{"id": "codex-51453", "titulo": "Queued follow-up inputs: Text is not copyable", "tipo": "bug", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-51487", "titulo": "Can't run codex on my device but works on other devices with the same account. It keeps reconnecting.", "tipo": "bug", "superficie": "CLI", "areas": ["connectivity", "app-server"]}
+{"id": "codex-51488", "titulo": "Codex GitHub review reacts with 👀 but never starts review job on org-owned repo", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-51495", "titulo": "Windows Work mode — app screenshots unreadable in cloud mode", "tipo": "bug", "superficie": "app", "areas": ["computer-use", "windows-os", "remote"]}
+{"id": "codex-51504", "titulo": "Shared daemon replays stale unrecognized-config warnings after config.toml is corrected", "tipo": "bug", "superficie": "CLI", "areas": ["config", "app-server"]}
+{"id": "codex-51533", "titulo": "[dot][Voice] Calls fail across iOS/macOS; web dot page also fails to load", "tipo": "bug", "superficie": "iOS", "areas": ["connectivity"]}
+{"id": "codex-51552", "titulo": "codex exec reports edits it never made: exits 0 after ~8 s with no file changes and a final message saying the change was done", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior", "tool-calls"]}
+{"id": "codex-51565", "titulo": "[macOS] Send button remains disabled in new chats after update; existing chats still work", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-51581", "titulo": "[macOS][Work] Send stays disabled with a non-empty prompt; Chat-to-Work computer-use handoff works", "tipo": "bug", "superficie": "app", "areas": ["computer-use", "session"]}
+{"id": "codex-51594", "titulo": "[Windows 26.1002.51308] New Work first prompt disabled after update; existing Work chats and Codex still work", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "session"]}
+{"id": "codex-51597", "titulo": "[Windows][26.1002.51308] New Work chats cannot send from home after update; existing chats still work", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "session"]}
+{"id": "codex-51606", "titulo": "[Dots] Cloud Firefox CA restoration requires manual takeover; reported cross-account inconsistency", "tipo": "bug", "superficie": "app", "areas": ["browser", "connectivity", "remote"]}
+{"id": "codex-51613", "titulo": "[Windows] Elevated sandbox refresh blocks command execution: MAXIMUM_ALLOWED causes error 32 on active runtime files", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-51614", "titulo": "ChatGPT/Codex Linux crashes during KDE appearance changes: SIGSEGV at libqt6_shim.so + 0x1230", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-51623", "titulo": "Windows elevated sandbox: root-only ACL grants open loaded runtime files for write (os error 32), so every setup refresh fails", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-51639", "titulo": "Can't create new conversations in Work mode", "tipo": "bug", "superficie": "app", "areas": ["session", "windows-os"]}
+{"id": "codex-51643", "titulo": "Computer Use doesn't exist", "tipo": "bug", "superficie": "app", "areas": ["computer-use"]}
+{"id": "codex-51648", "titulo": "no-active-thread-01a11600-adcc-7c02-b0a3-e267669dea1a", "tipo": "bug", "superficie": "app", "areas": ["session", "windows-os"]}
+{"id": "codex-51661", "titulo": "Desktop: Work cloud mode cannot send messages (lockdown-mode check error), while local Codex and web remain usable", "tipo": "bug", "superficie": "app", "areas": ["connectivity", "session"]}
+{"id": "codex-51677", "titulo": "Codex for Windows: elevated sandbox setup fails on every launch after update (os error 32 on node_repl.exe)", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-51695", "titulo": "Migrated Legacy Codex Cloud environment becomes “Shared by me” and cannot be edited or deleted by its owner", "tipo": "bug", "superficie": "codex-web", "areas": ["auth"]}
+{"id": "codex-51711", "titulo": "New chats are blocked by “Couldn’t load workspace settings” on a personal Plus account", "tipo": "bug", "superficie": "app", "areas": ["auth"]}
+{"id": "codex-51721", "titulo": "Windows WinGet package cannot start app-server daemon: \"the CLI package does not match this platform or executable\"", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "app-server"]}
+{"id": "codex-51727", "titulo": "[macOS 26.1002.52244] Startup always ends in \"ChatGPT hit a snag\" (AggregateError in auth/account sync; durable host fs/readFile without environmentId)", "tipo": "bug", "superficie": "app", "areas": ["app-server", "auth"]}
+{"id": "codex-51741", "titulo": "Windows sandbox setup fails with error 32 on node_repl.exe, blocking shell execution and browser automation", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "browser"]}
+{"id": "codex-51754", "titulo": "[macOS][Dots] Emoji reaction picker is clipped at the bottom of the window", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-51758", "titulo": "Managed daemon 0.161.0 and CLI 0.160.1 mismatch: startup prompt omits CLI upgrade guidance", "tipo": "bug", "superficie": "CLI", "areas": ["app-server"]}
+{"id": "codex-51764", "titulo": "ModRetro Chromatic emulator_close fails: recording access lease changed", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-51767", "titulo": "Windows elevated sandbox blocked by runtime ACL sharing violation; local access-mask probe and verified recovery", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-51783", "titulo": "[dot/macOS] Readable local tasks cannot be continued reliably; cancellation/approval errors and stale disconnect notifications", "tipo": "bug", "superficie": "app", "areas": ["mcp", "tool-calls", "remote"]}
+{"id": "codex-51787", "titulo": "daemon restart accepts --enable but preserves a conflicting saved feature override", "tipo": "bug", "superficie": "CLI", "areas": ["config", "app-server"]}
+{"id": "codex-51830", "titulo": "Terminal is still getting coopted", "tipo": "bug", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-51832", "titulo": "Windows browser runtime provisioning fails only while desktop app is running; closed-app sandbox check passes", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "browser"]}
+{"id": "codex-51845", "titulo": "Agent allocated an unapproved paid GPU during recovery; repeated generated guard and transfer failures", "tipo": "bug", "superficie": "app", "areas": ["model-behavior"]}
+{"id": "codex-51878", "titulo": "Post-handoff recovery prints insertion text for a pending Vim Replace key", "tipo": "bug", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-51881", "titulo": "Windows CLI 0.160.0: read-only codex exec fails initializing in-process app-server (os error 5), including --no-daemon", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "app-server"]}
+{"id": "codex-51888", "titulo": "Linux Desktop: inactive-window resume guard floods journal with 442–572 info messages/sec", "tipo": "bug", "superficie": "app", "areas": ["performance"]}
+{"id": "codex-51915", "titulo": "ChatGPT macOS: Dock badge “1” persists with no unread items and “Mark all read” disabled", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-51924", "titulo": "Voice chat in Codex not working", "tipo": "bug", "superficie": "extension", "areas": ["connectivity"]}
+{"id": "codex-51933", "titulo": "macOS Desktop 26.1002.52244: all \"Ran Command\" entries cannot expand (ChatGPT Pro, GPT-6.1 Sol Max)", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-51935", "titulo": "Linux Desktop: add “Open link in external browser” to link right-click context menu", "tipo": "enhancement", "superficie": "app", "areas": ["browser"]}
+{"id": "codex-51975", "titulo": "Projects missing from Windows desktop app after upgrade, still visible in browser", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-51977", "titulo": "Windows Codex Desktop: node_repl fails with SHARING VIOLATION during sandbox ACL initialization (os error 32)", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-51982", "titulo": "Migrated personal Codex Cloud environment becomes workspace-managed and cannot be edited or deleted", "tipo": "bug", "superficie": "codex-web", "areas": ["auth"]}
+{"id": "codex-51992", "titulo": "macOS: ChatGPT/Codex desktop 26.928.21956 repeatedly crashes on Chrome_IOThread (SIGTRAP; 4 occurrences)", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52011", "titulo": "Windows: daemon installation fails with os error 5 when renaming its staging directory", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "app-server"]}
+{"id": "codex-52027", "titulo": "Desktop: restore a supported Reload Window action in production builds", "tipo": "enhancement", "superficie": "app", "areas": ["app-server"]}
+{"id": "codex-52032", "titulo": "Withdrawn", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52046", "titulo": "Windows sandbox consistently fails with setup refresh had errors", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52047", "titulo": "Windows taskbar unread badge disappears briefly, then returns despite no visible unread chats", "tipo": "bug", "superficie": "app", "areas": ["session", "windows-os"]}
+{"id": "codex-52073", "titulo": "Linux: ChatGPT becomes the fallback browser without user selection, then hides “Open in external browser”", "tipo": "bug", "superficie": "app", "areas": ["browser"]}
+{"id": "codex-52085", "titulo": "Codex CLI 0.161.0 blocks same-version shared app-server over api_key_model_discovery default", "tipo": "bug", "superficie": "CLI", "areas": ["app-server", "config"]}
+{"id": "codex-52090", "titulo": "[Windows] Codex Desktop sandbox setup fails with error 32 on node_repl.exe — local execution completely blocked", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52093", "titulo": "Windows desktop: hidden Pages prewarm renderer causes runaway conversation-resume loop", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "performance"]}
+{"id": "codex-52097", "titulo": "[macOS][dot] 26.1002.52244: local Mac stays Offline, reconnect setup fails, and Computer-thread sends stall", "tipo": "bug", "superficie": "app", "areas": ["remote", "connectivity"]}
+{"id": "codex-52105", "titulo": "(5-hour) token usage window decrease?", "tipo": "bug", "superficie": "app", "areas": ["rate-limits"]}
+{"id": "codex-52112", "titulo": "[macOS][26.1002.52244] Desktop won't load account/usage data — JWT has no chatgpt_account_id, everything returns 432", "tipo": "bug", "superficie": "app", "areas": ["auth"]}
+{"id": "codex-52113", "titulo": "[Withdrawn] Codex App safety interruption report", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52126", "titulo": "CLI: opt-in compact status line with consumed-usage bars", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "rate-limits", "context"]}
+{"id": "codex-52138", "titulo": "Existing dot disappears from Windows desktop app and web after restart, but remains accessible on iPad", "tipo": "bug", "superficie": "app", "areas": ["remote", "session"]}
+{"id": "codex-52143", "titulo": "[Windows] Maximizing ChatGPT causes system-wide Wi-Fi loss with Intel AX210 driver errors", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "connectivity"]}
+{"id": "codex-52147", "titulo": "[Dots][Android] Messages arrive in chat but no push notifications on Motorola Edge 60 Fusion", "tipo": "bug", "superficie": "iOS", "areas": ["connectivity", "remote"]}
+{"id": "codex-52161", "titulo": "Default proxy connectivity in Codex Cloud broken", "tipo": "bug", "superficie": "codex-web", "areas": ["connectivity", "remote"]}
+{"id": "codex-52179", "titulo": "[Windows] All commands fail: \"setup refresh had errors\"", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52194", "titulo": "macOS desktop: Crashpad/pending reached 168 GB and keeps growing after cleanup", "tipo": "bug", "superficie": "app", "areas": ["performance"]}
+{"id": "codex-52205", "titulo": "Withdrawn", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52227", "titulo": "Windows: local commands fail with “helper_unknown_error: setup refresh had errors”", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52231", "titulo": "Windows dot-created local tasks appear in sidebar only after opening from Completed", "tipo": "bug", "superficie": "app", "areas": ["session", "remote"]}
+{"id": "codex-52257", "titulo": "Windows sandbox setup fails on loaded computer-use DLL (error 32)", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "computer-use"]}
+{"id": "codex-52264", "titulo": "copy past issue in remote ssh terminal", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "remote"]}
+{"id": "codex-52293", "titulo": "Codex Security 0.1.32 — Python MCP generates pycache files and repeatedly breaks plugin integrity verification", "tipo": "bug", "superficie": "app", "areas": ["mcp"]}
+{"id": "codex-52298", "titulo": "Windows 26.1002.52244: browser control blocked by node_repl.exe sharing violation after reboot", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "browser"]}
+{"id": "codex-52327", "titulo": "Codex Cloud: Library ZIP transfer returns HTTP 403; uploaded attachments remain unreadable sediment references", "tipo": "bug", "superficie": "codex-web", "areas": ["connectivity", "tool-calls"]}
+{"id": "codex-52334", "titulo": "Windows dot cannot access connected PC: “setup refresh had errors” / node_repl.exe sharing violation", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "remote"]}
+{"id": "codex-52342", "titulo": "New chat fails with \"Failed to load workspace settings\" after update to 26.1002.52244 — /accounts/check now hard-fails when DeviceCheck token generation fails (macOS)", "tipo": "bug", "superficie": "app", "areas": ["auth"]}
+{"id": "codex-52353", "titulo": "[Windows Codex Desktop 26.1002.7124.0] stdio MCP initializes and tool catalog builds, but tools are missing from Desktop chat (CLI works)", "tipo": "bug", "superficie": "app", "areas": ["mcp", "tool-calls"]}
+{"id": "codex-52370", "titulo": "Desktop follow-up appears unanswered while wait_agent is active on a remote host (triage request)", "tipo": "bug", "superficie": "app", "areas": ["remote", "subagent"]}
+{"id": "codex-52375", "titulo": "CLI 0.162.0 panics at terminal_hyperlinks.rs:392: UTF-8 boundary inside ➡ while rendering Chinese text", "tipo": "bug", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-52376", "titulo": "Codex CLI: clipboard failures, goal continuity loss, Astra Max discrepancy, and subagent usage/control issues", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "context", "subagent", "model-behavior"]}
+{"id": "codex-52379", "titulo": "The Codex app stops working and closes after 38 seconds.", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52405", "titulo": "Astra accounting: 2.26x combined allowance + credit burden per price-weighted workload between reset cycles", "tipo": "bug", "superficie": "app", "areas": ["rate-limits"]}
+{"id": "codex-52416", "titulo": "macOS: Chrome extension enabled but desktop app reports “Not installed”", "tipo": "bug", "superficie": "app", "areas": ["computer-use", "browser"]}
+{"id": "codex-52423", "titulo": "[macOS Desktop 26.1002] Queued messages never send; stopping or forking chat is required, with submission timeout", "tipo": "bug", "superficie": "app", "areas": ["session", "performance"]}
+{"id": "codex-52453", "titulo": "Codex Windows Desktop – Shell fails to start: sandbox setup refresh / OS error 32", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52461", "titulo": "[Windows] delegated tasks fail before shell startup with “setup refresh had errors”; logs report error 32 on node_repl.exe", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "remote"]}
+{"id": "codex-52462", "titulo": "Codex Desktop Windows sandbox initialization fails with a locked node_repl.exe", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52463", "titulo": "[TUI] Mouse capture blocks terminal-native right-click paste —   please add a config opt-out", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "config"]}
+{"id": "codex-52466", "titulo": "[Dots] Cloud execution failures (duplicate)", "tipo": "bug", "superficie": "app", "areas": ["connectivity", "remote"]}
+{"id": "codex-52474", "titulo": "v0.161.0 when copy Chinese language text from screen, pasted text is garbled text", "tipo": "bug", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-52479", "titulo": "codex exec prints the same unchanged diff three times with hooks disabled", "tipo": "bug", "superficie": "CLI", "areas": ["tool-calls"]}
+{"id": "codex-52480", "titulo": "codex exec prints the same unchanged diff three times with hooks disabled", "tipo": "bug", "superficie": "CLI", "areas": ["tool-calls"]}
+{"id": "codex-52500", "titulo": "[macOS Desktop] Japanese renders as boxed question marks in code within sent user messages and assistant responses", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52512", "titulo": "Keep task positions stable in the agent dashboard", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "subagent"]}
+{"id": "codex-52518", "titulo": "Windows elevated sandbox setup refresh fails with os error 32 in 0.162.0-alpha.2", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52528", "titulo": "Withdrawn: submitted through the wrong GitHub account", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52534", "titulo": "GitHub @codex review remains stuck after org-transfer connector rebinding (👀 persists, no review)", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-52539", "titulo": "Windows: persistent workspace settings Cloudflare 403; sending during Retry can start a chat", "tipo": "bug", "superficie": "app", "areas": ["connectivity", "auth"]}
+{"id": "codex-52573", "titulo": "GPT-6.1 Sol Ultrafast is not showing up", "tipo": "bug", "superficie": "app", "areas": ["model-behavior", "config"]}
+{"id": "codex-52581", "titulo": "I am seeing persistent false-positive invalid_prompt errors with the GPT-6 model family.", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior"]}
+{"id": "codex-52589", "titulo": "Persistent command-execution failure on connected Windows computer", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "remote"]}
+{"id": "codex-52590", "titulo": "Desktop: web-saved Codex custom instructions not picked up in a fresh local chat", "tipo": "bug", "superficie": "app", "areas": ["config", "session"]}
+{"id": "codex-52594", "titulo": "20572b4a-ecf7-4446-b9f2-264e9a15ba19", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52606", "titulo": "Windows sandbox: process creation fails with setup refresh had errors while full access works", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52630", "titulo": "Windows dot local delegation: sandbox setup refresh keeps failing", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "remote"]}
+{"id": "codex-52642", "titulo": "[TUI] “This server is not managed by Codex” obscures daemon ownership and safe recovery", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "app-server"]}
+{"id": "codex-52650", "titulo": "[Bug] Codex returns 503 \"Unable to verify Daybreak Blue access\" during normal GPT-6.1 Sol session", "tipo": "bug", "superficie": "app", "areas": ["auth"]}
+{"id": "codex-52658", "titulo": "Linux sandbox 0.162: deny_read entries that name the same file through a symlink fail with \"Unable to mount source on destination: No such file or directory\"", "tipo": "bug", "superficie": "CLI", "areas": ["sandbox", "config"]}
+{"id": "codex-52706", "titulo": "VS Code Codex dictation fails with HTTP 403 cloudflare_challenge", "tipo": "bug", "superficie": "extension", "areas": ["connectivity"]}
+{"id": "codex-52708", "titulo": "Windows app intermittently renders raw UI/HTML-like markup instead of formatted response", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52710", "titulo": "GitHub connector review blocks authorized blob uploads when payload is omitted", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-52726", "titulo": "Ultrafast unavailable in Codex CLI v0.162.0 on Pro 500: missing command and fallback to Standard", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior", "config"]}
+{"id": "codex-52810", "titulo": "TUI: Allow selecting and copying text from tips", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-52840", "titulo": "TUI converts an unsupported service_tier to default before core can emit its warning", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "config"]}
+{"id": "codex-52853", "titulo": "CLI/TUI: Make spawned subagent navigation and Alt+arrow shortcuts discoverable", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "subagent"]}
+{"id": "codex-52876", "titulo": "[Windows] OS error 32 / sandbox setup failure persists after latest Desktop update", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-52879", "titulo": "App-server logs \"Connection reset without closing handshake\" on every TUI startup", "tipo": "bug", "superficie": "CLI", "areas": ["app-server", "connectivity"]}
+{"id": "codex-52886", "titulo": "ChatGPT Work and Codex \"In the cloud\" mode cannot be selected", "tipo": "bug", "superficie": "app", "areas": ["remote"]}
+{"id": "codex-52916", "titulo": "[dot] Tools report “user cancelled MCP tool call” without any cancellation or approval prompt", "tipo": "bug", "superficie": "app", "areas": ["mcp", "tool-calls"]}
+{"id": "codex-52921", "titulo": "Model behavior: unsupported hypothesis replaces reported bug, followed by acknowledgement without follow-through", "tipo": "bug", "superficie": "app", "areas": ["model-behavior"]}
+{"id": "codex-52931", "titulo": "Windows app: project changes affect another open window", "tipo": "bug", "superficie": "app", "areas": ["session", "windows-os"]}
+{"id": "codex-52949", "titulo": "In-TUI /review never dispatches the Stop hook (no Stop or SubagentStop when the review turn ends)", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "tool-calls"]}
+{"id": "codex-52988", "titulo": "Withdrawn", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-52995", "titulo": "GPT-6 reasoning effort appears to have been retarded even when set to High", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior"]}
+{"id": "codex-53057", "titulo": "CLI: Left Arrow \"for agents\" stops working after the displayed thread is archived externally", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "session"]}
+{"id": "codex-53070", "titulo": "VS Code extension: dictation fails with “Dictation stopped”", "tipo": "bug", "superficie": "extension", "areas": ["connectivity"]}
+{"id": "codex-53088", "titulo": "Feature request: Intent-aware orchestration across Chat, Work, and Codex", "tipo": "enhancement", "superficie": "app", "areas": ["subagent", "tool-calls"]}
+{"id": "codex-53128", "titulo": "Withdrawn by reporter", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53160", "titulo": "[Windows] Codex unified exec fails with CreateProcessAsUserW error 5 despite working PowerShell terminals", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-53172", "titulo": "[VS Code] Codex secondary sidebar breaks mouse text selection in Jupyter notebooks", "tipo": "bug", "superficie": "extension", "areas": []}
+{"id": "codex-53191", "titulo": "install.sh: verify_archive_digest clobbers global archive_path, overwriting checksum manifest with package archive", "tipo": "bug", "superficie": "CLI", "areas": ["config"]}
+{"id": "codex-53211", "titulo": "[macOS][Permissions] Agent inferred email outreach from research “full send” and attempted Outlook access before consent", "tipo": "bug", "superficie": "app", "areas": ["computer-use", "model-behavior"]}
+{"id": "codex-53220", "titulo": "MobaXterm SSH: text paste triggers image clipboard error; --no-alt-screen fixes it (CLI 0.162.1)", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "remote"]}
+{"id": "codex-53259", "titulo": "[macOS] ChatGPT 26.1007.30912 crashes ~60-100s after launch, SIGTRAP at identical Codex Framework offset 0x475d754 (7/7 reproductions)", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53269", "titulo": "Withdrawn by author", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53284", "titulo": "Projects not listed in the Desktop App", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-53298", "titulo": "codex-utils-pty: let a caller observe an exited PTY child before the waiter reaps it", "tipo": "enhancement", "superficie": "CLI", "areas": ["tool-calls"]}
+{"id": "codex-53303", "titulo": "Running Codex task Threads disappreared", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-53305", "titulo": "Windows desktop loses local project catalog after unexpected power restart; retained database projects are not restored in the sidebar", "tipo": "bug", "superficie": "app", "areas": ["session", "windows-os"]}
+{"id": "codex-53309", "titulo": "Historical reasoning double-counted in 0.162.0-alpha.17.2, causing premature auto-compaction", "tipo": "bug", "superficie": "CLI", "areas": ["context"]}
+{"id": "codex-53348", "titulo": "[Bug] Frequent reminders：Selected model is at capacity. Please try a different model.", "tipo": "bug", "superficie": "app", "areas": ["model-behavior"]}
+{"id": "codex-53360", "titulo": "Codex Desktop: Show active Git branch prominently above the chat composer to prevent wrong-branch edits", "tipo": "enhancement", "superficie": "app", "areas": ["session"]}
+{"id": "codex-53435", "titulo": "Feature Request: Show Authenticated ChatGPT Account in Codex CLI", "tipo": "enhancement", "superficie": "CLI", "areas": ["auth"]}
+{"id": "codex-53439", "titulo": "[macOS desktop] Stream processing errors recur after moving work to a fresh conversation", "tipo": "bug", "superficie": "app", "areas": ["connectivity", "session"]}
+{"id": "codex-53457", "titulo": "[VS Code] Regression: dragging files into Codex chat no longer works", "tipo": "bug", "superficie": "extension", "areas": ["tool-calls"]}
+{"id": "codex-53461", "titulo": "Backend ends HTTP Responses streams at ~900 s and closes websocket turns (1000/1012) before response.completed on long gpt-6.1-sol reasoning turns", "tipo": "bug", "superficie": "CLI", "areas": ["connectivity", "performance"]}
+{"id": "codex-53467", "titulo": "Intercom MCP login reports success but initialization still returns Auth required in fresh tasks", "tipo": "bug", "superficie": "app", "areas": ["mcp", "auth"]}
+{"id": "codex-53471", "titulo": "[codex-web][Regression] Usage page takes ~5 seconds to load and feels sluggish after redesign", "tipo": "bug", "superficie": "codex-web", "areas": ["performance"]}
+{"id": "codex-53477", "titulo": "Withdrawn report", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53499", "titulo": "Withdrawn", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53509", "titulo": "Withdrawn by reporter", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53524", "titulo": "Selected model is at capacity. Please try a different model.", "tipo": "bug", "superficie": "app", "areas": ["model-behavior"]}
+{"id": "codex-53534", "titulo": "Withdrawn: web query accessibility report", "tipo": "bug", "superficie": "codex-web", "areas": []}
+{"id": "codex-53567", "titulo": "Feature request: automatically resume parent Codex session when delegated subagents finish", "tipo": "enhancement", "superficie": "CLI", "areas": ["subagent", "session"]}
+{"id": "codex-53571", "titulo": "macOS desktop unexpectedly switches an existing chat to New Chat; hidden Pages prewarm navigation suspected", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-53578", "titulo": "Recurring Codex Errors: SSE Idle Timeout & Model At Capacity", "tipo": "bug", "superficie": "app", "areas": ["connectivity", "model-behavior"]}
+{"id": "codex-53582", "titulo": "CLI: Removes leading tabs from display", "tipo": "bug", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-53583", "titulo": "[VS Code][Regression] Code comprehension quality down across GPT-6.1 Sol / GPT-6 Astra / GPT-5.6 Sol, with severe latency; web works better", "tipo": "bug", "superficie": "extension", "areas": ["model-behavior", "performance"]}
+{"id": "codex-53590", "titulo": "Withdrawn — please remove this issue", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53599", "titulo": "Frequent \"Selected model is at capacity\" error on two separate Pro accounts", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior"]}
+{"id": "codex-53610", "titulo": "Approved permissions, but write_stdin is blocked by sandbox_approval=false", "tipo": "bug", "superficie": "app", "areas": ["sandbox", "tool-calls"]}
+{"id": "codex-53613", "titulo": "/subagents keeps unavailable threads selectable and places newly spawned agents at the bottom", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "subagent"]}
+{"id": "codex-53651", "titulo": "[Windows] GPT-6.1 Sol still defaults to 373K / 354K effective after 500K announcement; updater reports up to date", "tipo": "bug", "superficie": "app", "areas": ["context"]}
+{"id": "codex-53662", "titulo": "TUI: let syntax themes color markdown prose, not just inline code", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI", "config"]}
+{"id": "codex-53703", "titulo": "[VS Code] LaTeX rendering broken in 26.1007.21434", "tipo": "bug", "superficie": "extension", "areas": []}
+{"id": "codex-53716", "titulo": "Windows ChatGPT Codex App: WSL agent exec_command fails with CreateProcess os error 2", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-53750", "titulo": "Permissions and Syncing bug", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53786", "titulo": "Windows MXC sandbox causes Python executable path resolution warning", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-53806", "titulo": "Codex app auto-review blocks CapCut access after failed export", "tipo": "bug", "superficie": "app", "areas": ["computer-use", "browser"]}
+{"id": "codex-53818", "titulo": "[WITHDRAWN] Not a product bug report", "tipo": "enhancement", "superficie": "app", "areas": []}
+{"id": "codex-53819", "titulo": "[WITHDRAWN] Not a product bug report", "tipo": "enhancement", "superficie": "app", "areas": []}
+{"id": "codex-53835", "titulo": "[CLI] `codex agents` checks launch-directory trust before opening the overview", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "sandbox"]}
+{"id": "codex-53836", "titulo": "[TUI] Resumed in-progress turns reset the elapsed-time indicator", "tipo": "bug", "superficie": "CLI", "areas": ["TUI", "session"]}
+{"id": "codex-53840", "titulo": "Codex WebView assets return HTTP 401 in VS Code Remote WSL after VS Code 1.141.1 update", "tipo": "bug", "superficie": "extension", "areas": ["connectivity", "remote"]}
+{"id": "codex-53851", "titulo": "Selected model is at capacity. Please try a different model.", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior"]}
+{"id": "codex-53891", "titulo": "[macOS] Update checks fail because appcast endpoint returns HTTP 520", "tipo": "bug", "superficie": "app", "areas": ["connectivity"]}
+{"id": "codex-53930", "titulo": "Feedback", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-53936", "titulo": "TUI renders an assistant message twice when a tool call interleaves between the streamed delta and item completion", "tipo": "bug", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-53958", "titulo": "CLI: same-host --remote unix:// silently uses daemon cwd unless --cd is supplied", "tipo": "bug", "superficie": "CLI", "areas": ["remote", "session"]}
+{"id": "codex-53971", "titulo": "Withdrawn by author", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-53985", "titulo": "[Windows Desktop 26.1007.9446.0] Stable app starts headlessly with no renderer or window after Store update and clean reinstall", "tipo": "bug", "superficie": "app", "areas": ["windows-os"]}
+{"id": "codex-54023", "titulo": "Delegated agents lose local Docker access and report false usage-limit errors for goals", "tipo": "bug", "superficie": "app", "areas": ["subagent", "sandbox", "rate-limits"]}
+{"id": "codex-54051", "titulo": "Conversation history skips completed turns after app update", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-54084", "titulo": "Windows Codex Desktop command execution hangs when features.prefer_mxc=true", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "config"]}
+{"id": "codex-54095", "titulo": "CLI Mermaid renderer rejects <br/> line breaks in node labels", "tipo": "bug", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-54111", "titulo": "Feature request: support Firefox/Gecko instead of Chromium for Codex browsing", "tipo": "enhancement", "superficie": "app", "areas": ["browser"]}
+{"id": "codex-54120", "titulo": "Hangs after a while", "tipo": "bug", "superficie": "CLI", "areas": ["performance", "connectivity"]}
+{"id": "codex-54127", "titulo": "codex-arg0: reuse inherited PATH aliases when CODEX_HOME is read-only inside sandboxed sub-processes", "tipo": "bug", "superficie": "CLI", "areas": ["sandbox", "config"]}
+{"id": "codex-54130", "titulo": "codex-cli doctor: accept reverted rollout revision lineage in state.rollout_db_parity", "tipo": "bug", "superficie": "CLI", "areas": ["config"]}
+{"id": "codex-54144", "titulo": "[macOS 27.0.1] Update check fails with server error 520 on 26.1007.30912", "tipo": "bug", "superficie": "app", "areas": ["connectivity"]}
+{"id": "codex-54194", "titulo": "Reference directories via @", "tipo": "enhancement", "superficie": "CLI", "areas": ["TUI"]}
+{"id": "codex-54196", "titulo": "GPT-6.1 SOL Ultrafast is available on web using my account, but missing in Codex Windows Desktop. Astra still offers Ultrafast. Updating, restarting, and signing out and back in did not resolve it.", "tipo": "bug", "superficie": "app", "areas": ["model-behavior", "config"]}
+{"id": "codex-54205", "titulo": "Desktop cloud conversations fail to load: ASB HTTP read failed (503) after successful reconnect", "tipo": "bug", "superficie": "app", "areas": ["connectivity", "session"]}
+{"id": "codex-54234", "titulo": "Codex Windows App: HTTP 400 – ChatGPT account not supported for any model", "tipo": "bug", "superficie": "app", "areas": ["auth", "model-behavior"]}
+{"id": "codex-54256", "titulo": "False positive: Cybersecurity safeguard blocks a local authentication code review", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior"]}
+{"id": "codex-54284", "titulo": "Closed by the author; see #51932", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-54292", "titulo": "[Windows] Codex 26.1007.9446.0 displays raw CSS instead of main interface after update", "tipo": "bug", "superficie": "app", "areas": ["windows-os"]}
+{"id": "codex-54296", "titulo": "macOS desktop updater fails to retrieve appcast with HTTP 520", "tipo": "bug", "superficie": "app", "areas": ["connectivity"]}
+{"id": "codex-54297", "titulo": "01a13fbd-4b1c-72e3-aa31-dcc4fad3bf78", "tipo": "bug", "superficie": "app", "areas": ["computer-use", "browser"]}
+{"id": "codex-54304", "titulo": "Title: Read-only batch rejected; /feedback permission check also fails", "tipo": "bug", "superficie": "extension", "areas": ["tool-calls"]}
+{"id": "codex-54325", "titulo": "Windows Codex CLI repeatedly fails with helper_unknown_error: setup refresh had errors", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-54327", "titulo": "Codex Windows Cloudflare 403 — Browser policy initialization blocked", "tipo": "bug", "superficie": "app", "areas": ["browser", "connectivity"]}
+{"id": "codex-54329", "titulo": "Withdrawn", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-54377", "titulo": "Product feedback: paid weekly usage drains too quickly, and upgrades need clear allowance expectations", "tipo": "enhancement", "superficie": "app", "areas": ["rate-limits"]}
+{"id": "codex-54392", "titulo": "Issues with Codex updates", "tipo": "bug", "superficie": "app", "areas": ["connectivity"]}
+{"id": "codex-54405", "titulo": "[Windows] codex exec fails with helper_unknown_error during sandbox setup; standalone sandbox succeeds", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-54408", "titulo": "[0.162.1][macOS] Deleting daemon startup directory still breaks account/read and TUI bootstrap", "tipo": "bug", "superficie": "CLI", "areas": ["app-server", "session"]}
+{"id": "codex-54410", "titulo": "Windows 10 Computer Use: FrameArrived timeout and missing click geometry fixed by MTA callback workaround (Sky 0.7.7)", "tipo": "bug", "superficie": "app", "areas": ["computer-use", "windows-os"]}
+{"id": "codex-54422", "titulo": "Windows app: outdated client offers unusable models without an update notice or actionable recovery guidance", "tipo": "enhancement", "superficie": "app", "areas": ["model-behavior"]}
+{"id": "codex-54437", "titulo": "Codex desktop becomes unusable when opening a linked local Go source file", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-54462", "titulo": "codex Error: account/read failed during TUI bootstrap: account/read failed: workspace routing discovery timed out (code -32603)", "tipo": "bug", "superficie": "CLI", "areas": ["app-server", "connectivity"]}
+{"id": "codex-54476", "titulo": "Windows: command rejected as “blocked by policy”, but /approve finds no denial", "tipo": "bug", "superficie": "CLI", "areas": ["sandbox", "windows-os"]}
+{"id": "codex-54480", "titulo": "Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop", "tipo": "documentation", "superficie": "app", "areas": ["app-server", "remote"]}
+{"id": "codex-54483", "titulo": "Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop", "tipo": "documentation", "superficie": "app", "areas": ["app-server", "remote"]}
+{"id": "codex-54486", "titulo": "Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop", "tipo": "documentation", "superficie": "app", "areas": ["app-server", "remote"]}
+{"id": "codex-54487", "titulo": "Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop", "tipo": "documentation", "superficie": "app", "areas": ["app-server", "remote"]}
+{"id": "codex-54488", "titulo": "Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop", "tipo": "documentation", "superficie": "app", "areas": ["app-server", "remote"]}
+{"id": "codex-54489", "titulo": "Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop", "tipo": "documentation", "superficie": "app", "areas": ["app-server", "remote"]}
+{"id": "codex-54503", "titulo": "[Edge extension][Ubuntu/Windows] ChatGPT side panel blocked by frame-ancestors CSP missing Edge extension ID", "tipo": "bug", "superficie": "extension", "areas": ["browser"]}
+{"id": "codex-54517", "titulo": "Automatic context compaction starts at only 66% usage (312k / 475k tokens)", "tipo": "bug", "superficie": "app", "areas": ["context"]}
+{"id": "codex-54527", "titulo": "[macOS / Chrome side panel / Work] Browser initialization fails after about one minute with \"Sheep MCP session closed: RPC INTERNAL\"", "tipo": "bug", "superficie": "extension", "areas": ["browser", "mcp"]}
+{"id": "codex-54534", "titulo": "Model at the capacity", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior"]}
+{"id": "codex-54558", "titulo": "After Update the app won't launch", "tipo": "bug", "superficie": "app", "areas": ["windows-os"]}
+{"id": "codex-54599", "titulo": "`$HOME/.codex` is loaded as a project config layer when `CODEX_HOME` points somewhere else (follow-up to #9932)", "tipo": "bug", "superficie": "CLI", "areas": ["config"]}
+{"id": "codex-54617", "titulo": "helper_sandbox_lock_failed — access denied to C:\\Users\\User\\.codex\\.sandbox-bin.", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-54670", "titulo": "Dissapearing credits", "tipo": "bug", "superficie": "app", "areas": ["rate-limits"]}
+{"id": "codex-54714", "titulo": "Windows dot-delegated browser startup still fails with missing host SystemDrive after full reboot", "tipo": "bug", "superficie": "app", "areas": ["windows-os", "sandbox", "browser"]}
+{"id": "codex-54727", "titulo": "Cloud environment disconnected (409 environment_offline), blocking access to unpublished changes", "tipo": "bug", "superficie": "app", "areas": ["connectivity", "remote"]}
+{"id": "codex-54758", "titulo": "[Windows] Bottom input area clipped after restoring Codex from minimized state", "tipo": "bug", "superficie": "app", "areas": ["windows-os"]}
+{"id": "codex-54760", "titulo": "GPT-6.1 Sol missing from Windows desktop model picker (available on chatgpt.com with same account)", "tipo": "bug", "superficie": "app", "areas": ["model-behavior", "config"]}
+{"id": "codex-54767", "titulo": "Weekly allowance dropped from 48% to 0%; usage still drains much faster after a banked reset", "tipo": "bug", "superficie": "app", "areas": ["rate-limits"]}
+{"id": "codex-54829", "titulo": "WSL: exec_command returns exit 1 with empty output; execution failure cause unknown", "tipo": "bug", "superficie": "CLI", "areas": ["tool-calls", "sandbox"]}
+{"id": "codex-54830", "titulo": "Withdrawn: reported in the wrong repository", "tipo": "bug", "superficie": "iOS", "areas": []}
+{"id": "codex-54868", "titulo": "Weekly limit shows 0% left unexpectedly fast on ChatGPT Pro ($100) with the Codex desktop app", "tipo": "bug", "superficie": "app", "areas": ["rate-limits"]}
+{"id": "codex-54897", "titulo": "Async compaction panic leaves the turn stuck inProgress until interrupted", "tipo": "bug", "superficie": "CLI", "areas": ["context"]}
+{"id": "codex-54909", "titulo": "[macOS][SSH remote] Voice is disabled in a new chat but becomes available after the first text message", "tipo": "bug", "superficie": "app", "areas": ["remote"]}
+{"id": "codex-54963", "titulo": "Auto-review appears to apply Guardian's own read-only restrictions to authorized parent actions (0.156.1, custom reviewer)", "tipo": "bug", "superficie": "CLI", "areas": ["sandbox", "tool-calls"]}
+{"id": "codex-55003", "titulo": "[macOS][In-app browser] blob: iframes stay about:blank while HTTP and srcdoc frames load", "tipo": "bug", "superficie": "app", "areas": ["browser"]}
+{"id": "codex-55031", "titulo": "Windows MXC: Git cannot enter explicitly read-granted checkout (Codex 0.162.0)", "tipo": "bug", "superficie": "CLI", "areas": ["windows-os", "sandbox"]}
+{"id": "codex-55084", "titulo": "[macOS][ChatGPT/Codex app][Sparkle] Dynamic update feed HTTP 520 over IPv6, succeeds over IPv4", "tipo": "bug", "superficie": "app", "areas": ["connectivity"]}
+{"id": "codex-55123", "titulo": "[macOS] Work sessions permanently stuck on \"Awaiting approval\" with no accessible composer or approval controls", "tipo": "bug", "superficie": "app", "areas": ["session", "tool-calls"]}
+{"id": "codex-55158", "titulo": "Design adjustment", "tipo": "enhancement", "superficie": "app", "areas": ["rate-limits"]}
+{"id": "codex-55205", "titulo": "[iOS/iPadOS Remote] Retired models remain selectable while standalone app-server stays on 0.142.5 despite up-to-date desktop", "tipo": "bug", "superficie": "iOS", "areas": ["model-behavior", "app-server"]}
+{"id": "codex-55264", "titulo": "Windows: command hooks always run through the session PowerShell (pwsh -NoProfile -Command), adding ~1-3 s per hook call", "tipo": "enhancement", "superficie": "CLI", "areas": ["windows-os", "performance"]}
+{"id": "codex-55290", "titulo": "[ChatGPT Desktop][Work][macOS] permissions control disappears after first message (local execution)", "tipo": "bug", "superficie": "app", "areas": ["sandbox"]}
+{"id": "codex-55307", "titulo": "[macOS / ChatGPT Work] Terminal DNS and HTTPS fail despite network_access=true; Sites publishing blocked", "tipo": "bug", "superficie": "app", "areas": ["sandbox", "connectivity"]}
+{"id": "codex-55354", "titulo": "Withdrawn", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-55399", "titulo": "Withdrawn", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-55405", "titulo": "[CLI 0.163.0] Daybreak Blue session blocked by cyber_policy", "tipo": "bug", "superficie": "CLI", "areas": ["auth", "model-behavior"]}
+{"id": "codex-55423", "titulo": "opensi.lol inorganic inflation", "tipo": "bug", "superficie": "codex-web", "areas": ["performance"]}
+{"id": "codex-55459", "titulo": "error", "tipo": "bug", "superficie": "app", "areas": ["connectivity"]}
+{"id": "codex-55544", "titulo": "Selected model is at capacity (server_is_overloaded) on ~30% of requests — all clients, all models, independent of quota", "tipo": "bug", "superficie": "CLI", "areas": ["model-behavior"]}
+{"id": "codex-55584", "titulo": "Durable host WebSocket (wss://codex-cloud-backend.chatgpt.com/) never establishes and loops on open_timeout / 1006 in the Windows desktop app", "tipo": "bug", "superficie": "app", "areas": ["connectivity", "model-behavior"]}
+{"id": "codex-55590", "titulo": "[macOS Desktop] App update leaves primary host’s app-managed server outdated in a two-host SSH setup", "tipo": "bug", "superficie": "app", "areas": ["app-server", "remote"]}
+{"id": "codex-55594", "titulo": "Codex CLI permissions issue, possibly related to openai/codex#52458.", "tipo": "bug", "superficie": "CLI", "areas": ["sandbox", "config"]}
+{"id": "codex-55634", "titulo": "Some tools are temporarily unavailable error.", "tipo": "bug", "superficie": "app", "areas": ["tool-calls", "mcp"]}
+{"id": "codex-55673", "titulo": "Required fail-closed native admission and conversation role binding for desktop alignment policies", "tipo": "enhancement", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-55679", "titulo": "Work Mode tools remain unavailable across new chats", "tipo": "bug", "superficie": "app", "areas": ["tool-calls"]}
+{"id": "codex-55744", "titulo": "macOS app 26.1016.51333: new chats fail on first message with Cannot serialize value (couldn't stringify value)", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-55816", "titulo": "Opened in error — please disregard", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-55832", "titulo": "Persistent \"Selected model is at capacity\" error despite remaining quota", "tipo": "bug", "superficie": "codex-web", "areas": ["model-behavior"]}
+{"id": "codex-55834", "titulo": "[Bug] Non-atomic write of ~/.codex/config.toml leads to 0x00 null-byte corruption and unrecoverable startup crash on sudden power loss", "tipo": "bug", "superficie": "CLI", "areas": ["config", "windows-os"]}
+{"id": "codex-55866", "titulo": "Report withdrawn by reporter", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-56074", "titulo": "Codex model queuing", "tipo": "bug", "superficie": "app", "areas": ["model-behavior"]}
+{"id": "codex-56116", "titulo": "Chat mode missing in macOS desktop app — only ChatGPT Work and Codex are shown", "tipo": "bug", "superficie": "app", "areas": ["session"]}
+{"id": "codex-56152", "titulo": "macOS Work mode: in-app browser discovery returns [] after continuing an existing task", "tipo": "bug", "superficie": "app", "areas": ["browser"]}
+{"id": "codex-56185", "titulo": "Selected model is at its capacity - no automatic retry or fallback mechanism", "tipo": "bug", "superficie": "app", "areas": ["model-behavior"]}
+{"id": "codex-56237", "titulo": "Withdrawn — no action needed", "tipo": "documentation", "superficie": "codex-web", "areas": ["session"]}
+{"id": "codex-56254", "titulo": "https://chatgpt.com/codex/install.sh returns 404", "tipo": "bug", "superficie": "CLI", "areas": ["connectivity"]}
+{"id": "codex-56352", "titulo": "Codex agent cannot tell whether Daybreak mode is active", "tipo": "bug", "superficie": "app", "areas": ["model-behavior"]}
+{"id": "codex-56376", "titulo": "3e6ff94b-a625-4f75-a51e-12c773b03a1c", "tipo": "bug", "superficie": "app", "areas": []}
+{"id": "codex-56393", "titulo": "CLI: attach a second terminal to a running session without closing the first (at least read-only)", "tipo": "enhancement", "superficie": "CLI", "areas": ["session", "TUI"]}
+{"id": "codex-56418", "titulo": "Codex desktop: label imported Claude Code chats in the sidebar and chat header", "tipo": "enhancement", "superficie": "app", "areas": ["session"]}
+{"id": "codex-56541", "titulo": "Windows: no Delete entry point for archived dot-created chats and Codex cloud tasks", "tipo": "enhancement", "superficie": "app", "areas": ["session"]}
+{"id": "codex-56546", "titulo": "Remote project task creation fails at local MCP transport", "tipo": "bug", "superficie": "app", "areas": ["remote", "mcp"]}
