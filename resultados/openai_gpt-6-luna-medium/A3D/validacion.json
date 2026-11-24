@@ -1,0 +1,25 @@
+{
+ "html": [
+  {
+   "fichero": "ruta-alhambra-3d.html",
+   "errores": [],
+   "titulo": "La Alhambra — ruta 3D",
+   "canvas": 1,
+   "texto": "✦\nGRANADA · ANDALUCÍA\nPASEO POR LA CIUDAD PALATINA\nLa Alhambra\nen tres dimensiones\n\nUn recorrido desde la Puerta de la Justicia hasta el Generalife, entre murallas, patios y jardines sobre Granada.\n\n◷ 2 h 30 min\n⌁ 3,2 km\n⌖ Granada\n01\nPuerta de la Justicia\nLa entrada monumental a la ciudad palatina, bajo la Torre de la Justicia.\n02\nPalacio de Carlos V\nParada 2 · Alcazaba y palacios\n03\nPatio de los ",
+   "scripts": [],
+   "captura": "capturas/ruta-alhambra-3d.html.png"
+  }
+ ],
+ "mermaid": [],
+ "extra": [
+  "✔ abre sin errores de consola; canvas 2D, sin WebGL",
+  "✔ cinco paradas reales en orden de visita",
+  "✖ «Iniciar recorrido» y «Siguiente parada» no mueven la cámara: el lienzo es idéntico a los 10 s y en la parada 3 solo cambia el marcador",
+  "~ se reconoce el estanque; el resto son cajas genéricas",
+  "✖ la cita del pie tapa los botones, cortados por abajo a 1280 × 800"
+ ],
+ "capturas_extra": [
+  "capturas/juez-10s.png",
+  "capturas/juez-parada3.png"
+ ]
+}

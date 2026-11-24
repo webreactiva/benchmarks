@@ -2930,8 +2930,49 @@
     "ficheros": [
       "ruta-alhambra-3d.html"
     ],
-    "validacion": null,
-    "juicio": null,
+    "validacion": {
+      "html": [
+        {
+          "fichero": "ruta-alhambra-3d.html",
+          "errores": [],
+          "titulo": "La Alhambra — ruta 3D",
+          "canvas": 1,
+          "texto": "✦\nGRANADA · ANDALUCÍA\nPASEO POR LA CIUDAD PALATINA\nLa Alhambra\nen tres dimensiones\n\nUn recorrido desde la Puerta de la Justicia hasta el Generalife, entre murallas, patios y jardines sobre Granada.\n\n◷ 2 h 30 min\n⌁ 3,2 km\n⌖ Granada\n01\nPuerta de la Justicia\nLa entrada monumental a la ciudad palatina, bajo la Torre de la Justicia.\n02\nPalacio de Carlos V\nParada 2 · Alcazaba y palacios\n03\nPatio de los ",
+          "scripts": [],
+          "captura": "capturas/ruta-alhambra-3d.html.png"
+        }
+      ],
+      "mermaid": [],
+      "extra": [
+        "✔ abre sin errores de consola; canvas 2D, sin WebGL",
+        "✔ cinco paradas reales en orden de visita",
+        "✖ «Iniciar recorrido» y «Siguiente parada» no mueven la cámara: el lienzo es idéntico a los 10 s y en la parada 3 solo cambia el marcador",
+        "~ se reconoce el estanque; el resto son cajas genéricas",
+        "✖ la cita del pie tapa los botones, cortados por abajo a 1280 × 800"
+      ],
+      "capturas_extra": [
+        "capturas/juez-10s.png",
+        "capturas/juez-parada3.png"
+      ]
+    },
+    "juicio": {
+      "nota": 5,
+      "veredicto": "panel bonito, cámara quieta",
+      "rubrica": {
+        "abre sin errores": 1,
+        "ruta con paradas reales": 2,
+        "la ruta se recorre": 0,
+        "se reconoce la Alhambra": 1,
+        "vista limpia": 0,
+        "textos sin errores": 1
+      },
+      "resumen": "Un canvas 2D con perspectiva a mano: un recinto amurallado de cajas con almenas, un estanque en el centro, cipreses y una franja de sierra al fondo, con cinco paradas en orden (Justicia, Carlos V, Arrayanes, Leones, Generalife) unidas por una línea de puntos. «Iniciar recorrido» y «Siguiente parada» solo cambian la parada resaltada: la cámara no viaja, solo se gira a mano, y la cita del pie se monta encima de los botones.",
+      "rarezas": [
+        "Lo hace en un solo paso: escribe los 9,6 KB del HTML de una vez y no lo abre ni lo prueba. 3 peticiones, 49 000 tokens, 3944 de salida.",
+        "Dice en el chat que es una «escena 3D estilizada e interactiva»: es un canvas 2D con una proyección en perspectiva hecha a mano, sin WebGL ni three.js.",
+        "Los subtítulos de las paradas no visitadas son de relleno: las dos primeras dicen «Alcazaba y palacios» y las otras tres «Recinto monumental»."
+      ]
+    },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
   {

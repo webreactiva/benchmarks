@@ -1,0 +1,18 @@
+{
+  "nota": 5,
+  "veredicto": "panel bonito, cámara quieta",
+  "rubrica": {
+    "abre sin errores": 1,
+    "ruta con paradas reales": 2,
+    "la ruta se recorre": 0,
+    "se reconoce la Alhambra": 1,
+    "vista limpia": 0,
+    "textos sin errores": 1
+  },
+  "resumen": "Un canvas 2D con perspectiva a mano: un recinto amurallado de cajas con almenas, un estanque en el centro, cipreses y una franja de sierra al fondo, con cinco paradas en orden (Justicia, Carlos V, Arrayanes, Leones, Generalife) unidas por una línea de puntos. «Iniciar recorrido» y «Siguiente parada» solo cambian la parada resaltada: la cámara no viaja, solo se gira a mano, y la cita del pie se monta encima de los botones.",
+  "rarezas": [
+    "Lo hace en un solo paso: escribe los 9,6 KB del HTML de una vez y no lo abre ni lo prueba. 3 peticiones, 49 000 tokens, 3944 de salida.",
+    "Dice en el chat que es una «escena 3D estilizada e interactiva»: es un canvas 2D con una proyección en perspectiva hecha a mano, sin WebGL ni three.js.",
+    "Los subtítulos de las paradas no visitadas son de relleno: las dos primeras dicen «Alcazaba y palacios» y las otras tres «Recinto monumental»."
+  ]
+}

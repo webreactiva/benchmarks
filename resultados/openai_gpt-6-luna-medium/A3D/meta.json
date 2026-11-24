@@ -1,0 +1,30 @@
+{
+  "codigo": "A3D",
+  "modelo": "gpt-6-luna",
+  "agente": "Codex CLI",
+  "esfuerzo": "medium",
+  "fecha": "2026-11-24T11:57:32Z",
+  "prompt_enviado": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 8613,
+    "output": 3944,
+    "reasoning": 109,
+    "cache_read": 36352,
+    "cache_write": 0,
+    "total": 49018
+  },
+  "peticiones": 3,
+  "error": null,
+  "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+  "esfuerzo_real": "medium",
+  "herramientas": {
+    "exec": 2
+  },
+  "mensajes_usuario": [
+    "Una ruta en 3D en la Alhambra de Granada en un solo fichero html Guarda lo que generes en la carpeta actual."
+  ],
+  "veces_decide_tu": 0,
+  "ficheros": [
+    "ruta-alhambra-3d.html"
+  ]
+}
