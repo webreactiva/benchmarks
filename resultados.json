@@ -295,7 +295,43 @@
     "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
     "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
     "validacion": null,
-    "juicio": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "claude-fable-5-2",
+      "nota": 7,
+      "rubrica": {
+        "f3": 5,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Casi completo, sin CWE",
+      "resumen": "Informe de 40 hallazgos, todos fallos reales, con fichero y línea en el 93 %: cubre 28 de las 40 entradas con la regla estricta (5 a medio punto) y 38 con el criterio del juez, más 14 fallos reales sin etiquetar. Solo se le escapan la fuga de la URL interna del asistente y el token de soporte guardado en claro; pierde puntos por líneas exactas que caen a pocas líneas de la ventana y por no dar ningún CWE.",
+      "cifras": {
+        "tp_estricto": 25.5,
+        "con_linea_tp": 23,
+        "sin_linea_tp": 5,
+        "fp_estricto": 18,
+        "fn_estricto": 14.5,
+        "f3": 63.2,
+        "wf3": 64.3,
+        "precision": 0.586,
+        "recall": 0.637,
+        "juez": {
+          "tp": 38,
+          "fp_inventados": 0,
+          "extra_reales": 14,
+          "f3": 95.5
+        }
+      },
+      "rarezas": [
+        "Dice que el proyecto parece una aplicación «deliberadamente vulnerable (laboratorio/CTF)» por la tabla flags, flag.txt y las cadenas QKB{…}; no nombra el proyecto original.",
+        "Sale a internet una vez: ejecuta npm audit --omit=dev, que consulta el registro de npm (WebSearch y WebFetch estaban denegados, pero el registro es accesible). De ahí salen los 21 avisos y los GHSA de C-09.",
+        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md y lo corrige una vez con Edit (49 → 52 rutas API tras contarlas). Sin subagentes, 15 peticiones.",
+        "Sus líneas son precisas pero tres caen justo fuera de la ventana: files:49 (la lectura está en 62), orders/search:81 (la ejecución en 102) y support-access:58 para el token devuelto (línea 90).",
+        "La pantalla final muestra en la caja de entrada la sugerencia de Claude Code «corrige los hallazgos críticos»; no se envió."
+      ]
+    },
     "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {

@@ -54,7 +54,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 
 | Modelo | Agente | A3D | AIF | CCA | SEC | TCI | Media | Peticiones | Tokens |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| [claude-fable-5-2](resultados/anthropic_claude-fable-5-2/README.md) | Claude Code | 10 | 8 | 10 | – | 5 | **9,3** | 46 | 4,5 M |
+| [claude-fable-5-2](resultados/anthropic_claude-fable-5-2/README.md) | Claude Code | 10 | 8 | 10 | 7 | 5 | **9,3** | 46 | 4,5 M |
 | [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | 9 | 10 | 9 | – | – | **9,3** | 45 | 1,6 M |
 | [claude-opus-5-5 (medium)](resultados/anthropic_claude-opus-5-5-medium/README.md) | Claude Code | 9 | 8 | 10 | 5 | 8 | **9,0** | 65 | 5,7 M |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | 9 | 9 | 9 | 4 | – | **9,0** | 95 | 3,8 M |
@@ -92,7 +92,7 @@ Etiqueta de cada prueba en la que el modelo saca 9 o más (la rehace `scripts/es
 | [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | Visual (9), Producto (10), Ejecución (9) | 3 de 5 |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | Visual (9), Producto (9), Ejecución (9) | 4 de 5 |
 | [claude-haiku-5-5](resultados/anthropic_claude-haiku-5-5/README.md) | Claude Code | Producto (9), Ejecución (9), Volumen (9) | 5 de 5 |
-| [claude-fable-5-2](resultados/anthropic_claude-fable-5-2/README.md) | Claude Code | Visual (10), Ejecución (10) | 4 de 5 |
+| [claude-fable-5-2](resultados/anthropic_claude-fable-5-2/README.md) | Claude Code | Visual (10), Ejecución (10) | 5 de 5 |
 | [claude-opus-5-5 (medium)](resultados/anthropic_claude-opus-5-5-medium/README.md) | Claude Code | Visual (9), Ejecución (10) | 5 de 5 |
 | [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | Producto (9), Ejecución (10) | 3 de 5 |
 | [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | Visual (9), Producto (9) | 3 de 5 |
