@@ -1,5 +1,5 @@
 {
-  "nota": 9,
+  "nota": 7,
   "veredicto": "a pie de calle, tapado",
   "rubrica": {
     "abre sin errores": 1,
@@ -14,5 +14,11 @@
     "Lo probó en Chrome con Playwright: arrancó la página, saltó a las paradas 4 y 6 y comprobó los títulos antes de dar por terminado.",
     "Comprobó con curl que el CDN de three.js respondía antes de usarlo.",
     "7 peticiones, 220 000 tokens, 0,43 $."
-  ]
+  ],
+  "nota_juez": 9,
+  "autor": {
+    "nota": 7,
+    "razon": "Es navegable, pero hay estructuras que no están cerradas y parecen bastante falsas.",
+    "fecha": "2026-11-24"
+  }
 }

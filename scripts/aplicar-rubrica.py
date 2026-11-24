@@ -46,11 +46,13 @@ for modelo, cods in PUNTOS.items():
         j.setdefault("nota_previa", j["nota"])
         j["rubrica"] = dict(zip(CRIT[cod], pts))
         j["nota"] = sum(pts)
+        if j.get("autor"):  # la nota del autor manda sobre la rúbrica
+            j["nota_juez"], j["nota"] = j["nota"], j["autor"]["nota"]
         json.dump(j, open(f, "w"), indent=2, ensure_ascii=False)
         md = f"{B}/resultados/{modelo}/{cod}/juicio.md"
         t = open(md).read()
-        t = re.sub(r"^(# .*· )\d+/10", lambda m: f"{m.group(1)}{j['nota']}/10", t, count=1, flags=re.M)
-        tabla = "\n## Rúbrica (rubricas.md)\n\n| Criterio | Puntos |\n|---|---:|\n" + "".join(f"| {c} | {p} |\n" for c, p in j["rubrica"].items()) + f"| **Total** | **{j['nota']}** |\n"
+        t = re.sub(r"^(# .*· )[\d,]+/10", lambda m: f"{m.group(1)}{str(j['nota']).replace('.', ',')}/10", t, count=1, flags=re.M)
+        tabla = "\n## Rúbrica (rubricas.md)\n\n| Criterio | Puntos |\n|---|---:|\n" + "".join(f"| {c} | {p} |\n" for c, p in j["rubrica"].items()) + f"| **Total** | **{j.get('nota_juez', j['nota'])}** |\n"
         t = re.sub(r"\n## Rúbrica \(rubricas.md\)\n.*?\| \*\*Total\*\* \| \*\*\d+\*\* \|\n", "", t, flags=re.S)
         partes = t.split("\n## ", 1)
         t = partes[0].rstrip() + "\n" + tabla + ("\n## " + partes[1] if len(partes) > 1 else "")

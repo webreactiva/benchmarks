@@ -1,6 +1,12 @@
-# A3D · ollama/beam · 7/10
+# A3D · ollama/beam · 2/10
 
 **Funciona, pero son cajas.** El A3D más pequeño (8 KB, 209 líneas, 5 peticiones): seis paradas reales, botones para cada una y un tour automático que mueve la cámara de la Alcazaba al Generalife. Pero la Alhambra son cajas de colores rodeadas de un anillo de pilares, la cámara se pega a los volúmenes y el panel no muestra el texto de la parada durante el tour.
+
+## Nota del autor
+
+**2/10**, nota definitiva de Daniel Primo. Son unas cajas con líneas, como un modelo BIM: no hay nada que se pueda ver ni visualizar, ni nada que tenga forma de ningún tipo.
+
+La rúbrica le daba 7/10.
 
 ## Rúbrica (rubricas.md)
 

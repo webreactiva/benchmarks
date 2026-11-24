@@ -19,14 +19,22 @@ j = json.load(sys.stdin)
 meta = json.load(open(os.path.join(d, "meta.json")))
 cod, modelo = meta["codigo"], meta["modelo"]
 j["nota"] = sum(j["rubrica"].values())
-out = {k: j[k] for k in ("nota", "veredicto", "rubrica", "resumen", "rarezas") if k in j}
+if cod == "A3D" and j["rubrica"].get("se reconoce la Alhambra") == 0:  # tope de rubricas.md
+    j["nota"] = min(j["nota"], 3)
+prev = os.path.join(d, "juicio.json")
+autor = (json.load(open(prev)) if os.path.exists(prev) else {}).get("autor")
+if autor:  # la nota del autor manda sobre la rúbrica y sobrevive a un nuevo juicio
+    j["nota_juez"], j["nota"], j["autor"] = j["nota"], autor["nota"], autor
+out = {k: j[k] for k in ("nota", "nota_juez", "autor", "veredicto", "rubrica", "resumen", "rarezas") if k in j}
 json.dump(out, open(os.path.join(d, "juicio.json"), "w"), indent=2, ensure_ascii=False)
 
-md = [f"# {cod} · {modelo} · {j['nota']}/10", "", f"**{j.get('titulo', j['veredicto'][0].upper() + j['veredicto'][1:] + '.')}** {j['resumen']}", ""]
+md = [f"# {cod} · {modelo} · {str(j['nota']).replace('.', ',')}/10", "", f"**{j.get('titulo', j['veredicto'][0].upper() + j['veredicto'][1:] + '.')}** {j['resumen']}", ""]
 if j.get("aviso"):
     md += [f"> {j['aviso']}", ""]
+if autor:
+    md += ["## Nota del autor", "", f"**{str(j['nota']).replace('.', ',')}/10**, nota definitiva de Daniel Primo. {autor['razon']}", "", f"La rúbrica le daba {j['nota_juez']}/10.", ""]
 md += ["## Rúbrica (rubricas.md)", "", "| Criterio | Puntos |", "|---|---:|"]
-md += [f"| {c} | {p} |" for c, p in j["rubrica"].items()] + [f"| **Total** | **{j['nota']}** |", ""]
+md += [f"| {c} | {p} |" for c, p in j["rubrica"].items()] + [f"| **Total** | **{j.get('nota_juez', j['nota'])}** |", ""]
 for titulo, items in (j.get("secciones") or {}).items():
     md += [f"## {titulo}"] + [f"- {x}" for x in items] + [""]
 md += ["## Rarezas de la sesión"] + [f"- {x}" for x in j["rarezas"]] + [""]

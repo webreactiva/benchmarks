@@ -1,5 +1,5 @@
 {
-  "nota": 8,
+  "nota": 4,
   "veredicto": "mucho detalle, textos inventados",
   "rubrica": {
     "abre sin errores": 1,
@@ -14,5 +14,11 @@
     "90 peticiones y 8,8 millones de tokens.",
     "Montó un proyecto: módulos JS en src/, plantilla, CSS y un build.py que lo junta todo, con three.min.js descargado e incrustado. Entregó también las fuentes.",
     "Asegura que «la cámara nunca queda dentro de un muro» y que lo verificó en Chromium."
-  ]
+  ],
+  "nota_juez": 8,
+  "autor": {
+    "nota": 4,
+    "razon": "Se queda en un 4.",
+    "fecha": "2026-11-24"
+  }
 }

@@ -11,11 +11,15 @@ PTS (post sobre los tests que fallan a veces) se retiró el 23 nov. 2026: al aut
 | Criterio | Puntos |
 |---|---:|
 | Un solo HTML que abre y funciona sin errores de consola | 1 |
-| Hay una ruta con paradas reales de la Alhambra, en un orden de visita creíble | 2 |
-| La ruta se recorre: la cámara viaja de una parada a otra (a mano o en automático) | 3 |
+| Hay una ruta con paradas reales de la Alhambra, en un orden de visita creíble y con el Patio de los Leones como parada (sin Leones, como mucho 1) | 2 |
+| La ruta se recorre: la cámara viaja de una parada a otra (a mano o en automático) | 2 |
 | Se reconoce la Alhambra sin leer las etiquetas: 2 si se ven tres o más elementos propios (arco de la Justicia, patio circular de Carlos V, Leones, estanque de Arrayanes, acequia del Generalife, torres de la Alcazaba, Sierra Nevada); 1 si uno o dos | 2 |
-| Vista limpia: la cámara no atraviesa muros, nada tapa la escena, las etiquetas se leen | 1 |
+| Vista limpia y volumen real: edificios cerrados y con volumen (no cajas ni planos sueltos), la cámara no atraviesa muros, nada tapa la escena, la vista tiene buen tamaño y las etiquetas se leen. 2 si todo; 1 si falla una cosa | 2 |
 | Los textos de las paradas no tienen errores | 1 |
+
+**Tope:** si no se reconoce la Alhambra (0 en ese criterio), la nota es como mucho un 3, aunque la ruta funcione. Unas cajas con una ruta no son una visita a la Alhambra.
+
+Rúbrica revisada el 24 nov. 2026: la anterior daba 7 puntos a abrir, tener paradas, recorrerlas y escribir bien, y una maqueta de cajas sacaba un 7. Los A3D ya juzgados no se vuelven a lanzar ni a juzgar: conservan el desglose antiguo, y donde el autor no estaba de acuerdo manda su nota (`juicio.json → autor`).
 
 ## AIF · Juego de alquimia como Infinite Craft con el contenido de Web Reactiva, en un único HTML
 

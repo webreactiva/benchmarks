@@ -1,6 +1,12 @@
-# A3D · ollama/deepseek-v4.1-flash · 6/10
+# A3D · ollama/deepseek-v4.1-flash · 4/10
 
 **La mejor maqueta, el tour falla.** Lo primero que ves es la Alhambra reconocible; lo que pasa al pulsar «Iniciar recorrido», no.
+
+## Nota del autor
+
+**4/10**, nota definitiva de Daniel Primo. Ni siquiera ha puesto el Patio de los Leones en el recorrido.
+
+La rúbrica le daba 6/10.
 
 ## Rúbrica (rubricas.md)
 

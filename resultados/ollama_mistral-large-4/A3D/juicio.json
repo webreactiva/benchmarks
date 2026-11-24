@@ -1,5 +1,5 @@
 {
-  "nota": 7,
+  "nota": 2,
   "veredicto": "se recorre, entre muros",
   "rubrica": {
     "abre sin errores": 1,
@@ -14,5 +14,11 @@
     "Ollama Cloud cortó tres de sus peticiones (dos ECONNRESET y un 504 Gateway Timeout, todas hacia los 5 minutos); OpenCode las reintentó y la sesión terminó. meta.json guarda el último error («Gateway Timeout») aunque el trabajo se completó.",
     "Escribió el fichero, dijo que tenía un error de sintaxis y lo reescribió entero; luego tres edit y una comprobación de sintaxis con python + node. No lo abrió en un navegador.",
     "10 peticiones y 134 000 tokens, en unos 40 minutos por los reintentos."
-  ]
+  ],
+  "nota_juez": 7,
+  "autor": {
+    "nota": 2,
+    "razon": "Ni se parece a la Alhambra ni tiene sentido alguno.",
+    "fecha": "2026-11-24"
+  }
 }

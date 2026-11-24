@@ -2,6 +2,12 @@
 
 **Lo más ambicioso, pero no se recorre.** Tiene más de todo que cualquier otro A3D, y lo único que pedía el prompt, la ruta, no funciona.
 
+## Nota del autor
+
+**4/10**, nota definitiva de Daniel Primo. No se parece a la Alhambra, no se ve nada bien y la visita guiada no funciona bien.
+
+La rúbrica le daba 4/10.
+
 ## Rúbrica (rubricas.md)
 
 | Criterio | Puntos |

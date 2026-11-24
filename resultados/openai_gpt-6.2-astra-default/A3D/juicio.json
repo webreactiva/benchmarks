@@ -7,11 +7,17 @@
     "vista limpia": 1,
     "textos": 1
   },
-  "nota": 6,
+  "nota": 4.5,
   "veredicto": "maqueta limpia, la cámara no viaja",
   "resumen": "Una maqueta en 3D hecha a mano en canvas, sin librerías y en 8 KB, con torres almenadas y el patio circular de Carlos V, y una ruta de cinco paradas reales con textos correctos. Pero «Siguiente parada» solo cambia el texto: la cámara se queda quieta, así que la ruta no se recorre.",
   "rarezas": [
     "Lo escribe todo en cinco peticiones y cuatro llamadas, sin abrirlo en un navegador",
     "Programa su propio motor 3D (caras, orden de pintado y proyección) en lugar de usar three.js"
-  ]
+  ],
+  "nota_juez": 6,
+  "autor": {
+    "nota": 4.5,
+    "razon": "Se ve algo y ha intentado hacer algo bonito, pero no está el Patio de los Leones, la vista es extremadamente pequeña y no tiene una visita guiada interactiva de verdad.",
+    "fecha": "2026-11-24"
+  }
 }

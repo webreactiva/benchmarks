@@ -1,5 +1,5 @@
 {
-  "nota": 8,
+  "nota": 6.5,
   "veredicto": "bonita, con tropiezos",
   "rubrica": {
     "abre sin errores": 1,
@@ -14,5 +14,11 @@
     "Lo reescribió entero tras revisar la geometría y lo probó en Chrome con Playwright: capturas del tour y análisis de los píxeles para comprobar que el cielo y la piedra se veían.",
     "Buscó navegadores también en /root/.cache/ms-playwright (vacío dentro del encierro).",
     "21 peticiones y 3,1 millones de tokens (2,9 de caché)."
-  ]
+  ],
+  "nota_juez": 8,
+  "autor": {
+    "nota": 6.5,
+    "razon": "La visita guiada funciona, pero se presenta de una forma un poco rara.",
+    "fecha": "2026-11-24"
+  }
 }

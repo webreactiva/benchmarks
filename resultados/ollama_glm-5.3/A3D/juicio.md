@@ -1,6 +1,12 @@
-# A3D · ollama/glm-5.3 · 8/10
+# A3D · ollama/glm-5.3 · 6,5/10
 
 **Bonita, con tropiezos.** Nueve paradas que se recorren y una maqueta que se reconoce, pero con vistas tapadas y un dato equivocado.
+
+## Nota del autor
+
+**6,5/10**, nota definitiva de Daniel Primo. La visita guiada funciona, pero se presenta de una forma un poco rara.
+
+La rúbrica le daba 8/10.
 
 ## Rúbrica (rubricas.md)
 

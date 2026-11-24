@@ -1,6 +1,12 @@
-# A3D · ollama/minimax-m3.1-flash · 8/10
+# A3D · ollama/minimax-m3.1-flash · 4/10
 
 **Mucho detalle; textos inventados.** El A3D más grande: 16 paradas, cámara sobre una curva que recorre el recinto, Carlos V con su patio circular, murallas, jardines, Sierra Nevada, minimapa, cuatro luces y three.js incrustado para funcionar sin conexión. Pero los paneles tapan media escena, las etiquetas se pisan y las fichas tienen datos inventados: una figura de «El Descubridor» que «señala La Meca» sobre la Puerta de la Justicia, Carlos V «erigido entre 1527 y 1537», Santa María como «la referencia más reconocible».
+
+## Nota del autor
+
+**4/10**, nota definitiva de Daniel Primo. Se queda en un 4.
+
+La rúbrica le daba 8/10.
 
 ## Rúbrica (rubricas.md)
 

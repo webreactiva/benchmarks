@@ -1,6 +1,12 @@
-# A3D · google/gemini-4-hydrogen · 9/10
+# A3D · google/gemini-4-hydrogen · 7/10
 
 **A pie de calle, tapado.** Una ruta guiada que se recorre y una Alhambra que se reconoce de cerca, con marcadores enormes en medio de la vista.
+
+## Nota del autor
+
+**7/10**, nota definitiva de Daniel Primo. Es navegable, pero hay estructuras que no están cerradas y parecen bastante falsas.
+
+La rúbrica le daba 9/10.
 
 ## Rúbrica (rubricas.md)
 

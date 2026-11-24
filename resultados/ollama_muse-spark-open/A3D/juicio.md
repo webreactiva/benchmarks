@@ -1,6 +1,12 @@
-# A3D · ollama/muse-spark-open · 7/10
+# A3D · ollama/muse-spark-open · 2/10
 
 **Bonita por fuera; la cámara, perdida.** Interfaz muy cuidada (Cinzel, fichas con datos, progreso, minimapa, leyenda, día y noche) y 7 paradas con textos correctos, y el recorrido automático avanza. Pero la escena está tan a escala que la cámara va siempre pegada a los volúmenes, hasta en «vista aérea», y al saltar de parada con «Siguiente» la consola se llena de errores (unos 150, uno por fotograma).
+
+## Nota del autor
+
+**2/10**, nota definitiva de Daniel Primo. Es innavegable y no es para nada la Alhambra. El 3D es falso: los objetos no tienen volumen, no se puede navegar ni ver nada, y es imposible saber si está el Patio de los Leones.
+
+La rúbrica le daba 7/10.
 
 ## Rúbrica (rubricas.md)
 

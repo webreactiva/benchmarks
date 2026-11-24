@@ -1,8 +1,14 @@
-# A3D · ollama/mistral-large-4 · 7/10
+# A3D · ollama/mistral-large-4 · 2/10
 
 **Se recorre, entre muros.** La ruta guiada funciona, pero la cámara acaba pegada a las paredes y la Alhambra apenas se reconoce.
 
 > Ollama Cloud cortó tres peticiones de la sesión hacia los 5 minutos (ECONNRESET y 504); OpenCode las reintentó y la sesión terminó con el fichero y su resumen. Cuenta como hecha.
+
+## Nota del autor
+
+**2/10**, nota definitiva de Daniel Primo. Ni se parece a la Alhambra ni tiene sentido alguno.
+
+La rúbrica le daba 7/10.
 
 ## Rúbrica (rubricas.md)
 

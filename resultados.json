@@ -2072,7 +2072,7 @@
       ]
     },
     "juicio": {
-      "nota": 9,
+      "nota": 7,
       "veredicto": "a pie de calle, tapado",
       "rubrica": {
         "abre sin errores": 1,
@@ -2087,7 +2087,13 @@
         "Lo probó en Chrome con Playwright: arrancó la página, saltó a las paradas 4 y 6 y comprobó los títulos antes de dar por terminado.",
         "Comprobó con curl que el CDN de three.js respondía antes de usarlo.",
         "7 peticiones, 220 000 tokens, 0,43 $."
-      ]
+      ],
+      "nota_juez": 9,
+      "autor": {
+        "nota": 7,
+        "razon": "Es navegable, pero hay estructuras que no están cerradas y parecen bastante falsas.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -3326,13 +3332,19 @@
         "vista limpia": 1,
         "textos": 1
       },
-      "nota": 6,
+      "nota": 4.5,
       "veredicto": "maqueta limpia, la cámara no viaja",
       "resumen": "Una maqueta en 3D hecha a mano en canvas, sin librerías y en 8 KB, con torres almenadas y el patio circular de Carlos V, y una ruta de cinco paradas reales con textos correctos. Pero «Siguiente parada» solo cambia el texto: la cámara se queda quieta, así que la ruta no se recorre.",
       "rarezas": [
         "Lo escribe todo en cinco peticiones y cuatro llamadas, sin abrirlo en un navegador",
         "Programa su propio motor 3D (caras, orden de pintado y proyección) en lugar de usar three.js"
-      ]
+      ],
+      "nota_juez": 6,
+      "autor": {
+        "nota": 4.5,
+        "razon": "Se ve algo y ha intentado hacer algo bonito, pero no está el Patio de los Leones, la vista es extremadamente pequeña y no tiene una visita guiada interactiva de verdad.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -4680,7 +4692,7 @@
       ]
     },
     "juicio": {
-      "nota": 7,
+      "nota": 2,
       "veredicto": "funciona, pero son cajas",
       "rubrica": {
         "abre sin errores": 1,
@@ -4694,7 +4706,13 @@
       "rarezas": [
         "El más rápido de todos: 5 peticiones y 64 k tokens, sin abrirlo ni probarlo.",
         "Contesta en una línea en inglés: «Creado … (single-file 3D Alhambra route)»."
-      ]
+      ],
+      "nota_juez": 7,
+      "autor": {
+        "nota": 2,
+        "razon": "Son unas cajas con líneas, como un modelo BIM: no hay nada que se pueda ver ni visualizar, ni nada que tenga forma de ningún tipo.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -5061,7 +5079,7 @@
       ]
     },
     "juicio": {
-      "nota": 6,
+      "nota": 4,
       "veredicto": "la mejor maqueta, el tour falla",
       "resumen": "La vista general es la mejor de todo el benchmark: colina de la Sabika amurallada, Alcazaba con torres, Palacio de Carlos V con su patio circular, Generalife con la acequia, casas alrededor y Sierra Nevada. Pero al iniciar el recorrido la cámara se mete dentro de la muralla y a los 35 s sigue en la primera de solo 5 paradas.",
       "rarezas": [
@@ -5078,6 +5096,12 @@
         "se reconoce la Alhambra": 2,
         "vista limpia": 0,
         "textos sin errores": 1
+      },
+      "nota_juez": 6,
+      "autor": {
+        "nota": 4,
+        "razon": "Ni siquiera ha puesto el Patio de los Leones en el recorrido.",
+        "fecha": "2026-11-24"
       }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
@@ -5475,7 +5499,7 @@
       ]
     },
     "juicio": {
-      "nota": 8,
+      "nota": 6.5,
       "veredicto": "bonita, con tropiezos",
       "rubrica": {
         "abre sin errores": 1,
@@ -5490,7 +5514,13 @@
         "Lo reescribió entero tras revisar la geometría y lo probó en Chrome con Playwright: capturas del tour y análisis de los píxeles para comprobar que el cielo y la piedra se veían.",
         "Buscó navegadores también en /root/.cache/ms-playwright (vacío dentro del encierro).",
         "21 peticiones y 3,1 millones de tokens (2,9 de caché)."
-      ]
+      ],
+      "nota_juez": 8,
+      "autor": {
+        "nota": 6.5,
+        "razon": "La visita guiada funciona, pero se presenta de una forma un poco rara.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -7326,6 +7356,12 @@
         "se reconoce la Alhambra": 1,
         "vista limpia": 0,
         "textos sin errores": 0
+      },
+      "nota_juez": 4,
+      "autor": {
+        "nota": 4,
+        "razon": "No se parece a la Alhambra, no se ve nada bien y la visita guiada no funciona bien.",
+        "fecha": "2026-11-24"
       }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
@@ -7975,7 +8011,7 @@
       ]
     },
     "juicio": {
-      "nota": 8,
+      "nota": 4,
       "veredicto": "mucho detalle, textos inventados",
       "rubrica": {
         "abre sin errores": 1,
@@ -7990,7 +8026,13 @@
         "90 peticiones y 8,8 millones de tokens.",
         "Montó un proyecto: módulos JS en src/, plantilla, CSS y un build.py que lo junta todo, con three.min.js descargado e incrustado. Entregó también las fuentes.",
         "Asegura que «la cámara nunca queda dentro de un muro» y que lo verificó en Chromium."
-      ]
+      ],
+      "nota_juez": 8,
+      "autor": {
+        "nota": 4,
+        "razon": "Se queda en un 4.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -8552,7 +8594,7 @@
       ]
     },
     "juicio": {
-      "nota": 7,
+      "nota": 2,
       "veredicto": "se recorre, entre muros",
       "rubrica": {
         "abre sin errores": 1,
@@ -8567,7 +8609,13 @@
         "Ollama Cloud cortó tres de sus peticiones (dos ECONNRESET y un 504 Gateway Timeout, todas hacia los 5 minutos); OpenCode las reintentó y la sesión terminó. meta.json guarda el último error («Gateway Timeout») aunque el trabajo se completó.",
         "Escribió el fichero, dijo que tenía un error de sintaxis y lo reescribió entero; luego tres edit y una comprobación de sintaxis con python + node. No lo abrió en un navegador.",
         "10 peticiones y 134 000 tokens, en unos 40 minutos por los reintentos."
-      ]
+      ],
+      "nota_juez": 7,
+      "autor": {
+        "nota": 2,
+        "razon": "Ni se parece a la Alhambra ni tiene sentido alguno.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -8985,7 +9033,7 @@
       ]
     },
     "juicio": {
-      "nota": 7,
+      "nota": 2,
       "veredicto": "bonita por fuera, cámara perdida",
       "rubrica": {
         "abre sin errores": 0,
@@ -8999,7 +9047,13 @@
       "rarezas": [
         "5 peticiones: lo escribió de una vez, sin probarlo.",
         "Promete «124 columnas + 12 leones» modelados; desde la cámara no se ven."
-      ]
+      ],
+      "nota_juez": 7,
+      "autor": {
+        "nota": 2,
+        "razon": "Es innavegable y no es para nada la Alhambra. El 3D es falso: los objetos no tienen volumen, no se puede navegar ni ver nada, y es imposible saber si está el Patio de los Leones.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
