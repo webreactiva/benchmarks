@@ -1,6 +1,12 @@
-# A3D · claude-haiku-5-5 (Claude Code) · 8/10
+# A3D · claude-haiku-5-5 (Claude Code) · 3/10
 
 **Funciona, pero la ruta tapa la Alhambra.** La escena tiene más contexto que la de nemotron, pero lo que más se ve durante el tour es el tubo amarillo que marca el camino.
+
+## Nota del autor
+
+**3/10**, nota definitiva de Daniel Primo. Es innavegable y lo que muestra no tiene sentido.
+
+La rúbrica le daba 8/10.
 
 ## Rúbrica (rubricas.md)
 

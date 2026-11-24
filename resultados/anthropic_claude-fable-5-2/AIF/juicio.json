@@ -1,5 +1,5 @@
 {
-  "nota": 8,
+  "nota": 7,
   "veredicto": "buen juego, poco Web Reactiva",
   "rubrica": {
     "abre sin errores": 1,
@@ -16,5 +16,11 @@
     "Comprobó el grafo de recetas con un script y dijo que no lo había probado en un navegador: honesto con lo que no comprobó.",
     "Avisa de que no es infinito («no hay IA generando resultados») y pone en el pie «Juego no oficial inspirado en los temas del podcast Web Reactiva».",
     "5 peticiones y 22 500 tokens de salida: barato para un AIF."
-  ]
+  ],
+  "nota_juez": 8,
+  "autor": {
+    "nota": 7,
+    "razon": "Buen juego de tablero, pero se queda corto en la temática de Web Reactiva.",
+    "fecha": "2026-11-24"
+  }
 }

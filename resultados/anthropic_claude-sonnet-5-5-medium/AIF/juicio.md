@@ -1,6 +1,12 @@
-# AIF · claude-sonnet-5-5 (medium, Claude Code) · 7/10
+# AIF · claude-sonnet-5-5 (medium, Claude Code) · 8/10
 
 **Buen juego, otra Web Reactiva.** La mecánica es la de Infinite Craft y todo se alcanza, pero el contenido es «web reactiva» en minúsculas: programación reactiva y diseño responsive, no Web Reactiva.
+
+## Nota del autor
+
+**8/10**, nota definitiva de Daniel Primo. Se puede jugar, aunque la temática no es la de Web Reactiva.
+
+La rúbrica le daba 7/10.
 
 ## Rúbrica (rubricas.md)
 

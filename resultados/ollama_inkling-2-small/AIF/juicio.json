@@ -1,5 +1,5 @@
 {
-  "nota": 9,
+  "nota": 7,
   "veredicto": "se juega, Web Reactiva a medias",
   "rubrica": {
     "abre sin errores": 1,
@@ -15,5 +15,11 @@
     "Dice «no puedo ver imágenes en este modelo» y comprueba la captura por el DOM. El modelo sí acepta imágenes: es nuestra configuración de OpenCode, que no declara qué entradas admite cada modelo.",
     "No consultó la web para el contenido.",
     "15 peticiones y 689 k tokens."
-  ]
+  ],
+  "nota_juez": 9,
+  "autor": {
+    "nota": 7,
+    "razon": "No tiene para nada temática tecnológica.",
+    "fecha": "2026-11-24"
+  }
 }

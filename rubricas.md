@@ -23,15 +23,18 @@ Rúbrica revisada el 24 nov. 2026: la anterior daba 7 puntos a abrir, tener para
 
 ## AIF · Juego de alquimia como Infinite Craft con el contenido de Web Reactiva, en un único HTML
 
+El juego de origen es un tapiz: un tablero libre donde sacas tantas tarjetas como quieras de la lista y combinas arrastrando una sobre otra. Poner un elemento en cada una de dos cajitas para generar otro no es Infinite Craft. El prompt no lo explica, pero el modelo tendría que haberlo investigado.
+
 | Criterio | Puntos |
 |---|---:|
 | Un solo HTML que abre y funciona sin errores de consola | 1 |
-| Mecánica de Infinite Craft: 2 si se arrastra un elemento sobre otro en un lienzo; 1 si se combina en ranuras o calderos | 2 |
-| Las combinaciones básicas funcionan al jugar | 2 |
-| Progresión: el 90 % o más de los elementos se puede alcanzar desde los iniciales | 1 |
-| «Infinito»: las mezclas sin receta también dan algo | 1 |
-| Contenido de Web Reactiva de verdad (sus temas, su comunidad, su voz): 2; solo el nombre: 0 | 2 |
+| Mecánica de tapiz: tablero libre, tarjetas que se sacan sin límite y se combinan arrastrando una sobre otra. Si combina en ranuras, calderos o cajitas: 0 | 2 |
+| Se puede jugar: las combinaciones funcionan al jugar. Si los conceptos no se combinan: 0 | 3 |
+| Contenido de Web Reactiva de verdad: 2 si sale el podcast y la inteligencia artificial (o lo que tiene que ver con ellos); 1 si solo tira de «web», «reactiva» y programación en general; 0 si no tiene temática tecnológica | 2 |
+| Progresión e «infinito»: casi todo se alcanza desde los elementos iniciales y las mezclas sin receta también dan algo | 1 |
 | Acabado: guarda el progreso, busca, da pistas | 1 |
+
+Rúbrica revisada el 24 nov. 2026: la anterior daba 1 punto a las ranuras y solo 2 a que se pudiera jugar. Los AIF ya juzgados no se vuelven a lanzar ni a juzgar: conservan el desglose antiguo, y donde el autor no estaba de acuerdo manda su nota (`juicio.json → autor`).
 
 ## CCA · Implementa un carrito de la compra escalable
 

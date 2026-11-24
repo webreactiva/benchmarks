@@ -1,6 +1,12 @@
-# AIF · ollama/inkling-2-small · 9/10
+# AIF · ollama/inkling-2-small · 7/10
 
 **Se juega; Web Reactiva, a medias.** Mesa libre con fichas que se combinan soltando una sobre otra, 125 elementos todos alcanzables y un generador para las mezclas sin receta. Parte de Agua, Fuego, Aire y Tierra y mezcla programación genérica (React, Rust, Docker) con algo de Web Reactiva (podcast, masterclass, «Maratón WR», «Membresía WR», «Slow Content»), sin mirar la web.
+
+## Nota del autor
+
+**7/10**, nota definitiva de Daniel Primo. No tiene para nada temática tecnológica.
+
+La rúbrica le daba 9/10.
 
 ## Rúbrica (rubricas.md)
 

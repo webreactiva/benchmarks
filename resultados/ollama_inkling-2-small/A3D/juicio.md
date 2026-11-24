@@ -1,6 +1,12 @@
-# A3D · ollama/inkling-2-small · 9/10
+# A3D · ollama/inkling-2-small · 5/10
 
 **Bonita y se recorre.** Maqueta clara del cerro de la Sabika con muralla, Alcazaba con bandera, Comares, Generalife con su alberca, Albaicín, el Darro y Sierra Nevada, 9 paradas con textos correctos y un recorrido automático que viaja de verdad. Pero al bajar a los patios la cámara se mete en los muros, y Comares sale como una torre redonda con cúpula.
+
+## Nota del autor
+
+**5/10**, nota definitiva de Daniel Primo. Ajuste del autor.
+
+La rúbrica le daba 9/10.
 
 ## Rúbrica (rubricas.md)
 

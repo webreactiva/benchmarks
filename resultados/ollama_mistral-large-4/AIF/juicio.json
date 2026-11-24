@@ -1,5 +1,5 @@
 {
-  "nota": 6,
+  "nota": 2,
   "veredicto": "funciona, sin Web Reactiva",
   "rubrica": {
     "abre sin errores": 1,
@@ -15,5 +15,11 @@
     "No intentó buscar nada sobre Web Reactiva: lo resolvió con un elemento «Web Reactiva» y una fanfarria al crearlo.",
     "Validó con node que no hubiera recetas duplicadas ni ingredientes huérfanos y que todo fuera alcanzable.",
     "9 peticiones y 267 000 tokens."
-  ]
+  ],
+  "nota_juez": 6,
+  "autor": {
+    "nota": 2,
+    "razon": "No se puede jugar: los conceptos no se combinan. Además, no tiene tablero ni contenido de Web Reactiva.",
+    "fecha": "2026-11-24"
+  }
 }

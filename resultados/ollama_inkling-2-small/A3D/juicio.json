@@ -1,5 +1,5 @@
 {
-  "nota": 9,
+  "nota": 5,
   "veredicto": "bonita y se recorre",
   "rubrica": {
     "abre sin errores": 1,
@@ -14,5 +14,11 @@
     "Lo probó en Chrome headless en varias paradas y lo retocó con 11 ediciones.",
     "Buscó navegadores (chromium, puppeteer, playwright) para probarlo; corría encerrado y solo vio lo del sistema.",
     "24 peticiones y 1,2 millones de tokens, sin compactaciones."
-  ]
+  ],
+  "nota_juez": 9,
+  "autor": {
+    "nota": 5,
+    "razon": "Ajuste del autor.",
+    "fecha": "2026-11-24"
+  }
 }

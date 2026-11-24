@@ -1,6 +1,12 @@
-# AIF · claude-fable-5-2 (Claude Code) · 8/10
+# AIF · claude-fable-5-2 (Claude Code) · 7/10
 
 **Buen juego, poco Web Reactiva.** La mecánica de Infinite Craft está bien hecha y todo se puede descubrir, pero el contenido es el de cualquier blog de desarrollo web, con Web Reactiva como una rama más.
+
+## Nota del autor
+
+**7/10**, nota definitiva de Daniel Primo. Buen juego de tablero, pero se queda corto en la temática de Web Reactiva.
+
+La rúbrica le daba 8/10.
 
 ## Rúbrica (rubricas.md)
 

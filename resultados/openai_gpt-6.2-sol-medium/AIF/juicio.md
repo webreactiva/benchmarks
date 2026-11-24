@@ -1,6 +1,12 @@
-# AIF · gpt-6.2-sol (medium) · 8/10
+# AIF · gpt-6.2-sol (medium) · 7/10
 
 **Pulido y muy de la casa**
+
+## Nota del autor
+
+**7/10**, nota definitiva de Daniel Primo. Ajuste del autor.
+
+La rúbrica le daba 8/10.
 
 ## Validación
 

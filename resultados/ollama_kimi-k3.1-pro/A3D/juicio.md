@@ -1,6 +1,12 @@
-# A3D · ollama/kimi-k3.1-pro · 10/10
+# A3D · ollama/kimi-k3.1-pro · 6/10
 
 **El mejor A3D, y sin librerías.** Una maqueta 3D con motor propio, sin three.js ni nada externo, que se reconoce (murallas almenadas, Alcazaba, Carlos V con su patio circular, los patios nazaríes con su fuente, el Generalife entre cipreses) y un recorrido de 6 paradas que lleva la cámara de una a otra sin atravesar nada. Diseño de guía turística: itinerario con tiempos, fichas, plano, atardecer, historia y consejos.
+
+## Nota del autor
+
+**6/10**, nota definitiva de Daniel Primo. Ajuste del autor.
+
+La rúbrica le daba 10/10.
 
 ## Rúbrica (rubricas.md)
 

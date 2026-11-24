@@ -1,6 +1,12 @@
-# AIF · claude-haiku-5-5 (Claude Code) · 9/10
+# AIF · claude-haiku-5-5 (Claude Code) · 6/10
 
 **Se juega y es de Web Reactiva.** Es lo que pedía el prompt: la mecánica de Infinite Craft con el contenido de Web Reactiva, en un HTML sin dependencias.
+
+## Nota del autor
+
+**6/10**, nota definitiva de Daniel Primo. Se puede jugar, pero es complicado.
+
+La rúbrica le daba 9/10.
 
 ## Rúbrica (rubricas.md)
 

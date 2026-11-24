@@ -1,5 +1,5 @@
 {
-  "nota": 5,
+  "nota": 3,
   "veredicto": "solo se alcanzan 12 de 169",
   "rubrica": {
     "abre sin errores": 1,
@@ -15,5 +15,11 @@
     "7 peticiones y 4 escrituras; no lo abrió ni comprobó las recetas.",
     "Las recetas van por nombre y una función crea al vuelo los elementos que faltan: así aparecen 60 elementos con ✨ que no están en la lista principal.",
     "Contesta en una línea: «Creado web-reactiva-alchemy.html en la carpeta actual.»"
-  ]
+  ],
+  "nota_juez": 5,
+  "autor": {
+    "nota": 3,
+    "razon": "No es un tablero: combina en ranuras y no tiene contenido de Web Reactiva. Además, solo se alcanzan 12 de 169 recetas.",
+    "fecha": "2026-11-24"
+  }
 }

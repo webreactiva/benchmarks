@@ -1,5 +1,5 @@
 {
-  "nota": 6,
+  "nota": 5,
   "veredicto": "se atasca en la segunda mezcla",
   "rubrica": {
     "abre sin errores": 1,
@@ -15,5 +15,11 @@
     "No busca nada de Web Reactiva: ni búsqueda web ni lectura de su web. El contenido sale de la palabra «reactiva»: un tutorial de React (useState, useEffect, limpieza, suscripción).",
     "En el chat dice que está «afinando las combinaciones para que todas funcionen» y quitando dependencias externas; al terminar, 21 de las 23 recetas usan un ingrediente que no se puede conseguir.",
     "No prueba el juego: 7 peticiones y 141 000 tokens, sin abrirlo en un navegador ni recorrer las recetas."
-  ]
+  ],
+  "nota_juez": 6,
+  "autor": {
+    "nota": 5,
+    "razon": "Tiene tablero, pero no tiene contenido de Web Reactiva y se atasca en la segunda mezcla.",
+    "fecha": "2026-11-24"
+  }
 }

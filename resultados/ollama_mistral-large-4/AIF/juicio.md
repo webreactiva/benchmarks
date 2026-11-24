@@ -1,6 +1,12 @@
-# AIF · ollama/mistral-large-4 · 6/10
+# AIF · ollama/mistral-large-4 · 2/10
 
 **Funciona, sin Web Reactiva.** Un juego de combinar completo y bien conectado, sin la mecánica de soltar, sin infinito y sin el contenido de la casa.
+
+## Nota del autor
+
+**2/10**, nota definitiva de Daniel Primo. No se puede jugar: los conceptos no se combinan. Además, no tiene tablero ni contenido de Web Reactiva.
+
+La rúbrica le daba 6/10.
 
 ## Rúbrica (rubricas.md)
 

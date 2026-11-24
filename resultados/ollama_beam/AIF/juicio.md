@@ -1,6 +1,12 @@
-# AIF · ollama/beam · 5/10
+# AIF · ollama/beam · 3/10
 
 **Se juega un rato; luego no hay salida.** Mesa de dos ranuras con siete elementos iniciales de desarrollo web (HTML, CSS, JavaScript, Navegador, Servidor, Terminal, Git). Las primeras mezclas funcionan, pero de 169 elementos solo se pueden alcanzar 12: muchas recetas piden ingredientes, como React, que no salen de ninguna. De Web Reactiva tiene el nombre y algún «Podcast».
+
+## Nota del autor
+
+**3/10**, nota definitiva de Daniel Primo. No es un tablero: combina en ranuras y no tiene contenido de Web Reactiva. Además, solo se alcanzan 12 de 169 recetas.
+
+La rúbrica le daba 5/10.
 
 ## Rúbrica (rubricas.md)
 

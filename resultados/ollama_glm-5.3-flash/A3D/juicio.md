@@ -1,8 +1,14 @@
-# A3D · ollama/glm-5.3-flash · 9/10
+# A3D · ollama/glm-5.3-flash · 6/10
 
 **Se recorre y se reconoce.** Una ruta a pie de calle que avanza sola y una maqueta que, desde arriba, es la Alhambra.
 
 > Tercera tirada: la primera se cortó en el tope de 32 000 tokens de OpenCode y la segunda compactó sin parar por nuestra configuración de límites. Las dos están en `_descartados/`.
+
+## Nota del autor
+
+**6/10**, nota definitiva de Daniel Primo. Ajuste del autor.
+
+La rúbrica le daba 9/10.
 
 ## Rúbrica (rubricas.md)
 

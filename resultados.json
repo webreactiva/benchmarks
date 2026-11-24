@@ -150,7 +150,7 @@
       ]
     },
     "juicio": {
-      "nota": 8,
+      "nota": 7,
       "veredicto": "buen juego, poco Web Reactiva",
       "rubrica": {
         "abre sin errores": 1,
@@ -167,7 +167,13 @@
         "Comprobó el grafo de recetas con un script y dijo que no lo había probado en un navegador: honesto con lo que no comprobó.",
         "Avisa de que no es infinito («no hay IA generando resultados») y pone en el pie «Juego no oficial inspirado en los temas del podcast Web Reactiva».",
         "5 peticiones y 22 500 tokens de salida: barato para un AIF."
-      ]
+      ],
+      "nota_juez": 8,
+      "autor": {
+        "nota": 7,
+        "razon": "Buen juego de tablero, pero se queda corto en la temática de Web Reactiva.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
@@ -450,7 +456,7 @@
       ]
     },
     "juicio": {
-      "nota": 8,
+      "nota": 3,
       "veredicto": "funciona, la ruta tapa la Alhambra",
       "resumen": "Un HTML con three.js sin errores, con paisaje (cielo, Sierra Nevada nevada, torres con tejado, cipreses del Generalife), 10 paradas con texto bueno y controles completos. Pero el tubo amarillo de la ruta y el marcador ocupan media pantalla durante el tour, y los edificios siguen siendo bloques.",
       "rarezas": [
@@ -466,6 +472,12 @@
         "se reconoce la Alhambra": 1,
         "vista limpia": 0,
         "textos sin errores": 1
+      },
+      "nota_juez": 8,
+      "autor": {
+        "nota": 3,
+        "razon": "Es innavegable y lo que muestra no tiene sentido.",
+        "fecha": "2026-11-24"
       }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
@@ -523,7 +535,7 @@
       ]
     },
     "juicio": {
-      "nota": 9,
+      "nota": 6,
       "veredicto": "se juega y es de Web Reactiva",
       "resumen": "Mesa de juego como Infinite Craft (arrastrar y soltar una cosa sobre otra), 54 elementos y 50 recetas, todas alcanzables desde Código, Humano, Idea y Café. El contenido sale de webreactiva.com de verdad: agentes, skills, MCP, SDD, OpenSpec, AI slop, podcast, cursos. Le falta lo infinito: con una tabla fija, la mayoría de mezclas no dan nada.",
       "rarezas": [
@@ -541,6 +553,12 @@
         "«infinito»": 0,
         "contenido de Web Reactiva": 2,
         "acabado": 1
+      },
+      "nota_juez": 9,
+      "autor": {
+        "nota": 6,
+        "razon": "Se puede jugar, pero es complicado.",
+        "fecha": "2026-11-24"
       }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
@@ -1314,7 +1332,7 @@
       ]
     },
     "juicio": {
-      "nota": 7,
+      "nota": 8,
       "veredicto": "buen juego, otra Web Reactiva",
       "resumen": "Mesa libre donde se suelta una ficha sobre otra, 63 elementos y 59 recetas, todos alcanzables desde Estado, Evento, Píxel y Pantalla, con buscador y guardado de la mesa. Pero leyó «Web Reactiva» como programación reactiva más diseño responsive (señales, Virtual DOM, media queries, clamp()): de la web, el podcast o la comunidad no hay nada, y las mezclas sin receta no dan nada.",
       "rarezas": [
@@ -1331,6 +1349,12 @@
         "«infinito»": 0,
         "contenido de Web Reactiva": 0,
         "acabado": 1
+      },
+      "nota_juez": 7,
+      "autor": {
+        "nota": 8,
+        "razon": "Se puede jugar, aunque la temática no es la de Web Reactiva.",
+        "fecha": "2026-11-24"
       }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
@@ -3037,7 +3061,7 @@
       ]
     },
     "juicio": {
-      "nota": 6,
+      "nota": 5,
       "veredicto": "se atasca en la segunda mezcla",
       "rubrica": {
         "abre sin errores": 1,
@@ -3053,7 +3077,13 @@
         "No busca nada de Web Reactiva: ni búsqueda web ni lectura de su web. El contenido sale de la palabra «reactiva»: un tutorial de React (useState, useEffect, limpieza, suscripción).",
         "En el chat dice que está «afinando las combinaciones para que todas funcionen» y quitando dependencias externas; al terminar, 21 de las 23 recetas usan un ingrediente que no se puede conseguir.",
         "No prueba el juego: 7 peticiones y 141 000 tokens, sin abrirlo en un navegador ni recorrer las recetas."
-      ]
+      ],
+      "nota_juez": 6,
+      "autor": {
+        "nota": 5,
+        "razon": "Tiene tablero, pero no tiene contenido de Web Reactiva y se atasca en la segunda mezcla.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
@@ -3332,7 +3362,7 @@
         "vista limpia": 1,
         "textos": 1
       },
-      "nota": 4.5,
+      "nota": 5,
       "veredicto": "maqueta limpia, la cámara no viaja",
       "resumen": "Una maqueta en 3D hecha a mano en canvas, sin librerías y en 8 KB, con torres almenadas y el patio circular de Carlos V, y una ruta de cinco paradas reales con textos correctos. Pero «Siguiente parada» solo cambia el texto: la cámara se queda quieta, así que la ruta no se recorre.",
       "rarezas": [
@@ -3341,7 +3371,7 @@
       ],
       "nota_juez": 6,
       "autor": {
-        "nota": 4.5,
+        "nota": 5,
         "razon": "Se ve algo y ha intentado hacer algo bonito, pero no está el Patio de los Leones, la vista es extremadamente pequeña y no tiene una visita guiada interactiva de verdad.",
         "fecha": "2026-11-24"
       }
@@ -4058,7 +4088,7 @@
         "vista limpia": 1,
         "textos": 1
       },
-      "nota": 10,
+      "nota": 6,
       "veredicto": "maqueta clara y se recorre",
       "resumen": "Una maqueta 3D en low-poly con las torres de la Alcazaba, el patio circular de Carlos V y la acequia del Generalife, y una ruta de cinco paradas en orden de visita que la cámara recorre con «Siguiente». La vista no se tapa, las etiquetas se leen y los textos son correctos; el botón «Iniciar ruta» solo encuadra la primera parada.",
       "rarezas": [
@@ -4066,7 +4096,13 @@
         "Lista /tmp y /Applications buscando navegadores",
         "Descarga three.js y dos fuentes y los mete dentro del HTML: 790 KB",
         "Mira sus propias capturas tres veces con view_image"
-      ]
+      ],
+      "nota_juez": 10,
+      "autor": {
+        "nota": 6,
+        "razon": "Se queda en la misma nota que GPT 6.2 Astra (medium).",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -4136,14 +4172,20 @@
         "contenido de Web Reactiva": 2,
         "acabado": 1
       },
-      "nota": 8,
+      "nota": 7,
       "veredicto": "pulido y muy de la casa",
       "resumen": "Un juego de ranuras con 52 elementos y 84 recetas, todos alcanzables, sacados de lo que encontró en webreactiva.com: el podcast, En pantuflas, Esperando a Eskainet, Wikipoke o el MCP de Web Reactiva. Guarda, busca y da pistas, pero no hay lienzo libre y las mezclas sin receta no dan nada.",
       "rarezas": [
         "Siete búsquedas y lecturas en webreactiva.com antes de escribir",
         "Prueba con un script propio que todas las recetas se alcanzan",
         "No consigue arrancar ningún navegador en el sandbox y lo dice: «la comprobación visual quedó pendiente»"
-      ]
+      ],
+      "nota_juez": 8,
+      "autor": {
+        "nota": 7,
+        "razon": "Ajuste del autor.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
@@ -4430,7 +4472,7 @@
       ]
     },
     "juicio": {
-      "nota": 6,
+      "nota": 2,
       "veredicto": "funciona, poco Alhambra",
       "resumen": "Un HTML con three.js que carga, enseña 14 paradas con nombre y un tour animado con cámara que sigue una curva, lista de paradas y teclas. Las paradas y el orden son los de una visita real, pero los edificios son cajas y cilindros sin nada nazarí, la cámara atraviesa los volúmenes y salen dos errores al empezar.",
       "rarezas": [
@@ -4446,6 +4488,12 @@
         "se reconoce la Alhambra": 0,
         "vista limpia": 0,
         "textos sin errores": 1
+      },
+      "nota_juez": 6,
+      "autor": {
+        "nota": 2,
+        "razon": "Ajuste del autor.",
+        "fecha": "2026-11-24"
       }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
@@ -4776,7 +4824,7 @@
       ]
     },
     "juicio": {
-      "nota": 5,
+      "nota": 3,
       "veredicto": "solo se alcanzan 12 de 169",
       "rubrica": {
         "abre sin errores": 1,
@@ -4792,7 +4840,13 @@
         "7 peticiones y 4 escrituras; no lo abrió ni comprobó las recetas.",
         "Las recetas van por nombre y una función crea al vuelo los elementos que faltan: así aparecen 60 elementos con ✨ que no están en la lista principal.",
         "Contesta en una línea: «Creado web-reactiva-alchemy.html en la carpeta actual.»"
-      ]
+      ],
+      "nota_juez": 5,
+      "autor": {
+        "nota": 3,
+        "razon": "No es un tablero: combina en ranuras y no tiene contenido de Web Reactiva. Además, solo se alcanzan 12 de 169 recetas.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
@@ -5499,7 +5553,7 @@
       ]
     },
     "juicio": {
-      "nota": 6.5,
+      "nota": 6,
       "veredicto": "bonita, con tropiezos",
       "rubrica": {
         "abre sin errores": 1,
@@ -5517,7 +5571,7 @@
       ],
       "nota_juez": 8,
       "autor": {
-        "nota": 6.5,
+        "nota": 6,
         "razon": "La visita guiada funciona, pero se presenta de una forma un poco rara.",
         "fecha": "2026-11-24"
       }
@@ -6004,7 +6058,7 @@
       ]
     },
     "juicio": {
-      "nota": 9,
+      "nota": 6,
       "veredicto": "se recorre y se reconoce",
       "rubrica": {
         "abre sin errores": 1,
@@ -6020,7 +6074,13 @@
         "Es un HTML distinto al de la tirada anterior (aquella era más pequeña, con 8 paradas y botones anterior/siguiente): la misma petición da obras distintas.",
         "Lo comprobó en Chrome headless capturando 9 tramos del recorrido.",
         "29 peticiones y 1,8 millones de tokens."
-      ]
+      ],
+      "nota_juez": 9,
+      "autor": {
+        "nota": 6,
+        "razon": "Ajuste del autor.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -6443,7 +6503,7 @@
       ]
     },
     "juicio": {
-      "nota": 9,
+      "nota": 5,
       "veredicto": "bonita y se recorre",
       "rubrica": {
         "abre sin errores": 1,
@@ -6458,7 +6518,13 @@
         "Lo probó en Chrome headless en varias paradas y lo retocó con 11 ediciones.",
         "Buscó navegadores (chromium, puppeteer, playwright) para probarlo; corría encerrado y solo vio lo del sistema.",
         "24 peticiones y 1,2 millones de tokens, sin compactaciones."
-      ]
+      ],
+      "nota_juez": 9,
+      "autor": {
+        "nota": 5,
+        "razon": "Ajuste del autor.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -6524,7 +6590,7 @@
       ]
     },
     "juicio": {
-      "nota": 9,
+      "nota": 7,
       "veredicto": "se juega, Web Reactiva a medias",
       "rubrica": {
         "abre sin errores": 1,
@@ -6540,7 +6606,13 @@
         "Dice «no puedo ver imágenes en este modelo» y comprueba la captura por el DOM. El modelo sí acepta imágenes: es nuestra configuración de OpenCode, que no declara qué entradas admite cada modelo.",
         "No consultó la web para el contenido.",
         "15 peticiones y 689 k tokens."
-      ]
+      ],
+      "nota_juez": 9,
+      "autor": {
+        "nota": 7,
+        "razon": "No tiene para nada temática tecnológica.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },
@@ -6880,7 +6952,7 @@
       ]
     },
     "juicio": {
-      "nota": 10,
+      "nota": 6,
       "veredicto": "el mejor A3D, sin librerías",
       "rubrica": {
         "abre sin errores": 1,
@@ -6895,7 +6967,13 @@
         "El único A3D sin librerías: ni three.js ni CDN, funciona sin conexión.",
         "Organizó el trabajo con una lista de tareas (todowrite) y lo probó en varias resoluciones.",
         "23 peticiones y 1 millón de tokens."
-      ]
+      ],
+      "nota_juez": 10,
+      "autor": {
+        "nota": 6,
+        "razon": "Ajuste del autor.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Una ruta en 3D en la Alhambra de Granada en un solo fichero html"
   },
@@ -7420,7 +7498,7 @@
       ]
     },
     "juicio": {
-      "nota": 9,
+      "nota": 8,
       "veredicto": "el mejor AIF, con mucho",
       "resumen": "399 elementos y 1780 recetas sacados de webreactiva.com de verdad (glosario, cursos, skills, comunidad Malandriner), un generador para las mezclas sin receta, 7 legendarios, pistas, bitácora, compartir por URL, y el logo, los colores y la tipografía de la marca. Funciona sin conexión. Le falta el lienzo libre de Infinite Craft: combina en dos calderos.",
       "rarezas": [
@@ -7439,6 +7517,12 @@
         "«infinito»": 1,
         "contenido de Web Reactiva": 2,
         "acabado": 1
+      },
+      "nota_juez": 9,
+      "autor": {
+        "nota": 8,
+        "razon": "Es muy de Web Reactiva, pero combina en ranuras en vez de en un tablero.",
+        "fecha": "2026-11-24"
       }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
@@ -8687,7 +8771,7 @@
       ]
     },
     "juicio": {
-      "nota": 6,
+      "nota": 2,
       "veredicto": "funciona, sin Web Reactiva",
       "rubrica": {
         "abre sin errores": 1,
@@ -8703,7 +8787,13 @@
         "No intentó buscar nada sobre Web Reactiva: lo resolvió con un elemento «Web Reactiva» y una fanfarria al crearlo.",
         "Validó con node que no hubiera recetas duplicadas ni ingredientes huérfanos y que todo fuera alcanzable.",
         "9 peticiones y 267 000 tokens."
-      ]
+      ],
+      "nota_juez": 6,
+      "autor": {
+        "nota": 2,
+        "razon": "No se puede jugar: los conceptos no se combinan. Además, no tiene tablero ni contenido de Web Reactiva.",
+        "fecha": "2026-11-24"
+      }
     },
     "prompt": "Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML."
   },

@@ -1,6 +1,12 @@
-# A3D · nemotron-3-ultra-550b-a55b:free · 6/10
+# A3D · nemotron-3-ultra-550b-a55b:free · 2/10
 
 **Funciona, poco Alhambra.** Es una ruta en 3D, en un solo HTML, que se abre y se recorre. Lo que no hay es Alhambra: un visitante no reconocería ningún sitio sin las etiquetas.
+
+## Nota del autor
+
+**2/10**, nota definitiva de Daniel Primo. Ajuste del autor.
+
+La rúbrica le daba 6/10.
 
 ## Rúbrica (rubricas.md)
 

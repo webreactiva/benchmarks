@@ -1,6 +1,12 @@
-# A3D · gpt-6.2-sol (medium) · 10/10
+# A3D · gpt-6.2-sol (medium) · 6/10
 
 **Maqueta clara y se recorre**
+
+## Nota del autor
+
+**6/10**, nota definitiva de Daniel Primo. Se queda en la misma nota que GPT 6.2 Astra (medium).
+
+La rúbrica le daba 10/10.
 
 ## Validación
 

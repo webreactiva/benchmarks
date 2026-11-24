@@ -1,6 +1,12 @@
-# AIF · gpt-6-luna · 6/10
+# AIF · gpt-6-luna · 5/10
 
 **Se atasca en la segunda mezcla.** La mecánica y la interfaz están bien, pero el árbol de recetas está roto y el contenido no es de Web Reactiva.
+
+## Nota del autor
+
+**5/10**, nota definitiva de Daniel Primo. Tiene tablero, pero no tiene contenido de Web Reactiva y se atasca en la segunda mezcla.
+
+La rúbrica le daba 6/10.
 
 ## Rúbrica (rubricas.md)
 

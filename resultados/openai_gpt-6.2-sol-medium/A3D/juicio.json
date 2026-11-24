@@ -7,7 +7,7 @@
     "vista limpia": 1,
     "textos": 1
   },
-  "nota": 10,
+  "nota": 6,
   "veredicto": "maqueta clara y se recorre",
   "resumen": "Una maqueta 3D en low-poly con las torres de la Alcazaba, el patio circular de Carlos V y la acequia del Generalife, y una ruta de cinco paradas en orden de visita que la cámara recorre con «Siguiente». La vista no se tapa, las etiquetas se leen y los textos son correctos; el botón «Iniciar ruta» solo encuadra la primera parada.",
   "rarezas": [
@@ -15,5 +15,11 @@
     "Lista /tmp y /Applications buscando navegadores",
     "Descarga three.js y dos fuentes y los mete dentro del HTML: 790 KB",
     "Mira sus propias capturas tres veces con view_image"
-  ]
+  ],
+  "nota_juez": 10,
+  "autor": {
+    "nota": 6,
+    "razon": "Se queda en la misma nota que GPT 6.2 Astra (medium).",
+    "fecha": "2026-11-24"
+  }
 }

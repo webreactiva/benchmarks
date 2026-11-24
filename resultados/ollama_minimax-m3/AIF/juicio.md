@@ -1,6 +1,12 @@
-# AIF · ollama/minimax-m3 · 9/10
+# AIF · ollama/minimax-m3 · 8/10
 
 **El mejor AIF, con mucho.** Es un juego que se podría publicar en Web Reactiva tal cual.
+
+## Nota del autor
+
+**8/10**, nota definitiva de Daniel Primo. Es muy de Web Reactiva, pero combina en ranuras en vez de en un tablero.
+
+La rúbrica le daba 9/10.
 
 ## Rúbrica (rubricas.md)
 

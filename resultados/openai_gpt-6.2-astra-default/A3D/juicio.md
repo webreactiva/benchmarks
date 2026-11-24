@@ -1,10 +1,10 @@
-# A3D · gpt-6.2-astra (default) · 4,5/10
+# A3D · gpt-6.2-astra (default) · 5/10
 
 **Maqueta limpia, la cámara no viaja**
 
 ## Nota del autor
 
-**4,5/10**, nota definitiva de Daniel Primo. Se ve algo y ha intentado hacer algo bonito, pero no está el Patio de los Leones, la vista es extremadamente pequeña y no tiene una visita guiada interactiva de verdad.
+**5/10**, nota definitiva de Daniel Primo. Se ve algo y ha intentado hacer algo bonito, pero no está el Patio de los Leones, la vista es extremadamente pequeña y no tiene una visita guiada interactiva de verdad.
 
 La rúbrica le daba 6/10.
 
