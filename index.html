@@ -795,8 +795,8 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>56</td>
 <td><small><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/SECURITY_AUDIT.md">SECURITY_AUDIT.md</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/documents/invoices/invoice-ORD-001.pdf">documents/invoices/invoice-ORD-001.pdf</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/documents/invoices/invoice-ORD-002.pdf">documents/invoices/invoice-ORD-002.pdf</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/documents/invoices/invoice-ORD-003.pdf">documents/invoices/invoice-ORD-003.pdf</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/documents/invoices/invoice-ORD-004.pdf">documents/invoices/invoice-ORD-004.pdf</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/lib/generated/prisma/browser.ts">lib/generated/prisma/browser.ts</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/lib/generated/prisma/client.ts">lib/generated/prisma/client.ts</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/lib/generated/prisma/commonInputTypes.ts">lib/generated/prisma/commonInputTypes.ts</a><br>… y 32 más</small></td>
 <td><small>–</small></td>
-<td class="nota n">–<br><small></small></td>
-<td><small></small></td>
+<td class="nota n1">6<br><small>Explota mucho, sin CWE</small></td>
+<td><small>Monta la tienda, la siembra y verifica en vivo 19 vectores; de sus 30 hallazgos el juez reconoce 29 entradas, ninguno inventado y nueve fallos reales sin etiquetar, pero la nota cuenta 21,5 (F3 54,5) porque el MD5, el prompt injection, el rate limiting y la exportación los sitúa fuera de su línea. Se le escapan la SQLi de reseñas de admin (que probó y no anotó), el oráculo de padding, la SSRF y la fuga del asistente, la API de flags, el open redirect, la subida de SVG y la página de noticias, y no da ningún CWE.</small> <a href="resultados/ollama_minimax-m3.1-flash/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
@@ -845,8 +845,8 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>14</td>
 <td><small><a href="resultados/ollama_mistral-large-4/SEC/salida/security-audit-report.md">security-audit-report.md</a></small></td>
 <td><small>–</small></td>
-<td class="nota n">–<br><small></small></td>
-<td><small></small></td>
+<td class="nota n1">5<br><small>Cruce sólido, forma descuidada</small></td>
+<td><small>Informe de 39 hallazgos en el que el juez reconoce 32 de las 40 entradas, pero la nota cuenta 22 (F3 54,5): ocho entradas valen medio acierto por ir sin línea o con rangos de más de 20, y ocho hallazgos no se sostienen como fallo. Se le escapan el oráculo de padding (lo menciona y lo descarta), el open redirect del login, el logout, el token de soporte en claro y en la respuesta, el total del pedido, la fuga de herramientas del asistente y la página de noticias; además pierde los puntos de línea y CWE.</small> <a href="resultados/ollama_mistral-large-4/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>

@@ -1,0 +1,38 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/mistral-large-4",
+  "nota": 5,
+  "rubrica": {
+    "f3": 4,
+    "criticas": 1,
+    "linea": 0,
+    "cwe": 0
+  },
+  "veredicto": "Cruce sólido, forma descuidada",
+  "resumen": "Informe de 39 hallazgos en el que el juez reconoce 32 de las 40 entradas, pero la nota cuenta 22 (F3 54,5): ocho entradas valen medio acierto por ir sin línea o con rangos de más de 20, y ocho hallazgos no se sostienen como fallo. Se le escapan el oráculo de padding (lo menciona y lo descarta), el open redirect del login, el logout, el token de soporte en claro y en la respuesta, el total del pedido, la fuga de herramientas del asistente y la página de noticias; además pierde los puntos de línea y CWE.",
+  "cifras": {
+    "tp_estricto": 22.0,
+    "con_linea_tp": 18,
+    "sin_linea_tp": 8,
+    "fp_estricto": 22,
+    "fn_estricto": 18.0,
+    "f3": 54.5,
+    "wf3": 57.5,
+    "precision": 0.5,
+    "recall": 0.55,
+    "juez": {
+      "tp": 32,
+      "fp_inventados": 8,
+      "extra_reales": 10,
+      "f3": 80.0
+    }
+  },
+  "rarezas": [
+    "No nombra el proyecto original (OopsSec, RealVuln); lo llama Quokka Bazaar y trata las flags QKB{…} como secretos a rotar.",
+    "No sale a internet ni ejecuta comandos: 80 read, 6 grep, 1 glob y 1 write, sin shell. El CVE-2025-55182 de Next lo cita de memoria, sugerido por la variable FLAG_CVE_2025_55182 de .env.local.",
+    "Copia en la sección de secretos los valores QKB{…} de .env.local, flag.txt, notice.txt, supplier-registry.txt y del system prompt del asistente.",
+    "Se le cuelan palabras en otros idiomas en el informe: «限制 entity expansion», «代替 de la cabecera» y «Any token con 3 partes».",
+    "Los seis hallazgos de la sección B no dan CWE y quince hallazgos van sin línea (C-7, C-16, A-4, A-9, M-2 a M-7, B-1, B-2, B-4 a B-6): pierde los dos puntos de forma.",
+    "Deja un solo fichero (security-audit-report.md) y no toca el código. Sin errores, subagentes ni compactaciones; termina en 3 min 40 s."
+  ]
+}
