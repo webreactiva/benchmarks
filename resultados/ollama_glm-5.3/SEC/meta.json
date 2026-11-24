@@ -1,0 +1,42 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/glm-5.3",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T08:34:50Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 109170,
+    "output": 36458,
+    "reasoning": 0,
+    "cache_read": 1517056,
+    "cache_write": 0,
+    "total": 1662684
+  },
+  "peticiones": 32,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "read": 57,
+    "shell": 20,
+    "write": 2,
+    "edit": 2
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df34e77ceffeYqCEdjAkOcP6ZM",
+  "coste_usd": 0,
+  "ficheros": [
+    "AUDITORIA-SEGURIDAD.md",
+    "hallazgos.json"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 524288,
+    "output_proveedor": 1048576,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

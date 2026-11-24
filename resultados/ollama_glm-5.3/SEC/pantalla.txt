@@ -1,0 +1,36 @@
+   Auditoría de seguridad del pr +
+     ├──────────────────────────────────────────────────────────┼────────────────────────────────────────────────────┤
+     │ V-03/V-04 SQLi sin autenticación (products/search,       │ Volcado completo de la BD                          │
+     │ tracking)                                                │                                                    │
+     ├──────────────────────────────────────────────────────────┼────────────────────────────────────────────────────┤
+     │ V-07 Path traversal sin auth en /api/files               │ Lee .env.local, facturas con PII, cualquier        │
+     │                                                          │ archivo                                            │
+     ├──────────────────────────────────────────────────────────┼────────────────────────────────────────────────────┤
+     │ V-08 XXE en import XML (noent+dtdload)                   │ Lectura de archivos/SSRF desde la consola admin    │
+     ├──────────────────────────────────────────────────────────┼────────────────────────────────────────────────────┤
+     │ V-09 Contraseñas en claro en logs + SIEM root:admin con  │ Fuga de credenciales de todos los usuarios         │
+     │ cookie falsificable                                      │                                                    │
+     ├──────────────────────────────────────────────────────────┼────────────────────────────────────────────────────┤
+     │ V-10 Token de reset = MD5(email+timestamp) y el          │ Toma de cualquier cuenta                           │
+     │ timestamp se devuelve                                    │                                                    │
+     ├──────────────────────────────────────────────────────────┼────────────────────────────────────────────────────┤
+     │ V-11 JWT_SECRET por defecto "secret"                     │ Forja de tokens admin                              │
+     └──────────────────────────────────────────────────────────┴────────────────────────────────────────────────────┘
+
+     Además: XSS almacenado en el panel admin (V-17), SSRF sin autenticar en soporte y en el asistente IA con prompt
+     injection (V-12/V-19), total del pedido controlado por el cliente (V-23), códigos de gift card predecibles (V-24)
+     , Next.js 15.2.2 con CVE-2025-29927 de bypass de middleware (V-25) y secretos filtrados en repo/bundle/imagen
+     Docker (V-27).
+
+     El informe incluye 4 cadenas de ataque que demuestran cómo combinarlos (p. ej. control admin total en 3 pasos sin
+     credenciales) y un plan de remediación priorizado donde el bloque P0 son correcciones mayormente de 1-2 líneas.
+
+     Build · glm-5.3 · 3m 29s · 226.6 tok/s · 1.2s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · glm-5.3 Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-EmPvsgqm                                                               99.1K (9%)  ctrl+p commands
+
