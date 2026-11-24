@@ -1,0 +1,1031 @@
+[
+  {
+    "id": "quokka-bazaar@2.17.0",
+    "name": "quokka-bazaar",
+    "version": "2.17.0",
+    "size": 301891,
+    "unpackedSize": 847948,
+    "shasum": "388aeadcca8c14c48b13cdd597e0810d8100f12d",
+    "integrity": "sha512-k21XDZCBU+UPYf4mN11toflX3xS6Qabcu8/bJKdgF4Z2qI4oSy9vMH9Hn/LTuPsUtUwacfTfOtf3PNQdXKHzLQ==",
+    "filename": "quokka-bazaar-2.17.0.tgz",
+    "files": [
+      {
+        "path": ".dockerignore",
+        "size": 298,
+        "mode": 420
+      },
+      {
+        "path": ".env.local",
+        "size": 94,
+        "mode": 420
+      },
+      {
+        "path": ".gitattributes",
+        "size": 234,
+        "mode": 420
+      },
+      {
+        "path": ".prettierignore",
+        "size": 141,
+        "mode": 420
+      },
+      {
+        "path": ".prettierrc.json",
+        "size": 174,
+        "mode": 420
+      },
+      {
+        "path": "Dockerfile",
+        "size": 685,
+        "mode": 420
+      },
+      {
+        "path": "LICENSE",
+        "size": 1106,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/AdminClient.tsx",
+        "size": 18426,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/analytics/AnalyticsClient.tsx",
+        "size": 13545,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/analytics/page.tsx",
+        "size": 1742,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/documents/DocumentsClient.tsx",
+        "size": 13947,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/documents/page.tsx",
+        "size": 1359,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/live/LiveManagementClient.tsx",
+        "size": 5777,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/live/page.tsx",
+        "size": 1757,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/page.tsx",
+        "size": 1698,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/products/page.tsx",
+        "size": 1776,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/products/ProductsManagementClient.tsx",
+        "size": 12926,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/reviews/page.tsx",
+        "size": 1743,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/reviews/ReviewsClient.tsx",
+        "size": 12541,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/suppliers/page.tsx",
+        "size": 1758,
+        "mode": 420
+      },
+      {
+        "path": "app/admin/suppliers/SupplierImportClient.tsx",
+        "size": 13642,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/analytics/route.ts",
+        "size": 1954,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/diag/route.ts",
+        "size": 824,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/products/[id]/image/route.ts",
+        "size": 2582,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/products/route.ts",
+        "size": 629,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/reviews/route.ts",
+        "size": 3955,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/route.ts",
+        "size": 986,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/suppliers/import-order/route.ts",
+        "size": 2754,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/suppliers/route.ts",
+        "size": 345,
+        "mode": 420
+      },
+      {
+        "path": "app/api/admin/support-audit/route.ts",
+        "size": 1331,
+        "mode": 420
+      },
+      {
+        "path": "app/api/ai-assistant/route.ts",
+        "size": 8518,
+        "mode": 420
+      },
+      {
+        "path": "app/api/auth/forgot-password/route.ts",
+        "size": 1330,
+        "mode": 420
+      },
+      {
+        "path": "app/api/auth/login/route.ts",
+        "size": 2199,
+        "mode": 420
+      },
+      {
+        "path": "app/api/auth/logout/route.ts",
+        "size": 236,
+        "mode": 420
+      },
+      {
+        "path": "app/api/auth/reset-password/route.ts",
+        "size": 1835,
+        "mode": 420
+      },
+      {
+        "path": "app/api/auth/signup/route.ts",
+        "size": 2403,
+        "mode": 420
+      },
+      {
+        "path": "app/api/auth/support-login/route.ts",
+        "size": 1932,
+        "mode": 420
+      },
+      {
+        "path": "app/api/cart/add/route.ts",
+        "size": 1819,
+        "mode": 420
+      },
+      {
+        "path": "app/api/cart/items/[id]/route.ts",
+        "size": 2285,
+        "mode": 420
+      },
+      {
+        "path": "app/api/cart/route.ts",
+        "size": 1260,
+        "mode": 420
+      },
+      {
+        "path": "app/api/coupon/[code]/route.ts",
+        "size": 972,
+        "mode": 420
+      },
+      {
+        "path": "app/api/coupon/apply/route.ts",
+        "size": 1513,
+        "mode": 420
+      },
+      {
+        "path": "app/api/documents/share/route.ts",
+        "size": 2897,
+        "mode": 420
+      },
+      {
+        "path": "app/api/files/route.ts",
+        "size": 2199,
+        "mode": 420
+      },
+      {
+        "path": "app/api/flags/[slug]/route.ts",
+        "size": 716,
+        "mode": 420
+      },
+      {
+        "path": "app/api/flags/progress/route.ts",
+        "size": 1983,
+        "mode": 420
+      },
+      {
+        "path": "app/api/flags/route.ts",
+        "size": 507,
+        "mode": 420
+      },
+      {
+        "path": "app/api/gift-cards/redeem/route.ts",
+        "size": 2681,
+        "mode": 420
+      },
+      {
+        "path": "app/api/gift-cards/resend/route.ts",
+        "size": 323,
+        "mode": 420
+      },
+      {
+        "path": "app/api/gift-cards/route.ts",
+        "size": 2622,
+        "mode": 420
+      },
+      {
+        "path": "app/api/live/stream/route.ts",
+        "size": 2265,
+        "mode": 420
+      },
+      {
+        "path": "app/api/mcp/route.ts",
+        "size": 6183,
+        "mode": 420
+      },
+      {
+        "path": "app/api/monitoring/auth/route.ts",
+        "size": 909,
+        "mode": 420
+      },
+      {
+        "path": "app/api/monitoring/logs/route.ts",
+        "size": 2606,
+        "mode": 420
+      },
+      {
+        "path": "app/api/orders/[id]/route.ts",
+        "size": 4335,
+        "mode": 420
+      },
+      {
+        "path": "app/api/orders/[id]/share/route.ts",
+        "size": 1145,
+        "mode": 420
+      },
+      {
+        "path": "app/api/orders/route.ts",
+        "size": 4986,
+        "mode": 420
+      },
+      {
+        "path": "app/api/orders/search/route.ts",
+        "size": 2232,
+        "mode": 420
+      },
+      {
+        "path": "app/api/products/[id]/reviews/route.ts",
+        "size": 2231,
+        "mode": 420
+      },
+      {
+        "path": "app/api/products/[id]/route.ts",
+        "size": 733,
+        "mode": 420
+      },
+      {
+        "path": "app/api/products/route.ts",
+        "size": 491,
+        "mode": 420
+      },
+      {
+        "path": "app/api/products/search/route.ts",
+        "size": 2346,
+        "mode": 420
+      },
+      {
+        "path": "app/api/support/route.ts",
+        "size": 1319,
+        "mode": 420
+      },
+      {
+        "path": "app/api/tracking/route.ts",
+        "size": 1706,
+        "mode": 420
+      },
+      {
+        "path": "app/api/uploads/[...path]/route.ts",
+        "size": 1306,
+        "mode": 420
+      },
+      {
+        "path": "app/api/user/export/route.ts",
+        "size": 3988,
+        "mode": 420
+      },
+      {
+        "path": "app/api/user/profile/route.ts",
+        "size": 2399,
+        "mode": 420
+      },
+      {
+        "path": "app/api/user/route.ts",
+        "size": 1147,
+        "mode": 420
+      },
+      {
+        "path": "app/api/user/support-access/route.ts",
+        "size": 3470,
+        "mode": 420
+      },
+      {
+        "path": "app/api/wishlists/[id]/items/[itemId]/route.ts",
+        "size": 1295,
+        "mode": 420
+      },
+      {
+        "path": "app/api/wishlists/[id]/items/route.ts",
+        "size": 2064,
+        "mode": 420
+      },
+      {
+        "path": "app/api/wishlists/[id]/route.ts",
+        "size": 2756,
+        "mode": 420
+      },
+      {
+        "path": "app/api/wishlists/route.ts",
+        "size": 1810,
+        "mode": 420
+      },
+      {
+        "path": "app/cart/CartClient.tsx",
+        "size": 12846,
+        "mode": 420
+      },
+      {
+        "path": "app/cart/page.tsx",
+        "size": 983,
+        "mode": 420
+      },
+      {
+        "path": "app/checkout/CheckoutClient.tsx",
+        "size": 16304,
+        "mode": 420
+      },
+      {
+        "path": "app/checkout/page.tsx",
+        "size": 997,
+        "mode": 420
+      },
+      {
+        "path": "app/checkout/redeem/page.tsx",
+        "size": 1187,
+        "mode": 420
+      },
+      {
+        "path": "app/checkout/redeem/RedeemClient.tsx",
+        "size": 3886,
+        "mode": 420
+      },
+      {
+        "path": "app/components/AddToWishlistButton.tsx",
+        "size": 5832,
+        "mode": 420
+      },
+      {
+        "path": "app/components/AuthButton.tsx",
+        "size": 1806,
+        "mode": 420
+      },
+      {
+        "path": "app/components/CartButton.tsx",
+        "size": 3130,
+        "mode": 420
+      },
+      {
+        "path": "app/components/Features.tsx",
+        "size": 3267,
+        "mode": 420
+      },
+      {
+        "path": "app/components/Footer.tsx",
+        "size": 8727,
+        "mode": 420
+      },
+      {
+        "path": "app/components/GiftCardsLink.tsx",
+        "size": 303,
+        "mode": 420
+      },
+      {
+        "path": "app/components/Header.tsx",
+        "size": 2317,
+        "mode": 420
+      },
+      {
+        "path": "app/components/Hero.tsx",
+        "size": 1717,
+        "mode": 420
+      },
+      {
+        "path": "app/components/Newsletter.tsx",
+        "size": 1511,
+        "mode": 420
+      },
+      {
+        "path": "app/components/OrderSearchLink.tsx",
+        "size": 526,
+        "mode": 420
+      },
+      {
+        "path": "app/components/ProductCard.tsx",
+        "size": 2384,
+        "mode": 420
+      },
+      {
+        "path": "app/components/ProductGrid.tsx",
+        "size": 1209,
+        "mode": 420
+      },
+      {
+        "path": "app/components/ProductSearchLink.tsx",
+        "size": 2802,
+        "mode": 420
+      },
+      {
+        "path": "app/components/ProfileLink.tsx",
+        "size": 514,
+        "mode": 420
+      },
+      {
+        "path": "app/components/PromoBanner.tsx",
+        "size": 412,
+        "mode": 420
+      },
+      {
+        "path": "app/components/SignUpLink.tsx",
+        "size": 759,
+        "mode": 420
+      },
+      {
+        "path": "app/components/VisitorTracker.tsx",
+        "size": 556,
+        "mode": 420
+      },
+      {
+        "path": "app/components/WishlistLink.tsx",
+        "size": 519,
+        "mode": 420
+      },
+      {
+        "path": "app/contact/page.tsx",
+        "size": 12198,
+        "mode": 420
+      },
+      {
+        "path": "app/error.tsx",
+        "size": 1838,
+        "mode": 420
+      },
+      {
+        "path": "app/gift-cards/GiftCardsClient.tsx",
+        "size": 11314,
+        "mode": 420
+      },
+      {
+        "path": "app/gift-cards/page.tsx",
+        "size": 1307,
+        "mode": 420
+      },
+      {
+        "path": "app/globals.css",
+        "size": 2661,
+        "mode": 420
+      },
+      {
+        "path": "app/icon.png",
+        "size": 177721,
+        "mode": 420
+      },
+      {
+        "path": "app/internal/oauth/callback/page.tsx",
+        "size": 3561,
+        "mode": 420
+      },
+      {
+        "path": "app/internal/page.tsx",
+        "size": 3420,
+        "mode": 420
+      },
+      {
+        "path": "app/layout.tsx",
+        "size": 744,
+        "mode": 420
+      },
+      {
+        "path": "app/live/page.tsx",
+        "size": 2452,
+        "mode": 420
+      },
+      {
+        "path": "app/login/CopyButton.tsx",
+        "size": 1605,
+        "mode": 420
+      },
+      {
+        "path": "app/login/forgot-password/ForgotPasswordForm.tsx",
+        "size": 3985,
+        "mode": 420
+      },
+      {
+        "path": "app/login/forgot-password/page.tsx",
+        "size": 1305,
+        "mode": 420
+      },
+      {
+        "path": "app/login/LoginForm.tsx",
+        "size": 4458,
+        "mode": 420
+      },
+      {
+        "path": "app/login/page.tsx",
+        "size": 1341,
+        "mode": 420
+      },
+      {
+        "path": "app/login/reset-password/page.tsx",
+        "size": 1582,
+        "mode": 420
+      },
+      {
+        "path": "app/login/reset-password/ResetPasswordForm.tsx",
+        "size": 5497,
+        "mode": 420
+      },
+      {
+        "path": "app/monitoring/internal-status/page.tsx",
+        "size": 4124,
+        "mode": 420
+      },
+      {
+        "path": "app/monitoring/siem/page.tsx",
+        "size": 14215,
+        "mode": 420
+      },
+      {
+        "path": "app/news/page.tsx",
+        "size": 6528,
+        "mode": 420
+      },
+      {
+        "path": "app/not-found.tsx",
+        "size": 2972,
+        "mode": 420
+      },
+      {
+        "path": "app/order/OrderClient.tsx",
+        "size": 7915,
+        "mode": 420
+      },
+      {
+        "path": "app/order/page.tsx",
+        "size": 1714,
+        "mode": 420
+      },
+      {
+        "path": "app/order/ShareOrderButton.tsx",
+        "size": 3364,
+        "mode": 420
+      },
+      {
+        "path": "app/orders/search/OrderSearchClient.tsx",
+        "size": 7705,
+        "mode": 420
+      },
+      {
+        "path": "app/orders/search/page.tsx",
+        "size": 1739,
+        "mode": 420
+      },
+      {
+        "path": "app/page.tsx",
+        "size": 1516,
+        "mode": 420
+      },
+      {
+        "path": "app/products/[id]/not-found.tsx",
+        "size": 1106,
+        "mode": 420
+      },
+      {
+        "path": "app/products/[id]/page.tsx",
+        "size": 1187,
+        "mode": 420
+      },
+      {
+        "path": "app/products/[id]/ProductDetailClient.tsx",
+        "size": 16367,
+        "mode": 420
+      },
+      {
+        "path": "app/products/search/page.tsx",
+        "size": 1756,
+        "mode": 420
+      },
+      {
+        "path": "app/products/search/ProductSearchClient.tsx",
+        "size": 7728,
+        "mode": 420
+      },
+      {
+        "path": "app/profile/gift-cards/page.tsx",
+        "size": 1928,
+        "mode": 420
+      },
+      {
+        "path": "app/profile/gift-cards/ProfileGiftCardsClient.tsx",
+        "size": 8522,
+        "mode": 420
+      },
+      {
+        "path": "app/profile/page.tsx",
+        "size": 1735,
+        "mode": 420
+      },
+      {
+        "path": "app/profile/ProfileClient.tsx",
+        "size": 25823,
+        "mode": 420
+      },
+      {
+        "path": "app/signup/page.tsx",
+        "size": 1251,
+        "mode": 420
+      },
+      {
+        "path": "app/signup/SignupForm.tsx",
+        "size": 4669,
+        "mode": 420
+      },
+      {
+        "path": "app/support-login/page.tsx",
+        "size": 3648,
+        "mode": 420
+      },
+      {
+        "path": "app/support/ai-assistant/AIAssistantChat.tsx",
+        "size": 18511,
+        "mode": 420
+      },
+      {
+        "path": "app/support/ai-assistant/page.tsx",
+        "size": 2140,
+        "mode": 420
+      },
+      {
+        "path": "app/support/page.tsx",
+        "size": 3701,
+        "mode": 420
+      },
+      {
+        "path": "app/support/SupportForm.tsx",
+        "size": 9306,
+        "mode": 420
+      },
+      {
+        "path": "app/wishlists/page.tsx",
+        "size": 995,
+        "mode": 420
+      },
+      {
+        "path": "app/wishlists/WishlistClient.tsx",
+        "size": 17601,
+        "mode": 420
+      },
+      {
+        "path": "docker-compose.yml",
+        "size": 427,
+        "mode": 420
+      },
+      {
+        "path": "docker-entrypoint.sh",
+        "size": 352,
+        "mode": 420
+      },
+      {
+        "path": "documents/readme.txt",
+        "size": 99,
+        "mode": 420
+      },
+      {
+        "path": "eslint.config.mjs",
+        "size": 1024,
+        "mode": 420
+      },
+      {
+        "path": "flag.txt",
+        "size": 24,
+        "mode": 420
+      },
+      {
+        "path": "hooks/useAuth.ts",
+        "size": 919,
+        "mode": 420
+      },
+      {
+        "path": "hooks/useMounted.ts",
+        "size": 232,
+        "mode": 420
+      },
+      {
+        "path": "instrumentation.node.ts",
+        "size": 1124,
+        "mode": 420
+      },
+      {
+        "path": "instrumentation.ts",
+        "size": 132,
+        "mode": 420
+      },
+      {
+        "path": "lib/.gitkeep",
+        "size": 0,
+        "mode": 420
+      },
+      {
+        "path": "lib/api.ts",
+        "size": 2562,
+        "mode": 420
+      },
+      {
+        "path": "lib/client-auth.ts",
+        "size": 494,
+        "mode": 420
+      },
+      {
+        "path": "lib/config.ts",
+        "size": 483,
+        "mode": 420
+      },
+      {
+        "path": "lib/database.ts",
+        "size": 612,
+        "mode": 420
+      },
+      {
+        "path": "lib/gift-card.ts",
+        "size": 1005,
+        "mode": 420
+      },
+      {
+        "path": "lib/github.ts",
+        "size": 1122,
+        "mode": 420
+      },
+      {
+        "path": "lib/invoice.ts",
+        "size": 4330,
+        "mode": 420
+      },
+      {
+        "path": "lib/live-stream.ts",
+        "size": 333,
+        "mode": 420
+      },
+      {
+        "path": "lib/logger.ts",
+        "size": 329,
+        "mode": 420
+      },
+      {
+        "path": "lib/mcp-constants.ts",
+        "size": 109,
+        "mode": 420
+      },
+      {
+        "path": "lib/prisma.ts",
+        "size": 573,
+        "mode": 420
+      },
+      {
+        "path": "lib/prompt-injection-filter.ts",
+        "size": 291,
+        "mode": 420
+      },
+      {
+        "path": "lib/server-auth.ts",
+        "size": 3114,
+        "mode": 420
+      },
+      {
+        "path": "lib/share-crypto.ts",
+        "size": 974,
+        "mode": 420
+      },
+      {
+        "path": "lib/types/index.ts",
+        "size": 2323,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/index.ts",
+        "size": 2880,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/admin.ts",
+        "size": 194,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/ai-assistant.ts",
+        "size": 236,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/auth.ts",
+        "size": 607,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/cart.ts",
+        "size": 293,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/coupons.ts",
+        "size": 164,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/documents.ts",
+        "size": 190,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/files.ts",
+        "size": 246,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/gift-cards.ts",
+        "size": 429,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/mcp.ts",
+        "size": 240,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/monitoring.ts",
+        "size": 347,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/orders.ts",
+        "size": 339,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/products.ts",
+        "size": 256,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/support.ts",
+        "size": 190,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/tracking.ts",
+        "size": 153,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/user.ts",
+        "size": 528,
+        "mode": 420
+      },
+      {
+        "path": "lib/validation/schemas/wishlists.ts",
+        "size": 257,
+        "mode": 420
+      },
+      {
+        "path": "middleware.ts",
+        "size": 933,
+        "mode": 420
+      },
+      {
+        "path": "next.config.ts",
+        "size": 372,
+        "mode": 420
+      },
+      {
+        "path": "npm-audit.json",
+        "size": 66049,
+        "mode": 420
+      },
+      {
+        "path": "npm-audit.stderr",
+        "size": 0,
+        "mode": 420
+      },
+      {
+        "path": "npm-pack-dry-run.json",
+        "size": 0,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 1853,
+        "mode": 420
+      },
+      {
+        "path": "postcss.config.mjs",
+        "size": 94,
+        "mode": 420
+      },
+      {
+        "path": "prisma.config.ts",
+        "size": 270,
+        "mode": 420
+      },
+      {
+        "path": "prisma/schema.prisma",
+        "size": 7467,
+        "mode": 420
+      },
+      {
+        "path": "prisma/seed.ts",
+        "size": 28665,
+        "mode": 420
+      },
+      {
+        "path": "public/file.svg",
+        "size": 391,
+        "mode": 420
+      },
+      {
+        "path": "public/globe.svg",
+        "size": 1035,
+        "mode": 420
+      },
+      {
+        "path": "public/next.svg",
+        "size": 1375,
+        "mode": 420
+      },
+      {
+        "path": "public/notice.txt",
+        "size": 18,
+        "mode": 420
+      },
+      {
+        "path": "public/vercel.svg",
+        "size": 128,
+        "mode": 420
+      },
+      {
+        "path": "public/window.svg",
+        "size": 385,
+        "mode": 420
+      },
+      {
+        "path": "scripts/setup.sh",
+        "size": 1512,
+        "mode": 493
+      },
+      {
+        "path": "supplier-registry.txt",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "tsconfig.json",
+        "size": 754,
+        "mode": 420
+      }
+    ],
+    "entryCount": 203,
+    "bundled": []
+  }
+]

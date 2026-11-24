@@ -1,0 +1,85 @@
+{
+  "info": {
+    "id": "ses_df48f963dfferu7VRCoudQc1qR",
+    "projectID": "95df553891149f3fca326f60b4399ebfacfe0016",
+    "agent": "build",
+    "model": {
+      "id": "muse-spark-open",
+      "providerID": "ol",
+      "variant": "default"
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "outcome": "failed",
+    "time": {
+      "created": 1795488246226,
+      "updated": 1795488246886,
+      "busy": 1795488246353,
+      "idle": 1795488246891,
+      "viewed": 1795488246891
+    },
+    "location": {
+      "directory": "/var/tmp/bench/ws-3xdGpDh4"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_20b7069c900114dHq4Dd4dVUNL",
+      "time": {
+        "created": 1795488246371
+      },
+      "text": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_20b706a7b001ikAgVnuJTlFB8H",
+      "time": {
+        "created": 1795488246401,
+        "completed": 1795488246886
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "muse-spark-open",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [],
+      "finish": "error",
+      "error": {
+        "type": "provider.quota",
+        "message": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 55fa51a3-9c58-48ae-b006-e617ab2ba673)",
+        "status": 429,
+        "response": {
+          "body": "{\"error\":{\"message\":\"you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 55fa51a3-9c58-48ae-b006-e617ab2ba673)\",\"type\":\"api_error\",\"param\":null,\"code\":null}}\n"
+        }
+      }
+    },
+    {
+      "id": "msg_20b706c6b001Eanj2NUer4n5Od",
+      "time": {
+        "created": 1795488246891
+      },
+      "type": "idle",
+      "outcome": "failed",
+      "error": {
+        "type": "provider.quota",
+        "message": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 55fa51a3-9c58-48ae-b006-e617ab2ba673)",
+        "status": 429,
+        "response": {
+          "body": "{\"error\":{\"message\":\"you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: 55fa51a3-9c58-48ae-b006-e617ab2ba673)\",\"type\":\"api_error\",\"param\":null,\"code\":null}}\n"
+        }
+      }
+    }
+  ]
+}

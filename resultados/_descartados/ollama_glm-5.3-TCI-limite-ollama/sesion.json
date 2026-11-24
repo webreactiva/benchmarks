@@ -1,0 +1,85 @@
+{
+  "info": {
+    "id": "ses_df48df36bffero6tQEbFrtkqri",
+    "projectID": "ed164e63882c23818f867542fc3c6cdf97949325",
+    "agent": "build",
+    "model": {
+      "id": "glm-5.3",
+      "providerID": "ol",
+      "variant": "default"
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "outcome": "failed",
+    "time": {
+      "created": 1795488353439,
+      "updated": 1795488353993,
+      "busy": 1795488353522,
+      "idle": 1795488353998,
+      "viewed": 1795488353998
+    },
+    "location": {
+      "directory": "/var/tmp/bench/ws-ZRixQ4hO"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_20b720c99001YNPBvrouUiHLzW",
+      "time": {
+        "created": 1795488353535
+      },
+      "text": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_20b720d18001cNzMJGaisnoT79",
+      "time": {
+        "created": 1795488353566,
+        "completed": 1795488353993
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "glm-5.3",
+        "providerID": "ol",
+        "variant": "default"
+      },
+      "content": [],
+      "finish": "error",
+      "error": {
+        "type": "provider.quota",
+        "message": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: dcfe6475-3337-4381-8fc3-071766884794)",
+        "status": 429,
+        "response": {
+          "body": "{\"error\":{\"message\":\"you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: dcfe6475-3337-4381-8fc3-071766884794)\",\"type\":\"api_error\",\"param\":null,\"code\":null}}\n"
+        }
+      }
+    },
+    {
+      "id": "msg_20b720ece001a1eH6d9Y9FZ2hQ",
+      "time": {
+        "created": 1795488353998
+      },
+      "type": "idle",
+      "outcome": "failed",
+      "error": {
+        "type": "provider.quota",
+        "message": "you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: dcfe6475-3337-4381-8fc3-071766884794)",
+        "status": 429,
+        "response": {
+          "body": "{\"error\":{\"message\":\"you (delineas) have reached your session usage limit, upgrade for higher limits: https://ollama.com/upgrade or add usage credits: https://ollama.com/settings (ref: dcfe6475-3337-4381-8fc3-071766884794)\",\"type\":\"api_error\",\"param\":null,\"code\":null}}\n"
+        }
+      }
+    }
+  ]
+}
