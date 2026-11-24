@@ -63,7 +63,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | 9 | 9 | 8 | 8 | 6 | **8,7** | 84 | 7,6 M |
 | [ollama/glm-5.3](resultados/ollama_glm-5.3/README.md) | OpenCode | 8 | 10 | 8 | 6 | 6 | **8,7** | 126 | 10,8 M |
 | [claude-sonnet-5-5 (medium)](resultados/anthropic_claude-sonnet-5-5-medium/README.md) | Claude Code | 9 | 7 | 9 | 4 | 8 | **8,3** | 48 | 4,6 M |
-| [google/gemini-4-neon](resultados/google_gemini-4-neon/README.md) | OpenCode | 9 | 10 | 6 | – | 6 | **8,3** | 121 | 6,1 M |
+| [google/gemini-4-neon](resultados/google_gemini-4-neon/README.md) | OpenCode | 9 | 10 | 6 | 7 | 6 | **8,3** | 121 | 6,1 M |
 | [ollama/glm-5.3-flash](resultados/ollama_glm-5.3-flash/README.md) | OpenCode | 9 | 8 | 8 | 5 | 6 | **8,3** | 99 | 5,8 M |
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | 10 | 9 | 6 | 8 | 6 | **8,3** | 260 | 14,0 M |
 | [ollama/muse-spark-open](resultados/ollama_muse-spark-open/README.md) | OpenCode | 7 | 8 | 9 | 2 | 5 | **8,0** | 139 | 9,4 M |
@@ -97,7 +97,7 @@ Etiqueta de cada prueba en la que el modelo saca 9 o más (la rehace `scripts/es
 | [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | Producto (9), Ejecución (10) | 5 de 5 |
 | [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | Visual (9), Producto (9) | 5 de 5 |
 | [claude-sonnet-5-5 (medium)](resultados/anthropic_claude-sonnet-5-5-medium/README.md) | Claude Code | Visual (9), Ejecución (9) | 5 de 5 |
-| [google/gemini-4-neon](resultados/google_gemini-4-neon/README.md) | OpenCode | Visual (9), Producto (10) | 4 de 5 |
+| [google/gemini-4-neon](resultados/google_gemini-4-neon/README.md) | OpenCode | Visual (9), Producto (10) | 5 de 5 |
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | Visual (10), Producto (9) | 5 de 5 |
 | [ollama/minimax-m3](resultados/ollama_minimax-m3/README.md) | OpenCode | Producto (9), Ejecución (10) | 5 de 5 |
 | [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | Producto (9), Volumen (9) | 5 de 5 |

@@ -66,7 +66,7 @@ for r in filas:
 <td><b>{e(r['codigo'])}</b><br><small>{TIPO.get(r['codigo'], '')}</small></td>
 <td><small>{e(r['modelo'])}</small><br><small>{e(r['agente'])} · {e(r['fecha'][:16].replace('T', ' '))} UTC</small></td>
 <td class=n><b>{k(t.get('total'))}</b><br><small>in {k(t.get('input'))} · out {k(t.get('output'))}<br>razon. {k(t.get('reasoning'))} · caché {k(t.get('cache_read'))}</small></td>
-<td class=n>{r['peticiones']}</td>
+<td class=n>{'–' if r['peticiones'] is None else r['peticiones']}</td>
 <td><small>{fich or '–'}</small></td>
 <td><small>{celda_val(r)}</small></td>
 <td class="nota n{'' if nota is None else int(nota) // 4}">{'–' if nota is None else nota}<br><small>{e(j.get('veredicto', ''))}</small></td>
@@ -108,7 +108,7 @@ for r in filas:
 for carpeta, rs in por_modelo.items():
     notas = [r["juicio"]["nota"] for r in rs if r["juicio"]]
     tok = sum((r["tokens"] or {}).get("total", 0) for r in rs)
-    pet = sum(r["peticiones"] for r in rs)
+    pet = sum(r["peticiones"] or 0 for r in rs)
     hechos = {r["codigo"] for r in rs}
     faltan = [c for c in ORDEN if c not in hechos]
     l = [f"# {rs[0]['modelo']}", "",
@@ -120,7 +120,7 @@ for carpeta, rs in por_modelo.items():
     l += ["| Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |", "|---|---|---:|---:|---:|---|---|---|"]
     for r in rs:
         j = r["juicio"] or {}
-        l.append(f"| [{r['codigo']}]({r['codigo']}/juicio.md) | {TIPO.get(r['codigo'], '')} | {r['peticiones']} | "
+        l.append(f"| [{r['codigo']}]({r['codigo']}/juicio.md) | {TIPO.get(r['codigo'], '')} | {'–' if r['peticiones'] is None else r['peticiones']} | "
                  f"{kk((r['tokens'] or {}).get('total'))} | {j.get('nota', '–')} | {j.get('veredicto', 'sin juzgar')} | "
                  f"{j.get('resumen', '').replace('|', '/')} | "
                  + (" · ".join(f"[▶ {f}]({u})" for f, u in en_vivo(r, PREVIEW + "/")) or "–") + " |")

@@ -2790,6 +2790,32 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/google_gemini-4-neon/SEC",
+    "codigo": "SEC",
+    "modelo": "google/gemini-4-neon",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24",
+    "tokens": null,
+    "peticiones": null,
+    "coste_usd": null,
+    "ficheros": [],
+    "sin_ejecutar": "No se lanzó por coste: la nota se hereda de los otros Gemini (ver juicio.md).",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "google/gemini-4-neon",
+      "nota": 7,
+      "rubrica": null,
+      "veredicto": "Nota heredada, sin ejecutar",
+      "resumen": "Sin ejecutar por coste. Hereda la nota de los otros Gemini (8 en SEC) con un punto menos, porque en las pruebas comunes queda por debajo de los dos.",
+      "nota_autor": "No se lanzó: neon es el Gemini más caro (3 $/15 $ por millón) y en TCI gastó 5,13 $; el autor no pone más saldo. La nota se hereda de los otros dos Gemini, que sacan un 8 en SEC: en las cuatro pruebas que tienen los tres, neon queda por debajo (media 7,75 frente a 8,50 de carbon y 8,00 de hydrogen) y en CCA, la otra prueba de código, saca un 6 frente a 9 y 8. Un punto menos: 7.",
+      "rarezas": [
+        "Advertencia: esta nota no sale de ninguna auditoría. No hay informe, sesión ni cruce con el ground truth; es una decisión del autor (24 nov. 2026)."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/google_gemini-4-neon/TCI",
     "codigo": "TCI",
     "modelo": "google/gemini-4-neon",

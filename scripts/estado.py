@@ -14,7 +14,7 @@ for (m, a, d), cs in mod.items():
     n = {c: cs[c]["juicio"]["nota"] if cs.get(c) and cs[c].get("juicio") else None for c in ORDEN}
     hechas = [n[c] for c in MEDIA if n[c] is not None]
     filas.append((sum(hechas) / len(MEDIA) if len(hechas) == len(MEDIA) else -1, m, a, d, n,
-                  sum(cs[c]["peticiones"] for c in cs), sum((cs[c]["tokens"] or {}).get("total", 0) for c in cs)))
+                  sum(cs[c]["peticiones"] or 0 for c in cs), sum((cs[c]["tokens"] or {}).get("total", 0) for c in cs)))
 filas.sort(key=lambda f: -f[0])
 t = "| Modelo | Agente | " + " | ".join(ORDEN) + " | Media | Peticiones | Tokens |\n|---|---|" + "---:|" * (len(ORDEN) + 3) + "\n"
 for med, m, a, d, n, pet, tok in filas:
