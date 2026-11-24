@@ -1,0 +1,42 @@
+{
+  "hallazgos": 26,
+  "tp_estricto": 25.0,
+  "con_linea_tp": 16,
+  "sin_linea_tp": 18,
+  "fp_estricto": 6,
+  "fn_estricto": 15.0,
+  "no_puntuables": 0,
+  "f3": 63.9,
+  "wf3": 65.3,
+  "recall": 0.625,
+  "precision": 0.806,
+  "juez": {
+    "tp": 36,
+    "fp_inventados": 0,
+    "extra_reales": 6,
+    "f3": 90.9
+  },
+  "con_linea": 1.0,
+  "con_cwe": 1.0,
+  "criticas_estricto": [
+    "oss-oopssec-store-001",
+    "oss-oopssec-store-002",
+    "oss-oopssec-store-017",
+    "oss-oopssec-store-018",
+    "oss-oopssec-store-040",
+    "oss-oopssec-store-042"
+  ],
+  "no_encontradas": [
+    "oss-oopssec-store-010",
+    "oss-oopssec-store-011",
+    "oss-oopssec-store-013",
+    "oss-oopssec-store-015"
+  ],
+  "rubrica": {
+    "f3": 5,
+    "criticas": 1,
+    "linea": 1,
+    "cwe": 1
+  },
+  "nota": 8
+}

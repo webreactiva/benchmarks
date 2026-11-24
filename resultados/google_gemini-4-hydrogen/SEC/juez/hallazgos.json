@@ -1,0 +1,440 @@
+{
+ "hallazgos": [
+  {
+   "id": "CRIT-01",
+   "titulo": "SQLi en búsqueda de productos, pedidos, reseñas de admin y tracking",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": true,
+     "nota": "cita 85-103"
+    },
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": true,
+     "nota": "cita 81-105; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-005",
+     "estricto": true,
+     "nota": "db.exec con consultas apiladas; cita 103-136; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-006",
+     "estricto": true,
+     "nota": "misma consulta concatenada; cita 103-136; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true,
+     "nota": "INSERT con IP y sessionId; cita 58-103; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "CRIT-02",
+   "titulo": "alta con rol ADMIN enviado por el cliente",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "nota": "cita 58-61; da CWE-915/269, la descripción es la de la entrada"
+    }
+   ]
+  },
+  {
+   "id": "CRIT-03",
+   "titulo": "tokens de soporte para cualquier email, revocación ignorada, token en la URL",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true,
+     "nota": "cita 51-91; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-035",
+     "estricto": true,
+     "nota": "token en la URL de support-login (línea 90 dentro del rango 51-91); rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-034",
+     "estricto": false,
+     "nota": "el token en claro solo aparece en la remediación, no como fallo"
+    }
+   ],
+   "nota": "La falta de comprobación de revoked en support-login es real y no está etiquetada."
+  },
+  {
+   "id": "CRIT-04",
+   "titulo": "secreto JWT «secret» por defecto y verificación débil",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true,
+     "nota": "línea 12"
+    }
+   ],
+   "nota": "No validar alg ni exigir exp es real y no está etiquetado."
+  },
+  {
+   "id": "CRIT-05",
+   "titulo": "XXE en la importación de pedidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "CRIT-06",
+   "titulo": "path traversal sin autenticación en /api/files",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "cita 8-72; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "nota": "cita 8-72; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "CRIT-07",
+   "titulo": "token de reset predecible md5(email+timestamp)",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real."
+  },
+  {
+   "id": "CRIT-08",
+   "titulo": "total del pedido del cliente, descuento del cupón sin recalcular, X-Payment-Auth sin validar",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true,
+     "nota": "línea 130"
+    }
+   ]
+  },
+  {
+   "id": "ALTO-01",
+   "titulo": "IDOR en pedidos y wishlists",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true,
+     "nota": "cita 8-75; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-036",
+     "estricto": true,
+     "nota": "cita 6-92; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "ALTO-02",
+   "titulo": "clave RTMP expuesta y emisión secuestrable",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real."
+  },
+  {
+   "id": "ALTO-03",
+   "titulo": "/internal por cabecera, internal-status público, API de flags pública",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-023",
+     "estricto": true,
+     "nota": "sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-021",
+     "estricto": true,
+     "nota": "sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "flags/progress cae en 022, no puntuable. La cabecera x-internal-request es real y no está etiquetada."
+  },
+  {
+   "id": "ALTO-04",
+   "titulo": "MD5 sin sal, enumeración en el login, contraseñas débiles en seed, hashes en /news",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": true,
+     "nota": "reset-password:46"
+    },
+    {
+     "id": "oss-oopssec-store-014",
+     "estricto": true,
+     "nota": "login 39-48"
+    },
+    {
+     "id": "oss-oopssec-store-042",
+     "estricto": true,
+     "nota": "seed 655-716"
+    },
+    {
+     "id": "oss-oopssec-store-038",
+     "estricto": false,
+     "nota": "cita news 4-17 (el array); la entrada es la 126, donde se pintan"
+    }
+   ]
+  },
+  {
+   "id": "ALTO-05",
+   "titulo": "XSS en reseñas, analytics, soporte y SVG subido",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-039",
+     "estricto": true,
+     "nota": "cita 51-67"
+    },
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true,
+     "nota": "línea 366"
+    },
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": false,
+     "nota": "cita la línea 14 (svg en la lista de tipos); la entrada es 64-72"
+    }
+   ],
+   "nota": "El XSS de SupportForm es real y no está etiquetado."
+  },
+  {
+   "id": "ALTO-06",
+   "titulo": "open redirect en LoginForm",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-037",
+     "estricto": true,
+     "nota": "cita 16, 36-37"
+    }
+   ]
+  },
+  {
+   "id": "ALTO-07",
+   "titulo": "SSRF en soporte y en el servidor MCP del asistente",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true,
+     "nota": "cita 14-28"
+    },
+    {
+     "id": "oss-oopssec-store-008",
+     "estricto": true,
+     "nota": "cita 63-100 y 200-212; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "ALTO-08",
+   "titulo": "carrera en el uso de cupones",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real."
+  },
+  {
+   "id": "ALTO-09",
+   "titulo": "contraseñas en el log y credenciales fijas del SIEM",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "nota": "cita 16-25"
+    },
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true,
+     "nota": "cita 5-21"
+    }
+   ]
+  },
+  {
+   "id": "ALTO-10",
+   "titulo": "AES-CBC sin MAC con clave fija y oráculo de padding",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true,
+     "nota": "cita 3-32; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-018",
+     "estricto": true,
+     "nota": "describe el oráculo de padding; cita 13-105; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "ALTO-11",
+   "titulo": "dependencias con CVE",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (Next 15.2.2)."
+  },
+  {
+   "id": "MED-01",
+   "titulo": "códigos de regalo predecibles y emitidos sin cobro",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real."
+  },
+  {
+   "id": "MED-02",
+   "titulo": "hash de contraseña y diagnósticos en la exportación",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": true,
+     "nota": "cita 127-142"
+    }
+   ],
+   "nota": "Que password esté en ALLOWED_USER_FIELDS es real y no está etiquetado."
+  },
+  {
+   "id": "MED-03",
+   "titulo": "token fijo en diag",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-003",
+     "estricto": true,
+     "nota": "cita 5-15"
+    }
+   ]
+  },
+  {
+   "id": "MED-04",
+   "titulo": ".env.local sin excluir, NEXT_PUBLIC_PAYMENT_SECRET, flag en el prompt",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-001",
+     "estricto": true,
+     "nota": ".env.local sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "MED-05",
+   "titulo": "filtro de prompt injection por regex y cabecera MCP fija",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-009",
+     "estricto": true,
+     "nota": "filtro evadible y herramienta restringida solo por el prompt; cita ai-assistant 161-215; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "La cabecera MCP fija es real y no está etiquetada. No cubre 010 (salidas de herramientas)."
+  },
+  {
+   "id": "MED-06",
+   "titulo": "subida validada solo por file.type, Docker como root, prisma studio",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": true,
+     "nota": "cita 64-85 (22 líneas); rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "MED-07",
+   "titulo": "sin cabeceras de seguridad ni protección CSRF",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Faltan las cabeceras (real y genérico); el CSRF está exagerado: las cookies van con sameSite lax."
+  }
+ ]
+}
