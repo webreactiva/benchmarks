@@ -1,0 +1,36 @@
+   Clasificación de incidencias. +
+     + 1 command
+
+     ↳ General finished · Classify issues 101-150
+
+     + 2 commands, 1 thought, 2 reads
+
+     He clasificado las 300 incidencias de incidencias.jsonl y guardado el resultado validado en clasificacion.jsonl (
+     una línea JSON por incidencia, en el mismo orden y con las claves id, tipo, superficie y areas).
+
+     Resumen de la clasificación
+
+     - Total de incidencias: 300 (sin errores de formato, IDs duplicados ni valores fuera de las listas permitidas)
+     - Por tipo:
+       - bug: 261
+       - enhancement: 30
+       - documentation: 9
+     - Por superficie:
+       - app: 182
+       - CLI: 85
+       - codex-web: 17
+       - extension: 14
+       - iOS: 2
+     - Áreas más frecuentes: sandbox (60), session (60), windows-os (58), tool-calls (41), app-server (33), TUI (33),
+       auth (27), connectivity (25), config (24), rate-limits (21), remote (21), browser (17), model-behavior (11),
+       context (11), performance (10), computer-use (9), mcp (9), subagent (9).
+
+     Build · google/gemini-4-neon · 1m 26s · 171.2 tok/s · 3.9s ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · google/gemini-4-neon OpenRouter
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-JZRS1yGl                                                       83.2K (8%) · $5.14  ctrl+p commands
+

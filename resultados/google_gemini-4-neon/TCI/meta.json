@@ -1,0 +1,56 @@
+{
+  "codigo": "TCI",
+  "modelo": "google/gemini-4-neon",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T10:30:22Z",
+  "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+  "tokens": {
+    "input": 698756,
+    "output": 54506,
+    "reasoning": 119910,
+    "cache_read": 3139636,
+    "cache_write": 0,
+    "total": 4012808
+  },
+  "peticiones": 79,
+  "error": null,
+  "mensajes_usuario": [
+    "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "Ve terminando: no lances más subagentes, junta lo que ya tengas clasificado, clasifica tú lo que falte y guarda clasificacion.jsonl cuanto antes."
+  ],
+  "herramientas": {
+    "read": 4,
+    "shell": 14,
+    "subagent": 6
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df2e4b0f6ffegRhEb02ngFoBcq",
+  "coste_usd": 5.132,
+  "ficheros": [
+    "clasificacion.jsonl"
+  ],
+  "subagentes": {
+    "sesiones": 6,
+    "tokens": 2903969,
+    "peticiones": 57,
+    "titulos": [
+      "Classify issues 1-50",
+      "Classify issues 51-100",
+      "Classify issues 151-200",
+      "Classify issues 201-250",
+      "Classify issues 101-150",
+      "Classify issues 251-300"
+    ],
+    "coste_usd": 4.243
+  },
+  "limites": {
+    "context": 1048576,
+    "output": 65536,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+  },
+  "veces_decide_tu": 0,
+  "espero_segundo_plano": true,
+  "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

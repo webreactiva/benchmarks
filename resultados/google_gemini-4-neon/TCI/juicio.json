@@ -1,0 +1,32 @@
+{
+  "codigo": "TCI",
+  "modelo": "google/gemini-4-neon",
+  "nota": 6,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 3,
+    "tokens": 0,
+    "tiempo": 0,
+    "peticiones": 0
+  },
+  "veredicto": "Bien clasificado, carísimo",
+  "resumen": "Tipo 96,7 %, superficie 89,3 % y F1 de áreas 0,698 frente a jev (94 idénticas). Le costó 558 s, 79 peticiones, 4,01 M tokens y 5,13 $ con seis subagentes: la prueba de TCI más cara.",
+  "cifras": {
+    "tipo": 0.967,
+    "superficie": 0.893,
+    "areas_f1_micro": 0.698,
+    "areas_f1_macro": 0.699,
+    "exactas": 94,
+    "segundos": 558,
+    "peticiones": 79,
+    "tokens": 4012808,
+    "coste_usd": 5.132
+  },
+  "rarezas": [
+    "Repartió las 300 incidencias en seis subagentes de 50 (57 de sus 79 peticiones y 2,9 M de sus 4,0 M tokens).",
+    "A los ~5 min, con 4,3 $ gastados, el autor le escribió en la sesión «Ve terminando: no lances más subagentes, junta lo que ya tengas clasificado, clasifica tú lo que falte y guarda clasificacion.jsonl cuanto antes». No estaba en el prompt; los subagentes ya lanzados terminaron igual.",
+    "SEC no se lanzó: con lo que gastó en TCI no quedaba saldo en OpenRouter.",
+    "OpenCode apuntaba en meta.json solo el coste de la sesión principal (0,89 $); el real con los subagentes es 5,13 $. Corregido en tokens-subagentes.py."
+  ]
+}

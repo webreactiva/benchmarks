@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """tokens-subagentes.py <resultados/<modelo>/<CÓDIGO>> [opencode.db]
 
-Suma a meta.json los tokens y las peticiones de los subagentes de una sesión de OpenCode. tokens.py solo lee la
+Suma a meta.json los tokens, las peticiones y el coste (OpenRouter) de los subagentes de una sesión de OpenCode. tokens.py solo lee la
 exportación de la sesión principal, y los subagentes (la herramienta «subagent», que el modelo lanza en paralelo)
 son sesiones hijas que no salen ahí: Kimi-K3.1-pro en TCI apuntaba 252 k tokens cuando gastó 2,4 M.
 
@@ -24,7 +24,7 @@ c = sqlite3.connect(db); c.row_factory = sqlite3.Row
 hijos, pend = [], [sid]
 while pend:
     p = pend.pop()
-    for r in c.execute("select id, title, tokens_input, tokens_output, tokens_reasoning, tokens_cache_read, tokens_cache_write "
+    for r in c.execute("select id, title, cost, tokens_input, tokens_output, tokens_reasoning, tokens_cache_read, tokens_cache_write "
                        "from session_v2 where parent_id = ?", (p,)):
         hijos.append(r); pend.append(r["id"])
 if not hijos:
@@ -40,7 +40,10 @@ for k, v in suma.items():
 t["total"] = sum(t.get(k) or 0 for k in claves)
 meta["tokens"] = t
 meta["peticiones"] = (meta.get("peticiones") or 0) + pet
-meta["subagentes"] = {"sesiones": len(hijos), "tokens": sum(suma.values()), "peticiones": pet,
+coste = sum(r["cost"] or 0 for r in hijos)  # OpenRouter: dólares de verdad; Ollama: 0
+if coste and meta.get("coste_usd") is not None:
+    meta["coste_usd"] = round(meta["coste_usd"] + coste, 4)
+meta["subagentes"] = {"sesiones": len(hijos), "tokens": sum(suma.values()), "peticiones": pet, "coste_usd": round(coste, 4),
                       "titulos": [r["title"] for r in hijos]}
 json.dump(meta, open(d / "meta.json", "w"), indent=2, ensure_ascii=False)
 print(f"{d}: +{len(hijos)} subagentes, +{sum(suma.values())} tokens, +{pet} peticiones → {t['total']} tokens, {meta['peticiones']} peticiones")
