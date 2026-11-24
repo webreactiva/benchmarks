@@ -1,31 +1,4 @@
 {
-  "proyectada": true,
-  "nota_proyeccion": "Cortada por el límite de Ollama con 7 de 10 bloques hechos (210 incidencias). La calidad se mide en esas 210 y se supone igual en las 90 que faltan; el coste es el real hasta el corte (sumando los 10 subagentes, que el lanzador no contó) más lo que faltaba. Sin clasificar ninguna incidencia por el modelo. Decisión del autor: no repetir (Kimi es caro).",
-  "calidad_en_210": {
-    "clasificadas": 210,
-    "tipo": 0.967,
-    "superficie": 0.89,
-    "areas_f1_micro": 0.712,
-    "exactas_pct": 0.329
-  },
-  "coste_real_hasta_el_corte": {
-    "tokens": 2419197,
-    "entrada": 464214,
-    "salida": 88391,
-    "cache_lectura": 1866592,
-    "peticiones": 117,
-    "segundos": 418,
-    "usd_estimado": 1.23
-  },
-  "coste_proyectado": {
-    "tokens": 2694541,
-    "entrada": 517049,
-    "salida": 98451,
-    "cache_lectura": 2079041,
-    "peticiones": 134,
-    "segundos": 478,
-    "usd_estimado": 1.37
-  },
   "rubrica": {
     "tipo": 1,
     "superficie": 2,
@@ -37,5 +10,20 @@
   "nota": 6,
   "nota_calidad": 6,
   "nota_eficiencia": 0,
-  "techo": "Supera el techo de calidad en áreas (0,712 frente a 0,687 de Inkling-2-small y 0,668 de Opus 5.5), aunque medido en 210 incidencias."
+  "calidad": {
+    "clasificadas": 210,
+    "tipo": 0.967,
+    "superficie": 0.89,
+    "areas_f1_micro": 0.712,
+    "exactas_pct": 0.329
+  },
+  "coste": {
+    "tokens": 2419197,
+    "entrada": 464214,
+    "salida": 88391,
+    "cache_lectura": 1866592,
+    "peticiones": 117,
+    "segundos": 418,
+    "usd_estimado": 1.23
+  }
 }

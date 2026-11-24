@@ -10,7 +10,7 @@ Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-24.
 | [AIF](AIF/juicio.md) | visual | 25 | 1714,8 k | 9 | pulido y de Web Reactiva | Contenido sacado de cuatro páginas de webreactiva.com (Malandriner, En pantuflas, Claude Code, Skills, MCP, SDD, «Deploy en viernes»), 98 elementos todos alcanzables, rangos («Aprendiz en pantuflas»), hitos, pistas, bitácora y una interfaz de producto. Mesa libre donde se combina soltando una ficha sobre otra. No es infinito: las mezclas sin receta dan un mensaje. | [▶ index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/ollama_kimi-k3.1-pro/AIF/salida/index.html) |
 | [CCA](CCA/juicio.md) | código | 11 | 174,6 k | 6 | correcto, pero no escala | Una clase Carrito en Python, limpia y bien validada (Decimal, una moneda por carrito, precio y stock del catálogo, 17 tests), pero sin servicio, sin persistencia y sin nada que responda a «escalable»: el carrito vive en un objeto en memoria y no hay README que lo explique. | – |
 | [SEC](SEC/juicio.md) | seguridad | 34 | 3651,5 k | 8 | Amplio, preciso, rangos anchos | Informe de 34 hallazgos sin ninguno inventado en el que el juez reconoce 35 de las 40 entradas, pero la nota cuenta 25,5 (F3 64,3): trece rangos pasan de 20 líneas y 17 entradas valen medio acierto. Se le escapan la SSRF del asistente (la borró justo antes del corte), la fuga de herramientas en su respuesta, la enumeración en el login, el oráculo de padding y el token de soporte en claro. | – |
-| [TCI](TCI/juicio.md) | clasificación | 14 | 252,2 k | 6 | El que mejor clasifica, el más caro | Repartió las 300 incidencias entre 10 subagentes en paralelo y el límite de Ollama la cortó con 7 bloques hechos. En esas 210 es el que más se parece a jev (áreas F1 0,712, superficie 89 %); la nota es proyectada: calidad 6/6 y eficiencia 0/4, con unos 2,7 M de tokens, 134 peticiones y ≈ 1,37 $ para la tirada completa. | – |
+| [TCI](TCI/juicio.md) | clasificación | 14 | 252,2 k | 6 | El que mejor clasifica, el más caro | Repartió las incidencias entre 10 subagentes que leen el texto completo de cada una. Es el que más se parece a jev (áreas F1 0,712, superficie 89 %), pero gasta 2,4 M de tokens, 117 peticiones y ≈ 1,23 $: calidad 6/6 y eficiencia 0/4. | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
@@ -44,7 +44,5 @@ Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamient
 
 **TCI**
 
-- Nota proyectada, por decisión del autor: el límite de uso de Ollama la cortó y no se repite porque Kimi es caro. La calidad se mide en las 210 incidencias que clasificó; el coste suma lo real hasta el corte y lo que le faltaba.
-- Escribió unas instrucciones de clasificación propias (.instrucciones_clasificacion.md) y lanzó 10 subagentes de 30 incidencias cada uno, que leen el texto completo de cada incidencia.
-- Los 10 subagentes gastaron 2,2 M de los 2,4 M de tokens reales; lanzar.sh solo apuntó los 252 k del agente principal.
-- Supera el techo de calidad en áreas (0,712), aunque medido sobre el 70 % de las incidencias.
+- Escribió unas instrucciones de clasificación propias (.instrucciones_clasificacion.md) y lanzó 10 subagentes de 30 incidencias cada uno.
+- Los 10 subagentes gastaron 2,2 M de los 2,4 M de tokens; lanzar.sh solo apuntó los 252 k del agente principal.

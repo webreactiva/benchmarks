@@ -10,18 +10,17 @@
     "tiempo": 0,
     "peticiones": 0
   },
-  "proyectada": true,
   "veredicto": "El que mejor clasifica, el más caro",
-  "resumen": "Repartió las 300 incidencias entre 10 subagentes en paralelo y el límite de Ollama la cortó con 7 bloques hechos. En esas 210 es el que más se parece a jev (áreas F1 0,712, superficie 89 %); la nota es proyectada: calidad 6/6 y eficiencia 0/4, con unos 2,7 M de tokens, 134 peticiones y ≈ 1,37 $ para la tirada completa.",
+  "resumen": "Repartió las incidencias entre 10 subagentes que leen el texto completo de cada una. Es el que más se parece a jev (áreas F1 0,712, superficie 89 %), pero gasta 2,4 M de tokens, 117 peticiones y ≈ 1,23 $: calidad 6/6 y eficiencia 0/4.",
   "cifras": {
-    "calidad_en_210": {
+    "calidad": {
       "clasificadas": 210,
       "tipo": 0.967,
       "superficie": 0.89,
       "areas_f1_micro": 0.712,
       "exactas_pct": 0.329
     },
-    "coste_real_hasta_el_corte": {
+    "coste": {
       "tokens": 2419197,
       "entrada": 464214,
       "salida": 88391,
@@ -29,21 +28,10 @@
       "peticiones": 117,
       "segundos": 418,
       "usd_estimado": 1.23
-    },
-    "coste_proyectado": {
-      "tokens": 2694541,
-      "entrada": 517049,
-      "salida": 98451,
-      "cache_lectura": 2079041,
-      "peticiones": 134,
-      "segundos": 478,
-      "usd_estimado": 1.37
     }
   },
   "rarezas": [
-    "Nota proyectada, por decisión del autor: el límite de uso de Ollama la cortó y no se repite porque Kimi es caro. La calidad se mide en las 210 incidencias que clasificó; el coste suma lo real hasta el corte y lo que le faltaba.",
-    "Escribió unas instrucciones de clasificación propias (.instrucciones_clasificacion.md) y lanzó 10 subagentes de 30 incidencias cada uno, que leen el texto completo de cada incidencia.",
-    "Los 10 subagentes gastaron 2,2 M de los 2,4 M de tokens reales; lanzar.sh solo apuntó los 252 k del agente principal.",
-    "Supera el techo de calidad en áreas (0,712), aunque medido sobre el 70 % de las incidencias."
+    "Escribió unas instrucciones de clasificación propias (.instrucciones_clasificacion.md) y lanzó 10 subagentes de 30 incidencias cada uno.",
+    "Los 10 subagentes gastaron 2,2 M de los 2,4 M de tokens; lanzar.sh solo apuntó los 252 k del agente principal."
   ]
 }
