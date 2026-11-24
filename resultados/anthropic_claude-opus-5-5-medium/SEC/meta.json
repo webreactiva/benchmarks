@@ -1,0 +1,31 @@
+{
+  "codigo": "SEC",
+  "modelo": "claude-opus-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-24T01:17:09Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 38,
+    "output": 17500,
+    "reasoning": 0,
+    "cache_read": 1575963,
+    "cache_write": 118623,
+    "total": 1712124
+  },
+  "peticiones": 19,
+  "error": null,
+  "herramientas": {
+    "Bash": 19,
+    "Write": 1
+  },
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "AUDITORIA_SEGURIDAD.md"
+  ],
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+  "esfuerzo": "medium"
+}

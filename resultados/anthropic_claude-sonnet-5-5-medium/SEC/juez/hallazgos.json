@@ -1,0 +1,445 @@
+{
+ "hallazgos": [
+  {
+   "id": "C1",
+   "titulo": "SQLi en products/search, orders/search, admin/reviews y tracking",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": true,
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": true,
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-005",
+     "estricto": true,
+     "nota": "«author en db.exec(query)»: una sola ubicación",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true,
+     "sin_linea": true
+    }
+   ],
+   "nota": "La misma ubicación de admin/reviews describe también 006 (db.exec, 122-136), pero cada ubicación cubre una entrada."
+  },
+  {
+   "id": "C2",
+   "titulo": "alta con rol arbitrario",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "C3",
+   "titulo": "secreto JWT por defecto, MD5 sin sal y credenciales sembradas",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true,
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-042",
+     "estricto": true,
+     "nota": "seed.ts sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": false,
+     "nota": "MD5 en server-auth (hashMD5); la entrada es reset-password:46, fichero no citado",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "C4",
+   "titulo": "dependencias con CVE (Next 15.2.2, React 19.2.0, tar, zod)",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real; lo saca de npm audit."
+  },
+  {
+   "id": "C5",
+   "titulo": "XXE en importación de proveedores",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true,
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "C6",
+   "titulo": "secretos en el repositorio y en el cliente",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-001",
+     "estricto": true,
+     "nota": ".env.local sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-003",
+     "estricto": true,
+     "nota": "diag sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true,
+     "nota": "monitoring/auth sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true,
+     "nota": "share-crypto sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "Resto (NEXT_PUBLIC_PAYMENT_SECRET en el bundle, X-Payment-Auth sin validar, supplier-registry.txt, streamKey RTMP, nota en el HTML de documentos, código en el prompt) real y sin entrada."
+  },
+  {
+   "id": "C7",
+   "titulo": "path traversal en /api/files (file y path)",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "join(baseDir, file)",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "nota": "join(baseDir, dirPath)",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "A1",
+   "titulo": "contraseñas en claro en el log",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "A2",
+   "titulo": "SSRF en soporte y en el asistente, inyección de prompt",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true,
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-008",
+     "estricto": true,
+     "nota": "mcpServerUrl del usuario",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-009",
+     "estricto": true,
+     "nota": "filtro de 4 regex evadible sobre el mensaje del usuario",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-010",
+     "estricto": true,
+     "nota": "inyección indirecta desde el servidor MCP externo",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "A3",
+   "titulo": "XSS en SupportForm, en analytics y autor de reseñas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true,
+     "nota": "AnalyticsClient.tsx:366"
+    }
+   ],
+   "nota": "El XSS de SupportForm es real y sin entrada. De las reseñas solo dice «verificar escapado», sin afirmar el XSS ni citar ProductDetailClient: no cubre 039."
+  },
+  {
+   "id": "A4",
+   "titulo": "IDOR y falta de control de acceso",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true,
+     "nota": "GET /api/orders/[id]",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-036",
+     "estricto": true,
+     "nota": "GET /api/wishlists/[id]",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true,
+     "nota": "POST /api/user/support-access con email ajeno",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-023",
+     "estricto": true,
+     "nota": "/api/flags",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-021",
+     "estricto": true,
+     "nota": "/api/flags/[slug]",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true,
+     "nota": "total de /api/orders fijado por el cliente",
+     "sin_linea": true
+    }
+   ],
+   "nota": "Secuestro del directo y carrera en cupones, reales y sin entrada."
+  },
+  {
+   "id": "A5",
+   "titulo": "token de reset predecible md5(email+timestamp)",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real: forgot-password devuelve requestedAt."
+  },
+  {
+   "id": "A6",
+   "titulo": "códigos de tarjeta regalo predecibles",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "A7",
+   "titulo": "AES-CBC sin autenticación y clave por defecto en share-crypto",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-018",
+     "estricto": false,
+     "nota": "nombra el padding oracle, pero lo sitúa en lib/share-crypto.ts y no describe la respuesta distinta de documents/share (400 frente a 404)",
+     "sin_linea": true
+    }
+   ],
+   "nota": "La clave por defecto ya la cubre C6 (041)."
+  },
+  {
+   "id": "A8",
+   "titulo": "middleware sin verificar la firma del JWT",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real."
+  },
+  {
+   "id": "A9",
+   "titulo": "fuga de información en errores de exportación",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": true,
+     "nota": "systemDiagnostics con stack en user/export",
+     "sin_linea": true
+    }
+   ],
+   "nota": "Exportar el campo password (línea 7) es real y sin entrada."
+  },
+  {
+   "id": "M1",
+   "titulo": "sin rate limiting y enumeración en el login",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-013",
+     "estricto": true,
+     "nota": "nombra el login entre otros endpoints",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-014",
+     "estricto": true,
+     "nota": "mensajes distintos para usuario inexistente y contraseña inválida",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M2",
+   "titulo": "CSRF por formularios urlencoded",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "No se sostiene: la cookie de sesión es SameSite=Lax y no viaja en un POST entre sitios."
+  },
+  {
+   "id": "M3",
+   "titulo": "sesiones sin revocación, logout solo en cliente",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-015",
+     "estricto": true,
+     "nota": "logout sin línea",
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M4",
+   "titulo": "SVG con script como imagen de producto",
+   "clase": "TP",
+   "linea": false,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": true,
+     "sin_linea": true
+    }
+   ]
+  },
+  {
+   "id": "M5",
+   "titulo": "/api/uploads filtra .. pero no hace resolve",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "El propio informe dice que el riesgo es bajo; el filtro de .. y \\0 basta."
+  },
+  {
+   "id": "M6",
+   "titulo": "sin cabeceras de seguridad",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real y genérico."
+  },
+  {
+   "id": "M7",
+   "titulo": "validación de entrada débil en los esquemas",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "Genérico: no añade un fallo concreto."
+  },
+  {
+   "id": "M8",
+   "titulo": "generación de ID de pedido con carrera y redirect sin validar en el login",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "La carrera del ID es un fallo de fiabilidad; la cookie oauth_callback=1 no tiene efecto de seguridad que el informe explique."
+  },
+  {
+   "id": "B1",
+   "titulo": "Docker como root y con secretos copiados",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real: .dockerignore excluye .env pero no .env.local."
+  },
+  {
+   "id": "B2",
+   "titulo": "Prisma Studio sin autenticación en setup.sh",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Real (scripts/setup.sh:53)."
+  },
+  {
+   "id": "B3",
+   "titulo": "libxmljs2 en serverExternalPackages",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "No es un fallo: el XXE ya está en C5."
+  },
+  {
+   "id": "B4",
+   "titulo": "logger sin redacción ni rotación",
+   "clase": "EXTRA",
+   "linea": false,
+   "cwe": false,
+   "nota": "Menor."
+  },
+  {
+   "id": "B5",
+   "titulo": "el directorio no es un repo git",
+   "clase": "FP",
+   "linea": false,
+   "cwe": false,
+   "nota": "Es una limitación del entorno, no un fallo del proyecto."
+  }
+ ]
+}

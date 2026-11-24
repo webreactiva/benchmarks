@@ -139,6 +139,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Servicio REST en Node sin dependencias, hexagonal, con carrito inmutable, céntimos, precios del catálogo, versión optimista con reintentos y backoff, y un adaptador de Redis con compare-and-swap en Lua que se conecta con REDIS_URL y aguanta 50 altas a la vez desde dos instancias sin perder nada. Lo flojo es menor: la moneda la pone el cliente sin validar, ioredis no está en package.json y la idempotencia y el catálogo solo existen en memoria, cosa que el README admite.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-24 01:17 UTC</small></td>
+<td class=n><b>1712.1 k</b><br><small>in 38 · out 17.5 k<br>razon. 0 · caché 1576.0 k</small></td>
+<td class=n>19</td>
+<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/SEC/salida/AUDITORIA_SEGURIDAD.md">AUDITORIA_SEGURIDAD.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n">–<br><small></small></td>
+<td><small></small></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
 <td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-24 00:30 UTC</small></td>
 <td class=n><b>768.0 k</b><br><small>in 24 · out 14.8 k<br>razon. 0 · caché 682.1 k</small></td>
@@ -177,6 +187,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ python3 tests/test_cart.py: 8/8, sin dependencias<br>✔ python3 -m cart.api arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50<br>✔ Redis real, dos instancias HTTP: 50 POST a la vez, aceptadas = guardadas; 2-6 acaban en 409 explícito tras 8 reintentos<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>~ una sola moneda fija (EUR): el catálogo no tiene moneda, así que no hay nada que mezclar<br>~ id ../ lo para la ruta HTTP (404); el servicio lo acepta<br>✖ el carrito devuelto se puede mutar y cambia lo guardado en memoria: 500 unidades a 1 ¢ sin pasar por catálogo ni límites<br>~ RedisCartRepository no está conectado en api.py ni exportado en cart/__init__.py: hay que montarlo a mano</small></td>
 <td class="nota n2">9<br><small>escala en 400 líneas</small></td>
 <td><small>Python sin dependencias con servicio sin estado, versión optimista con reintentos y un adaptador de Redis con compare-and-swap en Lua y TTL que funciona: con dos instancias sobre el mismo Redis, 50 altas a la vez acaban guardadas o en un 409 explícito, sin pérdidas. Pero el carrito que devuelve se puede mutar y en memoria eso cambia lo guardado (500 unidades a 1 céntimo sin pasar por el catálogo), solo hay una moneda fija y el adaptador de Redis no lo probó ni lo conectó a la API.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-24 01:15 UTC</small></td>
+<td class=n><b>1004.3 k</b><br><small>in 26 · out 11.5 k<br>razon. 0 · caché 905.9 k</small></td>
+<td class=n>13</td>
+<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/SEC/salida/SECURITY_AUDIT.md">SECURITY_AUDIT.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n1">4<br><small>Ve casi todo, sin líneas</small></td>
+<td><small>Informe de 29 hallazgos agrupados en el que el juez reconoce 33 de las 40 entradas y solo seis no se sostienen, pero la nota cuenta 16 (F3 40,9) porque solo da una línea en todo el informe y cada acierto sin línea vale medio. Se le escapan la fuga de la URL interna del asistente, el token de soporte en claro y en la respuesta, el open redirect del LoginForm, el XSS de reseñas y la página de noticias; no da ningún CWE.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>

@@ -21,5 +21,15 @@ for med, m, a, d, n, pet, tok in filas:
     t += f"| [{m}]({d}/README.md) | {a} | " + " | ".join("–" if n[c] is None else str(n[c]) for c in ORDEN)
     t += f" | **{coma(med, '.1f') if med >= 0 else 'en curso'}** | {pet} | {coma(tok / 1e6, '.1f')} M |\n"
 p = f"{B}/README.md"; s = open(p).read(); i = s.index("| Modelo | Agente |", s.index("## Estado")); j = s.index("\n\n", i)
-open(p, "w").write(s[:i] + t.rstrip() + s[j:])
+s = s[:i] + t.rstrip() + s[j:]
+# Para qué destaca cada modelo: la etiqueta de cada prueba con nota >= 9
+ETIQUETA = {"A3D": "Visual", "AIF": "Producto", "CCA": "Ejecución", "SEC": "Análisis", "TCI": "Volumen"}
+e = "| Modelo | Agente | Destaca en | Pruebas hechas |\n|---|---|---|---:|\n"
+for med, m, a, d, n, pet, tok in sorted(filas, key=lambda f: (-sum(1 for c in ORDEN if (f[4][c] or 0) >= 9), -f[0])):
+    eti = [f"{ETIQUETA[c]} ({n[c]})" for c in ORDEN if n[c] is not None and n[c] >= 9]
+    e += f"| [{m}]({d}/README.md) | {a} | {', '.join(eti) or '–'} | {sum(1 for c in ORDEN if n[c] is not None)} de {len(ORDEN)} |\n"
+if "<!-- etiquetas -->" in s:
+    i2, j2 = s.index("<!-- etiquetas -->"), s.index("<!-- /etiquetas -->")
+    s = s[:i2] + "<!-- etiquetas -->\n" + e + s[j2:]
+open(p, "w").write(s)
 print(t)

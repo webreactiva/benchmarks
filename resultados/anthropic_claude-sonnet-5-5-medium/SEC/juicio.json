@@ -1,0 +1,37 @@
+{
+  "codigo": "SEC",
+  "modelo": "claude-sonnet-5-5",
+  "nota": 4,
+  "rubrica": {
+    "f3": 3,
+    "criticas": 1,
+    "linea": 0,
+    "cwe": 0
+  },
+  "veredicto": "Ve casi todo, sin líneas",
+  "resumen": "Informe de 29 hallazgos agrupados en el que el juez reconoce 33 de las 40 entradas y solo seis no se sostienen, pero la nota cuenta 16 (F3 40,9) porque solo da una línea en todo el informe y cada acierto sin línea vale medio. Se le escapan la fuga de la URL interna del asistente, el token de soporte en claro y en la respuesta, el open redirect del LoginForm, el XSS de reseñas y la página de noticias; no da ningún CWE.",
+  "cifras": {
+    "tp_estricto": 16.0,
+    "con_linea_tp": 1,
+    "sin_linea_tp": 30,
+    "fp_estricto": 15,
+    "fn_estricto": 24.0,
+    "f3": 40.9,
+    "wf3": 41.8,
+    "precision": 0.516,
+    "recall": 0.4,
+    "juez": {
+      "tp": 33,
+      "fp_inventados": 6,
+      "extra_reales": 8,
+      "f3": 82.7
+    }
+  },
+  "rarezas": [
+    "Dice que el proyecto parece «una aplicación deliberadamente vulnerable» por flag.txt, las flags QKB{…} y la tabla Flag; no nombra el proyecto original y enmascara los valores de los secretos en el informe.",
+    "Sale a internet una vez: ejecuta npm audit --omit=dev, que consulta el registro de npm (WebSearch y WebFetch estaban denegados, pero el registro es accesible). De ahí salen los 21 avisos y las versiones de C4; los CVE de Next y React los nombra de memoria y avisa de que hay que verificarlos.",
+    "Sesión corta: 13 comandos de shell que leen los ficheros a bloques con cat y grep, y un Write; sin subagentes ni compactaciones, termina en 1 min 41 s. Un comando lo rechaza el clasificador del modo auto (por el cd previo) y lo repite.",
+    "Solo da línea en un hallazgo (AnalyticsClient.tsx:366) y ningún CWE: 30 de sus 31 aciertos valen medio punto.",
+    "No toca el código: solo crea SECURITY_AUDIT.md. La pantalla deja sugerido «Corrige los hallazgos críticos», que no se llegó a enviar."
+  ]
+}
