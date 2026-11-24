@@ -1,0 +1,42 @@
+{
+  "codigo": "SEC",
+  "modelo": "google/gemini-4-carbon",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T10:18:40Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 447061,
+    "output": 20472,
+    "reasoning": 8208,
+    "cache_read": 1666128,
+    "cache_write": 0,
+    "total": 2141869
+  },
+  "peticiones": 20,
+  "error": null,
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "herramientas": {
+    "glob": 4,
+    "read": 134,
+    "grep": 3,
+    "shell": 2,
+    "write": 1
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df2ef659affeH4ASA6pvVM5okk",
+  "coste_usd": 1.3369,
+  "ficheros": [
+    "AUDITORIA_SEGURIDAD.md"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 65536,
+    "output_proveedor": 943718,
+    "fuente": "openrouter /api/v1/models · SALIDA_MAX"
+  },
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}
