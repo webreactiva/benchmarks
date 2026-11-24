@@ -249,6 +249,26 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>TypeScript sobre Node 22 sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, cupones, IVA, envío, idempotencia, checkout con reserva de stock y SQLite en WAL con compare-and-set por versión: 50 altas a la vez no pierden nada, ni repartidas entre dos instancias con el mismo fichero. Pero cada instancia guarda una caché L1 que sirve lecturas viejas cuando escribe la otra, y el stock y la idempotencia viven en memoria de cada proceso.</small> <a href="resultados/google_gemini-4-carbon/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-24 10:18 UTC</small></td>
+<td class=n><b>2141.9 k</b><br><small>in 447.1 k · out 20.5 k<br>razon. 8.2 k · caché 1666.1 k</small></td>
+<td class=n>20</td>
+<td><small><a href="resultados/google_gemini-4-carbon/SEC/salida/AUDITORIA_SEGURIDAD.md">AUDITORIA_SEGURIDAD.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n2">8<br><small>Auditoría completa y precisa</small></td>
+<td><small>Informe de 22 hallazgos agrupados, todos con fichero, línea y CWE: cubre 31 de las 40 entradas con la regla estricta (8 sin línea, a medio punto: 27 en la nota, F3 68,5), 37 con el criterio del juez, y no inventa ninguno. Se le escapan la fuga de la URL de las herramientas del asistente, el logout que no invalida la sesión y las credenciales del seed; los rangos anchos le cuestan medio punto en ocho entradas.</small> <a href="resultados/google_gemini-4-carbon/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-24 10:00 UTC</small></td>
+<td class=n><b>3819.1 k</b><br><small>in 243.8 k · out 3.2 k<br>razon. 42.2 k · caché 3529.9 k</small></td>
+<td class=n>40</td>
+<td><small>–</small></td>
+<td><small>–</small></td>
+<td class="nota n0">0<br><small>Sin clasificación</small></td>
+<td><small>Leyó las 300 incidencias y clasificó todas en su razonamiento (185 000 caracteres en una sola petición), pero al ir a escribirlas generó once llamadas a herramienta mal formadas seguidas (MALFORMED_FUNCTION_CALL de Google) y la sesión murió a los 17 min sin dejar clasificacion.jsonl. Gastó 3,8 M tokens, 40 peticiones y 1,28 $.</small> <a href="resultados/google_gemini-4-carbon/TCI/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>google/gemini-4-hydrogen</small><br><small>OpenCode · 2026-11-20 15:20 UTC</small></td>
 <td class=n><b>220.3 k</b><br><small>in 59.3 k · out 37.6 k<br>razon. 7.2 k · caché 116.2 k</small></td>
@@ -277,6 +297,26 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ npm test: tsc + 14/14 (node:test); npm run demo recorre carrito, cupón y checkout<br>✖ 50 altas a la vez: 5 guardadas y 45 rechazadas con CONCURRENCY_CONFLICT (5 reintentos sin espera)<br>✔ dinero en céntimos (0,10 × 3 = 30), EUR + USD da error, precio del catálogo (se ignora el del cliente)<br>~ valida cantidades negativas, decimales y enormes; acepta cantidad 0<br>~ librería sin servidor: solo adaptadores en memoria; Redis o Postgres, en el README<br>~ entrega dist/ compilado; usa el tsc global de la máquina (no es dependencia)</small></td>
 <td class="nota n2">8<br><small>bien hecho, poca concurrencia</small></td>
 <td><small>Librería TypeScript sin dependencias, hexagonal, con dinero en céntimos, precio del catálogo, promociones (porcentaje, fijo, 3x2, volumen), IVA por categoría, envío, idempotencia, fusión de carritos y checkout con compensación de stock; 14 tests y una demo que funcionan. La versión optimista no pierde datos, pero con 50 altas a la vez rechaza 45 porque reintenta cinco veces sin esperar, y solo hay adaptadores en memoria.</small> <a href="resultados/google_gemini-4-hydrogen/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>google/gemini-4-hydrogen</small><br><small>OpenCode · 2026-11-24 09:56 UTC</small></td>
+<td class=n><b>2819.6 k</b><br><small>in 255.3 k · out 15.7 k<br>razon. 10.3 k · caché 2538.3 k</small></td>
+<td class=n>21</td>
+<td><small><a href="resultados/google_gemini-4-hydrogen/SEC/salida/AUDITORIA_SEGURIDAD.md">AUDITORIA_SEGURIDAD.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n2">8<br><small>Cobertura casi total, líneas anchas</small></td>
+<td><small>Informe de 26 hallazgos agrupados, todos con fichero, línea y CWE, sin un solo fallo inventado: cubre 36 de las 40 entradas con el criterio del juez, incluido el oráculo de padding. La nota se queda en F3 63,9 porque 18 de esas entradas las señala con rangos de más de 20 líneas, que valen medio acierto.</small> <a href="resultados/google_gemini-4-hydrogen/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>google/gemini-4-hydrogen</small><br><small>OpenCode · 2026-11-24 09:51 UTC</small></td>
+<td class=n><b>3449.6 k</b><br><small>in 269.8 k · out 12.5 k<br>razon. 34.8 k · caché 3132.5 k</small></td>
+<td class=n>26</td>
+<td><small><a href="resultados/google_gemini-4-hydrogen/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
+<td><small>–</small></td>
+<td class="nota n1">6<br><small>El mejor en áreas, caro</small></td>
+<td><small>Tipo 96,7 %, superficie 88,0 % y F1 de áreas 0,725 frente a jev (91 idénticas): el F1 de áreas más alto de todos. Le costó 261 s, 26 peticiones y 3,45 M tokens (0,99 $ en OpenRouter), así que no suma eficiencia.</small> <a href="resultados/google_gemini-4-hydrogen/TCI/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -465,7 +505,7 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td class=n>32</td>
 <td><small><a href="resultados/ollama_beam/SEC/salida/.env">.env</a></small></td>
 <td><small>–</small></td>
-<td class="nota n0">0<br><small>Sin informe</small></td>
+<td class="nota n0">1<br><small>Sin informe</small></td>
 <td><small>Leyó el proyecto entero (33 órdenes de shell en 2 min 37 s) y fue anotando fallos en su razonamiento, pero no escribió ningún informe: en el último turno metió la siguiente llamada a herramienta como texto mal formado dentro del razonamiento, OpenCode no la reconoció y la sesión se cerró sin respuesta.</small> <a href="resultados/ollama_beam/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>

@@ -55,12 +55,12 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | Modelo | Agente | A3D | AIF | CCA | SEC | TCI | Media | Peticiones | Tokens |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | [claude-fable-5-2](resultados/anthropic_claude-fable-5-2/README.md) | Claude Code | 10 | 8 | 10 | 7 | 5 | **9,3** | 46 | 4,5 M |
-| [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | 9 | 10 | 9 | – | – | **9,3** | 45 | 1,6 M |
+| [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | 9 | 10 | 9 | 8 | 0 | **9,3** | 105 | 7,6 M |
 | [claude-opus-5-5 (medium)](resultados/anthropic_claude-opus-5-5-medium/README.md) | Claude Code | 9 | 8 | 10 | 5 | 8 | **9,0** | 65 | 5,7 M |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | 9 | 9 | 9 | 4 | 6 | **9,0** | 242 | 9,2 M |
 | [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | 8 | 9 | 10 | 6 | 6 | **9,0** | 429 | 35,8 M |
 | [claude-haiku-5-5](resultados/anthropic_claude-haiku-5-5/README.md) | Claude Code | 8 | 9 | 9 | 6 | 9 | **8,7** | 50 | 3,9 M |
-| [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | 9 | 9 | 8 | – | – | **8,7** | 37 | 1,3 M |
+| [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | 9 | 9 | 8 | 8 | 6 | **8,7** | 84 | 7,6 M |
 | [ollama/glm-5.3](resultados/ollama_glm-5.3/README.md) | OpenCode | 8 | 10 | 8 | 6 | 6 | **8,7** | 126 | 10,8 M |
 | [claude-sonnet-5-5 (medium)](resultados/anthropic_claude-sonnet-5-5-medium/README.md) | Claude Code | 9 | 7 | 9 | 4 | 8 | **8,3** | 48 | 4,6 M |
 | [google/gemini-4-neon](resultados/google_gemini-4-neon/README.md) | OpenCode | 9 | 10 | 6 | – | – | **8,3** | 42 | 2,1 M |
@@ -73,7 +73,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | 7 | 6 | 8 | 5 | 6 | **7,0** | 56 | 2,4 M |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | 6 | 8 | 4 | – | – | **6,0** | 19 | 0,4 M |
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | – | – | **5,7** | 15 | 0,3 M |
-| [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | 0 | 6 | **5,3** | 82 | 3,6 M |
+| [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | 1 | 6 | **5,3** | 82 | 3,6 M |
 | [nvidia/nemotron-3-ultra-550b-a55b:free](resultados/nvidia_nemotron-3-ultra-550b-a55b_free/README.md) | OpenCode | 6 | 3 | 4 | – | – | **4,3** | 32 | 0,6 M |
 
 Notas con las rúbricas de `rubricas.md`. Las pruebas que fallaron por la parte técnica (respuestas cortadas en el tope de 32 000 tokens de OpenCode, GLM compactando sin parar por nuestra configuración de límites, MiniMax preguntando antes de que existiera la regla «Decide tú.») se repitieron. Las versiones anteriores están en `resultados/_descartados/`.
@@ -89,13 +89,13 @@ Etiqueta de cada prueba en la que el modelo saca 9 o más (la rehace `scripts/es
 <!-- etiquetas -->
 | Modelo | Agente | Destaca en | Pruebas hechas |
 |---|---|---|---:|
-| [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | Visual (9), Producto (10), Ejecución (9) | 3 de 5 |
+| [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | Visual (9), Producto (10), Ejecución (9) | 5 de 5 |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | Visual (9), Producto (9), Ejecución (9) | 5 de 5 |
 | [claude-haiku-5-5](resultados/anthropic_claude-haiku-5-5/README.md) | Claude Code | Producto (9), Ejecución (9), Volumen (9) | 5 de 5 |
 | [claude-fable-5-2](resultados/anthropic_claude-fable-5-2/README.md) | Claude Code | Visual (10), Ejecución (10) | 5 de 5 |
 | [claude-opus-5-5 (medium)](resultados/anthropic_claude-opus-5-5-medium/README.md) | Claude Code | Visual (9), Ejecución (10) | 5 de 5 |
 | [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | Producto (9), Ejecución (10) | 5 de 5 |
-| [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | Visual (9), Producto (9) | 3 de 5 |
+| [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | Visual (9), Producto (9) | 5 de 5 |
 | [claude-sonnet-5-5 (medium)](resultados/anthropic_claude-sonnet-5-5-medium/README.md) | Claude Code | Visual (9), Ejecución (9) | 5 de 5 |
 | [google/gemini-4-neon](resultados/google_gemini-4-neon/README.md) | OpenCode | Visual (9), Producto (10) | 3 de 5 |
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | Visual (10), Producto (9) | 5 de 5 |

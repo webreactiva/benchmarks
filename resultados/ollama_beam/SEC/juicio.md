@@ -1,6 +1,6 @@
-# SEC · beam · 0/10
+# SEC · beam · 1/10
 
-**No hay informe que juzgar.** La sesión terminó a mitad de la exploración, sin escribir ningún informe ni en un fichero ni en el chat, así que no se cruza nada con el ground truth: es un 0. No se repite, porque es un fallo del propio modelo (formato de herramientas) y no de la API ni de un límite nuestro.
+**No hay informe que juzgar.** La sesión terminó a mitad de la exploración, sin escribir ningún informe ni en un fichero ni en el chat, así que no se cruza nada con el ground truth y la rúbrica da 0. El autor le pone un 1 (24 nov. 2026) porque leyó el proyecto entero y fue apuntando fallos reales en su razonamiento. No se repite, porque es un fallo del propio modelo (formato de herramientas) y no de la API ni de un límite nuestro.
 
 ## Qué pasó
 

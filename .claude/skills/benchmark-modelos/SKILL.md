@@ -103,7 +103,7 @@ SALIDA_MAX=65536 PROVEEDOR_OR=google-ai-studio scripts/benchmark.sh google/gemin
 **Casos que decidió el autor** (no los generalices sin preguntar):
 - Kimi-K3.1-pro en SEC, cortado por el límite en una segunda pasada con el informe ya escrito: se juzga tal cual.
 - Kimi-K3.1-pro en TCI, cortado con 7 de 10 bloques: se juzga lo que hizo (sus bloques juntados) con el coste real, y se da por bueno. No se escribe que sea parcial ni proyectado.
-- Un modelo que falla por sí mismo sin error de la API (Beam en SEC: llamada a herramienta mal formada dentro del razonamiento, sin informe) se queda con un 0 y no se repite.
+- Un modelo que falla por sí mismo sin error de la API (Beam en SEC: llamada a herramienta mal formada dentro del razonamiento, sin informe) no se repite; la rúbrica da 0 y el autor le puso un 1 (leyó el proyecto y apuntó fallos reales en su razonamiento).
 
 **Coste en TCI.** OpenCode apunta 0 $ en los modelos de Ollama (suscripción): `puntuar.py` lo ignora y estima con `scripts/tci/precios.json` (precio del mismo modelo en OpenRouter, con la fuente). Un modelo nuevo necesita su línea ahí antes de puntuar.
 
