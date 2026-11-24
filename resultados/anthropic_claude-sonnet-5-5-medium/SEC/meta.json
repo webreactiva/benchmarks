@@ -1,0 +1,31 @@
+{
+  "codigo": "SEC",
+  "modelo": "claude-sonnet-5-5",
+  "agente": "Claude Code",
+  "fecha": "2026-11-24T01:15:04Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 26,
+    "output": 11526,
+    "reasoning": 0,
+    "cache_read": 905946,
+    "cache_write": 86757,
+    "total": 1004255
+  },
+  "peticiones": 13,
+  "error": null,
+  "herramientas": {
+    "Bash": 13,
+    "Write": 1
+  },
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "ficheros": [
+    "SECURITY_AUDIT.md"
+  ],
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+  "esfuerzo": "medium"
+}
