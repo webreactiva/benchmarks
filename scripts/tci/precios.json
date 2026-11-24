@@ -93,5 +93,26 @@
   "cache_lectura": 0.001,
   "cache_escritura": 0.05,
   "fuente": "deepseek/deepseek-v4.1-flash (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "google/gemini-4-hydrogen": {
+  "entrada": 1.5,
+  "salida": 7.5,
+  "cache_lectura": 0.075,
+  "cache_escritura": 1.5,
+  "fuente": "OpenRouter /api/v1/models, 24 nov. 2026"
+ },
+ "google/gemini-4-carbon": {
+  "entrada": 2,
+  "salida": 10,
+  "cache_lectura": 0.1,
+  "cache_escritura": 2,
+  "fuente": "OpenRouter /api/v1/models, 24 nov. 2026"
+ },
+ "google/gemini-4-neon": {
+  "entrada": 3,
+  "salida": 15,
+  "cache_lectura": 0.15,
+  "cache_escritura": 3,
+  "fuente": "OpenRouter /api/v1/models, 24 nov. 2026"
  }
 }
