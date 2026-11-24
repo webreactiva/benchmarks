@@ -1,7 +1,97 @@
 {
-  "_nota": "Dólares por millón de tokens: entrada, salida, lectura de caché y escritura en caché. Claude: precios de la API (la escritura en caché, estimada a 1,25 veces la entrada; la lectura de Haiku, al 10 %). Modelos de Ollama Cloud: se cobran por suscripción; para comparar se usa el precio por token del mismo modelo en su API pública (OpenRouter u otro proveedor) cuando lo hay, y se apunta de dónde sale. Si meta.json trae coste_usd (OpenRouter), manda ese.",
-  "claude-haiku-5-5":  {"entrada": 0.10, "salida": 0.50, "cache_lectura": 0.01, "cache_escritura": 0.125},
-  "claude-sonnet-5-5": {"entrada": 2.00, "salida": 10.00, "cache_lectura": 0.10, "cache_escritura": 2.50},
-  "claude-opus-5-5":   {"entrada": 4.00, "salida": 20.00, "cache_lectura": 0.20, "cache_escritura": 5.00},
-  "claude-fable-5-2":  {"entrada": 8.00, "salida": 40.00, "cache_lectura": 0.20, "cache_escritura": 10.00}
+ "_nota": "Dólares por millón de tokens: entrada, salida, lectura de caché y escritura en caché. Claude: precios de la API (la escritura en caché, estimada a 1,25 veces la entrada; la lectura de Haiku, al 10 %). Modelos de Ollama Cloud: se cobran por suscripción; para comparar se usa el precio por token del mismo modelo en su API pública (OpenRouter u otro proveedor) cuando lo hay, y se apunta de dónde sale. Si meta.json trae coste_usd (OpenRouter), manda ese.",
+ "claude-haiku-5-5": {
+  "entrada": 0.1,
+  "salida": 0.5,
+  "cache_lectura": 0.01,
+  "cache_escritura": 0.125
+ },
+ "claude-sonnet-5-5": {
+  "entrada": 2.0,
+  "salida": 10.0,
+  "cache_lectura": 0.1,
+  "cache_escritura": 2.5
+ },
+ "claude-opus-5-5": {
+  "entrada": 4.0,
+  "salida": 20.0,
+  "cache_lectura": 0.2,
+  "cache_escritura": 5.0
+ },
+ "claude-fable-5-2": {
+  "entrada": 8.0,
+  "salida": 40.0,
+  "cache_lectura": 0.2,
+  "cache_escritura": 10.0
+ },
+ "kimi-k3.1-pro": {
+  "entrada": 0.24,
+  "salida": 8.402,
+  "cache_lectura": 0.2,
+  "cache_escritura": 0.24,
+  "fuente": "moonshotai/kimi-k3.1-pro (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "glm-5.3": {
+  "entrada": 0.0699,
+  "salida": 1.4,
+  "cache_lectura": 0.0689,
+  "cache_escritura": 0.0699,
+  "fuente": "z-ai/glm-5.3 (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "glm-5.3-flash": {
+  "entrada": 0.12,
+  "salida": 0.38,
+  "cache_lectura": 0.02,
+  "cache_escritura": 0.12,
+  "fuente": "z-ai/glm-5.3-flash (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "minimax-m3.1-flash": {
+  "entrada": 0.15,
+  "salida": 0.6,
+  "cache_lectura": 0.015,
+  "cache_escritura": 0.15,
+  "fuente": "minimax/minimax-m3.1-flash (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "minimax-m3": {
+  "entrada": 0.3,
+  "salida": 1.2,
+  "cache_lectura": 0.06,
+  "cache_escritura": 0.3,
+  "fuente": "minimax/minimax-m3 (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "mistral-large-4": {
+  "entrada": 0.7,
+  "salida": 2.1,
+  "cache_lectura": 0.07,
+  "cache_escritura": 0.7,
+  "fuente": "mistralai/mistral-large-4-0 (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "muse-spark-open": {
+  "entrada": 1.25,
+  "salida": 4.25,
+  "cache_lectura": 0.15,
+  "cache_escritura": 1.25,
+  "fuente": "meta/muse-spark-open (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "beam": {
+  "entrada": 0.25,
+  "salida": 1.0,
+  "cache_lectura": 0.05,
+  "cache_escritura": 0.25,
+  "fuente": "reflection/beam-1.0-501b-a23b (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "inkling-2-small": {
+  "entrada": 0.3,
+  "salida": 1.0,
+  "cache_lectura": 0.03,
+  "cache_escritura": 0.3,
+  "fuente": "thinkingmachines/inkling-2-small (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ },
+ "deepseek-v4.1-flash": {
+  "entrada": 0.05,
+  "salida": 0.199,
+  "cache_lectura": 0.001,
+  "cache_escritura": 0.05,
+  "fuente": "deepseek/deepseek-v4.1-flash (OpenRouter /api/v1/models, 24 nov. 2026; sin precio de escritura en caché: se toma el de entrada)"
+ }
 }
