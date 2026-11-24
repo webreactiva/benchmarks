@@ -1,0 +1,30 @@
+{
+  "codigo": "TCI",
+  "modelo": "claude-fable-5-2",
+  "agente": "Claude Code",
+  "fecha": "2026-11-24T00:37:23Z",
+  "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+  "tokens": {
+    "input": 22,
+    "output": 15976,
+    "reasoning": 0,
+    "cache_read": 829045,
+    "cache_write": 107265,
+    "total": 952308
+  },
+  "peticiones": 11,
+  "error": null,
+  "herramientas": {
+    "Bash": 6,
+    "Read": 5
+  },
+  "mensajes_usuario": [
+    "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  ],
+  "ficheros": [
+    "clasificacion.jsonl"
+  ],
+  "veces_decide_tu": 0,
+  "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+  "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado"
+}
