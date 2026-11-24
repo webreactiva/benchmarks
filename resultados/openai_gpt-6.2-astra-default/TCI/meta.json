@@ -1,0 +1,31 @@
+{
+  "codigo": "TCI",
+  "modelo": "gpt-6.2-astra",
+  "agente": "Codex CLI",
+  "esfuerzo": "default",
+  "fecha": "2026-11-24T11:51:28Z",
+  "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+  "tokens": {
+    "input": 19966,
+    "output": 2711,
+    "reasoning": 36,
+    "cache_read": 167424,
+    "cache_write": 0,
+    "total": 190137
+  },
+  "peticiones": 7,
+  "error": null,
+  "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+  "esfuerzo_real": null,
+  "herramientas": {
+    "exec": 6
+  },
+  "mensajes_usuario": [
+    "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  ],
+  "veces_decide_tu": 0,
+  "ficheros": [
+    "clasificacion.jsonl"
+  ],
+  "semilla": "/Users/daniel/.cache/benchmark-semillas/TCI/semilla"
+}

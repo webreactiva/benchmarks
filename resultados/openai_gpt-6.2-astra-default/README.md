@@ -2,7 +2,7 @@
 
 Agente: Codex CLI. Fechas: 2026-11-20 a 2026-11-24.
 
-**Nota media: 6,0 / 10** (3 de 5 prompts juzgados). Total: 26 peticiones y 623,2 k tokens.
+**Nota media: 7,0 / 10** (4 de 5 prompts juzgados). Total: 26 peticiones y 623,2 k tokens.
 
 Pendientes: SEC.
 
@@ -11,7 +11,7 @@ Pendientes: SEC.
 | [A3D](A3D/juicio.md) | visual | 5 | 111,6 k | 6 | maqueta limpia, la cámara no viaja | Una maqueta en 3D hecha a mano en canvas, sin librerías y en 8 KB, con torres almenadas y el patio circular de Carlos V, y una ruta de cinco paradas reales con textos correctos. Pero «Siguiente parada» solo cambia el texto: la cámara se queda quieta, así que la ruta no se recorre. | [▶ alhambra.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/openai_gpt-6.2-astra-default/A3D/salida/alhambra.html) |
 | [AIF](AIF/juicio.md) | visual | 5 | 129,8 k | 8 | pequeño, completo y de la casa | Un juego de casillas con 35 elementos y 32 recetas, todos alcanzables, con contenido reconocible de Web Reactiva (Zona Malandriner, En pantuflas, Atlas MCP) sin haber consultado la web. Guarda, busca y da pistas en 9 KB, pero no hay lienzo libre y las mezclas sin receta no dan nada. | [▶ index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/openai_gpt-6.2-astra-default/AIF/salida/index.html) |
 | [CCA](CCA/juicio.md) | código | 9 | 191,7 k | 4 | maqueta de carrito, sin escalar | Una página de carrito bien acabada con cuatro láminas, envío gratis desde 75 € y persistencia en localStorage que valida lo que lee. No hay tests, ni servidor, ni README: «escalable» se queda en que el catálogo es una lista que se puede ampliar. | – |
-| [TCI](TCI/juicio.md) | clasificación | 7 | 190,1 k | – | sin juzgar |  | – |
+| [TCI](TCI/juicio.md) | clasificación | 7 | 190,1 k | 10 | Lo mismo con un tercio de tokens | Tipo 96,3 %, superficie 87,0 % y F1 de áreas 0,689 frente a jev (78 incidencias idénticas), la calidad de Opus o Sol. Le costó 92 s, 7 peticiones y 190 k tokens (≈ 0,34 $): el único que cumple las tres marcas de eficiencia. | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
@@ -33,3 +33,9 @@ Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamient
 - Descarga cuatro fotos de Unsplash con curl (y una quinta que luego borra)
 - Solo comprueba la sintaxis con node --check
 - Escribe los ficheros con una función propia que guarda en su memoria entre llamadas (store/load)
+
+**TCI**
+
+- No lee las incidencias enteras: saca con un script los títulos y las respuestas de versión, superficie y sistema operativo de cada plantilla (125 caracteres si no hay plantilla) y abre 36 dudosas a 460 caracteres.
+- Escribe las áreas de las 300 en un bloque de letras (w = windows-os, s = sandbox, a = app-server…) y lo expande con un script que comprueba con assert que hay una por id: 2711 tokens de salida.
+- Por tokens es el más barato de los GPT, pero Astra cuesta cuatro veces más por token que Sol: 0,34 $ frente a 0,21 $.

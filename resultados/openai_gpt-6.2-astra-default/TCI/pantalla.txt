@@ -1,0 +1,795 @@
+Reading additional input from stdin...
+OpenAI Codex v0.171.0
+--------
+workdir: /private/var/tmp/bench/ws-k3Pk5hdU
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: workspace-write [workdir] (network access enabled)
+reasoning effort: none
+reasoning summaries: none
+session id: 01a20d65-8d3e-77e1-b9da-22c75301439b
+--------
+user
+Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.
+codex
+Revisaré las incidencias y comprobaré que el archivo de salida tenga una línea por cada id y use solo las categorías indicadas.
+exec
+/bin/zsh -lc 'wc -l incidencias.jsonl; head -c 1800 incidencias.jsonl; ls' in /private/var/tmp/bench/ws-k3Pk5hdU
+ succeeded in 0ms:
+     300 incidencias.jsonl
+{"id": "codex-51098", "titulo": "0.160.0: --yolo ignored for new threads when TUI runs on managed app-server daemon / --remote", "texto": "### What version of Codex is running?\n\ncodex-cli 0.160.0 (Homebrew cask), managed app-server daemon 0.160.0, macOS 27.0 (arm64)\n\n### What issue are you seeing?\n\nOn 0.160.0, `codex --yolo` no longer gives **new** threads full access when the TUI runs on the managed app-server daemon. The thread is created with `approval_mode = on-request` and `sandbox_policy = {\"type\":\"managed\", file_system: restricted (cwd writable), \"network\":\"restricted\"}`. Commands that need network or local sockets fail (e.g. a local device bridge on `127.0.0.1:8710` → `Connect server failed`).\n\nThis is related to #49865 / #49088 (permissions lost after a daemon restart), but here the thread is **new**, not resumed:\n\n1. `codex --yolo` started at 12:37:18. The thread was created at 12:37:19 **inside the long-running managed daemon process** (logs_2.sqlite shows it under the daemon's pid, not the TUI's), and `state_5.sqlite` records `approval_mode=on-request`, `sandbox_policy.type=managed`, `network=restricted`.\n2. The same happens through a wrapper that starts its own app-server with `codex app-server -c approval_policy=\"never\" -c sandbox_mode=\"danger-full-access\" --listen unix://…` and then attaches `codex --remote unix://…`. The TUI (`client_name=\"codex-tui\"`) creates the thread itself, and the thread ends up with `approval_mode=never` but `sandbox_policy` managed/restricted — the server-side `-c sandbox_mode=\"danger-full-access\"` is not applied. Every `TurnInput` has `sandbox_policy: None, permission_profile: None`, so the restricted policy from thread creation sticks.\n3. Additionally (= #49088/#49865): an older thread that hincidencias.jsonl
+
+exec
+/bin/zsh -lc "python3 - <<'PY'
+import json
+for i,l in enumerate(open('incidencias.jsonl')): print(i,json.loads(l)['titulo'])
+PY" in /private/var/tmp/bench/ws-k3Pk5hdU
+ succeeded in 480ms:
+python3: error: couldn't create cache file '/var/folders/2b/k_922dnd3tq2l6yyc6fkgh9r0000gn/T/xcrun_db-FuVYLQ8l' (errno=Operation not permitted)
+0 0.160.0: --yolo ignored for new threads when TUI runs on managed app-server daemon / --remote
+1 [BUG] Ctrl+mouse wheel no longer changes Windows Terminal font size during Codex CLI
+2 Document supported lifecycle and capture controls for macOS exec_command
+3 [macOS desktop] Migrated custom pet disappears from picker despite active service record
+4 “Ask for approval” is selected, and internet access approval succeeds, but publishing fails
+5 [macOS app] Readable local chat rejects submissions with thread_not_found; archive/unarchive restores loaded state
+6 app-server rejects every turn with "invalid cwd" once the daemon's own working directory is deleted, even when the request cwd is absolute
+7 Daemon bootstrap reports success while its updater exits with SUN_LEN under a deep CODEX_HOME (Linux)
+8 Custom Slash Commands for reusable workflows/prompts
+9 Managed daemon auto-update restart kills in-flight turns without a terminal event and reloads threads with default permissions instead of Full access (0.160.0 → 0.160.1, macOS)
+10 Pairing isn't working; I log in with Google—there's no error—but it gets stuck in a loop during the authorization flow for pairing ChatGPT on Android with Windows.
+11 For local PC "A" 's sessions, how to show and resume in web cloud app, and in another PC "B"?
+12 Android: allow viewing the dot computer's browser cookies
+13 Approval prompts steal OS keyboard focus while I am typing in another application/window.
+14 ChatGPT Web: pinned project folders are omitted from the Projects interface
+15 Codex exec fails during in-process app-server initialization with read-only CODEX_HOME
+16 [Linux Desktop 26.930.61225] automation_update fails loading app-native tool dispatcher after update
+17 Desktop app crashing after several seconds
+18 Restore the Sparkle animation (maybe via config)
+19 Allow customizing user message background color in Codex CLI
+20 Windows: background daemon still fails with "Access is denied (os error 5)" on Codex CLI 0.160.1
+21 CLI turn off "Tip"
+22 Codex desktop app: show remaining usage limits and reset times in the header
+23 dot cloud task creation and continuation fail with AppServerBackendRequestError / UNKNOWN while manual creation works
+24 error
+25 Command Center: preserve selection and keep the list visible when deleting chats
+26 Queued follow-up inputs: Text is not copyable
+27 Can't run codex on my device but works on other devices with the same account. It keeps reconnecting.
+28 Codex GitHub review reacts with 👀 but never starts review job on org-owned repo
+29 Windows Work mode — app screenshots unreadable in cloud mode
+30 Shared daemon replays stale unrecognized-config warnings after config.toml is corrected
+31 [dot][Voice] Calls fail across iOS/macOS; web dot page also fails to load
+32 codex exec reports edits it never made: exits 0 after ~8 s with no file changes and a final message saying the change was done
+33 [macOS] Send button remains disabled in new chats after update; existing chats still work
+34 [macOS][Work] Send stays disabled with a non-empty prompt; Chat-to-Work computer-use handoff works
+35 [Windows 26.1002.51308] New Work first prompt disabled after update; existing Work chats and Codex still work
+36 [Windows][26.1002.51308] New Work chats cannot send from home after update; existing chats still work
+37 [Dots] Cloud Firefox CA restoration requires manual takeover; reported cross-account inconsistency
+38 [Windows] Elevated sandbox refresh blocks command execution: MAXIMUM_ALLOWED causes error 32 on active runtime files
+39 ChatGPT/Codex Linux crashes during KDE appearance changes: SIGSEGV at libqt6_shim.so + 0x1230
+40 Windows elevated sandbox: root-only ACL grants open loaded runtime files for write (os error 32), so every setup refresh fails
+41 Can't create new conversations in Work mode
+42 Computer Use doesn't exist
+43 no-active-thread-01a11600-adcc-7c02-b0a3-e267669dea1a
+44 Desktop: Work cloud mode cannot send messages (lockdown-mode check error), while local Codex and web remain usable
+45 Codex for Windows: elevated sandbox setup fails on every launch after update (os error 32 on node_repl.exe)
+46 Migrated Legacy Codex Cloud environment becomes “Shared by me” and cannot be edited or deleted by its owner
+47 New chats are blocked by “Couldn’t load workspace settings” on a personal Plus account
+48 Windows WinGet package cannot start app-server daemon: "the CLI package does not match this platform or executable"
+49 [macOS 26.1002.52244] Startup always ends in "ChatGPT hit a snag" (AggregateError in auth/account sync; durable host fs/readFile without environmentId)
+50 Windows sandbox setup fails with error 32 on node_repl.exe, blocking shell execution and browser automation
+51 [macOS][Dots] Emoji reaction picker is clipped at the bottom of the window
+52 Managed daemon 0.161.0 and CLI 0.160.1 mismatch: startup prompt omits CLI upgrade guidance
+53 ModRetro Chromatic emulator_close fails: recording access lease changed
+54 Windows elevated sandbox blocked by runtime ACL sharing violation; local access-mask probe and verified recovery
+55 [dot/macOS] Readable local tasks cannot be continued reliably; cancellation/approval errors and stale disconnect notifications
+56 daemon restart accepts --enable but preserves a conflicting saved feature override
+57 Terminal is still getting coopted
+58 Windows browser runtime provisioning fails only while desktop app is running; closed-app sandbox check passes
+59 Agent allocated an unapproved paid GPU during recovery; repeated generated guard and transfer failures
+60 Post-handoff recovery prints insertion text for a pending Vim Replace key
+61 Windows CLI 0.160.0: read-only codex exec fails initializing in-process app-server (os error 5), including --no-daemon
+62 Linux Desktop: inactive-window resume guard floods journal with 442–572 info messages/sec
+63 ChatGPT macOS: Dock badge “1” persists with no unread items and “Mark all read” disabled
+64 Voice chat in Codex not working
+65 macOS Desktop 26.1002.52244: all "Ran Command" entries cannot expand (ChatGPT Pro, GPT-6.1 Sol Max)
+66 Linux Desktop: add “Open link in external browser” to link right-click context menu
+67 Projects missing from Windows desktop app after upgrade, still visible in browser
+68 Windows Codex Desktop: node_repl fails with SHARING VIOLATION during sandbox ACL initialization (os error 32)
+69 Migrated personal Codex Cloud environment becomes workspace-managed and cannot be edited or deleted
+70 macOS: ChatGPT/Codex desktop 26.928.21956 repeatedly crashes on Chrome_IOThread (SIGTRAP; 4 occurrences)
+71 Windows: daemon installation fails with os error 5 when renaming its staging directory
+72 Desktop: restore a supported Reload Window action in production builds
+73 Withdrawn
+74 Windows sandbox consistently fails with setup refresh had errors
+75 Windows taskbar unread badge disappears briefly, then returns despite no visible unread chats
+76 Linux: ChatGPT becomes the fallback browser without user selection, then hides “Open in external browser”
+77 Codex CLI 0.161.0 blocks same-version shared app-server over api_key_model_discovery default
+78 [Windows] Codex Desktop sandbox setup fails with error 32 on node_repl.exe — local execution completely blocked
+79 Windows desktop: hidden Pages prewarm renderer causes runaway conversation-resume loop
+80 [macOS][dot] 26.1002.52244: local Mac stays Offline, reconnect setup fails, and Computer-thread sends stall
+81 (5-hour) token usage window decrease?
+82 [macOS][26.1002.52244] Desktop won't load account/usage data — JWT has no chatgpt_account_id, everything returns 432
+83 [Withdrawn] Codex App safety interruption report
+84 CLI: opt-in compact status line with consumed-usage bars
+85 Existing dot disappears from Windows desktop app and web after restart, but remains accessible on iPad
+86 [Windows] Maximizing ChatGPT causes system-wide Wi-Fi loss with Intel AX210 driver errors
+87 [Dots][Android] Messages arrive in chat but no push notifications on Motorola Edge 60 Fusion
+88 Default proxy connectivity in Codex Cloud broken
+89 [Windows] All commands fail: "setup refresh had errors"
+90 macOS desktop: Crashpad/pending reached 168 GB and keeps growing after cleanup
+91 Withdrawn
+92 Windows: local commands fail with “helper_unknown_error: setup refresh had errors”
+93 Windows dot-created local tasks appear in sidebar only after opening from Completed
+94 Windows sandbox setup fails on loaded computer-use DLL (error 32)
+95 copy past issue in remote ssh terminal
+96 Codex Security 0.1.32 — Python MCP generates pycache files and repeatedly breaks plugin integrity verification
+97 Windows 26.1002.52244: browser control blocked by node_repl.exe sharing violation after reboot
+98 Codex Cloud: Library ZIP transfer returns HTTP 403; uploaded attachments remain unreadable sediment references
+99 Windows dot cannot access connected PC: “setup refresh had errors” / node_repl.exe sharing violation
+100 New chat fails with "Failed to load workspace settings" after update to 26.1002.52244 — /accounts/check now hard-fails when DeviceCheck token generation fails (macOS)
+101 [Windows Codex Desktop 26.1002.7124.0] stdio MCP initializes and tool catalog builds, but tools are missing from Desktop chat (CLI works)
+102 Desktop follow-up appears unanswered while wait_agent is active on a remote host (triage request)
+103 CLI 0.162.0 panics at terminal_hyperlinks.rs:392: UTF-8 boundary inside ➡ while rendering Chinese text
+104 Codex CLI: clipboard failures, goal continuity loss, Astra Max discrepancy, and subagent usage/control issues
+105 The Codex app stops working and closes after 38 seconds.
+106 Astra accounting: 2.26x combined allowance + credit burden per price-weighted workload between reset cycles
+107 macOS: Chrome extension enabled but desktop app reports “Not installed”
+108 [macOS Desktop 26.1002] Queued messages never send; stopping or forking chat is required, with submission timeout
+109 Codex Windows Desktop – Shell fails to start: sandbox setup refresh / OS error 32
+110 [Windows] delegated tasks fail before shell startup with “setup refresh had errors”; logs report error 32 on node_repl.exe
+111 Codex Desktop Windows sandbox initialization fails with a locked node_repl.exe
+112 [TUI] Mouse capture blocks terminal-native right-click paste —   please add a config opt-out
+113 [Dots] Cloud execution failures (duplicate)
+114 v0.161.0 when copy Chinese language text from screen, pasted text is garbled text
+115 codex exec prints the same unchanged diff three times with hooks disabled
+116 codex exec prints the same unchanged diff three times with hooks disabled
+117 [macOS Desktop] Japanese renders as boxed question marks in code within sent user messages and assistant responses
+118 Keep task positions stable in the agent dashboard
+119 Windows elevated sandbox setup refresh fails with os error 32 in 0.162.0-alpha.2
+120 Withdrawn: submitted through the wrong GitHub account
+121 GitHub @codex review remains stuck after org-transfer connector rebinding (👀 persists, no review)
+122 Windows: persistent workspace settings Cloudflare 403; sending during Retry can start a chat
+123 GPT-6.1 Sol Ultrafast is not showing up
+124 I am seeing persistent false-positive invalid_prompt errors with the GPT-6 model family.
+125 Persistent command-execution failure on connected Windows computer
+126 Desktop: web-saved Codex custom instructions not picked up in a fresh local chat
+127 20572b4a-ecf7-4446-b9f2-264e9a15ba19
+128 Windows sandbox: process creation fails with setup refresh had errors while full access works
+129 Windows dot local delegation: sandbox setup refresh keeps failing
+130 [TUI] “This server is not managed by Codex” obscures daemon ownership and safe recovery
+131 [Bug] Codex returns 503 "Unable to verify Daybreak Blue access" during normal GPT-6.1 Sol session
+132 Linux sandbox 0.162: deny_read entries that name the same file through a symlink fail with "Unable to mount source on destination: No such file or directory"
+133 VS Code Codex dictation fails with HTTP 403 cloudflare_challenge
+134 Windows app intermittently renders raw UI/HTML-like markup instead of formatted response
+135 GitHub connector review blocks authorized blob uploads when payload is omitted
+136 Ultrafast unavailable in Codex CLI v0.162.0 on Pro 500: missing command and fallback to Standard
+137 TUI: Allow selecting and copying text from tips
+138 TUI converts an unsupported service_tier to default before core can emit its warning
+139 CLI/TUI: Make spawned subagent navigation and Alt+arrow shortcuts discoverable
+140 [Windows] OS error 32 / sandbox setup failure persists after latest Desktop update
+141 App-server logs "Connection reset without closing handshake" on every TUI startup
+142 ChatGPT Work and Codex "In the cloud" mode cannot be selected
+143 [dot] Tools report “user cancelled MCP tool call” without any cancellation or approval prompt
+144 Model behavior: unsupported hypothesis replaces reported bug, followed by acknowledgement without follow-through
+145 Windows app: project changes affect another open window
+146 In-TUI /review never dispatches the Stop hook (no Stop or SubagentStop when the review turn ends)
+147 Withdrawn
+148 GPT-6 reasoning effort appears to have been retarded even when set to High
+149 CLI: Left Arrow "for agents" stops working after the displayed thread is archived externally
+150 VS Code extension: dictation fails with “Dictation stopped”
+151 Feature request: Intent-aware orchestration across Chat, Work, and Codex
+152 Withdrawn by reporter
+153 [Windows] Codex unified exec fails with CreateProcessAsUserW error 5 despite working PowerShell terminals
+154 [VS Code] Codex secondary sidebar breaks mouse text selection in Jupyter notebooks
+155 install.sh: verify_archive_digest clobbers global archive_path, overwriting checksum manifest with package archive
+156 [macOS][Permissions] Agent inferred email outreach from research “full send” and attempted Outlook access before consent
+157 MobaXterm SSH: text paste triggers image clipboard error; --no-alt-screen fixes it (CLI 0.162.1)
+158 [macOS] ChatGPT 26.1007.30912 crashes ~60-100s after launch, SIGTRAP at identical Codex Framework offset 0x475d754 (7/7 reproductions)
+159 Withdrawn by author
+160 Projects not listed in the Desktop App
+161 codex-utils-pty: let a caller observe an exited PTY child before the waiter reaps it
+162 Running Codex task Threads disappreared
+163 Windows desktop loses local project catalog after unexpected power restart; retained database projects are not restored in the sidebar
+164 Historical reasoning double-counted in 0.162.0-alpha.17.2, causing premature auto-compaction
+165 [Bug] Frequent reminders：Selected model is at capacity. Please try a different model.
+166 Codex Desktop: Show active Git branch prominently above the chat composer to prevent wrong-branch edits
+167 Feature Request: Show Authenticated ChatGPT Account in Codex CLI
+168 [macOS desktop] Stream processing errors recur after moving work to a fresh conversation
+169 [VS Code] Regression: dragging files into Codex chat no longer works
+170 Backend ends HTTP Responses streams at ~900 s and closes websocket turns (1000/1012) before response.completed on long gpt-6.1-sol reasoning turns
+171 Intercom MCP login reports success but initialization still returns Auth required in fresh tasks
+172 [codex-web][Regression] Usage page takes ~5 seconds to load and feels sluggish after redesign
+173 Withdrawn report
+174 Withdrawn
+175 Withdrawn by reporter
+176 Selected model is at capacity. Please try a different model.
+177 Withdrawn: web query accessibility report
+178 Feature request: automatically resume parent Codex session when delegated subagents finish
+179 macOS desktop unexpectedly switches an existing chat to New Chat; hidden Pages prewarm navigation suspected
+180 Recurring Codex Errors: SSE Idle Timeout & Model At Capacity
+181 CLI: Removes leading tabs from display
+182 [VS Code][Regression] Code comprehension quality down across GPT-6.1 Sol / GPT-6 Astra / GPT-5.6 Sol, with severe latency; web works better
+183 Withdrawn — please remove this issue
+184 Frequent "Selected model is at capacity" error on two separate Pro accounts
+185 Approved permissions, but write_stdin is blocked by sandbox_approval=false
+186 /subagents keeps unavailable threads selectable and places newly spawned agents at the bottom
+187 [Windows] GPT-6.1 Sol still defaults to 373K / 354K effective after 500K announcement; updater reports up to date
+188 TUI: let syntax themes color markdown prose, not just inline code
+189 [VS Code] LaTeX rendering broken in 26.1007.21434
+190 Windows ChatGPT Codex App: WSL agent exec_command fails with CreateProcess os error 2
+191 Permissions and Syncing bug
+192 Windows MXC sandbox causes Python executable path resolution warning
+193 Codex app auto-review blocks CapCut access after failed export
+194 [WITHDRAWN] Not a product bug report
+195 [WITHDRAWN] Not a product bug report
+196 [CLI] `codex agents` checks launch-directory trust before opening the overview
+197 [TUI] Resumed in-progress turns reset the elapsed-time indicator
+198 Codex WebView assets return HTTP 401 in VS Code Remote WSL after VS Code 1.141.1 update
+199 Selected model is at capacity. Please try a different model.
+200 [macOS] Update checks fail because appcast endpoint returns HTTP 520
+201 Feedback
+202 TUI renders an assistant message twice when a tool call interleaves between the streamed delta and item completion
+203 CLI: same-host --remote unix:// silently uses daemon cwd unless --cd is supplied
+204 Withdrawn by author
+205 [Windows Desktop 26.1007.9446.0] Stable app starts headlessly with no renderer or window after Store update and clean reinstall
+206 Delegated agents lose local Docker access and report false usage-limit errors for goals
+207 Conversation history skips completed turns after app update
+208 Windows Codex Desktop command execution hangs when features.prefer_mxc=true
+209 CLI Mermaid renderer rejects <br/> line breaks in node labels
+210 Feature request: support Firefox/Gecko instead of Chromium for Codex browsing
+211 Hangs after a while
+212 codex-arg0: reuse inherited PATH aliases when CODEX_HOME is read-only inside sandboxed sub-processes
+213 codex-cli doctor: accept reverted rollout revision lineage in state.rollout_db_parity
+214 [macOS 27.0.1] Update check fails with server error 520 on 26.1007.30912
+215 Reference directories via @
+216 GPT-6.1 SOL Ultrafast is available on web using my account, but missing in Codex Windows Desktop. Astra still offers Ultrafast. Updating, restarting, and signing out and back in did not resolve it.
+217 Desktop cloud conversations fail to load: ASB HTTP read failed (503) after successful reconnect
+218 Codex Windows App: HTTP 400 – ChatGPT account not supported for any model
+219 False positive: Cybersecurity safeguard blocks a local authentication code review
+220 Closed by the author; see #51932
+221 [Windows] Codex 26.1007.9446.0 displays raw CSS instead of main interface after update
+222 macOS desktop updater fails to retrieve appcast with HTTP 520
+223 01a13fbd-4b1c-72e3-aa31-dcc4fad3bf78
+224 Title: Read-only batch rejected; /feedback permission check also fails
+225 Windows Codex CLI repeatedly fails with helper_unknown_error: setup refresh had errors
+226 Codex Windows Cloudflare 403 — Browser policy initialization blocked
+227 Withdrawn
+228 Product feedback: paid weekly usage drains too quickly, and upgrades need clear allowance expectations
+229 Issues with Codex updates
+230 [Windows] codex exec fails with helper_unknown_error during sandbox setup; standalone sandbox succeeds
+231 [0.162.1][macOS] Deleting daemon startup directory still breaks account/read and TUI bootstrap
+232 Windows 10 Computer Use: FrameArrived timeout and missing click geometry fixed by MTA callback workaround (Sky 0.7.7)
+233 Windows app: outdated client offers unusable models without an update notice or actionable recovery guidance
+234 Codex desktop becomes unusable when opening a linked local Go source file
+235 codex Error: account/read failed during TUI bootstrap: account/read failed: workspace routing discovery timed out (code -32603)
+236 Windows: command rejected as “blocked by policy”, but /approve finds no denial
+237 Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop
+238 Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop
+239 Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop
+240 Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop
+241 Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop
+242 Document a supported third-party attachment and graceful-pause path for tasks already owned by Codex Desktop
+243 [Edge extension][Ubuntu/Windows] ChatGPT side panel blocked by frame-ancestors CSP missing Edge extension ID
+244 Automatic context compaction starts at only 66% usage (312k / 475k tokens)
+245 [macOS / Chrome side panel / Work] Browser initialization fails after about one minute with "Sheep MCP session closed: RPC INTERNAL"
+246 Model at the capacity
+247 After Update the app won't launch
+248 `$HOME/.codex` is loaded as a project config layer when `CODEX_HOME` points somewhere else (follow-up to #9932)
+249 helper_sandbox_lock_failed — access denied to C:\Users\User\.codex\.sandbox-bin.
+250 Dissapearing credits
+251 Windows dot-delegated browser startup still fails with missing host SystemDrive after full reboot
+252 Cloud environment disconnected (409 environment_offline), blocking access to unpublished changes
+253 [Windows] Bottom input area clipped after restoring Codex from minimized state
+254 GPT-6.1 Sol missing from Windows desktop model picker (available on chatgpt.com with same account)
+255 Weekly allowance dropped from 48% to 0%; usage still drains much faster after a banked reset
+256 WSL: exec_command returns exit 1 with empty output; execution failure cause unknown
+257 Withdrawn: reported in the wrong repository
+258 Weekly limit shows 0% left unexpectedly fast on ChatGPT Pro ($100) with the Codex desktop app
+259 Async compaction panic leaves the turn stuck inProgress until interrupted
+260 [macOS][SSH remote] Voice is disabled in a new chat but becomes available after the first text message
+261 Auto-review appears to apply Guardian's own read-only restrictions to authorized parent actions (0.156.1, custom reviewer)
+262 [macOS][In-app browser] blob: iframes stay about:blank while HTTP and srcdoc frames load
+263 Windows MXC: Git cannot enter explicitly read-granted checkout (Codex 0.162.0)
+264 [macOS][ChatGPT/Codex app][Sparkle] Dynamic update feed HTTP 520 over IPv6, succeeds over IPv4
+265 [macOS] Work sessions permanently stuck on "Awaiting approval" with no accessible composer or approval controls
+266 Design adjustment
+267 [iOS/iPadOS Remote] Retired models remain selectable while standalone app-server stays on 0.142.5 despite up-to-date desktop
+268 Windows: command hooks always run through the session PowerShell (pwsh -NoProfile -Command), adding ~1-3 s per hook call
+269 [ChatGPT Desktop][Work][macOS] permissions control disappears after first message (local execution)
+270 [macOS / ChatGPT Work] Terminal DNS and HTTPS fail despite network_access=true; Sites publishing blocked
+271 Withdrawn
+272 Withdrawn
+273 [CLI 0.163.0] Daybreak Blue session blocked by cyber_policy
+274 opensi.lol inorganic inflation
+275 error
+276 Selected model is at capacity (server_is_overloaded) on ~30% of requests — all clients, all models, independent of quota
+277 Durable host WebSocket (wss://codex-cloud-backend.chatgpt.com/) never establishes and loops on open_timeout / 1006 in the Windows desktop app
+278 [macOS Desktop] App update leaves primary host’s app-managed server outdated in a two-host SSH setup
+279 Codex CLI permissions issue, possibly related to openai/codex#52458.
+280 Some tools are temporarily unavailable error.
+281 Required fail-closed native admission and conversation role binding for desktop alignment policies
+282 Work Mode tools remain unavailable across new chats
+283 macOS app 26.1016.51333: new chats fail on first message with Cannot serialize value (couldn't stringify value)
+284 Opened in error — please disregard
+285 Persistent "Selected model is at capacity" error despite remaining quota
+286 [Bug] Non-atomic write of ~/.codex/config.toml leads to 0x00 null-byte corruption and unrecoverable startup crash on sudden power loss
+287 Report withdrawn by reporter
+288 Codex model queuing
+289 Chat mode missing in macOS desktop app — only ChatGPT Work and Codex are shown
+290 macOS Work mode: in-app browser discovery returns [] after continuing an existing task
+291 Selected model is at its capacity - no automatic retry or fallback mechanism
+292 Withdrawn — no action needed
+293 https://chatgpt.com/codex/install.sh returns 404
+294 Codex agent cannot tell whether Daybreak mode is active
+295 3e6ff94b-a625-4f75-a51e-12c773b03a1c
+296 CLI: attach a second terminal to a running session without closing the first (at least read-only)
+297 Codex desktop: label imported Claude Code chats in the sidebar and chat header
+298 Windows: no Delete entry point for archived dot-created chats and Codex cloud tasks
+299 Remote project task creation fails at local MCP transport
+
+exec
+/bin/zsh -lc "node - <<'JS'
+const rows=require('fs').readFileSync('incidencias.jsonl','utf8').trim().split('\\n').map(JSON.parse);for(let [i,r] of rows.entries()) {let s=r.texto;let m=s.match(/What (?:version|surface|operating)["'^'"\\n]*\\n+(["'^'"\\n]+)/ig)||[];console.log(i,m.map(x=>x.split('\\n').pop().slice(0,65)).join('|')||s.replace(/\\s+/g,' ').slice(0,125))}
+JS" in /private/var/tmp/bench/ws-k3Pk5hdU
+ succeeded in 121ms:
+0 codex-cli 0.160.0 (Homebrew cask), managed app-server daemon 0.16
+1 0.159.2
+2 ## What is the type of issue? Documentation is missing or its applicability to the desktop tool route is unclear. ## What is 
+3 26.930.51102 (build 13100), read from the installed app Info.plis
+4 26.930.41038
+5 Desktop release `26.930.31730` (build `12947`), verified from the
+6 ## What happens The shared app-server daemon starts with the working directory of the first `codex` invocation that spawns it
+7 ## Behaviour On Linux with codex-cli 0.160.0, `app-server daemon bootstrap` successfully starts the managed app-server and re
+8 ### What variant of Codex are you using? CLI, Desktop App ### What feature would you like to see? # Summary Add support for u
+9 ### What happened macOS (arm64), managed app-server daemon with its own `CODEX_HOME`, several long-running desktop-app thread
+10 Versão 26.930.41038
+11 Using clodex cli, sessions are stored in local PC disk. If using web cloud app, how to show and resume sessions stored above 
+12 ### What variant of Codex are you using? Android app, version 1.2026.272 (20). ### What feature would you like to see? Allow 
+13 The keystroke intended for that application is then consumed by the Codex permission dialog and can accidentally approve or d
+14 ## Summary On **ChatGPT Web**, a project folder that has been pinned can disappear from the **Projects** tab/interface instea
+15 Running Codex CLI inside a ChatGPT-managed cloud development container fails during startup with: “failed to initialize in-pr
+16 Linux desktop package 26.930.61225; bundled codex-cli/app-server 
+17 26.930.61225
+18 ### What variant of Codex are you using? CLI ### What feature would you like to see? Codex showed a sparkling star effect aro
+19 ### What variant of Codex are you using? cli ### What feature would you like to see? In the Codex CLI TUI, user messages have
+20 codex-cli 0.160.1
+21 ### What variant of Codex are you using? CLI ### What feature would you like to see? Please let us turn off Tip. I already ha
+22 ### What variant of Codex are you using? App — Codex desktop app on Windows ### What feature would you like to see? Please ad
+23 On October 6, 2026, manually creating a new cloud task worked, but dot-initiated creation of new cloud tasks and continuation
+24 Mijn goedgekeurde vervanging van Supervisor31 door32 wordt geblokkeerd met “blocked by policy”, zonder reden. Kunnen jullie o
+25 Installed version in the reporting environment: `codex-cli 0.160.
+26 v0.160.0-alpha.6
+27 codex-cli 0.160.1
+28 ### What issue are you seeing? Codex GitHub code review acknowledges @codex review comments with the 👀 reaction, but never p
+29 Versión 26.930.61225
+30 codex-cli 0.160.1 (Homebrew). The running managed app-server is a
+31 ### What issue are you seeing? Dot calls fail on iPhone and macOS. I also observed a separate failure to load the dot page on
+32 codex-cli 0.160.0 (Homebrew cask)
+33 ### App version ChatGPT macOS desktop app 26.1002.51308, build 13417 (verified from the installed app). The built-in update c
+34 26.1002.51308 (latest version reported by the user)
+35 26.1002.51308 (production channel, Windows package 26.1002.6548.0
+36 26.1002.51308
+37 ## Verified current case A fresh Firefox 157.0.1 installation on the dot's Linux cloud computer cannot open https://chatgpt.c
+38 ## Summary After the October 7 update, the Windows app repeatedly failed to complete Windows setup and blocked sandboxed comm
+39 # [codex-theme-crash-evidence-2026-10-07.zip](https://github.com/user-attachments/files/33145200/codex-theme-crash-evidence-2
+40 26.1002.6548.0 (bundled `codex-cli 0.162.0-alpha.2`). The issue s
+41 26.1002.51308
+42 Version 26.930.61225
+43 Powered by Codex & OWL Version 26.1002.51308  Released 6 Oct 2026
+44 ### Summary In the ChatGPT desktop application, **Work cloud mode cannot send messages** and continues to show a lockdown-mod
+45 26.1002.7124.0
+46 ### What issue are you seeing? I migrated an environment from Legacy Codex Cloud to the new Codex Cloud environment system. T
+47 26.1002.52244 (Build 13536)
+48 ## Description The official Codex CLI package installed via WinGet cannot start the app-server daemon on Windows. The CLI its
+49 ChatGPT desktop 26.1002.52244 (Codex Framework 155.0.8059.27). Up
+50 Codex: 26.1002.52244, build 13536
+51 ChatGPT desktop 26.1002.52244 (build 13536)
+52 ### Issue Codex CLI 0.160.1 encounters a startup compatibility prompt when connecting to managed app-server 0.161.0: ```text 
+53 ## Summary The ModRetro Chromatic Codex plugin can build and boot a new disposable project, but the owning Codex chat cannot 
+54 ## Summary Windows elevated sandbox initialization fails before ordinary shell commands or Node tools can run. Restarting the
+55 - Running desktop app: version 26.930.61225, build 13232. Codex i
+56 `codex-cli 0.161.0`; managed daemon `0.161.0`.
+57 latest
+58 ### Environment - Windows 10 Pro, build 19045, 64-bit - Desktop MSIX package: `OpenAI.Codex_26.1002.7124.0_x64` - Bundled CLI
+59 ## Summary During an ongoing paid RunPod training-recovery task in Codex desktop on Windows, the agent created a different, m
+60 Recovery printing can show the wrong unsent draft when a held key belongs to Vim Replace. This affects the post-handoff recov
+61 ## Summary A standalone Windows desktop helper invokes the bundled Codex CLI for a separate, read-only conversation. It fails
+62 ## Summary Codex Desktop on Linux repeatedly writes the same informational message to the system journal at roughly 442–572 e
+63 ### App version ChatGPT desktop app 26.1002.52244. ### Subscription Not specified. ### Platform macOS. Exact OS version and a
+64 Codex 26.1002.51308 and Codex audio 26.1002.51308
+65 26.1002.52244. The user reports the release date as October 7, 20
+66 ### What variant of Codex are you using? App ### What feature would you like to see? ### Requested behavior Add “Open in exte
+67 26.1002.52244
+68 Codex Desktop for Windows: 26.1002.7124.0  Codex CLI: 0.161.0  No
+69 I migrated a legacy Codex Cloud environment to the new Codex Cloud experience from a personal ChatGPT Plus account. After mig
+70 26.928.21956 (build 12404), from the macOS crash report and insta
+71 0.161.0
+72 ### Request Please restore a supported **Reload Window** action for Codex Desktop production builds (menu + shortcut), or add
+73 
+74 Version 26.1002.52244
+75 ## Environment - Codex desktop app on Windows - Installed Microsoft Store/MSIX package version: `26.1002.7124.0` ## Problem T
+76 26.1002.52244 (RPM chatgpt-26.1002.52244-1.x86_64)
+77 0.161.0
+78 ## Summary Codex in the ChatGPT Windows desktop application cannot execute any local commands. Every execution attempt fails 
+79 26.1002.52244, build 13536, production. Windows Store package: Op
+80 ChatGPT desktop app 26.1002.52244, released October 7, 2026. The 
+81 ### What issue are you seeing? ## Summary Since yesterday, I've noticed a sudden and significant increase in Codex usage cons
+82 26.1002.52244. I checked the appcast and this seems to be the new
+83 Withdrawn at reporter request. The reporter prefers to contact OpenAI support privately rather than via a public GitHub issue
+84 ### What variant of Codex are you using? Codex CLI 0.161.0 on Windows x86_64, launched from PowerShell. ### What feature woul
+85 ## Summary On October 8, 2026, after restarting my Windows laptop, my existing dot ("kobe") disappeared from both the Windows
+86 App build in logs: 26.1002.52244; installed MSIX package: OpenAI.
+87 ### What issue are you seeing? Messages from my dot appear in the ChatGPT Android app, but I do not receive push notification
+88 ### What issue are you seeing? ````markdown ### Component and workspace - Component: **Codex Cloud (new)** - Workspace/plan: 
+89 26.1002.52244
+90 26.928.21956 (build 12404), prod channel. Version measured during
+91 Withdrawn at the author's request.
+92 Powered by Codex & OWL Version 26.1002.52244  Released 7 Oct 2026
+93 App: 26.1002.52244 Subscription: ChatGPT Pro Platform: Windows; exact OS build not collected A successfully completed local t
+94 Windows 11 Enterprise build 26200; Codex Windows package 26.1002.7124.0; elevated sandbox. Both Codex and ChatGPT Work fail w
+95 codex-cli 0.160.1
+96 ## Implementation update — October 14, 2026 [Python-cache fix #1625](<https://github.com/openai/codex-security/pull/1625>) is
+97 ## Summary On October 8, Codex Desktop on Windows repeatedly failed to start browser control before it could read Chrome tabs
+98 **Closed as a duplicate of #51737.** Its [October 8 update](https://github.com/openai/codex/issues/51737#issuecomment-6063919
+99 26.1002.52244, build 13536    The Windows package version was 26.
+100 ChatGPT/Codex desktop 26.1002.52244 (build 13536), installed 2026
+101 ## Summary On Windows, Codex Desktop recognizes and initializes an enabled custom stdio MCP server (`vibe-monitor`), and its 
+102 Not captured for the affected remote host. The reporter calls the
+103 `codex-cli 0.162.0`, installed globally via npm (`@openai/codex`)
+104  Six issues affect TUI interaction, goal execution, reasoning behavior, and subagent control. 1. Copy/paste fails in an eleva
+105 26.1002.52244
+106 26.1002.7124.0 (current installed Windows package, verified 9 Oct
+107 ### App version 26.1007.21159 (build 20052). Also reproduced before updating on 26.1002.52244 (build 13536). ### Subscription
+108 26.1002.52244, build 13536. Verified from the installed applicati
+109 Version 26.1002.52244
+110 26.1002.52244
+111 26.1002.52244
+112 Codex CLI 0.162.0
+113 补充信息已转到对应问题，关闭这个重复 issue。 - [沙箱启动失败](https://github.com/openai/codex/issues/51883#issuecomment-6077430332) - [环境发布失败、对话持续加载](
+114 v0.161.0
+115 codex-cli 0.162.0
+116 codex-cli 0.162.0
+117 ### Bug Japanese text is readable in the Codex desktop input composer. After submitting a message containing Markdown inline 
+118 ### What variant of Codex are you using? CLI ### What feature would you like to see? When monitoring several agents, tasks in
+119 # Codex CLI on Windows: elevated sandbox "setup refresh had errors" (os error 32) after update to 0.162.0-alpha.2 ## Environm
+120 Withdrawn because this report was submitted through the wrong connected GitHub account. The original statements should not be
+121 ### What issue are you seeing? ## Summary On 2026-10-09, GitHub Code Review accepted a manual `@codex review` request on a pr
+122 Windows package: `26.1002.7124.0` (verified by `codex doctor`).
+123 v0.162.0
+124 codex --version
+125 Version 26.1002.52244
+126 ### Environment - ChatGPT desktop app / Codex: **26.1007.21159**, build **20052** (installed app metadata) - macOS **15.7.7**
+127 GPT 6.1
+128 ### App version Unknown: the app update/version tool returned "App updates are only available on the local desktop host." No 
+129 Windows dot→本機委派持續於 shell 建立前失敗，重開機與單次釋放 runtime 程序均未通過驗收。 版本： - App 工具：26.1002.52244／build 13536／prod - 桌面紀錄與 setup package：
+130 ## Summary When the TUI finds a reachable shared app-server with incompatible feature flags, it can disable **Restart with th
+131 ## Environment - OS: Windows 11 - Client: Codex Desktop - Subscription: ChatGPT Plus - Model: GPT-6.1 Sol - Authentication: S
+132 Follow-up to #43929. Thanks for the fix in #50059, which works. With it in place, a second failure now shows. **Setup:** Linu
+133 ## Summary Dictation in the Codex VS Code extension starts recording and receives audio, but transcription fails: `/transcrib
+134 ### Summary In the ChatGPT/Codex Windows app, formatted response UI sometimes disappears and the underlying markup is shown a
+135 ## What happened In Codex Desktop, an authorized GitHub connector call to create a Git blob was rejected by automatic review 
+136 v0.162.0
+137 ### Feature request Allow users to select and copy text from tips in the Codex CLI using the same interactions available for 
+138 **Environment and scope** - Codex CLI `0.162.1` on Windows x64. - Source commit: `092d3acd6bec3e3a14bdc7e7a2810ab628ab759d`. 
+139 ### What variant of Codex are you using? Codex CLI / terminal TUI. ### Problem When a main Codex agent spawns subagents, it i
+140 This issue was created by mistake and is closed to avoid confusion. The intended follow-up report is #52878.
+141 **Version:** codex-cli 0.162.1 (npm), macOS (Apple Silicon), managed app-server daemon **What happens:** Each time `codex` st
+142  26.1007.11041
+143 Latest user-reported Windows desktop version: **26.1007.21434** f
+144 ## Summary During a coding task, Codex substituted a conditional, source-derived explanation for the user's reported bug with
+145 GPT-6.1 SOL medium
+146 Observed on codex-cli 0.149.0. Source traced at `1badea29abf49e56
+147 Withdrawn by the reporter. Please delete this issue and its revision history.
+148 ## Description GPT-6 appears to have its effective reasoning capabilities significantly restricted, even when reasoning effor
+149 Codex CLI and shared daemon: 0.162.1.
+150 26.1007.21434 (openai.chatgpt)
+151 ## Request Allow users to state an outcome once and have ChatGPT **plan and coordinate subtasks across Chat, Work, and Codex*
+152 This issue has been withdrawn by the reporter. Please disregard. No technical information remains in the current description.
+153 26.1007.21434
+154 26.1007.21434
+155 latest (main / 0.142.5 - 0.159.0)
+156 ## Summary In a Codex desktop research task, the user said "full send with a swarm of agents" to authorize an intensive image
+157 ### Environment - Codex CLI: 0.162.1 (standalone Linux binary) - Remote host: Ubuntu, SSH session - Client: MobaXterm on Wind
+158 ChatGPT 26.1007.30912 (build 20156) Codex Framework 155.0.8059.40
+159 Withdrawn by author. Please disregard this report.
+160 Powered by Codex & OWL Version 26.1007.21434
+161 ### What variant of Codex are you using? The `codex-utils-pty` Rust crate, used as a library dependency at `rust-v0.154.0`. #
+162 Version 26.908.40834
+163 Product and environment - Windows desktop application installed as OpenAI.Codex, package version 26.1007.2314.0. - Windows 10
+164 0.162.0-alpha.17.2
+165 26.1007.21434
+166 ## Summary Add a **persistent, highly visible indicator of the active Git branch immediately above or beside the chat input**
+167 ### What variant of Codex are you using? Codex CLI v0.151.0 on Debian Linux (VS Code integrated terminal) ### What feature wo
+168 ### Environment - Desktop app: currently installed ChatGPT/Codex macOS bundle `26.1007.30912 (20156)`, bundle ID `com.openai.
+169 `openai.chatgpt` 26.1007.21434
+170 ### What issue are you seeing? Long single reasoning turns against `https://chatgpt.com/backend-api/codex/responses` never co
+171 ## Environment - macOS, Codex desktop local task. - Installed Intercom plugin version 0.1.0. - MCP server name: `intercom`. -
+172 ### What issue are you seeing? Since the recent redesign, the **Codex usage page** (https://chatgpt.com/codex/settings/usage)
+173 This report has been withdrawn by its author.
+174 Report withdrawn by its author. Please delete this issue and its edit history.
+175 Withdrawn by reporter.
+176 26.1007.21434
+177 Withdrawn by the reporter for privacy. Public diagnostic details have been removed.
+178 Duplicate of #46120. I added my experience to the existing discussion there, so closing this issue to keep feedback consolida
+179 ChatGPT desktop 26.1007.30912 (build 20156); bundle com.openai.co
+180 26.1007.21434
+181 0.162.1
+182 ## Summary Over approximately the last two weeks (late September–October 13, 2026), the Codex VS Code extension has shown a s
+183 This report has been withdrawn by its author. Please delete this issue and its edit history, if possible. A separate report w
+184 codex-cli 0.162.1
+185 26.1007.21434 (build 13901)
+186 Codex CLI: 0.162.1
+187 ### Codex App version Windows package: `26.1007.2314.0`. The app's update checker reports internal version `26.1007.21434`, b
+188 ### What variant of Codex are you using? CLI (TUI), 0.162.1 ### What feature would you like to see? `MarkdownStyles::for_them
+189 After updating the Codex VS Code extension to `26.1007.21434`, LaTeX formulas stopped rendering in the chat panel. None of th
+190 26.1007.21434 (released October 9, 2026)
+191 
+192 0.162.1
+193 26.1007.30912 (build 20156)
+194 Withdrawn by the reporter. This was a workflow frustration, not a ChatGPT/Codex product malfunction, and should not be treate
+195 Withdrawn by the reporter. The observed conversation-title behavior is accepted as current product behavior and should not be
+196 ## Summary `codex agents` can show a workspace trust prompt for the process's current directory before the read-only Agent Ov
+197 ## Summary When the TUI resumes a session whose latest turn is still in progress, the status indicator appears to restart its
+198 26.1007.21434 (linux-x64)
+199 0.162.1
+200 26.1007.71326 (build 20398), production channel
+201 Le fichier peut-etre lu, mais l'environnement de modification des fichierd echoue
+202 `codex-cli 0.162.1`
+203 codex-cli 0.162.1; managed app-server 0.162.1.
+204 This report has been withdrawn at the author's request.
+205 ## Summary On 2026-10-14 (Asia/Macau, UTC+08:00), the Windows Microsoft Store/MSIX Codex desktop package `OpenAI.Codex 26.100
+206 ## Summary Two reproducible Codex issues affect delegated agents. ### 1. Delegated agent cannot access local Docker The local
+207 Codex macOS **26.1007.71326**, build **20398**. After updating, a long conversation jumps from yesterday at 8:39 p.m. straigh
+208 Windows, Codex Desktop MSIX 26.1007.9446.0
+209 `codex-cli 0.162.1`, installed through Homebrew on Apple Silicon.
+210 
+211 codex-cli 0.162.1
+212 ## Summary When `codex` (or a `codex` test binary / child CLI sub-process) runs inside a `workspace-write` or `read-only` san
+213 ## Summary When a thread is reverted (`thread/revert`), `codex-rollout` keeps `session_meta.meta.id` (`thread_id`) stable whi
+214 26.1007.30912, build 20156, production channel.
+215  0.162.1
+216 Version 26.1007.71326
+217 ### Component and version ChatGPT desktop app, Codex cloud conversations. - App version: 26.1007.71326 (build 20398) - OS: ma
+218 26.519.41501
+219 0.162.1
+220 Closed by the author. The same sandbox sharing violation on node_repl.exe is tracked in #51932, #52036 and #52722.
+221 26.1007.71326 (unable to access "About Codex" dialog)
+222 ## Problem The ChatGPT/Codex macOS desktop app repeatedly fails to check for updates because the official appcast endpoint re
+223 ### What issue are you seeing? Chrome extension is installed and enabled (1.26.901.11451), but ChatGPT desktop (26.1007.71326
+224 In Codex for VS Code on Windows, an Owner-authorized read-only comparison batch returned a generic rejection without diagnost
+225 codex-cli 0.162.1
+226 Codex 26.1007.21434
+227 Withdrawn. Content removed.
+228 ### What variant of Codex are you using? Codex desktop app (macOS) ### What feature would you like to see? I upgraded my subs
+229 Codex macOS 26.1007.30912, build 20156, production channel. Check for Updates fails with Sparkle error 2001. The updates.oais
+230 Codex CLI version: 0.162.1
+231 `codex-cli 0.162.1` (npm). The managed daemon and running app-ser
+232 Windows package `OpenAI.Codex_26.1007.9446.0_x64__2p2nqsd0c76g0`;
+233 ### App version Older Windows Codex desktop installation; exact build was not captured. Reported October 15, 2026. The old mo
+234 ### Summary Clicking a local Go source-file link in a Codex desktop conversation repeatedly makes the app unusable. This is t
+235 0.163.0
+236 codex-cli 0.163.0
+237 ## Integration / documentation question We are preparing a small user-authorized macOS App Sandbox utility that monitors Code
+238 ## Integration / documentation question We are preparing a small user-authorized macOS App Sandbox utility that monitors Code
+239 ## Integration / documentation question We are preparing a small user-authorized macOS App Sandbox utility that monitors Code
+240 ## Integration / documentation question We are preparing a small user-authorized macOS App Sandbox utility that monitors Code
+241 ## Integration / documentation question We are preparing a small user-authorized macOS App Sandbox utility that monitors Code
+242 ## Integration / documentation question We are preparing a small user-authorized macOS App Sandbox utility that monitors Code
+243 Desktop About version not recorded. Affected Edge ChatGPT extensi
+244 ### What issue are you seeing? Is automatic context compaction too aggressive under the new context window limit? Codex start
+245 ## Summary Browser control in ChatGPT Work, started from the Chrome side panel, fails during initialization before any tab ca
+246 0.162.1
+247 26.1013.3656.0
+248 codex-cli 0.163.0, the latest release. Also reproduced on 0.160.1
+249 gpt astra 6 light
+250 Powered by Codex & OWL Version 26.1013.31256
+251 ## Summary Browser control in a dot-delegated task on a connected, authorized Windows laptop still fails during initializatio
+252 Version 26.1013.31256
+253 26.1013.3656.0
+254 Hey all. GPT-6.1 Sol isn't showing up in the model picker in the Windows Codex app — only GPT-6 models are listed. I'm on Win
+255 ### What happened My remaining Codex weekly allowance dropped from **48% to 0%** in about nine minutes, then Codex started ch
+256 WSL: exec_command returns exit 1 with empty output; execution fai
+257 Withdrawn by the reporter. This is a ChatGPT iOS issue rather than a Codex issue. Please disregard.
+258 26.1007.30912 (build 20156)
+259 ### What issue are you seeing? Reproduced with the official `0.164.0-alpha.3` macOS arm64 binary against a loopback Responses
+260 ## Environment - Client: Codex desktop app on a MacBook (macOS) - Remote host: Windows - Connection: the app's built-in SSH r
+261 
+262 ChatGPT desktop 26.1013.40934 (build 20770), using the Codex/loca
+263 Environment - Windows NT 10.0, build 26300.9711, DisplayVersion 26H2 (read from the host registry after the incident; not cap
+264 ### Summary The ChatGPT/Codex macOS desktop updater consistently fails to retrieve its dynamic Sparkle appcast over **IPv6** 
+265 Bug description I am reporting a reproducible defect in ChatGPT Work that has rendered three separate Work sessions unusable.
+266 26.1013.40934
+267 ## Summary Codex Remote in the ChatGPT mobile app offers only older GPT-5.2–GPT-5.5 models when connecting to a Mac host. Sel
+268 ### What variant of Codex are you using? CLI — codex-cli 0.159.2 (`codex exec` / app-server), Windows 11, PowerShell 7.6.6 as
+269 [codex-logs-2026-10-19-220723-BJT.zip](https://github.com/user-attachments/files/33670578/codex-logs-2026-10-19-220723-BJT.zi
+270 ### App version ChatGPT macOS app / Work mode. Installed app Info.plist: version `26.1013.40934`, build `20770`. This is a Ch
+271 
+272 Withdrawn by author.
+273 0.163.0
+274 Hi, I’m @tehsaccade , Please forward this report to Thibault Sottiaux, @tibo-openai , and I’d appreciate acknowledgment that 
+275 codex 
+276 Codex Desktop 26.1013.40934 (core codex-cli 0.163.0-alpha.10.2), 
+277 ### Summary Two separate problems on Codex desktop for Windows. They have different causes. - **A. `server_overloaded` return
+278 Desktop app bundle inspected: `26.1013.40934` (build `20770`, ins
+279 openai/codex#52458.
+280 ### What issue are you seeing? Ive been getting this for the last hour on both desktop and browser. Cant connect to my studio
+281 ## Disposition: closing this overlapping umbrella request I should have checked the existing reports before opening this issu
+282  Description: ChatGPT Work Mode repeatedly displays “Some tools are temporarily unavailable,” preventing website creation and
+283 ## Summary In the Codex desktop app on macOS, sending the first message in a new chat fails with: ```text 启动聊天时出错 Cannot seri
+284 Opened in this repository by mistake. Please disregard.
+285 ### Description I am a Codex Pro subscriber and I am currently unable to use the service due to a persistent error. Every req
+286 26.1016.6573.0 (Codex CLI v0.150.1)
+287 This report has been withdrawn by the reporter. Please remove the issue and its revision history if possible.
+288 Hi, I think something may be wrong with my account's Codex access. Since Oct 21, every turn in Codex Desktop fails with: Sele
+289 Description The regular Chat mode is completely missing from the new ChatGPT desktop app on macOS. The top-left menu only sho
+290 26.1016.51333, as reported by the desktop client metadata. The lo
+291 v0.163.0
+292 ## Summary Starting a Codex Cloud coding task from the web is difficult to discover, and the documented controls do not match
+293 ### What issue are you seeing? Trying to run `curl -fsSL https://chatgpt.com/codex/install.sh | sh` currently results in `cur
+294 26.1016.62342 (released October 22, 2026)
+295 챗gpt
+296 ### What variant of Codex are you using? Codex CLI / terminal TUI. ### What feature would you like to see? Please add a suppo
+297 ## Feature request Show a clear source label on Claude Code chats that appear in the Codex desktop app. ## Problem My Claude 
+298 Installed Windows package: `26.1016.8622.0`.
+299 Codex CLI reports version 0.162.1
+
+exec
+/bin/zsh -lc "node - <<'JS'
+let r=require('fs').readFileSync('incidencias.jsonl','utf8').trim().split('\\n').map(JSON.parse); for(let i of [17,24,25,26,41,43,53,57,64,81,105,114,123,127,144,148,165,176,180,191,199,206,211,215,244,246,249,255,256,261,266,274,275,285,295,299])console.log(i,r[i].texto.replace(/\\s+/g,' ').slice(0,460))
+JS" in /private/var/tmp/bench/ws-k3Pk5hdU
+ succeeded in 85ms:
+17 ### What version of the Codex App are you using (From “About Codex” dialog)? 26.930.61225 ### What subscription do you have? Pro ### What platform is your computer? Microsoft Windows NT 10.0.22621.0 x64 ### What issue are you seeing? Desktop app crashing after several seconds ### What steps can reproduce the bug? Feedback ID: no-active-thread-01a1104d-ee2e-7951-a157-b0e3e9e17ea2 ### What is the expected behavior? _No response_ ### Additional information _N
+24 Mijn goedgekeurde vervanging van Supervisor31 door32 wordt geblokkeerd met “blocked by policy”, zonder reden. Kunnen jullie onderzoeken welke controle dit tegenhoudt? Windows Codex desktop, 6 October 2026. Conversation ID: 01a10b7d-8d67-7ad1-82a4-d2a443a3a2a4. Three exec_command requests were rejected before PowerShell execution with CreateProcess … Rejected … blocked by policy: - 15:44:02.120 UTC — call_hqhuAdfJ5a9skajGFUPr2XIy - 16:57:06.173 UTC — call_i
+25 ### What version of Codex CLI is running? Installed version in the reporting environment: `codex-cli 0.160.1`. ### What subscription do you have? Not specified; this concerns Command Center navigation and deletion. ### Which model were you using? N/A — no model turn is needed to encounter the list-navigation issue. ### What platform is your computer? Linux x86_64 under WSL2. ### What terminal emulator and version are you using (if applicable)? Not captured
+26 ### What version of Codex CLI is running? v0.160.0-alpha.6 ### What subscription do you have? Pro ### Which model were you using? Irrelevant ### What platform is your computer? Windows 11 ### What terminal emulator and version are you using (if applicable)? CMD normal default terminal ### Codex doctor report ```json ``` ### What issue are you seeing? Since the new "SHIFT + LEFT ARROW" for follow-up questions, text in the instruction from the agent can not 
+41 ### What version of the Codex App are you using (From “About Codex” dialog)? 26.1002.51308 ### What subscription do you have? Pro $200 ### What platform is your computer? Windows 11 ### What issue are you seeing? <img width="1030" height="634" alt="Image" src="https://github.com/user-attachments/assets/b3cb127f-743b-43cf-b421-54419d90a604" /> Send button is inactive. Enter doensn't work. Nothing happens, I can't start a new dialogue. I have 100% usage limi
+43 ### What version of the Codex App are you using (From “About Codex” dialog)? Powered by Codex & OWL Version 26.1002.51308 Released 6 Oct 2026 ### What subscription do you have? Pro 100 Personal ### What platform is your computer? Microsoft Windows NT 10.0.26300.0 x64 ### What issue are you seeing? ChatGPT/Codex Windows desktop Work Local is unable to start new tasks. Current behaviour: - Open a fresh Work → Local composer. - Select and explicitly trust/app
+53 ## Summary The ModRetro Chromatic Codex plugin can build and boot a new disposable project, but the owning Codex chat cannot close its own recorded emulator session. `emulator_close` fails with: ```json {"error":"Recording access lease changed; closure is unresolved","code":"GB_STUDIO_TOOL_ERROR"} ``` This reproduced twice in separate fresh Codex chats and separate starter-project folders. The second run did not reuse the first run's project, recording, or
+57 ### What version of Codex CLI is running? latest ### What subscription do you have? pro ### Which model were you using? _No response_ ### What platform is your computer? _No response_ ### What terminal emulator and version are you using (if applicable)? _No response_ ### Codex doctor report ```json ``` ### What issue are you seeing? See details in https://github.com/openai/codex/issues/48542#issuecomment-6046908242 ### What steps can reproduce the bug? Jus
+64 ### What version of the IDE extension are you using? Codex 26.1002.51308 and Codex audio 26.1002.51308 ### What subscription do you have? Plus ### Which IDE are you using? VS Code ### What platform is your computer? Ubuntu 24 ### What issue are you seeing? I tried to use voice command to ask "Tôi có thể làm gì với tính năng voice chat này" (What can I do with this voice feature) but Codex unable to transcript my voice ### What steps can reproduce the bug? 
+81 ### What issue are you seeing? ## Summary Since yesterday, I've noticed a sudden and significant increase in Codex usage consumption on my ChatGPT Plus subscription. The 5-hour usage quota now depletes considerably faster than it did previously, even though my coding workflow, typical tasks, and model preferences have remained unchanged. I'm unsure whether this is caused by a change in usage accounting, reduced effective limits, increased token consumption
+105 ### What version of the Codex App are you using (From “About Codex” dialog)? 26.1002.52244 ### What subscription do you have? stops working and closes ### What platform is your computer? Microsoft Windows NT 10.0.22631.0 x64 ### What issue are you seeing? The Codex app stops working and closes after 38 seconds. ### What steps can reproduce the bug? Following the recent update two days ago, the app started crashing. Whenever I launch it, it closes automatic
+114 ### What version of Codex CLI is running? v0.161.0 ### What subscription do you have? v0.161.0 when copy Chinese language text from screen, pasted text is garbled text ### Which model were you using? _No response_ ### What platform is your computer? _No response_ ### What terminal emulator and version are you using (if applicable)? _No response_ ### Codex doctor report ```json ``` ### What issue are you seeing? v0.161.0 when copy Chinese language text from
+123 ### What version of the Codex App are you using (From “About Codex” dialog)? v0.162.0 ### What subscription do you have? Promax - 500$ ### What platform is your computer? Windows ### What issue are you seeing? I change model to GPT-Sol 6.1 and Ultrafast option doesnt appear only for Astra. ### What steps can reproduce the bug? I change model to GPT-Sol 6.1 and Ultrafast option doesnt appear only for Astra. ### What is the expected behavior? _No response_ #
+127 ### What version of the Codex App are you using (From “About Codex” dialog)? GPT 6.1 ### What subscription do you have? 20572b4a-ecf7-4446-b9f2-264e9a15ba19 ### What platform is your computer? WINDOWS ### What issue are you seeing? εχει μπλοκαρει ### What steps can reproduce the bug? Feedback ID: 20572b4a-ecf7-4446-b9f2-264e9a15ba19 ### What is the expected behavior? _No response_ ### Additional information _No response_
+144 ## Summary During a coding task, Codex substituted a conditional, source-derived explanation for the user's reported bug without evidence that the condition applied. It implemented that narrower change, repeatedly returned to the assumed scenario, and later acknowledged the mistake without resolving the original investigation. This report concerns task interpretation, evidence discipline, and incorporation of corrective feedback. It does not establish a ba
+148 ## Description GPT-6 appears to have its effective reasoning capabilities significantly restricted, even when reasoning effort is explicitly set to **High**. This is not simply a regression to previous model behavior. Reasoning quality appears substantially worse than earlier versions, with reduced analytical depth, weaker contextual synthesis, and less independent critical thinking. ## Expected behavior High reasoning effort should enable thorough, multi-
+165 ### What version of the Codex App are you using (From “About Codex” dialog)? 26.1007.21434 ### What subscription do you have? business Plus ### What platform is your computer? Win ### What issue are you seeing? Frequent reminders：Selected model is at capacity. Please try a different model. All models have this problem. ### What steps can reproduce the bug? Frequent reminders：Selected model is at capacity. Please try a different model. All models have this 
+176 ### What version of the Codex App are you using (From “About Codex” dialog)? 26.1007.21434 ### What subscription do you have? Pro 20X ### What platform is your computer? Win 11 Pro ### What issue are you seeing? I am using Codex in the ChatGPT Windows desktop app, version 26.1007.21434. When I continue an existing long Codex conversation, the app repeatedly shows: “Selected model is at capacity. Please try a different model.” The issue affects GPT-6.1 Sol,
+180 ### What version of the Codex App are you using (From “About Codex” dialog)? 26.1007.21434 ### What subscription do you have? pro200 ### What platform is your computer? $([Environment]::OSVersion.VersionString) + " " + $(if ([Environment]::Is64BitOperatingSystem){"x64"}else{"x86"}) + " " + $env:PROCESSOR_ARCHITECTURE Microsoft Windows NT 10.0.26200.0 x64 AMD64 ### What issue are you seeing? I have been using Codex for a long time. Recently, I’ve been encou
+191 
+199 ### What version of Codex CLI is running? 0.162.1 ### What subscription do you have? Selected model is at capacity. Please try a different model. ### Which model were you using? 6.1 sol ### What platform is your computer? _No response_ ### What terminal emulator and version are you using (if applicable)? _No response_ ### Codex doctor report ```json ``` ### What issue are you seeing? Selected model is at capacity. Please try a different model. ### What ste
+206 ## Summary Two reproducible Codex issues affect delegated agents. ### 1. Delegated agent cannot access local Docker The local Codex environment can use Docker successfully: ```text whoami korone\\notal docker context show desktop-linux docker run --rm python:3.12-slim python --version Python 3.12.15 ``` The delegated agent runtime is separate and consistently fails with: ```text Access denied: C:\\Users\\notal\\.docker\\config.json permission denied: //./p
+211 ### What version of Codex CLI is running? codex-cli 0.162.1 ### What subscription do you have? pro ### Which model were you using? 6.1 ### What platform is your computer? Linux 6.12.43+deb13-amd64 x86_64 unknown ### What terminal emulator and version are you using (if applicable)? _No response_ ### Codex doctor report ```json { } ``` ### What issue are you seeing? All sessions are hanging after a while.. say 1-3 hours. New sessions hang as well. Killing al
+215 ### What version of Codex CLI is running? 0.162.1 ### What subscription do you have? Personal ### Which model were you using? does not matter ### What platform is your computer? Linux 6.6.87.2-microsoft-standard-WSL2 x86_64 x86_64 ### What terminal emulator and version are you using (if applicable)? Windows Terminal ### Codex doctor report ```json Not needed ``` ### What issue are you seeing? I can not reference directories using @, like I can do in claude
+244 ### What issue are you seeing? Is automatic context compaction too aggressive under the new context window limit? Codex starts compacting while the context indicator shows only **66% used**, or **312k / 475k tokens**. This leaves approximately **163k tokens (34%)** of the displayed window unused. The supplied screenshot shows these values at the same time: ```text Compacting... Context window 66% used 312k / 475k tokens ``` This raises a concern that the c
+246 ### What version of Codex CLI is running? 0.162.1 ### What subscription do you have? Pro 100 ### Which model were you using? astra high 6 ### What platform is your computer? Mac OS ### What terminal emulator and version are you using (if applicable)? default MACOS terminal ### Codex doctor report ```json { "schemaVersion": 1, "generatedAt": "1792133666s since unix epoch", "overallStatus": "warning", "codexVersion": "0.162.1", "checks": { "app_server.status
+249 ### What version of the Codex App are you using (From “About Codex” dialog)? gpt astra 6 light ### What subscription do you have? chatgpt plus ### What platform is your computer? windows 10 ### What issue are you seeing? sandbox provisioning failed: helper_sandbox_lock_failed Access denied opening C:\Users\User\.codex\.sandbox-bin NtCreateFile: Access is denied. (os error 5) 2d25ef17-0dd0-427e-a7df-8ff59f3974a8 ### What steps can reproduce the bug? Feedbac
+255 ### What happened My remaining Codex weekly allowance dropped from **48% to 0%** in about nine minutes, then Codex started charging my additional credits. I used **one banked reset**, but my allowance continued draining much faster than before. All times below are in **UTC**. The numbers come from `token_count` and `rate_limits` entries in my local Codex logs. ### Environment - OS: Linux - Client: Codex Desktop - Codex CLI version: `0.160.0` - Plan: ChatGP
+256 **Duplicate of #54831.** Both reports describe the same two historical calls and session. The corrected, consolidated report is #54831; closing this copy does not mean the execution problem is fixed. --- ### What version of Codex CLI is running? WSL: exec_command returns exit 1 with empty output; execution failure cause unknown ### What subscription do you have? pro ### Which model were you using? _No response_ ### What platform is your computer? _No respo
+261 
+266 ### What version of the Codex App are you using (From “About Codex” dialog)? 26.1013.40934 ### What subscription do you have? Plus ### What platform is your computer? Windows ### What issue are you seeing? I see token usage when viewing a .md file and thought that was a design failure on your part. ### What steps can reproduce the bug? Feedback ID: 01a1516c-16aa-7342-a29b-205da4e6c92c ### What is the expected behavior? No token usage when viewiing .md file
+274 Hi, I’m @tehsaccade , Please forward this report to Thibault Sottiaux, @tibo-openai , and I’d appreciate acknowledgment that he received it. Or not, doesn't really matter. I found that the request counter at opensi.lol can be inflated rapidly by one browser. Details withheld, despite it being a basic few lines. So far I've added over 100,000+ in an hour or so, I guess. Security.txt doesn't seem to highlight that there's any security reporting route, and I 
+275 ### What version of the Codex App are you using (From “About Codex” dialog)? codex ### What subscription do you have? business premium ### What platform is your computer? "$([Environment]::OSVersion | ForEach-Object VersionString) $(if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" })" ### What issue are you seeing? <img width="881" height="214" alt="Image" src="https://github.com/user-attachments/assets/58b0ce89-612e-44d9-bfb4-eab2aaed4823
+285 ### Description I am a Codex Pro subscriber and I am currently unable to use the service due to a persistent error. Every request I send returns "Selected model is at capacity. Please try a different model." My remaining quota still shows plenty left, so this does not appear to be normal usage exhaustion. I have retried multiple times over the past few hours and cannot execute a single task. My reset credits are useless if I cannot even execute a single re
+295 ### What version of the Codex App are you using (From “About Codex” dialog)? 챗gpt ### What subscription do you have? 프로 ### What platform is your computer? _No response_ ### What issue are you seeing? 3e6ff94b-a625-4f75-a51e-12c773b03a1c ### What steps can reproduce the bug? Feedback ID: 3e6ff94b-a625-4f75-a51e-12c773b03a1c ### What is the expected behavior? _No response_ ### Additional information _No response_
+299 ### What version of the Codex App are you using (From “About Codex” dialog)? Codex CLI reports version 0.162.1 ### What subscription do you have? pro ### What platform is your computer? x64 ### What issue are you seeing? Title: Component: Codex desktop remote project task creation one of our project is listed on the managed ubuntu-s-8vcpu-32gb-amd-nyc1 host, and its SSH status remains green in the UI. However, creating a task for that remote project repeat
+
+exec
+/bin/zsh -lc "node - <<'JS'
+const fs=require('fs'), assert=require('assert/strict');
+const src=fs.readFileSync('incidencias.jsonl','utf8').trim().split('\\n').map(JSON.parse);
+const area={w:'windows-os',s:'sandbox',a:'app-server',n:'connectivity',t:'TUI',h:'session',l:'rate-limits',o:'tool-calls',b:'browser',r:'remote',m:'model-behavior',p:'performance',k:'mcp',u:'auth',x:'context',g:'subagent',c:'config',z:'computer-use'};
+const groups="'`satr wt o c sn h a an tc ash
+wurn hr brz s h sa o w tc tc
+wa tc wl ar wso th wt n ur wzr
+ac n mo h hz wh wh bn ws -
+ws wh z wh sr ws uc uc wa ua
+wsbo - at oh ws hrn ac t wsb wmo
+t wsa p - n o b wh wso uc
+- wa - - ws w bc ac ws whp
+rnz l ul m tl whr wn r n ws
+p - wso wh wszo rt k wbs n wsr
+u wko rgh t twgmx w l b h wso wsg
+ws tc sr t o o - tg ws -
+- ur wnu wc m wrso cx w ws wsr
+at wu sc nu w so c t tc tg
+ws ant r ko m wh tgo - m thg
+n gm - wso - - mos trw - -
+h o h wh x wl - ut nh x
+n ku pl - - - wlh b gh h
+wnl t mp - l so tgh wx tc -
+wso sc ws sz - h st th wurn l
+n s to ra - w wgsl h wsp t
+b hp sc ah n tx wc rnh wu m
+ws w n b wso ws wnb - l n
+ws at wz wc p natu ws ah ah ah
+ah ah ah wb x bkn l w c ws
+l wbr rnh wt wc l wo - l xh
+r sh b ws n hs wl ra wp s
+sn - - mu b w l wn ar s
+on sm o h - l wc - l c
+bh l h n m - th h wh rkn`.split('"'\\n').map(x=>x.split(' '));groups.forEach((g,i)=>assert.equal(g.length,10,String(i)));const labels=groups.flat();
+const cli=new Set('0 1 6 7 8 15 18 19 20 21 25 26 27 30 32 48 52 56 57 60 61 71 77 84 95 96 103 104 112 114 115 116 118 119 124 130 132 136 137 138 139 141 146 149 155 157 161 164 167 170 178 181 184 186 188 192 196 197 199 202 203 209 211 212 213 215 219 225 230 231 235 236 244 246 248 256 259 261 268 273 279 291 293 296'.split(' ').map(Number));
+const ext=new Set([64,133,150,154,169,182,189,198,224,243,245]);const web=new Set([11,14,23,28,37,46,69,88,98,113,121,172,177,252,274,292]);const ios=new Set([31,257,267]);
+const enhancement=new Set([8,12,18,19,21,22,25,66,72,84,112,118,137,139,151,161,166,167,178,188,210,215,228,266,268,281,296,297,298]);const doc=new Set([2,11,237,238,239,240,241,242,292]);
+const out=src.map((r,i)=>({id:r.id,tipo:doc.has(i)?'documentation':enhancement.has(i)?'enhancement':'bug',superficie:ext.has(i)?'extension':ios.has(i)?'iOS':web.has(i)?'codex-web':cli.has(i)?'CLI':'app',areas:[...labels[i]].filter(x=>x"'!='"'-').map(x=>{assert.ok(area[x]);return area[x]})}));
+assert.equal(out.length,labels.length);assert.equal(new Set(out.map(x=>x.id)).size,300);fs.writeFileSync('clasificacion.jsonl',out.map(x=>JSON.stringify(x)).join('\\n')+'\\n');assert.deepEqual(fs.readFileSync('clasificacion.jsonl','utf8').trim().split('\\n').map(JSON.parse),out)
+JS" in /private/var/tmp/bench/ws-k3Pk5hdU
+ exited 1 in 0ms:
+node:assert:125
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: 10
+    at [stdin]:33:89
+    at Array.forEach (<anonymous>)
+    at [stdin]:33:67
+    at Script.runInThisContext (node:vm:122:12)
+    at Object.runInThisContext (node:vm:298:38)
+    at node:internal/process/execution:83:21
+    at [stdin]-wrapper:6:24
+    at runScript (node:internal/process/execution:82:62)
+    at evalScript (node:internal/process/execution:104:10)
+    at node:internal/main/eval_stdin:31:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 11,
+  expected: 10,
+  operator: 'strictEqual'
+}
+
+Node.js v20.5.1
+
+exec
+/bin/zsh -lc "node - <<'JS'
+const fs=require('fs'), assert=require('assert/strict');
+const src=fs.readFileSync('incidencias.jsonl','utf8').trim().split('\\n').map(JSON.parse);
+const area={w:'windows-os',s:'sandbox',a:'app-server',n:'connectivity',t:'TUI',h:'session',l:'rate-limits',o:'tool-calls',b:'browser',r:'remote',m:'model-behavior',p:'performance',k:'mcp',u:'auth',x:'context',g:'subagent',c:'config',z:'computer-use'};
+const groups="'`satr wt o c sn h a an tc ash
+wurn hr brz s h sa o w tc tc
+wa tc wl ar wso th wt n ur wzr
+ac n mo h hz wh wh bn ws -
+ws wh z wh sr ws uc uc wa ua
+wsbo - at oh ws hrn ac t wsb wmo
+t wsa p - n o b wh wso uc
+- wa - - ws w bc ac ws whp
+rnz l ul m tl whr wn r n ws
+p - wso wh wszo rt k wbs n wsr
+u wko rgh t twgmx w l b h wso
+wsg ws tc sr t o o - tg ws
+- ur wnu wc m wrso cx w ws wsr
+at wu sc nu w so c t tc tg
+ws ant r ko m wh tgo - m thg
+n gm - wso - - mos trw - -
+h o h wh x wl - ut nh x
+n ku pl - - - wlh b gh h
+wnl t mp - l so tgh wx tc -
+wso sc ws sz - h st th wurn l
+n s to ra - w wgsl h wsp t
+b hp sc ah n tx wc rnh wu m
+ws w n b wso ws wnb - l n
+ws at wz wc p natu ws ah ah ah
+ah ah ah wb x bkn l w c ws
+l wbr rnh w wc l wo - l xh
+r sh b ws n hs wl ra wp s
+sn - - mu b w l wn ar s
+on sm o h - l wc - l c
+bh l h n m - th h wh rkn`.split('"'\\n').map(x=>x.split(' '));groups.forEach((g,i)=>assert.equal(g.length,10,String(i)));const labels=groups.flat();
+const cli=new Set('0 1 6 7 8 15 18 19 20 21 25 26 27 30 32 48 52 56 57 60 61 71 77 84 95 96 103 104 112 114 115 116 118 119 124 130 132 136 137 138 139 141 146 149 155 157 161 164 167 170 178 181 184 186 188 192 196 197 199 202 203 209 211 212 213 215 219 225 230 231 235 236 244 246 248 256 259 261 268 273 279 291 293 296'.split(' ').map(Number));
+const ext=new Set([64,133,150,154,169,182,189,198,224,243,245]);const web=new Set([11,14,23,28,37,46,69,88,98,113,121,172,177,252,274,292]);const ios=new Set([31,257,267]);
+const enhancement=new Set([8,12,18,19,21,22,25,66,72,84,112,118,137,139,151,161,166,167,178,188,210,215,228,266,268,281,296,297,298]);const doc=new Set([2,11,237,238,239,240,241,242,292]);
+const out=src.map((r,i)=>({id:r.id,tipo:doc.has(i)?'documentation':enhancement.has(i)?'enhancement':'bug',superficie:ext.has(i)?'extension':ios.has(i)?'iOS':web.has(i)?'codex-web':cli.has(i)?'CLI':'app',areas:[...labels[i]].filter(x=>x"'!='"'-').map(x=>{assert.ok(area[x]);return area[x]})}));
+assert.equal(out.length,labels.length);assert.equal(new Set(out.map(x=>x.id)).size,300);fs.writeFileSync('clasificacion.jsonl',out.map(x=>JSON.stringify(x)).join('\\n')+'\\n');assert.deepEqual(fs.readFileSync('clasificacion.jsonl','utf8').trim().split('\\n').map(JSON.parse),out)
+JS" in /private/var/tmp/bench/ws-k3Pk5hdU
+ succeeded in 27ms:
+codex
+Guardé la clasificación en [clasificacion.jsonl](/private/var/tmp/bench/ws-k3Pk5hdU/clasificacion.jsonl). Verifiqué que contiene 300 líneas JSON válidas, una por cada id original y en el mismo orden.
+
+Para los informes retirados sin información suficiente, usé `bug` y `app` como valores por defecto y dejé `areas` vacía. Para los informes de Android, usé `app`.
+tokens used
+22.713
+Guardé la clasificación en [clasificacion.jsonl](/private/var/tmp/bench/ws-k3Pk5hdU/clasificacion.jsonl). Verifiqué que contiene 300 líneas JSON válidas, una por cada id original y en el mismo orden.
+
+Para los informes retirados sin información suficiente, usé `bug` y `app` como valores por defecto y dejé `areas` vacía. Para los informes de Android, usé `app`.

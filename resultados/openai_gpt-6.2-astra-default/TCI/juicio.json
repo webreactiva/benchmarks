@@ -1,0 +1,31 @@
+{
+  "codigo": "TCI",
+  "modelo": "gpt-6.2-astra",
+  "nota": 10,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 2,
+    "areas": 3,
+    "tokens": 2,
+    "tiempo": 1,
+    "peticiones": 1
+  },
+  "veredicto": "Lo mismo con un tercio de tokens",
+  "resumen": "Tipo 96,3 %, superficie 87,0 % y F1 de áreas 0,689 frente a jev (78 incidencias idénticas), la calidad de Opus o Sol. Le costó 92 s, 7 peticiones y 190 k tokens (≈ 0,34 $): el único que cumple las tres marcas de eficiencia.",
+  "cifras": {
+    "tipo": 0.963,
+    "superficie": 0.87,
+    "areas_f1_micro": 0.689,
+    "areas_f1_macro": 0.648,
+    "exactas": 78,
+    "segundos": 92,
+    "peticiones": 7,
+    "tokens": 190137,
+    "coste_usd_estimado": 0.337
+  },
+  "rarezas": [
+    "No lee las incidencias enteras: saca con un script los títulos y las respuestas de versión, superficie y sistema operativo de cada plantilla (125 caracteres si no hay plantilla) y abre 36 dudosas a 460 caracteres.",
+    "Escribe las áreas de las 300 en un bloque de letras (w = windows-os, s = sandbox, a = app-server…) y lo expande con un script que comprueba con assert que hay una por id: 2711 tokens de salida.",
+    "Por tokens es el más barato de los GPT, pero Astra cuesta cuatro veces más por token que Sol: 0,34 $ frente a 0,21 $."
+  ]
+}
