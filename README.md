@@ -55,7 +55,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | Modelo | Agente | A3D | AIF | CCA | SEC | TCI | Media | Peticiones | Tokens |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | [claude-fable-5-2](resultados/anthropic_claude-fable-5-2/README.md) | Claude Code | 10 | 8 | 10 | 7 | 5 | **9,3** | 46 | 4,5 M |
-| [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | 9 | 10 | 9 | 8 | 0 | **9,3** | 105 | 7,6 M |
+| [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | 9 | 10 | 9 | 8 | 6 | **9,3** | 105 | 7,6 M |
 | [claude-opus-5-5 (medium)](resultados/anthropic_claude-opus-5-5-medium/README.md) | Claude Code | 9 | 8 | 10 | 5 | 8 | **9,0** | 65 | 5,7 M |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | 9 | 9 | 9 | 4 | 6 | **9,0** | 242 | 9,2 M |
 | [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | 8 | 9 | 10 | 6 | 6 | **9,0** | 429 | 35,8 M |

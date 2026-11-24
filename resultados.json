@@ -1977,17 +1977,17 @@
     "juicio": {
       "codigo": "TCI",
       "modelo": "google/gemini-4-carbon",
-      "nota": 0,
+      "nota": 6,
       "rubrica": {
-        "tipo": 0,
-        "superficie": 0,
-        "areas": 0,
+        "tipo": 1,
+        "superficie": 2,
+        "areas": 3,
         "tokens": 0,
         "tiempo": 0,
         "peticiones": 0
       },
-      "veredicto": "Sin clasificación",
-      "resumen": "Leyó las 300 incidencias y clasificó todas en su razonamiento (185 000 caracteres en una sola petición), pero al ir a escribirlas generó once llamadas a herramienta mal formadas seguidas (MALFORMED_FUNCTION_CALL de Google) y la sesión murió a los 17 min sin dejar clasificacion.jsonl. Gastó 3,8 M tokens, 40 peticiones y 1,28 $.",
+      "veredicto": "Clasificó, no escribió",
+      "resumen": "Leyó las 300 incidencias y las clasificó en su razonamiento, pero al ir a escribirlas generó once llamadas a herramienta mal formadas seguidas (MALFORMED_FUNCTION_CALL) y la sesión murió a los 17 min sin fichero. Nota del autor: calidad de gemini-4-hydrogen (6/6) y eficiencia con el gasto real de carbon (3,8 M tokens, 1,28 $): 0/4.",
       "cifras": {
         "segundos": 1059,
         "peticiones": 40,
@@ -1995,10 +1995,11 @@
         "coste_usd": 1.2837
       },
       "rarezas": [
-        "Las once últimas peticiones acaban con finish_reason «error» y native_finish_reason «MALFORMED_FUNCTION_CALL» (Google AI Studio por OpenRouter): el modelo genera la llamada mal, no es un corte de red. Mismo caso que Beam en SEC: un 0 y no se repite.",
         "Antes hubo un ECONNRESET a los 60 s de una petición; OpenCode la reintentó y siguió.",
-        "Leyó las incidencias con read en trozos de ~50 KB y consultó algunas sueltas con scripts de Python."
-      ]
+        "Leyó las incidencias con read en trozos de ~50 KB y consultó algunas sueltas con scripts de Python.",
+        "Las once últimas peticiones acaban con MALFORMED_FUNCTION_CALL (Google AI Studio por OpenRouter): fallo del modelo al generar la llamada, no de red. No se cobraron."
+      ],
+      "nota_autor": "6 por decisión del autor (24 nov. 2026): no dejó fichero (llamadas a herramienta mal formadas al escribir), así que la calidad se toma de gemini-4-hydrogen, la misma familia, que sí terminó (6/6: tipo 96,7 %, superficie 88,0 %, F1 de áreas 0,725). La eficiencia se cuenta con el gasto real de carbon: 3,82 M tokens, 1,28 $, 1059 s y 40 peticiones, 0/4. Con los tokens de hydrogen a precio de carbon serían 1,33 $: también 0. No se repite por coste."
     },
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
