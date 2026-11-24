@@ -1,0 +1,17 @@
+{
+ "html": [],
+ "mermaid": [],
+ "extra": [
+  "✔ se sirve con un servidor estático y funciona sin errores de consola",
+  "✔ añadir, cambiar cantidad, quitar, vaciar, subtotal y envío gratis; persiste al recargar",
+  "✖ sin tests",
+  "~ precios en euros enteros, sin céntimos; una sola moneda",
+  "✔ el precio sale del catálogo; descarta cantidad negativa, decimal e id «../x» de un localStorage manipulado",
+  "✖ acepta 1e9 unidades: subtotal de 38.000.000.000 €",
+  "✖ sin servidor, concurrencia ni almacenamiento compartido; el README no habla de escalado"
+ ],
+ "capturas_extra": [
+  "capturas/juez-carrito.png"
+ ],
+ "comprobacion": "Copia en el scratchpad servida con juez/jugar.mjs (Playwright)"
+}

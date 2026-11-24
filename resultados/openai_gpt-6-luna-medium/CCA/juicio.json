@@ -1,0 +1,21 @@
+{
+  "nota": 3,
+  "veredicto": "escaparate sin escala",
+  "rubrica": {
+    "se instala y ejecuta": 1,
+    "tests": 0,
+    "dominio": 1,
+    "dinero exacto": 1,
+    "precio del catálogo y validación": 0,
+    "concurrencia": 0,
+    "escala horizontal": 0,
+    "explica el escalado": 0
+  },
+  "resumen": "Una tienda en el navegador bien presentada, con búsqueda, categorías, orden por precio, carrito lateral, envío gratis y persistencia en localStorage. No hay servidor, ni tests, ni nada de escalado, y aunque descarta cantidades negativas, decimales e ids desconocidos, acepta mil millones de unidades sin tope.",
+  "rarezas": [
+    "Lo primero que busca son las instrucciones locales del proyecto (AGENTS.md) y, al ver la carpeta vacía, decide hacer una tienda en el navegador.",
+    "Entiende «escalable» como separar catálogo, estado e interfaz: no hay servidor, ni almacenamiento compartido, ni concurrencia.",
+    "No prueba nada: 3 órdenes de shell, 4 peticiones y 75 000 tokens, sin abrir la página.",
+    "Las fotos de producto son enlaces a Unsplash: sin conexión, la tienda sale sin imágenes."
+  ]
+}

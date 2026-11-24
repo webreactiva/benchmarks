@@ -1,0 +1,367 @@
+Reading additional input from stdin...
+OpenAI Codex v0.171.0
+--------
+workdir: /private/var/tmp/bench/ws-OzRafAJq
+model: gpt-6-luna
+provider: openai
+approval: never
+sandbox: workspace-write [workdir] (network access enabled)
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a20d6e-a0ad-7752-8704-708c4611c363
+--------
+user
+Implementa un carrito de la compra escalable Guarda lo que generes en la carpeta actual.
+codex
+Voy a revisar la estructura del proyecto y sus instrucciones locales para integrar el carrito en el estilo y el stack que ya use la aplicación. Luego dejaré los cambios en la carpeta actual.
+exec
+/bin/zsh -lc "pwd && rg --files -g 'AGENTS.md' -g 'package.json' -g 'README*' -g 'src/**' -g 'app/**' -g 'pages/**' -g 'index.html' -g 'vite.config.*' -g 'tsconfig*.json' | head -200" in /private/var/tmp/bench/ws-OzRafAJq
+ succeeded in 0ms:
+/private/var/tmp/bench/ws-OzRafAJq
+
+exec
+/bin/zsh -lc 'ls -la && rg --files | head -100' in /private/var/tmp/bench/ws-OzRafAJq
+ succeeded in 0ms:
+total 0
+drwx------  2 daniel  wheel  64 Nov 24 13:01 .
+drwxr-xr-x  3 daniel  wheel  96 Nov 24 13:01 ..
+
+codex
+La carpeta está vacía, así que voy a preparar una implementación independiente y ejecutable sin dependencias: catálogo, búsqueda y categorías, carrito persistente y una estructura separada para datos, estado y renderizado.
+apply patch
+patch: completed
+/private/var/tmp/bench/ws-OzRafAJq/README.md
+/private/var/tmp/bench/ws-OzRafAJq/index.html
+/private/var/tmp/bench/ws-OzRafAJq/src/cart-store.js
+/private/var/tmp/bench/ws-OzRafAJq/src/main.js
+/private/var/tmp/bench/ws-OzRafAJq/src/products.js
+/private/var/tmp/bench/ws-OzRafAJq/styles.css
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..6a9f3e64ec2bd305ffff774540bda510cdf0e132
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,12 @@
++# nido — carrito de compra
++
++Tienda de demostración responsive, sin dependencias ni proceso de compilación. Abre `index.html` en un servidor estático local (por ejemplo, `python3 -m http.server`) para usar los módulos JavaScript.
++
++## Funcionalidad
++
++- Catálogo con búsqueda, filtros por categoría y orden por precio.
++- Carrito lateral con cantidades, eliminación, subtotal y umbral de envío gratis.
++- Persistencia local entre visitas mediante `localStorage`.
++- Separación entre catálogo (`src/products.js`), reglas y estado (`src/cart-store.js`) y presentación/interacciones (`src/main.js`). El store puede conectarse a una API o sustituirse por otro adaptador sin cambiar el catálogo visual.
++
++El botón de pago es una acción de demostración: conectar una pasarela requiere un backend de pedidos y pagos.
+diff --git a/index.html b/index.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..43c5a5d041f1df935f126133008782172a7cf020
+--- /dev/null
++++ b/index.html
+@@ -0,0 +1,74 @@
++<!doctype html>
++<html lang="es">
++  <head>
++    <meta charset="UTF-8" />
++    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++    <meta name="theme-color" content="#f7f7f2" />
++    <meta name="description" content="Compra objetos bien pensados para el día a día." />
++    <title>nido — cosas para vivir mejor</title>
++    <link rel="preconnect" href="https://fonts.googleapis.com" />
++    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
++    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
++    <link rel="stylesheet" href="styles.css" />
++  </head>
++  <body>
++    <header class="site-header">
++      <a class="brand" href="#inicio" aria-label="nido, inicio"><span class="brand-mark">n</span> nido<span class="brand-dot">.</span></a>
++      <nav class="main-nav" aria-label="Navegación principal">
++        <a href="#productos" class="nav-link active">Tienda</a>
++        <a href="#productos" class="nav-link">Nuestra selección</a>
++        <a href="#footer" class="nav-link">La idea</a>
++      </nav>
++      <div class="header-actions">
++        <button class="icon-button search-toggle" aria-label="Ir a buscar" title="Buscar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 4.2 4.2"/></svg></button>
++        <button class="cart-trigger" id="open-cart" aria-label="Abrir carrito"><span>Carrito</span><span class="cart-count" id="cart-count">0</span></button>
++      </div>
++    </header>
++
++    <main id="inicio">
++      <section class="hero" aria-labelledby="hero-title">
++        <div class="hero-copy">
++          <p class="eyebrow"><span class="eyebrow-dot"></span> Objetos para todos los días</p>
++          <h1 id="hero-title">Menos cosas.<br /><em>Mejores cosas.</em></h1>
++          <p class="hero-text">Una colección pequeña de objetos útiles, honestos y hechos para quedarse.</p>
++          <a class="button button-dark" href="#productos">Descubre la colección <span aria-hidden="true">↘</span></a>
++          <div class="hero-proof"><div class="avatar-stack"><span>✳</span><span>n</span><span>✦</span></div><span>Elegidos con calma, enviados con cariño</span></div>
++        </div>
++        <div class="hero-art" aria-label="Selección de objetos de diseño para casa">
++          <div class="hero-image"></div>
++          <div class="hero-note"><span class="note-star">✳</span><span>Pequeños rituales,<br />grandes días.</span></div>
++          <div class="hero-index">01 <span>/</span> 04</div>
++          <div class="hero-arc"></div>
++        </div>
++        <div class="hero-side-label">HECHO PARA DURAR · 2025</div>
++      </section>
++
++      <section class="shop-section" id="productos">
++        <div class="section-heading">
++          <div><p class="eyebrow">La selección nido</p><h2>Encuentra tu <em>favorito.</em></h2></div>
++          <p class="section-intro">Diseño funcional, materiales nobles<br />y nada que sobre.</p>
++        </div>
++        <div class="shop-toolbar">
++          <div class="category-list" id="categories" role="group" aria-label="Filtrar por categoría"></div>
++          <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 4.2 4.2"/></svg><input id="search-input" type="search" placeholder="Buscar un objeto" aria-label="Buscar productos" /></label>
++        </div>
++        <div class="result-line"><span id="result-count">0 objetos</span><button class="sort-button" id="sort-button">Ordenar: <strong>Destacados</strong><span>⌄</span></button></div>
++        <div class="product-grid" id="product-grid" aria-live="polite"></div>
++      </section>
++
++      <section class="manifesto"><span class="manifesto-star">✳</span><p>Creemos en comprar <em>menos</em>, elegir <em>mejor</em><br />y disfrutar cada pequeño detalle.</p><a href="#footer">Conoce nuestra idea <span>↗</span></a></section>
++    </main>
++
++    <footer id="footer"><a class="brand" href="#inicio"><span class="brand-mark">n</span> nido<span class="brand-dot">.</span></a><span>Objetos con intención, para la vida real.</span><span>© nido estudio 2025</span></footer>
++
++    <div class="overlay" id="overlay" hidden></div>
++    <aside class="cart-drawer" id="cart-drawer" aria-label="Tu carrito" aria-modal="true" role="dialog" aria-hidden="true">
++      <div class="drawer-header"><div><p class="eyebrow">Tu selección</p><h2>Tu carrito <span id="drawer-count">(0)</span></h2></div><button class="close-button" id="close-cart" aria-label="Cerrar carrito">×</button></div>
++      <div class="shipping-progress" id="shipping-progress"></div>
++      <div class="cart-items" id="cart-items"></div>
++      <div class="drawer-footer" id="drawer-footer"></div>
++    </aside>
++    <div class="toast" id="toast" role="status" aria-live="polite"></div>
++    <script type="module" src="src/main.js"></script>
++  </body>
++</html>
+diff --git a/src/cart-store.js b/src/cart-store.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..bd5d3168f601218ef46cd8d02cc28af3c5c5cd8f
+--- /dev/null
++++ b/src/cart-store.js
+@@ -0,0 +1,57 @@
++const STORAGE_KEY = 'nido-cart-v1';
++
++/** Small observable cart store. UI can be replaced without changing cart rules. */
++export class CartStore {
++  #items = new Map();
++  #listeners = new Set();
++
++  constructor(products) {
++    this.products = new Map(products.map((product) => [product.id, product]));
++    this.#restore();
++  }
++
++  subscribe(listener) {
++    this.#listeners.add(listener);
++    listener(this.snapshot());
++    return () => this.#listeners.delete(listener);
++  }
++
++  snapshot() {
++    const items = [...this.#items].map(([id, quantity]) => ({ product: this.products.get(id), quantity })).filter((item) => item.product);
++    return { items, count: items.reduce((sum, item) => sum + item.quantity, 0), subtotal: items.reduce((sum, item) => sum + item.product.price * item.quantity, 0) };
++  }
++
++  add(id, amount = 1) {
++    if (!this.products.has(id) || !Number.isInteger(amount) || amount < 1) return;
++    this.#items.set(id, (this.#items.get(id) || 0) + amount);
++    this.#publish();
++  }
++
++  setQuantity(id, quantity) {
++    if (!this.products.has(id) || !Number.isInteger(quantity)) return;
++    if (quantity < 1) this.#items.delete(id);
++    else this.#items.set(id, quantity);
++    this.#publish();
++  }
++
++  remove(id) {
++    if (this.#items.delete(id)) this.#publish();
++  }
++
++  clear() { this.#items.clear(); this.#publish(); }
++
++  #restore() {
++    try {
++      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
++      for (const [id, quantity] of Object.entries(saved)) {
++        if (this.products.has(id) && Number.isInteger(quantity) && quantity > 0) this.#items.set(id, quantity);
++      }
++    } catch { localStorage.removeItem(STORAGE_KEY); }
++  }
++
++  #publish() {
++    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(Object.fromEntries(this.#items))); } catch { /* Storage may be disabled; in-memory cart still works. */ }
++    const state = this.snapshot();
++    this.#listeners.forEach((listener) => listener(state));
++  }
++}
+diff --git a/src/main.js b/src/main.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..436e036e5c0557a435c1f2b3c8bc5afd1a4ed1d2
+--- /dev/null
++++ b/src/main.js
+@@ -0,0 +1,122 @@
++import { categories, formatPrice, products } from './products.js';
++import { CartStore } from './cart-store.js';
++
++const store = new CartStore(products);
++const $ = (selector) => document.querySelector(selector);
++const grid = $('#product-grid');
++const categoryList = $('#categories');
++const searchInput = $('#search-input');
++const cartDrawer = $('#cart-drawer');
++const overlay = $('#overlay');
++let activeCategory = 'Todo';
++let sortMode = 0;
++let latestCart = store.snapshot();
++let toastTimer;
++
++function renderCategories() {
++  categoryList.innerHTML = categories.map((category) => `<button class="category-chip ${category === activeCategory ? 'active' : ''}" data-category="${category}" aria-pressed="${category === activeCategory}">${category}</button>`).join('');
++}
++
++function filteredProducts() {
++  const query = searchInput.value.trim().toLocaleLowerCase('es');
++  let result = products.filter((product) => (activeCategory === 'Todo' || product.category === activeCategory) && (!query || `${product.name} ${product.detail} ${product.category}`.toLocaleLowerCase('es').includes(query)));
++  if (sortMode === 1) result = [...result].sort((a, b) => a.price - b.price);
++  if (sortMode === 2) result = [...result].sort((a, b) => b.price - a.price);
++  return result;
++}
++
++function renderProducts() {
++  const visible = filteredProducts();
++  $('#result-count').textContent = `${visible.length} ${visible.length === 1 ? 'objeto' : 'objetos'}`;
++  grid.innerHTML = visible.length ? visible.map((product) => `<article class="product-card">
++    <div class="product-visual"><img src="${product.image}" alt="${product.imageAlt}" loading="lazy" />${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}<button class="quick-add" data-add="${product.id}" aria-label="Añadir ${product.name} al carrito">+</button></div>
++    <div class="product-meta"><div><h3 class="product-name">${product.name}</h3><p class="product-detail">${product.detail}</p></div><span class="product-price">${formatPrice(product.price)}</span></div>
++  </article>`).join('') : '<div class="empty-results">No encontramos objetos con esa búsqueda. Prueba con otra palabra.</div>';
++}
++
++function renderCart(state) {
++  latestCart = state;
++  $('#cart-count').textContent = state.count;
++  $('#drawer-count').textContent = `(${state.count})`;
++  const left = Math.max(0, 80 - state.subtotal);
++  $('#shipping-progress').innerHTML = state.subtotal >= 80
++    ? '<strong>¡Envío gratis desbloqueado!</strong><div class="progress-track"><span style="width:100%"></span></div>'
++    : `Te faltan <strong>${formatPrice(left)}</strong> para el envío gratis<div class="progress-track"><span style="width:${Math.min(100, state.subtotal / 80 * 100)}%"></span></div>`;
++  if (!state.items.length) {
++    $('#cart-items').innerHTML = '<div class="cart-empty"><span class="empty-mark">n</span><h3>Tu carrito está tranquilo.</h3><p>Cuando encuentres algo que te guste, estará aquí.</p><button class="text-link" data-close>Seguir explorando</button></div>';
++    $('#drawer-footer').innerHTML = '';
++    return;
++  }
++  $('#cart-items').innerHTML = state.items.map(({ product, quantity }) => `<div class="cart-item">
++    <img src="${product.image}" alt="${product.imageAlt}" />
++    <div class="cart-item-info"><p class="cart-item-name">${product.name}</p><p class="cart-item-variant">${product.detail}</p><div class="qty-control" aria-label="Cantidad de ${product.name}"><button data-qty="${product.id}" data-delta="-1" aria-label="Quitar una unidad">−</button><span>${quantity}</span><button data-qty="${product.id}" data-delta="1" aria-label="Añadir una unidad">+</button></div><button class="remove-item" data-remove="${product.id}">Eliminar</button></div>
++    <span class="cart-item-price">${formatPrice(product.price * quantity)}</span>
++  </div>`).join('');
++  $('#drawer-footer').innerHTML = `<div class="subtotal-row"><span>Subtotal</span><span>${formatPrice(state.subtotal)}</span></div><p class="shipping-caption">${state.subtotal >= 80 ? 'Envío gratis incluido.' : 'Envío calculado al finalizar la compra.'}</p><button class="checkout-button" id="checkout-button"><span>Continuar al pago</span><span>→</span></button><p class="secure-note">Pago seguro · Cambios sencillos durante 30 días</p>`;
++}
++
++function openCart() {
++  overlay.hidden = false;
++  requestAnimationFrame(() => { overlay.classList.add('visible'); cartDrawer.classList.add('open'); });
++  cartDrawer.setAttribute('aria-hidden', 'false');
++  document.body.style.overflow = 'hidden';
++  $('#close-cart').focus();
++}
++
++function closeCart() {
++  overlay.classList.remove('visible');
++  cartDrawer.classList.remove('open');
++  cartDrawer.setAttribute('aria-hidden', 'true');
++  document.body.style.overflow = '';
++  window.setTimeout(() => { if (!cartDrawer.classList.contains('open')) overlay.hidden = true; }, 250);
++}
++
++function showToast(message) {
++  const toast = $('#toast');
++  toast.textContent = message;
++  toast.classList.add('show');
++  clearTimeout(toastTimer);
++  toastTimer = window.setTimeout(() => toast.classList.remove('show'), 1900);
++}
++
++categoryList.addEventListener('click', (event) => {
++  const button = event.target.closest('[data-category]');
++  if (!button) return;
++  activeCategory = button.dataset.category;
++  renderCategories(); renderProducts();
++});
++searchInput.addEventListener('input', renderProducts);
++$('.search-toggle').addEventListener('click', () => { searchInput.focus(); $('#productos').scrollIntoView({ behavior: 'smooth' }); });
++$('#sort-button').addEventListener('click', () => {
++  sortMode = (sortMode + 1) % 3;
++  const labels = ['Destacados', 'Precio: menor a mayor', 'Precio: mayor a menor'];
++  $('#sort-button').innerHTML = `Ordenar: <strong>${labels[sortMode]}</strong><span>⌄</span>`;
++  renderProducts();
++});
++grid.addEventListener('click', (event) => {
++  const button = event.target.closest('[data-add]');
++  if (!button) return;
++  store.add(button.dataset.add);
++  const product = products.find(({ id }) => id === button.dataset.add);
++  showToast(`${product.name} añadido al carrito`);
++});
++$('#open-cart').addEventListener('click', openCart);
++$('#close-cart').addEventListener('click', closeCart);
++overlay.addEventListener('click', closeCart);
++$('#cart-items').addEventListener('click', (event) => {
++  const quantityButton = event.target.closest('[data-qty]');
++  const removeButton = event.target.closest('[data-remove]');
++  if (quantityButton) {
++    const current = latestCart.items.find(({ product }) => product.id === quantityButton.dataset.qty)?.quantity || 0;
++    store.setQuantity(quantityButton.dataset.qty, current + Number(quantityButton.dataset.delta));
++  }
++  if (removeButton) store.remove(removeButton.dataset.remove);
++  if (event.target.closest('[data-close]')) closeCart();
++});
++$('#drawer-footer').addEventListener('click', (event) => {
++  if (event.target.closest('#checkout-button')) showToast('El pago estará disponible próximamente');
++});
++document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && cartDrawer.classList.contains('open')) closeCart(); });
++store.subscribe(renderCart);
++renderCategories();
++renderProducts();
+diff --git a/src/products.js b/src/products.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..683b845a0beebf28dafcdb9245367df0e48abd6c
+--- /dev/null
++++ b/src/products.js
+@@ -0,0 +1,15 @@
++/** Product catalog. Replace this module with an API adapter when connecting a backend. */
++export const categories = ['Todo', 'Casa', 'Accesorios', 'Papel'];
++
++export const products = [
++  { id: 'jarron-arcilla', name: 'Jarrón Arcilla', detail: 'Cerámica artesanal · Arena', price: 38, category: 'Casa', tag: 'Más querido', image: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=720&q=80', imageAlt: 'Jarrón de cerámica artesanal de tono arena' },
++  { id: 'lampara-lino', name: 'Lámpara Lino', detail: 'Lino natural · Roble', price: 89, category: 'Casa', tag: 'Edición pequeña', image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=720&q=80', imageAlt: 'Lámpara de mesa de diseño cálido' },
++  { id: 'bolso-diario', name: 'Bolso Diario', detail: 'Algodón orgánico · Oliva', price: 42, category: 'Accesorios', tag: '', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=720&q=80', imageAlt: 'Bolso de tela color natural' },
++  { id: 'cuaderno-calma', name: 'Cuaderno Calma', detail: 'Papel reciclado · A5', price: 16, category: 'Papel', tag: 'Hecho aquí', image: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=720&q=80', imageAlt: 'Cuaderno y papelería sobre una mesa' },
++  { id: 'taza-origen', name: 'Taza Origen', detail: 'Gres esmaltado · Crema', price: 24, category: 'Casa', tag: '', image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=720&q=80', imageAlt: 'Taza de cerámica artesanal' },
++  { id: 'vela-pausa', name: 'Vela Pausa', detail: 'Cera vegetal · Cedro', price: 28, category: 'Casa', tag: 'Nuevo', image: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=720&q=80', imageAlt: 'Vela aromática para el hogar' },
++  { id: 'estuche-trazo', name: 'Estuche Trazo', detail: 'Lona recuperada · Tierra', price: 19, category: 'Accesorios', tag: '', image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=720&q=80', imageAlt: 'Materiales para dibujo en un estuche' },
++  { id: 'lamina-botanica', name: 'Lámina Botánica', detail: 'Impresión risográfica · A4', price: 22, category: 'Papel', tag: 'Hecho aquí', image: 'https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=720&q=80', imageAlt: 'Lámina botánica enmarcada' },
++];
++
++export const formatPrice = (amount) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(amount);
+diff --git a/styles.css b/styles.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..15a8386f7939ebb9b487329938e1d70e97780231
+--- /dev/null
++++ b/styles.css
+@@ -0,0 +1,3 @@
++:root{font-family:'DM Sans',sans-serif;color:#24251f;background:#f7f7f2;font-synthesis:none;text-rendering:optimizeLegibility;--ink:#24251f;--muted:#818178;--green:#325c46;--paper:#f7f7f2;--line:#e6e6de;--serif:Georgia,'Times New Roman',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0}.site-header{height:76px;padding:0 7.1%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(36,37,31,.08);background:rgba(247,247,242,.94);position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}.brand{text-decoration:none;color:var(--ink);font:800 24px Manrope,sans-serif;letter-spacing:-1.5px;display:flex;align-items:center;gap:7px}.brand-mark{width:25px;height:25px;background:var(--green);color:#f7f7f2;border-radius:50% 50% 48% 12%;display:inline-grid;place-items:center;font:700 17px Georgia;transform:rotate(-13deg);letter-spacing:0}.brand-dot{color:#7f9a76;margin-left:-7px}.main-nav{display:flex;gap:37px;margin-left:75px}.nav-link{text-decoration:none;color:#797a72;font-size:12px}.nav-link.active,.nav-link:hover{color:var(--ink)}.nav-link.active:after{content:'';display:block;height:1px;background:var(--green);margin-top:7px}.header-actions{display:flex;gap:22px;align-items:center}.icon-button,.cart-trigger,.close-button{border:0;background:none;color:var(--ink);cursor:pointer}.icon-button svg,.search-box svg{fill:none;stroke:currentColor;stroke-width:1.7;width:18px}.cart-trigger{display:flex;align-items:center;gap:10px;font:500 12px 'DM Sans';padding:0}.cart-count{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:var(--green);color:white;font-size:10px}.hero{min-height:540px;display:grid;grid-template-columns:1fr 1.08fr;position:relative;padding:72px 10.2% 64px;overflow:hidden}.hero-copy{align-self:center;position:relative;z-index:1;padding-bottom:12px}.eyebrow{text-transform:uppercase;letter-spacing:1.7px;font-size:9px;font-weight:700;color:#85867b;margin:0 0 19px}.eyebrow-dot{display:inline-block;background:#829a6f;width:6px;height:6px;border-radius:50%;margin:0 8px 1px 0}.hero h1,.section-heading h2{font:500 clamp(46px,5.3vw,73px)/1.03 Manrope,sans-serif;letter-spacing:-4.8px;margin:0}.hero h1 em,.section-heading h2 em{font:italic 500 1em var(--serif);letter-spacing:-3px;color:var(--green)}.hero-text{font-size:13px;line-height:1.8;color:#77796f;max-width:310px;margin:23px 0 25px}.button{display:inline-flex;text-decoration:none;align-items:center;gap:32px;padding:15px 19px;font-size:11px}.button-dark{background:var(--green);color:white}.button-dark span{font-size:17px}.hero-proof{display:flex;align-items:center;gap:12px;color:#77796f;font-size:9px;margin-top:39px}.avatar-stack{display:flex}.avatar-stack span{display:grid;place-items:center;margin-left:-5px;width:23px;height:23px;border-radius:50%;border:2px solid var(--paper);background:#d7d4c0;color:#4a5442;font:12px Georgia}.avatar-stack span:first-child{margin-left:0;background:#e7cabc}.avatar-stack span:last-child{background:#bac8ad}.hero-art{height:405px;position:relative;margin-left:6%;align-self:center}.hero-image{position:absolute;inset:0 3% 5% 8%;background:#d7d4c6 url('https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?auto=format&fit=crop&w=1200&q=85') center 54%/cover;clip-path:polygon(9% 0,100% 7%,95% 100%,0 91%);filter:saturate(.72)}.hero-art:after{content:'';position:absolute;inset:12% 8% 0 0;border:1px solid #9eaa91;clip-path:polygon(9% 0,100% 7%,95% 100%,0 91%);pointer-events:none}.hero-note{position:absolute;left:-3%;bottom:13%;z-index:1;background:#e9e5d6;padding:16px 19px;display:flex;gap:11px;align-items:center;font:italic 13px/1.4 var(--serif);color:#52584b;transform:rotate(-4deg);box-shadow:0 6px 20px #39392310}.note-star{font-size:22px;color:#748368}.hero-index{position:absolute;right:2%;bottom:3%;font-size:10px;letter-spacing:1px}.hero-index span{color:#b3b3a7;padding:0 5px}.hero-arc{position:absolute;right:-10%;top:6%;width:90px;height:90px;border:1px solid #a7ad9b;border-radius:50%;opacity:.55}.hero-side-label{position:absolute;right:2.5%;top:46%;writing-mode:vertical-rl;font-size:8px;letter-spacing:2px;color:#98998f}.shop-section{padding:80px 10.2% 105px;background:#fff}.section-heading{display:flex;justify-content:space-between;align-items:end}.section-heading .eyebrow{margin-bottom:13px}.section-heading h2{font-size:41px;letter-spacing:-2.5px}.section-heading h2 em{letter-spacing:-1px}.section-intro{font-size:11px;line-height:1.8;color:#88897f;margin:0 0 4px}.shop-toolbar{display:flex;justify-content:space-between;align-items:center;margin-top:42px;border-bottom:1px solid var(--line);padding-bottom:15px}.category-list{display:flex;gap:8px;flex-wrap:wrap}.category-chip{background:none;border:1px solid transparent;border-radius:30px;color:#77796f;font:11px 'DM Sans';padding:9px 14px;cursor:pointer}.category-chip.active{border-color:#daddd2;color:var(--green);background:#f4f6f0}.search-box{display:flex;align-items:center;gap:9px;color:#8d8e85}.search-box svg{width:16px}.search-box input{width:145px;border:0;outline:0;background:transparent;font:11px 'DM Sans';color:var(--ink)}.search-box input::placeholder{color:#a1a197}.result-line{display:flex;justify-content:space-between;align-items:center;padding:18px 0 22px;color:#96968d;font-size:10px}.sort-button{border:0;background:none;color:#77796f;font:10px 'DM Sans';cursor:pointer}.sort-button strong{color:var(--ink);font-weight:600}.sort-button span{font-size:14px;margin-left:8px}.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:34px 19px}.product-card{min-width:0}.product-visual{height:auto;aspect-ratio: .91;position:relative;overflow:hidden;background:#f0efe9}.product-visual img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1);filter:saturate(.82)}.product-card:hover .product-visual img{transform:scale(1.045)}.product-tag{position:absolute;top:12px;left:12px;background:#f7f7f0eF;padding:7px 9px;text-transform:uppercase;letter-spacing:1px;font-size:8px;color:#5f6756}.quick-add{position:absolute;right:11px;bottom:11px;width:35px;height:35px;border:0;border-radius:50%;background:#f7f7f2;color:#26382a;font-size:22px;font-weight:300;cursor:pointer;transition:.2s}.quick-add:hover{background:var(--green);color:white}.product-meta{display:flex;justify-content:space-between;align-items:start;margin-top:13px;gap:10px}.product-name{font-size:12px;font-weight:600;margin:0 0 5px}.product-detail{font-size:10px;color:#898a80;margin:0}.product-price{font-size:11px;font-weight:600;white-space:nowrap}.empty-results{grid-column:1/-1;padding:65px 20px;text-align:center;color:#818178;font-size:13px}.manifesto{background:#e9ede4;min-height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;text-align:center;padding:44px 20px}.manifesto-star{font-size:22px;color:#63815e;margin-bottom:13px}.manifesto p{font:22px/1.45 var(--serif);color:#3f5041;margin:0}.manifesto p em{color:var(--green)}.manifesto a{margin-top:17px;color:#71806c;font-size:10px;text-decoration:none}.manifesto a span{font-size:15px;margin-left:7px}footer{height:95px;padding:0 7.1%;display:flex;align-items:center;justify-content:space-between;color:#898a80;font-size:10px}footer .brand{font-size:18px}footer .brand-mark{width:21px;height:21px;font-size:14px}.overlay{position:fixed;inset:0;background:#20231e70;z-index:9;opacity:0;transition:opacity .25s}.overlay.visible{opacity:1}.cart-drawer{position:fixed;z-index:10;right:0;top:0;height:100dvh;width:min(450px,100%);background:#fbfbf7;transform:translateX(102%);transition:transform .3s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;padding:31px 30px 24px;box-shadow:-10px 0 40px #171a1510}.cart-drawer.open{transform:translateX(0)}.drawer-header{display:flex;align-items:start;justify-content:space-between;padding-bottom:21px;border-bottom:1px solid var(--line)}.drawer-header .eyebrow{margin-bottom:8px}.drawer-header h2{font:600 23px Manrope;margin:0;letter-spacing:-.8px}.drawer-header h2 span{font:400 14px 'DM Sans';color:#97988e}.close-button{font:300 28px/1;padding:0}.shipping-progress{font-size:11px;color:#77796f;padding:17px 0;border-bottom:1px solid var(--line)}.shipping-progress strong{color:var(--green)}.progress-track{height:3px;background:#e7e9e1;margin-top:10px}.progress-track span{height:100%;display:block;background:#688364;transition:width .25s}.cart-items{overflow-y:auto;flex:1}.cart-item{display:grid;grid-template-columns:78px 1fr auto;gap:14px;padding:19px 0;border-bottom:1px solid var(--line)}.cart-item img{width:78px;height:84px;object-fit:cover;background:#eeede7}.cart-item-info{padding-top:3px}.cart-item-name{font-size:12px;font-weight:600;margin:0 0 4px}.cart-item-variant{font-size:10px;color:#898a80;margin:0}.cart-item-price{font-size:11px;font-weight:600;padding-top:3px}.qty-control{display:flex;align-items:center;border:1px solid #dedfd7;width:max-content;margin-top:12px;height:27px}.qty-control button{background:none;border:0;width:27px;height:25px;cursor:pointer;color:#54574d;font-size:14px}.qty-control span{font-size:10px;min-width:19px;text-align:center}.remove-item{display:block;margin-top:8px;padding:0;border:0;background:none;color:#9a9b91;font:9px 'DM Sans';text-decoration:underline;cursor:pointer}.cart-empty{height:100%;min-height:250px;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center}.empty-mark{width:57px;height:57px;border:1px solid #dce1d6;border-radius:50%;display:grid;place-items:center;color:var(--green);font:27px Georgia;margin-bottom:15px}.cart-empty h3{font:500 20px Manrope;margin:0 0 8px}.cart-empty p{font-size:11px;color:#88897f;margin:0 0 17px}.text-link{border:0;background:none;color:var(--green);font:600 11px 'DM Sans';text-decoration:underline;cursor:pointer}.drawer-footer{padding-top:19px;border-top:1px solid var(--line)}.subtotal-row{display:flex;justify-content:space-between;font-size:13px;font-weight:600}.shipping-caption{font-size:10px;color:#8a8b80;margin:8px 0 16px}.checkout-button{display:flex;justify-content:space-between;width:100%;padding:15px 17px;border:0;background:var(--green);color:#fff;font:600 11px 'DM Sans';cursor:pointer}.checkout-button:disabled{opacity:.5;cursor:default}.secure-note{text-align:center;color:#95968b;font-size:9px;margin:12px 0 0}.toast{position:fixed;z-index:12;bottom:25px;left:50%;transform:translate(-50%,20px);background:#263a2c;color:white;padding:12px 18px;font-size:11px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
++@media(max-width:850px){.site-header{padding:0 5%}.main-nav{margin-left:0;gap:20px}.hero{padding:55px 7%;min-height:480px;grid-template-columns:1fr 1fr}.hero-art{height:330px;margin-left:0}.hero h1{font-size:55px}.shop-section{padding:65px 7% 80px}.product-grid{grid-template-columns:repeat(2,1fr);gap:28px 16px}.hero-side-label{display:none}}
++@media(max-width:600px){.site-header{height:64px;padding:0 20px}.brand{font-size:21px}.main-nav{display:none}.header-actions{gap:15px}.hero{display:block;padding:52px 25px 38px;min-height:0}.hero h1{font-size:54px;letter-spacing:-3.8px}.hero-text{max-width:270px}.hero-proof{margin-top:28px}.hero-art{height:300px;margin:33px 0 0 7%}.hero-note{left:-7%}.hero-arc{right:-5%}.shop-section{padding:55px 20px 65px}.section-heading{display:block}.section-heading h2{font-size:34px}.section-intro{margin-top:12px}.shop-toolbar{display:block;margin-top:27px}.category-list{gap:3px;overflow:auto;flex-wrap:nowrap;padding-bottom:12px}.category-chip{white-space:nowrap;padding:8px 11px}.search-box{border-top:1px solid var(--line);padding-top:13px}.search-box input{width:100%}.result-line{padding:15px 0}.product-grid{gap:25px 12px}.product-visual{aspect-ratio:.82}.product-tag{top:8px;left:8px;font-size:7px;padding:6px 7px}.quick-add{width:31px;height:31px;right:8px;bottom:8px}.product-name{font-size:11px}.product-price{font-size:10px}.manifesto{min-height:200px}.manifesto p{font-size:19px}footer{height:auto;min-height:110px;padding:25px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}footer>span:last-child{text-align:right}.cart-drawer{padding:25px 21px 20px}}
+
+codex
+He implementado una tienda responsive con carrito lateral, búsqueda, filtros por categoría, orden por precio y cantidades editables. El carrito conserva su contenido entre visitas y muestra el subtotal y el progreso hacia el envío gratis.
+
+La estructura separa catálogo, estado del carrito e interfaz para facilitar futuras integraciones. Puedes abrirla desde [index.html](/private/var/tmp/bench/ws-OzRafAJq/index.html); las instrucciones están en [README.md](/private/var/tmp/bench/ws-OzRafAJq/README.md). El pago es una demostración y requiere una integración de backend para procesar pedidos.
+tokens used
+29.269
+He implementado una tienda responsive con carrito lateral, búsqueda, filtros por categoría, orden por precio y cantidades editables. El carrito conserva su contenido entre visitas y muestra el subtotal y el progreso hacia el envío gratis.
+
+La estructura separa catálogo, estado del carrito e interfaz para facilitar futuras integraciones. Puedes abrirla desde [index.html](/private/var/tmp/bench/ws-OzRafAJq/index.html); las instrucciones están en [README.md](/private/var/tmp/bench/ws-OzRafAJq/README.md). El pago es una demostración y requiere una integración de backend para procesar pedidos.

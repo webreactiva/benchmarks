@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f7f2" />
+    <meta name="description" content="Compra objetos bien pensados para el día a día." />
+    <title>nido — cosas para vivir mejor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="nido, inicio"><span class="brand-mark">n</span> nido<span class="brand-dot">.</span></a>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a href="#productos" class="nav-link active">Tienda</a>
+        <a href="#productos" class="nav-link">Nuestra selección</a>
+        <a href="#footer" class="nav-link">La idea</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button search-toggle" aria-label="Ir a buscar" title="Buscar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 4.2 4.2"/></svg></button>
+        <button class="cart-trigger" id="open-cart" aria-label="Abrir carrito"><span>Carrito</span><span class="cart-count" id="cart-count">0</span></button>
+      </div>
+    </header>
+
+    <main id="inicio">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> Objetos para todos los días</p>
+          <h1 id="hero-title">Menos cosas.<br /><em>Mejores cosas.</em></h1>
+          <p class="hero-text">Una colección pequeña de objetos útiles, honestos y hechos para quedarse.</p>
+          <a class="button button-dark" href="#productos">Descubre la colección <span aria-hidden="true">↘</span></a>
+          <div class="hero-proof"><div class="avatar-stack"><span>✳</span><span>n</span><span>✦</span></div><span>Elegidos con calma, enviados con cariño</span></div>
+        </div>
+        <div class="hero-art" aria-label="Selección de objetos de diseño para casa">
+          <div class="hero-image"></div>
+          <div class="hero-note"><span class="note-star">✳</span><span>Pequeños rituales,<br />grandes días.</span></div>
+          <div class="hero-index">01 <span>/</span> 04</div>
+          <div class="hero-arc"></div>
+        </div>
+        <div class="hero-side-label">HECHO PARA DURAR · 2025</div>
+      </section>
+
+      <section class="shop-section" id="productos">
+        <div class="section-heading">
+          <div><p class="eyebrow">La selección nido</p><h2>Encuentra tu <em>favorito.</em></h2></div>
+          <p class="section-intro">Diseño funcional, materiales nobles<br />y nada que sobre.</p>
+        </div>
+        <div class="shop-toolbar">
+          <div class="category-list" id="categories" role="group" aria-label="Filtrar por categoría"></div>
+          <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 4.2 4.2"/></svg><input id="search-input" type="search" placeholder="Buscar un objeto" aria-label="Buscar productos" /></label>
+        </div>
+        <div class="result-line"><span id="result-count">0 objetos</span><button class="sort-button" id="sort-button">Ordenar: <strong>Destacados</strong><span>⌄</span></button></div>
+        <div class="product-grid" id="product-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="manifesto"><span class="manifesto-star">✳</span><p>Creemos en comprar <em>menos</em>, elegir <em>mejor</em><br />y disfrutar cada pequeño detalle.</p><a href="#footer">Conoce nuestra idea <span>↗</span></a></section>
+    </main>
+
+    <footer id="footer"><a class="brand" href="#inicio"><span class="brand-mark">n</span> nido<span class="brand-dot">.</span></a><span>Objetos con intención, para la vida real.</span><span>© nido estudio 2025</span></footer>
+
+    <div class="overlay" id="overlay" hidden></div>
+    <aside class="cart-drawer" id="cart-drawer" aria-label="Tu carrito" aria-modal="true" role="dialog" aria-hidden="true">
+      <div class="drawer-header"><div><p class="eyebrow">Tu selección</p><h2>Tu carrito <span id="drawer-count">(0)</span></h2></div><button class="close-button" id="close-cart" aria-label="Cerrar carrito">×</button></div>
+      <div class="shipping-progress" id="shipping-progress"></div>
+      <div class="cart-items" id="cart-items"></div>
+      <div class="drawer-footer" id="drawer-footer"></div>
+    </aside>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
