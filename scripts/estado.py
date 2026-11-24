@@ -2,8 +2,8 @@
 """estado.py — reescribe la tabla «## Estado» de benchmark/README.md desde resultados.json (corre indice.py antes)."""
 import json, os
 B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ORDEN = ["A3D", "AIF", "CCA", "SEC"]
-# La media va sobre A3D, AIF y CCA mientras SEC (añadido el 23 nov. 2026) no lo tengan todos los modelos (PTS se retiró)
+ORDEN = ["A3D", "AIF", "CCA", "SEC", "TCI"]
+# La media va sobre A3D, AIF y CCA mientras SEC y TCI (añadidos el 23 y 24 nov. 2026) no los tengan todos los modelos (PTS se retiró)
 MEDIA = ["A3D", "AIF", "CCA"]
 r = json.load(open(f"{B}/resultados.json")); mod = {}
 for x in r:

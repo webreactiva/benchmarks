@@ -8,7 +8,7 @@
 # Lo que ya tiene meta.json no se repite. Para al primer 429 de OpenRouter.
 set -u
 B=$(cd "$(dirname "$0")/.." && pwd)
-prompts="A3D AIF CCA SEC"
+prompts="A3D AIF CCA SEC TCI"
 [ "${1:-}" = -p ] && { prompts=$(echo "$2" | tr ',' ' '); shift 2; }
 [ $# -ge 1 ] || { sed -n '2,8p' "$0"; exit 1; }
 for m in "$@"; do

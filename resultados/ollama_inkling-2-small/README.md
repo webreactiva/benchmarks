@@ -2,7 +2,9 @@
 
 Agente: OpenCode. Fechas: 2026-11-20 a 2026-11-23.
 
-**Nota media: 7,5 / 10** (4 de 4 prompts juzgados). Total: 95 peticiones y 3785,7 k tokens.
+**Nota media: 7,5 / 10** (4 de 5 prompts juzgados). Total: 95 peticiones y 3785,7 k tokens.
+
+Pendientes: TCI.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|

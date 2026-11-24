@@ -263,6 +263,69 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/anthropic_claude-fable-5-2/TCI",
+    "codigo": "TCI",
+    "modelo": "claude-fable-5-2",
+    "agente": "Claude Code",
+    "fecha": "2026-11-24T00:37:23Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 22,
+      "output": 15976,
+      "reasoning": 0,
+      "cache_read": 829045,
+      "cache_write": 107265,
+      "total": 952308
+    },
+    "peticiones": 11,
+    "error": null,
+    "herramientas": {
+      "Bash": 6,
+      "Read": 5
+    },
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "validacion": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "claude-fable-5-2",
+      "nota": 3,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 1,
+        "areas": 1,
+        "tokens": 0,
+        "tiempo": 0,
+        "peticiones": 0
+      },
+      "veredicto": "Criterio propio, lento y caro",
+      "resumen": "Tipo 97,3 %, superficie 89,7 % y F1 de áreas 0,63 frente a jev (82 incidencias idénticas). Le costó 190 s, 11 peticiones y 952 k tokens (≈ 1,88 $).",
+      "cifras": {
+        "tipo": 0.973,
+        "superficie": 0.897,
+        "areas_f1_micro": 0.63,
+        "areas_f1_macro": 0.592,
+        "exactas": 82,
+        "segundos": 190,
+        "peticiones": 11,
+        "tokens": 952308,
+        "coste_usd_estimado": 1.88
+      },
+      "rarezas": [
+        "Resume cada incidencia en unos 260 caracteres y lee los resúmenes con Read; abre completas unas pocas.",
+        "Aplica reglas propias más estrictas que jev: windows-os «solo cuando el problema parece propio de Windows» y deja sin área los avisos de «model at capacity», que jev pone en rate-limits."
+      ]
+    },
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/anthropic_claude-haiku-5-5/A3D",
     "codigo": "A3D",
     "modelo": "claude-haiku-5-5",
@@ -568,6 +631,69 @@
     "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
+    "dir": "resultados/anthropic_claude-haiku-5-5/TCI",
+    "codigo": "TCI",
+    "modelo": "claude-haiku-5-5",
+    "agente": "Claude Code",
+    "fecha": "2026-11-24T00:05:24Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 16,
+      "output": 28372,
+      "reasoning": 0,
+      "cache_read": 402811,
+      "cache_write": 67674,
+      "total": 498873
+    },
+    "peticiones": 8,
+    "error": null,
+    "herramientas": {
+      "Bash": 6,
+      "Write": 1
+    },
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "validacion": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "claude-haiku-5-5",
+      "nota": 7,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 1,
+        "areas": 1,
+        "tokens": 2,
+        "tiempo": 1,
+        "peticiones": 1
+      },
+      "veredicto": "Casi igual, por céntimos",
+      "resumen": "Tipo 96,3 %, superficie 85,7 % y F1 de áreas 0,617 frente a jev (63 incidencias idénticas). Le costó 113 s, 8 peticiones y 499 k tokens (≈ 0,03 $).",
+      "cifras": {
+        "tipo": 0.963,
+        "superficie": 0.857,
+        "areas_f1_micro": 0.617,
+        "areas_f1_macro": 0.599,
+        "exactas": 63,
+        "segundos": 113,
+        "peticiones": 8,
+        "tokens": 498873,
+        "coste_usd_estimado": 0.03
+      },
+      "rarezas": [
+        "Clasifica con un script que resume cada incidencia en el título y 150 caracteres; lo dice en su respuesta («el título y el inicio de cada texto, no el cuerpo completo»). Por eso falla windows-os y sandbox cuando el dato está más abajo, en la plantilla.",
+        "Añade un campo «nota» a 29 incidencias que le parecen retiradas, duplicadas o vacías."
+      ]
+    },
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/anthropic_claude-opus-5-5-medium/A3D",
     "codigo": "A3D",
     "modelo": "claude-opus-5-5 (medium)",
@@ -835,6 +961,69 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/anthropic_claude-opus-5-5-medium/TCI",
+    "codigo": "TCI",
+    "modelo": "claude-opus-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-24T00:30:40Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 24,
+      "output": 14828,
+      "reasoning": 0,
+      "cache_read": 682070,
+      "cache_write": 71058,
+      "total": 767980
+    },
+    "peticiones": 12,
+    "error": null,
+    "herramientas": {
+      "Bash": 11
+    },
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "esfuerzo": "medium",
+    "validacion": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "claude-opus-5-5",
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 1,
+        "areas": 2,
+        "tokens": 1,
+        "tiempo": 1,
+        "peticiones": 0
+      },
+      "veredicto": "Mejor en áreas, caro",
+      "resumen": "Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,668 frente a jev (86 incidencias idénticas). Le costó 125 s, 12 peticiones y 768 k tokens (≈ 0,79 $).",
+      "cifras": {
+        "tipo": 0.97,
+        "superficie": 0.877,
+        "areas_f1_micro": 0.668,
+        "areas_f1_macro": 0.641,
+        "exactas": 86,
+        "segundos": 125,
+        "peticiones": 12,
+        "tokens": 767980,
+        "coste_usd_estimado": 0.79
+      },
+      "rarezas": [
+        "Resume cada incidencia en unos 450 caracteres con un script y abre completas cinco dudosas.",
+        "Escribe la clasificación en un formato abreviado (51098|b|CLI|…) y la convierte a JSONL con un script: la mitad de tokens de salida que Haiku."
+      ]
+    },
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
     "dir": "resultados/anthropic_claude-sonnet-5-5-medium/A3D",

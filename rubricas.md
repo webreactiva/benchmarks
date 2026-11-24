@@ -58,3 +58,22 @@ Es exigente a propósito: usa la métrica y la regla de cruce de RealVuln. Un ha
 | El 90 % o más de los hallazgos da su CWE | 1 |
 
 Referencia de RealVuln en este repo: la mejor herramienta (Kolega) tiene F3 79, gpt-6-astra 54 y Sonnet 5 en Claude Code 34,5.
+
+## TCI · Clasifica las incidencias de incidencias.jsonl
+
+El agente recibe en su carpeta 300 incidencias reales del repositorio de Codex de OpenAI (octubre y noviembre de 2026; id, título y texto, sin etiquetas) y el prompt tal cual, sin la frase de destino: el propio prompt dice dónde guardar. Corre sin búsqueda web. La clasificación correcta es la de **jev-1.14.0**, un modelo de decisión que se toma como 100 % correcto (`scripts/tci/correcta-jev.jsonl`; en las áreas, las que tienen probabilidad ≥ 0,5). `python3 scripts/tci/puntuar.py <dir>` acepta cualquier estructura de JSON y calcula la nota.
+
+Mide dos cosas por separado. **Calidad**, contra jev. **Eficiencia**, con umbrales absolutos: jev no entra ahí, porque es un modelo de decisión y no un agente. Así un modelo pequeño que clasifica casi igual de bien gastando mucho menos queda por encima de uno grande. Los umbrales de eficiencia se calibraron con las tres primeras pruebas, en Claude Code; los agentes que releen más contexto en cada petición (OpenCode) pueden necesitar ajustarlos.
+
+| Criterio | Puntos |
+|---|---:|
+| **Calidad (contra jev)** | **6** |
+| Tipo (bug, enhancement, documentation): ≥ 95 % de aciertos | 1 |
+| Superficie (app, CLI, extension, codex-web, iOS): 2 si ≥ 90 %, 1 si ≥ 85 % | 2 |
+| Áreas, F1 global: 3 si ≥ 0,75, 2 si ≥ 0,65, 1 si ≥ 0,55 | 3 |
+| **Eficiencia** | **4** |
+| Tokens de toda la sesión (entrada, salida y caché): 2 si ≤ 600 000, 1 si ≤ 900 000 | 2 |
+| Tiempo de la sesión: ≤ 150 s | 1 |
+| Peticiones al modelo: ≤ 10 | 1 |
+
+La eficiencia solo puntúa si la calidad llega a 3 de 6: responder rápido y barato no tiene mérito si la clasificación no sirve. Una incidencia que falta o no se entiende cuenta como fallo en todo. El coste en dólares va aparte, como información (depende del proveedor y de la tarifa).

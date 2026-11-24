@@ -2,9 +2,9 @@
 
 Agente: Claude Code. Fechas: 2026-11-20 a 2026-11-20.
 
-**Nota media: 8,3 / 10** (3 de 4 prompts juzgados). Total: 26 peticiones y 2972,7 k tokens.
+**Nota media: 8,3 / 10** (3 de 5 prompts juzgados). Total: 26 peticiones y 2972,7 k tokens.
 
-Pendientes: SEC.
+Pendientes: SEC, TCI.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|

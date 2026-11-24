@@ -6,8 +6,8 @@ index.html usa rutas relativas: se abre desde benchmark/ con el navegador (o con
 import html, json, os, glob
 
 B = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ORDEN = ["A3D", "AIF", "CCA", "SEC"]
-TIPO = {"A3D": "visual", "AIF": "visual", "CCA": "código", "SEC": "seguridad"}
+ORDEN = ["A3D", "AIF", "CCA", "SEC", "TCI"]
+TIPO = {"A3D": "visual", "AIF": "visual", "CCA": "código", "SEC": "seguridad", "TCI": "clasificación"}
 PREVIEW = "https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main"  # abre los HTML del repo para verlos funcionando
 filas = []
 for m in sorted(glob.glob(f"{B}/resultados/*/*/meta.json")):

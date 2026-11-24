@@ -10,7 +10,9 @@ Medidas:
 - tipo y superficie: aciertos sobre las 300 incidencias (una que falta o no se entiende, fallo).
 - áreas: F1 micro (todas las áreas juntas) y macro (media por área), y Jaccard medio por incidencia.
 - exactas: incidencias con tipo, superficie y áreas iguales a las de jev.
-- coste: tokens y duración de la sesión (meta.json, sesion.jsonl), al lado del coste de jev (coste-jev.json).
+- coste: tokens y duración de la sesión (meta.json, sesion.jsonl), al lado del coste de jev (coste-jev.json), que es
+  solo información: jev no compite en eficiencia.
+- nota: rúbrica de rubricas.md (TCI): 6 puntos de calidad contra jev y 4 de eficiencia con umbrales absolutos.
 """
 import json, pathlib, re, sys
 from datetime import datetime
@@ -127,6 +129,25 @@ out = {"fichero": str(f.relative_to(d)) if f else None, "incidencias": n, "clasi
        "coste": {"segundos": dur, "tokens": meta.get("tokens"), "peticiones": meta.get("peticiones"),
                  "herramientas": meta.get("herramientas")},
        "coste_jev": json.load(open(AQUI / "coste-jev.json"))}
+# Rúbrica (rubricas.md, TCI). Calidad: contra jev. Eficiencia: umbrales absolutos; jev no entra (es un modelo de
+# decisión, no un agente), y la eficiencia no se compara con él.
+tok = (meta.get("tokens") or {}).get("total") or 0
+pet = meta.get("peticiones") or 0
+rub = {
+    "tipo": int(out["tipo"] >= 0.95),
+    "superficie": 2 if out["superficie"] >= 0.90 else 1 if out["superficie"] >= 0.85 else 0,
+    "areas": 3 if out["areas_f1_micro"] >= 0.75 else 2 if out["areas_f1_micro"] >= 0.65 else 1 if out["areas_f1_micro"] >= 0.55 else 0,
+    "tokens": 2 if 0 < tok <= 600_000 else 1 if 0 < tok <= 900_000 else 0,
+    "tiempo": int(dur is not None and dur <= 150),
+    "peticiones": int(0 < pet <= 10),
+}
+# La eficiencia solo cuenta si la clasificación vale: con calidad < 3, responder deprisa y barato no tiene mérito
+if rub["tipo"] + rub["superficie"] + rub["areas"] < 3:
+    rub["tokens"] = rub["tiempo"] = rub["peticiones"] = 0
+out["rubrica"] = rub
+out["nota"] = sum(rub.values())
+out["nota_calidad"] = rub["tipo"] + rub["superficie"] + rub["areas"]
+out["nota_eficiencia"] = rub["tokens"] + rub["tiempo"] + rub["peticiones"]
 (d / "juez").mkdir(exist_ok=True)
 (d / "juez" / "puntuacion.json").write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n")
 print(json.dumps({k: v for k, v in out.items() if k != "areas_por_area"}, indent=2, ensure_ascii=False))

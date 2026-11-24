@@ -15,7 +15,7 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 </style>
 <h1>Benchmark de modelos</h1>
 <p>Cada prompt se manda tal cual, en una sesión nueva de OpenCode aislado, con una sola frase añadida: «Guarda lo que generes en la carpeta actual.». Sin segundo mensaje ni correcciones. Tokens: suma de todas las peticiones de la sesión (entrada sin caché, salida, razonamiento y lectura de caché). Nota del juez de 0 a 10.</p>
-<ul><li><b>A3D</b> · Una ruta en 3D en la Alhambra de Granada en un solo fichero html</li><li><b>AIF</b> · Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML.</li><li><b>CCA</b> · Implementa un carrito de la compra escalable</li><li><b>SEC</b> · Haz una auditoría de seguridad de este proyecto</li></ul>
+<ul><li><b>A3D</b> · Una ruta en 3D en la Alhambra de Granada en un solo fichero html</li><li><b>AIF</b> · Haz un juego de alquimia como Infinite Craft de neal.fun, pero con el contenido de Web Reactiva. Un único archivo HTML.</li><li><b>CCA</b> · Implementa un carrito de la compra escalable</li><li><b>SEC</b> · Haz una auditoría de seguridad de este proyecto</li><li><b>TCI</b> · Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.</li></ul>
 <div class=wrap><table>
 <tr><th>Prompt</th><th>Modelo</th><th>Tokens</th><th>Pet.</th><th>Ficheros</th><th>Validación</th><th>Nota</th><th>Juicio</th><th>Captura</th></tr>
 <tr>
@@ -47,6 +47,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ npm ci y npm start; npm test: 13/13 en memoria (1 saltado) y 21/21 con REDIS_URL contra un Redis real<br>✔ 50 altas a la vez: 50 guardadas en una instancia (memoria y Redis) y repartidas entre dos instancias con el mismo Redis<br>✔ cada escritura es un script Lua atómico en Redis: sin leer-modificar-escribir en la aplicación<br>✔ dinero en céntimos enteros, una moneda por catálogo; el precio sale del catálogo al leer (se ignora el del cliente)<br>✔ valida cantidad 0, negativa, decimal, enorme y en texto; SKU inexistente, SKU y cartId con «../», cuerpo vacío o no JSON<br>~ sin Redis, dos instancias reparten el carrito (25 + 25): el README avisa de que la memoria es solo para desarrollo<br>~ entrega node_modules junto al código; Dockerfile y docker-compose sin probar (lo dice)</small></td>
 <td class="nota n2">10<br><small>escala de verdad, sin adornos</small></td>
 <td><small>Servicio HTTP en Node sin estado con los carritos en Redis: cada escritura es un script Lua atómico, así que 50 altas a la vez repartidas entre dos instancias con el mismo Redis guardan las 50; dinero en céntimos, precio siempre del catálogo y validación estricta. Pasa 21 tests contra un Redis real y el README explica cada decisión de escalado, pero el dominio es el mínimo: ni stock, ni descuentos, ni checkout.</small> <a href="resultados/anthropic_claude-fable-5-2/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>claude-fable-5-2</small><br><small>Claude Code · 2026-11-24 00:37 UTC</small></td>
+<td class=n><b>952.3 k</b><br><small>in 22 · out 16.0 k<br>razon. 0 · caché 829.0 k</small></td>
+<td class=n>11</td>
+<td><small><a href="resultados/anthropic_claude-fable-5-2/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
+<td><small>–</small></td>
+<td class="nota n0">3<br><small>Criterio propio, lento y caro</small></td>
+<td><small>Tipo 97,3 %, superficie 89,7 % y F1 de áreas 0,63 frente a jev (82 incidencias idénticas). Le costó 190 s, 11 peticiones y 952 k tokens (≈ 1,88 $).</small> <a href="resultados/anthropic_claude-fable-5-2/TCI/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
@@ -89,6 +99,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Informe de 45 hallazgos con fichero y línea en casi todos: cubre 25 de las 40 entradas con la regla estricta (F3 61,3), 35 con el criterio del juez, y solo 4 no son fallos. Se le escapan el oráculo de padding, la fuga de la URL interna del asistente, el IDOR de wishlists y la página de noticias; no da ningún CWE.</small> <a href="resultados/anthropic_claude-haiku-5-5/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>claude-haiku-5-5</small><br><small>Claude Code · 2026-11-24 00:05 UTC</small></td>
+<td class=n><b>498.9 k</b><br><small>in 16 · out 28.4 k<br>razon. 0 · caché 402.8 k</small></td>
+<td class=n>8</td>
+<td><small><a href="resultados/anthropic_claude-haiku-5-5/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
+<td><small>–</small></td>
+<td class="nota n1">7<br><small>Casi igual, por céntimos</small></td>
+<td><small>Tipo 96,3 %, superficie 85,7 % y F1 de áreas 0,617 frente a jev (63 incidencias idénticas). Le costó 113 s, 8 peticiones y 499 k tokens (≈ 0,03 $).</small> <a href="resultados/anthropic_claude-haiku-5-5/TCI/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-20 10:52 UTC</small></td>
 <td class=n><b>2281.3 k</b><br><small>in 34 · out 93.3 k<br>razon. 0 · caché 2065.7 k</small></td>
@@ -117,6 +137,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ npm test: 19/19 (node:test, sin dependencias), estable en tres pasadas<br>✔ npm start arranca; alta, cambio de cantidad, quitar y vaciar por HTTP<br>✔ 50 altas a la vez en memoria (servicio y HTTP): 50 de 50, también con 50 productos distintos<br>✔ Redis real, dos instancias HTTP con REDIS_URL: 50 POST a la vez, aceptadas = guardadas; 1 acaba en 409 explícito. Con CLUSTER=1 y dos workers, igual<br>✔ céntimos enteros (0,10 × 3 = 30); precio del catálogo, el del cliente se ignora<br>✔ el objeto devuelto se puede tocar, pero lo guardado no cambia (memoria serializada y Redis)<br>✔ id ../ no se puede crear (el id lo genera el servicio con UUID); la ruta HTTP da 404<br>~ la moneda la elige el cliente al crear y no se valida ({&quot;x&quot;:1} se guarda); el catálogo no tiene moneda, así que un carrito USD cobra los precios en euros<br>~ ioredis no está en package.json: para usar Redis hay que instalarlo a mano (el README lo dice)<br>~ idempotencia, catálogo y cupones solo en memoria: con varias réplicas la Idempotency-Key no se comparte (lo dice)</small></td>
 <td class="nota n2">10<br><small>escala, y Redis funciona</small></td>
 <td><small>Servicio REST en Node sin dependencias, hexagonal, con carrito inmutable, céntimos, precios del catálogo, versión optimista con reintentos y backoff, y un adaptador de Redis con compare-and-swap en Lua que se conecta con REDIS_URL y aguanta 50 altas a la vez desde dos instancias sin perder nada. Lo flojo es menor: la moneda la pone el cliente sin validar, ioredis no está en package.json y la idempotencia y el catálogo solo existen en memoria, cosa que el README admite.</small> <a href="resultados/anthropic_claude-opus-5-5-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>claude-opus-5-5 (medium)</small><br><small>Claude Code · 2026-11-24 00:30 UTC</small></td>
+<td class=n><b>768.0 k</b><br><small>in 24 · out 14.8 k<br>razon. 0 · caché 682.1 k</small></td>
+<td class=n>12</td>
+<td><small><a href="resultados/anthropic_claude-opus-5-5-medium/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
+<td><small>–</small></td>
+<td class="nota n1">6<br><small>Mejor en áreas, caro</small></td>
+<td><small>Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,668 frente a jev (86 incidencias idénticas). Le costó 125 s, 12 peticiones y 768 k tokens (≈ 0,79 $).</small> <a href="resultados/anthropic_claude-opus-5-5-medium/TCI/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>

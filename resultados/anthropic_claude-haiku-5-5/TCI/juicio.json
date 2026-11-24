@@ -1,0 +1,30 @@
+{
+  "codigo": "TCI",
+  "modelo": "claude-haiku-5-5",
+  "nota": 7,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 1,
+    "areas": 1,
+    "tokens": 2,
+    "tiempo": 1,
+    "peticiones": 1
+  },
+  "veredicto": "Casi igual, por céntimos",
+  "resumen": "Tipo 96,3 %, superficie 85,7 % y F1 de áreas 0,617 frente a jev (63 incidencias idénticas). Le costó 113 s, 8 peticiones y 499 k tokens (≈ 0,03 $).",
+  "cifras": {
+    "tipo": 0.963,
+    "superficie": 0.857,
+    "areas_f1_micro": 0.617,
+    "areas_f1_macro": 0.599,
+    "exactas": 63,
+    "segundos": 113,
+    "peticiones": 8,
+    "tokens": 498873,
+    "coste_usd_estimado": 0.03
+  },
+  "rarezas": [
+    "Clasifica con un script que resume cada incidencia en el título y 150 caracteres; lo dice en su respuesta («el título y el inicio de cada texto, no el cuerpo completo»). Por eso falla windows-os y sandbox cuando el dato está más abajo, en la plantilla.",
+    "Añade un campo «nota» a 29 incidencias que le parecen retiradas, duplicadas o vacías."
+  ]
+}

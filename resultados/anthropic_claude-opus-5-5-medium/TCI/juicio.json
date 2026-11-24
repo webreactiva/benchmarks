@@ -1,0 +1,30 @@
+{
+  "codigo": "TCI",
+  "modelo": "claude-opus-5-5",
+  "nota": 6,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 1,
+    "areas": 2,
+    "tokens": 1,
+    "tiempo": 1,
+    "peticiones": 0
+  },
+  "veredicto": "Mejor en áreas, caro",
+  "resumen": "Tipo 97,0 %, superficie 87,7 % y F1 de áreas 0,668 frente a jev (86 incidencias idénticas). Le costó 125 s, 12 peticiones y 768 k tokens (≈ 0,79 $).",
+  "cifras": {
+    "tipo": 0.97,
+    "superficie": 0.877,
+    "areas_f1_micro": 0.668,
+    "areas_f1_macro": 0.641,
+    "exactas": 86,
+    "segundos": 125,
+    "peticiones": 12,
+    "tokens": 767980,
+    "coste_usd_estimado": 0.79
+  },
+  "rarezas": [
+    "Resume cada incidencia en unos 450 caracteres con un script y abre completas cinco dudosas.",
+    "Escribe la clasificación en un formato abreviado (51098|b|CLI|…) y la convierte a JSONL con un script: la mitad de tokens de salida que Haiku."
+  ]
+}

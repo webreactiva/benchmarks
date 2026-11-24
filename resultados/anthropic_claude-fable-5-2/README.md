@@ -1,8 +1,8 @@
 # claude-fable-5-2
 
-Agente: Claude Code. Fechas: 2026-11-22 a 2026-11-22.
+Agente: Claude Code. Fechas: 2026-11-22 a 2026-11-24.
 
-**Nota media: 9,3 / 10** (3 de 4 prompts juzgados). Total: 20 peticiones y 1735,5 k tokens.
+**Nota media: 7,8 / 10** (4 de 5 prompts juzgados). Total: 31 peticiones y 2687,8 k tokens.
 
 Pendientes: SEC.
 
@@ -11,6 +11,7 @@ Pendientes: SEC.
 | [A3D](A3D/juicio.md) | visual | 9 | 1149,4 k | 10 | maqueta completa que se recorre | Maqueta de toda la colina de la Sabika con three.js incrustado: diez paradas en orden de visita, de la Puerta de la Justicia al Patio de la Acequia, con un recorrido que camina a ras de suelo por el camino dibujado y sigue solo, minimapa, lista de paradas y luz de día, atardecer y noche. Se reconocen el arco de la Justicia, la Alcazaba, el patio circular de Carlos V, la alberca de Arrayanes con Comares y el Patio de la Acequia, y las fichas son correctas; solo los Leones quedan algo escondidos entre tejados. | [▶ alhambra-ruta-3d.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/anthropic_claude-fable-5-2/A3D/salida/alhambra-ruta-3d.html) |
 | [AIF](AIF/juicio.md) | visual | 5 | 290,6 k | 8 | buen juego, poco Web Reactiva | Tablero libre donde se arrastra una ficha sobre otra, 141 elementos y 157 recetas, todos alcanzables desde HTML, CSS, JavaScript, Servidor, Micrófono y Café, con buscador, pista y progreso guardado. El contenido es cultura del desarrollo web en general (frameworks, Docker, «Centrar un div», «Deploy en viernes») con seis elementos de la casa; las mezclas sin receta no dan nada. | [▶ alquimia-reactiva.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/webreactiva/benchmarks/refs/heads/main/resultados/anthropic_claude-fable-5-2/AIF/salida/alquimia-reactiva.html) |
 | [CCA](CCA/juicio.md) | código | 6 | 295,5 k | 10 | escala de verdad, sin adornos | Servicio HTTP en Node sin estado con los carritos en Redis: cada escritura es un script Lua atómico, así que 50 altas a la vez repartidas entre dos instancias con el mismo Redis guardan las 50; dinero en céntimos, precio siempre del catálogo y validación estricta. Pasa 21 tests contra un Redis real y el README explica cada decisión de escalado, pero el dominio es el mínimo: ni stock, ni descuentos, ni checkout. | – |
+| [TCI](TCI/juicio.md) | clasificación | 11 | 952,3 k | 3 | Criterio propio, lento y caro | Tipo 97,3 %, superficie 89,7 % y F1 de áreas 0,63 frente a jev (82 incidencias idénticas). Le costó 190 s, 11 peticiones y 952 k tokens (≈ 1,88 $). | – |
 
 Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamiento y caché). «En vivo» abre el HTML tal cual lo dejó el modelo, abierto con htmlpreview.github.io.
 
@@ -37,3 +38,8 @@ Tokens: suma de todas las peticiones de la sesión (entrada, salida, razonamient
 - Dice que no ha probado el Dockerfile ni el docker-compose.
 - Entrega node_modules junto al código.
 - 3 minutos y 6 peticiones: 20 000 tokens de salida y 295 000 en total (245 000 de caché).
+
+**TCI**
+
+- Resume cada incidencia en unos 260 caracteres y lee los resúmenes con Read; abre completas unas pocas.
+- Aplica reglas propias más estrictas que jev: windows-os «solo cuando el problema parece propio de Windows» y deja sin área los avisos de «model at capacity», que jev pone en rate-limits.

@@ -1,0 +1,30 @@
+{
+  "codigo": "TCI",
+  "modelo": "claude-fable-5-2",
+  "nota": 3,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 1,
+    "areas": 1,
+    "tokens": 0,
+    "tiempo": 0,
+    "peticiones": 0
+  },
+  "veredicto": "Criterio propio, lento y caro",
+  "resumen": "Tipo 97,3 %, superficie 89,7 % y F1 de áreas 0,63 frente a jev (82 incidencias idénticas). Le costó 190 s, 11 peticiones y 952 k tokens (≈ 1,88 $).",
+  "cifras": {
+    "tipo": 0.973,
+    "superficie": 0.897,
+    "areas_f1_micro": 0.63,
+    "areas_f1_macro": 0.592,
+    "exactas": 82,
+    "segundos": 190,
+    "peticiones": 11,
+    "tokens": 952308,
+    "coste_usd_estimado": 1.88
+  },
+  "rarezas": [
+    "Resume cada incidencia en unos 260 caracteres y lee los resúmenes con Read; abre completas unas pocas.",
+    "Aplica reglas propias más estrictas que jev: windows-os «solo cuando el problema parece propio de Windows» y deja sin área los avisos de «model at capacity», que jev pone en rate-limits."
+  ]
+}

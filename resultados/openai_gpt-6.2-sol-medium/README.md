@@ -2,9 +2,9 @@
 
 Agente: Codex CLI. Fechas: 2026-11-20 a 2026-11-20.
 
-**Nota media: 7,7 / 10** (3 de 4 prompts juzgados). Total: 86 peticiones y 4361,3 k tokens.
+**Nota media: 7,7 / 10** (3 de 5 prompts juzgados). Total: 86 peticiones y 4361,3 k tokens.
 
-Pendientes: SEC.
+Pendientes: SEC, TCI.
 
 | Prompt | Tipo | Peticiones | Tokens | Nota | Veredicto | Juicio | En vivo |
 |---|---|---:|---:|---:|---|---|---|
