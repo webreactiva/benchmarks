@@ -81,6 +81,21 @@ tmux set-option -t "=$s:" @pantallas "$B/resultados/.pantallas"
 for i in $(seq 1 90); do sleep 1; tmux capture-pane -p -t "=$s:" | grep -q "ctrl+p" && break; done
 inicio=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 ACEPTA=1 ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" di "$s" "$prompt" || true
+# Subagentes en segundo plano: si el modelo cierra su turno esperándolos («↓ 6 subagents» en la barra de estado), la
+# sesión sigue viva y el turno vuelve cuando acaban. Se espera mientras la barra los muestre y la pantalla cambie; si
+# la pantalla no cambia en ~10 min con el agente libre, se da por acabado (por si la barra los sigue listando al terminar).
+espera_fondo() {
+  local t0 prev cur igual=0; t0=$(date +%s); prev=""
+  while tmux capture-pane -p -t "=$s:" 2>/dev/null | grep -qE "↓ [0-9]+ subagents?" \
+        && [ $(( $(date +%s) - t0 )) -lt ${ESPERA_MAX:-2400} ]; do
+    fondo=1; sleep 20
+    ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" espera "$s" >/dev/null || true
+    cur=$(tmux capture-pane -p -t "=$s:" 2>/dev/null | md5sum)
+    if [ "$cur" = "$prev" ]; then igual=$((igual + 1)); [ $igual -ge 30 ] && break; else igual=0; fi
+    prev=$cur
+  done
+}
+fondo=0; espera_fondo
 # Regla de las preguntas: el modelo decide siempre. Cada vez que pregunte, da opciones o pida que elijamos, se le
 # contesta «Decide tú.» (como mucho 5 veces, para no entrar en un bucle). Dos formas de preguntar:
 #   con la herramienta de preguntas (diálogo en pantalla): se cierra con Escape y se contesta;
@@ -110,6 +125,7 @@ while [ $pregunto -lt 5 ]; do
   fi
   pregunto=$((pregunto + 1))
   ACEPTA=1 ESPERA_MAX=${ESPERA_MAX:-2400} LINEAS=12 "$H/tmux-agente.sh" di "$s" "Decide tú." || true
+  espera_fondo
 done
 mkdir -p "$dest"
 tmux capture-pane -p -t "=$s:" -S -3000 > "$dest/pantalla.txt"
@@ -132,6 +148,11 @@ python3 - "$dest/meta.json" "$pregunto" <<'PY'
 import json, sys
 f = sys.argv[1]; m = json.load(open(f)); m["veces_decide_tu"] = int(sys.argv[2]); json.dump(m, open(f, "w"), indent=2, ensure_ascii=False)
 PY
+if [ "$fondo" = 1 ]; then python3 - "$dest/meta.json" <<'PY'
+import json, sys
+f = sys.argv[1]; m = json.load(open(f)); m["espero_segundo_plano"] = True; json.dump(m, open(f, "w"), indent=2, ensure_ascii=False)
+PY
+fi
 if [ -n "$SEMILLA" ]; then python3 - "$dest/meta.json" "$SEMILLA" "${SIN_WEB:-}" <<'PY'
 import json, sys
 f = sys.argv[1]; m = json.load(open(f)); m["semilla"] = sys.argv[2]
