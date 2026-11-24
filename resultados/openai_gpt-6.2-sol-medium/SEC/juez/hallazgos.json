@@ -1,0 +1,408 @@
+{
+ "hallazgos": [
+  {
+   "id": "C-01",
+   "titulo": "rol de administrador desde el registro público",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "signup 48-78 (31 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "C-02",
+   "titulo": "clave JWT por defecto en server-auth",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "server-auth 12-53 (42 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "C-03",
+   "titulo": "suplantación con el acceso de soporte; token en la respuesta",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "51-90 (40 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-035",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "«recibirlo en la respuesta»; 51-90; rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-034",
+     "estricto": false,
+     "nota": "solo recomienda guardar el hash; no dice que se guarde en claro"
+    }
+   ]
+  },
+  {
+   "id": "C-04",
+   "titulo": "token de restablecimiento predecible",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: md5 de email y hora; no está en la tabla. No describe el hash débil de la contraseña nueva (016)."
+  },
+  {
+   "id": "C-05",
+   "titulo": "lectura y listado de archivos sin confinamiento",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "files 8-26 (19 líneas) toca 21"
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "files 42-67 (26 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "C-06",
+   "titulo": "SQLi en la búsqueda de productos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": true,
+     "nota": "85-100 toca la ventana 90-113"
+    }
+   ]
+  },
+  {
+   "id": "C-07",
+   "titulo": "SSRF en soporte",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "support 6-37 (32 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "C-08",
+   "titulo": "contraseñas en el log y SIEM con credenciales fijas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "nota": "login 14-27"
+    },
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true,
+     "nota": "monitoring/auth 5-20"
+    }
+   ]
+  },
+  {
+   "id": "C-09",
+   "titulo": "Next.js 15.2.2 con avisos críticos",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "dependencia real (package.json:33); fuera de la tabla"
+  },
+  {
+   "id": "A-01",
+   "titulo": "SQLi en pedidos, seguimiento y reseñas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "orders/search 81-102 (22 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true,
+     "nota": "tracking 96-103"
+    },
+    {
+     "id": "oss-oopssec-store-005",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "admin/reviews 100-136 (37 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-006",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "admin/reviews 100-136; rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "A-02",
+   "titulo": "pedidos y listas de deseos de terceros",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "orders/[id] 8-56 (49 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-036",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "wishlists 6-59 (54 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "A-03",
+   "titulo": "XSS persistente en analítica",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true,
+     "nota": "AnalyticsClient.tsx:366"
+    }
+   ]
+  },
+  {
+   "id": "A-04",
+   "titulo": "XXE en la importación de pedidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true,
+     "nota": "import-order 9-24"
+    }
+   ]
+  },
+  {
+   "id": "A-05",
+   "titulo": "el cliente fija el total del pedido",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true,
+     "nota": "orders/route 124-131"
+    }
+   ]
+  },
+  {
+   "id": "A-06",
+   "titulo": "tarjetas regalo predecibles y sin pago",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: LCG sembrado en lib/gift-card.ts; fuera de la tabla"
+  },
+  {
+   "id": "A-07",
+   "titulo": "enlaces de compartir con CBC sin autenticar y clave fija",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "share-crypto 3-31 (29 líneas), «clave fija de reserva»; rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-018",
+     "estricto": false,
+     "nota": "dice CBC sin autenticación, no describe el oráculo de padding"
+    }
+   ]
+  },
+  {
+   "id": "A-08",
+   "titulo": "herramientas MCP privilegiadas en el asistente público",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-009",
+     "estricto": false,
+     "nota": "no nombra la inyección de prompt"
+    },
+    {
+     "id": "oss-oopssec-store-010",
+     "estricto": false,
+     "nota": "no nombra la inyección de prompt; 267-286 toca la ventana"
+    },
+    {
+     "id": "oss-oopssec-store-008",
+     "estricto": false,
+     "nota": "describe el acceso a red interna por MCP del cliente, pero sus líneas no tocan 59-91"
+    }
+   ],
+   "nota": "real: constante MCP en lib/mcp-constants.ts; no cubre ninguna entrada de forma estricta"
+  },
+  {
+   "id": "A-09",
+   "titulo": "MD5 sin sal y cuentas iniciales conocidas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-042",
+     "estricto": true,
+     "nota": "seed.ts 658-714; la entrada abarca todo el fichero"
+    }
+   ],
+   "nota": "el MD5 lo sitúa en server-auth, no en reset-password (016); intentos y errores de login solo como recomendación (013, 014 no)"
+  },
+  {
+   "id": "A-10",
+   "titulo": "cualquier cliente cambia el directo",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: live/stream solo anota hijacked"
+  },
+  {
+   "id": "M-01",
+   "titulo": "middleware decodifica el JWT sin verificar firma",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: middleware.ts usa atob sin firma"
+  },
+  {
+   "id": "M-02",
+   "titulo": "redirección abierta tras el login",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-037",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "LoginForm 15-37 (23 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ]
+  },
+  {
+   "id": "M-03",
+   "titulo": "HTML de una URL externa en soporte y SVG subidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "image/route 57-85 (29 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    }
+   ],
+   "nota": "el HTML de SupportForm también es real"
+  },
+  {
+   "id": "M-04",
+   "titulo": "diagnóstico con credencial fija, exportación y flags sin autenticación",
+   "clase": "TP",
+   "linea": true,
+   "cwe": false,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-003",
+     "estricto": true,
+     "sin_linea": true,
+     "nota": "admin/diag 5-25 (21 líneas); rango de más de 20 líneas que toca la ventana: cuenta como sin línea"
+    },
+    {
+     "id": "oss-oopssec-store-023",
+     "estricto": true,
+     "nota": "flags/route 5-13"
+    },
+    {
+     "id": "oss-oopssec-store-021",
+     "estricto": true,
+     "nota": "flags/[slug] 5-19"
+    },
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": false,
+     "nota": "user/export: cita 35-58 y 63-97; la entrada es 123-126"
+    }
+   ]
+  },
+  {
+   "id": "M-05",
+   "titulo": "contenedor como root y .env.local en el contexto",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: Dockerfile sin USER"
+  },
+  {
+   "id": "M-06",
+   "titulo": "lecturas sin límite de tamaño",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real, de poca gravedad"
+  },
+  {
+   "id": "M-07",
+   "titulo": "autor de reseñas elegido por el cliente",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": false,
+   "nota": "real: products/[id]/reviews prioriza el autor de la petición"
+  }
+ ]
+}

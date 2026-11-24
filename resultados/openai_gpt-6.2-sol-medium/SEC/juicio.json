@@ -1,0 +1,38 @@
+{
+  "codigo": "SEC",
+  "modelo": "gpt-6.2-sol",
+  "nota": 5,
+  "rubrica": {
+    "f3": 3,
+    "criticas": 1,
+    "linea": 1,
+    "cwe": 0
+  },
+  "veredicto": "Ve mucho, localiza con brocha gorda",
+  "resumen": "Informe de 26 hallazgos en tablas, todos con fichero y línea pero sin CWE: cubre 26 de las 40 entradas con la regla estricta (15 sin línea, a medio punto: 18,5 en la nota, F3 47,7), 29 con el criterio del juez, y no inventa ninguno. Los rangos anchos le cuestan medio punto en 15 entradas, y se le escapan la clave en .env.local, la SSRF y la inyección del asistente, el login sin límite de intentos y el logout.",
+  "cifras": {
+    "tp_estricto": 18.5,
+    "con_linea_tp": 11,
+    "sin_linea_tp": 15,
+    "fp_estricto": 9,
+    "fn_estricto": 21.5,
+    "f3": 47.7,
+    "wf3": 47.9,
+    "precision": 0.673,
+    "recall": 0.463,
+    "juez": {
+      "tp": 29,
+      "fp_inventados": 0,
+      "extra_reales": 9,
+      "f3": 74.6
+    }
+  },
+  "rarezas": [
+    "Busca un AGENTS.md en la carpeta y en las dos de arriba (/private/var/tmp/bench, /private/var/tmp) antes de empezar; no hay ninguno.",
+    "Filtra las líneas con «QKB{» al leer ficheros: evita a propósito las flags del laboratorio y dice que no copia credenciales ni datos de demostración. No nombra el proyecto original.",
+    "Sale a internet sin búsqueda web: npm audit contra el registro de npm (deja el resultado en AUDITORIA_DEPENDENCIAS_NPM.json) y curl a la API de avisos de GitHub para confirmar dos GHSA de Next.js. El perfil de Codex tiene red; solo la herramienta de búsqueda está desactivada.",
+    "No toca el código: crea AUDITORIA_SEGURIDAD.md y el anexo de npm.",
+    "Informe corto (71 líneas) y en tablas: 26 hallazgos con fichero y línea, ninguno con CWE, y con rangos anchos (51-90, 100-136, 6-59) que dejan 15 de sus 26 aciertos a medio punto.",
+    "21 peticiones, 1,19 M tokens."
+  ]
+}

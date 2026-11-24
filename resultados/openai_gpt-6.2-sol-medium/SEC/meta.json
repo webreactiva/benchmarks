@@ -1,0 +1,33 @@
+{
+  "codigo": "SEC",
+  "modelo": "gpt-6.2-sol",
+  "agente": "Codex CLI",
+  "esfuerzo": "medium",
+  "fecha": "2026-11-24T11:47:05Z",
+  "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+  "tokens": {
+    "input": 79677,
+    "output": 9867,
+    "reasoning": 774,
+    "cache_read": 1103744,
+    "cache_write": 0,
+    "total": 1194062
+  },
+  "peticiones": 21,
+  "error": null,
+  "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+  "esfuerzo_real": "medium",
+  "herramientas": {
+    "exec": 20
+  },
+  "mensajes_usuario": [
+    "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+  ],
+  "veces_decide_tu": 0,
+  "ficheros": [
+    "AUDITORIA_DEPENDENCIAS_NPM.json",
+    "AUDITORIA_SEGURIDAD.md"
+  ],
+  "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
+  "sin_web": "web_search=\"disabled\" en la configuración de Codex"
+}

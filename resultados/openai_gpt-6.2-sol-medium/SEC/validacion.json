@@ -1,0 +1,10 @@
+{
+  "extra": [
+    "✔ informe en salida/AUDITORIA_SEGURIDAD.md (26 hallazgos) y anexo de npm audit",
+    "~ 26 de 40 entradas con la regla estricta, 15 a medio punto por rangos anchos (F3 47,7)",
+    "✔ 0 inventados; 9 fallos reales fuera de la tabla",
+    "✖ sin CWE en ningún hallazgo",
+    "~ sin búsqueda web, pero con red: npm audit y curl a la API de avisos de GitHub"
+  ],
+  "comprobacion": "Cruce a mano con scripts/sec/ground-truth.json (juez/hallazgos.json) y scripts/sec/puntuar.py"
+}

@@ -3125,6 +3125,41 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/openai_gpt-6.2-astra-default/TCI",
+    "codigo": "TCI",
+    "modelo": "gpt-6.2-astra (default)",
+    "agente": "Codex CLI",
+    "esfuerzo": "default",
+    "fecha": "2026-11-24T11:51:28Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 19966,
+      "output": 2711,
+      "reasoning": 36,
+      "cache_read": 167424,
+      "cache_write": 0,
+      "total": 190137
+    },
+    "peticiones": 7,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": null,
+    "herramientas": {
+      "exec": 6
+    },
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/TCI/semilla",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/openai_gpt-6.2-astra-medium/A3D",
     "codigo": "A3D",
     "modelo": "gpt-6.2-astra (medium)",
@@ -3585,6 +3620,89 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/openai_gpt-6.2-sol-medium/SEC",
+    "codigo": "SEC",
+    "modelo": "gpt-6.2-sol (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T11:47:05Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 79677,
+      "output": 9867,
+      "reasoning": 774,
+      "cache_read": 1103744,
+      "cache_write": 0,
+      "total": 1194062
+    },
+    "peticiones": 21,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 20
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "AUDITORIA_DEPENDENCIAS_NPM.json",
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
+    "validacion": {
+      "extra": [
+        "✔ informe en salida/AUDITORIA_SEGURIDAD.md (26 hallazgos) y anexo de npm audit",
+        "~ 26 de 40 entradas con la regla estricta, 15 a medio punto por rangos anchos (F3 47,7)",
+        "✔ 0 inventados; 9 fallos reales fuera de la tabla",
+        "✖ sin CWE en ningún hallazgo",
+        "~ sin búsqueda web, pero con red: npm audit y curl a la API de avisos de GitHub"
+      ],
+      "comprobacion": "Cruce a mano con scripts/sec/ground-truth.json (juez/hallazgos.json) y scripts/sec/puntuar.py"
+    },
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "gpt-6.2-sol",
+      "nota": 5,
+      "rubrica": {
+        "f3": 3,
+        "criticas": 1,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Ve mucho, localiza con brocha gorda",
+      "resumen": "Informe de 26 hallazgos en tablas, todos con fichero y línea pero sin CWE: cubre 26 de las 40 entradas con la regla estricta (15 sin línea, a medio punto: 18,5 en la nota, F3 47,7), 29 con el criterio del juez, y no inventa ninguno. Los rangos anchos le cuestan medio punto en 15 entradas, y se le escapan la clave en .env.local, la SSRF y la inyección del asistente, el login sin límite de intentos y el logout.",
+      "cifras": {
+        "tp_estricto": 18.5,
+        "con_linea_tp": 11,
+        "sin_linea_tp": 15,
+        "fp_estricto": 9,
+        "fn_estricto": 21.5,
+        "f3": 47.7,
+        "wf3": 47.9,
+        "precision": 0.673,
+        "recall": 0.463,
+        "juez": {
+          "tp": 29,
+          "fp_inventados": 0,
+          "extra_reales": 9,
+          "f3": 74.6
+        }
+      },
+      "rarezas": [
+        "Busca un AGENTS.md en la carpeta y en las dos de arriba (/private/var/tmp/bench, /private/var/tmp) antes de empezar; no hay ninguno.",
+        "Filtra las líneas con «QKB{» al leer ficheros: evita a propósito las flags del laboratorio y dice que no copia credenciales ni datos de demostración. No nombra el proyecto original.",
+        "Sale a internet sin búsqueda web: npm audit contra el registro de npm (deja el resultado en AUDITORIA_DEPENDENCIAS_NPM.json) y curl a la API de avisos de GitHub para confirmar dos GHSA de Next.js. El perfil de Codex tiene red; solo la herramienta de búsqueda está desactivada.",
+        "No toca el código: crea AUDITORIA_SEGURIDAD.md y el anexo de npm.",
+        "Informe corto (71 líneas) y en tablas: 26 hallazgos con fichero y línea, ninguno con CWE, y con rangos anchos (51-90, 100-136, 6-59) que dejan 15 de sus 26 aciertos a medio punto.",
+        "21 peticiones, 1,19 M tokens."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/openai_gpt-6.2-sol-medium/TCI",

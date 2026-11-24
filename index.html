@@ -399,6 +399,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Una página de carrito bien acabada con cuatro láminas, envío gratis desde 75 € y persistencia en localStorage que valida lo que lee. No hay tests, ni servidor, ni README: «escalable» se queda en que el catálogo es una lista que se puede ampliar.</small> <a href="resultados/openai_gpt-6.2-astra-default/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-24 11:51 UTC</small></td>
+<td class=n><b>190.1 k</b><br><small>in 20.0 k · out 2.7 k<br>razon. 36 · caché 167.4 k</small></td>
+<td class=n>7</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-default/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
+<td><small>–</small></td>
+<td class="nota n">–<br><small></small></td>
+<td><small></small></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>gpt-6.2-astra (medium)</small><br><small>Codex CLI · 2026-11-20 09:56 UTC</small></td>
 <td class=n><b>94.6 k</b><br><small>in 15.3 k · out 7.1 k<br>razon. 79 · caché 72.1 k</small></td>
@@ -457,6 +467,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ npm start sin dependencias: sirve la app en el puerto 3000<br>✔ npm test: 4 de 4<br>✔ precios en céntimos; 0,10 × 3 = 30<br>✔ id con ../ ignorado; cantidades negativas o decimales, a 0; por encima de las existencias, al tope<br>✔ el localStorage manipulado solo conserva id y cantidad válidos<br>✖ no hay API: el carrito vive en el navegador (localStorage); el servidor solo sirve ficheros<br>✖ las 50 altas a la vez no se pueden probar: no hay servicio<br>✖ quoteCart devuelve el producto del catálogo: cambiar su precio cambia el catálogo<br>~ no hay botón de vaciar; el carrito se vacía al confirmar el pedido</small></td>
 <td class="nota n1">5<br><small>bonita tienda, no escala</small></td>
 <td><small>Una tienda en el navegador muy cuidada, con fotos generadas, cupón, envío y deshacer, y un carrito con funciones puras en céntimos que valida bien lo que lee de localStorage. «Escalable» lo entiende como un catálogo ampliable: no hay servicio, ni almacenamiento compartido, ni concurrencia, y el README solo dice que para producción haría falta un servidor.</small> <a href="resultados/openai_gpt-6.2-sol-medium/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>gpt-6.2-sol (medium)</small><br><small>Codex CLI · 2026-11-24 11:47 UTC</small></td>
+<td class=n><b>1194.1 k</b><br><small>in 79.7 k · out 9.9 k<br>razon. 774 · caché 1103.7 k</small></td>
+<td class=n>21</td>
+<td><small><a href="resultados/openai_gpt-6.2-sol-medium/SEC/salida/AUDITORIA_DEPENDENCIAS_NPM.json">AUDITORIA_DEPENDENCIAS_NPM.json</a><br><a href="resultados/openai_gpt-6.2-sol-medium/SEC/salida/AUDITORIA_SEGURIDAD.md">AUDITORIA_SEGURIDAD.md</a></small></td>
+<td><small>✔ informe en salida/AUDITORIA_SEGURIDAD.md (26 hallazgos) y anexo de npm audit<br>~ 26 de 40 entradas con la regla estricta, 15 a medio punto por rangos anchos (F3 47,7)<br>✔ 0 inventados; 9 fallos reales fuera de la tabla<br>✖ sin CWE en ningún hallazgo<br>~ sin búsqueda web, pero con red: npm audit y curl a la API de avisos de GitHub</small></td>
+<td class="nota n1">5<br><small>Ve mucho, localiza con brocha gorda</small></td>
+<td><small>Informe de 26 hallazgos en tablas, todos con fichero y línea pero sin CWE: cubre 26 de las 40 entradas con la regla estricta (15 sin línea, a medio punto: 18,5 en la nota, F3 47,7), 29 con el criterio del juez, y no inventa ninguno. Los rangos anchos le cuestan medio punto en 15 entradas, y se le escapan la clave en .env.local, la SSRF y la inyección del asistente, el login sin límite de intentos y el logout.</small> <a href="resultados/openai_gpt-6.2-sol-medium/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
