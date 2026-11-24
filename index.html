@@ -179,6 +179,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Python sin dependencias con servicio sin estado, versión optimista con reintentos y un adaptador de Redis con compare-and-swap en Lua y TTL que funciona: con dos instancias sobre el mismo Redis, 50 altas a la vez acaban guardadas o en un 409 explícito, sin pérdidas. Pero el carrito que devuelve se puede mutar y en memoria eso cambia lo guardado (500 unidades a 1 céntimo sin pasar por el catálogo), solo hay una moneda fija y el adaptador de Redis no lo probó ni lo conectó a la API.</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>claude-sonnet-5-5 (medium)</small><br><small>Claude Code · 2026-11-24 00:56 UTC</small></td>
+<td class=n><b>573.1 k</b><br><small>in 18 · out 10.0 k<br>razon. 0 · caché 507.3 k</small></td>
+<td class=n>9</td>
+<td><small><a href="resultados/anthropic_claude-sonnet-5-5-medium/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
+<td><small>–</small></td>
+<td class="nota n1">6<br><small>El más rápido, superficie justa</small></td>
+<td><small>Tipo 96,3 %, superficie 84,3 % y F1 de áreas 0,628 frente a jev (78 incidencias idénticas). Le costó 69 s, 9 peticiones y 573 k tokens (≈ 0,29 $).</small> <a href="resultados/anthropic_claude-sonnet-5-5-medium/TCI/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>google/gemini-4-carbon</small><br><small>OpenCode · 2026-11-20 12:12 UTC</small></td>
 <td class=n><b>111.2 k</b><br><small>in 39.2 k · out 28.8 k<br>razon. 1.2 k · caché 42.0 k</small></td>

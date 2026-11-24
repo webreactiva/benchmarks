@@ -1,0 +1,31 @@
+{
+  "codigo": "TCI",
+  "modelo": "claude-sonnet-5-5",
+  "veredicto": "El más rápido, superficie justa",
+  "rarezas": [
+    "Clasifica «a mano» leyendo el título y los primeros 110-260 caracteres de cada incidencia, en bloques de 60, y luego escribe el resultado con un script que comprueba que están las 300.",
+    "Pone los avisos de «Selected model is at capacity» en connectivity (jev, en rate-limits) y lo dice en su respuesta.",
+    "Es el que menos tokens de salida gasta (10 k) y el más rápido (69 s)."
+  ],
+  "nota": 6,
+  "rubrica": {
+    "tipo": 1,
+    "superficie": 0,
+    "areas": 1,
+    "tokens": 2,
+    "tiempo": 1,
+    "peticiones": 1
+  },
+  "resumen": "Tipo 96,3 %, superficie 84,3 % y F1 de áreas 0,628 frente a jev (78 incidencias idénticas). Le costó 69 s, 9 peticiones y 573 k tokens (≈ 0,29 $).",
+  "cifras": {
+    "tipo": 0.963,
+    "superficie": 0.843,
+    "areas_f1_micro": 0.628,
+    "areas_f1_macro": 0.59,
+    "exactas": 78,
+    "segundos": 69,
+    "peticiones": 9,
+    "tokens": 573057,
+    "coste_usd_estimado": 0.29
+  }
+}

@@ -141,8 +141,9 @@ rub = {
     "tiempo": int(dur is not None and dur <= 150),
     "peticiones": int(0 < pet <= 10),
 }
-# La eficiencia solo cuenta si la clasificación vale: con calidad < 3, responder deprisa y barato no tiene mérito
-if rub["tipo"] + rub["superficie"] + rub["areas"] < 3:
+# La eficiencia solo cuenta si la clasificación sirve (tipo >= 90 % y F1 de áreas >= 0,50): responder deprisa y barato
+# no tiene mérito si no. Va por las cifras y no por los puntos de calidad, para no crear saltos de nota por décimas.
+if out["tipo"] < 0.90 or out["areas_f1_micro"] < 0.50:
     rub["tokens"] = rub["tiempo"] = rub["peticiones"] = 0
 out["rubrica"] = rub
 out["nota"] = sum(rub.values())

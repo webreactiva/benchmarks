@@ -76,4 +76,4 @@ Mide dos cosas por separado. **Calidad**, contra jev. **Eficiencia**, con umbral
 | Tiempo de la sesión: ≤ 150 s | 1 |
 | Peticiones al modelo: ≤ 10 | 1 |
 
-La eficiencia solo puntúa si la calidad llega a 3 de 6: responder rápido y barato no tiene mérito si la clasificación no sirve. Una incidencia que falta o no se entiende cuenta como fallo en todo. El coste en dólares va aparte, como información (depende del proveedor y de la tarifa).
+La eficiencia solo puntúa si la clasificación sirve: tipo ≥ 90 % y F1 de áreas ≥ 0,50 (responder «bug, app, sin áreas» a todo da un 86 % de tipo y 0 de áreas). Va por las cifras y no por los puntos de calidad, para que unas décimas de superficie no se lleven por delante los 4 puntos. Una incidencia que falta o no se entiende cuenta como fallo en todo. El coste en dólares va aparte, como información (depende del proveedor y de la tarifa).

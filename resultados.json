@@ -1282,6 +1282,70 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/anthropic_claude-sonnet-5-5-medium/TCI",
+    "codigo": "TCI",
+    "modelo": "claude-sonnet-5-5 (medium)",
+    "agente": "Claude Code",
+    "fecha": "2026-11-24T00:56:27Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 18,
+      "output": 10041,
+      "reasoning": 0,
+      "cache_read": 507333,
+      "cache_write": 55665,
+      "total": 573057
+    },
+    "peticiones": 9,
+    "error": null,
+    "herramientas": {
+      "Bash": 8
+    },
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+    "sin_web": "WebSearch y WebFetch denegados en settings.json del aislado",
+    "esfuerzo": "medium",
+    "validacion": null,
+    "juicio": {
+      "codigo": "TCI",
+      "modelo": "claude-sonnet-5-5",
+      "veredicto": "El más rápido, superficie justa",
+      "rarezas": [
+        "Clasifica «a mano» leyendo el título y los primeros 110-260 caracteres de cada incidencia, en bloques de 60, y luego escribe el resultado con un script que comprueba que están las 300.",
+        "Pone los avisos de «Selected model is at capacity» en connectivity (jev, en rate-limits) y lo dice en su respuesta.",
+        "Es el que menos tokens de salida gasta (10 k) y el más rápido (69 s)."
+      ],
+      "nota": 6,
+      "rubrica": {
+        "tipo": 1,
+        "superficie": 0,
+        "areas": 1,
+        "tokens": 2,
+        "tiempo": 1,
+        "peticiones": 1
+      },
+      "resumen": "Tipo 96,3 %, superficie 84,3 % y F1 de áreas 0,628 frente a jev (78 incidencias idénticas). Le costó 69 s, 9 peticiones y 573 k tokens (≈ 0,29 $).",
+      "cifras": {
+        "tipo": 0.963,
+        "superficie": 0.843,
+        "areas_f1_micro": 0.628,
+        "areas_f1_macro": 0.59,
+        "exactas": 78,
+        "segundos": 69,
+        "peticiones": 9,
+        "tokens": 573057,
+        "coste_usd_estimado": 0.29
+      }
+    },
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/google_gemini-4-carbon/A3D",
     "codigo": "A3D",
     "modelo": "google/gemini-4-carbon",
