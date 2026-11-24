@@ -459,6 +459,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Node sin dependencias, 413 líneas: carrito, gestor con un cerrojo en memoria por carrito, repositorio en memoria, inventario opcional, eventos, cupones y una API HTTP, con 4 tests en verde. Pero el dinero va en coma flotante, el precio lo manda el cliente, todo vive en un proceso y no hay README.</small> <a href="resultados/ollama_beam/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>ollama/beam</small><br><small>OpenCode · 2026-11-24 09:08 UTC</small></td>
+<td class=n><b>1320.2 k</b><br><small>in 177.4 k · out 6.8 k<br>razon. 0 · caché 1135.9 k</small></td>
+<td class=n>32</td>
+<td><small><a href="resultados/ollama_beam/SEC/salida/.env">.env</a></small></td>
+<td><small>–</small></td>
+<td class="nota n0">0<br><small>Sin informe</small></td>
+<td><small>Leyó el proyecto entero (33 órdenes de shell en 2 min 37 s) y fue anotando fallos en su razonamiento, pero no escribió ningún informe: en el último turno metió la siguiente llamada a herramienta como texto mal formado dentro del razonamiento, OpenCode no la reconoció y la sesión se cerró sin respuesta.</small> <a href="resultados/ollama_beam/SEC/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
 <td><small>ollama/beam</small><br><small>OpenCode · 2026-11-24 08:16 UTC</small></td>
 <td class=n><b>1761.3 k</b><br><small>in 151.3 k · out 20.2 k<br>razon. 0 · caché 1589.8 k</small></td>
@@ -729,6 +739,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Monorepo TypeScript con dominio hexagonal, API Fastify sin estado, Redis con scripts Lua (CAS por versión, reserva de stock, idempotencia), outbox, métricas, SSE y una tienda React. Compila, pasa 69 tests y, con dos instancias sobre el mismo Redis, 40 altas a la vez no pierden ni un dato. Lo único discutible: bajo mucha contención devuelve 409 en vez de reintentar más.</small> <a href="resultados/ollama_minimax-m3/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-24 08:59 UTC</small></td>
+<td class=n><b>1694.4 k</b><br><small>in 75.3 k · out 36.7 k<br>razon. 0 · caché 1582.5 k</small></td>
+<td class=n>30</td>
+<td><small><a href="resultados/ollama_minimax-m3/SEC/salida/SECURITY_AUDIT.md">SECURITY_AUDIT.md</a><br><a href="resultados/ollama_minimax-m3/SEC/salida/security-findings.json">security-findings.json</a></small></td>
+<td><small>–</small></td>
+<td class="nota n">–<br><small></small></td>
+<td><small></small></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
 <td><small>ollama/minimax-m3</small><br><small>OpenCode · 2026-11-24 08:09 UTC</small></td>
 <td class=n><b>1763.3 k</b><br><small>in 112.2 k · out 31.5 k<br>razon. 0 · caché 1619.6 k</small></td>
@@ -769,6 +789,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>API Fastify sin estado con todo el carrito en Redis y cada mutación atómica en un script Lua, más concurrencia optimista por versión, idempotencia, outbox con worker y grupo de consumidores, rate limiting distribuido, JWT, métricas, Docker Compose para escalar réplicas y una prueba de carga con k6. Compila, pasa 42 tests y, con dos instancias, 40 altas a la vez entran todas sin un conflicto.</small> <a href="resultados/ollama_minimax-m3.1-flash/CCA/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-24 08:44 UTC</small></td>
+<td class=n><b>4030.7 k</b><br><small>in 119.8 k · out 32.5 k<br>razon. 0 · caché 3878.4 k</small></td>
+<td class=n>56</td>
+<td><small><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/SECURITY_AUDIT.md">SECURITY_AUDIT.md</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/documents/invoices/invoice-ORD-001.pdf">documents/invoices/invoice-ORD-001.pdf</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/documents/invoices/invoice-ORD-002.pdf">documents/invoices/invoice-ORD-002.pdf</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/documents/invoices/invoice-ORD-003.pdf">documents/invoices/invoice-ORD-003.pdf</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/documents/invoices/invoice-ORD-004.pdf">documents/invoices/invoice-ORD-004.pdf</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/lib/generated/prisma/browser.ts">lib/generated/prisma/browser.ts</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/lib/generated/prisma/client.ts">lib/generated/prisma/client.ts</a><br><a href="resultados/ollama_minimax-m3.1-flash/SEC/salida/lib/generated/prisma/commonInputTypes.ts">lib/generated/prisma/commonInputTypes.ts</a><br>… y 32 más</small></td>
+<td><small>–</small></td>
+<td class="nota n">–<br><small></small></td>
+<td><small></small></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>
 <td><small>ollama/minimax-m3.1-flash</small><br><small>OpenCode · 2026-11-24 07:53 UTC</small></td>
 <td class=n><b>2220.7 k</b><br><small>in 135.9 k · out 28.1 k<br>razon. 0 · caché 2056.6 k</small></td>
@@ -807,6 +837,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ sin dependencias: 24/24 tests (unittest) y la demo, en memoria y con SQLite<br>✔ 50 altas a la vez (hilos) con un servicio: 50 guardadas<br>✖ dos servicios sobre el mismo SQLite: 50 aceptadas y 47 guardadas; se pierden 3 sin aviso<br>✔ dinero en céntimos (0,10 × 3 = 0,30), EUR + USD da error, el precio sale del catálogo (la API no admite precio)<br>✔ valida cantidad 0, negativa, decimal, en texto y por encima de 999; SKU y carrito con «../»<br>~ librería sin servidor; el cerrojo que la protege vive en el proceso</small></td>
 <td class="nota n2">8<br><small>sólido en un proceso</small></td>
 <td><small>Librería Python sin dependencias, hexagonal, con dinero en céntimos, una moneda por carrito, precio del catálogo, descuentos e impuestos enchufables, eventos de dominio, límites y repositorio en memoria o SQLite; 24 tests y una demo que funcionan, y 50 altas a la vez con un servicio no pierden nada. Pero la concurrencia depende de un cerrojo del proceso: con dos servicios sobre el mismo SQLite se pierden 3 de 50 altas sin aviso.</small> <a href="resultados/ollama_mistral-large-4/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>ollama/mistral-large-4</small><br><small>OpenCode · 2026-11-24 08:55 UTC</small></td>
+<td class=n><b>567.1 k</b><br><small>in 77.9 k · out 15.2 k<br>razon. 0 · caché 474.1 k</small></td>
+<td class=n>14</td>
+<td><small><a href="resultados/ollama_mistral-large-4/SEC/salida/security-audit-report.md">security-audit-report.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n">–<br><small></small></td>
+<td><small></small></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>

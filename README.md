@@ -58,7 +58,7 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [google/gemini-4-carbon](resultados/google_gemini-4-carbon/README.md) | OpenCode | 9 | 10 | 9 | – | – | **9,3** | 45 | 1,6 M |
 | [claude-opus-5-5 (medium)](resultados/anthropic_claude-opus-5-5-medium/README.md) | Claude Code | 9 | 8 | 10 | 5 | 8 | **9,0** | 65 | 5,7 M |
 | [ollama/inkling-2-small](resultados/ollama_inkling-2-small/README.md) | OpenCode | 9 | 9 | 9 | 4 | – | **9,0** | 131 | 5,4 M |
-| [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | 8 | 9 | 10 | – | – | **9,0** | 329 | 30,2 M |
+| [ollama/minimax-m3.1-flash](resultados/ollama_minimax-m3.1-flash/README.md) | OpenCode | 8 | 9 | 10 | – | – | **9,0** | 385 | 34,3 M |
 | [claude-haiku-5-5](resultados/anthropic_claude-haiku-5-5/README.md) | Claude Code | 8 | 9 | 9 | 6 | 9 | **8,7** | 50 | 3,9 M |
 | [google/gemini-4-hydrogen](resultados/google_gemini-4-hydrogen/README.md) | OpenCode | 9 | 9 | 8 | – | – | **8,7** | 37 | 1,3 M |
 | [ollama/glm-5.3](resultados/ollama_glm-5.3/README.md) | OpenCode | 8 | 10 | 8 | 6 | – | **8,7** | 126 | 10,8 M |
@@ -68,12 +68,12 @@ MWP (Mermaid de la arquitectura de Wikipedia) se retiró: casi todos los modelos
 | [ollama/kimi-k3.1-pro](resultados/ollama_kimi-k3.1-pro/README.md) | OpenCode | 10 | 9 | 6 | – | – | **8,3** | 59 | 2,9 M |
 | [ollama/muse-spark-open](resultados/ollama_muse-spark-open/README.md) | OpenCode | 7 | 8 | 9 | 2 | – | **8,0** | 101 | 7,6 M |
 | [gpt-6.2-sol (medium)](resultados/openai_gpt-6.2-sol-medium/README.md) | Codex CLI | 10 | 8 | 5 | – | – | **7,7** | 86 | 4,4 M |
-| [ollama/minimax-m3](resultados/ollama_minimax-m3/README.md) | OpenCode | 4 | 9 | 10 | – | – | **7,7** | 336 | 37,5 M |
+| [ollama/minimax-m3](resultados/ollama_minimax-m3/README.md) | OpenCode | 4 | 9 | 10 | – | – | **7,7** | 366 | 39,2 M |
 | [ollama/deepseek-v4.1-flash](resultados/ollama_deepseek-v4.1-flash/README.md) | OpenCode | 6 | 9 | 6 | 7 | – | **7,0** | 136 | 10,0 M |
-| [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | 7 | 6 | 8 | – | – | **7,0** | 42 | 1,8 M |
+| [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | 7 | 6 | 8 | – | – | **7,0** | 56 | 2,4 M |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | 6 | 8 | 4 | – | – | **6,0** | 19 | 0,4 M |
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | 6 | 7 | 4 | – | – | **5,7** | 15 | 0,3 M |
-| [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | – | – | **5,3** | 50 | 2,3 M |
+| [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | 7 | 5 | 4 | 0 | – | **5,3** | 82 | 3,6 M |
 | [nvidia/nemotron-3-ultra-550b-a55b:free](resultados/nvidia_nemotron-3-ultra-550b-a55b_free/README.md) | OpenCode | 6 | 3 | 4 | – | – | **4,3** | 32 | 0,6 M |
 
 Notas con las rúbricas de `rubricas.md`. Las pruebas que fallaron por la parte técnica (respuestas cortadas en el tope de 32 000 tokens de OpenCode, GLM compactando sin parar por nuestra configuración de límites, MiniMax preguntando antes de que existiera la regla «Decide tú.») se repitieron. Las versiones anteriores están en `resultados/_descartados/`.
@@ -108,6 +108,6 @@ Etiqueta de cada prueba en la que el modelo saca 9 o más (la rehace `scripts/es
 | [ollama/mistral-large-4](resultados/ollama_mistral-large-4/README.md) | OpenCode | – | 3 de 5 |
 | [gpt-6.2-astra (default)](resultados/openai_gpt-6.2-astra-default/README.md) | Codex CLI | – | 3 de 5 |
 | [gpt-6.2-astra (medium)](resultados/openai_gpt-6.2-astra-medium/README.md) | Codex CLI | – | 3 de 5 |
-| [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | – | 3 de 5 |
+| [ollama/beam](resultados/ollama_beam/README.md) | OpenCode | – | 4 de 5 |
 | [nvidia/nemotron-3-ultra-550b-a55b:free](resultados/nvidia_nemotron-3-ultra-550b-a55b_free/README.md) | OpenCode | – | 3 de 5 |
 <!-- /etiquetas -->

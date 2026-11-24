@@ -1,0 +1,36 @@
+{
+  "codigo": "SEC",
+  "modelo": "ollama/beam",
+  "nota": 0,
+  "rubrica": {
+    "f3": 0,
+    "criticas": 0,
+    "linea": 0,
+    "cwe": 0
+  },
+  "veredicto": "Sin informe",
+  "resumen": "Leyó el proyecto entero (33 órdenes de shell en 2 min 37 s) y fue anotando fallos en su razonamiento, pero no escribió ningún informe: en el último turno metió la siguiente llamada a herramienta como texto mal formado dentro del razonamiento, OpenCode no la reconoció y la sesión se cerró sin respuesta.",
+  "rarezas": [
+    "Fallo de formato de herramientas: la llamada va dentro del razonamiento como <rfl:parameter name=\"command\">…, y la sesión acaba como «succeeded» sin texto final.",
+    "Creó un .env copiando scripts/setup.sh para generar Prisma y probar el path traversal en vivo; no lo consiguió (sin node_modules, y npx descargó prisma 8, sin ese comando).",
+    "Salió a internet por npm: dos npm audit y la descarga de npx prisma.",
+    "Buscó las flags (grep «QKB{», flag.txt) y en el razonamiento lo llama «deliberately vulnerable benchmark», sin nombrar el original."
+  ],
+  "cifras": {
+    "tp_estricto": 0,
+    "con_linea_tp": 0,
+    "sin_linea_tp": 0,
+    "fp_estricto": 0,
+    "fn_estricto": 40,
+    "f3": 0.0,
+    "wf3": 0.0,
+    "precision": 0,
+    "recall": 0.0,
+    "juez": {
+      "tp": 0,
+      "fp_inventados": 0,
+      "extra_reales": 0,
+      "f3": 0.0
+    }
+  }
+}

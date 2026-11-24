@@ -3664,6 +3664,83 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_beam/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/beam",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T09:08:11Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 177390,
+      "output": 6829,
+      "reasoning": 0,
+      "cache_read": 1135936,
+      "cache_write": 0,
+      "total": 1320155
+    },
+    "peticiones": 32,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "shell": 33
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df32fecabffewcCQ5h6ckDXnvv",
+    "coste_usd": 0,
+    "ficheros": [
+      ".env"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 131072,
+      "output_proveedor": 131072,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "ollama/beam",
+      "nota": 0,
+      "rubrica": {
+        "f3": 0,
+        "criticas": 0,
+        "linea": 0,
+        "cwe": 0
+      },
+      "veredicto": "Sin informe",
+      "resumen": "Leyó el proyecto entero (33 órdenes de shell en 2 min 37 s) y fue anotando fallos en su razonamiento, pero no escribió ningún informe: en el último turno metió la siguiente llamada a herramienta como texto mal formado dentro del razonamiento, OpenCode no la reconoció y la sesión se cerró sin respuesta.",
+      "rarezas": [
+        "Fallo de formato de herramientas: la llamada va dentro del razonamiento como <rfl:parameter name=\"command\">…, y la sesión acaba como «succeeded» sin texto final.",
+        "Creó un .env copiando scripts/setup.sh para generar Prisma y probar el path traversal en vivo; no lo consiguió (sin node_modules, y npx descargó prisma 8, sin ese comando).",
+        "Salió a internet por npm: dos npm audit y la descarga de npx prisma.",
+        "Buscó las flags (grep «QKB{», flag.txt) y en el razonamiento lo llama «deliberately vulnerable benchmark», sin nombrar el original."
+      ],
+      "cifras": {
+        "tp_estricto": 0,
+        "con_linea_tp": 0,
+        "sin_linea_tp": 0,
+        "fp_estricto": 0,
+        "fn_estricto": 40,
+        "f3": 0.0,
+        "wf3": 0.0,
+        "precision": 0,
+        "recall": 0.0,
+        "juez": {
+          "tp": 0,
+          "fp_inventados": 0,
+          "extra_reales": 0,
+          "f3": 0.0
+        }
+      }
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_beam/TCI",
     "codigo": "TCI",
     "modelo": "ollama/beam",
@@ -6112,6 +6189,51 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_minimax-m3/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/minimax-m3",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:59:06Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 75257,
+      "output": 36660,
+      "reasoning": 0,
+      "cache_read": 1582464,
+      "cache_write": 0,
+      "total": 1694381
+    },
+    "peticiones": 30,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "shell": 36,
+      "write": 2,
+      "edit": 5
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df337e5a8ffeOpQogH6Wv7uTS1",
+    "coste_usd": 0,
+    "ficheros": [
+      "SECURITY_AUDIT.md",
+      "security-findings.json"
+    ],
+    "limites": {
+      "context": 512000,
+      "output": 131072,
+      "output_proveedor": 131072,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_minimax-m3/TCI",
     "codigo": "TCI",
     "modelo": "ollama/minimax-m3",
@@ -6538,6 +6660,91 @@
     "prompt": "Implementa un carrito de la compra escalable"
   },
   {
+    "dir": "resultados/ollama_minimax-m3.1-flash/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/minimax-m3.1-flash",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:44:19Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 119830,
+      "output": 32469,
+      "reasoning": 0,
+      "cache_read": 3878400,
+      "cache_write": 0,
+      "total": 4030699
+    },
+    "peticiones": 56,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "shell": 39,
+      "read": 64,
+      "subagent": 2,
+      "write": 2,
+      "edit": 3
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df345c756ffe5cVF0S0DBPVVZ5",
+    "coste_usd": 0,
+    "ficheros": [
+      "SECURITY_AUDIT.md",
+      "documents/invoices/invoice-ORD-001.pdf",
+      "documents/invoices/invoice-ORD-002.pdf",
+      "documents/invoices/invoice-ORD-003.pdf",
+      "documents/invoices/invoice-ORD-004.pdf",
+      "lib/generated/prisma/browser.ts",
+      "lib/generated/prisma/client.ts",
+      "lib/generated/prisma/commonInputTypes.ts",
+      "lib/generated/prisma/enums.ts",
+      "lib/generated/prisma/internal/class.ts",
+      "lib/generated/prisma/internal/prismaNamespace.ts",
+      "lib/generated/prisma/internal/prismaNamespaceBrowser.ts",
+      "lib/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node",
+      "lib/generated/prisma/models.ts",
+      "lib/generated/prisma/models/Address.ts",
+      "lib/generated/prisma/models/Cart.ts",
+      "lib/generated/prisma/models/CartItem.ts",
+      "lib/generated/prisma/models/Coupon.ts",
+      "lib/generated/prisma/models/Flag.ts",
+      "lib/generated/prisma/models/FoundFlag.ts",
+      "lib/generated/prisma/models/GiftCard.ts",
+      "lib/generated/prisma/models/Hint.ts",
+      "lib/generated/prisma/models/Order.ts",
+      "lib/generated/prisma/models/OrderItem.ts",
+      "lib/generated/prisma/models/PasswordResetToken.ts",
+      "lib/generated/prisma/models/Product.ts",
+      "lib/generated/prisma/models/ProjectInit.ts",
+      "lib/generated/prisma/models/RevealedHint.ts",
+      "lib/generated/prisma/models/Review.ts",
+      "lib/generated/prisma/models/StreamConfig.ts",
+      "lib/generated/prisma/models/SupplierOrder.ts",
+      "lib/generated/prisma/models/SupportAccessToken.ts",
+      "lib/generated/prisma/models/User.ts",
+      "lib/generated/prisma/models/VisitorLog.ts",
+      "lib/generated/prisma/models/Wishlist.ts",
+      "lib/generated/prisma/models/WishlistItem.ts",
+      "logs/app.log",
+      "next-env.d.ts",
+      "security-audit/evidence/poc-run.txt",
+      "security-audit/poc/verify.sh"
+    ],
+    "limites": {
+      "context": 1000000,
+      "output": 500000,
+      "output_proveedor": 524288,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
+  },
+  {
     "dir": "resultados/ollama_minimax-m3.1-flash/TCI",
     "codigo": "TCI",
     "modelo": "ollama/minimax-m3.1-flash",
@@ -6867,6 +7074,51 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/ollama_mistral-large-4/SEC",
+    "codigo": "SEC",
+    "modelo": "ollama/mistral-large-4",
+    "agente": "OpenCode",
+    "fecha": "2026-11-24T08:55:05Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 77853,
+      "output": 15165,
+      "reasoning": 0,
+      "cache_read": 474112,
+      "cache_write": 0,
+      "total": 567130
+    },
+    "peticiones": 14,
+    "error": null,
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "herramientas": {
+      "read": 80,
+      "glob": 1,
+      "grep": 6,
+      "write": 1
+    },
+    "compactaciones": 0,
+    "sesion": "ses_df33bed74ffeO1fajQzbmVtXn9",
+    "coste_usd": 0,
+    "ficheros": [
+      "security-audit-report.md"
+    ],
+    "limites": {
+      "context": 1048576,
+      "output": 262144,
+      "output_proveedor": 262144,
+      "fuente": "ollama /api/show + error de max_tokens"
+    },
+    "veces_decide_tu": 0,
+    "semilla": "/root/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "webfetch y websearch denegados en opencode.json",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/ollama_mistral-large-4/TCI",
