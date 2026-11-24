@@ -1,0 +1,37 @@
+{
+  "codigo": "SEC",
+  "modelo": "google/gemini-4-carbon",
+  "nota": 8,
+  "rubrica": {
+    "f3": 5,
+    "criticas": 1,
+    "linea": 1,
+    "cwe": 1
+  },
+  "veredicto": "Auditoría completa y precisa",
+  "resumen": "Informe de 22 hallazgos agrupados, todos con fichero, línea y CWE: cubre 31 de las 40 entradas con la regla estricta (8 sin línea, a medio punto: 27 en la nota, F3 68,5), 37 con el criterio del juez, y no inventa ninguno. Se le escapan la fuga de la URL de las herramientas del asistente, el logout que no invalida la sesión y las credenciales del seed; los rangos anchos le cuestan medio punto en ocho entradas.",
+  "cifras": {
+    "tp_estricto": 27.0,
+    "con_linea_tp": 23,
+    "sin_linea_tp": 8,
+    "fp_estricto": 7,
+    "fn_estricto": 13.0,
+    "f3": 68.5,
+    "wf3": 69.7,
+    "precision": 0.794,
+    "recall": 0.675,
+    "juez": {
+      "tp": 37,
+      "fp_inventados": 0,
+      "extra_reales": 7,
+      "f3": 93.2
+    }
+  },
+  "rarezas": [
+    "Dice que el pie de página describe el proyecto como plataforma educativa de seguridad; no nombra el proyecto original.",
+    "No sale a internet (webfetch y websearch denegados; no lo intenta): cita CVE-2025-55182 a partir del nombre de una flag de .env.local y CVE-2025-29927 de memoria.",
+    "Solo dos órdenes de shell (cat de dos ficheros que ya podía leer con read) y 134 lecturas; un glob falla por buscar una carpeta components que no existe.",
+    "No toca el código: solo crea AUDITORIA_SEGURIDAD.md.",
+    "Agrupa mucho: 22 hallazgos que reúnen varios fallos cada uno, con rangos de línea anchos que en 8 entradas dejan el acierto a medio punto."
+  ]
+}

@@ -1,0 +1,398 @@
+{
+ "hallazgos": [
+  {
+   "id": "SEC-01",
+   "titulo": "CVE de Next 15.2.2 y React 19.2.0 (RCE en Flight, bypass del middleware)",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real: next 15.2.2 está afectado por CVE-2025-29927 y el middleware protege /monitoring/internal-status; CVE-2025-55182 lo toma del nombre de la flag de .env.local, el otro de memoria."
+  },
+  {
+   "id": "SEC-02",
+   "titulo": "SQLi en búsqueda de productos, tracking, búsqueda de pedidos y reseñas de admin",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-029",
+     "estricto": true,
+     "nota": "línea 93 (WHERE LIKE) y rango 85-103"
+    },
+    {
+     "id": "oss-oopssec-store-031",
+     "estricto": true,
+     "nota": "líneas 97-103 y 99"
+    },
+    {
+     "id": "oss-oopssec-store-027",
+     "estricto": true,
+     "nota": "líneas 81 y 96 (el rango 81-105 pasa de 20; la 96 cae en la ventana)"
+    },
+    {
+     "id": "oss-oopssec-store-005",
+     "estricto": true,
+     "nota": "línea 120 (db.exec)"
+    },
+    {
+     "id": "oss-oopssec-store-006",
+     "estricto": true,
+     "nota": "línea 113 (WHERE r.author concatenado), dentro de la ventana 112-146; el informe solo describe la consulta de db.exec, pero la de prepare de 133 concatena lo mismo"
+    }
+   ]
+  },
+  {
+   "id": "SEC-03",
+   "titulo": "alta con rol ADMIN enviado por el cliente",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-017",
+     "estricto": true,
+     "nota": "cita 59-61; da CWE-915/269, la descripción es la de la entrada"
+    }
+   ]
+  },
+  {
+   "id": "SEC-04",
+   "titulo": "tokens de soporte para cualquier email, revocación ignorada, token en la URL",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-033",
+     "estricto": true,
+     "nota": "línea 58 (targetEmail)"
+    },
+    {
+     "id": "oss-oopssec-store-035",
+     "estricto": true,
+     "nota": "devuelve el token y la URL de acceso en la respuesta; cita 58-91 / 51-91 ; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-034",
+     "estricto": false,
+     "nota": "dice que devuelve el token «en claro», no que se guarde en claro"
+    }
+   ],
+   "nota": "La falta de comprobación de revoked en support-login es real y no está etiquetada."
+  },
+  {
+   "id": "SEC-05",
+   "titulo": "path traversal sin autenticación en /api/files",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-019",
+     "estricto": true,
+     "nota": "línea 20"
+    },
+    {
+     "id": "oss-oopssec-store-020",
+     "estricto": true,
+     "nota": "cita la línea 49 (join del fichero), fuera de 52-72, y el rango 8-67 ; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "La falta de withAdminAuth también es real."
+  },
+  {
+   "id": "SEC-06",
+   "titulo": "XXE en la importación de pedidos",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-007",
+     "estricto": true
+    }
+   ]
+  },
+  {
+   "id": "SEC-07",
+   "titulo": "SSRF en soporte y /internal autorizado por cabecera",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-030",
+     "estricto": true,
+     "nota": "cita 14-28 en la matriz (14-38 en el detalle)"
+    }
+   ],
+   "nota": "La autorización de /internal por x-internal-request es real y no está etiquetada."
+  },
+  {
+   "id": "SEC-08",
+   "titulo": "secreto JWT «secret» por defecto y middleware sin verificar firma",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-040",
+     "estricto": true,
+     "nota": "línea 12"
+    }
+   ],
+   "nota": "El middleware que no verifica la firma es real y no está etiquetado."
+  },
+  {
+   "id": "SEC-09",
+   "titulo": "MD5 sin sal, contraseñas en el log, SIEM con credenciales fijas, hashes en /news",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-012",
+     "estricto": true,
+     "nota": "cita 16-25"
+    },
+    {
+     "id": "oss-oopssec-store-024",
+     "estricto": true,
+     "nota": "cita 5-22"
+    },
+    {
+     "id": "oss-oopssec-store-016",
+     "estricto": false,
+     "nota": "sitúa el MD5 en lib/server-auth.ts:14-16; no cita reset-password"
+    },
+    {
+     "id": "oss-oopssec-store-038",
+     "estricto": false,
+     "nota": "cita news 4-17 (el array); la entrada es la 126, donde se pintan"
+    }
+   ],
+   "nota": "Que password esté en ALLOWED_USER_FIELDS de export es real y no está etiquetado."
+  },
+  {
+   "id": "SEC-10",
+   "titulo": "token de reset predecible md5(email+timestamp) y requestedAt en la respuesta",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real."
+  },
+  {
+   "id": "SEC-11",
+   "titulo": "total del pedido del cliente y carrera en cupones",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-026",
+     "estricto": true,
+     "nota": "describe total: total sin recalcular; cita 39, 64-88 y 113-137 (112-137 en el detalle) ; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "La carrera en cupones es real y no está etiquetada."
+  },
+  {
+   "id": "SEC-12",
+   "titulo": "IDOR en pedidos y wishlists, stream en vivo con withAuth",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-025",
+     "estricto": true,
+     "nota": "cita 8-64 ; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-036",
+     "estricto": true,
+     "nota": "cita 6-82 ; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "La clave RTMP expuesta y la emisión secuestrable son reales y no están etiquetadas."
+  },
+  {
+   "id": "SEC-13",
+   "titulo": "XSS en reseñas, analytics, soporte y SVG; open redirect en LoginForm",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-039",
+     "estricto": true,
+     "nota": "cita 51-67"
+    },
+    {
+     "id": "oss-oopssec-store-002",
+     "estricto": true,
+     "nota": "cita 364-367 y 366"
+    },
+    {
+     "id": "oss-oopssec-store-037",
+     "estricto": true,
+     "nota": "cita 36-37"
+    },
+    {
+     "id": "oss-oopssec-store-004",
+     "estricto": false,
+     "nota": "cita 9-15 del route de imagen (tipos permitidos); la entrada es 64-72"
+    }
+   ],
+   "nota": "El XSS de SupportForm con el contenido de la SSRF es real y no está etiquetado."
+  },
+  {
+   "id": "SEC-14",
+   "titulo": "AES-CBC sin MAC con clave fija y oráculo de padding; LCG en tarjetas regalo",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-041",
+     "estricto": true,
+     "nota": "cita share-crypto 6-10 en el detalle"
+    },
+    {
+     "id": "oss-oopssec-store-018",
+     "estricto": true,
+     "nota": "describe el oráculo de padding; cita 13-42 ; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    }
+   ],
+   "nota": "El LCG sembrado con la hora en las tarjetas regalo es real y no está etiquetado."
+  },
+  {
+   "id": "SEC-15",
+   "titulo": "filtro de prompt injection por regex, SSRF y envenenamiento vía mcpServerUrl, cabecera MCP fija",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-009",
+     "estricto": true,
+     "nota": "filtro evadible y herramienta restringida solo por el prompt; cita 167-212, que toca la ventana 211-231 ; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-008",
+     "estricto": false,
+     "nota": "describe la SSRF de mcpServerUrl, pero cita 8-34 y 167-212; la entrada es la función fetch, 69-81"
+    },
+    {
+     "id": "oss-oopssec-store-010",
+     "estricto": false,
+     "nota": "describe que las respuestas del MCP externo inyectan instrucciones, sin línea cercana a 291"
+    }
+   ],
+   "nota": "La cabecera MCP fija es real y no está etiquetada. No cubre 011 (fuga de la URL de las herramientas)."
+  },
+  {
+   "id": "SEC-16",
+   "titulo": "sin protección CSRF, formularios urlencoded y login por GET",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Login CSRF por GET en support-login es real; el CSRF general está exagerado: las cookies van con sameSite lax."
+  },
+  {
+   "id": "SEC-17",
+   "titulo": "NEXT_PUBLIC_PAYMENT_SECRET, token fijo en diag, nota oculta, diagnósticos en export, flags públicas",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-001",
+     "estricto": true,
+     "nota": ".env.local:1"
+    },
+    {
+     "id": "oss-oopssec-store-003",
+     "estricto": true,
+     "nota": "cita 5-25 (21 líneas) ; rango de más de 20 líneas: cuenta como sin línea",
+     "sin_linea": true
+    },
+    {
+     "id": "oss-oopssec-store-032",
+     "estricto": true,
+     "nota": "cita 130-141 en el detalle"
+    },
+    {
+     "id": "oss-oopssec-store-023",
+     "estricto": true,
+     "nota": "cita 5-14"
+    },
+    {
+     "id": "oss-oopssec-store-021",
+     "estricto": true,
+     "nota": "cita 5-20"
+    }
+   ],
+   "nota": "La nota de desarrollo oculta en documents es real y no está etiquetada."
+  },
+  {
+   "id": "SEC-18",
+   "titulo": "Host / X-Forwarded-Proto en los enlaces de compartir pedidos",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (orders/[id]/share:21-23), de impacto bajo."
+  },
+  {
+   "id": "SEC-19",
+   "titulo": "sin rate limiting y enumeración de cuentas en el login",
+   "clase": "TP",
+   "linea": true,
+   "cwe": true,
+   "gt": [
+    {
+     "id": "oss-oopssec-store-013",
+     "estricto": true,
+     "nota": "cita login 39-48; sin rate limiting"
+    },
+    {
+     "id": "oss-oopssec-store-014",
+     "estricto": true,
+     "nota": "cita login 39-48; «Invalid credentials» frente a «Invalid password»"
+    }
+   ]
+  },
+  {
+   "id": "SEC-20",
+   "titulo": "Docker como root, herramientas de compilación, .env.local sin ignorar",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real y genérico."
+  },
+  {
+   "id": "SEC-21",
+   "titulo": "sin cabeceras de seguridad",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real y genérico."
+  },
+  {
+   "id": "SEC-22",
+   "titulo": "Prisma Studio arrancado sin autenticación en setup.sh",
+   "clase": "EXTRA",
+   "linea": true,
+   "cwe": true,
+   "nota": "Real (setup.sh:53), de entorno de desarrollo."
+  }
+ ]
+}
