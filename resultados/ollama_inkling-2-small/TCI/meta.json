@@ -1,0 +1,41 @@
+{
+  "codigo": "TCI",
+  "modelo": "ollama/inkling-2-small",
+  "agente": "OpenCode",
+  "fecha": "2026-11-24T08:29:40Z",
+  "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+  "tokens": {
+    "input": 158004,
+    "output": 36167,
+    "reasoning": 0,
+    "cache_read": 1372160,
+    "cache_write": 0,
+    "total": 1566331
+  },
+  "peticiones": 36,
+  "error": null,
+  "mensajes_usuario": [
+    "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  ],
+  "herramientas": {
+    "shell": 22,
+    "read": 4,
+    "subagent": 10
+  },
+  "compactaciones": 0,
+  "sesion": "ses_df3533237ffe1x5DBZWqRgCNxn",
+  "coste_usd": 0,
+  "ficheros": [
+    "clasificacion.jsonl"
+  ],
+  "limites": {
+    "context": 1048576,
+    "output": 131072,
+    "output_proveedor": 131072,
+    "fuente": "ollama /api/show + error de max_tokens"
+  },
+  "veces_decide_tu": 0,
+  "espero_segundo_plano": true,
+  "semilla": "/root/.cache/benchmark-semillas/TCI/semilla",
+  "sin_web": "webfetch y websearch denegados en opencode.json"
+}

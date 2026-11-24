@@ -1,0 +1,36 @@
+   Clasificación de incidencias. +
+     Listo. He clasificado las 300 incidencias en /var/tmp/bench/ws-MQrVAzPw/clasificacion.jsonl — una línea JSON por
+     incidencia con id, tipo, superficie y areas, en el mismo orden que incidencias.jsonl.
+
+     Resultado global
+
+     - Tipo: 261 bug, 29 enhancement, 10 documentation
+     - Superficie: 182 app (escritorio), 80 CLI, 20 codex-web, 12 extension, 6 iOS
+     - Áreas más frecuentes: windows-os (66), sandbox (57), session (48), tool-calls (43), app-server (32), TUI (31);
+       28 incidencias no encajan en ninguna área (mayormente "Withdrawn" sin contenido o bugs puramente de UI sin
+       categoría aplicable)
+
+     Cómo se hizo: lectura completa de los textos por 6 agentes en paralelo con una rúbrica común (definiciones por
+     tipo/superficie/área y reglas para casos ambiguos, p. ej. "model at capacity" → rate-limits, HTTP 5xx de red →
+     connectivity, issues de Android → iOS por ser la categoría móvil disponible), seguida de revisión manual de una
+     muestra amplia, corrección de asignaciones inconsistentes y validación final de esquema, cobertura (300/300 ids,
+     sin duplicados, valores dentro de los enumerados).
+
+     Limitaciones a tener en cuenta:
+
+     - Las issues "Withdrawn"/vacías o con solo un UUID no aportan señal; se clasificaron como bug con confianza baja.
+     - La superficie Android no existe en tu lista; esas issues se asignaron a iOS (categoría móvil).
+     - Algunos bugs puros de UI (p. ej. "LaTeX roto en VS Code") quedaron con areas: [] al no encajar en ninguna
+       categoría de la lista.
+     - Casos frontera (p. ej. "Chat mode missing" → auth por la sección de cuenta ausente, "Install.sh 404" → bug) son
+       decisiones de criterio; puedo ajustar cualquiera si me indicas tus preferencias.
+
+     Build · inkling-2-small · 58.0s · 262.2 tok/s · 715ms ttft
+
+  ┃
+  ┃
+  ┃
+  ┃  Build · inkling-2-small Ollama Cloud
+  ╹▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  /var/tmp/bench/ws-MQrVAzPw                                                               81.0K (8%)  ctrl+p commands
+
