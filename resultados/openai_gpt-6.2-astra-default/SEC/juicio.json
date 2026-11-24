@@ -1,0 +1,36 @@
+{
+  "codigo": "SEC",
+  "modelo": "gpt-6.2-astra",
+  "nota": 3,
+  "rubrica": {
+    "f3": 2,
+    "criticas": 0,
+    "linea": 1,
+    "cwe": 0
+  },
+  "veredicto": "Preciso pero corto",
+  "resumen": "Informe de 14 hallazgos, todos con fichero y línea exacta y ninguno inventado: cubre 13 de las 40 entradas, todas con línea (F3 34,4), 15 con el criterio del juez. Revisa poco: deja fuera las SQLi de reseñas, los IDOR de pedidos, listas y soporte, el open redirect, las flags, el diag, las contraseñas en el log y las credenciales del seed.",
+  "cifras": {
+    "tp_estricto": 13.0,
+    "con_linea_tp": 13,
+    "sin_linea_tp": 0,
+    "fp_estricto": 5,
+    "fn_estricto": 27.0,
+    "f3": 34.4,
+    "wf3": 37.4,
+    "precision": 0.722,
+    "recall": 0.325,
+    "juez": {
+      "tp": 15,
+      "fp_inventados": 0,
+      "extra_reales": 5,
+      "f3": 40.0
+    }
+  },
+  "rarezas": [
+    "Auditoría rápida: 9 órdenes de shell, 10 peticiones y 221 k tokens, sin razonamiento apuntado (esfuerzo por defecto). Busca patrones (queryRawUnsafe, dangerouslySetInnerHTML…) y lee unas pocas rutas; nunca abre admin/reviews, orders/[id], wishlists, support-access, flags ni LoginForm.",
+    "Oculta valores al leer: tapa con sed los secretos de docker-compose y las cadenas de monitoring/auth. No nombra el proyecto original.",
+    "No sale a internet: cita CVE-2025-55182 y CVE-2025-66478 de memoria, con el enlace al aviso de Next.js.",
+    "No toca el código: solo crea AUDITORIA_SEGURIDAD.md (36 líneas, 14 hallazgos en una tabla)."
+  ]
+}

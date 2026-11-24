@@ -369,6 +369,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>Tipo 96,7 %, superficie 89,3 % y F1 de áreas 0,698 frente a jev (94 idénticas). Le costó 558 s, 79 peticiones, 4,01 M tokens y 5,13 $ con seis subagentes: la prueba de TCI más cara.</small> <a href="resultados/google_gemini-4-neon/TCI/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
+<td><b>TCI</b><br><small>clasificación</small></td>
+<td><small>gpt-6-luna (medium)</small><br><small>Codex CLI · 2026-11-24 11:54 UTC</small></td>
+<td class=n><b>247.0 k</b><br><small>in 35.1 k · out 1.9 k<br>razon. 440 · caché 209.5 k</small></td>
+<td class=n>8</td>
+<td><small><a href="resultados/openai_gpt-6-luna-medium/TCI/salida/clasificacion.jsonl">clasificacion.jsonl</a></small></td>
+<td><small>–</small></td>
+<td class="nota n">–<br><small></small></td>
+<td><small></small></td>
+<td class=cap></td>
+</tr><tr>
 <td><b>A3D</b><br><small>visual</small></td>
 <td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-20 09:41 UTC</small></td>
 <td class=n><b>111.6 k</b><br><small>in 18.4 k · out 6.4 k<br>razon. 23 · caché 86.8 k</small></td>
@@ -397,6 +407,16 @@ th{font-size:12px;text-transform:uppercase;color:var(--muted)}
 <td><small>✔ se abre index.html sin instalar nada<br>✖ sin tests<br>✔ suma, resta, quita y recalcula envío y total; guarda al recargar<br>✔ precios en céntimos, una sola moneda<br>✔ localStorage manipulado: cantidades negativas, decimales e ids falsos fuera; 1e9 se queda en 99<br>✖ sin servidor, API ni almacenamiento compartido: no hay concurrencia ni escala<br>✖ sin README<br>~ no hay botón de vaciar</small></td>
 <td class="nota n1">4<br><small>maqueta de carrito, sin escalar</small></td>
 <td><small>Una página de carrito bien acabada con cuatro láminas, envío gratis desde 75 € y persistencia en localStorage que valida lo que lee. No hay tests, ni servidor, ni README: «escalable» se queda en que el catálogo es una lista que se puede ampliar.</small> <a href="resultados/openai_gpt-6.2-astra-default/CCA/juicio.md">juicio</a></td>
+<td class=cap></td>
+</tr><tr>
+<td><b>SEC</b><br><small>seguridad</small></td>
+<td><small>gpt-6.2-astra (default)</small><br><small>Codex CLI · 2026-11-24 11:53 UTC</small></td>
+<td class=n><b>221.4 k</b><br><small>in 26.6 k · out 3.6 k<br>razon. 0 · caché 191.2 k</small></td>
+<td class=n>10</td>
+<td><small><a href="resultados/openai_gpt-6.2-astra-default/SEC/salida/AUDITORIA_SEGURIDAD.md">AUDITORIA_SEGURIDAD.md</a></small></td>
+<td><small>–</small></td>
+<td class="nota n0">3<br><small>Preciso pero corto</small></td>
+<td><small>Informe de 14 hallazgos, todos con fichero y línea exacta y ninguno inventado: cubre 13 de las 40 entradas, todas con línea (F3 34,4), 15 con el criterio del juez. Revisa poco: deja fuera las SQLi de reseñas, los IDOR de pedidos, listas y soporte, el open redirect, las flags, el diag, las contraseñas en el log y las credenciales del seed.</small> <a href="resultados/openai_gpt-6.2-astra-default/SEC/juicio.md">juicio</a></td>
 <td class=cap></td>
 </tr><tr>
 <td><b>TCI</b><br><small>clasificación</small></td>

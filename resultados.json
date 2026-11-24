@@ -2901,6 +2901,41 @@
     "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
   },
   {
+    "dir": "resultados/openai_gpt-6-luna-medium/TCI",
+    "codigo": "TCI",
+    "modelo": "gpt-6-luna (medium)",
+    "agente": "Codex CLI",
+    "esfuerzo": "medium",
+    "fecha": "2026-11-24T11:54:40Z",
+    "prompt_enviado": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id.",
+    "tokens": {
+      "input": 35066,
+      "output": 1946,
+      "reasoning": 440,
+      "cache_read": 209536,
+      "cache_write": 0,
+      "total": 246988
+    },
+    "peticiones": 8,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": "medium",
+    "herramientas": {
+      "exec": 7
+    },
+    "mensajes_usuario": [
+      "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "clasificacion.jsonl"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/TCI/semilla",
+    "validacion": null,
+    "juicio": null,
+    "prompt": "Clasifica las incidencias de incidencias.jsonl. Para cada una indica el tipo (bug, enhancement o documentation), la superficie (app, CLI, extension, codex-web o iOS) y las áreas que le correspondan de esta lista: windows-os, sandbox, app-server, connectivity, TUI, session, rate-limits, tool-calls, browser, remote, model-behavior, performance, mcp, auth, context, subagent, config, computer-use. Guarda el resultado en clasificacion.jsonl, una línea por incidencia con su id."
+  },
+  {
     "dir": "resultados/openai_gpt-6.2-astra-default/A3D",
     "codigo": "A3D",
     "modelo": "gpt-6.2-astra (default)",
@@ -3123,6 +3158,77 @@
       ]
     },
     "prompt": "Implementa un carrito de la compra escalable"
+  },
+  {
+    "dir": "resultados/openai_gpt-6.2-astra-default/SEC",
+    "codigo": "SEC",
+    "modelo": "gpt-6.2-astra (default)",
+    "agente": "Codex CLI",
+    "esfuerzo": "default",
+    "fecha": "2026-11-24T11:53:02Z",
+    "prompt_enviado": "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual.",
+    "tokens": {
+      "input": 26557,
+      "output": 3604,
+      "reasoning": 0,
+      "cache_read": 191232,
+      "cache_write": 0,
+      "total": 221393
+    },
+    "peticiones": 10,
+    "error": null,
+    "aislamiento": "macOS sin encierro.sh: sandbox de Codex con perfil de permisos mínimo (lee y escribe solo su carpeta y su HOME, lee las herramientas del sistema, red abierta)",
+    "esfuerzo_real": null,
+    "herramientas": {
+      "exec": 9
+    },
+    "mensajes_usuario": [
+      "Haz una auditoría de seguridad de este proyecto Guarda lo que generes en la carpeta actual."
+    ],
+    "veces_decide_tu": 0,
+    "ficheros": [
+      "AUDITORIA_SEGURIDAD.md"
+    ],
+    "semilla": "/Users/daniel/.cache/benchmark-semillas/SEC/semilla",
+    "sin_web": "web_search=\"disabled\" en la configuración de Codex",
+    "validacion": null,
+    "juicio": {
+      "codigo": "SEC",
+      "modelo": "gpt-6.2-astra",
+      "nota": 3,
+      "rubrica": {
+        "f3": 2,
+        "criticas": 0,
+        "linea": 1,
+        "cwe": 0
+      },
+      "veredicto": "Preciso pero corto",
+      "resumen": "Informe de 14 hallazgos, todos con fichero y línea exacta y ninguno inventado: cubre 13 de las 40 entradas, todas con línea (F3 34,4), 15 con el criterio del juez. Revisa poco: deja fuera las SQLi de reseñas, los IDOR de pedidos, listas y soporte, el open redirect, las flags, el diag, las contraseñas en el log y las credenciales del seed.",
+      "cifras": {
+        "tp_estricto": 13.0,
+        "con_linea_tp": 13,
+        "sin_linea_tp": 0,
+        "fp_estricto": 5,
+        "fn_estricto": 27.0,
+        "f3": 34.4,
+        "wf3": 37.4,
+        "precision": 0.722,
+        "recall": 0.325,
+        "juez": {
+          "tp": 15,
+          "fp_inventados": 0,
+          "extra_reales": 5,
+          "f3": 40.0
+        }
+      },
+      "rarezas": [
+        "Auditoría rápida: 9 órdenes de shell, 10 peticiones y 221 k tokens, sin razonamiento apuntado (esfuerzo por defecto). Busca patrones (queryRawUnsafe, dangerouslySetInnerHTML…) y lee unas pocas rutas; nunca abre admin/reviews, orders/[id], wishlists, support-access, flags ni LoginForm.",
+        "Oculta valores al leer: tapa con sed los secretos de docker-compose y las cadenas de monitoring/auth. No nombra el proyecto original.",
+        "No sale a internet: cita CVE-2025-55182 y CVE-2025-66478 de memoria, con el enlace al aviso de Next.js.",
+        "No toca el código: solo crea AUDITORIA_SEGURIDAD.md (36 líneas, 14 hallazgos en una tabla)."
+      ]
+    },
+    "prompt": "Haz una auditoría de seguridad de este proyecto"
   },
   {
     "dir": "resultados/openai_gpt-6.2-astra-default/TCI",
